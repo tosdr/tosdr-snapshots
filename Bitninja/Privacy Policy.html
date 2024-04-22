@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en-US" >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- WP_HEAD() START -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900" >
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900|Mulish:100,200,300,400,500,600,700,800,900">
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<script type="text/javascript">
+    (function() {
+  var pvData = {"source":"Direct","referrer":"Direct","visitor_type":"logged out","visitor_login_status":"logged out","visitor_id":0,"page_title":"Privacy policy - BitNinja Security","post_type":"page","post_type_with_prefix":"single page","post_categories":"","post_tags":"","post_author":"futuremanagement","post_full_date":"2023.03.11.","post_year":"2023","post_month":"03","post_day":"11","is_front_page":0,"is_home":1,"search_query":"","search_results_count":0};
+  var body = {
+    url: encodeURIComponent(window.location.href),
+    referrer: encodeURIComponent(document.referrer)
+  };
+
+  function makePostRequest(e,t){var n=[];if(t.body){for(var o in t.body)n.push(encodeURIComponent(o)+"="+encodeURIComponent(t.body[o]));t.body=n.join("&")}return window.fetch?new Promise(n=>{var o={method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},redirect:"follow",body:{},...t};window.fetch(e,o).then(e=>{n(e.text())})}):new Promise(t=>{var o;"undefined"==typeof XMLHttpRequest&&t(null),(o=new XMLHttpRequest).open("POST",e,!0),o.onreadystatechange=function(){4==o.readyState&&200==o.status&&t(o.responseText)},o.setRequestHeader("Content-type","application/x-www-form-urlencoded"),o.send(n.join("&"))})}
+  function observeAjaxCartActions(e){new PerformanceObserver(function(t){for(var n=t.getEntries(),r=0;r<n.length;r++)["xmlhttprequest","fetch"].includes(n[r].initiatorType)&&['=get_refreshed_fragments', 'add_to_cart'].some(p => n[r].name.includes(p))&&fetchCart(e)}).observe({entryTypes:["resource"]})};
+
+  function fetchCart(adapter) {
+    makePostRequest("//bitninja.com/index.php?plugin=optimonk&action=cartData", { body })
+      .then((response) => {
+        var data = JSON.parse(response);
+        setCartData(data, adapter);
+      })
+  }
+
+  function setCartData(cartData, adapter) {
+    adapter.Cart.clear();
+
+    cartData.cart.forEach(cartItem => {
+      adapter.Cart.add(cartItem.sku, {quantity: cartItem.quantity, price: cartItem.price, name: cartItem.name});
+    });
+    Object.keys(cartData.avs).forEach((key, value) => {
+      adapter.attr(`wp_${key}`, cartData.avs[key]);
+    })
+  }
+
+  function setAssocData(assocData, adapter) {
+    Object.keys(assocData).forEach((key) => {
+      adapter.attr(`wp_${key}`, assocData[key]);
+    })
+  }
+
+  var RuleHandler = {
+    hasVisitorCartRules: (campaignMeta) => {
+      return !!(campaignMeta.rules.visitorCart || campaignMeta.rules.visitorCartRevamp);
+    },
+    hasVisitorAttributeRule: (campaignMeta) => {
+      return !!campaignMeta.rules.visitorAttribute;
+    }
+  }
+
+  document.querySelector('html').addEventListener('optimonk#embedded-campaigns-init', function(e) {
+    var campaignsData = e.parameters;
+
+    if (!campaignsData.length) {
+      return;
+    }
+
+    var adapter = window.OptiMonkEmbedded.Visitor.createAdapter();
+    var hasCartRule = false;
+    var hasAttributeRule = false;
+
+    campaignsData.forEach((campaignMetaData) => {
+      hasCartRule = hasCartRule || RuleHandler.hasVisitorCartRules(campaignMetaData);
+      hasAttributeRule = hasAttributeRule || RuleHandler.hasVisitorAttributeRule(campaignMetaData);
+    });
+
+    setAssocData(pvData, adapter);
+
+    if (hasCartRule) {
+      observeAjaxCartActions(adapter);
+      fetchCart(adapter);
+    }
+
+    if (hasAttributeRule) {
+      makePostRequest("//bitninja.com/index.php?plugin=optimonk&action=productData", { body })
+        .then((response) => {
+          var data = JSON.parse(response);
+          setAssocData(data, adapter);
+        })
+    }
+  });
+
+  document.querySelector('html').addEventListener('optimonk#campaigns_initialized', function () {
+    if (!OptiMonk.campaigns) {
+      return;
+    }
+
+    var adapter = window.OptiMonk.Visitor.createAdapter();
+
+    setAssocData(pvData, adapter);
+
+    if (OptiMonk.campaigns.filter(campaign => campaign.hasVisitorCartRules()).length) {
+      observeAjaxCartActions(adapter);
+      fetchCart(adapter);
+    }
+
+    if (OptiMonk.campaigns.filter(campaign => campaign.hasVisitorAttributeRules()).length) {
+      makePostRequest("//bitninja.com/index.php?plugin=optimonk&action=productData", { body })
+        .then((response) => {
+          var data = JSON.parse(response);
+          setAssocData(data, adapter);
+        });
+    }
+  });
+}());
+
+</script>
+<script type="text/javascript" src="https://onsite.optimonk.com/script.js?account=2717" async></script>
+	<!-- This site is optimized with the Yoast SEO plugin v22.4 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Privacy policy - BitNinja Security</title>
+	<link rel="canonical" href="https://bitninja.com/privacy-policy/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Privacy policy - BitNinja Security" />
+	<meta property="og:description" content="PRIVACY POLICY OF BITNINJA Last modified: 2023.12.06. This Privacy Policy (the “Policy”) explains how&nbsp;BitNinja Technologies, Zrt.&nbsp;a company registered and operating under the laws of Hungary&nbsp;(registered seat:&nbsp;4024 Debrecen, Kossuth utca 42. II. em. 5.; registration number: 09-10-000598; hereinafter: “BitNinja”, “Company”, “we”, or “us”) collects, stores, uses, and discloses personal information from their users (“you”, “user”) in [&hellip;]" />
+	<meta property="og:url" content="https://bitninja.com/privacy-policy/" />
+	<meta property="og:site_name" content="BitNinja Security" />
+	<meta property="article:modified_time" content="2023-12-06T12:55:47+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Est. reading time" />
+	<meta name="twitter:data1" content="32 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://bitninja.com/privacy-policy/","url":"https://bitninja.com/privacy-policy/","name":"Privacy policy - BitNinja Security","isPartOf":{"@id":"https://bitninja.com/#website"},"datePublished":"2023-03-11T15:35:40+00:00","dateModified":"2023-12-06T12:55:47+00:00","breadcrumb":{"@id":"https://bitninja.com/privacy-policy/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://bitninja.com/privacy-policy/"]}]},{"@type":"BreadcrumbList","@id":"https://bitninja.com/privacy-policy/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://bitninja.com/"},{"@type":"ListItem","position":2,"name":"Privacy policy"}]},{"@type":"WebSite","@id":"https://bitninja.com/#website","url":"https://bitninja.com/","name":"BitNinja Security","description":"State-of-the-art server security with an all-in-one platform","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://bitninja.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="alternate" type="application/rss+xml" title="BitNinja Security &raquo; Feed" href="https://bitninja.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="BitNinja Security &raquo; Comments Feed" href="https://bitninja.com/comments/feed/" />
+<link rel='stylesheet' id='mailchimpSF_main_css-css' href='https://bitninja.com/wp-content/cache/min/1/mailchimpSF_main_css.css?ver=1.5.8' media='all' />
+<!--[if IE]>
+<link rel='stylesheet' id='mailchimpSF_ie_css-css' href='https://bitninja.com/wp-content/plugins/mailchimp/css/ie.css?ver=6.5.2' media='all' />
+<![endif]-->
+<style id='wp-block-library-inline-css'>
+:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,161;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px;--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:#9747ff}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}.has-text-align-center{text-align:center}.has-text-align-left{text-align:left}.has-text-align-right{text-align:right}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}.screen-reader-text:focus{background-color:#ddd;clip:auto!important;-webkit-clip-path:none;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+</style>
+<style id='classic-theme-styles-inline-css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--base: #ffffff;--wp--preset--color--contrast: #000000;--wp--preset--color--primary: #9DFF20;--wp--preset--color--secondary: #345C00;--wp--preset--color--tertiary: #F6F6F6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: clamp(0.875rem, 0.875rem + ((1vw - 0.2rem) * 0.227), 1rem);--wp--preset--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.227), 1.125rem);--wp--preset--font-size--large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 0.227), 1.875rem);--wp--preset--font-size--x-large: 2.25rem;--wp--preset--font-size--xx-large: clamp(4rem, 4rem + ((1vw - 0.2rem) * 10.909), 10rem);--wp--preset--font-family--dm-sans: "DM Sans", sans-serif;--wp--preset--font-family--ibm-plex-mono: 'IBM Plex Mono', monospace;--wp--preset--font-family--inter: "Inter", sans-serif;--wp--preset--font-family--system-font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;--wp--preset--font-family--source-serif-pro: "Source Serif Pro", serif;--wp--preset--spacing--30: clamp(1.5rem, 5vw, 2rem);--wp--preset--spacing--40: clamp(1.8rem, 1.8rem + ((1vw - 0.48rem) * 2.885), 3rem);--wp--preset--spacing--50: clamp(2.5rem, 8vw, 4.5rem);--wp--preset--spacing--60: clamp(3.75rem, 10vw, 7rem);--wp--preset--spacing--70: clamp(5rem, 5.25rem + ((1vw - 0.48rem) * 9.096), 8rem);--wp--preset--spacing--80: clamp(7rem, 14vw, 11rem);--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(body .is-layout-flow)  > :first-child:first-child{margin-block-start: 0;}:where(body .is-layout-flow)  > :last-child:last-child{margin-block-end: 0;}:where(body .is-layout-flow)  > *{margin-block-start: 1.5rem;margin-block-end: 0;}:where(body .is-layout-constrained)  > :first-child:first-child{margin-block-start: 0;}:where(body .is-layout-constrained)  > :last-child:last-child{margin-block-end: 0;}:where(body .is-layout-constrained)  > *{margin-block-start: 1.5rem;margin-block-end: 0;}:where(body .is-layout-flex) {gap: 1.5rem;}:where(body .is-layout-grid) {gap: 1.5rem;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.oxy-header-container {
+    flex-direction: row!important;
+}
+
+@media (max-width: 1120px)
+#_posts_grid-232-152 .oxy-post {
+    width: 100% !important;
+}
+
+.oxy-header-container > div {
+    justify-content: right!important;
+}
+
+div.oxy-repeater-pages-wrap {
+    display: none;
+}
+
+input#email-4b3d0e95-9ffe-4b44-8c83-b4eda58fb926 {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    width: 280px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #D0D0D2;
+    border-radius: 4px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+input.hs-button.primary.large {
+    width: 138px;
+    height: 40px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFE600;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    background-color: rgba(37, 40, 58, 1);
+	  margin-left: 15px
+}
+
+div#div_block-60-152 {
+    color: white!important;
+}
+
+div#div_block-78-10996 {
+    color: white;
+}
+.hs_email.hs-email.hs-fieldtype-text.field.hs-form-field {
+    display: inline-block!important;
+}
+
+.hs_submit.hs-submit {
+    display: inline-block;
+}
+
+input#email-4b3d0e95-9ffe-4b44-8c83-b4eda58fb926 {
+    display: inline-block;
+}
+
+ul.no-list.hs-error-msgs.inputs-list {
+    display: none;
+}
+
+.hs_error_rollup {
+    display: none;
+}
+
+input#gform_submit_button_1 {
+    width: 182px;
+    height: 32px;
+    left: 1242px;
+    top: 723px;
+    background: ;
+    border-radius: 4px;
+	font-family: 'Mulish';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 20px;
+	color: #fff;
+	display: flex;
+align-items: center;
+justify-content: center;
+width: 50% !important;
+margin-right:auto;
+margin-left:auto;
+}
+
+body .gform_wrapper .gform_footer input.button,
+body .gform_wrapper .gform_footer input[type=submit] {
+color:#ffffff;
+padding-top:4px;
+padding-bottom:4px;
+padding-left:10px;
+padding-right:10px;
+border: 1px solid rgba(114,114,114,0.4);
+border-radius: 1px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+-moz-box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+-webkit-box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+background-color: #0038FF;
+}
+
+input.search-field {
+    width: 75%;
+ border: none;
+    /* border-color: #000000; */
+    border-bottom: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    /* margin-left: 10px; */
+}
+
+.oxy-search-form input[type="submit"] {
+    /* padding: calc(0.5em + 1px) 1em; */
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+	border-radius: 4px;
+   
+}
+
+#div_block-138-152 {
+    width: 100%;
+    justify-content: center;
+    text-align: left;
+    /* align-items: flex-end; */
+}
+
+div#code_block-147-152 {
+    width: 100%;
+}
+
+.actions {
+    margin: 0px!important;
+    margin: 0px!important;
+    padding: 0px!important;
+}
+
+#-pro-menu-165-172 .oxy-pro-menu-list .menu-item a {
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+
+
+#-pro-menu-165-172 .oxy-pro-menu-list .menu-item, #-pro-menu-165-172 .oxy-pro-menu-list .menu-item a {
+    color: #0038ff;
+    font-size: 14px;
+    border-right: 0.5px solid #0038ff;
+
+}
+
+#-pro-menu-210-152 .oxy-pro-menu-list .menu-item a {
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+
+
+#-pro-menu-210-152 .oxy-pro-menu-list .menu-item, #-pro-menu-210-152 .oxy-pro-menu-list .menu-item a {
+    color: #0038ff;
+    font-size: 14px;
+    border-right: 0.5px solid #0038ff;
+}
+
+#-pro-menu-15-8 .oxy-pro-menu-list .menu-item a {
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+
+#-pro-menu-15-8 .oxy-pro-menu-list .menu-item, #-pro-menu-15-8 .oxy-pro-menu-list .menu-item a {
+    color: #0038ff;
+    font-size: 14px;
+    border-right: 0.5px solid #0038ff;
+}
+
+
+#-pro-menu-150-180 .oxy-pro-menu-list .menu-item a {
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+
+
+#-pro-menu-150-180 .oxy-pro-menu-list .menu-item, #-pro-menu-150-180 .oxy-pro-menu-list .menu-item a{
+    color: #0038ff;
+    font-size: 14px;
+    border-right: 0.5px solid #0038ff;
+}
+
+
+#-pro-menu-46-8 .oxy-pro-menu-list .menu-item a
+{
+    padding-right: 10px!important;
+    padding-left: 10px!important;
+}
+
+
+#-pro-menu-46-8 .oxy-pro-menu-list .menu-item, #-pro-menu-46-8 .oxy-pro-menu-list .menu-item a
+{
+    color: #0038ff;
+    font-size: 14px;
+    border-right: 0.5px solid #0038ff;
+}
+
+.oxy-easy-posts-pages {
+    font-size: 8px!important;
+}
+
+.hs-form-4b3d0e95-9ffe-4b44-8c83-b4eda58fb926_278746a4-e61d-4e48-ac20-8e1ff100b2cd .hs-submit > .actions {
+    text-align: center;
+    margin-top: 0px!important;
+    padding-top: 0px!important;
+}
+
+.hs-form-4b3d0e95-9ffe-4b44-8c83-b4eda58fb926_75cab0c1-2553-4d10-a4d6-ca14422add93 .hs-submit > .actions {
+    text-align: center!important;
+    padding-top: 0px!important;
+}
+
+span#span-59-9 {
+    width: 100%;
+}
+
+#gform_confirmation_wrapper_1 {
+	color: white !important;
+}
+
+li#menu-item-12077 {
+border-bottom: solid 1px white!important;
+}
+
+li#menu-item-12081{
+border-bottom: solid;
+	border-top: solid;
+
+}
+
+li#menu-item-12082{
+border-bottom: solid;
+}
+
+li#menu-item-12089{
+border-bottom: solid;
+}
+
+li#menu-item-18969{
+border-bottom: solid;
+}
+
+.oxy-pro-menu-dropdown-icon-click-area { 
+	width: 50%;
+	margin-left: 60%!important;
+}
+
+ul.sub-menu {
+    padding-left: 20px!important;
+}
+
+</style>
+<link rel='stylesheet' id='oxygen-css' href='https://bitninja.com/wp-content/plugins/oxygen/component-framework/oxygen.css?ver=4.8.1' media='all' />
+<link rel='stylesheet' id='moove_gdpr_frontend-css' href='https://bitninja.com/wp-content/plugins/gdpr-cookie-compliance/dist/styles/gdpr-main.css?ver=4.13.4' media='all' />
+<style id='moove_gdpr_frontend-inline-css'>
+#moove_gdpr_cookie_modal,#moove_gdpr_cookie_info_bar,.gdpr_cookie_settings_shortcode_content{font-family:Nunito,sans-serif}#moove_gdpr_save_popup_settings_button{background-color:#373737;color:#fff}#moove_gdpr_save_popup_settings_button:hover{background-color:#000}#moove_gdpr_cookie_info_bar .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a.mgbutton,#moove_gdpr_cookie_info_bar .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.mgbutton{background-color:#0c4da2}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-footer-content .moove-gdpr-button-holder a.mgbutton,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-footer-content .moove-gdpr-button-holder button.mgbutton,.gdpr_cookie_settings_shortcode_content .gdpr-shr-button.button-green{background-color:#0c4da2;border-color:#0c4da2}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-footer-content .moove-gdpr-button-holder a.mgbutton:hover,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-footer-content .moove-gdpr-button-holder button.mgbutton:hover,.gdpr_cookie_settings_shortcode_content .gdpr-shr-button.button-green:hover{background-color:#fff;color:#0c4da2}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-close i,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-close span.gdpr-icon{background-color:#0c4da2;border:1px solid #0c4da2}#moove_gdpr_cookie_info_bar span.change-settings-button.focus-g,#moove_gdpr_cookie_info_bar span.change-settings-button:focus,#moove_gdpr_cookie_info_bar button.change-settings-button.focus-g,#moove_gdpr_cookie_info_bar button.change-settings-button:focus{-webkit-box-shadow:0 0 1px 3px #0c4da2;-moz-box-shadow:0 0 1px 3px #0c4da2;box-shadow:0 0 1px 3px #0c4da2}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-close i:hover,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-close span.gdpr-icon:hover,#moove_gdpr_cookie_info_bar span[data-href]>u.change-settings-button{color:#0c4da2}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li.menu-item-selected a span.gdpr-icon,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li.menu-item-selected button span.gdpr-icon{color:inherit}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li a span.gdpr-icon,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li button span.gdpr-icon{color:inherit}#moove_gdpr_cookie_modal .gdpr-acc-link{line-height:0;font-size:0;color:transparent;position:absolute}#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-close:hover i,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li a,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li button,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li button i,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-modal-left-content #moove-gdpr-menu li a i,#moove_gdpr_cookie_modal .moove-gdpr-modal-content .moove-gdpr-tab-main .moove-gdpr-tab-main-content a:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a.mgbutton:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.mgbutton:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content span.change-settings-button:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.change-settings-button:hover,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content u.change-settings-button:hover,#moove_gdpr_cookie_info_bar span[data-href]>u.change-settings-button,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a.mgbutton.focus-g,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.mgbutton.focus-g,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a.focus-g,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.focus-g,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a.mgbutton:focus,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button.mgbutton:focus,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content a:focus,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content button:focus,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content span.change-settings-button.focus-g,span.change-settings-button:focus,button.change-settings-button.focus-g,button.change-settings-button:focus,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content u.change-settings-button.focus-g,#moove_gdpr_cookie_info_bar.moove-gdpr-dark-scheme .moove-gdpr-info-bar-container .moove-gdpr-info-bar-content u.change-settings-button:focus{color:#0c4da2}#moove_gdpr_cookie_modal.gdpr_lightbox-hide{display:none}
+</style>
+<link rel='stylesheet' id='wp-block-paragraph-css' href='https://bitninja.com/wp-includes/blocks/paragraph/style.min.css?ver=6.5.2' media='all' />
+<link rel='stylesheet' id='wp-block-table-css' href='https://bitninja.com/wp-includes/blocks/table/style.min.css?ver=6.5.2' media='all' />
+<script src="https://bitninja.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script src="https://bitninja.com/wp-content/plugins/sticky-menu-or-anything-on-scroll/assets/js/jq-sticky-anything.min.js?ver=2.1.1" id="stickyAnythingLib-js"></script>
+<link rel="https://api.w.org/" href="https://bitninja.com/wp-json/" /><link rel="alternate" type="application/json" href="https://bitninja.com/wp-json/wp/v2/pages/11124" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://bitninja.com/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.5.2" />
+<link rel='shortlink' href='https://bitninja.com/?p=11124' />
+<link rel="alternate" type="application/json+oembed" href="https://bitninja.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitninja.com%2Fprivacy-policy%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://bitninja.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitninja.com%2Fprivacy-policy%2F&#038;format=xml" />
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NZ3KQ3');</script>
+<!-- End Google Tag Manager -->
+
+
+
+<!-- Hotjar Tracking Code for Bitninja.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3437165,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<!-- Amplitude Integration Code -->
+<script type="text/javascript"> !function(){"use strict";!function(e,t){var r=e.amplitude||{_q:[],_iq:{}};if(r.invoked)e.console&&console.error&&console.error("Amplitude snippet has been loaded.");else{var n=function(e,t){e.prototype[t]=function(){return this._q.push({name:t,args:Array.prototype.slice.call(arguments,0)}),this}},s=function(e,t,r){return function(n){e._q.push({name:t,args:Array.prototype.slice.call(r,0),resolve:n})}},o=function(e,t,r){e[t]=function(){if(r)return{promise:new Promise(s(e,t,Array.prototype.slice.call(arguments)))}}},i=function(e){for(var t=0;t<m.length;t++)o(e,m[t],!1);for(var r=0;r<y.length;r++)o(e,y[r],!0)};r.invoked=!0;var a=t.createElement("script");a.type="text/javascript",a.crossOrigin="anonymous",a.src="https://cdn.amplitude.com/libs/plugin-ga-events-forwarder-browser-0.2.0-min.js.gz",a.onload=function(){e.gaEventsForwarder&&e.gaEventsForwarder.plugin&&e.amplitude.add(e.gaEventsForwarder.plugin())};var c=t.createElement("script");c.type="text/javascript",c.integrity="sha384-HpnlFSsUOQTaqmMKb6/PqZKVOBEpRji3JNLr81x6XElQ4bkquzRyG/F8rY8IDMuw",c.crossOrigin="anonymous",c.async=!0,c.src="https://cdn.amplitude.com/libs/analytics-browser-2.2.1-min.js.gz",c.onload=function(){e.amplitude.runQueuedFunctions||console.log("[Amplitude] Error: could not load SDK")};var u=t.getElementsByTagName("script")[0];u.parentNode.insertBefore(a,u),u.parentNode.insertBefore(c,u);for(var p=function(){return this._q=[],this},d=["add","append","clearAll","prepend","set","setOnce","unset","preInsert","postInsert","remove","getUserProperties"],l=0;l<d.length;l++)n(p,d[l]);r.Identify=p;for(var g=function(){return this._q=[],this},v=["getEventProperties","setProductId","setQuantity","setPrice","setRevenue","setRevenueType","setEventProperties"],f=0;f<v.length;f++)n(g,v[f]);r.Revenue=g;var m=["getDeviceId","setDeviceId","getSessionId","setSessionId","getUserId","setUserId","setOptOut","setTransport","reset","extendSession"],y=["init","add","remove","track","logEvent","identify","groupIdentify","setGroup","revenue","flush"];i(r),r.createInstance=function(e){return r._iq[e]={_q:[]},i(r._iq[e]),r._iq[e]},e.amplitude=r}}(window,document)}(); amplitude.init('d38d410f5aa22fe29e9f611918172093'); </script>
+<!-- End Amplitude Integration Code -->
+
+<!-- Install this snippet AFTER the Hotjar tracking code. -->
+<script>
+var userId = your_user_id || null; // Replace your_user_id with your own if available.
+window.hj('identify', userId, {
+    // Add your own custom attributes here. Some EXAMPLES:
+    // 'Signed up': '2019—06-20Z', // Signup date in ISO-8601 format.
+    // 'Last purchase category': 'Electronics', // Send strings with quotes around them.
+    // 'Total purchases': 15, // Send numbers without quotes.
+    // 'Last purchase date': '2019-06-20Z', // Send dates in ISO-8601 format.
+    // 'Last refund date': null, // Send null when no value exists for a user.
+});
+</script>		<script type="text/javascript">
+				(function(c,l,a,r,i,t,y){
+					c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;
+					t.src="https://www.clarity.ms/tag/"+i+"?ref=wordpress";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+				})(window, document, "clarity", "script", "k7s4d5x6ry");
+		</script>
+		<style id='wp-fonts-local'>
+@font-face{font-family:"DM Sans";font-style:normal;font-weight:400;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"DM Sans";font-style:italic;font-weight:400;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"DM Sans";font-style:normal;font-weight:700;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"DM Sans";font-style:italic;font-weight:700;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:300;font-display:block;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:block;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"IBM Plex Mono";font-style:italic;font-weight:400;font-display:block;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:700;font-display:block;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:Inter;font-style:normal;font-weight:200 900;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');font-stretch:normal;}
+@font-face{font-family:"Source Serif Pro";font-style:normal;font-weight:200 900;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:"Source Serif Pro";font-style:italic;font-weight:200 900;font-display:fallback;src:url('https://bitninja.com/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2') format('woff2');font-stretch:normal;}
+</style>
+<link rel="icon" href="https://bitninja.com/wp-content/uploads/2023/03/cropped-image-2-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://bitninja.com/wp-content/uploads/2023/03/cropped-image-2-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://bitninja.com/wp-content/uploads/2023/03/cropped-image-2-180x180.png" />
+<meta name="msapplication-TileImage" content="https://bitninja.com/wp-content/uploads/2023/03/cropped-image-2-270x270.png" />
+<link rel='stylesheet' id='oxygen-cache-11-css' href='//bitninja.com/wp-content/uploads/oxygen/css/11.css?cache=1713180248&#038;ver=6.5.2' media='all' />
+<link rel='stylesheet' id='oxygen-universal-styles-css' href='//bitninja.com/wp-content/uploads/oxygen/css/universal.css?cache=1713436119&#038;ver=6.5.2' media='all' />
+<!-- END OF WP_HEAD() -->
+</head>
+<body class="page-template-default page page-id-11124 wp-embed-responsive  oxygen-body" >
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NZ3KQ3"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+						<header id="_header-2-225" class="oxy-header-wrapper oxy-sticky-header oxy-overlay-header oxy-header" ><div id="_header_row-10-225" class="oxygen-hide-in-overlay oxy-header-row" ><div class="oxy-header-container"><div id="_header_left-11-225" class="oxy-header-left" ><a id="link-12-225" class="ct-link atomic-logo" href="/" target="_self"  ><img  id="image-181-11" alt="bitninja server security logo linux malware scanner" src="https://bitninja.com/wp-content/uploads/2023/10/Group-8-3.png" class="ct-image" srcset="" sizes="(max-width: 297px) 100vw, 297px" /><img  id="image-13-225" alt="bitninja server security logo linux malware scanner" src="https://bitninja.com/wp-content/uploads/2023/10/Group-7-2.png" class="ct-image" srcset="https://bitninja.com/wp-content/uploads/2023/10/Group-7-2.png 825w, https://bitninja.com/wp-content/uploads/2023/10/Group-7-2-300x79.png 300w, https://bitninja.com/wp-content/uploads/2023/10/Group-7-2-768x202.png 768w" sizes="(max-width: 825px) 100vw, 825px" /><img  id="image-183-11" alt="" src="https://bitninja.com/wp-content/uploads/2024/03/Dark.svg" class="ct-image" srcset="" sizes="(max-width: 297px) 100vw, 297px" /></a></div><div id="_header_center-14-225" class="oxy-header-center" >
+		<div id="-pro-menu-71-11" class="oxy-pro-menu " ><div class="oxy-pro-menu-mobile-open-icon " data-off-canvas-alignment=""><svg id="-pro-menu-71-11-open-icon"><use xlink:href="#FontAwesomeicon-bars"></use></svg></div>
+
+                
+        <div class="oxy-pro-menu-container  oxy-pro-menu-dropdown-links-visible-on-mobile oxy-pro-menu-dropdown-links-toggle oxy-pro-menu-show-dropdown" data-aos-duration="400" 
+
+             data-oxy-pro-menu-dropdown-animation="fade-up"
+             data-oxy-pro-menu-dropdown-animation-duration="0.4"
+             data-entire-parent-toggles-dropdown="true"
+
+             
+                          data-oxy-pro-menu-dropdown-animation-duration="0.4"
+             
+                          data-oxy-pro-menu-dropdown-links-on-mobile="toggle">
+             
+            <div class="menu-menu-container"><ul id="menu-menu" class="oxy-pro-menu-list"><li id="menu-item-319" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-319"><a href="https://bitninja.com/cybersecurity-solutions/">Solutions</a>
+<ul class="sub-menu">
+	<li id="menu-item-320" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-320"><a href="https://bitninja.com/cybersecurity-solutions/anti-malware/">ANTI-MALWARE</a></li>
+	<li id="menu-item-321" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-321"><a href="https://bitninja.com/cybersecurity-solutions/waf/">WAF</a></li>
+	<li id="menu-item-322" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-322"><a href="https://bitninja.com/cybersecurity-solutions/ip-reputation/">IP REPUTATION</a></li>
+	<li id="menu-item-19261" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19261"><a href="https://bitninja.com/cybersecurity-solutions/outbound_spam_detection/">Outbound Spam Detection</a></li>
+	<li id="menu-item-19585" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19585"><a href="https://bitninja.com/cybersecurity-solutions/siteprotection/">SiteProtection</a></li>
+	<li id="menu-item-323" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-323"><a href="https://bitninja.com/cybersecurity-solutions/extra-security-components/">Additional Solutions</a></li>
+	<li id="menu-item-19864" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19864"><a href="https://bitninja.com/cybersecurity-solutions/">THREATS</a></li>
+</ul>
+</li>
+<li id="menu-item-335" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-335"><a href="https://bitninja.com/pricing/">PRICING</a></li>
+<li id="menu-item-19833" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-19833"><a>PERSONAS</a>
+<ul class="sub-menu">
+	<li id="menu-item-19834" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19834"><a href="https://bitninja.com/for-shared-webhosting/">For shared webhosting</a></li>
+	<li id="menu-item-19835" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19835"><a href="https://bitninja.com/for-small-businesses/">For small business</a></li>
+	<li id="menu-item-19836" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19836"><a href="https://bitninja.com/for-vps-providers/">For VPS providers</a></li>
+</ul>
+</li>
+<li id="menu-item-46" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-46"><a>RESOURCES</a>
+<ul class="sub-menu">
+	<li id="menu-item-60" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-60"><a>KNOWLEDGE BASE</a>
+	<ul class="sub-menu">
+		<li id="menu-item-305" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-305"><a href="https://www.youtube.com/playlist?list=PLiaDKRuUNJ7gMFk_0S8qCMjZCUZnT96Lo">YOUTUBE</a></li>
+		<li id="menu-item-306" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-306"><a href="http://knowledgebase.bitninja.io">FAQ</a></li>
+		<li id="menu-item-307" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-307"><a href="http://doc.bitninja.io">DOCS</a></li>
+	</ul>
+</li>
+	<li id="menu-item-327" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-327"><a href="https://bitninja.com/resources/success-stories/">SUCCESS STORY</a></li>
+	<li id="menu-item-11120" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11120"><a href="https://bitninja.com/for-vps-providers/">RESELLER PARTNERS</a></li>
+	<li id="menu-item-19004" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19004"><a href="https://bitninja.com/resources/library/">LIBRARY</a></li>
+	<li id="menu-item-324" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-324"><a href="https://bitninja.com/contact-us/">CONTACT US</a></li>
+</ul>
+</li>
+<li id="menu-item-18970" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18970"><a href="https://bitninja.com/blog/">BLOG</a></li>
+<li id="menu-item-330" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-330"><a href="#">COMPANY</a>
+<ul class="sub-menu">
+	<li id="menu-item-331" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-331"><a href="https://bitninja.com/about-us/">ABOUT US</a></li>
+	<li id="menu-item-334" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-334"><a href="https://bitninja-technologies-zrt.breezy.hr/">CAREER</a></li>
+	<li id="menu-item-19260" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19260"><a href="https://bitninja.com/partners/">Partners</a></li>
+	<li id="menu-item-332" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-332"><a href="https://bitninja.com/contact-us/">CONTACT US</a></li>
+</ul>
+</li>
+</ul></div>
+            <div class="oxy-pro-menu-mobile-close-icon"><svg id="svg--pro-menu-71-11"><use xlink:href="#FontAwesomeicon-close"></use></svg>close</div>
+
+        </div>
+
+        </div>
+
+		<script type="text/javascript">
+			jQuery('#-pro-menu-71-11 .oxy-pro-menu-show-dropdown .menu-item-has-children > a', 'body').each(function(){
+                jQuery(this).append('<div class="oxy-pro-menu-dropdown-icon-click-area"><svg class="oxy-pro-menu-dropdown-icon"><use xlink:href="#FontAwesomeicon-angle-right"></use></svg></div>');
+            });
+            jQuery('#-pro-menu-71-11 .oxy-pro-menu-show-dropdown .menu-item:not(.menu-item-has-children) > a', 'body').each(function(){
+                jQuery(this).append('<div class="oxy-pro-menu-dropdown-icon-click-area"></div>');
+            });			</script>
+		<div id="-pro-menu-146-11" class="oxy-pro-menu " ><div class="oxy-pro-menu-mobile-open-icon " data-off-canvas-alignment=""><svg id="-pro-menu-146-11-open-icon"><use xlink:href="#FontAwesomeicon-bars"></use></svg></div>
+
+                
+        <div class="oxy-pro-menu-container  oxy-pro-menu-dropdown-links-visible-on-mobile oxy-pro-menu-dropdown-links-toggle oxy-pro-menu-show-dropdown" data-aos-duration="400" 
+
+             data-oxy-pro-menu-dropdown-animation="fade-up"
+             data-oxy-pro-menu-dropdown-animation-duration="0.4"
+             data-entire-parent-toggles-dropdown="true"
+
+             
+                          data-oxy-pro-menu-dropdown-animation-duration="0.4"
+             
+                          data-oxy-pro-menu-dropdown-links-on-mobile="toggle">
+             
+            <div class="menu-mobile-menu-container"><ul id="menu-mobile-menu" class="oxy-pro-menu-list"><li id="menu-item-19815" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19815"><a href="https://bitninja.com/cybersecurity-solutions/">Solutions</a>
+<ul class="sub-menu">
+	<li id="menu-item-19816" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19816"><a href="https://bitninja.com/cybersecurity-solutions/anti-malware/">Linux Malware Scanner</a></li>
+	<li id="menu-item-19821" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19821"><a href="https://bitninja.com/cybersecurity-solutions/waf/">WAF</a></li>
+	<li id="menu-item-19818" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19818"><a href="https://bitninja.com/cybersecurity-solutions/ip-reputation/">IP reputation</a></li>
+	<li id="menu-item-19819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19819"><a href="https://bitninja.com/cybersecurity-solutions/outbound_spam_detection/">Outbound Spam Detection</a></li>
+	<li id="menu-item-19820" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19820"><a href="https://bitninja.com/cybersecurity-solutions/siteprotection/">SiteProtection</a></li>
+	<li id="menu-item-19817" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19817"><a href="https://bitninja.com/cybersecurity-solutions/extra-security-components/">Extra security components</a></li>
+</ul>
+</li>
+<li id="menu-item-19825" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-19825"><a>Personas</a>
+<ul class="sub-menu">
+	<li id="menu-item-19799" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19799"><a href="https://bitninja.com/for-shared-webhosting/">For shared webhosting</a></li>
+	<li id="menu-item-19800" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19800"><a href="https://bitninja.com/for-small-businesses/">For small business</a></li>
+	<li id="menu-item-19801" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19801"><a href="https://bitninja.com/for-vps-providers/">For VPS providers</a></li>
+</ul>
+</li>
+<li id="menu-item-19807" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19807"><a href="https://bitninja.com/pricing/">Pricing</a></li>
+<li id="menu-item-19809" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19809"><a href="https://bitninja.com/resources/">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-19810" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-19810"><a href="https://bitninja.com/resources/knowledge-base/">Knowledge base</a>
+	<ul class="sub-menu">
+		<li id="menu-item-19826" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19826"><a href="https://www.youtube.com/playlist?list=PLiaDKRuUNJ7gMFk_0S8qCMjZCUZnT96Lo">Youtube</a></li>
+		<li id="menu-item-19827" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19827"><a href="https://knowledgebase.bitninja.io/?_gl=1%2Ajpnr1i%2A_gcl_au%2AMTAwOTAwNDkwMC4xNjk5Mjc0NDUy%2A_ga%2AMjc0MTI1NDMzLjE2NDM3MDg5OTk.%2A_ga_V4F4WM8XQQ%2AMTcwMTMzOTQ1Mi4xOTguMS4xNzAxMzQxNjY3LjYwLjAuMA..">FAQ</a></li>
+		<li id="menu-item-19828" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19828"><a href="https://doc.bitninja.io/docs/intro/">DOCS</a></li>
+	</ul>
+</li>
+	<li id="menu-item-19811" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19811"><a href="https://bitninja.com/resources/library/">Library</a></li>
+	<li id="menu-item-19812" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19812"><a href="https://bitninja.com/resources/success-stories/">Success stories</a></li>
+	<li id="menu-item-19798" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19798"><a href="https://bitninja.com/contact-us/">Contact us</a></li>
+</ul>
+</li>
+<li id="menu-item-19794" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19794"><a href="https://bitninja.com/blog/">Blog</a></li>
+<li id="menu-item-19822" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-19822"><a>Company</a>
+<ul class="sub-menu">
+	<li id="menu-item-19792" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19792"><a href="https://bitninja.com/about-us/">ABOUT US</a></li>
+	<li id="menu-item-19823" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19823"><a href="https://bitninja-technologies-zrt.breezy.hr/">CAREER</a></li>
+	<li id="menu-item-19804" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19804"><a href="https://bitninja.com/partners/">Partners</a></li>
+	<li id="menu-item-19824" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19824"><a href="https://bitninja.com/contact-us/">CONTACT US</a></li>
+</ul>
+</li>
+</ul></div>
+            <div class="oxy-pro-menu-mobile-close-icon"><svg id="svg--pro-menu-146-11"><use xlink:href="#Lineariconsicon-cross"></use></svg></div>
+
+        </div>
+
+        </div>
+
+		<script type="text/javascript">
+			jQuery('#-pro-menu-146-11 .oxy-pro-menu-show-dropdown .menu-item-has-children > a', 'body').each(function(){
+                jQuery(this).append('<div class="oxy-pro-menu-dropdown-icon-click-area"><svg class="oxy-pro-menu-dropdown-icon"><use xlink:href="#FontAwesomeicon-angle-right"></use></svg></div>');
+            });
+            jQuery('#-pro-menu-146-11 .oxy-pro-menu-show-dropdown .menu-item:not(.menu-item-has-children) > a', 'body').each(function(){
+                jQuery(this).append('<div class="oxy-pro-menu-dropdown-icon-click-area"></div>');
+            });			</script></div><div id="_header_right-15-225" class="oxy-header-right" ><div id="div_block-16-225" class="ct-div-block" ><a id="link_text-18-225" class="ct-link-text atomic-medium-button" href="https://registration.bitninja.io/"   >FREE TRIAL</a><a id="link-110-11" class="ct-link" href="https://admin.bitninja.io/site/login" target="_self"  ><img  id="image-111-11" alt="Ninja logo BitNinja server security linux malware scanner" src="https://bitninja.com/wp-content/uploads/2023/02/plus.png" class="ct-image" srcset="" sizes="(max-width: 14px) 100vw, 14px" /><div id="text_block-112-11" class="ct-text-block" >Login</div></a></div></div></div></div></header>
+				<script type="text/javascript">
+			jQuery(document).ready(function() {
+				var selector = "#_header-2-225",
+					scrollval = parseInt("300");
+				if (!scrollval || scrollval < 1) {
+											jQuery("body").css("margin-top", jQuery(selector).outerHeight());
+						jQuery(selector).addClass("oxy-sticky-header-active");
+									}
+				else {
+					var scrollTopOld = 0;
+					jQuery(window).scroll(function() {
+						if (!jQuery('body').hasClass('oxy-nav-menu-prevent-overflow')) {
+							if (jQuery(this).scrollTop() > scrollval 
+																) {
+								if (
+																		!jQuery(selector).hasClass("oxy-sticky-header-active")) {
+									if (jQuery(selector).css('position')!='absolute') {
+										jQuery("body").css("margin-top", jQuery(selector).outerHeight());
+									}
+									jQuery(selector)
+										.addClass("oxy-sticky-header-active")
+																	}
+							}
+							else {
+								jQuery(selector)
+									.removeClass("oxy-sticky-header-fade-in")
+									.removeClass("oxy-sticky-header-active");
+								if (jQuery(selector).css('position')!='absolute') {
+									jQuery("body").css("margin-top", "");
+								}
+							}
+							scrollTopOld = jQuery(this).scrollTop();
+						}
+					})
+				}
+			});
+		</script><div id='inner_content-3-228' class='ct-inner-content'><section id="section-2-306" class=" ct-section" ><div class="ct-section-inner-wrap"><div id='inner_content-3-306' class='ct-inner-content'><h1>PRIVACY POLICY OF BITNINJA</h1>
+
+
+<p>Last modified: 2023.12.06.</p>
+
+
+
+<p>This Privacy Policy (the “<strong>Policy</strong>”) explains how&nbsp;<strong>BitNinja Technologies, Zrt.&nbsp;</strong>a company registered and operating under the laws of Hungary&nbsp;(registered seat:&nbsp;4024 Debrecen, Kossuth utca 42. II. em. 5.; registration number: 09-10-000598; hereinafter: “<strong>BitNinja</strong>”, “<strong>Company</strong>”, “<strong>we</strong>”, or “<strong>us</strong>”) collects, stores, uses, and discloses personal information from their users (“<strong>you</strong>”, “<strong>user</strong>”) in connection with the website located at <a href="https://www.bitninja.io/">www.bitninja.io</a>, or&nbsp;<a href="https://bitninja.com/privacy-policy/_wp_link_placeholder">www.bitninja.com</a>&nbsp;(the “<strong>Website</strong>”) operated by the Company, further by using our services (hereinafter: “<strong>Service</strong>” or “<strong>Services</strong>”) including registering a Reseller Account or a Customer Account on the Website (hereinafter: “<strong>Registration</strong>”) and purchasing a paid plan (hereinafter: “<strong>Subscription</strong>”), or by signing up to our newsletter service (hereinafter: “<strong>Newsletter</strong>”) or by sharing an idea about our blog posts posted on our Website (hereinafter: “<strong>Commenting</strong>”). Furthermore, this Policy declares the rights and obligations regarding the processing of personal data and other essential provisions. This Policy forms an integral part of the Company’s general terms and conditions (hereinafter: “<strong>GTC</strong>”), therefore the capitalized terms not specified in the present Policy shall have the same meaning as in the GTC. The GTC of BitNinja can be found <a href="https://bitninja.com/terms-and-conditions/">here</a>.</p>
+
+
+
+<p>The processing and collecting of personal data by BitNinja shall be in harmony with the directly applicable data protection laws and the provisions of the Hungarian laws in effect as follows:</p>
+
+
+
+<ol>
+<li>In case of processing personal data, the Regulation (EU) 2016/679 of the European Parliament and of the Council (hereinafter: “<strong>GDPR</strong>”), the Act CXII of 2011 on the Right to Informational Self-determination and Freedom of Information (hereafter: “<strong>Freedom of Information Act</strong>”), the Act XLVIII of 2008 on the Essential Conditions and Certain Limitations of Business Advertising Activity (hereinafter: “<strong>Business Advertising Act</strong>”), the Act CVIII of 2001 on the ecommerce services and information society services (“<strong>Ecommerce Act</strong>”), furthermore the recommendations and the data protection practice of the Hungarian National Authority for Data Protection and Freedom of Information (hereinafter: “<strong>NAIH</strong>”) and the recommendations of the Article 29 Data Protection Working Party (hereinafter: “<strong>WP29</strong>”) and of the European Data Protection Board (hereinafter: “<strong>EDPB</strong>”).</li>
+
+
+
+<li>For the collection and processing of personal data of Brazilian individuals, Brazil’s Law No. 13,709, of August 14, 2018 on the Brazilian General Data Protection Act (in Portuguese: Lei Geral de Proteção de Dados, hereinafter: “<strong>LGPD</strong>”) shall apply.</li>
+
+
+
+<li>Furthermore, in respect of Californian individuals BitNinja complies with the Senate Bill No. 1121 California Consumer Privacy Act of 2018 (hereinafter: “<strong>CCPA</strong>”).</li>
+</ol>
+
+
+
+<p>The Company is the data controller of any data which constitutes personal data, and which is uploaded when using our Services and subscribing for the Newsletter.</p>
+
+
+
+<p>The Company bound in honor to protect personal data; therefore, the Company will keep confidential the personal data received and take all necessary steps to secure data processing.&nbsp;</p>
+
+
+
+<p>Please read and make sure you understand this Policy. If you do not agree with this Policy or our practices, you may not use our Website or our Services.</p>
+
+
+
+<ul>
+<li>Definitions</li>
+</ul>
+
+
+
+<p>The following definitions are determined according to the GDPR:</p>
+
+
+
+<p>‘<strong>personal data</strong>’: shall mean any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;</p>
+
+
+
+<p>‘<strong>consent</strong>’: shall mean any freely given, specific, informed and unambiguous indication of the will of the Data Subject by which he or she, by a statement or by a clear affirmative action, signifies agreement to the processing of personal data relating to him or her;</p>
+
+
+
+<p>‘<strong>data controller</strong>’: shall mean the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of personal data; where the purposes and means of such processing are determined by European Union or Member State law, the controller or the specific criteria for its nomination may be provided for by Union or Member State law;</p>
+
+
+
+<p>‘<strong>data processing</strong>’: shall mean any operation or set of operations which is performed on personal data or on sets of personal data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;</p>
+
+
+
+<p>‘<strong>data processor</strong>’: shall mean a natural or legal person, public authority, agency or other body which processes personal data on behalf of the controller;&nbsp;</p>
+
+
+
+<p>‘<strong>third party</strong>’: shall mean a natural or legal person, public authority, agency or body other than the data subject, controller, processor and persons who, under the direct authority of the controller or processor, are authorized to process personal data;</p>
+
+
+
+<p>‘<strong>personal data breach</strong>’: shall mean a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, personal data transmitted, stored or otherwise processed;</p>
+
+
+
+<p>‘<strong>recipient</strong>’: shall mean a natural or legal person, public authority, agency or another body, to which the personal data are disclosed, whether a third party or not. However, public authorities which may receive personal data in the framework of a particular inquiry in accordance with European Union or Member State law shall not be regarded as recipients; the processing of those data by those public authorities shall be in compliance with the applicable data protection rules according to the purposes of the processing;</p>
+
+
+
+<p>‘<strong>supervisory authority</strong>’: shall mean one or more independent public authorities provided by each Member State which is responsible for monitoring the application of the GDPR in order to protect the fundamental rights and freedoms of natural persons in relation to processing and to facilitate the free flow of personal data within the European Union;</p>
+
+
+
+<p>‘<strong>supervisory authority concerned</strong>’: shall mean a supervisory authority which is concerned by the processing of personal data because: (a) the controller or processor is established on the territory of the Member State of that supervisory authority; (b) data subjects residing in the Member State of that supervisory authority are substantially affected or likely to be substantially affected by the processing; or (c) a complaint has been lodged with that supervisory authority.</p>
+
+
+
+<ul>
+<li>What information does BitNinja collect?</li>
+</ul>
+
+
+
+<p>The information we gather from Users on the one hand, enables the Users to register for our Newsletter, to set up accounts on our Website and to share their ideas about our blog posts, and on the other hand, enables the Company to personalize and improve the Services.</p>
+
+
+
+<ul>
+<li>Information you provide to Us:</li>
+
+
+
+<li>At Registration as Customer:</li>
+</ul>
+
+
+
+<p>We collect the following personal data uploaded during the registration on the Website and creation of a user profile:</p>
+
+
+
+<ul>
+<li>Name</li>
+
+
+
+<li>Email address</li>
+</ul>
+
+
+
+<p>Please note that the e-mail address provided does not require the inclusion of personal data, such as your name. You are free to choose an e-mail address that contains information about your identity.</p>
+
+
+
+<p>If you are registering as a Client, you do not have to share your credit card’s details with us unless you are willing to purchase one of our Services.</p>
+
+
+
+<ul>
+<li>At Registration as Reseller:</li>
+</ul>
+
+
+
+<p>We collect the following personal data uploaded during the registration on the Reseller Panel and creation of a user profile:</p>
+
+
+
+<ul>
+<li>Name</li>
+
+
+
+<li>Email address</li>
+
+
+
+<li>When purchasing a Subscription</li>
+</ul>
+
+
+
+<p>We collect the following personal data uploaded during the purchase of our Services:</p>
+
+
+
+<ul>
+<li>Name</li>
+
+
+
+<li>Email address</li>
+
+
+
+<li>Phone number</li>
+
+
+
+<li>Credit card details&nbsp;</li>
+
+
+
+<li>PayPal account name</li>
+
+
+
+<li>Billing address</li>
+
+
+
+<li>When signing up for our Newsletter:</li>
+</ul>
+
+
+
+<p>We collect the following personal data when you sign up to our Newsletter on our Website:</p>
+
+
+
+<ul>
+<li>Email address</li>
+
+
+
+<li>Name</li>
+
+
+
+<li>When Commenting on the Website:</li>
+</ul>
+
+
+
+<p>We collect the following personal data when you are Commenting on one of our blog posts:</p>
+
+
+
+<ul>
+<li>Name</li>
+
+
+
+<li>Email address</li>
+
+
+
+<li>Any other personal data you share with us in your idea.</li>
+
+
+
+<li>When using BitNinja’s Free Server Security Scan:</li>
+</ul>
+
+
+
+<p>We collect the following personal data when you are signing up to our free server security scan:</p>
+
+
+
+<ul>
+<li>Email address.</li>
+
+
+
+<li>Information Collected Automatically:</li>
+</ul>
+
+
+
+<p>We collect, receive and store certain types of information automatically whenever you interact with the Website and by using the Services. BitNinja continually receives and records information sent by the Website. These data include especially the following type and scope:&nbsp;</p>
+
+
+
+<ul>
+<li>IP address, unique device identifier, language preferences and other system settings, operating system type and version, the type of web browser used, the domain name you access the internet from, the link you have been redirected to the Website from, geographic location of the server you access the Website from, other software and hardware information (i.e. for error reports);</li>
+
+
+
+<li>Usage information: the date and time you access the Website, activities on the Website, time spent on the Website and its regularity, visited content, search terms used, links clicked/tapped on.</li>
+</ul>
+
+
+
+<p><strong>2.3</strong>&nbsp;<strong>Information we receive from our Customers and Resellers regarding their users:</strong></p>
+
+
+
+<p>By providing our Services we receive and collect certain personal data on the users of our Customers and Resellers that is provided to us for the purpose of processing directly from our Customers and Resellers, including, but not limited to the uploaded or shared personal data of their customers, like name or e-mail or any other personal data stored on the servers we provide protection for or any personal data (included in files or other electronic form) provided to us in order to provide our Services, especially AI powered malware scanner and threat hunting module.&nbsp;</p>
+
+
+
+<p>If the provisions of the GDPR shall apply, in that relationship regarding to the personal data of your customers you shall be deemed as data controller, and therefore you as our user are also responsible to comply with the provisions of the GDPR. Please note, that in such case the data processing relationship between the data controller and the data processor shall be governed by a written contract, and such written contract shall satisfy the requirements of Article 28 of the GDPR. In order to facilitate your compliance with the provisions of the GDPR, the data processing relationship between you, as a data controller and BitNinja, as a data processor shall be governed by the Addendum attached to the present Policy as <em>Attachment I</em>, which shall form an integral part of the present Policy.</p>
+
+
+
+<ul>
+<li>What About Cookies?</li>
+</ul>
+
+
+
+<p>The Company processes anonymous data in order to improve the Website, to bring it to perfection. During this procedure BitNinja can incorporate “cookies”, which collect the visitor’s first level domain name, the date, and the exact time of access. The “cookie” alone cannot be used to reveal the identity of the visitor. The “cookie” is a file, which is sent to the browser of the visitor and stored on the hard drive of visitor. Cookies don’t damage the computer of the visitor. The browser can be set to indicate when a cookie is received, so the visitor can decide to accept the so-called cookie or not. The Company does not use cookies to collect or manage any information that would allow the identification of the user. For further information, please read our Cookie Policy here.</p>
+
+
+
+<ul>
+<li>How does BitNinja use my information?</li>
+</ul>
+
+
+
+<p>We may use your information, including your personal information – based on diverse purposes as well as the legal basis of the processing – as follows:</p>
+
+
+
+<ul>
+<li>We process the following personal data for the purpose and on the legal basis of the&nbsp;performance of the contract,&nbsp;product, and Service fulfillment:</li>
+</ul>
+
+
+
+<ul>
+<li>Full name</li>
+
+
+
+<li>Email address</li>
+
+
+
+<li>Credit card details (optional)</li>
+
+
+
+<li>PayPal account name (optional)</li>
+
+
+
+<li>Billing address (optional)</li>
+</ul>
+
+
+
+<p>The above obligatory or optional personal data you provide is used for purposes such as fulfilling the obligations defined in the GTC and providing the Service, responding to your questions, requests relating to the Service, customizing the visualized content, communicating with you about sales offers relating to special Services and new features, and responding to problems relating to our Services.&nbsp;</p>
+
+
+
+<ul>
+<li>We process the following personal information based on your consent (as the legal basis of this processing) for&nbsp;marketing purposes,&nbsp;to deliver coupons, newsletters, emails:</li>
+</ul>
+
+
+
+<ul>
+<li>Full name</li>
+
+
+
+<li>Email address</li>
+</ul>
+
+
+
+<p>You shall always have the right to withdraw your consent given for marketing purposes at any time,&nbsp;without affecting the lawfulness of processing based on your consent, or on any other legal basis, before your withdrawal.</p>
+
+
+
+<ul>
+<li>We process personal data for the purpose and on the legal basis of&nbsp;compliance with legal obligations&nbsp;to prevent fraudulent transactions, monitor against theft and otherwise protect our customers and our business. We also process personal data for the purpose and on the legal basis of&nbsp;legal compliance&nbsp;and to assist law enforcement and respond to subpoenas.&nbsp;</li>
+</ul>
+
+
+
+<p>This means that in some cases the data processing is stipulated by the applicable laws and we have an obligation to process and keep this data for the required time. This includes employment data, billing data, data which is necessary to assist law enforcement etc.</p>
+
+
+
+<ul>
+<li>We process the following personal data for the purpose and on the legal basis of the&nbsp;legitimate interests of the Company,&nbsp;to improve the effectiveness of the Website, our Services, and marketing efforts, to conduct research and analysis, including focus groups and surveys and to perform other business activities as needed, or as described elsewhere in this Policy:</li>
+</ul>
+
+
+
+<ul>
+<li>IP address</li>
+
+
+
+<li>browser information</li>
+
+
+
+<li>contact information</li>
+
+
+
+<li>content consumed on the Website</li>
+
+
+
+<li>unique device identifier</li>
+
+
+
+<li>browser characteristics</li>
+
+
+
+<li>domain and other system settings</li>
+
+
+
+<li>search queries</li>
+
+
+
+<li>device characteristics</li>
+
+
+
+<li>operating system type</li>
+
+
+
+<li>language preferences</li>
+
+
+
+<li>referring URLs</li>
+
+
+
+<li>actions taken on our Website</li>
+
+
+
+<li>page requested</li>
+
+
+
+<li>content consumed (e.g., viewed, uploaded, and shared)</li>
+
+
+
+<li>dates and times of Website visits</li>
+
+
+
+<li>other information associated with other files stored on your device</li>
+</ul>
+
+
+
+<p>Where it is feasible, we anonymize personal data or use non-identifiable statistical data. We do not collect personal data in advance and store it for potential future purposes unless required or permitted by the applicable laws.</p>
+
+
+
+<p>For collecting anonymously, the above-mentioned data and making statistics and analysis we may use the following software and programs:</p>
+
+
+
+<figure class="wp-block-table"><table><tbody><tr><td><strong>Name&nbsp;</strong></td><td><strong>Registered seat</strong></td><td><strong>Country</strong></td></tr><tr><td>Google Analytics and Google AdWords (Google LLC.)</td><td>1600 Amphitheatre Parkway Mountain View, CA 94043</td><td>United States of America</td></tr><tr><td>Twitter, Inc.</td><td>1355 Market Street Suite 900 San Francisco, CA</td><td>United States of America</td></tr><tr><td>Facebook pixel (Facebook Inc.)</td><td>1601 Willow Road Menlo Park, CA 94025</td><td>United States of America</td></tr><tr><td>LinkedIn Corp.</td><td>2029 Stierlin Court Mountain View, CA 94043</td><td>United States of America</td></tr><tr><td>Optimizely, Inc.</td><td>631 Howard St. Suite 100, San Francisco, CA 94105</td><td>United States of America</td></tr><tr><td>Reddit, Inc.</td><td>420 Taylor Street San Francisco, CA 94102</td><td>United States of America</td></tr><tr><td>Smartsupp.com, s.r.o.</td><td>Lidicka 20, Brno, 602 00</td><td>Czech Republic</td></tr><tr><td>Mixpanel, Inc.</td><td>405 Howard Street San Francisco, CA 94105</td><td>United States of America</td></tr></tbody></table></figure>
+
+
+
+<ul>
+<li>Data integrity and purpose limitation: BitNinja will only collect and retain personal data which is relevant to the purposes for which the data is collected, and we will not use it in a way that is incompatible with such purposes unless such use has been subsequently authorized by you. We will take reasonable steps to ensure that personal data is reliable for its intended use, accurate, complete and current. We may occasionally contact you to determine that your data is still accurate and current. To secure your personal information processed we save your personal information to backup archives in every 4 hours. The data stored in our backup archives will be deleted in every week.&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<p>Although we strive to keep the information about you up to date, the Company may keep the outdated information in its records for the retention period of that data to resolve disputes, or for the exercise or defense of legal claims. For these purposes, BitNinja may process (store) the personal information after the User deletes his/her account. BitNinja will only keep those data that might be relevant in a dispute, and it will delete or anonymize them as soon as the enforceability of such claims lapse.</p>
+
+
+
+<ul>
+<li>How Long We Retain Your Personal Data?</li>
+</ul>
+
+
+
+<p>We will retain your personal data for so long as it is needed to fulfill the purposes outlined in this Policy or until you withdraw your consent, unless a longer retention period is required or permitted by law (such as tax, accounting or other legal requirements, further for the establishment, exercise or defense of legal claims). When we have no longer or no legal basis to process your personal information, we will either delete or anonymize it, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.&nbsp;</p>
+
+
+
+<ul>
+<li>Will BitNinja share any of the information it receives?</li>
+</ul>
+
+
+
+<p>Information about our users is an integral part of our business, and we may share such information with our affiliated entities. Except as expressly described below, we neither rent nor sell your information to other people or nonaffiliated companies unless we have your permission.</p>
+
+
+
+<p>We will not share any personal data with third-parties for their direct marketing purposes to the extent prohibited by the CCPA. If our practices change, we will do so in accordance with applicable laws and will notify you in advance.</p>
+
+
+
+<p><strong>6.1</strong>&nbsp;BitNinja shall not ensure access for a third party to personal data provided by you without your preliminary consent, except the cases, when data transfer is necessary for the performance of the contract or for enforcing of BitNinja’s legitimate interest or prescribed by law.</p>
+
+
+
+<p><strong>6.2&nbsp;</strong>BitNinja may share certain personal information with third party vendors in the EU or in third countries, who supply software applications, web hosting and other technologies or services for the Website and our Services (hereinafter: “<strong>Data Processor</strong>”). The Company will only provide these third parties with access to information that is reasonably necessary to perform their work or comply with the law. Those third parties will never use such information for any other purpose except to provide services in connection with the Website and our Services. During the service of data process, the Data Processor shall abide under the present Policy, relevant legislations in force, furthermore the provisions of the existing contracts between them and BitNinja.</p>
+
+
+
+<p>We use the data process service of the following Data Processors:</p>
+
+
+
+<figure class="wp-block-table"><table><tbody><tr><td><strong>Name</strong></td><td><strong>Registered seat</strong></td><td><strong>Country</strong></td><td><strong>Activity (data processing service)</strong></td></tr><tr><td>The Rocket Science Group LLC (MailChimp)</td><td>675 Ponce de Leon Ave NE, Suite 5000, Atlanta, GA 30308</td><td>USA</td><td>Newsletter service</td></tr><tr><td>HEG US Inc.</td><td>210 North Tucker Blvd.Suite 910St.Louis, MO 63101</td><td>USA</td><td>Server service</td></tr><tr><td>Google LLC&nbsp;</td><td>1600 Amphitheatre Pkwy, Mountain View, CA 94043&nbsp;</td><td>USA</td><td>Cloud services</td></tr><tr><td>Amazon Web Services, Inc.</td><td>410 Terry Avenue North Seattle, WA 98109-5210</td><td>USA</td><td>Cloud services</td></tr><tr><td>Atlassian Corporation Plc.</td><td>341 George Street Level 6, Sydney, NSW 2000</td><td>Australia</td><td>Software development tool and cloud services</td></tr><tr><td>Rollbar, Inc.</td><td>665 3rd Street #150 San Francisco</td><td>USA</td><td>Cloud services</td></tr><tr><td>Optimizely, Inc.</td><td>631 Howard St. Suite 100, San Francisco, CA 94105</td><td>USA</td><td>Cloud services</td></tr><tr><td>PayPal (Europe) S.à r.l. et Cie, S.C.A. (Braintree)</td><td>22-24, boulevard Royal L-2449 Luxembourg</td><td>Luxembourg</td><td>Payment Services</td></tr><tr><td>tawk.to, Inc.</td><td>187 East Warm Springs Rd, SB119 Las Vegas, NV, 89119</td><td>USA</td><td>Chatbot services</td></tr><tr><td>Intercom, Inc.</td><td>19505 52Nd Ave W Ste A Lynnwood, WA 98036</td><td>USA</td><td>Chatbot services</td></tr><tr><td>Varga Katalin</td><td>1151 Budapest, Géza fejedelem tér 1.</td><td>Hungary</td><td>Accounting Services</td></tr></tbody></table></figure>
+
+
+
+<p><strong>6.3</strong>&nbsp;According to the adequacy decisions of the European Commission, USA is considered to provide appropriate safeguards for the personal data of European citizens. For more information, you can read the official website of the European Commission <a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en">here</a>.</p>
+
+
+
+<p><strong>6.4</strong>&nbsp;We only transfer personal data collected from individuals located within the EU only with the consent of the individuals to a third-party having a registered seat outside the EU acting as a data processor without the appropriate safeguards set out in the GDPR, or when it is necessary for the performance of the contract. BitNinja will make every effort to ensure that the personal data transferred is safe and secure and that the personal data is processed in a manner consistent with the GDPR.</p>
+
+
+
+<p><strong>6.5</strong>&nbsp;If you are using BitNinja’s Services as an End User (as defined in the GTC), your personal data is processed by the Data Processors listed in section 6.2 of the present Policy as well as by the Reseller (as defined in the GTC) you bought the License Key (as defined in the GTC) from. You can find the details of your Reseller in your Customer Account (as defined in the GTC) under the ‘User Profile’ menu point.&nbsp;</p>
+
+
+
+<ul>
+<li>Is information about me secure?</li>
+</ul>
+
+
+
+<p>We take commercially reasonable measures to protect all collected information from loss, theft, misuse and unauthorized access, disclosure, alteration and destruction.&nbsp;Please understand that you can help keep your information secure by choosing and protecting your password appropriately, not sharing your password and preventing others from using your computer.&nbsp;Please understand that no security system is perfect and, as such, we cannot guarantee the security of the Website, or that your information will not be intercepted while being transmitted to us. If we learn of a security systems breach, then we may either post a notice, or attempt to notify you by email and will take reasonable steps to remedy the breach.</p>
+
+
+
+<ul>
+<li>Children’s privacy</li>
+</ul>
+
+
+
+<p>Our Website is not directed to children under 18 and we do not knowingly collect personal information from children under 18. If we learn that we have collected personal information of a child under 16 we will take steps to delete such information from our files as soon as possible.&nbsp;If you are aware of anyone under 18 using the Website, please contact us at +1 805-628-4196.&nbsp;</p>
+
+
+
+<ul>
+<li>Your privacy rights</li>
+</ul>
+
+
+
+<p><strong>9.1</strong>&nbsp;<strong>Access and Retention</strong>:</p>
+
+
+
+<p>If you have an account registered on the Website or in the Application, you can log in to view and update your account information. You have the right to obtain confirmation of whether or not we are processing personal data relating to you, have communicated to you such data so that you could verify its accuracy and the lawfulness of the processing and have the data corrected, amended or deleted where it is inaccurate or processed in violation of the GDPR.</p>
+
+
+
+<p>We encourage you to&nbsp;contact us at +1 805-628-4196 with your questions or concerns, or to request edits to your personal information, or to have it removed from our database. Requests to access, change or remove your personal data will be handled within 30 days.&nbsp;</p>
+
+
+
+<p><strong>9.2</strong>&nbsp;<strong>Additional Rights for EU Territory</strong>:</p>
+
+
+
+<p>If you are from the territory of the EU, you may have the right to exercise additional rights available to you under applicable laws, including:</p>
+
+
+
+<p>(a)&nbsp;<strong>Right of Erasure</strong>: In certain circumstances, you may have a broader right to erasure of personal&nbsp;information&nbsp;that we hold about you – for example, if it is no longer necessary in relation to the purposes for which it was originally collected. Please note, however, that we may need to retain certain information for record keeping purposes, to complete transactions or to comply with our legal obligations.</p>
+
+
+
+<p>(b)&nbsp;<strong>Right&nbsp;to&nbsp;Object to Processing</strong>: You may have the right to request Vam Apps to stop processing your personal information and/or to stop sending you marketing communications.</p>
+
+
+
+<p>(c)&nbsp;<strong>Right&nbsp;to Restrict Processing</strong>: You may have the right to request that we restrict processing of your personal information in certain circumstances (for example, where you believe that the personal information, we hold about you is inaccurate or unlawfully held).</p>
+
+
+
+<p>(d)&nbsp;<strong>Right to Data Portability</strong>: In certain circumstances, you may have the right to be&nbsp;provided&nbsp;with your personal information in a structured, machine readable and commonly used format and to request that we transfer the personal information to another data controller without hindrance.</p>
+
+
+
+<p>If you would like to exercise such rights, please contact us at +1 805-628-4196.&nbsp; We will consider your request in accordance with applicable laws. To protect your privacy and security, we may take steps to verify your identity before complying with the request.</p>
+
+
+
+<p>If you do not agree with our decision, you have the right to an effective judicial remedy or to lodge a complaint to any of the European Data Protection Authorities.</p>
+
+
+
+<p>You also have the right to complain to the EU Data Protection Authority about our collection and use of your personal data. For more information, please contact your local EU Data Protection Authority.</p>
+
+
+
+<p><strong>9.3</strong>&nbsp;<strong>Additional Rights for Brazilian individuals</strong></p>
+
+
+
+<p>If you are a Brazilian individual, you have the following rights in addition to the rights described in sections 9.1 and 9.2 of this Policy:</p>
+
+
+
+<ol>
+<li><strong>Right of erasure:&nbsp;</strong>If you would exercise this right, we will respond to you immediately, or if that is not possible, we will send a reply to you to indicate the reasons of fact or law that prevents the immediate adoption of the measure. If we are not the data processors of the data you requested the erasure of – whenever possible – we will indicate who the processing agent is.</li>
+
+
+
+<li><strong>Right to be informed:</strong>&nbsp;You have the right to obtain information about what types of processing do we carry out on your personal information.</li>
+
+
+
+<li><strong>Right of access:&nbsp;</strong>If you request the providing of your personal data processed by us, we will grant you access to such data in 15 days of your request, if the data requested is more than the simplified request version.&nbsp;</li>
+
+
+
+<li><strong>Nondiscrimination:</strong>&nbsp;We do not process your data for unlawful or abusive discriminatory purposes. In certain circumstances, you have the right to request a review of our data processing and the supervisory authority (the Brazilian National Authority for Protection of Data (hereinafter: “<strong>ANPD</strong>”)) may carry out an audit to verify discriminatory aspects.</li>
+
+
+
+<li><strong>Data portability:&nbsp;</strong>Your data might be transferred to another service or product supplier in accordance with the regulations of the ANPD and as subjects to commercial and industrial secrets.</li>
+</ol>
+
+
+
+<p>BitNinja appointed dr. Zoltán Egri (address: H- 4029 Debrecen, Csapó utca 37.; e-mail address:&nbsp;<a href="mailto:dpo@bitninja.io">dpo@bitninja.io</a>) as data protection officer (hereinafter “<strong>DPO</strong>”) in accordance with item II of Article 23 of the LGPD.</p>
+
+
+
+<p>If you would like to exercise the rights included in the present section of the Policy, please contact our DPO or BitNinja at&nbsp;[…]. We will consider your request in accordance with applicable laws. To protect your privacy and security, we may take steps to verify your identity before complying with the request.</p>
+
+
+
+<p>You also have the right to complain to the ANPD about our collection and use of your personal data. For more information, please contact the ANPD.</p>
+
+
+
+<ul>
+<li>Modifications to this Policy</li>
+</ul>
+
+
+
+<p>We will modify this Policy if our privacy practices change. We will notify you of such changes by posting the modified version on our Website and indicating the date it was last modified, and, if the changes are significant, we will provide a more prominent notice (including by email in certain instances). The date this Policy was last modified is at the top of this page. Please periodically review this Policy so that you are familiar with the current Policy and aware of any changes.</p>
+
+
+
+<ul>
+<li>For California Users</li>
+</ul>
+
+
+
+<p>If you are a user in California, the Company’s Privacy Notice for California Consumers applies to you.</p>
+
+
+
+<p>We will not share any personal data with third-parties for their direct marketing purposes to the extent prohibited by the CCPA. If our practices change, we will do so in accordance with applicable laws and will notify you in advance.</p>
+
+
+
+<ul>
+<li>Questions</li>
+</ul>
+
+
+
+<p>If you have any questions concerning this Policy or the Services, please contact us at&nbsp;+1 805-628-4196. You can also contact us at our contact office (H-4024 Debrecen, Kossuth utca 42. II. em. 5., Hungary).</p>
+
+
+
+<p><strong>Attachment I.</strong></p>
+
+
+
+<p>Data Processing Addendum</p>
+
+
+
+<p>based on the EU’s standard contractual clauses between controllers and processors, which automatically forms part of our Privacy Policy and applies to personal data protected by EU laws</p>
+
+
+
+<p>I. Section</p>
+
+
+
+<p>Clause 1. Purpose and scope</p>
+
+
+
+<p>(a) The purpose of these Standard Contractual Clauses (the Clauses) is to ensure compliance with Article&nbsp;28(3) and&nbsp;(4) of Regulation (EU) 2016/679 of the European Parliament and of the Council of 27&nbsp;April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation).</p>
+
+
+
+<p>(b) The controllers and processors listed in the Privacy Policy have agreed to these Clauses in order to ensure compliance with Article&nbsp;28(3) and&nbsp;(4) of Regulation (EU) 2016/679 and/or Article&nbsp;29(3) and&nbsp;(4) of Regulation (EU) 2018/1725.</p>
+
+
+
+<p>(c) These Clauses apply to the processing of personal data as specified in the Privacy Policy.</p>
+
+
+
+<p>(d) The Privacy Policy itself is an integral part of the Clauses.</p>
+
+
+
+<p>(e) These Clauses are without prejudice to obligations to which the controller is subject by virtue of Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725.</p>
+
+
+
+<p>(f) These Clauses do not by themselves ensure compliance with obligations related to international transfers in accordance with Chapter V of Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725.</p>
+
+
+
+<p>Clause 2. Invariability of the Clauses</p>
+
+
+
+<p>(a) The Parties undertake not to modify the Clauses, except for adding information to the Annexes or updating information in them.</p>
+
+
+
+<p>(b) This does not prevent the Parties from including the standard contractual clauses laid down in these Clauses in a broader contract, or from adding other clauses or additional safeguards provided that they do not directly or indirectly contradict the Clauses or detract from the fundamental rights or freedoms of data subjects.</p>
+
+
+
+<p>Clause 3. Interpretation</p>
+
+
+
+<p>(a) Where these Clauses use the terms defined in Regulation (EU) 2016/679 or Regulation (EU) 2018/1725 respectively, those terms shall have the same meaning as in that Regulation.</p>
+
+
+
+<p>(b) These Clauses shall be read and interpreted in the light of the provisions of Regulation (EU) 2016/679 or Regulation (EU) 2018/1725 respectively.</p>
+
+
+
+<p>(c) These Clauses shall not be interpreted in a way that runs counter to the rights and obligations provided for in Regulation (EU) 2016/679 / Regulation (EU) 2018/1725 or in a way that prejudices the fundamental rights or freedoms of the data subjects.</p>
+
+
+
+<p>Clause 4. Hierarchy</p>
+
+
+
+<p>In the event of a contradiction between these Clauses and the provisions of related agreements between the Parties existing at the time when these Clauses are agreed or entered into thereafter, these Clauses shall prevail.</p>
+
+
+
+<p>II. Obligaions of the Parties</p>
+
+
+
+<p>Clause 5. Description of processing(s)</p>
+
+
+
+<p>The details of the processing operations, in particular the categories of personal data and the purposes of processing for which the personal data is processed on behalf of the controller, are specified in the Privacy Policy.</p>
+
+
+
+<p>Clause 6. Obligations of the Parties</p>
+
+
+
+<p>6.1. Instructions</p>
+
+
+
+<p>(a) The processor shall process personal data only on documented instructions from the controller, unless required to do so by Union or Member State law to which the processor is subject. In this case, the processor shall inform the controller of that legal requirement before processing, unless the law prohibits this on important grounds of public interest. Subsequent instructions may also be given by the controller throughout the duration of the processing of personal data. These instructions shall always be documented.</p>
+
+
+
+<p>(b) The processor shall immediately inform the controller if, in the processor’s opinion, instructions given by the controller infringe Regulation (EU) 2016/679 / Regulation (EU) 2018/1725 or the applicable Union or Member State data protection provisions.</p>
+
+
+
+<p>6.2. Purpose limitation</p>
+
+
+
+<p>The processor shall process the personal data only for the specific purpose(s) of the processing, as set out in the Privacy Policy, unless it receives further instructions from the controller.</p>
+
+
+
+<p>6.3. Duration of the processing of personal data</p>
+
+
+
+<p>Processing by the processor shall only take place for the duration specified in the Privacy Policy.</p>
+
+
+
+<p>6.4. Security of processing</p>
+
+
+
+<p>(a) The processor shall at least implement the technical and organisational measures specified in the Privacy Policy to ensure the security of the personal data. This includes protecting the data against a breach of security leading to accidental or unlawful destruction, loss, alteration, unauthorised disclosure or access to the data (personal data breach). In assessing the appropriate level of security, the Parties shall take due account of the state of the art, the costs of implementation, the nature, scope, context and purposes of processing and the risks involved for the data subjects.</p>
+
+
+
+<p>(b) The processor shall grant access to the personal data undergoing processing to members of its personnel only to the extent strictly necessary for implementing, managing and monitoring of the contract. The processor shall ensure that persons authorised to process the personal data received have committed themselves to confidentiality or are under an appropriate statutory obligation of confidentiality.</p>
+
+
+
+<p>6.5. Sensitive data</p>
+
+
+
+<p>If the processing involves personal data revealing racial or ethnic origin, political opinions, religious or philosophical beliefs, or trade union membership, genetic data or biometric data for the purpose of uniquely identifying a natural person, data concerning health or a person’s sex life or sexual orientation, or data relating to criminal convictions and offences (“sensitive data”), the processor shall apply specific restrictions and/or additional safeguards.</p>
+
+
+
+<p>6.6. Documentation and compliance</p>
+
+
+
+<p>(a) The Parties shall be able to demonstrate compliance with these Clauses.</p>
+
+
+
+<p>(b) The processor shall deal promptly and adequately with inquiries from the controller about the processing of data in accordance with these Clauses.</p>
+
+
+
+<p>(c) The processor shall make available to the controller all information necessary to demonstrate compliance with the obligations that are set out in these Clauses and stem directly from Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725. At the controller’s request, the processor shall also permit and contribute to audits of the processing activities covered by these Clauses, at reasonable intervals or if there are indications of non-compliance. In deciding on a review or an audit, the controller may take into account relevant certifications held by the processor.</p>
+
+
+
+<p>(d) The controller may choose to conduct the audit by itself or mandate an independent auditor. Audits may also include inspections at the premises or physical facilities of the processor and shall, where appropriate, be carried out with reasonable notice.</p>
+
+
+
+<p>(e) The Parties shall make the information referred to in this Clause, including the results of any audits, available to the competent supervisory authority/ies on request.</p>
+
+
+
+<p>6.7. Use of sub-processors</p>
+
+
+
+<p>(a) The processor has the controller’s general authorisation for the engagement of sub-processors from an agreed list in the Privacy Policy. The processor shall specifically inform in writing the controller of any intended changes of that list through the addition or replacement of sub-processors at least 2 days in advance, thereby giving the controller sufficient time to be able to object to such changes prior to the engagement of the concerned sub-processor(s). The processor shall provide the controller with the information necessary to enable the controller to exercise the right to object.</p>
+
+
+
+<p>(b) Where the processor engages a sub-processor for carrying out specific processing activities (on behalf of the controller), it shall do so by way of a contract which imposes on the sub-processor, in substance, the same data protection obligations as the ones imposed on the data processor in accordance with these Clauses. The processor shall ensure that the sub-processor complies with the obligations to which the processor is subject pursuant to these Clauses and to Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725.</p>
+
+
+
+<p>(c) At the controller’s request, the processor shall provide a copy of such a sub-processor agreement and any subsequent amendments to the controller. To the extent necessary to protect business secret or other confidential information, including personal data, the processor may redact the text of the agreement prior to sharing the copy.</p>
+
+
+
+<p>(d) The processor shall remain fully responsible to the controller for the performance of the sub-processor’s obligations in accordance with its contract with the processor. The processor shall notify the controller of any failure by the sub-processor to fulfil its contractual obligations.</p>
+
+
+
+<p>(e) The processor shall agree a third party beneficiary clause with the sub-processor whereby - in the event the processor has factually disappeared, ceased to exist in law or has become insolvent&nbsp;- the controller shall have the right to terminate the sub-processor contract and to instruct the sub-processor to erase or return the personal data.</p>
+
+
+
+<p>6.8. International transfers</p>
+
+
+
+<p>(a) Any transfer of data to a third country or an international organisation by the processor shall be done only on the basis of documented instructions from the controller or in order to fulfil a specific requirement under Union or Member State law to which the processor is subject and shall take place in compliance with Chapter V of Regulation (EU) 2016/679 or Regulation (EU) 2018/1725.</p>
+
+
+
+<p>(b) The controller agrees that where the processor engages a sub-processor in accordance with Clause 7.7. for carrying out specific processing activities (on behalf of the controller) and those processing activities involve a transfer of personal data within the meaning of Chapter V of Regulation (EU) 2016/679, the processor and the sub-processor can ensure compliance with Chapter V of Regulation (EU) 2016/679 by using standard contractual clauses adopted by the Commission in accordance with of Article&nbsp;46(2) of Regulation (EU) 2016/679, provided the conditions for the use of those standard contractual clauses are met.</p>
+
+
+
+<p>Clause 7 Assistance to the controller</p>
+
+
+
+<p>(a) The processor shall promptly notify the controller of any request it has received from the data subject. It shall not respond to the request itself, unless authorised to do so by the controller.</p>
+
+
+
+<p>(b) The processor shall assist the controller in fulfilling its obligations to respond to data subjects’ requests to exercise their rights, taking into account the nature of the processing. In fulfilling its obligations in accordance with (a) and (b), the processor shall comply with the controller’s instructions.</p>
+
+
+
+<p>(c) In addition to the processor’s obligation to assist the controller pursuant to Clause 7(b), the processor shall furthermore assist the controller in ensuring compliance with the following obligations, taking into account the nature of the data processing and the information available to the processor: (1)&nbsp; the obligation to carry out an assessment of the impact of the envisaged processing operations on the protection of personal data (a ‘data protection impact assessment’) where a type of processing is likely to result in a high risk to the rights and freedoms of natural persons; (2) the obligation to consult the competent supervisory authority/ies prior to processing where a data protection impact assessment indicates that the processing would result in a high risk in the absence of measures taken by the controller to mitigate the risk; (3) the obligation to ensure that personal data is accurate and up to date, by informing the controller without delay if the processor becomes aware that the personal data it is processing is inaccurate or has become outdated; (4) the obligations in Article&nbsp;32 of Regulation (EU) 2016/679.</p>
+
+
+
+<p>(d) The Parties shall set out in the Privacy Policy the appropriate technical and organisational measures by which the processor is required to assist the controller in the application of this Clause as well as the scope and the extent of the assistance required.</p>
+
+
+
+<p>Clause 8 Notification of personal data breach</p>
+
+
+
+<p>In the event of a personal data breach, the processor shall cooperate with and assist the controller for the controller to comply with its obligations under Articles 33 and&nbsp;34 of Regulation (EU) 2016/679 or under Articles 34 and&nbsp;35 of Regulation (EU) 2018/1725, where applicable, taking into account the nature of processing and the information available to the processor.</p>
+
+
+
+<p>8.1. Data breach concerning data processed by the controller</p>
+
+
+
+<p>In the event of a personal data breach concerning data processed by the controller, the processor shall assist the controller:</p>
+
+
+
+<p>(a) in notifying the personal data breach to the competent supervisory authority/ies, without undue delay after the controller has become aware of it, where relevant/(unless the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons);</p>
+
+
+
+<p>(b) in obtaining the following information which, pursuant to Article&nbsp;33(3) of Regulation (EU) 2016/679 shall be stated in the controller’s notification, and must at least include: (1) the nature of the personal data including where possible, the categories and approximate number of data subjects concerned and the categories and approximate number of personal data records concerned; (2) the likely consequences of the personal data breach; (3) the measures taken or proposed to be taken by the controller to address the personal data breach, including, where appropriate, measures to mitigate its possible adverse effects.</p>
+
+
+
+<p>Where, and insofar as, it is not possible to provide all this information at the same time, the initial notification shall contain the information then available and further information shall, as it becomes available, subsequently be provided without undue delay.</p>
+
+
+
+<p>(c) in complying, pursuant to Article&nbsp;34 of Regulation (EU) 2016/679 with the obligation to communicate without undue delay the personal data breach to the data subject, when the personal data breach is likely to result in a high risk to the rights and freedoms of natural persons.</p>
+
+
+
+<p>8.2. Data breach concerning data processed by the processor</p>
+
+
+
+<p>In the event of a personal data breach concerning data processed by the processor, the processor shall notify the controller without undue delay after the processor having become aware of the breach. Such notification shall contain, at least:</p>
+
+
+
+<p>(a) a description of the nature of the breach (including, where possible, the categories and approximate number of data subjects and data records concerned);</p>
+
+
+
+<p>(b) the details of a contact point where more information concerning the personal data breach can be obtained;</p>
+
+
+
+<p>(c) its likely consequences and the measures taken or proposed to be taken to address the breach, including to mitigate its possible adverse effects.</p>
+
+
+
+<p>Where, and insofar as, it is not possible to provide all this information at the same time, the initial notification shall contain the information then available and further information shall, as it becomes available, subsequently be provided without undue delay.</p>
+
+
+
+<p>The Parties set out in the Privacy Policy all other elements to be provided by the processor when assisting the controller in the compliance with the controller’s obligations under Articles 33 and&nbsp;34 of Regulation (EU) 2016/679.</p>
+
+
+
+<p>Section III. Final provisions</p>
+
+
+
+<p>Clause 9. Non-compliance with the Clauses and termination</p>
+
+
+
+<p>(a) Without prejudice to any provisions of Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725, in the event that the processor is in breach of its obligations under these Clauses, the controller may instruct the processor to suspend the processing of personal data until the latter complies with these Clauses or the contract is terminated. The processor shall promptly inform the controller in case it is unable to comply with these Clauses, for whatever reason.</p>
+
+
+
+<p>(b) The controller shall be entitled to terminate the contract insofar as it concerns processing of personal data in accordance with these Clauses if: (1) the processing of personal data by the processor has been suspended by the controller pursuant to point (a) and if compliance with these Clauses is not restored within a reasonable time and in any event within one month following suspension; (2) the processor is in substantial or persistent breach of these Clauses or its obligations under Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725; (3) the processor fails to comply with a binding decision of a competent court or the competent supervisory authority/ies regarding its obligations pursuant to these Clauses or to Regulation (EU) 2016/679 and/or Regulation (EU) 2018/1725.</p>
+
+
+
+<p>(c) The processor shall be entitled to terminate the contract insofar as it concerns processing of personal data under these Clauses where, after having informed the controller that its instructions infringe applicable legal requirements in accordance with Clause 6.1 (b), the controller insists on compliance with the instructions.</p>
+
+
+
+<p>(d) Following termination of the contract, the processor shall, at the choice of the controller, delete all personal data processed on behalf of the controller and certify to the controller that it has done so, or, return all the personal data to the controller and delete existing copies unless Union or Member State law requires storage of the personal data. Until the data is deleted or returned, the processor shall continue to ensure compliance with these Clauses.</p>
+</div></div></section></div><section id="section-20-225" class=" ct-section" ><div class="ct-section-inner-wrap"><div id="div_block-47-225" class="ct-div-block" ><div id="div_block-76-11" class="ct-div-block" ><img  id="image-78-11" alt="BitNinja Server Security Logo White" src="https://bitninja.com/wp-content/uploads/2023/02/Dark.png" class="ct-image" srcset="https://bitninja.com/wp-content/uploads/2023/02/Dark.png 981w, https://bitninja.com/wp-content/uploads/2023/02/Dark-300x78.png 300w, https://bitninja.com/wp-content/uploads/2023/02/Dark-768x200.png 768w" sizes="(max-width: 981px) 100vw, 981px" /></div><div id="div_block-48-225" class="ct-div-block" ><a id="link-113-11" class="ct-link text-link" href="https://bitninja.com/sandbox-2/" target="_blank"  ><div id="text_block-114-11" class="ct-text-block" >try without install</div><div id="fancy_icon-115-11" class="ct-fancy-icon" ><svg id="svg-fancy_icon-115-11"><use xlink:href="#FontAwesomeicon-arrow-right"></use></svg></div></a></div><div id="div_block-60-11" class="ct-div-block" ><a id="link_button-80-11" class="ct-link-button atomic-primary-button" href="http://registration.bitninja.io" target="_blank"  >sign up for free</a></div></div><div id="new_columns-21-225" class="ct-new-columns" ><div id="div_block-140-11" class="ct-div-block" ><div id="div_block-26-225" class="ct-div-block" ><h2 id="headline-27-225" class="ct-headline footer-link">security</h2><a id="link_text-29-225" class="ct-link-text footer-link" href="https://bitninja.com/for-shared-webhosting/" target="_blank"  >For Shared Webhosting</a><a id="link_text-145-11" class="ct-link-text footer-link" href="https://bitninja.com/for-vps-providers/" target="_blank"  >For VPS providers</a><a id="link_text-30-225" class="ct-link-text footer-link" href="https://bitninja.com/for-small-businesses/" target="_blank"  >For Small Businesses</a><a id="link_text-31-225" class="ct-link-text footer-link" href="https://bitninja.com/pricing/" target="_blank"  >Pricing</a><a id="link_text-32-225" class="ct-link-text footer-link" href="https://bitninja.com/solutions/anti-malware/" target="_blank"  >Anti-Malware</a><a id="link_text-81-11" class="ct-link-text footer-link" href="https://bitninja.com/solutions/waf/" target="_blank"  >WAF</a><a id="link_text-82-11" class="ct-link-text footer-link" href="https://bitninja.com/solutions/ip-reputation/" target="_blank"  >Realtime IP Reputation</a><a id="link_text-172-11" class="ct-link-text footer-link" href="https://bitninja.com/solutions/outbound_spam_detection/" target="_blank"  >Outbound Spam Detection</a><a id="link_text-180-11" class="ct-link-text footer-link" href="https://bitninja.com/solutions/siteprotection/" target="_blank"  >SiteProtection</a><a id="link_text-83-11" class="ct-link-text footer-link" href="https://bitninja.com/solutions/extra-security-components/" target="_blank"  >Extra Security Components</a></div><div id="div_block-33-225" class="ct-div-block" ><h2 id="headline-34-225" class="ct-headline footer-link">Resources</h2><a id="link_text-35-225" class="ct-link-text footer-link" href="/general-content-1/" target="_self"  >BitNinja Learn</a><a id="link_text-37-225" class="ct-link-text footer-link" href="https://doc.bitninja.io/" target="_blank"  >Documentation</a><a id="link_text-38-225" class="ct-link-text footer-link" href="https://knowledgebase.bitninja.io/" target="_blank"  >FAQs</a><a id="link_text-39-225" class="ct-link-text footer-link" href="https://bitninja.com/success-stories/" target="_blank"  >Success Stories</a><a id="link_text-84-11" class="ct-link-text footer-link" href="/our-services/" target="_self"  >Security Guides</a><a id="link_text-85-11" class="ct-link-text footer-link" href="https://bitninja.com/for-vps-providers/" target="_blank"  >Reseller Partner Kit</a><a id="link_text-86-11" class="ct-link-text footer-link" href="/our-services/" target="_self"  >Comparisons</a><a id="link_text-87-11" class="ct-link-text footer-link" href="/our-services/" target="_self"  >Incident Report</a></div></div><div id="div_block-144-11" class="ct-div-block" ><div id="div_block-40-225" class="ct-div-block" ><h2 id="headline-41-225" class="ct-headline footer-link">Company</h2><a id="link_text-42-225" class="ct-link-text footer-link" href="https://bitninja.com/about-us/" target="_blank"  >About</a><a id="link_text-43-225" class="ct-link-text footer-link" href="https://bitninja.com/success-stories/" target="_blank"  >Customers</a><a id="link_text-88-11" class="ct-link-text footer-link" href="https://bitninja-technologies-zrt.breezy.hr/" target="_blank"  >Jobs at BitNinja</a><a id="link_text-89-11" class="ct-link-text footer-link" href="https://bitninja.com/terms-and-conditions/" target="_blank"  >Legal Terms</a><a id="link_text-90-11" class="ct-link-text footer-link" href="https://bitninja.com/privacy-policy/" target="_blank"  >Privacy</a><a id="link_text-91-11" class="ct-link-text footer-link" href="https://ujbitninja.kinsta.cloud/?page_id=123"   >Events</a><a id="link_text-92-11" class="ct-link-text footer-link" href="https://hckrt.com/Reports/EmbeddedReportForm?program=bitninja" target="_blank"  >Bug Bounty</a><a id="link_text-176-11" class="ct-link-text footer-link" href="https://bitninja.com/partners/" target="_blank"  >Partners</a><a id="link_text-178-11" class="ct-link-text footer-link" href="https://bitninja.com/bitninja_impact/" target="_blank"  >Impact</a></div><div id="div_block-63-11" class="ct-div-block" ><h2 id="headline-64-11" class="ct-headline footer-link">Connect</h2><a id="link_text-65-11" class="ct-link-text footer-link" href="https://calendly.com/bitninja-demo/" target="_blank"  >Book a demo</a><a id="link_text-66-11" class="ct-link-text footer-link" href="https://bitninja.com/contact-us/" target="_blank"  >Contact us</a><a id="link_text-93-11" class="ct-link-text footer-link" href="mailto:%20info@bitninja.io" target="_blank"  >Support</a><a id="link_text-94-11" class="ct-link-text footer-link" href="https://feedback.bitninja.io/b/feature-requests/" target="_blank"  >Product Feedback</a></div></div><div id="div_block-70-11" class="ct-div-block" ><div id="text_block-95-11" class="ct-text-block" >BitNinja</div><div id="text_block-96-11" class="ct-text-block" >Proactive server protection from a centralized, easy-to-use console. Secure your web servers and customers’ websites against all kinds of cyber threats with our multi-layered security tool</div><div id="div_block-118-11" class="ct-div-block" ><a id="link-129-11" class="ct-link" href="https://www.facebook.com/bitninja.io" target="_self"  ><img  id="image-120-11" alt="Facebook BitNinja Server Security Platform" src="https://bitninja.com/wp-content/uploads/2023/03/Vector-4.png" class="ct-image" srcset="" sizes="(max-width: 14px) 100vw, 14px" /></a><a id="link-132-11" class="ct-link" href="https://twitter.com/bitninjaio" target="_self"  ><img  id="image-133-11" alt="Twitter BitNinja Server Security Platform" src="https://bitninja.com/wp-content/uploads/2023/03/Vector-5.png" class="ct-image" srcset="" sizes="(max-width: 30px) 100vw, 30px" /></a><a id="link-134-11" class="ct-link" href="https://www.linkedin.com/company/bitninja-io" target="_self"  ><img  id="image-135-11" alt="LinkedIn BitNinja Server Security Platform" src="https://bitninja.com/wp-content/uploads/2023/03/Vector-6.png" class="ct-image" srcset="" sizes="(max-width: 24px) 100vw, 24px" /></a><a id="link-136-11" class="ct-link" href="https://www.instagram.com/bitninja_official/" target="_self"  ><img  id="image-137-11" alt="Instagram BitNinja Server Security Platform" src="https://bitninja.com/wp-content/uploads/2023/03/Vector-7.png" class="ct-image" srcset="" sizes="(max-width: 24px) 100vw, 24px" /></a><a id="link-138-11" class="ct-link" href="https://www.youtube.com/c/BitninjaIo/videos" target="_self"  ><img  id="image-139-11" alt="Youtube BitNinja Server Security Platform" src="https://bitninja.com/wp-content/uploads/2023/03/Vector-8.png" class="ct-image" srcset="" sizes="(max-width: 28px) 100vw, 28px" /></a></div></div></div><div id="new_columns-161-11" class="ct-new-columns" ><div id="div_block-163-11" class="ct-div-block" ><img  id="image-167-11" alt="AICPA SOC BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/05/21972-312_SOC_NonCPA-1.svg" class="ct-image" srcset="" sizes="(max-width: 90px) 100vw, 90px" /></div><div id="div_block-164-11" class="ct-div-block" ><img  id="image-170-11" alt="Privacy Shield BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/05/privacy-shield-certified-logo.png" class="ct-image" srcset="" sizes="(max-width: 219px) 100vw, 219px" /></div><div id="div_block-165-11" class="ct-div-block" ><img  id="image-169-11" alt="GDPR BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/05/eu_gdpr_compliant_logo.png" class="ct-image" srcset="" sizes="(max-width: 186px) 100vw, 186px" /></div><div id="div_block-166-11" class="ct-div-block" ><img  id="image-168-11" alt="CCPA BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/05/CCPA.png" class="ct-image" srcset="" sizes="(max-width: 115px) 100vw, 115px" /></div></div><div id="new_columns-101-11" class="ct-new-columns" ><div id="div_block-102-11" class="ct-div-block" ><div id="text_block-103-11" class="ct-text-block" >2024 BitNinja. All Rights reserved.</div></div></div><img  id="image-104-11" alt="Hexa BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1.png" class="ct-image" srcset="https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1.png 660w, https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1-300x300.png 300w, https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1-150x150.png 150w" sizes="(max-width: 660px) 100vw, 660px" /><img  id="image-105-11" alt="Hexa BitNinja Server Security" src="https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1.png" class="ct-image" srcset="https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1.png 660w, https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1-300x300.png 300w, https://bitninja.com/wp-content/uploads/2023/02/Eszkoz-4-1-150x150.png 150w" sizes="(max-width: 660px) 100vw, 660px" /></div></section>	<!-- WP_FOOTER -->
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function() {
+	    var copyImage = document.getElementById('copyPricingButton');
+		var copyMessage = document.getElementById('copiedMessage')
+	    if (copyImage) {
+	        copyImage.addEventListener('click', function() {
+	            var pricingBashCode = document.getElementById("pricingBashCode");
+	            var range = document.createRange();
+	            range.selectNode(pricingBashCode);
+	            window.getSelection().removeAllRanges();
+	            window.getSelection().addRange(range);
+	            try {
+	                document.execCommand('copy');
+                    copyMessage.style.display = 'block';
+                    setTimeout(function() {
+                        copyMessage.style.display = 'none';
+                    }, 3000);
+	            } catch (error) {
+	                console.error("Copy failed: " + error);
+	            }
+	            window.getSelection().removeAllRanges();
+	        });
+	    }
+	});
+</script>
+<style>.ct-FontAwesomeicon-close{width:0.78571428571429em}</style>
+<style>.ct-FontAwesomeicon-arrow-right{width:0.82142857142857em}</style>
+<style>.ct-FontAwesomeicon-bars{width:0.85714285714286em}</style>
+<style>.ct-FontAwesomeicon-angle-right{width:0.32142857142857em}</style>
+<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"><defs><symbol id="FontAwesomeicon-close" viewBox="0 0 22 28"><title>close</title><path d="M20.281 20.656c0 0.391-0.156 0.781-0.438 1.062l-2.125 2.125c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-4.594-4.594-4.594 4.594c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-2.125-2.125c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l4.594-4.594-4.594-4.594c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.594 4.594-4.594c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062s-0.156 0.781-0.438 1.062l-4.594 4.594 4.594 4.594c0.281 0.281 0.438 0.672 0.438 1.062z"/></symbol><symbol id="FontAwesomeicon-arrow-right" viewBox="0 0 23 28"><title>arrow-right</title><path d="M23 15c0 0.531-0.203 1.047-0.578 1.422l-10.172 10.172c-0.375 0.359-0.891 0.578-1.422 0.578s-1.031-0.219-1.406-0.578l-1.172-1.172c-0.375-0.375-0.594-0.891-0.594-1.422s0.219-1.047 0.594-1.422l4.578-4.578h-11c-1.125 0-1.828-0.938-1.828-2v-2c0-1.062 0.703-2 1.828-2h11l-4.578-4.594c-0.375-0.359-0.594-0.875-0.594-1.406s0.219-1.047 0.594-1.406l1.172-1.172c0.375-0.375 0.875-0.594 1.406-0.594s1.047 0.219 1.422 0.594l10.172 10.172c0.375 0.359 0.578 0.875 0.578 1.406z"/></symbol><symbol id="FontAwesomeicon-bars" viewBox="0 0 24 28"><title>bars</title><path d="M24 21v2c0 0.547-0.453 1-1 1h-22c-0.547 0-1-0.453-1-1v-2c0-0.547 0.453-1 1-1h22c0.547 0 1 0.453 1 1zM24 13v2c0 0.547-0.453 1-1 1h-22c-0.547 0-1-0.453-1-1v-2c0-0.547 0.453-1 1-1h22c0.547 0 1 0.453 1 1zM24 5v2c0 0.547-0.453 1-1 1h-22c-0.547 0-1-0.453-1-1v-2c0-0.547 0.453-1 1-1h22c0.547 0 1 0.453 1 1z"/></symbol><symbol id="FontAwesomeicon-angle-right" viewBox="0 0 9 28"><title>angle-right</title><path d="M9.297 15c0 0.125-0.063 0.266-0.156 0.359l-7.281 7.281c-0.094 0.094-0.234 0.156-0.359 0.156s-0.266-0.063-0.359-0.156l-0.781-0.781c-0.094-0.094-0.156-0.219-0.156-0.359 0-0.125 0.063-0.266 0.156-0.359l6.141-6.141-6.141-6.141c-0.094-0.094-0.156-0.234-0.156-0.359s0.063-0.266 0.156-0.359l0.781-0.781c0.094-0.094 0.234-0.156 0.359-0.156s0.266 0.063 0.359 0.156l7.281 7.281c0.094 0.094 0.156 0.234 0.156 0.359z"/></symbol></defs></svg><?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"><defs><symbol id="Lineariconsicon-cross" viewBox="0 0 20 20"><title>cross</title><path class="path1" d="M10.707 10.5l5.646-5.646c0.195-0.195 0.195-0.512 0-0.707s-0.512-0.195-0.707 0l-5.646 5.646-5.646-5.646c-0.195-0.195-0.512-0.195-0.707 0s-0.195 0.512 0 0.707l5.646 5.646-5.646 5.646c-0.195 0.195-0.195 0.512 0 0.707 0.098 0.098 0.226 0.146 0.354 0.146s0.256-0.049 0.354-0.146l5.646-5.646 5.646 5.646c0.098 0.098 0.226 0.146 0.354 0.146s0.256-0.049 0.354-0.146c0.195-0.195 0.195-0.512 0-0.707l-5.646-5.646z"/></symbol></defs></svg>
+
+        <script type="text/javascript">
+
+            function oxygen_init_pro_menu() {
+                jQuery('.oxy-pro-menu-container').each(function(){
+                    
+                    // dropdowns
+                    var menu = jQuery(this),
+                        animation = menu.data('oxy-pro-menu-dropdown-animation'),
+                        animationDuration = menu.data('oxy-pro-menu-dropdown-animation-duration');
+                    
+                    jQuery('.sub-menu', menu).attr('data-aos',animation);
+                    jQuery('.sub-menu', menu).attr('data-aos-duration',animationDuration*1000);
+
+                    oxygen_offcanvas_menu_init(menu);
+                    jQuery(window).resize(function(){
+                        oxygen_offcanvas_menu_init(menu);
+                    });
+
+                    // let certain CSS rules know menu being initialized
+                    // "10" timeout is extra just in case, "0" would be enough
+                    setTimeout(function() {menu.addClass('oxy-pro-menu-init');}, 10);
+                });
+            }
+
+            jQuery(document).ready(oxygen_init_pro_menu);
+            document.addEventListener('oxygen-ajax-element-loaded', oxygen_init_pro_menu, false);
+            
+            let proMenuMouseDown = false;
+
+            jQuery(".oxygen-body")
+            .on("mousedown", '.oxy-pro-menu-show-dropdown:not(.oxy-pro-menu-open-container) .menu-item-has-children', function(e) {
+                proMenuMouseDown = true;
+            })
+
+            .on("mouseup", '.oxy-pro-menu-show-dropdown:not(.oxy-pro-menu-open-container) .menu-item-has-children', function(e) {
+                proMenuMouseDown = false;
+            })
+
+            .on('mouseenter focusin', '.oxy-pro-menu-show-dropdown:not(.oxy-pro-menu-open-container) .menu-item-has-children', function(e) {
+                if( proMenuMouseDown ) return;
+                
+                var subMenu = jQuery(this).children('.sub-menu');
+                subMenu.addClass('aos-animate oxy-pro-menu-dropdown-animating').removeClass('sub-menu-left');
+
+                var duration = jQuery(this).parents('.oxy-pro-menu-container').data('oxy-pro-menu-dropdown-animation-duration');
+
+                setTimeout(function() {subMenu.removeClass('oxy-pro-menu-dropdown-animating')}, duration*1000);
+
+                var offset = subMenu.offset(),
+                    width = subMenu.width(),
+                    docWidth = jQuery(window).width();
+
+                    if (offset.left+width > docWidth) {
+                        subMenu.addClass('sub-menu-left');
+                    }
+            })
+            
+            .on('mouseleave focusout', '.oxy-pro-menu-show-dropdown .menu-item-has-children', function( e ) {
+                if( jQuery(this).is(':hover') ) return;
+
+                jQuery(this).children('.sub-menu').removeClass('aos-animate');
+
+                var subMenu = jQuery(this).children('.sub-menu');
+                //subMenu.addClass('oxy-pro-menu-dropdown-animating-out');
+
+                var duration = jQuery(this).parents('.oxy-pro-menu-container').data('oxy-pro-menu-dropdown-animation-duration');
+                setTimeout(function() {subMenu.removeClass('oxy-pro-menu-dropdown-animating-out')}, duration*1000);
+            })
+
+            // open icon click
+            .on('click', '.oxy-pro-menu-mobile-open-icon', function() {    
+                var menu = jQuery(this).parents('.oxy-pro-menu');
+                // off canvas
+                if (jQuery(this).hasClass('oxy-pro-menu-off-canvas-trigger')) {
+                    oxygen_offcanvas_menu_run(menu);
+                }
+                // regular
+                else {
+                    menu.addClass('oxy-pro-menu-open');
+                    jQuery(this).siblings('.oxy-pro-menu-container').addClass('oxy-pro-menu-open-container');
+                    jQuery('body').addClass('oxy-nav-menu-prevent-overflow');
+                    jQuery('html').addClass('oxy-nav-menu-prevent-overflow');
+                    
+                    oxygen_pro_menu_set_static_width(menu);
+                }
+                // remove animation and collapse
+                jQuery('.sub-menu', menu).attr('data-aos','');
+                jQuery('.oxy-pro-menu-dropdown-toggle .sub-menu', menu).slideUp(0);
+            });
+
+            function oxygen_pro_menu_set_static_width(menu) {
+                var menuItemWidth = jQuery(".oxy-pro-menu-list > .menu-item", menu).width();
+                jQuery(".oxy-pro-menu-open-container > div:first-child, .oxy-pro-menu-off-canvas-container > div:first-child", menu).width(menuItemWidth);
+            }
+
+            function oxygen_pro_menu_unset_static_width(menu) {
+                jQuery(".oxy-pro-menu-container > div:first-child", menu).width("");
+            }
+
+            // close icon click
+            jQuery('body').on('click', '.oxy-pro-menu-mobile-close-icon', function(e) {
+                
+                var menu = jQuery(this).parents('.oxy-pro-menu');
+
+                menu.removeClass('oxy-pro-menu-open');
+                jQuery(this).parents('.oxy-pro-menu-container').removeClass('oxy-pro-menu-open-container');
+                jQuery('.oxy-nav-menu-prevent-overflow').removeClass('oxy-nav-menu-prevent-overflow');
+
+                if (jQuery(this).parent('.oxy-pro-menu-container').hasClass('oxy-pro-menu-off-canvas-container')) {
+                    oxygen_offcanvas_menu_run(menu);
+                }
+
+                oxygen_pro_menu_unset_static_width(menu);
+            });
+
+            // dropdown toggle icon click
+            jQuery('body').on(
+                'touchstart click', 
+                '.oxy-pro-menu-dropdown-links-toggle.oxy-pro-menu-off-canvas-container .menu-item-has-children > a > .oxy-pro-menu-dropdown-icon-click-area,'+
+                '.oxy-pro-menu-dropdown-links-toggle.oxy-pro-menu-open-container .menu-item-has-children > a > .oxy-pro-menu-dropdown-icon-click-area', 
+                function(e) {
+                    e.preventDefault();
+
+                    // fix for iOS false triggering submenu clicks
+                    jQuery('.sub-menu').css('pointer-events', 'none');
+                    setTimeout( function() {
+                        jQuery('.sub-menu').css('pointer-events', 'initial');
+                    }, 500);
+
+                    // workaround to stop click event from triggering after touchstart
+                    if (window.oxygenProMenuIconTouched === true) {
+                        window.oxygenProMenuIconTouched = false;
+                        return;
+                    }
+                    if (e.type==='touchstart') {
+                        window.oxygenProMenuIconTouched = true;
+                    }
+                    oxygen_pro_menu_toggle_dropdown(this);
+                }
+            );
+
+            function oxygen_pro_menu_toggle_dropdown(trigger) {
+
+                var duration = jQuery(trigger).parents('.oxy-pro-menu-container').data('oxy-pro-menu-dropdown-animation-duration');
+
+                jQuery(trigger).closest('.menu-item-has-children').children('.sub-menu').slideToggle({
+                    start: function () {
+                        jQuery(this).css({
+                            display: "flex"
+                        })
+                    },
+                    duration: duration*1000
+                });
+            }
+                    
+            // fullscreen menu link click
+            var selector = '.oxy-pro-menu-open .menu-item a';
+            jQuery('body').on('click', selector, function(event){
+                
+                if (jQuery(event.target).closest('.oxy-pro-menu-dropdown-icon-click-area').length > 0) {
+                    // toggle icon clicked, no need to hide the menu
+                    return;
+                }
+                else if ((jQuery(this).attr("href") === "#" || jQuery(this).closest(".oxy-pro-menu-container").data("entire-parent-toggles-dropdown")) && 
+                         jQuery(this).parent().hasClass('menu-item-has-children')) {
+                    // empty href don't lead anywhere, treat it as toggle trigger
+                    oxygen_pro_menu_toggle_dropdown(event.target);
+                    // keep anchor links behavior as is, and prevent regular links from page reload
+                    if (jQuery(this).attr("href").indexOf("#")!==0) {
+                        return false;
+                    }
+                }
+
+                // hide the menu and follow the anchor
+                if (jQuery(this).attr("href").indexOf("#")===0) {
+                    jQuery('.oxy-pro-menu-open').removeClass('oxy-pro-menu-open');
+                    jQuery('.oxy-pro-menu-open-container').removeClass('oxy-pro-menu-open-container');
+                    jQuery('.oxy-nav-menu-prevent-overflow').removeClass('oxy-nav-menu-prevent-overflow');
+                }
+
+            });
+
+            // off-canvas menu link click
+            var selector = '.oxy-pro-menu-off-canvas .menu-item a';
+            jQuery('body').on('click', selector, function(event){
+                if (jQuery(event.target).closest('.oxy-pro-menu-dropdown-icon-click-area').length > 0) {
+                    // toggle icon clicked, no need to trigger it 
+                    return;
+                }
+                else if ((jQuery(this).attr("href") === "#" || jQuery(this).closest(".oxy-pro-menu-container").data("entire-parent-toggles-dropdown")) && 
+                    jQuery(this).parent().hasClass('menu-item-has-children')) {
+                    // empty href don't lead anywhere, treat it as toggle trigger
+                    oxygen_pro_menu_toggle_dropdown(event.target);
+                    // keep anchor links behavior as is, and prevent regular links from page reload
+                    if (jQuery(this).attr("href").indexOf("#")!==0) {
+                        return false;
+                    }
+                }
+            });
+
+            // off canvas
+            function oxygen_offcanvas_menu_init(menu) {
+
+                // only init off-canvas animation if trigger icon is visible i.e. mobile menu in action
+                var offCanvasActive = jQuery(menu).siblings('.oxy-pro-menu-off-canvas-trigger').css('display');
+                if (offCanvasActive!=='none') {
+                    var animation = menu.data('oxy-pro-menu-off-canvas-animation');
+                    setTimeout(function() {menu.attr('data-aos', animation);}, 10);
+                }
+                else {
+                    // remove AOS
+                    menu.attr('data-aos', '');
+                };
+            }
+            
+            function oxygen_offcanvas_menu_run(menu) {
+
+                var container = menu.find(".oxy-pro-menu-container");
+                
+                if (!container.attr('data-aos')) {
+                    // initialize animation
+                    setTimeout(function() {oxygen_offcanvas_menu_toggle(menu, container)}, 0);
+                }
+                else {
+                    oxygen_offcanvas_menu_toggle(menu, container);
+                }
+            }
+
+            var oxygen_offcanvas_menu_toggle_in_progress = false;
+
+            function oxygen_offcanvas_menu_toggle(menu, container) {
+
+                if (oxygen_offcanvas_menu_toggle_in_progress) {
+                    return;
+                }
+
+                container.toggleClass('aos-animate');
+
+                if (container.hasClass('oxy-pro-menu-off-canvas-container')) {
+                    
+                    oxygen_offcanvas_menu_toggle_in_progress = true;
+                    
+                    var animation = container.data('oxy-pro-menu-off-canvas-animation'),
+                        timeout = container.data('aos-duration');
+
+                    if (!animation){
+                        timeout = 0;
+                    }
+
+                    setTimeout(function() {
+                        container.removeClass('oxy-pro-menu-off-canvas-container')
+                        menu.removeClass('oxy-pro-menu-off-canvas');
+                        oxygen_offcanvas_menu_toggle_in_progress = false;
+                    }, timeout);
+                }
+                else {
+                    container.addClass('oxy-pro-menu-off-canvas-container');
+                    menu.addClass('oxy-pro-menu-off-canvas');
+                    oxygen_pro_menu_set_static_width(menu);
+                }
+            }
+        </script>
+
+    <link rel='stylesheet' id='oxygen-aos-css' href='https://bitninja.com/wp-content/plugins/oxygen/component-framework/vendor/aos/aos.css?ver=6.5.2' media='all' />
+<style id='wp-block-list-inline-css'>
+ol,ul{box-sizing:border-box}ol.has-background,ul.has-background{padding:1.25em 2.375em}
+</style>
+<script id="stickThis-js-extra">
+var sticky_anything_engage = {"element":".sticky","topspace":"0","minscreenwidth":"0","maxscreenwidth":"999999","zindex":"1","legacymode":"","dynamicmode":"","debugmode":"","pushup":"","adminbar":"1"};
+</script>
+<script src="https://bitninja.com/wp-content/plugins/sticky-menu-or-anything-on-scroll/assets/js/stickThis.js?ver=2.1.1" id="stickThis-js"></script>
+<script id="rocket-browser-checker-js-after">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id="rocket-preload-links-js-extra">
+var RocketPreloadLinksConfig = {"excludeUris":"\/adminninja\/|\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/bitninja.com","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script id="rocket-preload-links-js-after">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script id="moove_gdpr_frontend-js-extra">
+var moove_frontend_gdpr_scripts = {"ajaxurl":"https:\/\/bitninja.com\/wp-admin\/admin-ajax.php","post_id":"11124","plugin_dir":"https:\/\/bitninja.com\/wp-content\/plugins\/gdpr-cookie-compliance","show_icons":"all","is_page":"1","ajax_cookie_removal":"false","strict_init":"1","enabled_default":{"third_party":0,"advanced":0},"geo_location":"false","force_reload":"false","is_single":"","hide_save_btn":"false","current_user":"0","cookie_expiration":"365","script_delay":"2000","close_btn_action":"1","close_btn_rdr":"","scripts_defined":"{\"cache\":true,\"header\":\"\",\"body\":\"\",\"footer\":\"\",\"thirdparty\":{\"header\":\"\",\"body\":\"\",\"footer\":\"\"},\"advanced\":{\"header\":\"\",\"body\":\"\",\"footer\":\"\"}}","gdpr_scor":"true","wp_lang":""};
+</script>
+<script src="https://bitninja.com/wp-content/plugins/gdpr-cookie-compliance/dist/scripts/main.js?ver=4.13.4" id="moove_gdpr_frontend-js"></script>
+<script id="moove_gdpr_frontend-js-after">
+var gdpr_consent__strict = "false"
+var gdpr_consent__thirdparty = "false"
+var gdpr_consent__advanced = "false"
+var gdpr_consent__cookies = ""
+</script>
+<script src="https://bitninja.com/wp-content/plugins/oxygen/component-framework/vendor/aos/aos.js?ver=1" id="oxygen-aos-js"></script>
+<script type="text/javascript" id="ct-footer-js">
+	  	AOS.init({
+	  				duration: 1500,
+			  		  		  		  			  	once: true,
+			  		  				  			})
+		
+				jQuery('body').addClass('oxygen-aos-enabled');
+		
+		
+	</script>
+    
+  <!--copyscapeskip-->
+  <!-- V1 -->
+  <div id="moove_gdpr_cookie_modal" class="gdpr_lightbox-hide" role="complementary" aria-label="GDPR Settings Screen">
+    <div class="moove-gdpr-modal-content moove-clearfix logo-position-left moove_gdpr_modal_theme_v1">
+          
+        <button class="moove-gdpr-modal-close" aria-label="Close GDPR Cookie Settings">
+          <span class="gdpr-sr-only">Close GDPR Cookie Settings</span>
+          <span class="gdpr-icon moovegdpr-arrow-close"></span>
+        </button>
+            <div class="moove-gdpr-modal-left-content">
+        
+<div class="moove-gdpr-company-logo-holder">
+  <img src="https://bitninja.com/wp-content/plugins/gdpr-cookie-compliance/dist/images/gdpr-logo.png" alt="BitNinja Security"   width="350"  height="233"  class="img-responsive" />
+</div>
+<!--  .moove-gdpr-company-logo-holder -->        <ul id="moove-gdpr-menu">
+          
+<li class="menu-item-on menu-item-privacy_overview menu-item-selected">
+  <button data-href="#privacy_overview" class="moove-gdpr-tab-nav" aria-label="Privacy Overview">
+    <span class="gdpr-nav-tab-title">Privacy Overview</span>
+  </button>
+</li>
+
+  <li class="menu-item-strict-necessary-cookies menu-item-off">
+    <button data-href="#strict-necessary-cookies" class="moove-gdpr-tab-nav" aria-label="Strictly Necessary Cookies">
+      <span class="gdpr-nav-tab-title">Strictly Necessary Cookies</span>
+    </button>
+  </li>
+
+
+
+
+        </ul>
+        
+<div class="moove-gdpr-branding-cnt">
+  		<a href="https://wordpress.org/plugins/gdpr-cookie-compliance/" rel="noopener noreferrer" target="_blank" class='moove-gdpr-branding'>Powered by&nbsp; <span>GDPR Cookie Compliance</span></a>
+		</div>
+<!--  .moove-gdpr-branding -->      </div>
+      <!--  .moove-gdpr-modal-left-content -->
+      <div class="moove-gdpr-modal-right-content">
+        <div class="moove-gdpr-modal-title">
+           
+        </div>
+        <!-- .moove-gdpr-modal-ritle -->
+        <div class="main-modal-content">
+
+          <div class="moove-gdpr-tab-content">
+            
+<div id="privacy_overview" class="moove-gdpr-tab-main">
+      <span class="tab-title">Privacy Overview</span>
+    <div class="moove-gdpr-tab-main-content">
+  	<p>This website uses cookies so that we can provide you with the best user experience possible. Cookie information is stored in your browser and performs functions such as recognising you when you return to our website and helping our team to understand which sections of the website you find most interesting and useful.</p>
+  	  </div>
+  <!--  .moove-gdpr-tab-main-content -->
+
+</div>
+<!-- #privacy_overview -->            
+  <div id="strict-necessary-cookies" class="moove-gdpr-tab-main" style="display:none">
+    <span class="tab-title">Strictly Necessary Cookies</span>
+    <div class="moove-gdpr-tab-main-content">
+      <p>Strictly Necessary Cookie should be enabled at all times so that we can save your preferences for cookie settings.</p>
+      <div class="moove-gdpr-status-bar ">
+        <div class="gdpr-cc-form-wrap">
+          <div class="gdpr-cc-form-fieldset">
+            <label class="cookie-switch" for="moove_gdpr_strict_cookies">    
+              <span class="gdpr-sr-only">Enable or Disable Cookies</span>        
+              <input type="checkbox" aria-label="Strictly Necessary Cookies"  value="check" name="moove_gdpr_strict_cookies" id="moove_gdpr_strict_cookies">
+              <span class="cookie-slider cookie-round" data-text-enable="Enabled" data-text-disabled="Disabled"></span>
+            </label>
+          </div>
+          <!-- .gdpr-cc-form-fieldset -->
+        </div>
+        <!-- .gdpr-cc-form-wrap -->
+      </div>
+      <!-- .moove-gdpr-status-bar -->
+              <div class="moove-gdpr-strict-warning-message" style="margin-top: 10px;">
+          <p>If you disable this cookie, we will not be able to save your preferences. This means that every time you visit this website you will need to enable or disable cookies again.</p>
+        </div>
+        <!--  .moove-gdpr-tab-main-content -->
+                                              
+    </div>
+    <!--  .moove-gdpr-tab-main-content -->
+  </div>
+  <!-- #strict-necesarry-cookies -->
+            
+            
+            
+          </div>
+          <!--  .moove-gdpr-tab-content -->
+        </div>
+        <!--  .main-modal-content -->
+        <div class="moove-gdpr-modal-footer-content">
+          <div class="moove-gdpr-button-holder">
+			  		<button class="mgbutton moove-gdpr-modal-allow-all button-visible" aria-label="Enable All">Enable All</button>
+		  					<button class="mgbutton moove-gdpr-modal-save-settings button-visible" aria-label="Save Settings">Save Settings</button>
+				</div>
+<!--  .moove-gdpr-button-holder -->        </div>
+        <!--  .moove-gdpr-modal-footer-content -->
+      </div>
+      <!--  .moove-gdpr-modal-right-content -->
+
+      <div class="moove-clearfix"></div>
+
+    </div>
+    <!--  .moove-gdpr-modal-content -->
+  </div>
+  <!-- #moove_gdpr_cookie_modal -->
+  <!--/copyscapeskip-->
+<!-- /WP_FOOTER --> 
+</body>
+</html>
