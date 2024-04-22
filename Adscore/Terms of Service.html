@@ -1,0 +1,1076 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Terms of Service | Adscore</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="theme-color" content="#032336">
+    <!-- 'sha256-ghN2lf2Dk8hHsCOeQGgZL/nH5vXZtIoJ+jRwBhb9/K8=' - adblock warning -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://static.cloudflareinsights.com/ 'sha256-ghN2lf2Dk8hHsCOeQGgZL/nH5vXZtIoJ+jRwBhb9/K8=';
+        connect-src 'self' https://static.cloudflareinsights.com/ https://api.adscore.com https://devapi.adscore.com
+          https://o318863.ingest.sentry.io/;
+        object-src 'none';
+        default-src 'self';
+        style-src 'self' 'unsafe-inline';
+        base-uri 'self';
+        font-src 'self';
+        frame-src 'self' https://www.openstreetmap.org;
+        img-src 'self' data:;
+        manifest-src 'self';
+        media-src 'self';
+        worker-src 'none';">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="preload" as="image" href="/assets/img/adscore--header-wing.min.svg">
+    <style>
+      /* Source repo: adscore-adblock-warning */
+      .blocker-warning {
+        background: linear-gradient(0deg, rgba(150, 36, 49, 0.49) 0%, rgba(150, 36, 49, 0.49) 100%),
+          rgba(12, 34, 52, 0.98);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+        z-index: 9999999;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        /* https://stackoverflow.com/a/30293718 */
+        padding-left: calc(100vw - 100%) !important;
+        padding-right: 0 !important;
+      }
+
+      #close-blocker-warning {
+        color: #ffffff;
+        cursor: pointer;
+        position: fixed;
+        top: 48px;
+        right: 48px;
+      }
+
+      .blocked-warning-container hr {
+        border-top: 1px solid #bfc6ca;
+        border-bottom: none;
+        opacity: 0.5;
+        width: 100%;
+        margin: 0;
+      }
+
+      .blocked-warning-container label {
+        display: flex;
+        gap: 8px;
+        color: #bfc6ca;
+        font-family: 'kappa', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+
+      .blocker-warning-content {
+        display: flex;
+        gap: 24px;
+      }
+
+      .blocker-warning-content > svg {
+        width: 54px;
+        height: 54px;
+        flex-shrink: 0;
+      }
+
+      .blocker-warning-text {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex-grow: 1;
+      }
+
+      .blocker-warning-text > div {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      /* adblock detected header */
+      .blocker-warning-text > div > span {
+        color: #fff;
+        font-family: 'kappa', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        text-transform: uppercase;
+      }
+
+      .blocker-warning-text > span {
+        color: #bfc6ca;
+        font-family: 'kappa', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .blocker-warning a {
+        color: #fff;
+        font-style: normal;
+        text-decoration: none;
+      }
+
+      .blocker-warning a:hover {
+        color: #fff;
+        font-style: normal;
+        text-decoration: underline;
+      }
+
+      .blocker-warning .mobile-close-placeholder {
+        width: 54px;
+        height: 24px;
+      }
+
+      .blocked-warning-container {
+        max-width: 1340px;
+        margin: 0 auto;
+        display: flex;
+        padding: 48px 0px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      @media screen and (max-width: 1340px) {
+        .blocked-warning-container {
+          padding: 48px 5vw;
+        }
+      }
+    </style>
+  <link rel="stylesheet" href="styles.4e6908287d631e6b.css"><style ng-app-id="ng">#loading-indicator{background:rgba(255,255,255,.85);position:fixed;overflow:hidden;z-index:10;inset:-10%}#loading-indicator .center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}#loading-indicator .center .logo{width:150px;height:140px;margin:auto;overflow:auto;background-size:150px 140px}#loading-indicator .center #balls{position:relative;text-align:center;margin-top:1.5rem}.fake-loader{position:absolute;inset:0;z-index:-9999999;background-color:transparent}.fade-out-loader{z-index:9999999;background-color:transparent;transition:background-color .3s linear}.fade-loader{z-index:9999999;background-color:#ffffff40;transition:background-color .3s linear}#balls{transform:translate(-50%,-50%);position:absolute;z-index:11;top:50%;left:50%}#page,#main{position:relative;width:100%}#page{min-height:100vh;height:auto}#main{max-width:1340px;margin:0 auto;min-height:100%;height:auto;background-color:#fff;background-repeat:no-repeat;background-size:auto 426px;background-position:right -1px}@media (max-width: 575.98px){#main{background-image:none}}@media (max-width: 575.98px){#main.logged-in #landing-screen{padding-top:10rem}}.section{width:100%;position:relative}.section.section--spread{min-height:100vh}.section--container{padding:4rem}@media (max-width: 575.98px){.section--container{padding:5vw}}@media (min-width: 1200px) and (max-height: 800px){.section--container{padding:3rem 4rem}}@media (min-width: 576px){#homepage-header nav#additional-resources,#home-sidebar-wrapper nav#additional-resources,#homepage-footer nav#additional-resources{margin-top:1rem}}#homepage-header nav .nav-bar,#home-sidebar-wrapper nav .nav-bar,#homepage-footer nav .nav-bar{list-style-type:none}#homepage-header nav a,#homepage-header nav button,#home-sidebar-wrapper nav a,#home-sidebar-wrapper nav button,#homepage-footer nav a,#homepage-footer nav button{color:#fff;display:block;font-weight:700;line-height:1;padding:1.25rem 0;text-decoration:none;text-transform:uppercase;transition:box-shadow .25s ease-in-out}#homepage-header nav button,#home-sidebar-wrapper nav button,#homepage-footer nav button{background-color:transparent;border:none}#homepage-header nav li,#home-sidebar-wrapper nav li,#homepage-footer nav li{display:inline-block}@media (max-width: 575.98px){#homepage-header nav li,#home-sidebar-wrapper nav li,#homepage-footer nav li{padding-left:calc(.5rem - 4px);padding-right:calc(.5rem - 4px)}#homepage-header nav li:first-child,#home-sidebar-wrapper nav li:first-child,#homepage-footer nav li:first-child{padding-left:0}#homepage-header nav li:last-child,#home-sidebar-wrapper nav li:last-child,#homepage-footer nav li:last-child{padding-right:0}#homepage-header nav a,#home-sidebar-wrapper nav a,#homepage-footer nav a{padding:.75rem 0}}#homepage-header{position:absolute;top:0;left:0;width:100%;z-index:6}@media (max-width: 575.98px){#homepage-header #toggle-and-logo{position:fixed;left:0;width:100%;background:#032336;z-index:200;height:4rem}#homepage-header nav{width:initial!important;position:absolute!important;left:calc(1.25rem + 2px)}#homepage-header app-navigation-bar{display:none}}#homepage-header nav{width:100%;padding-right:3rem;position:relative}#homepage-header nav li+li{margin-left:calc(1.5rem - 4px)}@media (min-width: 768px){#homepage-header nav li div{border-top:3px solid transparent!important}#homepage-header nav li div:hover{border-top:3px solid rgba(255,255,255,.75)!important;transform:none}#homepage-header nav li div:hover a{transform:translateY(-3px)}}#homepage-header nav li div{transform:translateY(-3px);border-top:3px solid transparent!important}#homepage-header nav li.active div{border-top:3px solid white!important;transform:none}#homepage-header nav li.active a{transform:translateY(-3px)}#homepage-header nav #language{position:absolute;right:0;top:0}@media (max-width: 575.98px){#homepage-header nav{padding-right:0;text-align:center}#homepage-header nav #language{top:2.25rem;right:1.25rem;z-index:1}}#homepage-header #top-wing--for-mobile{display:none}#homepage-header #header--second-level{margin-left:2rem;margin-top:21px}#homepage-header #header--identity>*{display:inline-block;vertical-align:middle}#homepage-header #header--identity .logo{width:8.5rem;height:8.5rem;position:relative;background-image:url(/assets/img/adscore--logo--w-color--wo-text.min.svg);background-repeat:no-repeat;background-size:contain;background-position:left top}#homepage-header #header--identity .text-brand{margin-left:calc(.5rem - 4px)}@media (max-width: 575.98px){#homepage-header #header--identity{display:none}}#homepage-header #header--identity-mobile{display:none}#homepage-header #header--identity-mobile img{width:48px}@media (max-width: 575.98px){#homepage-header #header--identity-mobile{display:flex;justify-content:center}}#homepage-header #header--login{width:22rem;max-width:100%;float:right;position:relative}@media (max-width: 575.98px){#homepage-header #header--login{padding-top:4rem}#homepage-header #header--login:not(.logged-in){display:none}}#homepage-header #header--login form:after,#homepage-header #header--login .logged-in-controls:after{background-color:#032336;border-radius:50%;color:#fff;content:"or";font-size:1rem;font-weight:800;text-align:center;text-transform:uppercase;position:absolute;left:50%;width:2.875rem;height:2.875rem;line-height:2.875rem;transform:translate(-50%)}#homepage-header #header--login form:after{bottom:3.25rem}#homepage-header #header--login .logged-in-controls:after{bottom:0}#homepage-header #header--login #remember-me{height:2rem;color:#929292}#homepage-header #header--login .button{padding-left:1.1rem;padding-right:1.1rem}@media (max-width: 480px){#homepage-header #header--login.logged-in{margin-bottom:2rem}}@media (max-width: 1340px){#homepage-header{margin-left:1.25rem;margin-right:1.25rem;width:calc(100% - 2.5rem)}#homepage-header #header--login{width:20.75rem}#homepage-header #header--identity{margin-left:-1rem}}@media (max-width: 1090px){#homepage-header #header--second-level{margin-left:-.5rem}#homepage-header #header--identity{margin-left:1.25rem}#homepage-header #header--identity .text-brand{width:8.5rem;text-align:center;font-size:1.5rem!important;margin-top:.75rem!important}}@media (max-width: 575.98px){#homepage-header{background-color:#032336;margin-left:0;margin-right:0;padding-left:1.25rem;padding-right:1.25rem;width:100%}#homepage-header #top-wing--for-mobile{display:none;position:absolute;right:0;overflow:hidden}#homepage-header #top-wing--for-mobile svg{width:55rem;height:auto;margin-top:-5px;margin-right:-4rem}#homepage-header #top-wing--for-mobile svg path{fill:#032336}#homepage-header #header--second-level{margin-top:0}#homepage-header #header--identity{position:absolute;top:1.25rem}#homepage-header #header--identity .logo{width:6.5rem;height:6.5rem}#homepage-header #header--identity .text-brand{width:6.5rem;margin-top:.5rem!important;font-size:1.25rem!important}}@media (max-width: 575.98px){#homepage-header #header--identity{margin-left:2.5rem;top:2rem}#homepage-header #top-wing--for-mobile svg{width:28rem;margin-top:-2px;margin-right:-2rem}}#homepage-footer{margin-top:-4rem}#homepage-footer nav li{margin:0 .35rem}@media (min-width: 768px){#homepage-footer nav li div{border-bottom:3px solid transparent}#homepage-footer nav li div:hover{border-bottom:3px solid rgba(255,255,255,.75);transform:none}#homepage-footer nav li div:hover a,#homepage-footer nav li div:hover button{transform:translateY(3px)}}#homepage-footer nav li div{transform:translateY(3px);border-bottom:3px solid transparent}#homepage-footer nav li.active div{border-bottom:3px solid white;transform:none}#homepage-footer nav li.active a{transform:translateY(3px)}.footer--wing{background-color:transparent;position:relative}.footer--wing .wing{margin-left:-2px;margin-right:-2px}.footer--wing .wing svg,.footer--wing .logo svg{display:block;width:100%;height:auto}.footer--wing .logo{width:4rem;height:auto;position:absolute;left:50%;bottom:20%;transform:translate(-50%)}@media (max-width: 575.98px){#homepage-footer{margin-top:0}.footer--wing .wing{padding-top:1.8rem}.footer--wing .logo{bottom:0;height:3rem}.footer--wing .logo svg{height:100%;width:auto;margin:0 auto}}.button{background:#032336;color:#fff;text-decoration:none!important;display:inline-block;font-weight:900;letter-spacing:.02rem;line-height:1;position:relative;text-align:center;text-decoration:none;text-transform:uppercase;opacity:1;padding:1rem 2rem;transition:opacity .25s ease;-webkit-tap-highlight-color:transparent;border:0}.button.cta{font-size:1.25rem;padding:1.25rem 2.25rem}.button.cta:after{content:" ";position:absolute;width:100%;height:1.25rem;bottom:-1.1rem;right:-.5rem;background-image:url(/assets/img/adscore--cta--bottom-wing.min.svg);background-repeat:no-repeat;background-position:right top;background-size:contain}@media (min-width: 768px){.button:hover{opacity:.9}}#landing-screen{padding-top:15rem;z-index:1}#landing-screen .section--container{padding-left:11rem}@media (min-width: 1090px) and (max-width: 1600px){#landing-screen .section--container{padding-top:1rem;padding-bottom:3rem}}@media (max-width: 991.98px){#landing-screen .section--container{padding-left:5vw}}@media (max-width: 575.98px){#landing-screen{padding-top:4rem}#landing-screen .section--container h1{font-size:1.75rem}#landing-screen .section--container h1+p{font-size:1rem!important}}@media (min-width: 1200px) and (max-height: 800px){#landing-screen .section--container{padding-top:0}}.textarea-wrapper{height:10rem}.marketing-landing-page section+section .section--container{padding-top:2rem}.marketing-landing-page app-content-divider+section .section--container{padding-bottom:2.5rem}.marketing-landing-page section+app-cta{display:block;margin-top:-2rem}#wings-top{position:absolute;top:-2px;pointer-events:none;z-index:1;left:-2px;width:calc(100% + 4px);max-width:calc(100% + 4px)}#header--sidebar{width:12%;height:100%;position:absolute;top:75px;left:63px;z-index:0}#page[is-faq] #homepage-header{pointer-events:none}#page[is-faq] #homepage-header #header--login,#page[is-faq] #homepage-header nav{pointer-events:initial}@media (max-width: 575.98px){#wings-top{display:none!important}}#home-sidebar-overlay{opacity:0;pointer-events:none;background:rgba(0,0,0,.5);position:fixed;top:4rem;left:0;z-index:100;width:100%;height:100%}#home-sidebar-wrapper{position:fixed;left:0;z-index:10;width:13.75rem;margin-left:-13.75rem;top:4rem;background:#032336;height:100%;border-top:1px solid black;transition:margin-left .2s cubic-bezier(.35,0,.25,1)}@media (prefers-reduced-motion: reduce){#home-sidebar-wrapper{transition:none}}#home-sidebar-wrapper li{width:100%;padding-left:1.25rem!important;padding-right:1.25rem!important}#home-sidebar-wrapper li.active{border-left:3px solid white}#home-sidebar-wrapper li.active a{margin-left:-3px}#home-sidebar-wrapper hr{margin-left:1.25rem;margin-right:1.25rem;border-top:1px solid white;opacity:1}.aside-toggled-mobile #home-sidebar-overlay{opacity:1;pointer-events:initial}.aside-toggled-mobile #home-sidebar-wrapper{margin-left:0}@media (max-width: 575.98px){header .text-brand{color:#fff}}.footer--content{margin-top:-1px;padding-top:13px}#badge-img{width:160px;margin-right:12px}@media (max-width: 575.98px){#badge-img{width:100px;margin:25px auto}}
+</style><style ng-app-id="ng">@charset "UTF-8";li[_ngcontent-ng-c1093065446]{position:relative;padding-left:calc(.75rem - 4px);padding-right:calc(.75rem - 4px);margin-left:0!important;margin-right:0!important}li[_ngcontent-ng-c1093065446]:first-of-type{padding-left:0}li.open[_ngcontent-ng-c1093065446]{background-color:#334d5c}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]{text-align:left;left:0;z-index:10}@media (min-width: 576px){li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]{position:absolute;white-space:nowrap}}li[_ngcontent-ng-c1093065446]   .sublinks.footer[_ngcontent-ng-c1093065446]{bottom:100%}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446]{padding:0 1rem 0 .5rem;border-top:2px solid transparent;background-color:#334d5c;transition:background-color .25s ease}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446]   a[_ngcontent-ng-c1093065446]{padding:.75rem 0!important}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446]   a[_ngcontent-ng-c1093065446]:before{color:#ffffff26;content:"\21b3";margin-right:.5rem;transition:color .25s ease}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446] + .sublink[_ngcontent-ng-c1093065446]{border-top:1px solid rgba(3,35,54,.5)}@media (min-width: 768px){li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446]:hover{background-color:#6f828c}li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]   .sublink[_ngcontent-ng-c1093065446]:hover   a[_ngcontent-ng-c1093065446]:before{color:#fff}}@media (max-width: 767.98px){li[_ngcontent-ng-c1093065446]   .sublinks[_ngcontent-ng-c1093065446]{left:auto;right:0}}#navbar--identity[_ngcontent-ng-c1093065446]{display:inline-block;margin-right:45px;margin-left:7%}#navbar--identity[_ngcontent-ng-c1093065446]   #header-logo[_ngcontent-ng-c1093065446]{width:40px;height:40px;vertical-align:-12px}#navbar--identity[_ngcontent-ng-c1093065446]   span.text-brand[_ngcontent-ng-c1093065446]{color:#fff}</style><style ng-app-id="ng">.content-divider[_ngcontent-ng-c542170583]{height:2rem;width:100%;position:relative;z-index:2}.content-divider[_ngcontent-ng-c542170583]:before, .content-divider[_ngcontent-ng-c542170583]:after{content:" ";height:2px;width:calc(50% - 2.25rem);background-color:#e6e8eb;position:absolute;top:calc(1rem - 1px)}.content-divider[_ngcontent-ng-c542170583]:before{left:0}.content-divider[_ngcontent-ng-c542170583]:after{right:0}.content-divider[_ngcontent-ng-c542170583]   .logo[_ngcontent-ng-c542170583]{height:2rem;position:absolute;top:0;left:50%;transform:translate(-50%)}.content-divider[_ngcontent-ng-c542170583]   .logo[_ngcontent-ng-c542170583]   svg[_ngcontent-ng-c542170583]{height:100%;width:auto}.content-divider[_ngcontent-ng-c542170583]   .logo[_ngcontent-ng-c542170583]   .path[_ngcontent-ng-c542170583]{fill:#dbdcdf}.content-divider.on-dark-background[_ngcontent-ng-c542170583]:before, .content-divider.on-dark-background[_ngcontent-ng-c542170583]:after{background-color:#334d5c}.content-divider.on-dark-background[_ngcontent-ng-c542170583]   .logo[_ngcontent-ng-c542170583]   .path[_ngcontent-ng-c542170583]{fill:#435b69}.content-divider.filled[_ngcontent-ng-c542170583]   .logo[_ngcontent-ng-c542170583]   .svg-background[_ngcontent-ng-c542170583]{fill:#fff}.content-divider[_ngcontent-ng-c542170583]:not(.filled)   .logo[_ngcontent-ng-c542170583]   .svg-background[_ngcontent-ng-c542170583]{fill:#fff0}.content-divider.no-logo[_ngcontent-ng-c542170583]:before, .content-divider.no-logo[_ngcontent-ng-c542170583]:after{width:50%}</style><meta name="description" content="Terms of Service for using Adscore."><meta name="og:type" content="website"><meta name="og:title" content="Adscore: Terms of Service"><meta name="og:description" content="Terms of Service for using Adscore."><meta name="og:url" content="https://www.adscore.com/tos"><meta name="og:site_name" content="Adscore"><meta name="og:image" content="https://www.adscore.com/assets/img/adscore--social-media-share--v1-tiny.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:description" content="Terms of Service for using Adscore."><meta name="twitter:title" content="Adscore: Terms of Service"><meta name="twitter:image" content="https://www.adscore.com/assets/img/adscore--social-media-share--v1-tiny.jpg"><style ng-app-id="ng">.hide-outside-view{width:0;height:0;position:absolute;left:0;opacity:0}.input-component-container{position:relative}.input-component-container app-loading-indicator{position:absolute;inset:0;padding-top:23px}.multi-input-container{border-top:1px solid #e6e8eb}.multi-input-container .ngx-select:not(.b-primary){border-top:none!important;border-bottom:none!important}.multi-input-container .ngx-select+input{padding-top:8px!important}.multi-input-container span{color:#333!important;max-width:100%;white-space:normal;text-align:left}.multi-input-container input:not(.b-primary){border-top:none!important}.multi-input-container:hover .ngx-select{background-color:#fff!important}.multi-input-container a.ngx-select__clear{padding:0;opacity:.5;margin-left:5px}.multi-input-container .ngx-select__clear-icon{display:inline-block;font-size:inherit;cursor:pointer;position:relative;width:1em;height:.75em;padding:0}.multi-input-container .ngx-select__clear-icon:before{content:"";position:absolute;border-top:3px solid;border-top-width:3px;border-top-style:solid;border-top-color:initial;width:100%;top:50%;left:0;margin-top:-1px;transform:rotate(45deg)}.multi-input-container .ngx-select__clear-icon:after{content:"";position:absolute;border-top:3px solid;border-top-width:3px;border-top-style:solid;border-top-color:initial;width:100%;top:50%;left:0;margin-top:-1px;transform:rotate(-45deg)}input::placeholder{white-space:initial}
+</style><style ng-app-id="ng">a[_ngcontent-ng-c1383193272]{font-weight:900;text-decoration:underline}@media (max-width: 575.98px){a[_ngcontent-ng-c1383193272]{word-break:break-all}}</style></head>
+  <body><!--nghm-->
+    <app-root _nghost-ng-c3450146732="" ng-version="16.2.12" class="layout-fixed layout-boxed" ngh="6" ng-server-context="ssg|httpcache,hydration"><router-outlet _ngcontent-ng-c3450146732=""></router-outlet><app-layout ngh="5"><div id="home-sidebar-overlay">
+  <div id="home-sidebar-wrapper">
+    <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+    <nav>
+      <app-navigation-bar _nghost-ng-c1093065446="" ngh="0"><ul _ngcontent-ng-c1093065446="" class="m-0 p-0">
+  <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/">Home</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/pricing">Pricing</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/implementations">Implementations</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/faq">FAQ</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/tech-documentation">Documentation</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" class="cursor-pointer">Use Cases</a>
+        <!---->
+      </div>
+    </li><!---->
+  <!----><!---->
+  <li _ngcontent-ng-c1093065446="" class="demo-dashboard-reference">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" href="/demo-login" mattooltipposition="above" mattooltip="Get to see how Adscore works" data-cta-demo="" class="mat-mdc-tooltip-trigger" data-cta="homepage-header" aria-describedby="cdk-describedby-message-ng-59-61" cdk-describedby-host="ng-59">Demo</a><!---->
+    </div>
+  </li><!---->
+  <li _ngcontent-ng-c1093065446="" class="">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/contact" mattooltipposition="above" mattooltip="Get in touch" class="mat-mdc-tooltip-trigger" href="/contact" aria-describedby="cdk-describedby-message-ng-59-60" cdk-describedby-host="ng-59">Contact</a><!---->
+    </div>
+  </li>
+  <div _ngcontent-ng-c1093065446="" class="d-sm-none">
+    <hr _ngcontent-ng-c1093065446="">
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/sign-in" href="/sign-in">Sign in</a>
+    </li>
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/register" href="/register">Register</a>
+    </li>
+  </div><!---->
+</ul>
+</app-navigation-bar>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+  <div id="main" class="">
+    <img id="wings-top" alt="wings" src="/assets/img/adscore--header-wing.min.svg">
+    <header id="homepage-header">
+      <div id="toggle-and-logo" class="d-flex align-items-center justify-content-center">
+        <nav>
+          <button aria-label="open menu" type="button" class="nav-link d-sm-none fs-1">
+            <em class="icon-options-vertical align-middle"></em>
+          </button>
+          <app-navigation-bar _nghost-ng-c1093065446="" ngh="0"><ul _ngcontent-ng-c1093065446="" class="m-0 p-0">
+  <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/">Home</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/pricing">Pricing</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/implementations">Implementations</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/faq">FAQ</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/tech-documentation">Documentation</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" class="cursor-pointer">Use Cases</a>
+        <!---->
+      </div>
+    </li><!---->
+  <!----><!---->
+  <li _ngcontent-ng-c1093065446="" class="demo-dashboard-reference">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" href="/demo-login" mattooltipposition="above" mattooltip="Get to see how Adscore works" data-cta-demo="" class="mat-mdc-tooltip-trigger" data-cta="homepage-header" aria-describedby="cdk-describedby-message-ng-59-61" cdk-describedby-host="ng-59">Demo</a><!---->
+    </div>
+  </li><!---->
+  <li _ngcontent-ng-c1093065446="" class="">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/contact" mattooltipposition="above" mattooltip="Get in touch" class="mat-mdc-tooltip-trigger" href="/contact" aria-describedby="cdk-describedby-message-ng-59-60" cdk-describedby-host="ng-59">Contact</a><!---->
+    </div>
+  </li>
+  <div _ngcontent-ng-c1093065446="" class="d-sm-none">
+    <hr _ngcontent-ng-c1093065446="">
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/sign-in" href="/sign-in">Sign in</a>
+    </li>
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/register" href="/register">Register</a>
+    </li>
+  </div><!---->
+</ul>
+</app-navigation-bar>
+          <div id="language" class="d-none">
+            <a href="#">▼ EN</a>
+          </div>
+        </nav>
+        <div id="header--identity-mobile" routerlink="/" class="align-items-center my-2" tabindex="0">
+          <img alt="adscore logo" src="/assets/img/adscore--logo--w-color--wo-text.min.svg">
+          <span class="text-brand fs-2 lh-1"><span>AD</span>score</span>
+        </div>
+      </div>
+      <div id="top-wing--for-mobile"></div><!---->
+      <div id="header--second-level">
+        <div class="row no-gutters">
+          <div class="col">
+            <div id="header--identity">
+              <div role="img" aria-label="adscore logo" class="logo"></div>
+              <span class="text-brand fs-1-75 lh-1 m-t-1-25"><span>AD</span>score</span>
+            </div>
+          </div>
+          <div class="col">
+            <div id="header--login" class="">
+              <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+              <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+                <form novalidate="" method="post" class="ng-untouched ng-pristine ng-valid">
+                  <div class="row">
+                    <div class="col">
+                      <app-input data-testid="email-input" ngh="1"><div class="input-component-container"><!----><div class="input-field"><input class="ng-untouched ng-pristine ng-valid" placeholder="" type="email" name="email" id="email" autocomplete="email" value=""><!----><!----><!----><!----><!----><!----><label for="email">Email</label></div><!----><!----><!----></div><!----><!----></app-input>
+                    </div>
+                    <div class="col">
+                      <app-input ngh="1"><div class="input-component-container"><!----><div class="input-field"><input class="ng-untouched ng-pristine ng-valid" placeholder="" type="password" name="password" id="password" autocomplete="current-password" value=""><!----><!----><!----><!----><!----><!----><label for="password">Password</label></div><!----><!----><!----></div><!----><!----></app-input>
+                    </div>
+                  </div>
+                  <div class="row m-t-1-25">
+                    <div class="col">
+                      <button id="button--sign-in" type="button" class="button cursor-pointer background-primary text-white w-100">
+                        Sign In
+                      </button>
+                    </div>
+                    <div class="col">
+                      <a href="/register" data-testid="desktop-register-btn" class="button background-white text-secondary w-100">Register</a>
+                    </div>
+                  </div>
+                </form>
+              <!---->
+
+              <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+              <!---->
+
+              <div id="remember-me" class="row m-t-1-25">
+                <div class="col">
+                  <label class="c-checkbox">
+                    <input name="rememberme" type="checkbox" class="ng-untouched ng-pristine ng-valid">
+                    <fa-icon class="ng-fa-icon m-r-0-5 hidden" ngh="2"><svg role="img" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path></svg></fa-icon>
+                    Remember Me
+                  </label>
+                </div>
+              </div><!---->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+    <router-outlet></router-outlet><tos _nghost-ng-c1383193272="" ngh="2"><section _ngcontent-ng-c1383193272="" id="landing-screen" class="section">
+  <div _ngcontent-ng-c1383193272="" class="section--container">
+    <div _ngcontent-ng-c1383193272="" class="row">
+      <div _ngcontent-ng-c1383193272="" class="col-lg-6">
+        <h1 _ngcontent-ng-c1383193272="" class="d-sm-block text-primary text-ultra m-b-2">Terms of Service</h1>
+        <p _ngcontent-ng-c1383193272="" class="fs-1-25">Last updated date: January 14th, 2019</p>
+      </div>
+    </div>
+  </div>
+</section>
+<div _ngcontent-ng-c1383193272="" id="homepage-content">
+  <app-content-divider _ngcontent-ng-c1383193272="" _nghost-ng-c542170583="" ngh="3"><div _ngcontent-ng-c542170583="" class="content-divider">
+  <div _ngcontent-ng-c542170583="" class="logo">
+    <img _ngcontent-ng-c542170583="" alt="Adscore logo" src="/assets/img/adscore--logo--wo-color--w-fill--wo-text.min.svg" width="34" height="32" loading="lazy"><!---->
+    <!---->
+  </div><!---->
+</div>
+</app-content-divider>
+  <div _ngcontent-ng-c1383193272="" class="section">
+    <div _ngcontent-ng-c1383193272="" class="section--container">
+      <div _ngcontent-ng-c1383193272="" class="row justify-content-center">
+        <div _ngcontent-ng-c1383193272="" class="col-lg-8">
+          <div _ngcontent-ng-c1383193272="">
+            <h2 _ngcontent-ng-c1383193272="" id="services">Services</h2>
+            <p _ngcontent-ng-c1383193272="">
+              These Terms of Service (these “Terms”) apply to the features and functions provided by Adscore
+              Technologies DMCC (“Adscore,” “our,” or “we”) via adscore.com (the “Site”) (collectively, the “Services”).
+              By accessing or using the Site or the Services, you agree to be bound by these Terms. If you do not agree
+              to these Terms, you are not allowed to use the Site or the Services. The “Effective Date” of these Terms
+              is the date you first use the Site, or access any of the Services.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              If you are using the Site or accessing the Services in your capacity as an employee, consultant or agent
+              of a company or other entity, you represent that you are an employee, consultant or agent of that company
+              or entity, and that you have the authority to bind that company or entity to these Terms. For the purpose
+              of these Terms, you (and, if applicable, the company or entity that you represent) will be referred to as
+              “Client” or “you”.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              Adscore reserves the right to change or modify these Terms, or any of our other policies or guidelines, at
+              any time upon notice to you. We may provide that notice in a variety of ways, including, without
+              limitation, sending you an email, posting a notice on the Site, or posting the revised Terms on the Site
+              and revising the date at the top of these Terms. Any changes or modifications will be effective after we
+              provide notice that these Terms have been modified. You acknowledge that your continued use of the Site or
+              any of the Services following such notice constitutes your acceptance of the modified Terms.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              Adscore reserves the right – at any time, and without notice or liability to you – to modify the Site or
+              the Services, or any part of them, temporarily or permanently. We may modify the Services for a variety of
+              reasons, including, without limitation, for the purpose of providing new features, implementing new
+              protocols, maintaining compatibility with emerging standards, or complying with regulatory requirements.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              These Terms form a binding agreement between you and Adscore. Violation of any of the Terms below will
+              result in the termination of your account(s).
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="privacy">Privacy</h2>
+            <p _ngcontent-ng-c1383193272="">
+              Please refer to Adscore’s privacy policy, made available at
+              <a _ngcontent-ng-c1383193272="" href="https://www.adscore.com/privacy-policy">https://www.adscore.com/privacy-policy</a> for
+              information about how we collect and use information about the users of our Site and Services. By using
+              the Site and the Services, you consent to our collection and use of information as set forth in our
+              privacy policy, as we may update that policy from time to time.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="registering">Registering</h2>
+            <p _ngcontent-ng-c1383193272="">
+              In order to use the Services, you must first complete the registration process via the Site. During the
+              registration process, you agree:
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                to provide accurate, current and complete information about you as part of the registration process
+                (“Registration Data”);
+              </li>
+              <li _ngcontent-ng-c1383193272="">to maintain the security of your password;</li>
+              <li _ngcontent-ng-c1383193272="">
+                to accept all risks of unauthorized access to your Registration Data, and any other information you
+                provide to Adscore, via your account(s) or password(s);
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                that you are responsible for maintaining the security of your account and safeguarding your password(s);
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                that you will be fully responsible for any activities or transactions that take place using your
+                account(s) or password(s), even if you were not aware of them.
+              </li>
+            </ol>
+            <h2 _ngcontent-ng-c1383193272="" id="accessing-the-services">Accessing the Services</h2>
+            <p _ngcontent-ng-c1383193272="">
+              Subject to your continued compliance with these Terms, Adscore grants you a limited, non-transferable,
+              non-exclusive, revocable right and license to:
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                access and use the Services and its associated documentation, solely for your own internal business
+                purposes, for the period of which you have paid the applicable post-paid subscription fees or pre-paid
+                deposits;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                access and use any data or reports that we provide or make available to you as part of your access and
+                use of the Services (collectively, “Reports”), solely in conjunction with your use of the Services.
+                Reports are considered part of the applicable Services, for the purpose of the license granted above.
+              </li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              You understand that Adscore uses third-party vendors and hosting partners to provide the necessary
+              hardware, software, networking, storage, and related technology required to provide the Services, and you
+              agree that Adscore is not and will not be liable or responsible for the acts or omissions of such
+              third-party vendors or hosting partners.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="restrictions">Restrictions</h2>
+            <p _ngcontent-ng-c1383193272="">Except as expressly authorized by these Terms, you may not:</p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">modify, disclose, alter, translate or create derivative works of the Site or the Services;</li>
+              <li _ngcontent-ng-c1383193272="">
+                license, sublicense, resell, distribute, lease, rent, lend, transfer, assign or otherwise dispose of the
+                Services or any Report (or any components thereof);
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                offer any part of the Services (including, without limitation, any Report) on a timeshare or service
+                bureau basis;
+              </li>
+              <li _ngcontent-ng-c1383193272="">allow or permit any third party to access or use the Services;</li>
+              <li _ngcontent-ng-c1383193272="">
+                use the Site or the Services to store or transmit any viruses, software routines, or other code designed
+                to permit anyone to access in an unauthorized manner, disable, erase or otherwise harm software,
+                hardware, or data, or to perform any other harmful actions;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                build a competitive product or service, or copy any features or functions of the Site or the Services
+                (including, without limitation, the look-and-feel of the Site or the Services);
+              </li>
+              <li _ngcontent-ng-c1383193272="">interfere with or disrupt the integrity or performance of the Site or the Services;</li>
+              <li _ngcontent-ng-c1383193272="">
+                remove, alter or obscure any proprietary notices in or on the Site or the Services, including copyright
+                notices;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                use the Site or the Services or any product thereof for any illegal or unauthorized purpose, or in a
+                manner which violates any laws or regulations in your jurisdiction;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code, object code,
+                or underlying structure, ideas, or algorithms that make up the Services or any software, documentation,
+                or data relating to the Services
+              </li>
+              <li _ngcontent-ng-c1383193272="">cause or permit any third party to do any of the foregoing.</li>
+            </ol>
+            <h2 _ngcontent-ng-c1383193272="" id="content">Content</h2>
+            <p _ngcontent-ng-c1383193272="">
+              Any Uniform Resource Locator (“URL”) that you publish and configure by means of the Services, and the
+              information that it link s to is considered Your “Content”. You agree that you are entirely responsible
+              for such Content, and for any harm or liability resulting from or arising out of that Content, regardless
+              of what type of information the URL links to, including whether or not you were the original creator or
+              owner of the Content. You agree that you will be responsible for all Content on your account(s), even if
+              placed there by third parties. By publishing or uploading Content to the Site or the Services, you
+              represent and warrant that:
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                The Content does not and will not infringe, violate or misappropriate the Intellectual Property Rights
+                of any third party (where “Intellectual Property Rights” are defined as any patents, copyrights, moral
+                rights, trademarks, trade secrets, or any other form of intellectual property rights recognized in any
+                jurisdiction in the world, including applications and registrations for any of the foregoing)
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                You have obtained all rights and permissions necessary to publish and/or use the Content in the manner
+                in which you have published and/or used it
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                <p _ngcontent-ng-c1383193272="">
+                  Adscore’s use of the Content for the purpose of providing the Services (including, without limitation,
+                  downloading, copying, processing, or creating aggregations of the Content) does not and will not:
+                </p>
+                <ol _ngcontent-ng-c1383193272="">
+                  <li _ngcontent-ng-c1383193272="">violate any applicable laws or regulations,</li>
+                  <li _ngcontent-ng-c1383193272="">Or infringe, violate, or misappropriate the Intellectual Property Rights of any third party</li>
+                </ol>
+              </li>
+              <li _ngcontent-ng-c1383193272=""><p _ngcontent-ng-c1383193272="">You have fully complied with any third-party licenses relating to the Content</p></li>
+              <li _ngcontent-ng-c1383193272="">
+                The Content does not contain or install any viruses, worms, malware, Trojan horses or other harmful or
+                destructive code
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                The Content is not spam, is not randomly-generated, and does not contain unethical or unwanted
+                commercial content designed to drive traffic to third party sites or boost the search engine rankings of
+                third party sites, or for any other unlawful acts (such as phishing), or for misleading recipients as to
+                the source of the material (such as spoofing)
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                The Content does not contain threats or incitement to violence, and does not violate the privacy or
+                publicity rights of any third party;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                The Content is not being advertised via unwanted electronic messages (such as, by way of example, spam
+                links on newsgroups, email lists, other blogs and websites, and similar unsolicited promotional methods)
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                The Content is not named in a manner that misleads (or could mislead) third parties into thinking that
+                you are another person or company (by way of example, your Content’s URL or name should not be
+                confusingly similar to the name of another person or entity)
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                By submitting or uploading Content to the Services, you grant Adscore a worldwide, royalty-free, and
+                non-exclusive license to use, reproduce, modify, adapt and publish that Content for the purpose of
+                providing the Services to you
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                If you delete Content, Adscore will use reasonable efforts to remove it from the Services. You
+                acknowledge, however, that cached copies or other references to the Content may still be available.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                <p _ngcontent-ng-c1383193272="">
+                  Without limiting any of your representations or warranties with respect to the Content, Adscore has
+                  the right (but not the obligation) to reject or remove any Content, without liability or notice to
+                  you, that Adscore believes, in Adscore’ sole discretion that it either:
+                </p>
+                <ol _ngcontent-ng-c1383193272="">
+                  <li _ngcontent-ng-c1383193272="">violates these Terms or any Adscore policy,</li>
+                  <li _ngcontent-ng-c1383193272="">or violates or misappropriates the Intellectual Property Rights of any third party,</li>
+                  <li _ngcontent-ng-c1383193272="">or is in any way harmful or objectionable.</li>
+                </ol>
+              </li>
+            </ol>
+            <h2 _ngcontent-ng-c1383193272="" id="fees-and-payment-terms">Fees and Payment Terms</h2>
+            <p _ngcontent-ng-c1383193272="">
+              Pricing for the Services are displayed on the Site in CPM (“cost per thousand impressions”). In the
+              context of the Adscore Services, an impression is when a web page has been seen successfully fetched and
+              seen by a visitor, whether it is a real human or a bot. Detailed information regarding Pricing for the
+              Services and the way it applies in regards to the number of Impressions that you are routing through the
+              service can be found on the Pricing Page:
+              <a _ngcontent-ng-c1383193272="" href="https://www.adscore.com/pricing">https://www.adscore.com/pricing</a>. Additionally, you
+              acknowledge and agree with the following terms:
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                Your account will get automatically moved to a less expensive pricing tier based on the number of
+                impressions you have generated within a day.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                In the event that your account will see a decrease in traffic over a period of 3 consecutives months,
+                below the threshold of your current tier, we reserve the right to downgrade your tier accordingly.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                Each new Adscore account comes with a Trial Period credit of US$5 that can be used within 30 days of
+                creating the account, to test the Services.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                In exchange for your rights to access the Site and use the Services, after you have exhausted the Trial
+                credits or exceeded the Trial Period, you will need to deposit funds to your Adscore account using the
+                payment tools made available to you via the Adscore Dashboard, to be able to use the Service; the
+                Service currently supports deposits only via PayPal transfers in U.S. Dollars.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                <p _ngcontent-ng-c1383193272="">All Adscore accounts function under “in advance”, “pre-paid” payment terms. This means that:</p>
+                <ol _ngcontent-ng-c1383193272="">
+                  <li _ngcontent-ng-c1383193272="">
+                    You will need to keep your account’s balance positive, above US$0 (zero) to be able to use the
+                    service
+                  </li>
+                  <li _ngcontent-ng-c1383193272="">
+                    You understand that maintaining your account balance positive is your responsibility and failing to
+                    do so will infer your account being deactivated alongside the loss of any and all functionality that
+                    you currently have configured within the Service. We do not accept any liability for such loss.
+                  </li>
+                  <li _ngcontent-ng-c1383193272="">
+                    The Services will only be restored once you have made a deposit to your account that at least should
+                    cover an existing negative balance, plus US$10 to ensure that the Services can continue to function
+                    for a short while.
+                  </li>
+                </ol>
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                <p _ngcontent-ng-c1383193272="">
+                  The deposited amount does not include any taxes; you will be responsible for, and will promptly pay,
+                  all taxes associated with your use of the Site and the Services, other than taxes based on our net
+                  income.
+                </p>
+              </li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              At any given time, you can withdraw available funds deposited for The Services and associated with your
+              account, by contacting Support.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="disclaimer">Disclaimer</h2>
+            <p _ngcontent-ng-c1383193272="">
+              You acknowledge that the site and the services are provided on an “as is”, “as available” basis, without
+              warranty of any kind, whether express or implied, and that your use of the site and the services is at
+              your sole risk.
+            </p>
+            <p _ngcontent-ng-c1383193272="">Adscore does not warrant:</p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">that the site or the services will meet your specific requirements;</li>
+              <li _ngcontent-ng-c1383193272="">that the site or the services will be uninterrupted, timely, secure, or error-free;</li>
+              <li _ngcontent-ng-c1383193272="">that the results that may be obtained from the use of the services will be accurate or reliable;</li>
+              <li _ngcontent-ng-c1383193272="">
+                that the quality of any products, services, information, or other material that you purchase or obtain
+                through the site or the services will meet your expectations;
+              </li>
+              <li _ngcontent-ng-c1383193272="">that any errors in the site or the services will be corrected.</li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              Adscore specifically disclaims any implied warranties of merchantability, fitness for particular purpose,
+              title, and non-infringement.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="liability">Liability</h2>
+            <p _ngcontent-ng-c1383193272="">
+              You agree, at your sole expense, to defend, indemnify and hold Adscore (and its directors, officers,
+              employees, consultants and agents) harmless from and against any and all actual or threatened suits,
+              actions, proceedings (whether at law or in equity), claims, damages, payments, deficiencies, fines,
+              judgments, settlements, liabilities, losses, costs and expenses (including, without limitation, reasonable
+              attorneys’ fees, costs, penalties, interest and disbursements) arising out of or relating to:
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">your Content;</li>
+              <li _ngcontent-ng-c1383193272="">your use of the Site or the Services;</li>
+              <li _ngcontent-ng-c1383193272="">your failure to pay any taxes that you owe under these Terms;</li>
+              <li _ngcontent-ng-c1383193272="">
+                any other actual or alleged breach of any of your obligations under these Terms (including, among other
+                things, any actual or alleged breach of any of your representations or warranties as set forth herein).
+                You will not settle any such claim in any manner that would require Adscore to pay money or admit
+                wrongdoing of any kind without our prior written consent, which we may withhold in our sole discretion.
+              </li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              In no event will Adscore be liable to you or to any third party for any loss of profits, loss of use, loss
+              of revenue, loss of goodwill, interruption of business, loss of data, or any indirect, special,
+              incidental, exemplary, punitive or consequential damages of any kind arising out of, or in connection with
+              these terms or your use (or inability to use) any part of the site or the services, whether in contract,
+              tort, strict liability or otherwise, even if we have been advised or are otherwise aware of the
+              possibility of such damages.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="reservation-of-rights">Reservation of Rights</h2>
+            <p _ngcontent-ng-c1383193272="">As between the parties:</p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">You own all right, title and interest in and to your Content;</li>
+              <li _ngcontent-ng-c1383193272="">
+                Adscore owns all right, title and interest in and to the Site and the Services, and all Intellectual
+                Property Rights therein. The look and feel of the Site and the Services, including any custom graphics,
+                button icons, and scripts are also the property of Adscore, and you may not copy, imitate, or use them,
+                in whole or in part, without Adscore’ prior written consent. Adscore reserves all rights not expressly
+                granted to you in these Terms, and Adscore does not grant any licenses to you or to any other party
+                under these Terms, whether by implication, estoppel or otherwise, except as expressly set forth herein.
+              </li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              You acknowledge that any suggestions, comments, or other feedback that you provide to Adscore with respect
+              to the Site, the Services, or any other Adscore product or service (collectively, “Feedback”) will be
+              owned by Adscore, including all Intellectual Property Rights therein, and will be and become Adscore’
+              Confidential Information (as defined below). You acknowledge and agree that Adscore will be free to use,
+              disclose, reproduce, license, and otherwise distribute and exploit the Feedback as Adscore sees fit,
+              without obligation or restriction of any kind. At our request and expense, you agree to execute documents
+              or take such further actions as we may reasonably request to help us acquire, perfect, and maintain our
+              rights in the Feedback.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="termination">Termination</h2>
+            <p _ngcontent-ng-c1383193272="">
+              These Terms will apply to you starting on the Effective Date, and will continue for as long as you are
+              accessing or using the Site or the Services.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              Adscore, in its sole discretion, has the right to suspend your ability to use and/or access the Site or
+              the Services, without liability, under the following circumstances:<br _ngcontent-ng-c1383193272="">for scheduled or emergency
+              maintenance to the Site or the Services, or any part thereof;
+            </p>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                if Adscore believes that you are using the Site or the Services in violation of these Terms or
+                applicable law;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                if Adscore believes that your use of the Site or the Services poses a security risk to us or to any
+                third party;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                if required by law enforcement or government agency, or otherwise in order to comply with applicable law
+                or regulation;
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                if you fail to fulfill your payment obligations hereunder. Adscore also reserves the right to
+                temporarily or permanently suspend your ability to access the Services, without liability, if Adscore
+                determines, in its sole discretion, that you are engaging in abusive or excessively frequent use of the
+                Services.
+              </li>
+            </ol>
+            <p _ngcontent-ng-c1383193272="">
+              Either of us can terminate these Terms upon notice to the other if the other party breaches any of these
+              Terms and fails to cure the breach within thirty (30) days of receiving written notice of it from the
+              non-breaching party. We reserve the right to terminate these Terms for cause immediately upon notice to
+              you, and without giving you a cure period, if you breach any of these Terms relating to our intellectual
+              property (including your compliance with the access grant and any restrictions).
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              We can terminate any trial credit that you have automatically received when registering, at any time and
+              for any reason, without notice or liability to you. We can terminate any paid Plan that you have
+              subscribed to, for any reason and without liability, by providing notice to you that we intend to
+              terminate your Plan at the end of the then-current Contract Period.
+            </p>
+            <p _ngcontent-ng-c1383193272="">
+              When these Terms terminate or expire: (i) you will no longer have the right to use or access the Site or
+              the Services as of the date of termination/expiration; (ii) if you owed us any fees prior to such
+              termination/expiration, you will pay those fees immediately; and (iii) each of us will promptly return to
+              the other (or, if the other party requests it, destroy) all Confidential Information (as defined in
+              Section 13, below) belonging to the other. Sections 1, 2, 3.2, 5 through 12, 13.5, and 15 through 17 will
+              survive the termination or expiration of these Terms for any reason.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="trademarks">Trademarks</h2>
+            <p _ngcontent-ng-c1383193272="">
+              You acknowledge and agree that any Adscore names, trademarks, service marks, logos, trade dress, or other
+              branding included on the Site or as part of the Services (collectively, the “Marks”) are owned by Adscore
+              and may not be copied, imitated, or used (in whole or in part) without Adscore’s prior written consent.
+              All other trademarks, names, or logos referenced on the Site or the Services (collectively, “Third-Party
+              Trademarks”) are the property of their respective owners, and the use of such Third-Party Trademarks inure
+              to the benefit of their respective owners. The use of such Third-Party Trademarks is intended to denote
+              interoperability, and does not constitute an affiliation by Adscore or its licensors with any company or
+              an endorsement or approval by that company of Adscore, its licensors, or their respective products or
+              services.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="support">Support</h2>
+            <p _ngcontent-ng-c1383193272="">
+              If you are a registered member of the Services, Adscore will provide you with email-based support – just
+              use any of the website’s Contact or Support buttons to get in touch. While we work hard to respond to you
+              and resolve your issues quickly, we do not warrant that we will respond within any particular time frame,
+              or that we will be able to resolve your issue. We also encourage you to review our FAQ pages on the Site,
+              which can provide immediate and valuable information to help answer any of your questions.
+            </p>
+            <h2 _ngcontent-ng-c1383193272="" id="general-provisions">General Provisions</h2>
+            <ol _ngcontent-ng-c1383193272="">
+              <li _ngcontent-ng-c1383193272="">
+                This Agreement shall be governed and interpreted in accordance with the laws of the United Arab Emirates
+                as applied in the Emirate of Dubai and you consent to the non-exclusive jurisdiction of the Dubai
+                courts.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                You agree that any notice that Adscore is required to provide pursuant to these Terms can be given
+                electronically, which may include an email to the email address you provide to Adscore as part of your
+                Registration Data. These notices can be about a wide variety of things, including responding to your
+                questions, requests for additional information, and legal notices. You agree that such electronic
+                notices satisfy any legal requirement that such communications be in writing. An electronic notice will
+                be deemed to have been received on the day the email is sent to you, provided that the email is the same
+                as the email address you provided as part of your Registration Data.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                If any portion of these Terms is held to be unenforceable or invalid, that portion will be enforced to
+                the maximum extent possible, and all other provisions will remain in full force and effect.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                Except for payments due under these Terms, neither party will be responsible for any delay or failure to
+                perform that is attributable in whole or in part to any cause beyond its reasonable control, including,
+                without limitation, acts of God (fire, storm, floods, earthquakes, etc.); civil disturbances; disruption
+                of telecommunications, power or other essential services; interruption or termination of service by any
+                service providers used by Adscore to host the Services or to link its servers to the Internet; labor
+                disturbances; vandalism; cable cut; computer viruses or other similar occurrences; or any malicious or
+                unlawful acts of any third party.
+              </li>
+              <li _ngcontent-ng-c1383193272="">
+                We are each independent contractors with respect to the subject matter of these Terms. Nothing contained
+                in these Terms will be deemed or construed in any manner whatsoever to create a partnership, joint
+                venture, employment, agency, fiduciary, or other similar relationship between us, and neither of us can
+                bind the other contractually.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</tos><!---->
+
+    <footer id="homepage-footer">
+      <div class="footer--wing">
+        <div role="img" aria-label="wings" class="wing"></div><!---->
+        <div role="img" aria-label="adscore logo" class="logo"></div><!---->
+      </div>
+      <div class="footer--content background-secondary p-b-2">
+        <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+          <nav class="m-b-1 text-bold d-none d-sm-block">
+            <app-navigation-bar _nghost-ng-c1093065446="" ngh="0"><ul _ngcontent-ng-c1093065446="" class="m-0 p-0 text-center">
+  <!--ngtns--><!--ngtns--><!--ngtns--><!--ngtns-->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/">Home</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/pricing">Pricing</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/implementations">Implementations</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/faq">FAQ</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" href="/tech-documentation">Documentation</a>
+      </div>
+    </li><!---->
+    <!---->
+  <!---->
+    <!---->
+    <li _ngcontent-ng-c1093065446="" class="">
+      <div _ngcontent-ng-c1093065446="">
+        <a _ngcontent-ng-c1093065446="" class="cursor-pointer">Use Cases</a>
+        <!---->
+      </div>
+    </li><!---->
+  <!----><!---->
+  <li _ngcontent-ng-c1093065446="" class="demo-dashboard-reference">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" href="/demo-login" mattooltipposition="above" mattooltip="Get to see how Adscore works" data-cta-demo="" class="mat-mdc-tooltip-trigger" data-cta="homepage-footer" aria-describedby="cdk-describedby-message-ng-59-61" cdk-describedby-host="ng-59">Demo</a><!---->
+    </div>
+  </li><!---->
+  <li _ngcontent-ng-c1093065446="" class="">
+    <div _ngcontent-ng-c1093065446="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/contact" mattooltipposition="above" mattooltip="Get in touch" class="mat-mdc-tooltip-trigger" href="/contact" aria-describedby="cdk-describedby-message-ng-59-60" cdk-describedby-host="ng-59">Contact</a><!---->
+    </div>
+  </li>
+  <div _ngcontent-ng-c1093065446="" class="d-sm-none">
+    <hr _ngcontent-ng-c1093065446="">
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/sign-in" href="/sign-in">Sign in</a>
+    </li>
+    <li _ngcontent-ng-c1093065446="" class="">
+      <a _ngcontent-ng-c1093065446="" routerlink="/register" href="/register">Register</a>
+    </li>
+  </div><!---->
+</ul>
+</app-navigation-bar>
+          </nav>
+          <app-content-divider class="d-none d-sm-block" _nghost-ng-c542170583="" ngh="4"><div _ngcontent-ng-c542170583="" class="content-divider on-dark-background">
+  <div _ngcontent-ng-c542170583="" class="logo">
+    <!---->
+    <img _ngcontent-ng-c542170583="" alt="Adscore logo" src="/assets/img/adscore--logo--wo-color--w-fill--wo-text-dark.min.svg" width="34" height="32" loading="lazy"><!---->
+  </div><!---->
+</div>
+</app-content-divider>
+        <!---->
+
+        <nav id="additional-resources">
+          <ul class="nav-bar secondary-menu text-center m-0 p-0 fs-0-7 text-ultra o-0-75">
+            <li class="d-none"><a href="#">API</a></li>
+            <li>
+              <div><a routerlink="/privacy-policy" routerlinkactive="active" href="/privacy-policy">Privacy Policy</a></div>
+            </li>
+            <li>
+              <div><a routerlink="/tos" routerlinkactive="active" href="/tos" class="active">Terms of Service</a></div>
+            </li>
+            <li>
+              <div>
+                <button name="forgot password" class="cursor-pointer">
+                  Forgot Password
+                </button>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="copy m-t-1 text-center fs-0-7 text-bold text-white o-0-5">
+          © Copyright Adscore Technologies DMCC 2024. All content and images are copyrighted.
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!---->
+
+<!---->
+
+<swal confirmbuttontext="Close" ngh="2"></swal>
+</app-layout><!---->
+</app-root>
+    <script>
+      /* Source repo: adscore-adblock-warning */
+      Promise.allSettled([
+        createAdblockTestScript('page-ads.js'),
+        createAdblockTestScript('ads.js'),
+        createAdblockTestScript('popads.js'),
+        createAdblockTestScript('adlib.js')
+      ]).then((res) => {
+        const allScriptsLoaded = res.every((x) => x.value === true);
+
+        if (!allScriptsLoaded) {
+          showAdBlockError();
+        }
+      });
+
+      function createAdblockTestScript(scriptName) {
+        return new Promise((resolve, reject) => {
+          try {
+            const scriptElement = document.createElement('script');
+            scriptElement.setAttribute('src', `adscore-landing-assets/${scriptName}`);
+            this.document.body.appendChild(scriptElement);
+            scriptElement.onerror = () => {
+              console.warn(`Script "${scriptName}" couldn't been loaded`);
+              reject();
+            };
+
+            scriptElement.onload = (test) => {
+              const variableName = scriptName.replace('-', '_').replace('.js', '') + '_script_works';
+
+              if (window[variableName] !== true) {
+                console.warn(`Script "${scriptName}" loaded but not working`);
+                reject();
+                return;
+              }
+
+              scriptElement.remove();
+              window[variableName] = undefined;
+
+              resolve(true);
+            };
+          } catch (error) {
+            reject();
+          }
+        });
+      }
+
+      function showAdBlockError() {
+        if (localStorage.getItem('blocker-warning-closed') === 'yes') {
+          return;
+        }
+
+        const warningElement = document.createElement('template');
+
+        warningElement.innerHTML = /* HTML */ `<div
+          id="blocker-warning"
+          class="blocker-warning"
+          data-testid="blocker-warning"
+        >
+          <div class="blocked-warning-container">
+            <span id="close-blocker-warning" title="Close" data-testid="close-blocker-warning">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0 12C0 5.37481 5.37481 0 12 0C18.6252 0 24 5.37481 24 12C24 18.6252 18.6252 24 12 24C5.37481 24 0 18.6252 0 12ZM12 1.87106C6.40817 1.87106 1.87107 6.40817 1.87107 12C1.87107 17.5918 6.40817 22.1289 12 22.1289C17.5918 22.1289 22.1289 17.5918 22.1289 12C22.1289 6.40817 17.5918 1.87106 12 1.87106ZM7.65033 7.65032C8.01567 7.28498 8.60802 7.28498 8.97337 7.65032L12 10.677L15.0266 7.65032C15.392 7.28498 15.9843 7.28498 16.3497 7.65032C16.715 8.01567 16.715 8.60802 16.3497 8.97337L13.323 12L16.3497 15.0266C16.715 15.392 16.715 15.9843 16.3497 16.3497C15.9843 16.715 15.392 16.715 15.0266 16.3497L12 13.323L8.97337 16.3497C8.60802 16.715 8.01567 16.715 7.65033 16.3497C7.28498 15.9843 7.28498 15.392 7.65033 15.0266L10.677 12L7.65033 8.97337C7.28498 8.60802 7.28498 8.01567 7.65033 7.65032Z"
+                  fill="#BFC6CA"
+                />
+              </svg>
+            </span>
+            <div class="blocker-warning-content">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="2" width="52" height="52" rx="26" stroke="#BFC6CA" stroke-width="2" />
+                <path d="M1 55L55 1" stroke="#BFC6CA" stroke-width="2" stroke-linecap="round" />
+                <path
+                  d="M13 36.2852L20.6172 19H20.8047L28.4102 36.2852H26.207L24.8125 32.8984H16.6094L15.2148 36.2852H13ZM17.3477 31.1523H24.0977L20.7109 22.9844L17.3477 31.1523Z"
+                  fill="#BFC6CA"
+                />
+                <path
+                  d="M30.3555 36.2852V19.4805H34.5391C36.5391 19.4805 38.2305 19.8516 39.6133 20.5938C40.9961 21.3281 42.0312 22.332 42.7188 23.6055C43.4062 24.8711 43.75 26.2969 43.75 27.8828C43.75 29.4688 43.4062 30.8984 42.7188 32.1719C42.0312 33.4453 40.9961 34.4492 39.6133 35.1836C38.2305 35.918 36.5391 36.2852 34.5391 36.2852H30.3555ZM32.4766 34.4102H34.5156C36.9141 34.4102 38.6992 33.8086 39.8711 32.6055C41.0508 31.3945 41.6406 29.8203 41.6406 27.8828C41.6406 25.9453 41.0508 24.375 39.8711 23.1719C38.6992 21.9609 36.9141 21.3555 34.5156 21.3555H32.4766V34.4102Z"
+                  fill="#BFC6CA"
+                />
+              </svg>
+              <div class="blocker-warning-text">
+                <div>
+                  <span>AdBlocker detected!</span>
+                  <span class="mobile-close-placeholder">
+                    <!-- Placeholder for X button in mobile -->
+                  </span>
+                </div>
+                <span>
+                  Please disable it to use the full functionality of the site. Read more in the
+                  <a href="https://www.adscore.com/faq/why-whitelist-adscore-in-adblocker"> FAQ entry</a>.
+                </span>
+              </div>
+            </div>
+            <hr />
+            <div>
+              <label>
+                <input type="checkbox" id="do-not-show-blocker-warning" data-testid="do-not-show-blocker-warning" />
+                Don't show this warning again
+              </label>
+            </div>
+          </div>
+        </div>`;
+
+        document.body.prepend(warningElement.content.firstChild);
+
+        document.getElementById('close-blocker-warning').addEventListener('click', () => {
+          if (document.getElementById('do-not-show-blocker-warning').checked) {
+            localStorage.setItem('blocker-warning-closed', 'yes');
+          }
+
+          document.getElementById('blocker-warning').remove();
+        });
+      }
+    </script>
+  <script src="runtime.50f701709de19bef.js" type="module"></script><script src="polyfills.fa89ebf806db1606.js" type="module"></script><script src="scripts.4985f2781104a472.js" defer=""></script><script src="main.85e08a152ac1eeac.js" type="module"></script>
+
+<div style="visibility: hidden;" class="cdk-describedby-message-container cdk-visually-hidden" platform="server"><div id="cdk-describedby-message-ng-59-60" role="tooltip">Get in touch</div><div id="cdk-describedby-message-ng-59-61" role="tooltip">Get to see how Adscore works</div></div><script id="ng-state" type="application/json">{"__ɵnghData__":[{"t":{"2":"t0","4":"t4","18":"t5"},"c":{"2":[{"i":"t0","r":7,"e":{"0":6},"t":{"2":"t1","4":"t2"},"c":{"2":[{"i":"t1","r":1}],"4":[]},"x":5},{"i":"t0","r":7,"e":{"0":6},"t":{"2":"t1","4":"t2"},"c":{"2":[],"4":[{"i":"t2","r":1,"t":{"7":"t3"},"c":{"7":[]}}]}}],"4":[{"i":"t4","r":1,"c":{"4":[]}}],"13":[],"18":[{"i":"t5","r":1}]}},{"t":{"2":"t8","3":"t9","4":"t15","5":"t16","7":"t17"},"c":{"2":[],"3":[{"i":"t9","r":2,"e":{"0":1},"t":{"2":"t10","3":"t12","4":"t13","5":"t14"},"c":{"2":[{"i":"t10","r":3,"e":{"0":2},"t":{"1":"t11"},"c":{"1":[{"i":"t11","r":1}]}}],"3":[],"4":[],"5":[]}}],"4":[],"5":[],"7":[]}},{},{"t":{"2":"t19"},"c":{"2":[{"i":"t19","r":1,"t":{"2":"t20","4":"t21"},"c":{"2":[{"i":"t20","r":1}],"4":[]}}]}},{"t":{"2":"t19"},"c":{"2":[{"i":"t19","r":1,"t":{"2":"t20","4":"t21"},"c":{"2":[],"4":[{"i":"t21","r":1}]}}]}},{"c":{"49":[],"73":[{"i":"t7","r":3}],"76":[],"79":[{"i":"t18","r":1}],"87":[{"i":"c1383193272","r":1}],"93":[],"95":[],"151":[],"153":[]},"t":{"73":"t6","76":"t7","79":"t18","151":"t24","153":"t25"},"e":{"100":5},"d":[158]},{"c":{"0":[{"i":"c2787454454","r":1}]}},{"d":[0,2]},{"d":[0,2,3,5]}]}</script></body></html>
