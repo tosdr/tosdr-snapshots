@@ -1,0 +1,368 @@
+<!DOCTYPE html> 
+<html translate="no">
+<head>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.9kw.eu/news_en.rss" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Language" content="en" />
+<title>9kw.eu - Captcha Service for the user - captcha solver</title>
+<meta name="msvalidate.01" content="2F5A759B50C748BBCF99DB4EEE23BB44" />
+<meta name="google-site-verification" content="jUYFk9q82aaKS6qdTeZrkSKdw8anVO6VDSzwHUil4U0" />
+<meta name="Keywords" content="">
+<meta name="Description" content="Privacy">
+<meta name="Robots" content="noindex,nofollow,noarchive">
+<meta http-equiv="pragma" content="no-cache">
+<meta name="Language" content="en">
+<meta name="Content-Language" content="en">
+<link rel="icon" type="image/ico" href="favicon.ico">
+<link rel="stylesheet" type="text/css" href="https://www.9kw.eu/style/style.css" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link type="text/css" href="https://www.9kw.eu/grafik/css/jquery.ui/jquery-ui.css" rel="stylesheet" />
+<script type="text/javascript" src="https://www.9kw.eu/grafik/js/jquery.1.9.1.min.js"></script>
+<script type="text/javascript" src="https://www.9kw.eu/grafik/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://www.9kw.eu/grafik/js/jquery-mobile-touch.value.js"></script>
+<script type="text/javascript" src="https://www.9kw.eu/grafik/social/jquery.socialshareprivacy.js"></script>
+<style>
+.alert
+{
+    font-size: 1.3em;
+    padding: 1em;
+    text-align: center;
+    white-space: nowrap;
+    width: auto;
+    word-wrap: normal;
+}
+</style>
+<script type="text/javascript">
+window.alert = function(message){
+    $(document.createElement('div'))
+        .attr({title: 'Alert', 'class': 'alert'})
+        .html(message)
+        .dialog({
+            buttons: {OK: function(){$(this).dialog('close');}},
+            close: function(){$(this).remove();},
+            draggable: true,
+            modal: true,
+            resizable: false,
+            width: 'auto'
+        });
+};
+
+$.fn.click = function(listener){
+	return this.each(function(){
+		var $this = $( this );
+		$this.on("vclick", listener);
+	});
+};
+</script>
+<!--
+<script type="text/javascript">
+  jQuery(document).ready(function($){
+    if(jQuery('#socialshareprivacy').length > 0){
+      jQuery('#socialshareprivacy').socialSharePrivacy({
+		uri : "http://www.9kw.eu/"
+	}); 
+    }
+  });
+</script>
+-->
+</head>
+<body>
+
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <h1><a href="https://www.9kw.eu/">9kw.eu - <span class="logo_colour">Captcha Service</span></a></h1>
+          <h2>Easy. Fast. Secure.
+	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+	<a href="https://www.9kw.eu/de">Deutsch</a> - <a href="https://www.9kw.eu/en">English</a></h2>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+          <li><a href="https://www.9kw.eu/">Home</a></li>
+          <li><a href="https://www.9kw.eu/news.html">News</a></li>
+
+
+          <li><a href="https://www.9kw.eu/login.html">Login</a></li>
+          <li><a href="https://www.9kw.eu/register.html">Register</a></li>
+
+          <li><a href="https://www.9kw.eu/plugins.html">Plugins</a></li>
+
+          <li><a href="https://www.9kw.eu/faq.html">FAQ</a></li>
+
+
+          <li><a href="https://www.9kw.eu/kontakt.html">Contact</a></li>
+
+
+        </ul>
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="sidebar_container">
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Links</h3>
+            <ul>
+              <li><a href="https://www.9kw.eu/hilfe.html">Help</a></li>
+              <li><a href="https://www.9kw.eu/plugins.html">Plugins</a></li>
+            </ul>
+		<a href="https://www.facebook.com/9kw.eu" rel="nofollow" target="_blank"><img src="https://www.9kw.eu/grafik/button_fb_small.png" border="0"></a> 
+		<!--<a href="https://plus.google.com/u/0/110258100747376411304/posts" rel="nofollow" target="_blank"><img src="https://www.9kw.eu/grafik/button_gplus.png" border="0"></a> -->
+		<a href="https://twitter.com/9kw_eu" rel="nofollow" target="_blank"><img src="https://www.9kw.eu/grafik/button_twitter.png" border="0"></a> 
+		<a href="//www.9kw.eu/news_en.rss" target="_blank"><img src="https://www.9kw.eu/grafik/button_newsfeed.png" border="0"></a>
+		<!--<a href="https://flattr.com/submit/auto?user_id=stefanos&url=http%3A%2F%2Fwww.9kw.eu%2F" rel="nofollow" target="_blank"><img src="https://www.9kw.eu/grafik/button_flattr.png" alt="Flattr this" title="Flattr this" border="0"></a> -->
+		<a href="//www.youtube.com/c/9kwEu" target="_blank"><img src="https://www.9kw.eu/grafik/button_youtube.png" alt="Youtube videos" title="Youtube videos" border="0"></a> 
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+
+
+            <h3>Login</h3>
+            <form method="post" action="index.cgi" id="search_form" accept-charset="UTF-8">
+		<input type="hidden" name="action" value="login2">
+		<input type="hidden" name="xcheck2" value="3">
+              <p>
+                <input class="search" type="text" name="email" value="" required><br>
+                <input class="search" type="password" name="pass" value="" required><br>
+                <input name="search" type="submit" style="border: 0; margin: 0 0 -9px 5px;" value="Login"/>
+		<br><br> 
+		(<a href="https://www.9kw.eu/pwforget.html">Forgot password?</a>)
+              </p>
+            </form>
+
+        </div>
+          <div class="sidebar_base"></div>
+        </div>
+
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Last News</h3>
+            <h4>A little news</h4>
+            <p>New server since today<br />
+		<a href="https://www.9kw.eu/news_en_18.html">Mehr</a></p>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+		<h3>Statistics</h3>
+		New users in 24h: <span id="newuser24h_header">8</span><br>
+		User online: <span id="useronline_header">8</span> 
+		(<a href="https://www.9kw.eu/stat_en.html">mehr</a>)
+          </div>
+          <div class="sidebar_base">
+	</div><br><br>
+
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2664243370061747";
+/* 9kw.eu - rechts unten - 120x240 */
+google_ad_slot = "4562292085";
+google_ad_width = 120;
+google_ad_height = 240;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+        </div>
+      </div>
+      <div id="content">
+<h1>Privacy policy (Datenschutz)</h1>
+This is an English courtesy translation of our original text in the German language. Please consider that only the original version in German has legal value.
+<br><br>
+<b>General</b><br>
+The protection of personal data is taken very seriously. All personal data is treated as strictly confidential and is treated according to privacy protection laws and this privacy policy.
+<br><br>
+This privacy policy explains the manner, the purpose and extent of processing personal data on our website and on associated websites, functions and content and if applicable on external websites.
+<br><br>
+We exclusively use your data for the execution of our service. All data is stored and processed according to the appropriate regulations.
+<br><br>
+We explicitly point out that all data transfers on the internet (e.g. communication via e-mail) are potentially vulnerable to security flaws. Total security against access by third parties is not possible.
+<br><br>
+Regarding the terminology used (e.g. "personal data" or its "processing") we refer to die definitions specified in article 4 of the GDPR.
+<br><br>
+
+<b>Controller</b><br>
+The responsible data controller can be found in the <a href="https://www.9kw.eu/web/impressum.html" rel="nofollow">imprint</a> of this website. The controller is the natural or legal person which, alone or jointly with others, determines the purposes and means of the processing of personal data (e.g. names, e-mail addresses).
+<br><br>
+<b>Withdrawal of consent for data processing</b><br>
+Several data processing operations are only possibly with your explicit consent. Withdrawing your consent is possible at any time. An informal message to us by e-mail, mail or our form is sufficient. The withdrawal of consent does not affect the lawfulness of processing before the withdrawal. 
+<br>
+<br>
+
+<b>Right to information, rectification, restriction and erasure</b><br>
+In accordance with current legal regulations you have the right to obtain information regarding personal data stored concerning you, their origin, recipient and the purpose of their processing at any time. Furthermore you have the right to rectification of your data, their restriction and their erasure. To exercise these rights sending an informal message by e-mail, mail or form suffices.
+<br><br>
+
+<b>Right to lodge a complaint with a supervisory authority</b><br>
+As the person concerned you have the right to lodge a complaint with the appropriate supervisory authority in case of a personal data breach. The appropriate supervisory authority for questions regarding privacy protection is the state data protection officer (Landesdatenschutzbeauftragte) of the state in which our company is located. 
+<br><br>
+
+<b>Erasure of data</b><br>
+Data stored by us will be deleted as soon as they are no longer necessary in relation to the purposes for which they were collected or otherwise processed provided there is no legal retention period dictating otherwise. If personal data are not being deleted because they are required for other legally permitted applications their use is being restricted, i.e. your data won't be used for other purposes. This applies, for example, to personal data required to be stored because of trade or tax law.
+<br><br>
+Data will be stored for 6 years according to &#167; 257(1) HGB (books of account, inventories, opening balance sheets, annual financial statements, business letters, accounting records, etc.) or for 10 years according to &#167; 147(1) AO (accounts and records, inventories, opening balance sheets, situation reports, accounting records, trade or business letters, other documents relevant for taxation, etc.).
+<br><br>
+
+<b>SSL and TLS encryption</b><br>
+For security reasons and to protect the transmission of confidential information that you send to us as the operator of this website generally SSL or TLS encryption is used. Thereby data transmitted on our website can't be accessed by third parties. You can recognise an encrypted connection by "https://" in the address bar of your browser and by a lock symbol next to it.
+<br><br>
+
+<b>Server log files</b><br>
+The web server and the website automatically store information automatically transmitted by your browser in the server log files. These are:<br>
+- accessed page (URL)<br>
+- type of browser and version used<br>
+- operating system used<br>
+- referrer URL (last visited page)<br>
+- hostname of the accessing computer (IP address)<br>
+- time of the server query<br>
+No consolidation of these data with data from other sources occurs. The basis for the data processing is art. 6(1)(b) GDPR which allows processing of data necessary for the performance of a contract or in order to take steps prior to entering into a contract.<br>
+For privacy reasons this information is stored for a maximum of seven days and is deleted automatically subsequently. Data stored to be later used as evidence are exempt from deletion until the incident has been conclusively resolved.<br>
+<br>
+
+<b>Transmission of data when entering into a contract for the purpose of purchasing or shipping goods</b><br>
+Personal data is only going to be transmitted to third parties if necessary for the performance of a contract. Examples for third parties would be payment service providers or logistics companies. No further transmission of data is taking place, except with your express consent. <br>
+The basis for the data processing is art. 6(1)(b) GDPR which allows processing of data necessary for the performance of a contract or in order to take steps prior to entering into a contract.<br>
+<br>
+
+<b>Registering:</b><br>
+It is possible to create an account on our website to use certain functions. Data transmitted is only used for the purposes of using the specific feature or service. Required information is to be provided in full, otherwise your sign up request will be rejected.<br>
+In case of important changes, for example for technical reasons, you will be informed by e-mail sent to the address you have given when signing up.<br>
+Processing of the data you provided when signing up occurs on the basis of your consent (art. 6(1)(a) GDPR). It is possible to revoke your consent at any time, an informal message to us by e-mail suffices. The withdrawal of consent does not affect the lawfulness of data processing before the withdrawal.<br>
+Data submitted when signing up is saved as long as you are registered with our website. Your data will be deleted if you cancel your registration. Legal retention periods remain unaffected.<br>
+<br>
+
+<b>Contact</b><br>
+When using the contact form the data submitted (including your contact data) is saved to work on your request and to handle further questions. These data will not be transmitted without your consent.<br>
+Data processing occurs on the basis of your consent (art. 6(1)(a) GDPR). It is possible to revoke your consent at any time, an informal message to us by e-mail suffices. The withdrawal of consent does not affect the lawfulness of data processing before the withdrawal.<br>
+Data submitted using the contact form will be saved until you request deletion, withdraw consent or further retention is no longer necessary. Binding legal regulations (especially legal retention periods) are unaffected.<br>
+<br>
+
+<b>Online presences on social media</b><br>
+Several online presences on social networks etc. are maintained to attend to and to inform active customers, users and interested persons.<br>
+<br>
+
+<b>Affiliate links</b><br>
+Certain links on this website are so called affiliate links. When clicking on such a link the provider of the affiliate program or network is notified (possibly using a cookie) of the website of origin (publisher). When purchasing or interacting with the target website a commission is paid out to the operator of the website of origin. No further costs arise for the user and there is no further information about what you do on the target website. The commission has no influence on measured data to the provider and is handled automatically. If this is not desired you may contact the specific provider directly. <br>
+<br>
+
+<b>Hosting</b><br>
+Our websites are hosted on our own dedicated servers.
+<br><br>
+
+<b>Cookies</b><br>
+Our website uses cookies. These are small text files saved by your web browser to your device. Cookies help us to make our service more user friendly, effective and safe.<br>
+<br>
+Some of these cookies are "session cookies". Such cookies are deleted automatically after the end of your browser session. Other cookies will persist until you delete them manually. They are used to recognise you when returning to our website.<br>
+<br>
+Using a modern web browser you can monitor, restrict and prohibit the saving of cookies. Many web browsers can be configured in such a way that cookies are automatically deleted when closing the application. Deactivating cookies may result in restricted functionality of our website.<br>
+<br>
+Saving of cookies necessary for electronic communication or the provision of certain user desired functions (e.g. shopping cart) occurs on the basis of art. 6(1)(f) GDPR. We as the website provider have a legitimate interest in the saving of cookies to allow technologically error free and smooth operation of our services. The saving of cookies for other reasons (e.g. for analysing purposes) are covered separately in this privacy policy.<br>
+<br>
+
+<b>PayPal:</b><br>
+It's possible to pay on our website using PayPal. The payment service provider is PayPal (Europe) S.&agrave;.r.l. et Cie, S.C.A, 22-24 Boulevard Royal, L-2449 Luxembourg.<br>
+When paying with PayPal the payment data you entered will be transmitted to PayPal.<br>
+The basis for this transmission is art. 6(1)(f) GDPR (consent) and art. 6(1)(b) GDPR (processing for the performance of a contract). It is possible to revoke your given consent at any time. Past instances of data processing are unaffected from the revocation. <br>
+Details can be found at <a href="https://www.paypal.com/de/webapps/mpp/ua/privacy-full?locale.x=en_DE" rel="nofollow" target="_blank">https://www.paypal.com/de/webapps/mpp/ua/privacy-full?locale.x=en_DE</a> zu finden.<br>
+<br>
+
+<b>Sofort&uuml;berweisung</b><br>
+It's possible to pay on our website using Sofort&uuml;berweisung. The payment service provider is Sofort GmbH, Theresienh&ouml;he 12, 80339 M&uuml;nchen.<br>
+Sofort&uuml;berweisung provides confirmation of payment in real time which enables us to start completion of the contract immediately.<br>
+When paying with Sofort&uuml;berweisung your PIN and TAN will be transmitted to Sofort GmbH. The payment service provider uses those to sign in to your online banking account, automatically checks your balance and executes the bank transfer. A confirmation of the transaction follows immediately. Your transactions, the credit limit of your overdraft credit and the existence of other accounts and their balances are automatically checked as well.  <br>
+Additionally to PIN and TAN the payment data and your personal data will be transmitted to Sofort GmbH. Your personal data includes your full name, address, telephone number(s), e-mail-address, IP-address and further information necessary for the handling of the payment. These data transfers are necessary to ascertain your identity and prevent attempts to defraud.<br>
+The basis for this transmission is art. 6(1)(f) GDPR (consent) and art. 6(1)(b) GDPR (processing for the performance of a contract). It is possible to revoke your given consent at any time. Past instances of data processing are unaffected from the revocation. <br>
+
+Details can be found at <a href="https://www.sofort.de/datenschutz.html" rel="nofollow" target="_blank">https://www.sofort.de/datenschutz.html</a> and <a href="https://www.klarna.com/sofort/" rel="nofollow" target="_blank">https://www.klarna.com/sofort/</a>.<br>
+<br>
+
+<b>Paysafecard:</b><br>
+It's possible to pay on our website using Paysafecard. The payment service provider is paysafecard.com Deutschland, Zweigniederlassung der Prepaid Services Company Limited, Ro&szlig;stra&szlig;e 92, D-40476 D&uuml;sseldorf.<br>
+When paying with Paysafecard the payment data you entered will be transmitted to Paysafecard.<br>
+The basis for this transmission is art. 6(1)(f) GDPR (consent) and art. 6(1)(b) GDPR (processing for the performance of a contract). It is possible to revoke your given consent at any time. Past instances of data processing are unaffected from the revocation. <br>
+<br>
+Details can be found at <a href="https://www.paysafecard.com/de-de/datenschutz/" rel="nofollow" target="_blank">https://www.paysafecard.com/de-de/datenschutz/</a><br>
+<br>
+
+<b>Youtube</b><br>
+Our website uses YouTube plug-ins for the integration and displaying of videos. The provider is YouTube, LLC, 901 Cherry Ave., San Bruno, CA 94066, USA.<br>
+When accessing a website with an integrated YouTube plug-in a connection to the YouTube servers is established thereby informing YouTube which of our pages you accessed. <br>
+YouTube is able to assign your surfing behaviour directly to your personal profile if you are signed in to your YouTube account. You can avoid that by signing out prior to using our website.<br>
+YouTube is used for creating an appealing design for our websites. This constitutes a legitimate interest according to art. 6(1)(f) GDPR.<br>
+<br>
+Details of the handling of personal data are set out in the privacy policy of YouTube at <a href="https://www.google.de/intl/de/policies/privacy" rel="nofollow" target="_blank">https://www.google.de/intl/de/policies/privacy</a> and <a href="https://www.google.com/policies/privacy/" rel="nofollow" target="_blank">https://www.google.com/policies/privacy/</a><br>
+<br>
+
+<b>Google ReCaptcha und FunCaptcha</b><br>
+For the purpose of recognising bots using online contact forms the feature "ReCaptcha" of Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA is used. For signup and cancellation the feature "FunCaptcha" of FunCaptcha Pty Ltd Level 2, 315 Brunswick St, Fortitude Valley, Brisbane, QLD 4006 Australia or 75 Broadway, Suite 202, San Francisco, California, 94111, USA is used.<br>
+This makes it possible to distinguish between human and automated input using so called CAPTCHAs. This is used to detect improper use.<br>
+The basis for the data processing is art. 6(1)(f) GDPR as the website operator has legitimate interests in protecting his websites from improper automated spying and spam. <br>
+<br>
+Further information is found in the privacy policies of Google at <a href="https://policies.google.com/privacy" rel="nofollow" target="_blank">https://policies.google.com/privacy</a> and FunCaptcha at <a href="https://www.funcaptcha.com/privacypolicy-full" rel="nofollow" target="_blank">https://www.funcaptcha.com/privacypolicy-full</a>
+
+<br>
+
+<br><br>
+<!-- Advertisement: <a href="https://www.9kw.eu/otherlinks.html">Sicherheit in Online-Casinos</a>--><br>
+
+<br><br>
+      </div>
+<!--
+<div id="socialshareprivacy"></div>
+-->
+    </div>
+
+    <div id="content_footer">
+<center>
+
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2664243370061747";
+/* 9kw.eu - unten - 468x60 */
+google_ad_slot = "2231271902";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</center>
+	</div>
+
+    <div id="footer">
+      <p>&copy; Copyright 2021 - 9kw.eu - 
+<a href="https://www.9kw.eu/web/agb.html">TOS</a> &#124; 
+<a href="https://www.9kw.eu/web/datenschutz.html">Privacy</a> &#124; 
+<a href="https://www.9kw.eu/web/impressum.html">Imprint</a> &#124; 
+
+<a href="https://www.9kw.eu/plugins.html">Software</a> &#124; 
+<a href="https://www.9kw.eu/api.html">API</a> &#124; 
+
+
+<a href="https://www.9kw.eu/rewards.html">Rewards</a> &#124; 
+
+<a href="https://www.9kw.eu/sitemap.html">Sitemap</a> &#124; 
+</p>
+<a href="http://www.html5webtemplates.co.uk" target="_blank">design from HTML5webtemplates.co.uk</a>
+    </div>
+  </div>
+
+
+</body>
+</html>
