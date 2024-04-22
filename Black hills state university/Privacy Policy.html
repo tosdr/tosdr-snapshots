@@ -1,0 +1,1008 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html lang="en-US">
+    <head>
+        <!-- image resizer -->
+        <script>
+        const MAX_WIDTH = 320;
+const MAX_HEIGHT = 180;
+const MIME_TYPE = "image/jpeg";
+const QUALITY = 0.7;
+
+const input = document.getElementById("img-input");
+input.onchange = function (ev) {
+  const file = ev.target.files[0]; // get the file
+  const blobURL = URL.createObjectURL(file);
+  const img = new Image();
+  img.src = blobURL;
+  img.onerror = function () {
+    URL.revokeObjectURL(this.src);
+    // Handle the failure properly
+    console.log("Cannot load image");
+  };
+  img.onload = function () {
+    URL.revokeObjectURL(this.src);
+    const [newWidth, newHeight] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
+    const canvas = document.createElement("canvas");
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+    canvas.toBlob(
+      (blob) =&gt; {
+        // Handle the compressed image. es. upload or save in local state
+        displayInfo('Original file', file);
+        displayInfo('Compressed file', blob);
+      },
+      MIME_TYPE,
+      QUALITY
+    );
+    document.getElementById("root").append(canvas);
+  };
+};
+
+function calculateSize(img, maxWidth, maxHeight) {
+  let width = img.width;
+  let height = img.height;
+
+  // calculate the width and height, constraining the proportions
+  if (width &gt; height) {
+    if (width &gt; maxWidth) {
+      height = Math.round((height * maxWidth) / width);
+      width = maxWidth;
+    }
+  } else {
+    if (height &gt; maxHeight) {
+      width = Math.round((width * maxHeight) / height);
+      height = maxHeight;
+    }
+  }
+  return [width, height];
+}
+
+// Utility functions for demo purpose
+
+function displayInfo(label, file) {
+  const p = document.createElement('p');
+  p.innerText = `${label} - ${readableBytes(file.size)}`;
+  document.getElementById('root').append(p);
+}
+
+function readableBytes(bytes) {
+  const i = Math.floor(Math.log(bytes) / Math.log(1024)),
+    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+}
+</script>
+<!-- End image resizer -->
+        <!--
+        <script src="https://kit.fontawesome.com/76de1f2c0c.js" crossorigin="anonymous"></script>
+        -->
+    	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    	<meta content="879D2242375781F32857BF378A42023B" name="msvalidate.01"/>
+    	<meta content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    	<title>
+    		Privacy Statement - Black Hills State University
+    	</title>
+    	<meta content="Privacy Statement at Black Hills State University." name="description"/>
+    	
+    	<meta content="INDEX, FOLLOW" id="MetaRobots" name="ROBOTS"/>
+    	<meta content="J-Cxn7cmCTmv_3KZ5Ws9RECBAZCaN_3qbCEAY2whrq80" name="google-site-verification"/>
+    	<!--Style Sheets-->
+<meta content="879D2242375781F32857BF378A42023B" name="msvalidate.01"/>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-20244973-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-20244973-1');
+</script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Lato|Poppins|Oswald" rel="stylesheet"/> 
+<link href="../_files/css/fonts.css" rel="stylesheet" type="text/css"/>
+<link crossorigin="anonymous" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" rel="stylesheet"/>
+<link href="//stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../_files/css/set1.css" rel="stylesheet" type="text/css"/>
+<link href="../_files/css/acc-wizard.min.css" rel="stylesheet" type="text/css"/>
+
+<link href="//use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet"/>
+<link href="https://www.bhsu.edu/_files/css/bhsu.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.bhsu.edu/_files/css/quick.css?2" rel="stylesheet" type="text/css"/>
+<!-- <link href="https://bhsu.netlify.app/main.css" rel="stylesheet" type="text/css" /> -->
+
+<!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+<![endif]-->
+
+
+<!--Image Gallery-->
+<link href="../_files/css/nanogallery2.min.css" rel="stylesheet" type="text/css"/>
+<link href="../_files/css/hh-gallery.css" rel="stylesheet" type="text/css"/>
+<!-- JS -->
+<script src="../_files/libraries/jQuery/03_02_01/jquery.js?cdv=695" type="text/javascript"></script>
+
+<!--YouTube Player
+<link rel="stylesheet" href="site://_Black Hills State University/_files/css/mylist-player/css/mylist-player.css" />
+<script src="site://_Black Hills State University/_files/css/mylist-player/js/settings.js"></script>
+<script src="site://_Black Hills State University/_files/css/mylist-player/js/mylist-player.js"></script>
+-->
+
+
+    
+    	
+    	<script type="text/javascript">// <![CDATA[
+(function () {
+var tagjs = document.createElement("script");
+var s = document.getElementsByTagName("script")[0]; tagjs.async = true;
+tagjs.src = "//s.btstatic.com/tag.js#site=sPLaZHQ&referrer=" +
+encodeURIComponent(document.location.href) + ""; s.parentNode.insertBefore(tagjs, s);
+}());
+// ]]></script>
+	</head>
+	<body>
+<style>
+		        .skip-link {
+  z-index: 10000;
+  background: white;
+  opacity: 1;
+  color: #fff;
+  font-weight: 700;
+  left: 50%;
+  padding: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  transform: translateY(-100%);
+   transition: transform 0.3s;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
+}
+}
+</style>
+				<a class="skip-link" href="#main">Skip to content</a>
+				<a class="skip-link" href="#footerlink">Skip to footer</a>
+		<div id="panel">
+		    
+			
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5WF8JRX');</script>
+
+<meta name="facebook-domain-verification" content="8jqve6l2gsqlb7qc4pdgrkqxvy1wtg" />
+<section class="row no-padding" id="home">
+
+    <nav class="row no-padding tert-nav" id="main-navigation" style="background-color: rgba(0, 0, 0, 0.6); linear-gradient(180deg,#07210899 0,rgba(0, 0, 0, 0.60) 95%,rgba(0,0,0,.17) 72%,#3a540f00)">
+        <!-- top desktop navigation menu -->
+        <div id="top-nav">
+            <div class="col-md-2 col-sm-11 logo-side">
+                <!-- logo -->
+                <a class="bhsu-logo-link" href="/"><img alt="Black Hills State University Logo" class="bhsu-logo" src="../_files/images/Home/logos/BHSU-Horizontal-v2-White.svg"/></a>
+            </div>
+            <div class="col-md-8 hidden-sm hidden-xs">
+                <!-- middle navigation change-->
+                <ul class="main-nav-menu list-inline text-uppercase">
+                                                                                                <li><a href="index" target="_parent">About</a></li>
+                                                                                                                        <li><a href="../Academics/index" target="_parent">Academics</a></li>
+                                                                                                                        <li><a href="../Admissions/index" target="_parent">Admissions</a></li>
+                                                                                                                        <li><a href="../Student-Life/index" target="_parent">Student Life</a></li>
+                                                                                                                        <li><a href="../Research/index" target="_parent">Research</a></li>
+                                                                                                        <li><a href="https://www.bhsuathletics.com" target="_blank">Athletics</a></li>
+                                                            </ul>
+            </div>
+            <div class="col-md-2 col-sm-1">
+                <!-- dropdown buttons -->
+                <div class="burger-button visible-xs visible-sm">
+                    <a class="navbar-toggle toggle-menu menu-right push-body visible-xs visible-sm hamburger is-closed" data-target="#slidemenu" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="hamb-top"></span>
+                        <span class="hamb-middle"></span>
+                        <span class="hamb-bottom"></span>
+                    </a>
+                </div>
+                <!-- search dropdowner -->
+                <div class="dropdown dropdown-icon search-left hidden-xs hidden-sm pull-left" id="search">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div style="background-color: transparent; height: 40px; width: 200px; position: absolute; top: -40px; right: 40px;">
+                        </div>
+                        <div class="site-search" id="Search-Links">
+                            <div class="site-search">
+                                
+    <script async src="https://cse.google.com/cse.js?cx=006311729883596647120:hqi_r-f9beg">
+</script>
+<div class="gcse-searchbox-only"></div>
+                                
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="container-fluid">
+                            <ul class="nav nav-pills nav-stacked">
+                                
+                                                                                                                                    <li>
+                                        <a href="../AZ-Site-Index" target="_parent">
+                                            <i class="fas fa-sort-alpha-down"></i>
+                                            A-Z Site Index
+                                        </a>
+                                    </li>
+                                                                                                                                                        <li>
+                                        <a href="https://www.bhsu.edu/events/" target="_parent">
+                                            <i class="far fa-calendar"></i>
+                                            Campus Calendar
+                                        </a>
+                                    </li>
+                                                                                                                                                                        <li>
+                                        <a href="https://www.bhsu.edu/directory/index" target="_parent">
+                                            <i class="far fa-address-book"></i>
+                                            Campus Directories
+                                        </a>
+                                    </li>
+                                                                                                                                                                        <li>
+                                        <a href="Campus-Map" target="_parent">
+                                            <i class="far fa-map"></i>
+                                            Maps/Directions
+                                        </a>
+                                    </li>
+                                                                                                                                                                        <li>
+                                        <a href="../Faculty-Staff/Policies-and-Procedures/index" target="_parent">
+                                            <i class="fas fa-book"></i>
+                                            Policies &amp; Procedures
+                                        </a>
+                                    </li>
+                                                                                                </ul>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="container-fluid">
+                            <h4>Common Searches</h4>
+                            <ul class="nav nav-pills nav-stacked">
+                                                                                                                    <li><a href="https://www.bhsu.edu/events/" target="_parent"><i class="fas fa-angle-double-right"></i> calendar</a></li>
+                                                                                                                                                        <li><a href="/email365" target="_parent"><i class="fas fa-angle-double-right"></i> email</a></li>
+                                                                                                                                                                        <li><a href="../Admissions/Pay-for-College/Scholarships/index" target="_parent"><i class="fas fa-angle-double-right"></i> scholarships</a></li>
+                                                                                                </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- grid dropdown -->
+                <div class="dropdown dropdown-icon hidden-xs hidden-sm pull-left" id="grid">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-th"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div style="background-color: transparent; height: 40px; width: 18px; position: absolute; top: -40px; right: 40px;">
+                        </div>
+                        <div class="container-fluid" id="Important-Links">
+                                                            <div class="row">
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://www.bhsufoundation.org/donate" target="_blank">
+                                                <img alt="Donate Button" src="../_files/images/icons/grid/donate.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://my.bhsu.edu" target="_parent">
+                                                <img alt="My BHSU Button" src="../_files/images/icons/grid/mybhsu-snap.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://outlook.office365.com" target="_parent">
+                                                <img alt="BHSU Webmail Access" src="../_files/images/icons/grid/email.svg"/>
+                                            </a>
+                                        </div>
+                                                                    </div>
+                                                            <div class="row">
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://support.bhsu.edu/TDClient/30/Portal/Home/" target="_blank">
+                                                <img alt="Jacket Connect" src="../_files/images/icons/IconJCsm.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="/d2l" target="_parent">
+                                                <img alt="D2L Access" src="../_files/images/icons/d2l-new-01.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="/apply" target="_parent">
+                                                <img alt="Apply to BHSU Button" src="../_files/images/icons/apply.svg"/>
+                                            </a>
+                                        </div>
+                                                                    </div>
+                                                            <div class="row">
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://www.bhsubookstore.com" target="_parent">
+                                                <img alt="Online Bookstore Access" src="../_files/images/icons/grid/bookstore.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="http://www.bhsu.edu/library/" target="_parent">
+                                                <img alt="Online Library Access" src="../_files/images/icons/grid/library.svg"/>
+                                            </a>
+                                        </div>
+                                                                            <div class="col-sm-4 col-xs-3 grid-item">
+                                                                                                    <a href="https://yellowjacketsbhsu-my.sharepoint.com/" target="_parent">
+                                                <img alt="OneDrive Access" src="../_files/images/icons/grid/onedrive.svg"/>
+                                            </a>
+                                        </div>
+                                                                    </div>
+                                                        
+                        </div>
+                    </div>
+                </div>
+                <!-- audience dropdown -->
+                <div class="dropdown dropdown-icon hidden-xs hidden-sm pull-left" id="users">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-users"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div style="background-color: transparent; height: 40px;width: 18px;position: absolute;top: -40px;right: 40px;">
+                        </div>
+                        <div class="container-fluid" id="Audience-Links">
+                                                            <div class="row">
+                                                                                                    <a href="../Admissions/index" target="_parent">
+                                        <div class="user-item">Future Students</div>
+                                    </a>
+                                                                    </div>
+                                                            <div class="row">
+                                                                                                    <a href="../Current-Students/index" target="_parent">
+                                        <div class="user-item">Current Students</div>
+                                    </a>
+                                                                    </div>
+                                                            <div class="row">
+                                                                                                    <a href="../International/index" target="_parent">
+                                        <div class="user-item">International</div>
+                                    </a>
+                                                                    </div>
+                                                            <div class="row">
+                                                                                                    <a href="../Faculty-Staff/index" target="_parent">
+                                        <div class="user-item">Faculty &amp; Staff</div>
+                                    </a>
+                                                                    </div>
+                                                            <div class="row">
+                                                                                                    <a href="Community/index" target="_parent">
+                                        <div class="user-item">Community</div>
+                                    </a>
+                                                                    </div>
+                                                            <div class="row">
+                                                                                                    <a href="../Alumni-Donors/index" target="_parent">
+                                        <div class="user-item">Alumni &amp; Donors</div>
+                                    </a>
+                                                                    </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</section>
+			
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+<!-- mobile navigation menu -->
+<div id="mobile-nav">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="mobile-menu">
+        <ul class="nav navbar-nav text-uppercase">
+            <li class="visible-sm visible-xs">
+                <div class="mobile-nav-logo">
+                    <a href="/">
+                        <span class="sr-only">
+                            BHSU University
+                        </span>
+                        <img alt="BHSU University Logo" class="bhsu-logo" src="../_files/images/Home/logos/BHSU-Horizontal-v2-Full-Color.svg"/>
+                    </a>
+                </div>
+                <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle text-center mobile-quicklinks-icon" data-toggle="dropdown" href="#" role="button">
+                    <span class="sr-only">Tools</span>
+                    <i class="fa fa-th fa-lg tools-btn"></i>
+                </a>
+                <ul class="dropdown-menu nav-info-for">
+                                            <div class="row">
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://www.bhsufoundation.org/donate" target="_blank">
+                                        <img alt="Donate Button" src="../_files/images/icons/grid/donate.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://my.bhsu.edu" target="_parent">
+                                        <img alt="My BHSU Button" src="../_files/images/icons/grid/mybhsu-snap.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://outlook.office365.com" target="_parent">
+                                        <img alt="BHSU Webmail Access" src="../_files/images/icons/grid/email.svg"/>
+                                    </a>
+                                                                    </div>
+                                                    </div>
+                                            <div class="row">
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://support.bhsu.edu/TDClient/30/Portal/Home/" target="_blank">
+                                        <img alt="Jacket Connect" src="../_files/images/icons/IconJCsm.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="/d2l" target="_parent">
+                                        <img alt="D2L Access" src="../_files/images/icons/d2l-new-01.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="/apply" target="_parent">
+                                        <img alt="Apply to BHSU Button" src="../_files/images/icons/apply.svg"/>
+                                    </a>
+                                                                    </div>
+                                                    </div>
+                                            <div class="row">
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://www.bhsubookstore.com" target="_parent">
+                                        <img alt="Online Bookstore Access" src="../_files/images/icons/grid/bookstore.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="http://www.bhsu.edu/library/" target="_parent">
+                                        <img alt="Online Library Access" src="../_files/images/icons/grid/library.svg"/>
+                                    </a>
+                                                                    </div>
+                                                            <div class="col-sm-3 col-xs-3 grid-item">
+                                                                                    <a href="https://yellowjacketsbhsu-my.sharepoint.com/" target="_parent">
+                                        <img alt="OneDrive Access" src="../_files/images/icons/grid/onedrive.svg"/>
+                                    </a>
+                                                                    </div>
+                                                    </div>
+                                    </ul>
+            </li>
+            <div class="clearfix"></div>
+            <li class="visible-sm visible-xs">
+                <div class="mobile-search">
+                    <div class="site-search">
+                                
+                                    <script async src="https://cse.google.com/cse.js?cx=006311729883596647120:hqi_r-f9beg"></script>
+                                    <div class="gcse-searchbox-only"></div>
+                                
+                       
+                    </div>
+                </div>
+            </li>
+                                                        <li><a href="https://bhsu.tfaforms.net/217803" target="_parent">Contact Us</a></li>
+                                                                        <li><a href="https://my.bhsu.edu" target="_parent">MyBHSU</a></li>
+                                                                        <li><a href="https://outlook.office365.com" target="_parent">BHSU Email</a></li>
+                                                                        <li><a href="https://www.bhsu.edu/d2l" target="_parent">D2L</a></li>
+                                                                                        <li><a href="../IITS/Services/Help-Desk/index" target="_parent">Help Desk</a></li>
+                                                                        <li><a href="https://jackethub.campus.eab.com" target="_parent">JacketHub</a></li>
+                                                                                        <li><a href="Campus-Calendar/index" target="_parent">Campus Calendar</a></li>
+                                                                                        <li><a href="index" target="_parent">About BHSU</a></li>
+                                                                                        <li><a href="../Academics/index" target="_parent">Academics</a></li>
+                                                                                        <li><a href="../Admissions/index" target="_parent">Admissions</a></li>
+                                                                                        <li><a href="../Student-Life/index" target="_parent">Student Life</a></li>
+                                                                        <li><a href="http://www.bhsuathletics.com" target="_parent">Athletics</a></li>
+                                        <li class="visible-xs visible-sm">
+                <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                    Info Links
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu nav-info-for">
+                                                                                                <li class="visible-xs visible-sm">
+                            <a href="../Admissions/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                Future Students
+                            </a>
+                        </li>
+                                                                                                                        <li class="visible-xs visible-sm">
+                            <a href="../Current-Students/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                Current Students
+                            </a>
+                        </li>
+                                                                                                                        <li class="visible-xs visible-sm">
+                            <a href="../International/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                International
+                            </a>
+                        </li>
+                                                                                                                        <li class="visible-xs visible-sm">
+                            <a href="../Faculty-Staff/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                Faculty &amp; Staff
+                            </a>
+                        </li>
+                                                                                                                        <li class="visible-xs visible-sm">
+                            <a href="Community/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                Community
+                            </a>
+                        </li>
+                                                                                                                        <li class="visible-xs visible-sm">
+                            <a href="../Alumni-Donors/index" target="_parent">
+                                <i aria-hidden="true" class="fa fa-child"></i>
+                                Alumni &amp; Donors
+                            </a>
+                        </li>
+                                            
+                </ul>
+            </li>
+            <li class="visible-xs visible-sm">
+                <ul class="nav nav-mobile-action-items">
+                                                                                                <li class="col-xs-12">
+                            <a class="btn btn-bRed" href="" target="_parent">Apply</a>
+                        </li>
+                                                                                                                        <li class="col-xs-12">
+                            <a class="btn btn-bRed" href="../Admissions/Visit/index" target="_parent">Visit</a>
+                        </li>
+                                            
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+			<div class="container-fluid no-padding">
+				
+				<main id="main"></main>
+				
+				
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+
+    <div class="container-fluid no-padding header-banner2">
+        
+                    <div class=" ">
+                                                        
+                                                            <div class="col-md-12 no-padding">
+                                                
+                    
+                </div>
+                            </div>
+                
+    </div>
+			</div>
+
+            <div class="container-fluid no-padding">
+                
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+<div class="t-container">
+
+    <div class="col-lg-10 col-lg-push-2 Right_Wide_Pane">
+        
+                    <div class="row marge">
+                                                            <div class="bredcrumb-container">
+                        <a href="/" target="_parent"><i class="glyphicon glyphicon-home"></i> Home</a> /
+    
+                                                                                                    <a class="breadcrumbLink" href="index" target="_parent">About BHSU</a> /
+                                                                                                                            Privacy Statement
+                                                        </div>
+                                        
+                                                            <div class="col-md-12 no-padding">
+                                                                                    <div class="col-md-12 no-padding">
+            <h1>PRIVACY STATEMENT</h1>
+<hr/>
+<p>Black Hills State University is committed to protecting your privacy and developing technology that gives you the most powerful and safe online experience. This Statement of Privacy applies to the Black Hills State University Web site and governs data collection and usage. By using the Black Hills State University website, you consent to the data practices described in this statement.</p>
+<h2>Collection of your Personal Information</h2>
+<p>Black Hills State University collects personally identifiable information, such as your e-mail address, name, home or work address or telephone number. Black Hills State University also collects anonymous demographic information, which is not unique to you, such as your ZIP code, age, gender, preferences, interests and favorites.</p>
+<p>There is also information about your computer hardware and software that is automatically collected by Black Hills State University. This information can include: your IP address, browser type, domain names, access times and referring Web site addresses. This information is used by Black Hills State University for the operation of the service, to maintain quality of the service, and to provide general statistics regarding use of the Black Hills State University Web site.</p>
+<p>Please keep in mind that if you directly disclose personally identifiable information or personally sensitive data through Black Hills State University public message boards, this information may be collected and used by others. Note: Black Hills State University does not read any of your private online communications.</p>
+<p>Black Hills State University encourages you to review the privacy statements of Web sites you choose to link to from Black Hills State University so that you can understand how those Web sites collect, use and share your information. Black Hills State University is not responsible for the privacy statements or other content on Web sites outside of the Black Hills State University and Black Hills State University family of Web sites.</p>
+<h2>Use of your Personal Information</h2>
+<p>Black Hills State University collects and uses your personal information to operate the Black Hills State University Web site and deliver the services you have requested. Black Hills State University also uses your personally identifiable information to inform you of other products or services available from Black Hills State University and its affiliates. Black Hills State University may also contact you via surveys to conduct research about your opinion of current services or of potential new services that may be offered.</p>
+<p>Black Hills State University does not sell, rent or lease its customer lists to third parties. Black Hills State University may, from time to time, contact you on behalf of external business partners about a particular offering that may be of interest to you. In those cases, your unique personally identifiable information (e-mail, name, address, telephone number) is not transferred to the third party. In addition, Black Hills State University may share data with trusted partners to help us perform statistical analysis, send you email or postal mail, provide customer support, or arrange for deliveries. All such third parties are prohibited from using your personal information except to provide these services to Black Hills State University, and they are required to maintain the confidentiality of your information.</p>
+<p>Black Hills State University does not use or disclose sensitive personal information, such as race, religion, or political affiliations, without your explicit consent.</p>
+<p>Black Hills State University keeps track of the Web sites and pages our customers visit within Black Hills State University, in order to determine what Black Hills State University services are the most popular. This data is used to deliver customized content and advertising within Black Hills State University to customers whose behavior indicates that they are interested in a particular subject area.</p>
+<p>Black Hills State University Web sites will disclose your personal information, without notice, only if required to do so by law or in the good faith belief that such action is necessary to: (a) conform to the edicts of the law or comply with legal process served on Black Hills State University or the site; (b) protect and defend the rights or property of Black Hills State University; and, (c) act under exigent circumstances to protect the personal safety of users of Black Hills State University, or the public.</p>
+<h2>Use of Cookies</h2>
+<p>The Black Hills State University Web site use "cookies" to help you personalize your online experience. A cookie is a text file that is placed on your hard disk by a Web page server. Cookies cannot be used to run programs or deliver viruses to your computer. Cookies are uniquely assigned to you, and can only be read by a web server in the domain that issued the cookie to you.</p>
+<p>One of the primary purposes of cookies is to provide a convenience feature to save you time. The purpose of a cookie is to tell the Web server that you have returned to a specific page. For example, if you personalize Black Hills State University pages, or register with Black Hills State University site or services, a cookie helps Black Hills State University to recall your specific information on subsequent visits. This simplifies the process of recording your personal information, such as billing addresses, shipping addresses, and so on. When you return to the same Black Hills State University Web site, the information you previously provided can be retrieved, so you can easily use the Black Hills State University features that you customized.</p>
+<p>You have the ability to accept or decline cookies. Most Web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. If you choose to decline cookies, you may not be able to fully experience the interactive features of the Black Hills State University services or Web sites you visit.</p>
+<h2>Security of your Personal Information</h2>
+<p>Black Hills State University secures your personal information from unauthorized access, use or disclosure. Black Hills State University secures the personally identifiable information you provide on computer servers in a controlled, secure environment, protected from unauthorized access, use or disclosure. When personal information (such as a credit card number) is transmitted to other Web sites, it is protected through the use of encryption, such as the Secure Socket Layer (SSL) protocol.</p>
+<h2>Changes to this Statement</h2>
+<p>Black Hills State University will occasionally update this Statement of Privacy to reflect company and customer feedback. Black Hills State University encourages you to periodically review this Statement to be informed of how Black Hills State University is protecting your information.</p>
+<h2>Contact Information</h2>
+<p>Black Hills State University welcomes your comments regarding this Statement of Privacy. If you believe that Black Hills State University has not adhered to this Statement,<span>&#160;</span><a href="https://www.bhsu.edu/AboutBHSU/Campus-Directories/Contact-Us">please contact us</a>. We will use commercially reasonable efforts to promptly determine and remedy the problem.</p>
+        </div>
+        
+                    
+                </div>
+                            </div>
+        
+    </div>
+
+                <div class="col-lg-2 col-xs-12 col-lg-pull-10 no-padding side-menu">
+                            <div class="viz0020" style="margin-top:15px">
+                                            
+                            <ul class="sp-side-menu">
+                                                                                            <li class="side-menu-toplink"><a href="index" target="_parent">About BHSU</a></li>
+                                                                                                                                                                    <li class="bhmenu">
+                                        <a href="Black-Hills-of-SD/index" target="_parent">Black Hills of SD</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="https://www.bhsu.edu/directory/index" target="_parent">Campus Directories </a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Campus-Map" target="_parent">Campus Map</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="https://www.bhsu.edu/events/index.html" target="_parent">Campus Calendar </a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Community/index" target="_parent">Community Info</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Events/index" target="_parent">BHSU Events</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="https://www.bhsu.edu/about-bhsu/news-events/index" target="_parent">BHSU News</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="../President/index" target="_parent">President </a>
+                                    </li>
+                                                                                                                                                        <li class="bhmenu">
+                                        <a href="https://www.bhsu.edu/President/2023-01ADMINISTRATIVESTRUCTURE_FINAL.pdf" target="_blank">Admin Team</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="BHSU-Traditions" target="_parent">BHSU Traditions </a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Student-Consumer-Information" target="_parent">Student Consumer Information </a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="BHSU_FACT_SHEET.pdf" target="_parent">BHSU Fact Sheet</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Safety/index" target="_parent">Safety</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="The-Hive-Sculpture/index" target="_parent">The Hive Sculpture</a>
+                                    </li>
+                                                                                                                                                                        <li class="bhmenu">
+                                        <a href="Strategic Enrollment Plan/_pages/StrategicEnrollmentPlan" target="_parent">Strategic Enrollment Plan</a>
+                                    </li>
+                                                                                                </ul>
+                        
+                                    </div>
+                                        
+        </div>
+
+</div>
+
+ 
+
+
+
+            </div>
+            <div class="container">
+                
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+
+    <div class="container">
+        
+                    <div class="row">
+                                                        
+                                                            <div class="col-md-12 no-padding">
+                                                
+                    
+                </div>
+                            </div>
+                
+    </div>
+                
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+
+        
+    <section>
+        <div class="container">
+            <div class="Closer col-md-12 no-padding" runat="server">
+                <!--content pane-->
+                <div class="viz0019">
+                    <div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-10 center-block cta-1">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-5 cta-1-left" style="text-align:center">
+                                        <h1 style="letter-spacing:2.5px;margin-bottom: 0px"><strong>Take The Next Step</strong></h1>
+                                        <img alt="" src="../_files/images/cta-yellow-under.png"/>
+                                        <div style="max-width:325px; margin:10px auto; line-height:1.4;color:#000">Develop valuable personal relationships in a small community with amazing faculty and staff while thriving in the outdoors of the Black Hills.</div>
+                                    </div>
+                                    <div class="col-md-5 cta-1-right" style="text-align:center; ">
+                                        <div class="hidden-xs hidden-sm" style="height: 100px; border-left:solid 2px #cacaca; position: absolute; left:0px; top:30px; color:#fff">
+                                        </div>
+                                        <!-- <img style="margin:10px 0 15px 0;" src="site://_Black Hills State University/_files/images/admissions/NewVectorSlogan__Green_Horizontal2 resized.jpg" /> -->
+                                        <br/>
+                                                    <a class="button1" href="https://bhsu.my.salesforce-sites.com/form?formid=217750" target="_blank">Request Info</a>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+            </div>
+			<main id="footerlink"></main>
+            
+
+
+
+
+
+ 
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+
+
+
+
+
+<!-- footer -->
+<div class="row no-padding">
+    <div id="footer18">
+        <div class="footer-container" style="">
+            <img alt="Footer Background - a silhouette of hills" class="footer-background" src="../_files/images/img/footer-reg.jpg"/>
+            <div class="col-md-4 col-md-offset-1 col-sm-12 col-xs-12">
+                <div class="contactInfoBox" style="text-align: center;">
+                    <div>
+                        <img alt="BHSU Logo" class="rc-footer-logo" src="../_files/images/Home/logos/BHSU-Horizontal-v2-White.svg"/>
+                    </div>
+                    <!-- visualizer input -->
+                    <div style="display: inline-block; text-align: left;">
+                        <!--content pane-->
+                        <div class="viz0019">
+                            <div>
+                                <div class="contactInfo">
+                                    
+                                    <style><!--
+.pfoot{
+  font-weight: 1;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-top: 3px;
+}
+
+.footcontact{
+  color: white;
+  column-count: 2;
+  max-width: 500px;
+}
+
+.footcontact p{
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.footcontact h3{
+  margin-top: 3px;
+  margin-bottom: 1px;
+  color: white;
+}
+#rc{
+  margin-top:4px;
+}
+--></style>
+<div class="footcontact">
+<div class="column"><center>
+<h3 class="tfoot">Spearfish</h3>
+</center>
+<p class="pfoot" id="sf">1200 University Street<br/>Spearfish, SD<br/>57799-9502<br/><a aria-label="Phone. 6 0 5. 6 4 2. 6 1 3 1" href="tel:6056426131">Phone: 605.642.6131</a><br/>Fax: 605.642.6254<br/><a aria-label="Email link for Admissions@BHSU.edu" href="mailto:Admissions@BHSU.edu">Admissions@BHSU.edu</a></p>
+</div>
+<div class="column"><center>
+<h3 class="tfoot">Rapid City</h3>
+</center>
+<p class="pfoot" id="rc">4300 Cheyenne Blvd<br/>Box Elder, SD<br/>57719-7700<br/><a aria-label="Phone. 6 0 5. 7 1 8. 4 1 1 2" href="tel:6057184112">Phone: 605.718.4112</a></p>
+</div>
+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- visualizer input -->
+                </div>
+            </div>
+                            <div class="col-md-2 col-sm-4 col-xs-12">
+                    <div class="footer-list">
+                        <h2>Students</h2>
+                        <ul>
+                                                                                                                        <li><a href="../Library/index" target="_parent">Library</a></li>
+                                                                                                                                        <li><a href="http://www.bhsubookstore.com/" target="_blank">Bookstore</a></li>
+                                                                                                                                                        <li><a href="../Admissions/index" target="_parent">Future Students</a></li>
+                                                                                                                                                        <li><a href="../Admissions/Pay-for-College/index" target="_parent">Pay For College</a></li>
+                                                                                                                                        <li><a href="https://cm.maxient.com/reportingform.php?BlackHillsStateUniv&amp;layout_id=4" target="_parent">Concern Form</a></li>
+                                                                                                                                                        <li><a href="../Registration-Records/index" target="_parent">Registration &amp; Records</a></li>
+                                                                                                                                        <li><a href="https://my.bhsu.edu" target="_parent">Student Portal</a></li>
+                                                            
+                        </ul>
+                    </div>
+                </div>
+                            <div class="col-md-2 col-sm-4 col-xs-12">
+                    <div class="footer-list">
+                        <h2>Resources</h2>
+                        <ul>
+                                                                                                                        <li><a href="../Admissions/Visit/index" target="_blank">Contact Form</a></li>
+                                                                                                                                                        <li><a href="https://www.bhsu.edu/directory/index" target="_parent">Directory</a></li>
+                                                                                                                                                        <li><a href="../AZ-Site-Index" target="_parent">A-Z Site Index</a></li>
+                                                                                                                                                        <li><a href="Campus-Calendar/index" target="_parent">Campus Calendar</a></li>
+                                                                                                                                        <li><a href="https://support.bhsu.edu/TDClient/30/Portal/Home/" target="_blank">Jacket Connect</a></li>
+                                                                                                                                        <li><a href="https://bhsumarketing.smugmug.com/" target="_blank">Campus Photos</a></li>
+                                                                                                                                        <li><a href="https://www.bhsu.edu/Registration-Records/Transcript-Request" target="_parent">Transcript Request</a></li>
+                                                            
+                        </ul>
+                    </div>
+                </div>
+                            <div class="col-md-2 col-sm-4 col-xs-12">
+                    <div class="footer-list">
+                        <h2>Information</h2>
+                        <ul>
+                                                                                                                        <li><a href="Community/index" target="_parent">Community Info</a></li>
+                                                                                                                                        <li><a href="https://www.bhsu.edu/d2l" target="_parent">Desire2Learn (D2L)</a></li>
+                                                                                                                                                        <li><a href="../Faculty-Staff/Human-Resources/Employment-Opportunities" target="_parent">Employment</a></li>
+                                                                                                                                                        <li><a href="Campus-Map" target="_parent">Maps/Directions</a></li>
+                                                                                                                                                        <li><a href="../Faculty-Staff/Marketing-and-Communications/Social-Media" target="_parent">Official Social Channels</a></li>
+                                                                                                                                                        <li><a href="Student-Consumer-Information" target="_parent">Student Consumer Information</a></li>
+                                                            
+                        </ul>
+                    </div>
+                </div>
+                        
+
+            <div class="col-md-12 col-sm-12 col-xs-12 no-padding">
+                <div class="copyright-container" style="width: 100%; padding: 0;">
+                    <div class="col-md-12">
+                        <p><a class="social-footer" href="https://facebook.com/blackhillsstate" rel="noopener" target="_blank"> <img alt="facebook" src="https://www.bhsu.edu/_files/images/icons/social/facebook-60.png"/>&#160; </a> <a class="social-footer" href="https://www.instagram.com/blackhillsstate" rel="noopener" target="_blank"> <img alt="instagram" src="https://www.bhsu.edu/_files/images/icons/social/instagram-60.png"/> </a><a class="social-footer" href="https://x.com/blackhillsstate" rel="noopener" target="_blank"> <img alt="x (formerly Twitter)" height="35" src="https://www.bhsu.edu/_files/images/icons/social/xlogosm.png" width="35"/> </a></p>
+<p><a href="https://bhsu.tfaforms.net/217803" rel="noopener" target="_blank">Questions?</a><a href="Privacy-Statement">Privacy</a><a href="../President/Title-IX/index">Title IX</a><br/><a href="Terms-of-Use">Terms of Use</a><a class="text-center" href="https://mail.office365.com/yellowjackets.bhsu.edu" rel="noopener" target="_blank">Email Login</a><a class="text-center" href="https://account.bhsu.edu/" rel="noopener" target="_blank">Email Password Reset</a></p>
+<noscript>
+</noscript>
+<script>// <![CDATA[
+(function(){ var s = document.createElement('script'); var h = document.querySelector('head') || document.body; s.src = 'https://acsbapp.com/apps/app/dist/js/app.js'; s.async = true; s.onload = function(){ acsbJS.init({ statementLink : '', footerHtml : '', hideMobile : false, hideTrigger : false, disableBgProcess : false, language : 'en', position : 'right', leadColor : '#036234', triggerColor : '#036234', triggerRadius : '10px', triggerPositionX : 'right', triggerPositionY : 'bottom', triggerIcon : 'people', triggerSize : 'medium', triggerOffsetX : 25, triggerOffsetY : 20, mobile : { triggerSize : 'small', triggerPositionX : 'right', triggerPositionY : 'bottom', triggerOffsetX : 10, triggerOffsetY : 10, triggerRadius : '10px' } }); }; h.appendChild(s); })();
+// ]]></script>
+                        <p>Copyright © 2024 · Black Hills State University</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		</div>
+		    <script src="//stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../_files/js/scrollmagic/minified/ScrollMagic.min.js"></script>
+    <script src="../_files/js/main.js" type="text/javascript"></script>
+	<script src="../_files/js/jquery.nanogallery2.js" type="text/javascript"></script>
+	<script src="../_files/js/tab-hash.js" type="text/javascript"></script>
+	<script src="../_files/js/acc-wizard.min.js" type="text/javascript"></script>
+	<script src="https://website-widgets.pages.dev/dist/sienna.min.js"></script>
+
+		
+	</body>
+</html>
