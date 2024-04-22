@@ -1,0 +1,254 @@
+<!DOCTYPE html><html lang="ru-ru"><head><meta charset="UTF-8" /><title>Политика конфиденциальности  •  Arzamas</title><meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black" name="apple-mobile-web-app-status-bar-style" /><meta content="" name="keywords" /><meta content="ru-ru" http-equiv="content-language" /><link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" /><link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" /><link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" /><link href="/manifest.json" rel="manifest" /><meta content="#ffffff" name="theme-color" /><script>
+  // simple method to get cookie by name not to wait for jquery to load
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+var _rollbarConfig = {
+    accessToken: '43f7514d2667420ea2c610cb5f3c86a4',
+    captureUncaught: false,
+    captureUnhandledRejections: false,
+    payload: {
+        environment: "production",
+        //context: 'home/index',
+        //trace_id: 'abc123',
+        client: {
+          javascript: {
+            code_version: '1.0.0',
+            //source_map_enabled: true,
+            //guess_uncaught_frames: true
+          }
+        }
+    },
+    ignoredMessages: ['jQuery is missing', 'Script error.', "Can't find variable: $", "$ is not defined"]
+};
+var radio_account_uuid = getCookie('radio_account_uuid')
+var may_have_radio_subscription;
+if (radio_account_uuid) {
+  may_have_radio_subscription = getCookie('may_have_radio_subscription') === '1'
+  _rollbarConfig.payload.person = {id: radio_account_uuid}
+  _rollbarConfig.payload.may_have_radio_subscription = may_have_radio_subscription
+  _rollbarConfig.captureUncaught = true
+  _rollbarConfig.captureUnhandledRejections = true
+}
+// Rollbar Snippet
+!function(r){var e={};function o(n){if(e[n])return e[n].exports;var t=e[n]={i:n,l:!1,exports:{}};return r[n].call(t.exports,t,t.exports,o),t.l=!0,t.exports}o.m=r,o.c=e,o.d=function(r,e,n){o.o(r,e)||Object.defineProperty(r,e,{enumerable:!0,get:n})},o.r=function(r){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(r,"__esModule",{value:!0})},o.t=function(r,e){if(1&e&&(r=o(r)),8&e)return r;if(4&e&&"object"==typeof r&&r&&r.__esModule)return r;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:r}),2&e&&"string"!=typeof r)for(var t in r)o.d(n,t,function(e){return r[e]}.bind(null,t));return n},o.n=function(r){var e=r&&r.__esModule?function(){return r.default}:function(){return r};return o.d(e,"a",e),e},o.o=function(r,e){return Object.prototype.hasOwnProperty.call(r,e)},o.p="",o(o.s=0)}([function(r,e,o){"use strict";var n=o(1),t=o(5);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdn.rollbar.com/rollbarjs/refs/tags/v2.24.0/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,e,o){"use strict";var n=o(2),t=o(3);function a(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}var l=0;function i(r,e){this.options=r,this._rollbarOldOnError=null;var o=l++;this.shimId=function(){return o},"undefined"!=typeof window&&window._rollbarShims&&(window._rollbarShims[o]={handler:e,messages:[]})}var s=o(4),d=function(r,e){return new i(r,e)},c=function(r){return new s(d,r)};function u(r){return a((function(){var e=this,o=Array.prototype.slice.call(arguments,0),n={shim:e,method:r,args:o,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)}))}i.prototype.loadFull=function(r,e,o,n,t){var l=!1,i=e.createElement("script"),s=e.getElementsByTagName("script")[0],d=s.parentNode;i.crossOrigin="",i.src=n.rollbarJsUrl,o||(i.async=!0),i.onload=i.onreadystatechange=a((function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){i.onload=i.onreadystatechange=null;try{d.removeChild(i)}catch(r){}l=!0,function(){var e;if(void 0===r._rollbarDidLoad){e=new Error("rollbar.js did not load");for(var o,n,a,l,i=0;o=r._rollbarShims[i++];)for(o=o.messages||[];n=o.shift();)for(a=n.args||[],i=0;i<a.length;++i)if("function"==typeof(l=a[i])){l(e);break}}"function"==typeof t&&t(e)}()}})),d.insertBefore(i,s)},i.prototype.wrap=function(r,e,o){try{var n;if(n="function"==typeof e?e:function(){return e||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){o&&"function"==typeof o&&o.apply(this,arguments);try{return r.apply(this,arguments)}catch(o){var e=o;throw e&&("string"==typeof e&&(e=new String(e)),e._rollbarContext=n()||{},e._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=e),e}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(e){return r}};for(var p="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad".split(","),f=0;f<p.length;++f)i.prototype[p[f]]=u(p[f]);r.exports={setupShim:function(r,e){if(r){var o=e.globalAlias||"Rollbar";if("object"==typeof r[o])return r[o];r._rollbarShims={},r._rollbarWrappedError=null;var l=new c(e);return a((function(){e.captureUncaught&&(l._rollbarOldOnError=r.onerror,n.captureUncaughtExceptions(r,l,!0),e.wrapGlobalEventHandlers&&t(r,l,!0)),e.captureUnhandledRejections&&n.captureUnhandledRejections(r,l,!0);var a=e.autoInstrument;return!1!==e.enabled&&(void 0===a||!0===a||"object"==typeof a&&a.network)&&r.addEventListener&&(r.addEventListener("load",l.captureLoad.bind(l)),r.addEventListener("DOMContentLoaded",l.captureDomContentLoaded.bind(l))),r[o]=l,l}))()}},Rollbar:c}},function(r,e,o){"use strict";function n(r,e,o,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null);var t=e.handleUncaughtException.apply(e,n);o&&o.apply(r,n),"anonymous"===t&&(e.anonymousErrorsPending+=1)}r.exports={captureUncaughtExceptions:function(r,e,o){if(r){var t;if("function"==typeof e._rollbarOldOnError)t=e._rollbarOldOnError;else if(r.onerror){for(t=r.onerror;t._rollbarOldOnError;)t=t._rollbarOldOnError;e._rollbarOldOnError=t}e.handleAnonymousErrors();var a=function(){var o=Array.prototype.slice.call(arguments,0);n(r,e,t,o)};o&&(a._rollbarOldOnError=t),r.onerror=a}},captureUnhandledRejections:function(r,e,o){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var o,n,t;try{o=r.reason}catch(r){o=void 0}try{n=r.promise}catch(r){n="[unhandledrejection] error getting `promise` from event"}try{t=r.detail,!o&&t&&(o=t.reason,n=t.promise)}catch(r){}o||(o="[unhandledrejection] error getting `reason` from event"),e&&e.handleUnhandledRejection&&e.handleUnhandledRejection(o,n)};n.belongsToShim=o,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}}},function(r,e,o){"use strict";function n(r,e,o){if(e.hasOwnProperty&&e.hasOwnProperty("addEventListener")){for(var n=e.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(e,o,t){n.call(this,e,r.wrap(o),t)};t._rollbarOldAdd=n,t.belongsToShim=o,e.addEventListener=t;for(var a=e.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,e,o){a.call(this,r,e&&e._rollbar_wrapped||e,o)};l._rollbarOldRemove=a,l.belongsToShim=o,e.removeEventListener=l}}r.exports=function(r,e,o){if(r){var t,a,l="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(t=0;t<l.length;++t)r[a=l[t]]&&r[a].prototype&&n(e,r[a].prototype,o)}}},function(r,e,o){"use strict";function n(r,e){this.impl=r(e,this),this.options=e,function(r){for(var e=function(r){return function(){var e=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,e)}},o="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureEvent,captureDomContentLoaded,captureLoad".split(","),n=0;n<o.length;n++)r[o[n]]=e(o[n])}(n.prototype)}n.prototype._swapAndProcessMessages=function(r,e){var o,n,t;for(this.impl=r(this.options);o=e.shift();)n=o.method,t=o.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],o.ts]):this[n].apply(this,t));return this},r.exports=n},function(r,e,o){"use strict";r.exports=function(r){return function(e){if(!e&&!window._rollbarInitialized){for(var o,n,t=(r=r||{}).globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;o=window._rollbarShims[i++];)n||(n=o.handler),o.handler._swapAndProcessMessages(l,o.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+// End Rollbar Snippet
+</script><link rel="stylesheet" media="all" href="https://cdn-s-assets.arzamas.academy/assets/front/application-5ef54e89abc97542c69b5d489a8ca048fe27cc49be526f630d7e175983ad1825.css" data-turbolinks-track="true" /><script>
+  function parseJwt(token) {
+    try {
+      if (!token) return undefined
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  function getCurrentAccountUUID() {
+    let globalSessionJwt = null;
+    let cookieValue = document.cookie.split('; ').find(row => row.startsWith('globalSessionJwt'));
+    if (cookieValue) {
+      globalSessionJwt = cookieValue.split('=')[1];
+    }
+    const parsedJwt = parseJwt(globalSessionJwt);
+    if (parsedJwt) {
+      return parsedJwt.account_uuid;
+    }
+  }
+</script><style>.team:not(.team--public) { display: none !important; } .uv__team:not(.uv__team--public) { display: none !important; }</style><!--[if IE]><script src="https://cdn-s-assets.arzamas.academy/assets/frontend/html5ie-7385499396f2fdbd403dcd4f4653692e68115c68261ff6c2dde4cc139ae262b7.js" data-turbolinks-track="true"></script><![endif]--><script src="https://cdn-s-assets.arzamas.academy/assets/front/vendor-9b52c6b5b6a4810101515233edc81bd777080e14e6ac0705ee89b9365596b2df.js" data-turbolinks-track="true"></script><script src="https://cdn-s-assets.arzamas.academy/assets/front/application-ef0bf5811fc94e56308cae5bcb0fd1d31d69c05856406ab17cb4dc1640465889.js" data-turbolinks-track="true"></script><link rel="alternate" type="application/rss+xml" title="Arzamas  •  Всё" href="https://arzamas.academy/feed_v1.rss" /><link rel="alternate" type="application/rss+xml" title="Arzamas  •  Курсы" href="https://arzamas.academy/feed_v1/courses.rss" /><link rel="alternate" type="application/rss+xml" title="Arzamas  •  Журнал" href="https://arzamas.academy/feed_v1/mag.rss" /><link href="https://cdn-s-static.arzamas.academy/global-share.jpg" rel="image_src" /><meta content="56.7.30.22.70.112.101.75.9.5.4.5.70.9.56.15.7.1.17.1.71.24.40.43.0.1.14.23.91.89.30.24.55.91.92.81.92.70.34.0.15.21" name="arzamas-tool" /><meta content="Arzamas" property="og:site_name" /><meta content="591507477617507" property="fb:app_id" /><meta content="564393327020774" property="fb:pages" /><meta content="4778594" property="vk:app_id" /><meta content="ru_RU" property="og:locale" /><meta content="Политика конфиденциальности" name="title" property="og:title" /><meta content="История культуры в видео, текстах и фотографиях" name="description" property="og:description" /><meta content="summary_large_image" name="twitter:card" /><meta content="@arzamas_academy" name="twitter:site" /><meta content="Политика конфиденциальности" name="twitter:title" /><meta content="История культуры в видео, текстах и фотографиях" name="twitter:description" /><meta content="4222eda340ce4afa7513" name="wot-verification" /><meta content="https://cdn-s-static.arzamas.academy/global-share.jpg" property="og:image" /><meta content="https://cdn-s-static.arzamas.academy/global-share.jpg" property="og:image:secure_url" /><meta content="1200" property="og:image:width" /><meta content="630" property="og:image:height" /><meta content="https://cdn-s-static.arzamas.academy/global-share.jpg" name="twitter:image:src" /><meta content="https://arzamas.academy/" property="og:url" /><meta content="website" property="og:type" /><script type="text/javascript">window.subscriptionProducts = {
+  prices: {"monthly":299,"yearly":1999,"biennial":3499,"triennial":4499,"lifetime":9999,"kids_monthly":299,"kids_yearly":1999,"kids_biennial":3499,"kids_triennial":4499,"kids_lifetime":9999,"pack_monthly":449,"pack_yearly":2999,"pack_biennial":4999,"pack_triennial":6499,"pack_lifetime":15999},
+  titles: {"monthly":"Подписка на Радио Arzamas (месяц)","yearly":"Подписка на Радио Arzamas (год)","triennial":"Подписка на Радио Arzamas (3 года)","lifetime":"Подписка на Радио Arzamas (навсегда)","kids_monthly":"Подписка на ГусьГусь (месяц)","kids_yearly":"Подписка на ГусьГусь (год)","kids_triennial":"Подписка на ГусьГусь (3 года)","kids_lifetime":"Подписка на ГусьГусь (навсегда)","pack_monthly":"Подписка на Радио Arzamas и ГусьГусь (месяц)","pack_yearly":"Подписка на Радио Arzamas и ГусьГусь (год)","pack_triennial":"Подписка на Радио Arzamas и ГусьГусь (3 года)","pack_lifetime":"Подписка на Радио Arzamas и ГусьГусь (навсегда)"},
+  periods: {"monthly":1,"yearly":12,"triennial":36,"lifetime":12000,"kids_monthly":1,"kids_yearly":12,"kids_triennial":36,"kids_lifetime":12000,"pack_monthly":1,"pack_yearly":12,"pack_triennial":36,"pack_lifetime":12000},
+}</script><script data-turbolinks-eval="false">
+    window.ga=function() {
+        // console.log("window.ga called")
+    }
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CTS3T38NF"></script>
+<script>
+  let contentGroup;
+  let contentGroup2;
+  if (location.pathname.startsWith('/account')) {
+    contentGroup = 'Личный кабинет'
+  } else if (location.pathname.startsWith('/micro')) {
+    contentGroup = 'Микрорубрики'
+  } else if (location.pathname.startsWith('/offline')) {
+    contentGroup = 'Оффлайн'
+  } else if (location.pathname.startsWith('/likbez')) {
+    contentGroup = 'Ликбезы'
+  } else if (location.pathname.startsWith('/mag')) {
+    contentGroup = 'Журнал'
+  } else if (location.pathname.startsWith('/themes')) {
+    contentGroup = 'Страницы тегов'
+  } else if (location.pathname.startsWith('/authors')) {
+    contentGroup = 'Авторы'
+  } else if (location.pathname.startsWith('/results/')) {
+    contentGroup = 'Результаты иксов для шеринга'
+  } else if (location.pathname === '/courses') {
+    contentGroup = 'Список курсов'
+  } else if (location.pathname === '/kids') {
+    contentGroup = 'Список детских курсов'
+  } else if (location.pathname.startsWith('/channel/UCVgvnGSFU41kIhEc09aztEg')) {
+    contentGroup = 'Youtube'
+  } else if (location.pathname.startsWith('/search')) {
+    contentGroup = 'Поиск'
+  } else if (location.pathname.startsWith('/about') || location.pathname.startsWith('/license')) {
+    contentGroup = 'Статичные страницы'
+  } else if (location.pathname.startsWith('/special/') ||
+    location.pathname.startsWith('/stickers') ||
+    location.pathname.startsWith('/uni/') ||
+    location.pathname.startsWith('/university')
+  ) {
+    contentGroup = 'Спецпроекты'
+  } else if (location.pathname.startsWith('/materials/')) {
+    contentGroup = 'Страницы материалов'
+  } else if (location.pathname.startsWith('/episodes/') ||
+    /^\/courses\/[0-9]+\/[0-9]+/.test(location.pathname) ||
+    /^\/podcasts\/[0-9]+\/[0-9]+/.test(location.pathname) ||
+    /^\/shorts\/[0-9]+\/[0-9]+/.test(location.pathname)
+  ) {
+    contentGroup = 'Страницы эпизодов'
+  } else if (/^\/kids\/[0-9]+\/[0-9]+/.test(location.pathname)) {
+    contentGroup = 'Страницы детских эпизодов'
+  } else if (/^\/courses\/[0-9]+/.test(location.pathname) ||
+      /^\/podcasts\/[0-9]+/.test(location.pathname) ||
+      /^\/shorts\/[0-9]+/.test(location.pathname)
+    ) {
+    contentGroup = 'Страницы курсов'
+  } else if (/^\/kids\/[0-9]+/.test(location.pathname)) {
+    contentGroup = 'Страницы детских курсов'
+  } else if (location.pathname.startsWith('/radio')) {
+    contentGroup = 'Радио'
+  } else if (location.pathname.startsWith('/goosegoose')) {
+    contentGroup = 'Гусьгусь лендинг'
+  } else if (location.pathname === '/gift') {
+    contentGroup = 'Продажа сертификатов'
+  } else if (location.pathname === '/') {
+    contentGroup = 'Главная'
+  }
+
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+  // gtag('config', 'G-5G5E5HW69L', {currency: 'RUB', user_id: UserAnalytics.getCurrentAccountUUID()}); // separate GA property for Arzamas web
+  gtag('config', 'G-4CTS3T38NF', {
+    currency: 'RUB',
+    user_id: getCurrentAccountUUID(),
+    content_group: contentGroup,
+    content_group2: contentGroup2,
+  }); // unified Apps + Web property
+  
+  window.setGA4UserId = function(accountUUID) {
+    // gtag('config', 'G-5G5E5HW69L', {user_id: accountUUID})
+    gtag('config', 'G-4CTS3T38NF', {user_id: accountUUID})
+  }
+</script>
+<script>
+
+  const ga4EcCategory = 'Подарочные сертификаты';
+  const ga4EcCategory2Radio = 'Сертификаты Радио Arzamas';
+  const ga4EcCategory2Kids = 'Сертификаты Гусьгусь';
+  const ga4EcCategory2Pack = 'Сертификаты Радио Arzamas + Гусьгусь';
+  const ga4EcBrand = 'Arzamas';
+  const ga4EcList = 'Страница продажи сертификатов';
+  const ga4EcListId = 'gift_certificates_page';
+  var ga4GiftCertificatesImpressionDetails = {
+    'year_gift_certificate': { 'item_id': 'year_gift_certificate', 'item_name': 'Сертификат на подписку Радио на 1 год', 'item_category2': ga4EcCategory2Radio, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 1 },
+    '2_years_gift_certificate': { 'item_id': '2_years_gift_certificate', 'item_name': 'Сертификат на подписку Радио на 2 года', 'item_category2': ga4EcCategory2Radio, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 2 },
+    '3_years_gift_certificate': { 'item_id': '3_years_gift_certificate', 'item_name': 'Сертификат на подписку Радио на 3 года', 'item_category2': ga4EcCategory2Radio, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 3 },
+    'unlimited_gift_certificate': { 'item_id': 'unlimited_gift_certificate', 'item_name': 'Сертификат на подписку Радио навсегда', 'item_category2': ga4EcCategory2Radio, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 4 },
+    'kids_year_gift_certificate': { 'item_id': 'kids_year_gift_certificate', 'item_name': 'Сертификат на подписку Гусьгусь на 1 год', 'item_category2': ga4EcCategory2Kids, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 5 },
+    'kids_2_years_gift_certificate': { 'item_id': 'kids_2_years_gift_certificate', 'item_name': 'Сертификат на подписку Гусьгусь на 2 года', 'item_category2': ga4EcCategory2Kids, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 6 },
+    'kids_3_years_gift_certificate': { 'item_id': 'kids_3_years_gift_certificate', 'item_name': 'Сертификат на подписку Гусьгусь на 3 года', 'item_category2': ga4EcCategory2Kids, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 7 },
+    'kids_unlimited_gift_certificate': { 'item_id': 'kids_unlimited_gift_certificate', 'item_name': 'Сертификат на подписку Гусьгусь навсегда', 'item_category2': ga4EcCategory2Kids, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 8 },
+    'pack_year_gift_certificate': { 'item_id': 'pack_year_gift_certificate', 'item_name': 'Сертификат на общую подписку на 1 год', 'item_category2': ga4EcCategory2Pack, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 9 },
+    'pack_2_years_gift_certificate': { 'item_id': 'pack_2_years_gift_certificate', 'item_name': 'Сертификат на общую подписку на 2 года', 'item_category2': ga4EcCategory2Pack, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 10 },
+    'pack_3_years_gift_certificate': { 'item_id': 'pack_3_years_gift_certificate', 'item_name': 'Сертификат на общую подписку на 3 года', 'item_category2': ga4EcCategory2Pack, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 11 },
+    'pack_unlimited_gift_certificate': { 'item_id': 'pack_unlimited_gift_certificate', 'item_name': 'Сертификат на общую подписку навсегда', 'item_category2': ga4EcCategory2Pack, 'item_category': ga4EcCategory, 'item_brand': ga4EcBrand, 'index': 12 },
+  };
+</script><script type="text/javascript">!function() {
+  var t = document.createElement('script')
+  t.type = 'text/javascript', t.async = !0, t.src = 'https://vk.com/js/api/openapi.js?169', t.onload = function() {
+    VK.Retargeting.Init('VK-RTRG-970017-9naN4'), VK.Retargeting.Hit()
+  }, document.head.appendChild(t)
+}()</script>
+<noscript><img src="https://vk.com/rtrg?p=VK-RTRG-970017-9naN4" style="position:fixed; left:-999px;" alt="" />
+</noscript></head><body><script type="text/javascript">var cloudpaymentsPublicId = "pk_0b7e9d734918763b4a57e8cee13fb";
+var radioApiHostForPurchases =  "https://radio.arzamas.academy";</script><script type="text/javascript">var radioApiHostForAccountAuth =  "https://radio.arzamas.academy";</script><script src="https://accounts.google.com/gsi/client" async defer></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter28061802 = new Ya.Metrika({
+                    id:28061802,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true,
+                    ecommerce:"dataLayer"
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/28061802" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --><!--LiveInternet counter--><script type="text/javascript"><!--
+document.write(
+"<img src='//counter.yadro.ru/hit?t44.6;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='' "+
+"border='0' width='31' height='31' style='display: none;'>")
+//--></script><!--/LiveInternet-->
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2866980", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "topmailru-code");
+</script><noscript><div>
+<img src="//top-fwz1.mail.ru/counter?id=2866980;js=na" style="border:0;position:absolute;left:-9999px;" alt="" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+<div class="content-overflow"><div id="fb-root"></div><!--[if lte IE 7]><div class="chromeframe">Ваш браузер <em>устарел!</em> <a href="http://browsehappy.com/">Установите другой браузер</a> или <a href="http://www.google.com/chromeframe/?redirect=true">Google Chrome Frame</a>, чтобы просматривать этот сайт.</div><![endif]--><noscript><div class="noscript">У вас отключено выполнение сценариев Javascript. Измените, пожалуйста, настройки браузера.</div></noscript><header class="site-header header-page--transparent"><div class="site-header__content"><a aria-label="На главную Arzamas" class="site-header__additional-logo" href="/"></a><div class="site-header__overlay"></div><button aria-label="Главное меню" class="site-header__dropdown-button" type="button"></button><div class="site-header__dropdown-menu"><button aria-label="Закрыть" class="site-header__dropdown-cross" type="button"></button><a aria-label="На главную Arzamas" class="site-header__logo" href="/"></a><nav aria-label="Основное меню" class="site-header__nav" itemscope="" itemtype="http://schema.org/SiteNavigationElement"><ul class="site-header__nav-list"><li class="site-header__nav-item"><a class="site-header__nav-link" href="/courses?kind=courses">Курсы</a></li><li class="site-header__nav-item"><a class="site-header__nav-link" href="/courses?kind=podcasts">Подкасты</a></li><li class="site-header__nav-item"><a class="site-header__nav-link" href="/courses?kind=audio_materials">Материалы</a></li><li class="site-header__nav-item"><a class="site-header__nav-link" href="/mag">Журнал</a></li><li class="site-header__nav-item"><a class="site-header__nav-link" href="https://shop.arzamas.academy">Магазин</a></li></ul></nav><button aria-label="Дополнительное меню" class="site-header__subnav-button" type="button"></button><a class="site-header__arzroom-link" href="https://arzroom.arzamas.academy"></a><a class="site-header__goosegoose-link" href="/kids"></a><a class="site-header__arzamas-app-link" href="/radio">Скачать <span>приложение<span></a><a class="site-header__goosegoose-app-link" href="/goosegoose">Скачать <span>приложение<span></a><nav aria-label="Дополнительное меню" class="site-header__subnav" itemscope="" itemtype="http://schema.org/SiteNavigationElement"><div class="site-header__subnav__items"><a class="site-header__subnav__item" href="/special/author-among-us"><span>Автор среди нас</span></a><a class="site-header__subnav__item" href="/special/jewish-museum"><span>Еврейский музей</span></a><a class="site-header__subnav__item" href="/special/tretyakovka"><span>Новая Третьяковка</span></a><a class="site-header__subnav__item" href="/university"><span>Онлайн-университет</span></a><a class="site-header__subnav__item" href="/uni/eastwest"><span>Запад и Восток: история культур</span></a></div><div class="site-header__subnav__items"><a class="site-header__subnav__item" href="/likbez/ruskult"><span>Видеоистория русской культуры</span></a><a class="site-header__subnav__item" href="/likbez/ruslang"><span>Русский язык от «гой еси» до «лол кек»</span></a><a class="site-header__subnav__item" href="/likbez/antiquity"><span>Что такое античность</span></a></div><div class="site-header__subnav__items"><a class="site-header__subnav__item" href="/likbez/russian-art-xx"><span>Русское искусство XX века</span></a><a class="site-header__subnav__item" href="/special/ruslit-xx"><span>Русская литература XX века</span></a><a class="site-header__subnav__item" href="/special/kids"><span>Детская комната</span></a></div></nav><a class="site-header__get-gift-certificate" href="/gift"><span>«Радио Arzamas»&nbsp;— в&nbsp;подарок!</span></a><div class="site-header__border"></div><a class="site-header__login-button" href="/account"></a><div class="site-header__border"></div></div><button aria-label="Поиск" class="site-header__search-button" type="button"></button><div class="site-header__search"><form action="/search" method="get"><label class="sr-only" for="search"></label><input class="site-header__search-input" id="search" name="query" type="search" value="" /><input class="site-header__search-submit" name="" type="submit" value="Найти" /></form></div></div></header><script type="text/javascript">window.nonMobile = true;
+$('body').addClass('license')</script><article class="article-about article-lisence"><h1>Политика конфиденциальности <nobr>веб-сайта</nobr> Arzamas.academy в&nbsp;сети интернет и&nbsp;мобильных приложений «Радио Arzamas»&nbsp;и «Гусьгусь»</h1></article><section class="section-container"><article class="article article-about-content article-center article-lisence"><div class="dates"><p><strong>Версия:</strong> 2.4 от «01» июля 2020 года</p><p><strong>Опубликовано и вступило в силу:</strong> «1» августа 2015 года</p></div><h2>Термины и определения</h2><div class="text-block"><p>Веб-сайт</p><p>Web-сайт, расположенный в&nbsp;сети Интернет по&nbsp;адресу <a href="https://arzamas.academy">https://arzamas.academy</a>, являющийся составным объектом интеллектуальной собственности в&nbsp;составе программ для ЭВМ и&nbsp;других программных средств, баз данных, графического Контента и&nbsp;других произведений, объединенных для обеспечения нормального функционирования Веб-сайта и&nbsp;использования его возможностей.</p><p>В&nbsp;понятие Веб-сайт по&nbsp;контексту включаются также приложения &laquo;Радио Arzamas&raquo; и&nbsp;&laquo;Гусьгусь&raquo; для операционных систем iOS и&nbsp;Android. Приложение &laquo;Гусьгусь&raquo; преимущественно направлено на&nbsp;детскую аудиторию.</p><p>На&nbsp;Веб-сайте Арзамас предоставляет Авторам возможность размещения их&nbsp;материалов в&nbsp;сети и&nbsp;предоставляет Пользователям возможность доступа к&nbsp;соответствующим материалам, расположенным в&nbsp;сети Интернет (пункт 1&nbsp;и&nbsp;пункт 3&nbsp;статьи 1253.1 Гражданского кодекса Российской Федерации).</p><p>Интеллектуальные права на&nbsp;Веб-сайт в&nbsp;полном объеме принадлежат компании Арзамас, которая администрирует Веб-сайт и&nbsp;доменное имя.</p><p>Веб-сайт состоит из&nbsp;совокупности страниц, к&nbsp;каждой из&nbsp;которых в&nbsp;равной степени применяются положения настоящих Правил.</p></div><div class="text-block"><p>Арзамас</p><p>Общество с&nbsp;ограниченной ответственностью «АРЗАМАС», ОГРН 1147748145126 от&nbsp;<nobr>23.12.2014 г.</nobr>, <acronym title="Идентификационный номер налогоплательщика" lang="ru">ИНН</acronym> 7703824501, юридический адрес: 123022, г.&nbsp;Москва, ул. 1905 Года, д.2, стр.&nbsp;1</p></div><div class="text-block"><p>Пользователь</p><p>посетитель Веб-сайта&nbsp;— лицо, получающее доступ к&nbsp;страницам Веб-сайта посредством технических и&nbsp;программных средств, например, Интернет-браузера, мобильного приложения.</p></div><div class="text-block"><p>Личный кабинет</p><p>личная страница Пользователя на&nbsp;Веб-сайте, где Пользователь может хранить, изменять, добавлять или удалять информацию о&nbsp;себе, в&nbsp;том числе, свои персональные данные, задавать параметры подписки, видеть статистику пользования Веб-сайтом. Личный кабинет позволяет Пользователю перенести подписку, статистику и&nbsp;историю прослушиваний на&nbsp;другие устройства Пользователя. В&nbsp;Личном кабинете могут отражаться иные сведения или возможности для Пользователя, по&nbsp;усмотрению Арзамаса. Личный кабинет создается Пользователем при регистрации на&nbsp;Веб-сайте (в&nbsp;том числе, в&nbsp;мобильных приложениях &laquo;Радио Arzamas&raquo; и&nbsp;&laquo;Гусьгусь&raquo;) и&nbsp;привязан к&nbsp;устройствам Пользователя. Конкретное количество допустимых устройств, привязанных к&nbsp;Личному кабинету, определяется на&nbsp;усмотрение Арзамаса. Доступ к&nbsp;Личному кабинету осуществляется посредством логина и&nbsp;пароля, авторизации через социальные сети или иными способами авторизации, предусмотренными на&nbsp;Веб-сайте. Создание Пользователем Личного кабинета не&nbsp;является обязательным для использования Веб-сайта и&nbsp;доступа к&nbsp;Контенту, при этом, использование Личного кабинета на&nbsp;Веб-сайте, а&nbsp;не&nbsp;в&nbsp;мобильном приложении, также позволяет приобретать подписку или получать доступ к&nbsp;платному Контенту непосредственно на&nbsp;Веб-сайте, а&nbsp;не&nbsp;только в&nbsp;мобильном приложении (возможность получения платного Контента через Веб-сайт, а&nbsp;не&nbsp;мобильное приложение, будет доступна после технической реализации такой возможности Арзамасом). Без создания Личного кабинета Пользователь не&nbsp;имеет возможности ввести промокоды на&nbsp;подписку или получить скидку на&nbsp;подписку.</p></div><div class="text-block"><p>Автор</p><p>Физическое лицо, творческим трудом которого создаются элементы Контента, размещенные на&nbsp;Веб-сайте, главным образом&nbsp;— видеолекции, статьи, иллюстрации и&nbsp;мультимедийные продукты, с&nbsp;которым Арзамас заключает Авторское соглашение.</p></div><div class="text-block"><p>Партнер</p><p>Юридическое лицо, которому Арзамас предоставляет определенные права на&nbsp;использование результатов интеллектуальной деятельности, входящие в&nbsp;Контент Веб-сайта, для распространения, размещения в&nbsp;сети Интернет, издания и/или переработки и&nbsp;создания новых результатов интеллектуальной деятельности.</p><p>Условия использования Контента Веб-сайтами определяются соответствующими договорами, заключаемыми с&nbsp;ними.</p></div><div class="text-block"><p>Контент, а также Контент Веб-сайта</p><p>информация, представленная в&nbsp;текстовом, графическом, аудиовизуальном (видео) форматах на&nbsp;Веб-сайте, являющаяся его наполнением. Контент Веб-сайта в&nbsp;основном состоит из&nbsp;видеолекций, статей и&nbsp;мультимедийных продуктов, которые как правило объединяются по&nbsp;смыслу в&nbsp;отдельные курсы.</p><p>К&nbsp;Контенту Веб-сайта также относятся иллюстрации&nbsp;— произведения графики и&nbsp;дизайна, изобразительного искусства, права на&nbsp;размещение которых приобретаются Арзамасом у&nbsp;Авторов и&nbsp;иных правообладателей.</p><p>В&nbsp;случае, если какие-либо элементы Контента размещаются в&nbsp;социальных сетях и&nbsp;на&nbsp;других Интернет-сайтах, на&nbsp;них в&nbsp;полной мере распространяются положения настоящих Правил, при этом они дополняются правилами использования соответствующих социальных сетей и&nbsp;иных порталов.</p></div><h2>Правила в отношении персональных данных</h2><div class="text-block-small"><p>1</p><p>В рамках функционирования Веб-сайта Арзамас получает от Пользователей отдельные персональные данные, предусмотренные настоящим Соглашением.</p></div><div class="text-block-small"><p>2</p><p>Обработка таких персональных данных регулируется настоящими правилами и осуществляется в соответствии с действующим законодательством (в том числе Федеральным законом «О персональных данных» № 152-ФЗ от 27 июля 2006 г.) исключительно с целью заключения и исполнения договоров с субъектами персональных данных или юридическими лицами, от имени и (или) в интересах которых действуют субъекты персональных данных – в том числе, настоящего Соглашения. </p></div><div class="text-block-small"><p>3</p><p>Принимая обязательство исполнять правила, содержащиеся в настоящем разделе, каждый Пользователь и каждый Автор даёт своё согласие на обработку Арзамасом его персональных данных в соответствии с пунктом 1 статьи 9 Федерального закона «О персональных данных», а именно на совершение в том числе следующих действий: сбор, запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, предоставление персональных данных, передача (в том числе путём распространения, доступа), обезличивание, блокирование, удаление и уничтожение. </p></div><div class="text-block-small"><p>4</p><p>Арзамас осуществляет обработку персональных данных с целью заключения и исполнения настоящего Соглашения, а также с целью выполнения требований действующих нормативно-правовых актов Российской Федерации. Арзамас не осуществляет трансграничную передачу персональных данных (то есть не передаёт их на территории иностранных государств). Арзамас вправе совершать автоматизированную обработку персональных данных, в рамках, предусмотренных правилами настоящего Соглашения, а также поручать обработку персональных данных третьим лицам. </p></div><div class="text-block-small"><p>5</p><p>Арзамас может собирать анонимную неличную информацию, предоставленную Пользователями. К неличной информации относится любая нескрываемая информация, которая становится доступной Арзамасу во время получения Пользователем доступа на Веб-сайт и его непосредственного использования. Неличная информация может содержать, помимо прочего, данные об идентификации браузера Пользователя, так же как и оперативной системы, порядок посещения страниц, время и дату подключения, бренд и&nbsp;модель мобильного устройства, название оператора мобильной связи, название и&nbsp;версия операционной системы мобильного устройства, настройки масштабирования шрифтов, уникальный id&nbsp;устройства и т.п. Арзамас может собирать личную информацию, добровольно и сознательно предоставляемую Пользователем во время создания учётной записи на Веб-сайте, а именно фамилию и имя, номер мобильного телефона и адрес электронной почты, другие сведения, сообщённые Пользователем.</p></div><div class="text-block-small"><p>6</p><p>Полученная Арзамасом информация (персональные данные) не подлежит разглашению, за исключением случаев, когда её раскрытие является обязательным по законодательству Российской Федерации или необходимо для работы Веб-сайта и его функций.</p></div><div class="text-block-small"><p>7</p><p>Арзамас может использовать полученные персональные данные для следующих целей:</p></div><div class="text-block-inside"><p>7.1</p><p>обеспечивать качественную работу Веб-сайта;</p></div><div class="text-block-inside"><p>7.2</p><p>вносить изменения в Веб-сайт для улучшения его работы;</p></div><div class="text-block-inside"><p>7.3</p><p>отправлять сообщения Пользователям;</p></div><div class="text-block-inside"><p>7.4</p><p>отправлять Пользователям рекламные материалы и сообщать о специальных предложениях.</p></div><div class="text-block-inside"><p>7.5</p><p>Арзамас может использовать общеотраслевую технологию «куки» (cookies). Куки – это небольшой фрагмент данных, отправленный веб-сервером и хранимый на компьютере, который использует Пользователь, позволяющий Арзамасу сохранять персональные настройки и предпочтения Пользователя, а также собирать неличную информацию о нём.</p></div><div class="text-block-small"><p>8</p><p>Пользователь может запросить удаление своих пользовательских данных, написав письмо на&nbsp;почту radio@arzamas.academy.</p></div><div class="text-block-small"><p>9</p><p>Арзамас не несёт ответственности за риск наступления неблагоприятных последствий, которые наступят или могут наступить вследствие несоответствия используемого Пользователями оборудования, программного обеспечения или каналов связи установленным требованиям по защите персональных данных от несанкционированного (противоправного) посягательства третьих лиц.</p></div><div class="text-block-small"><p>10</p><p>Веб-сайт собирает данные, добровольно указанные пользователями, а&nbsp;также используют сторонние сервисы Amplitude (https://amplitude.com), Sentry (https://sentry.io) и&nbsp;Firebase (https://firebase.google.com).</p></div></article></section><div id="corrections_popup"><div class="close corrections-popup-close"></div><p class="msg"></p><blockquote></blockquote><p><textarea class="corrections_popup__textarea" maxlength="256" placeholder="Ваш комментарий (не обязательно)"></textarea><div><textarea class="corrections_popup__textarea_hp" maxlength="256"></textarea></div></p><div class="buttons"><input data-host="api.arzamas.academy" type="button" value="Отправить" /></div></div><div class="corrections-popup-close" id="corrections_overlay"></div><div class="popup-overlay"></div><div class="signup-popup"><div class="cross"></div><div class="s-header"><div class="logo"></div></div><div class="email-note"><h5>Подписка на еженедельную рассылку</h5><p>Оставьте ваш e-mail, чтобы получать наши новости</p></div><form action="/" class="email-form" data-host="api.arzamas.academy" method="post"><input class="input" name="email" placeholder="Ваш e-mail" type="email" /><div class="submit"><input type="submit" value="" /></div><span class="error-message">Введите правильный e-mail</span></form></div><footer class="footer-page"><a aria-label="Главная" class="footer-page__logo" href="/"></a><div class="footer-page__sections"><a class="footer-page__section" href="/about">О проекте</a><a class="footer-page__section" href="/license">Лицензия</a><a class="footer-page__section" href="/privacy">Политика конфиденциальности</a><a class="footer-page__section" href="/about/contact">Обратная связь</a></div><div class="footer-page__apps"><a class="footer-page__app" href="/radio"><img class="footer-page__app-icon" src="https://cdn-s-assets.arzamas.academy/assets/footer/radio-a6815ca7f5da23fdb196c993dae491f981b617461b1f8dca55742ae86a21e9f4.png" alt="Radio" /><span class="footer-page__app-title">Радио Arzamas</span></a><a class="footer-page__app" href="/goosegoose"><img class="footer-page__app-icon" src="https://cdn-s-assets.arzamas.academy/assets/footer/goose-57ac85c29296815c0dacf1da048b171faa77c83fed1213f77b241fc6cbd303e8.svg" alt="Goose" /><span class="footer-page__app-title">Гусьгусь</span></a><a class="footer-page__app" href="/stickers"><img class="footer-page__app-icon" src="https://cdn-s-assets.arzamas.academy/assets/footer/stickers-adc3b76cda0e4493bd33fd8f647e9f55e741f4704834420f36fd1ebbe3a01ac2.png" alt="Stickers" /><span class="footer-page__app-title">Стикеры Arzamas</span></a></div><div class="footer-page__columns"><div class="footer-page__socials"><a class="footer-page__social" href="https://ok.ru/group/arzamas.academy" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/ok-ac9b5033ed3ba01fe20f7558762bfb7eace35a1c8b94d3a50dcdabffe80634d9.svg" alt="Ok" /></div><span class="footer-page__social-title">Одноклассники</span></a><a class="footer-page__social" href="https://vk.com/arzamas.academy" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/vk-b80b74eb484faab6fd3ce4b3de78f8f2f9605b0d2541a9e6fa9f57f9fde72d3f.svg" alt="Vk" /></div><span class="footer-page__social-title">VK</span></a><a class="footer-page__social" href="https://www.youtube.com/c/Arzamaschannel" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/youtube-4fef51188fc1166a13873c16dee9f106aa083f6564a7af94254013eb160b802d.svg" alt="Youtube" /></div><span class="footer-page__social-title">YouTube</span></a><a class="footer-page__social" href="https://podcasts.apple.com/ru/channel/arzamas-%D0%B0%D1%80%D0%B7%D0%B0%D0%BC%D0%B0%D1%81/id6442582675?l=en" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/podcasts-67dd58df90840c5b223f394cc4a13f7de369e8ad8c6b13850b368e9ede35c8fb.svg" alt="Podcasts" /></div><span class="footer-page__social-title">Подкасты</span></a><a class="footer-page__social" href="https://twitter.com/arzamas_academy" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/twitter-8b3a5a9f4e3a6702ed66f04f4f9bbd792995edf2c6c73d81eb331f049b658e96.svg" alt="Twitter" /></div><span class="footer-page__social-title">Twitter</span></a><a class="footer-page__social" href="https://t.me/ArzamasLive" rel="noopener" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/telegram-6dcb3b912e304654c50ce9d1ea2252bacb9d9a68b9563bb933c7183a42a90978.svg" alt="Telegram" /></div><span class="footer-page__social-title">Telegram</span></a><a class="footer-page__social" href="/feed_v1.rss" target="_blank"><div class="footer-page__social-icon"><img class="footer-page__social-image" src="https://cdn-s-assets.arzamas.academy/assets/footer/rss-c85e9e6d159c7b1a95246fe3758566353686aa04c0ed76b393162dfc117faf79.svg" alt="Rss" /></div><span class="footer-page__social-title">RSS</span></a></div><div class="footer-page__subscribe"><div class="email-note"><h5>Подписка</h5><p>Оставьте ваш e-mail, чтобы получать наши новости</p></div><form action="/" class="email-form" data-host="api.arzamas.academy" method="post"><label class="sr-only" for="email"></label><input class="input" id="email" name="email" placeholder="Ваш e-mail" type="email" /><div class="submit"><input type="submit" value="" /></div><span class="error-message">Введите правильный e-mail</span></form></div></div><div class="footer-page__copyright"><p>История, литература, искусство в&nbsp;лекциях, шпаргалках, играх и&nbsp;ответах экспертов: новые&nbsp;знания каждый&nbsp;день</p><p>© Arzamas 2024. Все права защищены</p></div></footer></div></body></html>
