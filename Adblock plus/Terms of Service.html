@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html 
+lang="en"
+data-page="terms"
+data-siteurl="https://adblockplus.org"
+dir="ltr"
+class="no-js  page-terms">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Terms of Use</title>
+
+  <meta name="description" content="The Terms of Use regulate the permitted use of Adblock Plus and the terms and conditions under which we provide ABP.">
+
+<link rel="canonical" href="https://adblockplus.org/terms">
+
+
+
+    
+<meta property="og:image" content="/img/adblockplus_promo.png">
+<meta property="og:title" content="Terms of Use">
+
+  <meta property="og:description" content="The Terms of Use regulate the permitted use of Adblock Plus and the terms and conditions under which we provide ABP.">
+
+<meta property="og:locale" content="en_US">
+
+  
+    <meta property="og:locale:alternate" content="de_DE">
+  
+
+  
+
+  
+    <meta property="og:locale:alternate" content="fr_FR">
+  
+
+<meta property="og:url" content="https://adblockplus.org/en/terms">
+
+
+<meta name="twitter:site" content="@AdblockPlus">
+<meta name="twitter:creator" content="@AdblockPlus">
+    
+  <link rel="stylesheet" href="/css/defaults.css?3035291160">
+  <link rel="stylesheet" href="/css/fonts.css?3035291160">
+  <link rel="stylesheet" href="/css/main.css?3035291160">
+  <link rel="stylesheet" href="/css/cookies.css?3035291160">
+
+
+
+
+
+    <script>
+  var noop = function() {};
+
+  var adblock = window.adblock = {
+    settings: {
+      language: "en",
+    },
+    strings: {
+      "error--unexpected": "Sorry, your payment could not be processed."
+    },
+    searchParameters: new URLSearchParams(location.search),
+    error: (message) => { alert(message) },
+    runtime: {},
+    config: {},
+    lib: {},
+    api: {},
+  };
+
+  adblock.query = adblock.searchParameters;
+
+  if (adblock.query.has("dev")) document.documentElement.classList.add("dev");
+  if (adblock.query.has("design")) document.documentElement.classList.add("design");
+
+  var eyeo = window.eyeo = {
+    preventCookiePrompt: false,
+    log: noop,
+    beacon: noop
+  };
+
+  //FIXME: eyeo/cms doesn't support img in string so this replaces span with img
+  // e.g. span src image.png class img turns into img src image.png class img
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("span.img").forEach(span => {
+        span.innerHTML = span.outerHTML.replace("span", "img");
+        span.replaceWith(span.querySelector("img"));
+    });
+  });
+
+  /**
+   * Apply config/properties to a namespace
+   *
+   * This is especially useful for building and retrieving config at paths that 
+   * may or may not have been created yet e.g. to test components together or
+   * separately. It also forces all config to be applied to only one global
+   * namespace (`eyeo`).
+   *
+   * Careful! It doesn't check/warn you about typos in path!
+   *
+   * @param {string} path - A Javascript object path to be created or retrieved
+   * @param {string} config - Config/properties to be applied to the path
+   */
+  function path(path, config)
+  {
+    var parts = path.split(".");
+    var point = eyeo;
+
+    for (var i = 0; i < parts.length; i++)
+    {
+      if (!point.hasOwnProperty(parts[i]))
+        point[parts[i]] = {};
+      
+      point = point[parts[i]];
+    }
+
+    if (typeof config == "object")
+      for (var key in config)
+        point[key] = config[key];
+
+    return point;
+  }
+
+  if (typeof console == "object" && typeof console.log == "function") {
+    console.log("success");
+  }
+</script>
+    <script>(function () {
+
+// Temporarily disable these features outside of select pages until Content-Security-Policy changes
+if ([
+  'premium', 
+  'manage', 
+  'deal', 
+  'anti-adblock-pass', 
+  'block-cookie-banners', 
+  'block-cookie-banners-v2'
+].indexOf(document.documentElement.dataset.page) == -1) return;
+
+var accessTime = parseInt(performance.now(), 10);
+var eyeo = window.eyeo = (window.eyeo || {});
+var adblock = window.adblock = (window.adblock || {});
+
+var CLIENT_ID = 'b';
+var SERVICE_URL = 'https://europe-west1-abp-log-service.cloudfunctions.net/log';
+
+var ALPHANUM = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+/**
+ * Generate a 32 character unique identifier
+ * @returns {String} unique identifier
+ */
+var uid = eyeo.uid = function() {
+  for (var i = 0, uid = ''; i < 32; i++)
+    uid += ALPHANUM[Math.floor(Math.random() * ALPHANUM.length)];
+  return uid;
+}
+
+var sid = eyeo.sid = adblock.sid = uid();
+
+var logEntries = [];
+
+/**
+ * Log an event with a payload to log-service
+ * 
+ * @param {string} event - name of event in log entry
+ * @param {object} payload - JSON stringified data in log entry
+ * @returns {Promimse}
+ */
+var log = eyeo.log = adblock.log = (event, payload) => {
+  payload = payload || {};
+  payload.sid = sid;
+  return new Promise(function(resolve, reject) {
+    var entry = {
+      id: uid(),
+      client: CLIENT_ID,
+      event: event,
+      payload: payload
+    };
+    var reference = {
+      recieved: false,
+      entry: entry
+    };
+    logEntries.push(reference);
+    if ((adblock.query.has("dev") || adblock.query.has("test")) && typeof console == "object" && typeof console.log == "function") {
+      console.log("adblock.log", entry);
+    }
+    var request = new XMLHttpRequest();
+    request.addEventListener('load', function() {
+      reference.recieved = true;
+      resolve();
+    });
+    request.addEventListener('error', reject);
+    request.addEventListener('abort', reject);
+    request.open('POST', SERVICE_URL);
+    request.send(JSON.stringify(entry));
+  });
+}
+
+var beaconPayload = {
+  sid: sid,
+  accessTime: accessTime
+};
+
+/** 
+ * Assign data to "beacon" event log entry
+ * 
+ * "beacon" events are special in that they are sent via sendBeacon on 
+ * "visibilitychange". sendBeacon POSTS data async even if the tab is closing
+ * without preventing the tab from closing. "visibilitychange" occurs when a 
+ * user navigates to a new page, switches tabs, closes a tab, minimizes or 
+ * closes the browser, or switches apps on mobile operating systems.
+ * 
+ * @param {object} data
+ */
+var beacon = eyeo.beacon = adblock.beacon = (data) => {
+  Object.assign(beaconPayload, data);
+}
+
+document.addEventListener('visibilitychange', function() {
+  var unrecievedLogEntries;
+  if (document.visibilityState == 'hidden') {
+    // unrecievedLogEntries = logEntries.reduce(function(collection, reference) {
+    //   if (!reference.recieved) collection.push(reference.entry);
+    //   return collection;
+    // }, []);
+    beaconPayload.beaconTime = parseInt(performance.now(), 10);
+    // beaconPayload.unrecievedLogEntries = unrecievedLogEntries;
+    navigator.sendBeacon(SERVICE_URL, JSON.stringify({
+      id: uid(),
+      client: CLIENT_ID,
+      event: 'beacon',
+      payload: beaconPayload
+    }));
+  }
+});
+
+var userAgent = navigator.userAgent;
+// Browser detection subset based on lancedikson/bowser
+eyeo.browser =
+  /opera|opr\/|opios/i.test(userAgent) ? 'opera'
+  : /SamsungBrowser/i.test(userAgent) ? 'samsung'
+  : /yabrowser/i.test(userAgent) ? 'yandex'
+  : /msie|trident/i.test(userAgent) ? 'ie'
+  : /\sedg\/|edg([ea]|ios)/i.test(userAgent) ? 'edge'
+  : /firefox|iceweasel|fxios/i.test(userAgent) ? 'firefox'
+  : /chrome|crios|crmo|chromium/i.test(userAgent) ? 'chrome'
+  : /safari|applewebkit/i.test(userAgent) ? 'safari'
+  : 'other';
+
+var CODE_FORMAT = /^[\w-]+$/g;
+var trafficSource = adblock.query.get("s") || "u";
+if (false == CODE_FORMAT.test(trafficSource)) trafficSource = "u";
+adblock.settings.trafficSource = trafficSource;
+
+log('access', {
+  trafficSource: trafficSource,
+  pageName: document.documentElement.dataset.page,
+  pageLanguage: document.documentElement.lang,
+  browserLanguage: navigator.language,
+  browserName: eyeo.browser,
+  browserHeight: window.innerHeight,
+  browserWidth: window.innerWidth,
+  screenHeight: screen.height,
+  screenWidth: screen.width
+});
+
+window.addEventListener('load', function() {
+  beacon({
+    loadTime: parseInt(performance.now(), 10)
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('[data-click]').forEach(function(target) {
+    target.addEventListener('click', function(event) {
+      log("click", JSON.parse(target.dataset.click));
+    });
+  });
+});
+
+})();</script>
+
+    
+      
+<br />
+<style>
+    #terms-print
+    {
+      text-align: right;
+    }
+
+    #terms-print img
+    {
+      height: 1em;
+      width: 1em;
+      vertical-align: text-top;
+    }
+
+    [dir="rtl"] #terms-print
+    {
+      text-align: left;
+    }
+  </style></p>
+
+    
+  </head>
+
+  <body>
+    
+
+
+
+<nav id="navbar">
+  <div class="container">
+    <a href="/en/" hreflang="en" id="navbar-logo">
+      <img
+        src="/img/adblockplus-logo-color.svg?3071336908"
+        alt="Adblock Plus logo in navigation menu">
+    </a>
+    <a href="#" id="navbar-menu-toggle">
+      <img
+        src="/img/menu-toggle-black.svg?3071336908"
+        alt="Top menu toggle">
+    </a>
+    <ul id="navbar-menu">
+      
+        <li class="">
+          <a href="/en/download" hreflang="en">Download</a>
+        </li>
+      
+        <li class="">
+          <a href="/en/about" hreflang="en">About</a>
+        </li>
+      
+      <li class="">
+        <a href="https://accounts.adblockplus.org/premium">Premium</a>
+      </li>
+      <li>
+        <a href="https://help.adblockplus.org" target="_blank">Help</a>
+      </li>
+      <li id="navbar-locale-menubar">
+        <a id="navbar-locale-selected">
+          English (US)
+        </a>
+        <ul id="navbar-locale-menu">
+          
+            <li>
+              <a href="/de/terms" hreflang="de">
+                Deutsch (DE)
+              </a>
+            </li>
+          
+            <li>
+              <a href="/en/terms" hreflang="en">
+                English (US)
+              </a>
+            </li>
+          
+            <li>
+              <a href="/fr/terms" hreflang="fr">
+                Français (FR)
+              </a>
+            </li>
+          
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+    <div id="content" class="container content False">
+      
+
+      
+        
+
+        
+        
+      
+
+      
+        <p>
+<p id="terms-print"><img alt="Print" aria-hidden="true" src="/img/print-icon.png?3071336908" />
+<a href="javascript:window.print()">Print</a></p>
+<h1>Terms of Use</h1>
+<h2>Adblock Plus</h2>
+<p>We, eyeo GmbH, Lichtstrasse 25, 50825 Cologne, Germany (&quot;eyeo&quot;; &quot;we&quot;), have developed the browser extension Adblock Plus (&quot;ABP&quot;) which can be downloaded via at our <a href="https://adblockplus.org">website</a> and other domains. ABP is a free extension that allows you to – among <a href="https://adblockplus.org/en/features">other things</a> – customize your web experience. You can block annoying ads, disable tracking, block domains known to spread malware and lots more. It&#39;s available for all major browsers, including Chrome, Firefox, Internet Explorer, Maxthon, Opera, Safari and Yandex.Browser. ABP uses filters that you choose to block unwanted elements.</p>
+<h3>What does that mean?</h3>
+<p>ABP is provided free of charge to you as a user. However, we&#39;ve reached a point where further Terms of Use, such as these, are necessary. This protects you and it protects us. These Terms of Use apply to your use of ABP.</p>
+<h3>What do you mean &quot;ABP is free to use?&quot;</h3>
+<p>ABP is an open source project, licensed under <a href="https://www.gnu.org/licenses/">GPLv3</a>, and can be used by anyone free of charge. The use of ABP is subject to the restrictions of the <a href="https://www.gnu.org/licenses/">GPLv3</a>.</p>
+<h3>Non-permitted use of ABP</h3>
+<p>Please note that some website owners may not permit ad-blocking users to view their website. That must be respected, especially in the following cases:</p>
+<ul>
+<li>You must not use ABP on websites where you have agreed not to use it, i.e. by agreeing to Terms of Services on the respective website, not to use any ad blockers.</li>
+<li>You are not permitted to use ABP in connection with any tools to circumvent technological measures that effectively control access to websites.</li>
+</ul>
+<h3>What are Acceptable Ads?</h3>
+<p>By default, nonintrusive ads aren&#39;t blocked when using ABP in order to support websites (<a href="https://adblockplus.org/en/acceptable-ads">learn more</a>). You can disable this feature at any time by opting out (<a href="https://adblockplus.org/en/acceptable-ads#optout">guideline how to disable Acceptable Ads</a>). This does not affect ABP&#39;s functionalities.</p>
+<p>Within our Acceptable Ads program the following rules have and always will apply to everyone, without exception:</p>
+<ul>
+<li>Participants cannot pay to avoid the <a href="https://adblockplus.org/en/acceptable-ads#criteria-general">criteria</a>. Every enabled ad must comply.</li>
+<li>For transparency, we add all Acceptable Ads to our <a href="https://adblockplus.org/forum/viewforum.php?f=12">forum</a> so that our community of users can provide feedback.</li>
+<li>We listen to our users. If an Acceptable Ads proposal is flagged by our community for a legitimate reason, we will remove it from the allowlist.</li>
+</ul>
+<p>We are able to keep our open source product free by charging large entities a fee for allowlisting services. For the other roughly 90 percent of our partners, these services are offered free of charge.</p>
+<h3>What if ABP does not work properly?</h3>
+<p>ABP is provided &quot;as is&quot; and on an &quot;as available&quot; basis. Your use of ABP is at your own risk. eyeo makes no warranty or condition that ABP will meet your requirements or be uninterrupted, timely, secure or error-free:</p>
+<ul>
+<li>eyeo makes no warranty or condition that all ads will be blocked; in particular <a href="https://adblockplus.org/en/about#acceptableads">Acceptable Ads</a> will be shown in ABP&#39;s default setting.</li>
+<li><strong>You acknowledge and understand that the filters used may occasionally lead to blocked content. This is an unwanted side effect of some filters and cannot be completely avoided.</strong></li>
+<li>ABP itself has no functionality; it does not block anything until you &quot;tell&quot; it what to block by adding <a href="https://adblockplus.org/en/about#workings">external filter lists</a>. Filter lists are essentially an extensive set of rules that tell ABP which elements of a website to block. eyeo has no influence on those filter lists.</li>
+</ul>
+<p>In the case that you detect any defect or incorrect blocking, including the blocking of content, <a href="https://adblockplus.org/en/bugs">inform</a> us as soon as possible.</p>
+
+
+<h3>Additional information</h3>
+<p>This Terms of Use shall be governed by the laws of the Federal Republic of Germany. If you have no place of jurisdiction in Germany or in any other EU member state, if you have transferred your permanent domicile abroad after these Terms of Use take effect or if your domicile or usual place of residence is unknown at the time legal action is taken, the sole place of jurisdiction for all disputes arising from this agreement will be the location of our registered offices.</p>
+<p>We reserve the right to amend and adapt these Terms of Use with effect for the future. You can request the currently applicable version of the Terms of Use from our <a href="mailto: legal@eyeo.com">legal department</a> or access them on our website. You will be notified no later than one month before new Terms of Use take effect. If you do not object to the validity of the new Terms of Use within one month after they take effect, you will be deemed to have accepted the new Terms of Use. We will inform you separately in suitable form about the significance of the one month&#39;s notice period, your right to object and the legal consequences of non-objection. This amendment mechanism does not apply to amendments to the parties&#39; main contractual obligations.</p>
+      
+    </div>
+
+    
+
+<footer id="footer" class="content">
+  <div class="footer-wrap footer-links">
+    <div class="container">
+      <div class="row">
+        <nav class="column one-fourth">
+          <h5 class="footer-heading">Download</h5>
+          <ul>
+            <li><a href="/en/adblock-plus-chrome" hreflang="en">Adblock Plus for Chrome</a></li>
+            <li><a href="/en/adblock-plus-firefox" hreflang="en">Adblock Plus for Firefox</a></li>
+            <li><a href="/en/ad-blocker-safari" hreflang="en">Adblock Plus for Safari</a></li>
+            <li><a href="/en/adblock-plus-opera" hreflang="en">Adblock Plus for Opera</a></li>
+            <li><a href="/en/adblock-plus-edge" hreflang="en">Adblock Plus for Edge</a></li>
+            <li><a href="/en/android-install" hreflang="en">Adblock Browser for Android</a></li>
+          </ul>
+        </nav>
+        <nav class="column one-fourth">
+          <h5 class="footer-heading">Resources</h5>
+          <ul>
+            
+              <li><a href="/en/acceptable-ads" hreflang="en">Acceptable Ads</a></li>
+            
+              <li><a href="/en/documentation" hreflang="en">Documentation</a></li>
+            
+              <li><a href="/en/deployments" hreflang="en">For admins</a></li>
+            
+              <li><a href="/en/bugs" hreflang="en">Report an issue</a></li>
+            
+            
+              <li><a href="/en/faq-privacy" hreflang="en">Privacy FAQ</a></li>
+            
+            <li><a href="https://help.adblockplus.org/hc/articles/360062733293" target="_blank" hreflang="en">Writing Adblock Plus filters</a></li>
+          </ul>
+        </nav>
+        <nav class="column one-fourth">
+          <h5 class="footer-heading">Community</h5>
+          <ul>
+            <li><a href="/en/contribute" hreflang="en">Contribute</a></li>
+            <li><a href="https://adblockplus.org/releases/" hreflang="en">Announcements</a></li>
+            <li><a href="https://adblockplus.org/blog/" hreflang="en">Blog</a></li>
+            <li><a href="https://adblockplus.org/forum/" hreflang="en">Forum</a></li>
+          </ul>
+        </nav>
+        <nav class="column one-fourth">
+          <h5 class="footer-heading">Development</h5>
+          <ul>
+            <li><a href="https://gitlab.com/adblockinc/ext/adblockplus">Source Code</a></li>
+            
+  
+    <li><a href="/en/tools" hreflang="en">Tools</a></li>
+  
+
+            <li><a href="https://adblock.pinpointhq.com/en#js-careers-jobs-block">Careers at Adblock Inc</a></li>
+            <li><a href="https://eyeo.com/jobs/">Careers at eyeo GmbH</a></li>
+            <li><a href="/en/partner-integrations" hreflang="en">Partner Integrations</a></li>
+          </ul>
+        </nav>
+
+        <nav id="social-list" class="column">
+          <h5 class="footer-social-heading">Follow us on</h5>
+          <ul>
+            <li>
+              <a
+                href="https://twitter.com/AdblockPlus"
+                title="Follow Adblock Plus on Twitter"
+                target="_blank" rel="nofollow noopener">
+                <img
+                  src="/img/footer-twitter-glyphicon.png?3071336908"
+                  alt="Twitter glyphicon">
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.youtube.com/user/AdblockPlusOfficial"
+                title="Subscribe to Adblock Plus on YouTube"
+                target="_blank" rel="nofollow noopener">
+                <img
+                  src="/img/footer-youtube-glyphicon.png?3071336908"
+                  alt="YouTube glyphicon">
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/adblockplus"
+                title="Follow Adblock Plus on Facebook"
+                target="_blank" rel="nofollow noopener">
+                <img
+                  src="/img/footer-facebook-glyphicon.png?3071336908"
+                  alt="Facebook glyphicon">
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/adblockplus/"
+                title="Follow Adblock Plus on Instagram"
+                target="_blank" rel="nofollow noopener">
+                <img
+                  src="/img/footer-instagram-glyphicon.png?3071336908"
+                  alt="Instagram glyphicon">
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://vk.com/adblockplusofficial"
+                title="Follow Adblock Plus on VK"
+                target="_blank" rel="nofollow noopener">
+                <img
+                  src="/img/footer-vk-glyphicon.png?3071336908"
+                  alt="VK glyphicon">
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div> 
+    </div> 
+  </div> 
+
+  <div class="footer-wrap footer-legal-links">
+    <div class="container">
+      <div id="footer-legal">
+        <p id="copyright-notice">Copyright © 2023 All rights reserved. Adblock Plus<sup>®</sup> is a registered trademark of <a href="https://eyeo.com">eyeo GmbH</a>.</p>
+        <ul id="legal-list">
+          
+            
+              <li><a href="/en/terms" hreflang="en">Terms of use</a></li>
+            
+              <li><a href="/en/privacy" hreflang="en">Privacy Policy</a></li>
+            
+              <li><a href="/en/imprint" hreflang="en">Imprint</a></li>
+            
+          
+        </ul>
+      </div> 
+    </div> 
+  </div> 
+</footer> 
+    <div id="cookiebar" class="cookie cookiebar">
+  <div class="container">
+    <div class="row">
+
+      <div class="column two-thirds">
+        <p class="cookiebar-text">
+          <svg viewBox="0 0 37.796 41.279" width="38" height="42">
+            <title>Cookie notice</title>
+            <g transform="translate(-14.904 0)">
+              <g transform="translate(14.904 0)">
+                <path d="M52.468,31.165a6.029,6.029,0,0,1-1.514-4.908.935.935,0,0,0-.626-1.019,6.029,6.029,0,0,1-3.244-8.8A.935.935,0,0,0,47,15.368a6.039,6.039,0,0,1-1.112-5.609A.935.935,0,0,0,45.4,8.647,6.029,6.029,0,0,1,42.129,2.01.935.935,0,0,0,41.484.935a20.682,20.682,0,1,0,11.049,31.38A.935.935,0,0,0,52.468,31.165Zm-3.739,2.814A18.759,18.759,0,1,1,40.148,2.524,7.9,7.9,0,0,0,43.887,10a7.889,7.889,0,0,0,1.281,6.029A7.917,7.917,0,0,0,46.682,25.1a7.823,7.823,0,0,0,2.346,1.617,7.889,7.889,0,0,0,1.57,5.123A18.6,18.6,0,0,1,48.729,33.979Z" transform="translate(-14.904 0)"/>
+              </g>
+              <g transform="translate(24.556 12.199)">
+                <circle cx="1.598" cy="1.598" r="1.598"/>
+              </g>
+              <g transform="translate(34.81 18.817)">
+                <circle cx="1.598" cy="1.598" r="1.598"/>
+              </g>
+              <g transform="translate(33.212 32.212)">
+                <circle cx="1.598" cy="1.598" r="1.598"/>
+              </g>
+              <g transform="translate(36.652 9.03)">
+                <circle cx="1.047" cy="1.047" r="1.047"/>
+              </g>
+              <g transform="translate(23.509 25.912)">
+                <circle cx="1.047" cy="1.047" r="1.047"/>
+              </g>
+              <g transform="translate(42.765 27.23)">
+                <circle cx="1.047" cy="1.047" r="1.047"/>
+              </g>
+            </g>
+          </svg>
+          <span>
+            We use some cookies to give you the best experience on our website. By using our site you are aware that we are using cookies and you can change this any time. <a href="/en/cookie-information" hreflang="en">Learn more</a>
+          </span>
+        </p>
+      </div>
+
+      <div class="column one-third text-end">
+        <ul class="cookiebar-nav">
+          <li>
+            <button
+              type="button"
+              class="cookies-submit button"
+              title="Dismiss cookie notification">
+              Ok, got it
+            </button>
+          </li>
+          <li class="dropup cookies-dropup">
+            <button
+              type="button"
+              class="cookies-settings button"
+              title="Edit cookie settings">
+              Settings  
+              <svg viewBox="0 0 16.509 16.993" width="18" height="18">
+                <title>Settings icon</title>
+                <path d="M175.051,8.283V.478a.478.478,0,1,0-.955,0v7.8a2.425,2.425,0,0,0,0,4.755v3.474a.478.478,0,1,0,.955,0V13.038a2.425,2.425,0,0,0,0-4.755Zm-.478,3.846a1.468,1.468,0,1,1,1.468-1.468A1.469,1.469,0,0,1,174.574,12.129Z" transform="translate(-166.302 0)"/>
+                <path d="M9.751,4.278V.478a.478.478,0,0,0-.955,0v3.8a2.425,2.425,0,0,0,0,4.755v7.479a.478.478,0,0,0,.955,0V9.029a2.423,2.423,0,0,0,0-4.752ZM9.274,8.123a1.468,1.468,0,1,1,1.468-1.468A1.469,1.469,0,0,1,9.274,8.123Z" transform="translate(-6.85 0)"/>
+                <path d="M339.351,4.278V.478a.478.478,0,0,0-.955,0v3.8a2.425,2.425,0,0,0,0,4.755v7.483a.478.478,0,0,0,.955,0V9.029a2.423,2.423,0,0,0,0-4.752Zm-.478,3.846a1.468,1.468,0,1,1,1.468-1.468A1.469,1.469,0,0,1,338.874,8.123Z" transform="translate(-324.789 0)"/>
+              </svg>
+            </button>
+            <div class="cookies-dropup-menu text-start" tabindex="1">
+               <div class="cookies-settings-form">
+
+  <div class="cookies-setting row">
+    <div class="column three-fourths">
+      <p class="cookies-setting-title">Necessary cookies</p>
+      <p>Used to remember your privacy preferences. They cannot be switched off.</p>
+    </div>
+    <div class="column one-fourth text-end">
+      <label class="switch">
+        <input type="checkbox" checked disabled>
+        <span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="cookies-setting row">
+    <div class="column three-fourths">
+      <p class="cookies-setting-title">Tracking cookies</p>
+      <p>We use these to analyze website traffic.</p>
+    </div>
+    <div class="column one-fourth text-end">
+      <label class="switch">
+        <input class="tracking-cookies" type="checkbox" checked>
+        <span></span>
+      </label>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="link-button cookies-save"
+    title="Save cookie preferences">
+    Save preferences
+  </button>
+
+  <span class="arrow"></span>
+
+</div><!-- .cookies-settings-form -->
+              <span class="arrow"></span>
+            </div>
+          </li>
+        </ul>
+      </div><!-- .column -->
+    </div><!-- .row -->
+  </div><!-- .container -->
+
+</div><!-- #cookies-large-bar -->
+  <form class="cookie cookieprompt">
+
+  <fieldset class="container">
+
+    <legend class="cookie-heading">
+      Cookie preferences
+    </legend>
+
+    <button
+      type="button"
+      class="cookies-close"
+      title="Dismiss cookie notification">
+      <svg viewBox="0 0 23.313 23.313" width="15" height="15">
+        <title>Close icon</title>
+        <path fill="#fff" class="a" d="M21.763,23.044C19.816,21.1,15.74,17.021,11.656,12.936L1.548,23.044a.9.9,0,0,1-1.279,0,.893.893,0,0,1,0-1.278c1.947-1.948,6.023-6.025,10.108-10.11L.269,1.547a.893.893,0,0,1,0-1.278.9.9,0,0,1,1.279,0L11.655,10.377,21.763.269a.905.905,0,0,1,1.283,1.278L12.935,11.657l10.11,10.11a.908.908,0,0,1-.64,1.547A.909.909,0,0,1,21.763,23.044Z"/>
+      </svg>
+    </button>
+
+    <p>
+      We use some cookies to give you the best experience on our website.
+      <a
+        href="/en/cookie-information" hreflang="en"
+        title="More information about cookies"
+        target="_blank">Read more</a>
+    </p>
+
+    <p>
+      <button
+        type="button"
+        class="cookies-submit"
+        title="Dismiss cookie notification">
+        Ok, got it
+      </button>
+    </p>
+
+    <p>
+      <button
+        type="button"
+        class="cookies-settings"
+        title="Edit cookie settings">
+        Change settings
+      </button>
+    </p>
+
+  </fieldset>
+
+</form>
+  <form class="cookie cookiepage">
+
+  <header class="bg-dark">
+    <div class="container">
+
+      <h4 class="cookie-heading">
+        Cookie preferences
+      </h4>
+
+      <button
+        type="button"
+        class="cookies-close"
+        title="Dismiss cookie notification">
+        <svg viewBox="0 0 23.313 23.313" width="15" height="15">
+          <title>Close icon</title>
+          <path fill="#fff" class="a" d="M21.763,23.044C19.816,21.1,15.74,17.021,11.656,12.936L1.548,23.044a.9.9,0,0,1-1.279,0,.893.893,0,0,1,0-1.278c1.947-1.948,6.023-6.025,10.108-10.11L.269,1.547a.893.893,0,0,1,0-1.278.9.9,0,0,1,1.279,0L11.655,10.377,21.763.269a.905.905,0,0,1,1.283,1.278L12.935,11.657l10.11,10.11a.908.908,0,0,1-.64,1.547A.909.909,0,0,1,21.763,23.044Z"/>
+        </svg>
+      </button>
+
+    </div>
+  </header>
+
+  <div class="bg-light">
+    <div class="container section">
+        We use some cookies to give you the best experience on our website. By using our site you are aware that we are using cookies and you can change this any time. <a href="/en/cookie-information" hreflang="en">Learn more</a>
+    </div>
+  </div>
+
+  <div class="container section">
+     <div class="cookies-settings-form">
+
+  <div class="cookies-setting row">
+    <div class="column three-fourths">
+      <p class="cookies-setting-title">Necessary cookies</p>
+      <p>Used to remember your privacy preferences. They cannot be switched off.</p>
+    </div>
+    <div class="column one-fourth text-end">
+      <label class="switch">
+        <input type="checkbox" checked disabled>
+        <span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="cookies-setting row">
+    <div class="column three-fourths">
+      <p class="cookies-setting-title">Tracking cookies</p>
+      <p>We use these to analyze website traffic.</p>
+    </div>
+    <div class="column one-fourth text-end">
+      <label class="switch">
+        <input class="tracking-cookies" type="checkbox" checked>
+        <span></span>
+      </label>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="link-button cookies-save"
+    title="Save cookie preferences">
+    Save preferences
+  </button>
+
+  <span class="arrow"></span>
+
+</div><!-- .cookies-settings-form -->
+  </div>
+
+</form>
+    <script src="/js/testing/setup.js?868066876"></script>
+    
+  <script src="/js/main.js?868066876"></script>
+
+
+
+  </body>
+</html>
