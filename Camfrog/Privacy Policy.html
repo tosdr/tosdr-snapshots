@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- Common -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link href="https://static2.camfrogcdn.com/css/template_styles.css?v=329" rel="preload" as="style">
+    <link rel="stylesheet" type="text/css" href="https://static2.camfrogcdn.com/css/template_styles.css?v=329">
+    <link rel="stylesheet" type="text/css" href="https://static2.camfrogcdn.com/css/fonts.css?v=329">
+
+    <link href="https://static.camfrogcdn.com/js/template.min.js?v=289" rel="preload" as="script">
+    <script src="https://static.camfrogcdn.com/js/template.min.js?v=289"></script>
+    <!-- End Common -->
+
+    <!-- jQuery -->
+    <script src="https://static.camfrogcdn.com/js/jquery-1.11.2.min.js?v=289"></script>
+    <script src="https://static.camfrogcdn.com/js/jquery-migrate-1.2.1.min.js?v=289"></script>
+    <!-- End jQuery -->
+
+    <!-- Access -->
+    <script async src="https://cdn.levelaccess.net/accessjs/YW1wMTI5MDc/access.js"></script>
+    <!-- End Access -->
+
+    <!-- Stripe -->
+    <script async src="https://js.stripe.com/v3/"></script>
+    <!-- End Stripe -->
+
+    <script>
+        /**
+         * Global function
+         */
+        function getAvatarNickname(nickname) {
+            if ( ! nickname) {
+                nickname = document.querySelector('.nav-popover-username');
+
+                if ( ! nickname) {
+                    return '';
+                }
+
+                nickname = nickname.title;
+            }
+
+            if ( ! nickname) {
+                return '';
+            }
+
+            if (nickname.match(/[a-zA-Z]/g)) {
+                nickname = nickname.match(/[a-zA-Z]/g).join('');
+            }
+
+            nickname = nickname.slice(0,2);
+            nickname = nickname.charAt(0).toUpperCase() + nickname.charAt(1).toLowerCase();
+
+            return nickname || '';
+        }
+    </script>
+
+    <script>
+        var BASE_URL                = 'https://www.camfrog.com/en';
+        var BASE_PROFILES_URL       = 'https://profiles.camfrog.com/en';
+        var BASE_VIDEOCHAT_URL      = 'https://videochat.camfrog.com/en';
+        var BASE_DOWNLOAD_URL       = 'https://download.camfrog.com/en';
+        var BASE_BLOB_URL           = 'https://blob.camfrogcdn.com';
+        var SSL_URL                 = 'https://www.camfrog.com/en';
+        var DEPEND_SSL_BASE_URL     = 'https://www.camfrog.com/en';
+        var MAIN_DOMAIN             = 'camfrog.com';
+        var STATIC_URL              = 'https://static.camfrogcdn.com';
+        var nick                    = '';
+        var csrf                    = '838e9c3d55042d51fa02d15189f386b34b49e304bf06cb009bc27cf8d6d52206';
+        var lang                    = 'en';
+        var page_version            = '/';
+        var vwo_track_browser       = '';
+        var vwo_female_subscription = 'common';
+        var vwo_user_new            = 'old';
+        var vwo_user_new_subs       = 'old';
+        var vwo_trial_eligible      = 'common';
+        var firebase_config = {
+            apiKey: 'AIzaSyDSa4cJa2oPKHjWjk-fTiTudruG5F6RRL8',
+            messagingSenderId: '517497077671',
+            projectId: 'camfrog-532e3',
+            appId: '1:517497077671:web:31cca6621fca1850df8082'
+        };
+
+        var genders_list = (function(){return ["Unknown","Male","Female"];})()||[];
+
+        let autologin_params = 'lang=[CF_APP_LANGUAGE]&global_auth_cookie=[CF_AUTH_TOKEN]&client_version=[CF_APP_VERSION]&platform=[CF_APP_PLATFORM]';
+
+        // Client OS params
+        var os_param = {
+            android: {
+                img_url:        'https://static3.camfrogcdn.com/images/android-device.png',
+                os_name:        'Android',
+                download_link:  'https://play.google.com/store/apps/details?id=com.camshare.camfrog.android',
+                class_name:     'support-slide-android',
+                img_alt:        'Camfrog Video Chat for Android'
+            },
+            ipad: {
+                img_url:        'https://static3.camfrogcdn.com/images/ios-device.png',
+                os_name:        'iOS',
+                download_link:  'https://itunes.apple.com/app/id694578768?ls=1&mt=8',
+                class_name:     'support-slide-ios',
+                img_alt:        'Camfrog Video Chat for iOS'
+            },
+            iphone: {
+                img_url:        'https://static3.camfrogcdn.com/images/ios-device.png',
+                os_name:        'iOS',
+                download_link:  'https://itunes.apple.com/app/id694578768?ls=1&mt=8',
+                class_name:     'support-slide-ios',
+                img_alt:        'Camfrog Video Chat for iOS'
+            },
+            windows: {
+                img_url:        'https://static3.camfrogcdn.com/images/win-device.png',
+                os_name:        'Windows',
+                download_link:  'https://download.camfrogcdn.com/setup/camfrog.exe',
+                class_name:     'support-slide-windows',
+                img_alt:        'Camfrog Video Chat for Windows'
+            }
+        };
+    </script>
+
+    <meta http-equiv="Content-Language" content="en" />
+<title>Camfrog - Privacy Policy</title>
+<meta name="keywords" content="" />
+<meta name="Description" content="" />
+
+<!-- iOS Smart App Banner--><meta name="apple-itunes-app" content="app-id=694578768"><!-- End iOS Smart App Banner-->
+<link rel="icon" type="image/png" href="/images/icons/favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="/images/icons/favicon-16x16.ico" sizes="16x16" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/x-icon" href="/images/icons/favicon-32x32.ico" sizes="32x32" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-57x57.png" sizes="57x57" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-72x72.png" sizes="72x72" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-114x114.png" sizes="114x114" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-120x120.png" sizes="120x120" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-128x128.png" sizes="128x128" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-144x144.png" sizes="144x144" />
+<link rel="icon" type="image/png" href="/images/icons/favicon-196x196.png" sizes="196x196" />
+<link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" sizes="128x128" href="/images/icons/apple-touch-icon-128x128.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="196x196" href="/images/icons/apple-touch-icon-196x196.png" />
+
+<link rel="alternate" hreflang="ar" href="https://www.camfrog.com/ar/privacy.phtml" />
+<link rel="alternate" hreflang="bs" href="https://www.camfrog.com/bs/privacy.phtml" />
+<link rel="alternate" hreflang="de" href="https://www.camfrog.com/de/privacy.phtml" />
+<link rel="alternate" hreflang="en" href="https://www.camfrog.com/en/privacy.phtml" />
+<link rel="alternate" hreflang="fr" href="https://www.camfrog.com/fr/privacy.phtml" />
+<link rel="alternate" hreflang="id" href="https://www.camfrog.com/id/privacy.phtml" />
+<link rel="alternate" hreflang="it" href="https://www.camfrog.com/it/privacy.phtml" />
+<link rel="alternate" hreflang="ko" href="https://www.camfrog.com/ko/privacy.phtml" />
+<link rel="alternate" hreflang="ru" href="https://www.camfrog.com/ru/privacy.phtml" />
+<link rel="alternate" hreflang="th" href="https://www.camfrog.com/th/privacy.phtml" />
+<link rel="alternate" hreflang="zh" href="https://www.camfrog.com/zh-s/privacy.phtml" />
+<link rel="alternate" hreflang="tw" href="https://www.camfrog.com/zh-t/privacy.phtml" />
+<link rel="alternate" hreflang="x-default" href="https://www.camfrog.com/en/privacy.phtml" />
+
+
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WV8VZJ3');</script>
+    <!-- End Google Tag Manager -->
+
+    <script>
+        var _user_id = '';
+    </script>
+
+
+    <!-- Google Analytics -->
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'UA-1870603-1', 'auto', {'legacyCookieDomain': 'camfrog.com', 'cookieDomain': 'camfrog.com'});
+        ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    <!-- End Google Analytics -->
+
+
+    <!-- OneTrust Cookies Consent Notice (Production CDN, camfrog.com, en-GB) -->
+    <script async src="https://cdn.cookielaw.org/consent/b31888c3-d52b-48ee-bf89-24ab6fe4e531.js" charset="UTF-8"></script>
+    <script>
+        function OptanonWrapper() { }
+    </script>
+    <!-- End OneTrust Cookies Consent Notice (Production CDN, camfrog.com, en-GB) -->
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-messaging.js"></script>
+
+    <!-- AdSense tag -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740249915809419"
+            crossorigin="anonymous"></script>
+
+    <script>
+        // Initialize Firebase
+        firebase.initializeApp(firebase_config);
+    </script>
+
+    <script>
+        window.___gcfg = {
+            width: 70
+        }
+    </script>
+    <!-- End Firebase -->
+
+    
+
+    <!--[if IE]>
+    <script defer src="https://static.camfrogcdn.com/js/ddr-ecma5-1.2.1.js"></script>
+    <![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" type="text/css" href="https://static2.camfrogcdn.com/css/template_styles_ie.css?v=329" />
+    <![endif]-->
+
+    
+
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WV8VZJ3" tabindex="-1" title="empty" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+<div id="fb-root"></div>
+
+<div id="wrapper" data-template-type="default">
+    <link rel="stylesheet" type="text/css" href="https://static2.camfrogcdn.com/css/template_styles_header.css?v=329">
+
+
+<div id="header">
+    <div id="nav-static-wrapper">
+        <div id="nav-static">
+            <a class="nav-logo" href="https://www.camfrog.com/en/" aria-label="Camfrog Home"></a>
+            <button class="nav-sandwich-menu-button" aria-label="Navigation" onclick="this.focus()"></button>
+
+            
+
+            <nav class="nav-menu">
+                <div class="nav-menu-links">
+                    <a href="https://videochat.camfrog.com/en/">Rooms</a>
+                    <a href="https://profiles.camfrog.com/en/">People</a>
+                    <a href="https://www.camfrog.com/en/store/">Store</a>
+                    <a href="https://download.camfrog.com/en/">Downloads</a>
+                    <a href="https://www.camfrog.com/en/register/">Upgrade</a>
+                </div>
+                <div class="nav-btns">
+                    
+                    <a href="https://download.camfrog.com/en/" class="nav-btn nav-btn-download-for-free">
+                        Get <span>Camfrog</span> For Free
+                    </a>
+                    <a href="https://www.camfrog.com/en/login.php" class="nav-btn-sign-on">
+                        Sign On
+                    </a>
+                    
+
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div id="nav-fixed">
+    <div id="nav-fixed-menu">
+
+    </div>
+</div>
+
+
+<script>
+    var current_os;
+
+    // Minimal scroll offset for fixed menu
+    var min_fixed_length = 10;
+
+    // Maximal width without! parallax effect
+    var max_width_without_parallax = 320;
+
+    // Get client OS type
+    if (typeof current_os == "undefined") {
+        current_os = getOs();
+    }
+
+    addEvent(document, 'ready', function() {
+        var button = document.querySelector('#nav-static > .nav-menu > .nav-btns > .nav-btn');
+        if (button) {
+            [].slice.call(document.querySelectorAll('#nav-static > .nav-sandwich-menu-button, #nav-fixed-menu > .nav-sandwich-menu-button'))
+                .forEach(function(item) {
+                    item.parentNode.insertBefore(button.cloneNode(true), item);
+                });
+        }
+
+        if (document.querySelector('.nav-user-logo')) {
+            document.querySelector('.nav-user-logo').setAttribute('data-nickname', getAvatarNickname());
+        }
+
+        var coins_element = document.getElementById('header-coins-count');
+
+        if (coins_element) {
+            coins_element.innerHTML = (coins_element.getAttribute('data-coins') * 1).toLocaleString('en-US');
+            coins_element.setAttribute('title',(coins_element.getAttribute('data-coins') * 1).toLocaleString('en-US'));
+        }
+
+        var notifications = document.getElementById('header-notifications-count');
+
+        if (notifications) {
+            notifications.innerHTML = (notifications.getAttribute('data-notifications') * 1).toLocaleString('en-US');
+            notifications.setAttribute('title',(notifications.getAttribute('data-notifications') * 1).toLocaleString('en-US'));
+
+          if (notifications.getAttribute('data-notifications') > 0) {
+            document.querySelector('.nav-user-logged > .notification-icon').addClass('show');
+            document.querySelector('.nav-popover-content .notification-icon').addClass('show');
+          }
+        }
+
+        try {
+            checkAds();
+        } catch(e) {}
+
+        isBannedDevices();
+    });
+
+    /**
+     * Clone navigation menu to fixed division
+     */
+    function cloneNavigationToFixed() {
+        document.getElementById('nav-fixed-menu').innerHTML = document.getElementById('nav-static').innerHTML
+    }
+
+    /**
+     * Get OS version
+     */
+    function isBannedDevices() {
+        if (typeof current_os == "undefined") {
+            current_os = getOs();
+        }
+        return current_os == 'android' ||
+            current_os == 'ipad' ||
+            current_os == 'iphone' ||
+            getWindowSizes().width <= max_width_without_parallax;
+    }
+</script>
+
+    <div id="content-wrapper">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="https://www.camfrog.com/en/css/template_styles.css?v=329">
+    <link rel="stylesheet" type="text/css" href="https://www.camfrog.com/en/css/privacy_terms.css?v=329">
+
+    <div id="privacy">
+        <h2>Camfrog Privacy Policy</h2>
+        <h3>Effective November 24, 2020</h3>
+        <p>Camfrog values our users privacy and protection of their data, we build our apps and operate our business with this in mind.</p>
+        <p>Camfrog is a property of Paltalk Inc. who also operates Paltalk, TinyChat, and Vumber. Your services are provided by Paltalk Inc. who also acts as a data controller for your information.</p>
+        <p>By using Camfrog you are also using its sister product Ribbit which is a mobile video viewing application. In this policy when we mention Camfrog this will also include use and interaction with Ribbit.</p>
+        <p>This privacy policy applies to all of Camfrog’s services. By using Camfrog you agree to this Privacy Policy as well as our <a class="terms-link" target="_blank" href="https://www.camfrog.com/en/terms.phtml">Terms of Service</a>.</p>
+        <p>As part of providing a great experience for you this sometimes requires us to collect personal information from you. We have done our best to give you control and access to your data where possible and we want you to be aware how that data is being used. This policy will cover:</p>
+        <ul>
+            <li>What information we may collect about you</li>
+            <li>What we may do with the information we collect about you</li>
+            <li>Whether we share your information with anyone else</li>
+            <li>How we use cookies on our site</li>
+            <li>Where we store your information</li>
+            <li>How we keep your information secure</li>
+            <li>Your rights in relation to your information</li>
+        </ul>
+        <p>At Paltalk Inc. we take your privacy seriously. We operate on the principle that your personal information belongs to you and only you can decide who you want to share it with and why. This is fundamental to the way we work and we’re committed to providing a secure environment for you to store your personal information and share it with others when you want to.</p>
+
+        <h4>Information you voluntarily provide</h4>
+
+        <p>To register and interact with members on the site, many times you will be prompted to share information with us to improve your experience while using the product.  Some of the information you may share with us includes:</p>
+        <ul>
+            <li>User nickname</li>
+            <li>E-mail address</li>
+            <li>Address or location information</li>
+            <li>Birthdate</li>
+            <li>Gender</li>
+            <li>Interests</li>
+            <li>Payment information</li>
+            <li>Photos</li>
+            <li>Personal description</li>
+            <li>Shared social network details</li>
+            <li>Information to customer support</li>
+            <li>Mobile Number</li>
+            <li>Name</li>
+            <li>Use of your Camera</li>
+            <li>Use of your Microphone</li>
+            <li>Recorded Video</li>
+        </ul>
+
+        <p>We primarily use this information to help other users find and connect with you, if you want to update this information you can visit your <a class="terms-link" target="_blank" href="https://profiles.camfrog.com/home.php">profile</a> at any time to do so.  If you specifically desire, we will use your social networking data to allow you to create an account with data you have on another site. Your payment information is used when you decide to purchase premium parts of the Service. Information shared with customer support will be used solely to address the issue(s) you have brought to our attention.  Use of your camera and microphone are optional; when using your microphone or camera in a chatroom, it will share video or audio to other users in that room.</p>
+
+        <h4>Information we collect about you and your device</h4>
+
+        <p>When you use Camfrog and interact with our services, we may use technology to collect information about your activity.  Some of the data that is collected while using the website and mobile/desktop clients may include:</p>
+
+        <ul>
+            <li>IP address</li>
+            <li>Type of browser you use</li>
+            <li>Number of sessions per browser/client on each device</li>
+            <li>Type of device and operating system</li>
+            <li>Referrer information</li>
+            <li>Local language</li>
+            <li>Actions taken while in the client or on the website</li>
+            <li>Device identifiers</li>
+        </ul>
+
+        <p>We use this information to help tailor your experience for your device/language.  We also use this information to help prevent fraud as well as identify service issues.</p>
+
+        <h4>This is what we do with the information we collect about you</h4>
+
+        <p>We use the information you provide to us to:</p>
+
+        <ul>
+            <li>Enable us to provide the Services</li>
+            <li>Ensure that our apps/website are presented in an effective manner for you and for your device</li>
+            <li>Provide you with marketing information about us and our services (<a class="terms-link" target="_blank" href="https://profiles.camfrog.com/settings.php#tab-information">Opt Out</a>)</li>
+            <li>Notify you about changes to Camfrog</li>
+            <li>Carry out our obligations arising out of the Terms of Service</li>
+            <li>Defend our servers against malicious attacks</li>
+        </ul>
+
+
+        <p>We try to be as careful as possible when using your data.  Anywhere we take in personal data or perform actions we feel may be optional or objectionable to you, we will ask for your consent which can also be revoked at a later date.  We are always looking to improve and as we identify data that falls into this category will continue to add new messaging to you so you are always aware of when we take in your data and how we process it.</p>
+
+        <p>At times on Camfrog you may be shown content from YouTube or interact with the YouTube API.  Please see Google's <a class="terms-link" target="_blank" href="https://policies.google.com/privacy">Privacy Policy</a> for more information on how Youtube and Google handle your data.</p>
+        <p>The law gives you the right to request a copy of the personal information we hold about you.  We may request additional information about you to verify your identity before we do such. We will supply, correct or delete personal information about you in our files.  In addition, you may request rectification or erasure of personal information as well as the restriction of processing of your personal information. We will comply with your requests in accordance with the applicable law.</p>
+        <p>Camfrog respects a user's wishes to delete their personal data.  At any time a user may deactivate their account by visiting <a class="terms-link" target="_blank" href="https://profiles.camfrog.com/profiles/deactivate">this link</a>, your account deletion will also remove your personal data. If you have any issues or questions while attempting to delete your account you may also contact us at <a href="mailto:support@camfrog.com">support@camfrog.com</a> for additional assistance.</p>
+        <h4>Information Collection & Use</h4>
+        <h5>Registration</h5>
+        <p>In order to use Camfrog, you must first complete the registration form. During registration you are required to give contact information such as your email address. We use this information to contact you about services on our site in which you have expressed interest. Please see below for Information and Sharing Disclosure.</p>
+        <h5>Communications from the Site</h5>
+        <ul class="communication">
+            <li>
+                <p><strong>Special Offers and Updates</strong></p>
+                <p>We will occasionally send you information on products, services, special deals, or promotions. Out of respect for your privacy, we present the option not to receive these types of communications. Please see the "Choice and Opt-out."</p>
+            </li>
+            <li>
+                <p><strong>Newsletters</strong></p>
+                <p>If you wish to subscribe to our newsletter, we will use your email address to send the newsletter to you. Out of respect for your privacy, we provide you a way to unsubscribe. Please see the "Choice and Opt-out" section.</p>
+            </li>
+            <li>
+                <p><strong>Service-related Announcement</strong></p>
+                <p>We will send you strictly service-related announcements on rare occasions when it is necessary to do so. For instance, if our service is temporarily suspended for maintenance, we might send you an email. Generally, you may not opt-out of these communications, which are not promotional in nature. If you do not wish to receive them, you have the option to deactivate your account.</p>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        addEvent(document, 'ready', function () {
+            if ('' === 'embedded') {
+                let collection;
+                collection = document.getElementsByClassName('settings-link');
+                for (let i = 0; i < collection.length; i++) {
+                    collection[i].href = "camfrog://open_url/?url=" + encodeURIComponent('https://profiles.camfrog.com/settings.php?' + autologin_params);
+                }
+                collection = document.getElementsByClassName('terms-link');
+                for (let i = 0; i < collection.length; i++) {
+                    collection[i].href = "camfrog://open_url/?url=" + encodeURIComponent('https://www.camfrog.com/en/terms.phtml?' + autologin_params);
+                }
+            }
+        });
+    </script>
+
+    </div>
+</div>
+
+<div id="footer" data-template-type="default">
+    <link rel="stylesheet" type="text/css" href="https://www.camfrog.com/en/css/template_styles_footer.css?v=329">
+
+
+<div id="footer-menu">
+    <div id="footer-menu-content">
+        <div class="footer-group">
+            <ul>
+                <li><a class="nav-logo" href="https://www.camfrog.com/en/" aria-label="Camfrog Home"></a></li>
+                <li>
+                    <a class="level-access-logo" href="https://levelaccess.com/a/camfrog" aria-label="Level Access website accessibility icon." target="_blank">
+                        <img src="https://www.camfrog.com/en/images/level-access-icon-blue.svg" alt="Level Access website accessibility icon.">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">RESOURCES</h2>
+            <ul>
+                <li>
+                    <a href="https://www.camfrog.com/en/deaf.phtml">Deaf</a>
+                </li>
+                <li>
+                    <a href="https://translate.camfrog.com/">Translate</a>
+                </li>
+                <li>
+                    <a href="https://www.camfrog.com/en/map.phtml">Site Map</a>
+                </li>
+                <li>
+                    <a href="https://blog.camfrog.com/">Blog</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">SUPPORT</h2>
+            <ul>
+                <li>
+                    <a href="https://help.camfrog.com/">Help</a>
+                </li>
+                <li>
+                    <a href="https://www.camfrog.com/en/contact.phtml">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">LEGAL</h2>
+            <ul>
+                <li>
+                    <a href="https://www.camfrog.com/en/privacy.phtml">Privacy Policy</a>
+                </li>
+                <li>
+                    <a href="https://www.camfrog.com/en/terms.phtml">Terms of Service</a>
+                </li>
+                
+                <!-- OneTrust Cookies Settings button start -->
+                <li>
+                    <a class="optanon-show-settings">Cookie Settings</a>
+                </li>
+                <!-- OneTrust Cookies Settings button end -->
+                
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">SOCIAL</h2>
+            <ul>
+                <li>
+                    <a id="footer-group-link-facebook" href="https://www.facebook.com/Camfrog">Facebook</a>
+                </li>
+                <li>
+                    <a id="footer-group-link-instagram" href="https://instagram.com/CamfrogLive">Instagram</a>
+                </li>
+                <li>
+                    <a id="footer-group-link-twitter" href="https://www.twitter.com/Camfrog">Twitter</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">OUR PRODUCTS</h2>
+            <ul>
+                <li>
+                    <a href="https://www.paltalk.com/">Paltalk</a>
+                </li>
+                <li>
+                    <a href="https://tinychat.com/">Tinychat</a>
+                </li>
+                <li>
+                    <a href="https://www.vumber.com">Vumber</a>
+                </li>
+                <li>
+                    <a href="https://www.videoconference.com">Video Conference</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-group">
+            <h2 class="footer-group-header">ABOUT US</h2>
+            <ul>
+                <li>
+                    <a href="https://investors.paltalk.com/news">Newsroom</a>
+                </li>
+                <li>
+                    <a href="https://www.paltalk.com/leadership">Leadership</a>
+                </li>
+                <li>
+                    <a href="https://www.paltalk.com/careers">Careers</a>
+                </li>
+                <li>
+                    <a href="https://investors.paltalk.com">Investors</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="footer-socials">
+    <div id="footer-language">
+        <div id="footer-language-list">
+            <span id="footer-language-selected" tabindex="0" role="button">English</span>
+            <div id="footer-language-form">
+                <h6>CHANGE LANGUAGE</h6>
+                <ul>
+                    
+                    <li title="Arabic" onclick="changeLang('ar');">العربية</li>
+                    
+                    <li title="Bosnian" onclick="changeLang('bs');">Bosanski</li>
+                    
+                    <li title="German" onclick="changeLang('de');">Deutsch</li>
+                    
+                    <li title="French" onclick="changeLang('fr');">Français</li>
+                    
+                    <li title="Indonesian" onclick="changeLang('id');">Bahasa Indonesia</li>
+                    
+                    <li title="Italian" onclick="changeLang('it');">Italiano</li>
+                    
+                    <li title="Korean" onclick="changeLang('ko');">한국어&#44; 조선말</li>
+                    
+                    <li title="Russian" onclick="changeLang('ru');">Русский</li>
+                    
+                    <li title="Thai" onclick="changeLang('th');">ภาษาไทย</li>
+                    
+                    <li title="Chinese Simplified" onclick="changeLang('zh-s');">中文&#44; 汉语</li>
+                    
+                    <li title="Chinese Traditional" onclick="changeLang('zh-t');">中文&#44; 漢語</li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="footer-copyright">
+        &copy; 2003&mdash;<span id="current_year"></span> Camshare Inc.
+    </div>
+</div>
+
+
+<script>
+
+    if ((document.getElementsByTagName('body')[0] || {}).className === 'independent') {
+        document.getElementById('footer-language-list').innerHTML = '';
+    }
+
+    document.getElementById('current_year').innerHTML = (new Date()).getFullYear();
+
+    /**
+     * Change language
+     */
+    function changeLang(lang) {
+        lang = lang || '';
+
+        if ( ! lang) {
+            return;
+        }
+
+        // set cookie
+        Cookie.set('lang', lang, {
+            path: '/'
+            , domain: (function() {
+                var splitted = window.location.hostname.split('.').reverse();
+                return [
+                    splitted[0],
+                    splitted[1],
+                ].reverse().join('.');
+            })()
+            , expires: 365
+            , secure: true
+            , SameSite: 'Lax'
+        });
+
+        // redirect
+        location.replace(BASE_URL + '/updateUserLanguage.php?' +
+            serializeParams({
+                lang_abr: lang
+                , http_referer: encodeURIComponent(window.location.href)
+            })
+        );
+    }
+</script>
+</div>
+
+<!-- 2 Google Code for CamFrog Main List -->
+<!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 1070936763;
+    var google_conversion_label = "D5duCMeGnhUQu-XU_gM";
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+</script>
+<script async type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" loading="lazy" alt="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/1070936763/?value=0&amp;label=D5duCMeGnhUQu-XU_gM&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+
+<!-- 3 Quantcast Tag -->
+<script type="text/javascript">
+    var _qevents = _qevents || [];
+
+    (function() {
+        var elem = document.createElement('script');
+
+        elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+        elem.async = true;
+        elem.type = "text/javascript";
+        var scpt = document.getElementsByTagName('script')[0];
+        scpt.parentNode.insertBefore(elem, scpt);
+    })();
+</script>
+<script type="text/javascript">
+    _qevents.push( { qacct:"p-91mBChr87YHGg"} );
+</script>
+<noscript>
+    <div style="display: none;"><img src="https://pixel.quantserve.com/pixel/p-91mBChr87YHGg.gif" height="1" width="1" alt="Quantcast"/></div>
+</noscript>
+<!-- End Quantcast tag -->
+
+<!-- 4 Begin comScore Tag -->
+<script>
+    var _comscore = _comscore || [];
+    _comscore.push({ c1: "2", c2: "13846821" });
+    (function() {
+        var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+        s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+        el.parentNode.insertBefore(s, el);
+    })();
+</script>
+<noscript>
+    <img src="http://b.scorecardresearch.com/p?c1=2&c2=13846821&cv=2.0&cj=1" alt=""/>
+</noscript>
+<!-- End comScore Tag -->
+
+
+
+
+<!-- Ads -->
+<script async src="https://www.camfrog.com/en/js/ads.js"></script>
+<script>
+    function checkAds() {
+        var block_value = 'Blocked';
+        if (document.getElementById('adsense')!=undefined) {
+            block_value = 'Unblocked';
+        }
+        ga('send', 'event', 'Adblock', block_value);
+    }
+</script>
+<script>!function(t,e,n){n=t.createElement(e),t=t.getElementsByTagName(e)[0],n.async=1,n.src="https://obscenesidewalk.com/v2/0/pbrkHKYQgIMPK0G5xmu_C4H-UkHP1MDpQarW5aSZhcTHwQqq07NT3IYJwqRHlt7dwsSG1PUlmH_5cnzFqzurxh9JtI0Bs4jphcI5d0",t.parentNode.insertBefore(n,t)}(document,"script"),function(t,e){t[e]=t[e]||function(){(t[e].q=t[e].q||[]).push(arguments)}}(document,window,"script","admiral");!function(t,e,a,n){function r(t){try{return t=localStorage.getItem("v4ac1eiZr0"),t&&t.split(",")[4]>0}catch(e){}return!1}function c(){var n=r();if(n){var c=t[e].pubads();typeof c.setTargeting===a&&c.setTargeting("admiral-engaged","true")}}n=t[e]=t[e]||{},n.cmd=n.cmd||[],typeof n.pubads===a?c():typeof n.cmd.unshift===a?n.cmd.unshift(c):n.cmd.push(c)}(window,"googletag","function");;;;;</script>
+<!-- End Ads -->
+
+</body>
+</html>
