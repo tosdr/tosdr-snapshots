@@ -252,112 +252,14 @@ body.dark.new_dark {
 <script>
   window.googlefc = window.googlefc || {};
   googlefc.callbackQueue = googlefc.callbackQueue || [];
-  
-
-  googlefc.callbackQueue.push({
-    "AD_BLOCK_DATA_READY": function() {
-      switch (googlefc.getAdBlockerStatus()) {
-        case googlefc.AdBlockerStatusEnum.EXTENSION_LEVEL_AD_BLOCKER:
-        case googlefc.AdBlockerStatusEnum.NETWORK_LEVEL_AD_BLOCKER:
-          /*ga("send", "event", {
-            eventCategory: "NTG adblock",
-            eventAction: "detected",
-            eventLabel: "<page url>",
-            nonInteraction: true
-          });*/
-          break;
-      }
-      switch (googlefc.getAllowAdsStatus()) {
-        case googlefc.AllowAdsStatusEnum.ADS_ALLOWED:
-          console.log("ads_allowed");
-          /*ga("send", "event", {
-            eventCategory: "NTG adblock",
-            eventAction: "allow-ads",
-            eventLabel: "<page url>",
-            nonInteraction: true
-          });*/
-          break;
-      }
-   }});
-
 
 var advallytest = false;
   if("<?php echo $adsplit['banner'];?>" == 'advally')  {
     advallytest=true;
   }
-  //console.log("av:"+advallytest);
-
-
-function negCons(){
-  return;
-
-  if(advallytest == true)
-    return;
- 
-
-
-
-
-  var ads_coo=readCookie("adsplit");
   
-  if(ads_coo.indexOf("adsense")!==-1){
-    ads_coo = ads_coo.replace("adsense","setupad");
-    createCookie('adsplit',ads_coo,1);
-  }
 
 
-  /** loadsetupad */
-  document.querySelectorAll('.ad_slot').forEach(el => {
-    el.classList.add(['sad'],['sadlazy']);
-    //el.style.add('text-align','center');
-  });
-
-  lazySetupad();
-
-  /** Anchor */
-  setTimeout(function() {
-    document.querySelector('[id*="_anchor_"]').remove();
-    document.querySelector('[data-id*="_anchor_"]').remove();
-
-    var footeriframe = document.createElement('div');
-    footeriframe.innerHTML ='<iframe data-id="airportinfo.live_970x90_anchor_DFP" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" width="1" height="1" style="max-width: 1050px;"></iframe>'; // assign an id
-    document.body.appendChild(footeriframe); 
-
-    (function () {
-          var size='970x90|728x90|320x100',
-              adunit = 'airportinfo.live_970x90_anchor_DFP',
-              childNetworkId = '21796078979',
-              xmlhttp = new XMLHttpRequest();xmlhttp.onreadystatechange = function(){if(xmlhttp.readyState==4 && xmlhttp.status==200){var es = document.querySelectorAll("[data-id='"+adunit+"']");var e = Array.from(es).filter(function(e) {return !e.hasAttribute("data-rendered")});if(e.length > 0){e.forEach(function(el){var iframe = el.contentWindow.document;iframe.open();iframe.write(xmlhttp.responseText);iframe.close();el.setAttribute('data-rendered', true)})}}};var child=childNetworkId.trim()?','+childNetworkId.trim():'';xmlhttp.open("GET", 'https://pubads.g.doubleclick.net/gampad/adx?iu=/147246189'+child+'/'+adunit+'&sz='+encodeURI(size)+'&t=Placement_type%3Dserving&'+Date.now(), true);xmlhttp.send();})();
-
-  }, 5000);
-
-}
-
-function anchorFill(){
-
-  
-  setTimeout(function() {
-
-    if($("#AdvallyAdhesion iframe").length == 0 && document.querySelector('[id*="AdvallyAdhesion"]') != null ){
-      document.querySelector('[id*="AdvallyAdhesion"]').remove();
-      console.log("NOW");
-
-      var footeriframe = document.createElement('div');
-      footeriframe.innerHTML ='<iframe data-id="airportinfo.live_970x90_anchor_DFP" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" width="1" height="1" style="max-width: 1050px;"></iframe>'; // assign an id
-      document.body.appendChild(footeriframe); 
-
-      (function () {
-            var size='970x90|728x90|320x100',
-                adunit = 'airportinfo.live_970x90_anchor_DFP',
-                childNetworkId = '21796078979',
-                xmlhttp = new XMLHttpRequest();xmlhttp.onreadystatechange = function(){if(xmlhttp.readyState==4 && xmlhttp.status==200){var es = document.querySelectorAll("[data-id='"+adunit+"']");var e = Array.from(es).filter(function(e) {return !e.hasAttribute("data-rendered")});if(e.length > 0){e.forEach(function(el){var iframe = el.contentWindow.document;iframe.open();iframe.write(xmlhttp.responseText);iframe.close();el.setAttribute('data-rendered', true)})}}};var child=childNetworkId.trim()?','+childNetworkId.trim():'';xmlhttp.open("GET", 'https://pubads.g.doubleclick.net/gampad/adx?iu=/147246189'+child+'/'+adunit+'&sz='+encodeURI(size)+'&t=Placement_type%3Dserving&'+Date.now(), true);xmlhttp.send();})();
-    }
-
-  }, 15000);
-
-
-}
-//anchorFill();
 
 </script>
 
@@ -370,7 +272,6 @@ function anchorFill(){
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js" as="script">
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-
 <script>
     var isMobile = {
         Android: function() {
@@ -396,12 +297,6 @@ function anchorFill(){
         }
     }
 
-    function showAdfreeActivationError() {
-        setTimeout(function() {
-            alert("Adfree Activation Code was used on a different device and therefore deactivated on this device");
-        }, 9000);
-
-    }
 </script>
 
 <script defer src="https://airportinfo.live/js/script_minimized.js"></script>
@@ -452,184 +347,9 @@ function anchorFill(){
     
 
 
-    /** Adsense Lazy Load */
-
-    window.addEventListener("load", lazyAdsense, false);
-
-    function lazyAdsense(){
-      
-
-      const adspots = document.querySelectorAll("insx");
-      //element.outerHTML = element.outerHTML.replace(/wns/g,"lmn");
-
-      // handler
-      const handleScrollToAd = (entries) => {
-        const adspotIsVisible = entries[0].isIntersecting;
-        
-        //console.log("🚀 ~ file: javascripts.php ~ line 333 ~ handleScrollToAd ~ adspotIsVisible", adspotIsVisible);
-        //console.log("🚀 ~ file: javascripts.php ~ line 335 ~ handleScrollToAd ~ entries[0]", entries[0])
-        
-        //when in view
-        if(entries[0].isIntersecting){
-        //console.log("🚀 ~ file: javascripts.php ~ line 341 ~ handleScrollToAd ~ entries[0]", entries[0])
-          
-          //let adIns=document.querySelectorAll('insx')[0];
-          //adIns.outerHTML=document.querySelectorAll('insx')[0].outerHTML.replace('insx','ins')
-
-          
-          let inner = entries[0].target.outerHTML.replace(/insx/g,"ins");
-          entries[0].target.parentNode.innerHTML=inner;
-          (adsbygoogle = window.adsbygoogle || []).push({overlays: {bottom: true}});
-
-          //console.log(entries[0].outerHTML);
-        }
-      }
-            
-      
-      const options = {
-        root: null, // null means that root element = browser viewport.					
-        rootMargin: '0px 0px 300px 0px',
-        threshhold: 0, // see below what 0 means.
-      };
-
-      // initialize and start the observer.
-      const adobserver = new IntersectionObserver(handleScrollToAd, options);
-      try {
-        adspots.forEach(function(adspot) {
-          adobserver.observe(adspot);
-      });
-       
-
-      } catch (e) {
-        console.log(e.message);
-      };
-  
-    }
-
-    /** Setupad Lazy Load */
-
-    window.addEventListener("load", lazySetupad, false);
-
-    function lazySetupad(){      
-
-      const adspots = document.querySelectorAll(".sadlazy");
-    
-      // handler
-      const handleScrollToAd = (entries) => {
-        const adspotIsVisible = entries[0].isIntersecting;
-        
-        //when in view
-        if(entries[0].isIntersecting && entries[0].target.innerHTML.indexOf('iframe') == -1){
-        
-          if(isMobile.any() && entries[0].target.className.indexOf('sad100') !== -1){
-            entries[0].target.innerHTML='<iframe data-id="airportinfo.live_320x100_mobile_DFP" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" width="1" height="1"></iframe>';	
-          
-            (function () {
-            var size='320x100',
-            adunit = 'airportinfo.live_320x100_mobile_DFP',
-            childNetworkId = '21796078979',
-            xmlhttp = new XMLHttpRequest();xmlhttp.onreadystatechange = function(){if(xmlhttp.readyState==4 && xmlhttp.status==200){var es = document.querySelectorAll("[data-id='"+adunit+"']");var e = Array.from(es).filter(function(e) {return !e.hasAttribute("data-rendered")});if(e.length > 0){e.forEach(function(el){var iframe = el.contentWindow.document;iframe.open();iframe.write(xmlhttp.responseText);iframe.close();el.setAttribute('data-rendered', true)})}}};var child=childNetworkId.trim()?','+childNetworkId.trim():'';xmlhttp.open("GET", 'https://pubads.g.doubleclick.net/gampad/adx?iu=/147246189'+child+'/'+adunit+'&sz='+encodeURI(size)+'&t=Placement_type%3Dserving&'+Date.now(), true);xmlhttp.send();})();
-
-            
-          }
-          //let adIns=document.querySelectorAll('insx')[0];
-          //adIns.outerHTML=document.querySelectorAll('insx')[0].outerHTML.replace('insx','ins')
-          
-          //let inner = entries[0].target.outerHTML.replace(/insx/g,"ins");
-          else{
-          entries[0].target.innerHTML='<iframe data-id="airportinfo.live_980x300_billboard_DFP" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" width="1" height="1"></iframe>';	
-          
-          (function () {
-            
-              var size='970x250|300x250',
-                adunit = 'airportinfo.live_980x300_billboard_DFP',
-                childNetworkId = '21796078979',
-                xmlhttp = new XMLHttpRequest();xmlhttp.onreadystatechange = function(){if(xmlhttp.readyState==4 && xmlhttp.status==200){var es = document.querySelectorAll("[data-id='"+adunit+"']");var e = Array.from(es).filter(function(e) {return !e.hasAttribute("data-rendered")});if(e.length > 0){e.forEach(function(el){var iframe = el.contentWindow.document;iframe.open();iframe.write(xmlhttp.responseText);iframe.close();el.setAttribute('data-rendered', true)})}}};var child=childNetworkId.trim()?','+childNetworkId.trim():'';xmlhttp.open("GET", 'https://pubads.g.doubleclick.net/gampad/adx?iu=/147246189'+child+'/'+adunit+'&sz='+encodeURI(size)+'&t=Placement_type%3Dserving&'+Date.now(), true);xmlhttp.send();
-          })();
-        }
-        }
-      }
-            
-      
-      const options = {
-        root: null, // null means that root element = browser viewport.					
-        rootMargin: '300px 0px 300px 0px',
-        threshhold: 0, // see below what 0 means.
-      };
-
-      // initialize and start the observer.
-      const adobserver = new IntersectionObserver(handleScrollToAd, options);
-      try {
-        adspots.forEach(function(adspot) {
-          adobserver.observe(adspot);
-      });
-       
-
-      } catch (e) {
-        console.log(e.message);
-      };
-  
-    }
-
-
-
-    /** Advally Lazy Load */
-
-    window.addEventListener("load", lazyAdvally, false);
-
-    function lazyAdvally(){
-      
-
-      const adspots = document.querySelectorAll(".advx");
-      //element.outerHTML = element.outerHTML.replace(/wns/g,"lmn");
-
-      // handler
-      const handleScrollToAd = (entries) => {
-        const adspotIsVisible = entries[0].isIntersecting;
-        
-      
-        //when in view
-        if(entries[0].isIntersecting){
-        //console.log("🚀 ~ file: javascripts.php ~ line 341 ~ handleScrollToAd ~ entries[0]", entries[0])
-          
-          //let adIns=document.querySelectorAll('insx')[0];
-          //adIns.outerHTML=document.querySelectorAll('insx')[0].outerHTML.replace('insx','ins')
-
-          
-          let inner = entries[0].target.outerHTML.replace(/advx/g,"AdvallyTag");
-          entries[0].target.outerHTML=inner;
-          advally.scanNew();
-          //(adsbygoogle = window.adsbygoogle || []).push({overlays: {bottom: true}});
-
-          //console.log(entries[0].outerHTML);
-        }
-      }
-            
-      
-      const options = {
-        root: null, // null means that root element = browser viewport.					
-        rootMargin: '0px 0px 300px 0px',
-        threshhold: 0, // see below what 0 means.
-      };
-
-      // initialize and start the observer.
-      const adobserver = new IntersectionObserver(handleScrollToAd, options);
-      try {
-        adspots.forEach(function(adspot) {
-          adobserver.observe(adspot);
-      });
-       
-
-      } catch (e) {
-        console.log(e.message);
-      };
-  
-    }
 
 </script>
 <meta name="msvalidate.01" content="977C561D1628ED2D24D08ECACFED48B1" />
-
-
 
 <script>
   var _paq = window._paq = window._paq || [];
@@ -669,7 +389,7 @@ function anchorFill(){
 <button><img src="/images/search.svg" height="20" width="20" style="vertical-align: middle;"></button>
 </form>
 </div>
-</div> <div id="header-info"><span id="txt">08:50 pm</span><br>Mon 04/22/2024</div>
+</div> <div id="header-info"><span id="txt">02:49 am</span><br>Thu 06/13/2024</div>
 <div id="header-logo-right"><img src="/images/header-background-right.png" alt=" Abflug"></div>
 </div>
 <div id="fullscreen"></div>
@@ -684,6 +404,7 @@ function anchorFill(){
 <a href="https://airportinfo.live/flight-statistics" id="navstats">Flight Statistics</a>
 <a href="https://airportinfo.live/airport-statistics" id="navstatsairport">Airport Statistics</a>
 <a href="https://airportinfo.live/worldairports" id="navworld">Flughäfen weltweit</a>
+<a href="https://shop.airportinfo.live/" class="active" id="navhomex">Shop</a>
 <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 <i class="x"></i>
 </a>
@@ -760,7 +481,7 @@ function anchorFill(){
 <p>50674 Köln</p>
 <p>Deutschland</p>
 <p>Phone: +49 (0)221 67774630</p>
-<p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f79e999198b7969e85879885839e999198d99b9e8192">[email&#160;protected]</a></p>
+<p>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7811161e173819110a08170a0c11161e175614110e1d">[email&#160;protected]</a></p>
 <p>Website: https://airportinfo.live</p>
 <h4>3. Cookies</h4>
 <p>The Internet pages of Christian Rommes, Airportinfo.live use cookies. Cookies are text files that are stored in a computer system via an Internet browser.</p>
@@ -992,8 +713,7 @@ You can change your privacy settings by clicking the following button: <button i
 
 
 function EzConsentCallback(consent) {
-	// consent enthält die notwendigen, Präferenzen, Statistiken und Marketingeigenschaften mit booleschen Werten. 
-	//console.log("Consent:", consent); 
+	
 	var settings="necessary";
 	if(consent.preferences) {
 		settings=settings+" preferences ";	
@@ -1005,9 +725,7 @@ function EzConsentCallback(consent) {
 		settings=settings+" marketing ";	
 	}
 	
-		//send_event("Consent", "Set", settings, 0);
-		//ga("send", "event", "Consent", "Set", settings);
-		//console.log("Consentsettings:", settings); 
+		
 }
 
 </script>
@@ -1029,6 +747,7 @@ function EzConsentCallback(consent) {
 
 </div>
 </div>
+<div id="adngin-outstream_video-0"></div>
 <div id="ccpa" style="display:none;cursor:pointer;">Do not share my Personal Information.</div>
 </span><a href="https://airportinfo.live/imprint">Imprint</a> <span>|</span> <a href="https://airportinfo.live/about-us">About us</a> <span>|</span> <span class="change-consent" style="cursor: pointer;" onClick="googlefc.showRevocationMessage()">Privacy settings</span>
 <span id="ccpa" style="display:none;cursor:pointer;"> | Do not share my Personal Information</span>
@@ -1056,9 +775,9 @@ function EzConsentCallback(consent) {
 </div>
 <div class="after-rating">
 <span>
-Thank you!<br>Would you support us by rating us at Trustpilot? </span>
+Thank you!<br>Would you support us by rating us at Google? </span>
 <span class="rating-buttons">
-<button id="yes" class="t">Of course</button>
+<button id="yes" class="g">Of course</button>
 <button id="no">No thanks</button>
 </span>
 </div>
