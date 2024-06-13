@@ -42,9 +42,155 @@
 <link rel="preload" href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/amgen-com-custom.css" as="style">
 
 
-            <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
-                    type="text/javascript" data-consentmode="disabled" async></script>
 
+
+<script type="text/javascript">
+
+    function getcountrycode()
+    {
+        if (document.getElementById("CybotCookiebotDialog")) {
+            var countryCode = Cookiebot.userCountry.toUpperCase();
+            var countryListEU = ["GB", "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "ES", "EE", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "SE"];
+            if (countryListEU.includes(countryCode)) {
+                countryCode = "EU"
+            }
+            var usRegionList = ["US-01", "US-02", "US-04", "US-05", "US-06", "US-08", "US-09", "US-10", "US-11", "US-12", "US-13", "US-15", "US-16", "US-17", "US-18", "US-19", "US-20", "US-21", "US-22", "US-23", "US-24", "US-25", "US-26", "US-27", "US-28", "US-29", "US-30", "US-31", "US-32", "US-33", "US-34", "US-35", "US-36", "US-37", "US-38", "US-39", "US-40", "US-41", "US-42", "US-44", "US-45", "US-46", "US-47", "US-48", "US-49", "US-50", "US-51", "US-53", "US-54", "US-55", "US-56"];
+            if (usRegionList.includes(countryCode)) {
+                countryCode = "US";
+            }
+            if (countryCode != "US" && countryCode != "EU" && countryCode != "CA") {
+                countryCode = "ccpa_default";
+            }
+            document.getElementById("CybotCookiebotDialog").classList.add(countryCode);
+            console.log("country code class " + countryCode);
+        }
+    }
+
+    function OpenPopupOnCookiebotRenewClick() {
+        ReshowPopup();
+        setTimeout(function () {
+            ReshowPopup();
+        }, 1400);
+    }
+
+    function ReshowPopup() {
+        if (document.cookie.indexOf('cbrenew') > -1) {
+            if (document.getElementById("CybotCookiebotDialogBodyButtonAccept")) {
+                CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "add");
+                document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+                if (document.getElementById("nvtext")) {
+                    document.getElementById("nvtext").setAttribute('style', 'display:block !important');
+                }
+            }
+        }
+        if (document.getElementById("isGeot")) { getcountrycode(); }
+    }
+
+    function CookiebotRenewClick() {
+        if (document.getElementsByClassName("cb-renew").length > 0)
+        {
+            let renewCBBtn = document.getElementsByClassName("cb-renew")[0]; renewCBBtn.removeAttribute("onclick");renewCBBtn.href = "#";
+            renewCBBtn.addEventListener('click', function () {
+                Cookiebot.renew();
+                 OpenPopupOnCookiebotRenewClick();
+               
+            });
+        }
+    }
+    window.addEventListener("DOMContentLoaded", function () {
+        CookiebotRenewClick();
+    });
+
+</script>
+
+            <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
+                    type="text/javascript" data-consentmode="disabled"
+                    data-georegions="{'region':'GB,DE,FR,NL','cbid':'%207ca522be-0c36-4abe-b5be-20129dbf1b64'}" async></script>
+        <input type="hidden" id="isGeot" value="1" />
+        <script type="text/javascript">
+            window.addEventListener("DOMContentLoaded", function () {
+                setTimeout(function () { getcountrycode();}, 900);               
+            });
+        </script>
+
+
+
+
+    <style>
+        .disable-abtn {
+            color: gray !important;
+            pointer-events: none !important;
+        }
+    </style>
+    <script type="text/javascript">
+
+
+        function setCookieForCountryCode(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            } document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function CheckELMAndApplyCSS(ele, cssname, addorremove) {
+
+            var domELE = document.getElementById(ele);
+            if (domELE && addorremove == "add") {
+                domELE.classList.add(cssname);
+            }
+            if (domELE && addorremove == "rm") {
+                domELE.classList.remove(cssname);
+            }
+
+        }
+
+        async function checkElementExists(element, timeout = Infinity) {
+            let startTime = Date.now();           
+            return new Promise((resolve) => {
+                const intervalId = setInterval(() => {
+                    if (document.querySelector(element)) {
+                        clearInterval(intervalId);
+                        resolve(true);
+                    } else if (Date.now() - startTime >= timeout * 1000) {
+                        clearInterval(intervalId);
+                        resolve(false);
+                    }
+                }, 100, (1));
+            });
+        }
+
+
+        function blockPopup()
+        {
+            var regionArray = [];
+            var disableCountryCode = Cookiebot.userCountry.toUpperCase();
+            setCookieForCountryCode("RegionCode", disableCountryCode, 365);
+            CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "add");
+
+                   regionArray.push("US-53");
+                   regionArray.push("US-32");
+
+            if (regionArray.includes(disableCountryCode))
+            {
+                if (document.getElementById("CybotCookiebotDialogBodyButtonAccept"))
+                    document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+
+                if (document.getElementById("nvtext"))
+                    document.getElementById("nvtext").setAttribute('style', 'display:block !important');
+
+                setCookieForCountryCode("cbrenew", "1", 365);
+     
+            }
+            else
+                CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "rm");
+        }
+
+  checkElementExists("#CybotCookiebotDialog", 60).then((result) => { if (result) { blockPopup(); } else {console.log("ncb"); }});
+
+
+    </script>
 
 
     
@@ -69,9 +215,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link href="/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css" rel="stylesheet" /><link href="/-/media/Base-Themes/LazyLoading/Styles/psuedolazyload.css" rel="stylesheet" /><link href="/-/media/Base-Themes/CCPA-Bottom-Base-Styles/Styles/CCPA_Bottom_CSS.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/main.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/aglobal-styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/alert.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/cl-customizedsearch.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/component-tabs.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-bootstrap.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/megamenu.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Print.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/search-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/amgen-com-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/tiles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/zfont-weight-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/sxaOverRide.css" rel="stylesheet" />
+<link href="/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css" rel="stylesheet" /><link href="/-/media/Base-Themes/LazyLoading/Styles/psuedolazyload.css" rel="stylesheet" /><link href="/-/media/Base-Themes/GeoTarget-Footer-CSS/Styles/Geotarget_Footer.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/main.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/aglobal-styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/alert.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/cl-customizedsearch.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/component-tabs.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-bootstrap.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/megamenu.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Print.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/search-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/amgen-com-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/tiles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/zfont-weight-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/sxaOverRide.css" rel="stylesheet" />
     
-<meta name="VIcurrentDateTime" content="638494091197720520" />
+<meta name="VIcurrentDateTime" content="638538370156301263" />
 <meta name="VirtualFolder" content="/" />
 <script type="text/javascript" src="/layouts/system/VisitorIdentification.js"></script>
 
@@ -198,7 +344,7 @@
 </div>
 
 </head>
-<body class="grey-bg sub-page privacy-statement default-device bodyclass">
+<body class="grey-bg sub-page privacy-statement mobile-device bodyclass">
     
     
 
@@ -693,8 +839,8 @@
 </ul>
                                                                 </li>
                                                                 <li class="quantum-drop-down-menu__menu-list-item">
-                                                                    <a href="/responsibility/environmental-social-and-governance-report" class="quantum-drop-down-menu__menu-link gtm-header " menu-name="Environmental Social and Governance Report 2021"  menu-type="header" data-value="FLItem-6-SLItem-23">
-                                                                        Environmental, Social &#38; Governance Report 2022
+                                                                    <a href="/responsibility/environmental-social-and-governance-report" class="quantum-drop-down-menu__menu-link gtm-header " menu-name="Environmental Social and Governance Report 2023"  menu-type="header" data-value="FLItem-6-SLItem-23">
+                                                                        Environmental, Social & Governance Report 2023
                                                                     </a>
                                                                     
 
@@ -822,7 +968,7 @@
                     </li>
                     <li class="quantum-drop-down-menu__menu-list-item ">
                         <a href="/responsibility/a-healthy-amgen/ethical-research" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="Ethical Research"  menu-type="header" data-value="FLItem-6-SLItem-28-SLItem-4">
-                            Ethical Research
+                            Ethical Research and Development
                         </a>
                     </li>
                     <li class="quantum-drop-down-menu__menu-list-item ">
@@ -843,7 +989,7 @@
 </ul>
                                                                 </li>
                                                                 <li class="quantum-drop-down-menu__menu-list-item">
-                                                                    <a href="/responsibility/reporting-and-metrics" class="quantum-drop-down-menu__menu-link desktop-submenu-right-icon gtm-header " menu-name="Reporting and Metrics"  menu-type="header" data-value="FLItem-6-SLItem-29">
+                                                                    <a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics" class="quantum-drop-down-menu__menu-link desktop-submenu-right-icon gtm-header " menu-name="Reporting and Metrics"  menu-type="header" data-value="FLItem-6-SLItem-29">
                                                                         Reporting and Metrics
                                                                     </a>
                                                                     
@@ -851,22 +997,17 @@
 
 <ul class="quantum-drop-down-menu__tertiary">
                     <li class="quantum-drop-down-menu__menu-list-item ">
-                        <a href="/responsibility/reporting-and-metrics" class="quantum-drop-down-menu__menu-link  gtm-header " menu-name="Reporting and Metrics Overview"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-1">
+                        <a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics" class="quantum-drop-down-menu__menu-link  gtm-header " menu-name="Reporting and Metrics Overview"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-1">
                             Overview
                         </a>
                     </li>
                     <li class="quantum-drop-down-menu__menu-list-item ">
-                        <a href="/responsibility/reporting-and-metrics/summary-of-data" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="Summary of Data"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-2">
-                            Summary of Data
-                        </a>
-                    </li>
-                    <li class="quantum-drop-down-menu__menu-list-item ">
-                        <a href="/responsibility/reporting-and-metrics/cdp" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="CDP"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-3">
+                        <a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics/cdp" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="CDP"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-2">
                             CDP
                         </a>
                     </li>
                     <li class="quantum-drop-down-menu__menu-list-item ">
-                        <a href="/responsibility/reporting-and-metrics/archived-reports" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="Archived Reports"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-4">
+                        <a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics/archived-reports" class="quantum-drop-down-menu__menu-link  gtm-header sub-menu-item " menu-name="Archived Reports"  menu-type="header" data-value="FLItem-6-SLItem-29-SLItem-3">
                             Archived Reports
                         </a>
                     </li>
@@ -1246,7 +1387,7 @@
                                                                                     <li class="quantum-megamenu__menu-list-item">
 <a href="/science/scientific-advisory-boards" class=" quantum-megamenu__menu-link gtm-header" ca1="" class="hide-href"  menu-name="Scientific Advisory Boards"  menu-type="header"" target="" value="FLItem-2-SLItem-19" >Scientific Advisory Boards</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="http://www.amgenbiosimilars.com/" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Biosimilars"  menu-type="header"  rel="noopener"" target="_blank" value="FLItem-2-SLItem-20" >Biosimilars <i class="fa fa-external-link"></i></a>                                                                                    </li>
+<a href="/science/biosimilars" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Biosimilars"  menu-type="header"  rel="noopener"" target="" value="FLItem-2-SLItem-20" >Biosimilars</a>                                                                                    </li>
 
                                                                 </ul>
                                                                 <ul class="quantum-megamenu__menu-column desktip-menu-right-icon">
@@ -1345,7 +1486,7 @@
                                                                             <li class="quantum-megamenu__menu-list-item">
 <a href="/responsibility" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Responsibility"  menu-type="header"" target="" value="FLItem-4-SLItem-47" >Overview</a>                                                                            </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/environmental-social-and-governance-report" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Environmental Social and Governance Report 2021"  menu-type="header"" target="" value="FLItem-4-SLItem-48" >Environmental, Social &#38; Governance Report 2022</a>                                                                                    </li>
+<a href="/responsibility/environmental-social-and-governance-report" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Environmental Social and Governance Report 2023"  menu-type="header"" target="" value="FLItem-4-SLItem-48" >Environmental, Social & Governance Report 2023</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
 <a href="/responsibility/environment-social-and-governance-strategy" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Environment Social and Governance Strategy"  menu-type="header"" target="" value="FLItem-4-SLItem-49" >Environment, Social and Governance Strategy</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
@@ -1386,7 +1527,7 @@
                                                                                     <li class="quantum-megamenu__menu-list-item">
 <a href="/responsibility/a-healthy-amgen/business-ethics-and-compliance" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Business Ethics and Compliance"  menu-type="header"" target="" value="FLItem-4-SLItem-63" >Business Ethics and Compliance</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/a-healthy-amgen/ethical-research" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Ethical Research"  menu-type="header"" target="" value="FLItem-4-SLItem-64" >Ethical Research</a>                                                                                    </li>
+<a href="/responsibility/a-healthy-amgen/ethical-research" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Ethical Research"  menu-type="header"" target="" value="FLItem-4-SLItem-64" >Ethical Research and Development</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
 <a href="/products/global-patient-safety" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Patient Safety"  menu-type="header"" target="" value="FLItem-4-SLItem-65" >Patient Safety</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
@@ -1394,13 +1535,11 @@
                                                                                     <li class="quantum-megamenu__menu-list-item">
 <a href="/responsibility/a-healthy-amgen/cybersecurity-and-data-privacy" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Cybersecurity and Data Privacy"  menu-type="header"" target="" value="FLItem-4-SLItem-67" >Cybersecurity and Data Privacy</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/reporting-and-metrics" class="mega-menu-innerlist quantum-megamenu__menu-link desktop-submenu-right-icon gtm-header" ca1="" menu-name="Reporting and Metrics"  menu-type="header"" target="" value="FLItem-4-SLItem-68" >Reporting and Metrics</a>                                                                                    </li>
+<a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics" class="mega-menu-innerlist quantum-megamenu__menu-link desktop-submenu-right-icon gtm-header" ca1="" menu-name="Reporting and Metrics"  menu-type="header"" target="" value="FLItem-4-SLItem-68" >Reporting and Metrics</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/reporting-and-metrics/summary-of-data" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Summary of Data"  menu-type="header"" target="" value="FLItem-4-SLItem-69" >Summary of Data</a>                                                                                    </li>
+<a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics/cdp" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="CDP"  menu-type="header"" target="" value="FLItem-4-SLItem-69" >CDP</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/reporting-and-metrics/cdp" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="CDP"  menu-type="header"" target="" value="FLItem-4-SLItem-70" >CDP</a>                                                                                    </li>
-                                                                                    <li class="quantum-megamenu__menu-list-item">
-<a href="/responsibility/reporting-and-metrics/archived-reports" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Archived Reports"  menu-type="header"" target="" value="FLItem-4-SLItem-71" >Archived Reports</a>                                                                                    </li>
+<a href="/responsibility/healthy-planet/environmental-sustainability/reporting-and-metrics/archived-reports" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Archived Reports"  menu-type="header"" target="" value="FLItem-4-SLItem-70" >Archived Reports</a>                                                                                    </li>
 
                                                                 </ul>
                                                     </div>
@@ -1419,30 +1558,30 @@
 </a>                                                                                                    <div class="quantum-megamenu__menu">
                                                                 <ul class="quantum-megamenu__menu-column ">
                                                                             <li class="quantum-megamenu__menu-list-item">
-<a href="/stories" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="All Stories"  menu-type="header"" target="" value="FLItem-5-SLItem-72" >All Stories</a>                                                                            </li>
+<a href="/stories" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="All Stories"  menu-type="header"" target="" value="FLItem-5-SLItem-71" >All Stories</a>                                                                            </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories/categories/responsibility" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Responsibility"  menu-type="header"" target="" value="FLItem-5-SLItem-73" >Responsibility</a>                                                                                    </li>
+<a href="/stories/categories/responsibility" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Responsibility"  menu-type="header"" target="" value="FLItem-5-SLItem-72" >Responsibility</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories/categories/people-and-culture" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="People and Culture"  menu-type="header"" target="" value="FLItem-5-SLItem-74" >People and Culture</a>                                                                                    </li>
+<a href="/stories/categories/people-and-culture" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="People and Culture"  menu-type="header"" target="" value="FLItem-5-SLItem-73" >People and Culture</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories/categories/science-and-innovation" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Science and Innovation"  menu-type="header"" target="" value="FLItem-5-SLItem-75" >Science and Innovation</a>                                                                                    </li>
+<a href="/stories/categories/science-and-innovation" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Science and Innovation"  menu-type="header"" target="" value="FLItem-5-SLItem-74" >Science and Innovation</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories/categories/patients" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Patients"  menu-type="header"" target="" value="FLItem-5-SLItem-76" >Patients</a>                                                                                    </li>
+<a href="/stories/categories/patients" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Patients"  menu-type="header"" target="" value="FLItem-5-SLItem-75" >Patients</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories/categories/leadership" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Leadership"  menu-type="header"" target="" value="FLItem-5-SLItem-77" >Leadership</a>                                                                                    </li>
+<a href="/stories/categories/leadership" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Leadership"  menu-type="header"" target="" value="FLItem-5-SLItem-76" >Leadership</a>                                                                                    </li>
 
                                                                 </ul>
                                                                 <ul class="quantum-megamenu__menu-column ">
                                                                             <li class="quantum-megamenu__menu-list-item">
-<a href="" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Popular Tags"  menu-type="header"" target="" value="FLItem-5-SLItem-78" >Popular Tags</a>                                                                            </li>
+<a href="" class=" quantum-megamenu__menu-link gtm-header" ca1="" menu-name="Popular Tags"  menu-type="header"" target="" value="FLItem-5-SLItem-77" >Popular Tags</a>                                                                            </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories?tag=COVID-19" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="COVID-19"  menu-type="header"" target="" value="FLItem-5-SLItem-79" >COVID-19</a>                                                                                    </li>
+<a href="/stories?tag=COVID-19" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="COVID-19"  menu-type="header"" target="" value="FLItem-5-SLItem-78" >COVID-19</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories?tag=Supporting Our Staff" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Supporting Our Staff"  menu-type="header"" target="" value="FLItem-5-SLItem-80" >Supporting Our Staff</a>                                                                                    </li>
+<a href="/stories?tag=Supporting Our Staff" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Supporting Our Staff"  menu-type="header"" target="" value="FLItem-5-SLItem-79" >Supporting Our Staff</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories?tag=Leveraging Our Science" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Leveraging Our Science"  menu-type="header"" target="" value="FLItem-5-SLItem-81" >Leveraging Our Science</a>                                                                                    </li>
+<a href="/stories?tag=Leveraging Our Science" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Leveraging Our Science"  menu-type="header"" target="" value="FLItem-5-SLItem-80" >Leveraging Our Science</a>                                                                                    </li>
                                                                                     <li class="quantum-megamenu__menu-list-item">
-<a href="/stories?tag=Serving Our Communities" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Serving Our Communities"  menu-type="header"" target="" value="FLItem-5-SLItem-82" >Serving Our Communities</a>                                                                                    </li>
+<a href="/stories?tag=Serving Our Communities" class=" quantum-megamenu__menu-link gtm-header sub-menu-item" ca1="" menu-name="Serving Our Communities"  menu-type="header"" target="" value="FLItem-5-SLItem-81" >Serving Our Communities</a>                                                                                    </li>
 
                                                                 </ul>
                                                     </div>
@@ -3482,7 +3621,7 @@ div.quantum-accordion__item-contents  * {
                     <a href="/healthdataprivacypolicy" class="  gtm-header quantum-link quantum-footer__link" menu-name="Contact Us"  menu-type="footer" target="">
                       Consumer Health Data Privacy Policy
                     </a>
-                    <a href="javascript:Cookiebot.renew()" class="  gtm-header quantum-link quantum-footer__link" menu-name="Your Cookie Preferences"  menu-type="footer" target="">
+                    <a href="javascript:Cookiebot.renew()" class="cb-renew  gtm-header quantum-link quantum-footer__link" menu-name="Your Cookie Preferences"  menu-type="footer" target="">
                       Your Cookie Preferences
                     </a>
 </div>
