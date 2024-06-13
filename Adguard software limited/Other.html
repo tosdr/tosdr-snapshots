@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
     lang="en"
-    class="html html--en html--country-fr"
+    class="html html--en html--country-gb"
 >
                             
     <head>
@@ -9,8 +9,8 @@
 
         
         
-        <link rel="preload" as="image" href="https://st.agrd.eu/adguard-4524/img/main.min.svg">
-        <link rel="preload" as="script" href="https://st.agrd.eu/adguard-4524/js/main.min.js">
+        <link rel="preload" as="image" href="https://st.agrd.eu/adguard-4589/img/main.min.svg">
+        <link rel="preload" as="script" href="https://st.agrd.eu/adguard-4589/js/main.min.js">
 
                                                                                 
                                     
@@ -21,19 +21,40 @@
                             
                                                             
                         
+                                                    <link rel="alternate" hreflang="de" href="https://adguard.com/de/privacy/content-blocker.html">
+                                                                    
+                        
                                                     <link rel="alternate" hreflang="en" href="https://adguard.com/en/privacy/content-blocker.html">
                                                                     
                         
-                                                    <link rel="alternate" hreflang="ru" href="https://adguard.com/ru/privacy/content-blocker.html">
+                                                    <link rel="alternate" hreflang="es" href="https://adguard.com/es/privacy/content-blocker.html">
+                                                                    
+                        
+                                                    <link rel="alternate" hreflang="fr" href="https://adguard.com/fr/privacy/content-blocker.html">
+                                                                    
+                        
+                                                    <link rel="alternate" hreflang="it" href="https://adguard.com/it/privacy/content-blocker.html">
                                                                     
                         
                                                     <link rel="alternate" hreflang="ja" href="https://adguard.com/ja/privacy/content-blocker.html">
                                                                     
                         
-                                                    <link rel="alternate" hreflang="de" href="https://adguard.com/de/privacy/content-blocker.html">
+                                                    <link rel="alternate" hreflang="ko" href="https://adguard.com/ko/privacy/content-blocker.html">
                                                                     
                         
-                                                    <link rel="alternate" hreflang="fr" href="https://adguard.com/fr/privacy/content-blocker.html">
+                                                    <link rel="alternate" hreflang="pt-br" href="https://adguard.com/pt_br/privacy/content-blocker.html">
+                                                                    
+                        
+                                                    <link rel="alternate" hreflang="pt-pt" href="https://adguard.com/pt_pt/privacy/content-blocker.html">
+                                                                    
+                        
+                                                    <link rel="alternate" hreflang="ru" href="https://adguard.com/ru/privacy/content-blocker.html">
+                                                                    
+                                                                            
+                                                    <link rel="alternate" hreflang="zh-Hans" href="https://adguard.com/zh_cn/privacy/content-blocker.html">
+                                                                    
+                                                                            
+                                                    <link rel="alternate" hreflang="zh-Hant" href="https://adguard.com/zh_tw/privacy/content-blocker.html">
                                                                         
             <meta name="translation_percentage" content="100">
 
@@ -49,8 +70,122 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <meta name="format-detection" content="telephone=no">
 
-        
-                    <link rel="stylesheet" href="https://st.agrd.eu/adguard-4524/css/main.min.css">
+            
+<script>
+    class ThemeManager {
+        constructor() {
+            this._matchMedia = window.matchMedia('(prefers-color-scheme: dark)');
+            this._matchMedia.addEventListener('change', this.listenForDarkMode.bind(this));
+
+            this._STORAGE_KEY = 'theme-name';
+            this._THEMES = Object.freeze({
+                auto: 'auto',
+                light: 'light',
+                dark: 'dark',
+            });
+
+            this._changeCallbacks = [];
+            this._theme = undefined;
+        }
+
+        _isThemeSupported(theme) {
+            return Object.values(this._THEMES).includes(theme);
+        }
+
+        _storeTheme(theme) {
+            if (this._isThemeSupported(theme)) {
+                try {
+                    localStorage.setItem(this._STORAGE_KEY, theme);
+                } catch {}
+            }
+        }
+
+        _setPageTheme(theme) {
+            const changed = this._theme !== theme;
+
+            if (theme === this._THEMES.dark || theme === this._THEMES.light) {
+                document.documentElement.dataset.theme = theme;
+
+                this._theme = theme;
+
+                if (changed) {
+                    this._changeCallbacks.forEach((cb) => cb(theme));
+                }
+            }
+        }
+
+        _detectSystemTheme() {
+            const isSystemDarkMode = this._matchMedia.matches;
+            const storedTheme = this.getStoredTheme();
+            const isStoredDarkTheme = storedTheme === this._THEMES.dark;
+            const isAutoTheme = storedTheme === this._THEMES.auto;
+
+            if (isStoredDarkTheme || (isAutoTheme && isSystemDarkMode)) {
+                this._setPageTheme(this._THEMES.dark);
+            } else {
+                this._setPageTheme(this._THEMES.light);
+            }
+        }
+
+        getThemes() {
+            return this._THEMES;
+        }
+
+        listenForDarkMode(event) {
+            if (this.getStoredTheme() === this._THEMES.auto) {
+                this._setPageTheme(event.matches ? this._THEMES.dark : this._THEMES.light);
+            }
+        }
+
+        onThemeChange(cb) {
+            this._changeCallbacks.push(cb);
+        }
+
+        // return the theme from storage. possible values for theme are: 'dark', 'light', and 'auto'.
+        getStoredTheme() {
+            try {
+                const theme = localStorage.getItem(this._STORAGE_KEY);
+
+                return this._isThemeSupported(theme) ? theme : this._THEMES.auto;
+            } catch {
+                return this._THEMES.auto;
+            }
+        }
+
+        // the switchTheme method switches the current theme to the given one. possible `theme` values are: 'dark', 'light' and 'auto'.
+        switchTheme(theme) {
+            if (this._isThemeSupported(theme)) {
+                this._storeTheme(theme);
+
+                if (theme === this._THEMES.auto) {
+                    this._detectSystemTheme(theme);
+                } else {
+                    this._setPageTheme(theme);
+                }
+            }
+        }
+
+        // returns only dark/light - the current body color, not the selected preset
+        getCurrentTheme() {
+            if (typeof this._theme === 'undefined') {
+                throw new Error('call the init method first');
+            }
+
+            return this._theme;
+        }
+
+        // the init method adds the dark modifier to <html /> if required.
+        init() {
+            this._detectSystemTheme();
+        }
+    }
+
+    window.themeManager = new ThemeManager();
+
+    window.themeManager.init();
+</script>
+
+                    <link rel="stylesheet" href="https://st.agrd.eu/adguard-4589/css/main.min.css">
         
                     <meta property="og:type" content="website"/>
             <meta name="twitter:card" content="summary" />
@@ -430,7 +565,7 @@
                     AdGuard Assistant
                 </a>
             </div>
-                    <div class="products-navigation__dropdown-item-wr products-navigation__dropdown-item-wr--tempmail">
+                    <div class="products-navigation__dropdown-item-wr">
                 <a
                     href="/en/adguard-temp-mail/overview.html?aid=34549"
                     class="products-navigation__dropdown-item products-navigation__dropdown-item--tempmail"
@@ -453,9 +588,9 @@
 
 <div class="products-navigation products-navigation--desktop"
     v-on-clickaway="onClickOutsideMenu"
-    @mouseenter="setOpenDesktop('products')"
-    @mouseleave="setOpenDesktop('')"
-    @click.stop="setOpenMobile(switchChildAndParent('products'))"
+    @mouseenter="onMouseEnter('products')"
+    @mouseleave="onMouseLeave()"
+    @click.stop="onClick('products')"
 >
     <span
         class="products-navigation__item"
@@ -773,7 +908,7 @@
                     AdGuard Assistant
                 </a>
             </div>
-                    <div class="products-navigation__dropdown-item-wr products-navigation__dropdown-item-wr--tempmail">
+                    <div class="products-navigation__dropdown-item-wr">
                 <a
                     href="/en/adguard-temp-mail/overview.html?aid=34549"
                     class="products-navigation__dropdown-item products-navigation__dropdown-item--tempmail"
@@ -830,10 +965,10 @@
 
 
 <div class="header__item-wr header__item-wr--dropdown header__item-wr--right header__item-wr--right-lang"
-     @click.stop="setOpenMobile(switchChildAndParent('lang')); isMenuActive = false"
+     @click.stop="onClick('lang'); isMenuActive = false"
      v-on-clickaway="onClickOutsideMenu"
-     @mouseenter="setOpenDesktop('lang')"
-     @mouseleave="setOpenDesktop('')"
+     @mouseenter="onMouseEnter('lang')"
+     @mouseleave="onMouseLeave()"
 >
     <span class="header__item header__item--dropdown header__item--lang" :class="{'header__item-active' : isOpen('lang')}">
                     EN
@@ -1079,114 +1214,114 @@
                 
                 
                 <main class="main">
+                                                <div class="container container--6">
+        <div class="document">
                             
     
-    <article class="article">
-        
-                    <div class="article__title">
-                <div class="article__title-in">
-                    <div class="article__title-wrap">
-                        <h1 class="article__h1">
-                            AdGuard Privacy Policy                        </h1>
-                                            </div>
-                </div>
-            </div>
-        
-        <div class="article__in">
-            <div class="article__content">
-                <div class="article__section">
-                    <h1 class="md__title md__title_first">AdGuard Content Blocker Privacy Notice</h1>
-<div class="md__paragraph"><span class="md__em">November 06, 2019</span></div>
+<div class="document__breadcrumbs">
+    
+    <div class="breadcrumbs">
+        <a href="/en/welcome.html" class="breadcrumbs__item">AdGuard</a>
+                                    <a href="/en/privacy.html" class="breadcrumbs__item">Privacy Policy</a>
+                                                <span class="breadcrumbs__item">AdGuard Content Blocker</span>
+                        </div>
+
+                    <script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"AdGuard","item":"https:\/\/adguard.com\/en\/welcome.html"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https:\/\/adguard.com\/en\/privacy.html"},{"@type":"ListItem","position":3,"name":"AdGuard Content Blocker"}]}</script>
+    </div>
+            
+                            
+            
+            <div class="document__content">
+                                    <h1 class="md__title md__title_first">AdGuard Content Blocker Privacy Notice</h1>
+<div class="md__paragraph"><span class="md__em">May 17, 2024</span></div>
 <div class="md__quote">
-<div class="md__paragraph"><span class="md__strong">Keynote:</span> We do not share or sell any of your personal data. We are proud to say that we are one of the fighters for users privacy and we are strongly committed to this principle and to being as transparent as possible.</div>
+<div class="md__paragraph"><span class="md__strong">Keynote:</span> This Privacy Notice lists all the information that we may collect and explains why we do it and how we use this information. We only collect essential information for AdGuard products to function fully and properly. We do not share or sell your personal information. We are strongly committed to protecting user privacy and being as transparent as possible.</div>
 </div>
-<div class="md__paragraph">This Privacy Notice lists all the information that we may collect and explains why we do it and how we use this information. The information we collect includes no more than is crucial to provide the full functionality of AdGuard products.</div>
-<div class="md__paragraph">We believe that privacy is a fundamental human right. That's why we are transparent about what AdGuard does and explain the purpose of every little bit of information that is gathered by our apps.</div>
-<h2 class="md__title md__title_second">What data can AdGuard Content Blocker collect and when</h2>
-<h3 class="md__title md__title_third">Blocking filters updates check</h3>
-<div class="md__paragraph">To check filter updates AdGuard connects to its servers. When it happens, the following information is being sent:</div>
-<div class="md__list">
-<div class="md__list-elem">Application language;</div>
-<div class="md__list-elem">Vendor identifier.</div>
-</div>
-<div class="md__paragraph">Filter updates check is performed once a day. We do not store the obtained data, but we do aggregate it in order to identify the total number of active users.</div>                </div>
-            </div>
+<h2 class="md__title md__title_second">What data AdGuard Content Blocker can collect and when</h2>
+<h3 class="md__title md__title_third">Checking for filter updates</h3>
+<div class="md__paragraph">To check for filter updates, AdGuard connects to its servers. When it happens, no information is sent.</div>
+<div class="md__paragraph">Filter updates are checked at user-defined intervals in accordance with the application’s settings. We do not store this data, but we do aggregate it in an anonymous form to count the total number of active users.</div>
+                
+                                    
 
-                            <div class="article__sidebar article__sidebar--privacy">
-                    <div class="sidebar">
-                            <div class="sidebar__title">
-                General notes
-    </div>
-    <div class="sidebar__item sidebar__item--link">
-        <a class="sidebar__link" href="/en/privacy.html">Back to General notes</a>
-    </div>
-<div class="sidebar__title">
-    Privacy notices
-</div>
-<div class="sidebar__list">
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/windows.html">
-                AdGuard for Windows
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/android.html">
-                AdGuard for Android
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/mac.html">
-                AdGuard for Mac
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/ios.html">
-                AdGuard for iOS
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/browser-extension.html">
-                AdGuard Browser Extension
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/safari.html">
-                AdGuard for Safari
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/assistant.html">
-                AdGuard Assistant
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/content-blocker.html">
-                AdGuard Content Blocker
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/home.html">
-                AdGuard Home
-            </a>
-        </div>
-            <div class="sidebar__item sidebar__item--link">
-            <a class="sidebar__link" href="/en/privacy/temp-mail.html">
-                AdGuard Temp Mail
-            </a>
-        </div>
-                <div class="sidebar__item sidebar__item--link">
-            <a href="/en/privacy/website.html" class="sidebar__link">
-                AdGuard website &amp; Cookies
-            </a>
-        </div>
+
+<div class="document__docs-list-wrap">
+    <div class="document__desc">
+        Other documents:
     </div>
 
-                                            </div>
-                </div>
-                    </div>
-    </article>
+            <a href="/en/eula.html" class="document__docs-list-item">
+            AdGuard software Limited — End User License Agreement
+        </a>
+            <a href="/en/adguard-temp-mail/eula.html" class="document__docs-list-item">
+            End-User License Agreement of AdGuard Temp Mail
+        </a>
+            <a href="/en/terms-of-sale.html" class="document__docs-list-item">
+            Terms of sale
+        </a>
+    
+            <a href="/en/privacy.html" class="document__docs-list-item">
+            Privacy policy
+        </a>
+    
+    <ul class="document__docs-list">
+                    <li>
+                <a href="/en/privacy/windows.html" class="document__docs-list-item">
+                    AdGuard for Windows
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/android.html" class="document__docs-list-item">
+                    AdGuard for Android
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/mac.html" class="document__docs-list-item">
+                    AdGuard for Mac
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/ios.html" class="document__docs-list-item">
+                    AdGuard for iOS
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/browser-extension.html" class="document__docs-list-item">
+                    AdGuard Browser Extension
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/safari.html" class="document__docs-list-item">
+                    AdGuard for Safari
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/assistant.html" class="document__docs-list-item">
+                    AdGuard Assistant
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/home.html" class="document__docs-list-item">
+                    AdGuard Home
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/temp-mail.html" class="document__docs-list-item">
+                    AdGuard Temp Mail
+                </a>
+            </li>
+                    <li>
+                <a href="/en/privacy/website.html" class="document__docs-list-item">
+                    AdGuard website &amp; Cookies
+                </a>
+            </li>
+            </ul>
+</div>
 
-                    </main>
+                            </div>
+        </div>
+    </div>
+                                    </main>
 
                 
                 
@@ -1238,7 +1373,11 @@
 
 
                                     <!-- cookie terms -->
-    <div class="sticky-bar sticky-bar--cookie sticky-bar--hide annoyance" v-terms-cookie>
+    <div
+        class="sticky-bar sticky-bar--cookie sticky-bar--hide annoyance"
+        v-terms-cookie
+        v-cloak
+    >
         <div class="sticky-bar__in sticky-bar__in--cookie">
             <div class="sticky-bar__terms">
                 <div class="sticky-bar__text">
@@ -1258,83 +1397,170 @@
 <!-- /cookie terms -->
 
                 
-                                    
+                    
 <page-footer inline-template>
     <footer class="footer">
-    
                     
-            
-
-
 
 
 
 <div id="footer-bottom" class="footer__bottom">
-    <div class="footer__inner footer__inner--bottom ">
-                    
-            <div class="footer__subtitle">
-                &copy; 2009&ndash;2024 Adguard Software Limited
-            </div>
-            <div
-                @click="footerMapShow = !footerMapShow"
-                class="footer__link footer__dropdown"
-                v-scroll-to="'#footer-bottom'"
-                v-cloak
+    <div class="footer__inner footer__inner--bottom">
+                            
+                                
+            <theme-switch
+                :is-footer-map-open="footerMapShow"
+                inline-template
             >
-                <span class="footer__dropdown-in" :class="{'footer__dropdown-in--active': footerMapShow}" v-cloak>
-                    Site map
-                </span>
-            </div>
-            <div class="footer__icons footer__icons--social">
-                <span class="footer__icons-title footer__icons-title--social footer__icons-title--hidden">
-                    Social Media
-                </span>
+                <div
+                    class="theme-switch theme-switch--desktop"
+                    v-if="theme"
+                >
+                    <button
+                        type="button"
+                        class="theme-switch__toggle"
+                        :class="{'theme-switch__toggle--active': themeDropdownOpen}"
+                        data-type="light"
+                        @click.stop="themeDropdownOpen = !themeDropdownOpen"
+                        v-cloak
+                    >
+                                                    <span
+                                class="theme-switch__icon"
+                                data-type="auto"
+                                v-if="theme === 'auto'"
+                            >
+                            </span>
+                                                    <span
+                                class="theme-switch__icon"
+                                data-type="light"
+                                v-if="theme === 'light'"
+                            >
+                            </span>
+                                                    <span
+                                class="theme-switch__icon"
+                                data-type="dark"
+                                v-if="theme === 'dark'"
+                            >
+                            </span>
+                        
+                        <span class="theme-switch__toggle-text-wrap">
+                                                            <span
+                                    class="theme-switch__toggle-text"
+                                    :class="{'theme-switch__toggle-text--active': theme === 'auto'}"
+                                >
+                                    System theme
+                                </span>
+                                                            <span
+                                    class="theme-switch__toggle-text"
+                                    :class="{'theme-switch__toggle-text--active': theme === 'light'}"
+                                >
+                                    Light theme
+                                </span>
+                                                            <span
+                                    class="theme-switch__toggle-text"
+                                    :class="{'theme-switch__toggle-text--active': theme === 'dark'}"
+                                >
+                                    Dark theme
+                                </span>
+                                                    </span>
 
+                        <span class="theme-switch__dropdown-icon"></span>
+                    </button>
+
+                    <div
+                        class="theme-switch__dropdown"
+                        :class="{'theme-switch__dropdown--reverse': isFooterMapOpen}"
+                        v-on-clickaway="closeThemeDropdown"
+                    >
+                                                    <button
+                                type="button"
+                                class="theme-switch__dropdown-toggle"
+                                @click="selectTheme('auto')"
+                            >
+                                System theme
+                            </button>
+                                                    <button
+                                type="button"
+                                class="theme-switch__dropdown-toggle"
+                                @click="selectTheme('light')"
+                            >
+                                Light theme
+                            </button>
+                                                    <button
+                                type="button"
+                                class="theme-switch__dropdown-toggle"
+                                @click="selectTheme('dark')"
+                            >
+                                Dark theme
+                            </button>
+                                            </div>
+                </div>
+            </theme-switch>
+        
                 
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--instagram"
-                        @click="sendSocialEvent('instagram')"
-                        v-redirect-link="{ link: 'https://www.instagram.com/adguard.app', target_blank: true }"
-                    >
-                    </button>
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--facebook"
-                        @click="sendSocialEvent('facebook')"
-                        v-redirect-link="{ link: 'https://www.facebook.com/AdguardEn/', target_blank: true }"
-                    >
-                    </button>
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--twitter"
-                        @click="sendSocialEvent('twitter')"
-                        v-redirect-link="{ link: 'https://x.com/adguard', target_blank: true }"
-                    >
-                    </button>
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--youtube"
-                        @click="sendSocialEvent('youtube')"
-                        v-redirect-link="{ link: 'https://www.youtube.com/channel/UCsBoll12QILGTkmQ4PSttkw', target_blank: true }"
-                    >
-                    </button>
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--telegram"
-                        @click="sendSocialEvent('telegram')"
-                        v-redirect-link="{ link: 'https://t.me/adguarden', target_blank: true }"
-                    >
-                    </button>
-                                    <button
-                        type="button"
-                        class="icon footer__social footer__social--reddit"
-                        @click="sendSocialEvent('reddit')"
-                        v-redirect-link="{ link: 'https://www.reddit.com/r/Adguard', target_blank: true }"
-                    >
-                    </button>
-                            </div>
-            </div>
+        <div class="footer__subtitle">
+            &copy; 2009&ndash;2024 Adguard Software Ltd.
+        </div>
+        <div
+            @click="footerMapShow = !footerMapShow"
+            class="footer__link footer__dropdown"
+            v-scroll-to="'#footer-bottom'"
+            v-cloak
+        >
+            <span class="footer__dropdown-in" :class="{'footer__dropdown-in--active': footerMapShow}" v-cloak>
+                Site map
+            </span>
+        </div>
+        <div class="footer__icons footer__icons--social">
+            <span class="footer__icons-title footer__icons-title--social footer__icons-title--hidden">
+                Social Media
+            </span>
+
+            
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--instagram"
+                    @click="sendSocialEvent('instagram')"
+                    v-redirect-link="{ link: 'https://www.instagram.com/adguard.app', target_blank: true }"
+                >
+                </button>
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--facebook"
+                    @click="sendSocialEvent('facebook')"
+                    v-redirect-link="{ link: 'https://www.facebook.com/AdguardEn/', target_blank: true }"
+                >
+                </button>
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--twitter"
+                    @click="sendSocialEvent('twitter')"
+                    v-redirect-link="{ link: 'https://x.com/adguard', target_blank: true }"
+                >
+                </button>
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--youtube"
+                    @click="sendSocialEvent('youtube')"
+                    v-redirect-link="{ link: 'https://www.youtube.com/channel/UCsBoll12QILGTkmQ4PSttkw', target_blank: true }"
+                >
+                </button>
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--telegram"
+                    @click="sendSocialEvent('telegram')"
+                    v-redirect-link="{ link: 'https://t.me/adguarden', target_blank: true }"
+                >
+                </button>
+                            <button
+                    type="button"
+                    class="icon footer__social footer__social--reddit"
+                    @click="sendSocialEvent('reddit')"
+                    v-redirect-link="{ link: 'https://www.reddit.com/r/Adguard', target_blank: true }"
+                >
+                </button>
+                    </div>
+    </div>
 </div>
         
                     <div v-if="footerMapShow" class="footer__map">
@@ -1430,7 +1656,7 @@
                                                                                                                                                                                 <a href="https://adguard-vpn.com/welcome.html" class="footer__dropdown-link">
                                                     AdGuard VPN                                                </a>
                                                                                                                                                                                 <a href="/en/adguard-temp-mail/overview.html?aid=34549" class="footer__dropdown-link">
-                                                    AdGuard Temp Mail&nbsp;<sup>β</sup>                                                </a>
+                                                    AdGuard Temp Mail                                                </a>
                                                                                                                                                                                 <a href="/en/products.html" class="footer__dropdown-link">
                                                     All products                                                </a>
                                                                                                                         </div>
@@ -1740,7 +1966,7 @@
                                             :class="{ 'footer__link--hidden': footerTab !== 'otherProducts' }"
                                             v-redirect-link="{ link: '/en/adguard-temp-mail/overview.html?aid=34549', target_blank: '' }"
                                         >
-                                            AdGuard Temp Mail&nbsp;<sup>β</sup>                                        </button>
+                                            AdGuard Temp Mail                                        </button>
                                                                                                                                                                     
                                                                             <button
                                             type="button"
@@ -2007,12 +2233,12 @@
             </theme-switch>
             </footer>
 </page-footer>
-                            </div>
+            </div>
         </div>
 
                          <script>
         window.products = {"windows":"AdGuard for Windows","android":"AdGuard for Android","android-tv":"AdGuard for\u00a0Android\u00a0TV","mac":"AdGuard for Mac","ios":"AdGuard for iOS","ios-pro":"AdGuard for iOS Pro","browser-extension":"AdGuard Browser Extension","safari":"AdGuard for Safari","assistant":"AdGuard Assistant","content-blocker":"AdGuard Content Blocker","home":"AdGuard Home","dns":"AdGuard DNS","temp-mail":"AdGuard Temp Mail"};
-        window.last_versions = {"windows":"AdGuard for Windows v7.17, 14-day trial period","home":"AdGuard Home v0.107","content-blocker":"AdGuard Content Blocker v2.7","ios":"AdGuard for iOS v4.5","browser-extension":"AdGuard Browser Extension v4.3","dns":"AdGuard DNS v2.7","android-tv":"AdGuard for\u00a0Android\u00a0TV v4.3","ios-pro":"AdGuard for iOS Pro v4.5","assistant":"AdGuard Assistant v1.4","mac":"AdGuard for Mac v2.14, 14-day trial period","safari":"AdGuard for Safari v1.11","android":"AdGuard for Android v4.3, 7-day trial period"};
+        window.last_versions = {"home":"AdGuard Home v0.107","android":"AdGuard for Android v4.5, 7-day trial period","content-blocker":"AdGuard Content Blocker v2.7","mac":"AdGuard for Mac v2.14, 14-day trial period","browser-extension":"AdGuard Browser Extension v4.3","windows":"AdGuard for Windows v7.17, 14-day trial period","android-tv":"AdGuard for\u00a0Android\u00a0TV v4.5","safari":"AdGuard for Safari v1.11","ios-pro":"AdGuard for iOS Pro v4.5","ios":"AdGuard for iOS v4.5","assistant":"AdGuard Assistant v1.4","dns":"AdGuard DNS v2.7"};
         window.download_urls = {"default":"\/en\/download.html","windows":"https:\/\/adguard.com\/en\/download.html?os=windows","android":"https:\/\/adguard.com\/en\/download.html?os=android","mac":"https:\/\/adguard.com\/en\/download.html?os=mac","ios":"https:\/\/adguard.com\/en\/ios","ios-pro":"https:\/\/adguard.com\/en\/iospro","content-blocker":"https:\/\/adguard.com\/en\/content_blocker"};
         window.extensions_urls = {"chrome":"\/en\/download-extension\/chrome.html","firefox":"\/en\/download-extension\/firefox.html","safari":"\/en\/download-extension\/safari.html","edge":"\/en\/download-extension\/edge.html","opera":"\/en\/download-extension\/opera.html","yandex":"\/en\/download-extension\/yandex.html"};
         window.default_aid = 18672;
@@ -2034,8 +2260,7 @@
     </script>
 
         
-            
-
+        
         
                     <script type="text/javascript">
                 window.locale = 'en';
@@ -2044,11 +2269,11 @@
                 window.base_download_url = 'https://download.adguard.com/';
                 window.base_vpn_download_url = 'https://download.adguard-vpn.com/';
                 window.accept_language = 'en';
-                window.app_version = '4524';
+                window.app_version = '4589';
                 window.log_click_url = 'https://adguard.com/click.json';
                 window.env = 'prod';
             </script>
-                            <script src="https://st.agrd.eu/adguard-4524/js/main.min.js" async></script>
+                            <script src="https://st.agrd.eu/adguard-4589/js/main.min.js" async></script>
                     
                             
                                 </body>
