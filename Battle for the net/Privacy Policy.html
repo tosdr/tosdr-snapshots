@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Battle for the Net Privacy Policy</title>
-<link rel="stylesheet" href="/wp-content/themes/fight/css/battle-for-the-net.css?v=1713813561">
+<link rel="stylesheet" href="/wp-content/themes/fight/css/battle-for-the-net.css?v=1718328140">
 <link rel="stylesheet" href="https://use.typekit.net/wby2teo.css">
 
 <meta property="og:locale" content="en_US" />
@@ -264,6 +264,390 @@ team@fightforthefuture.org</a>
 </div>
 </div>
 </div>
+
+<script type="text/x-template" id="share-modal-template">
+<Teleport to="body">
+<div class="modal fade share-modal" ref="modal" :id="id" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Share</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="links-screen" v-if="screen == 'links'">
+        <div class="modal-body">
+          <div class="row row-cols-2 g-4">
+            <a class="share-link" :href="twitterLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-x.svg" alt="" aria-hidden class="me-2">
+              <span>Share to X</span>
+            </a>
+            <a class="share-link" :href="facebookLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-facebook.svg" alt="" aria-hidden class="me-2">
+              <span>Share to Facebook</span>
+            </a>
+            <a class="share-link" :href="linkedInLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-linkedin.svg" alt="" aria-hidden class="me-2">
+              <span>Share to LinkedIn</span>
+            </a>
+            <a class="share-link" :href="emailLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-email.svg" width="40" height="40" alt="" aria-hidden class="me-2">
+              <span>Send as Email</span>
+            </a>
+            <a class="share-link" :href="gmailLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-gmail.svg" width="40" height="40" alt="" aria-hidden class="border rounded-circle me-2">
+              <span>Send with Gmail</span>
+            </a>
+            <a class="share-link" :href="protonMailLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-protonmail.svg" width="40" height="40" alt="" aria-hidden class="border rounded-circle me-2">
+              <span>Send with ProtonMail</span>
+            </a>
+            <a class="share-link" :href="fastMailLink" target="_blank">
+              <img src="/wp-content/themes/fight/images/share-icon-fastmail.svg" width="40" height="40" alt="" aria-hidden class="me-2">
+              <span>Send with FastMail</span>
+            </a>
+            <a class="share-link" href="#" @click.prevent="screen = 'image'">
+              <img src="/wp-content/themes/fight/images/share-icon-image.svg" width="40" height="40" alt="" aria-hidden class="me-2">
+              <span>Share with Image</span>
+            </a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <img src="/wp-content/themes/fight/images/share-icon-mastodon.svg" alt="" aria-hidden class="me-2 rotating-icon" ref="rotatingIcon">
+          <div class="input-group">
+            <input type="text" class="form-control border-dark" :value="url" readonly>
+            <button class="btn btn-dark text-white" @click="copyLink()">
+              <img src="/wp-content/themes/fight/images/share-icon-link.svg" alt="" aria-hidden class="me-2">
+              <span v-html="copyLinkLabel"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="image-screen" v-else-if="screen == 'image'">
+        <div class="modal-body">
+          <div :style="{ width: `${shareImageWidth * 0.43}px`, height: `${shareImageHeight * 0.43}px`, backgroundColor: shareImageBGColor }" class="rounded overflow-hidden">
+            <div class="share-image" ref="shareImage" :style="{ backgroundColor: shareImageBGColor, color: shareImageTextColor, width: `${shareImageWidth}px`, height: `${shareImageHeight}px`, fontSize: `${shareImageTextSize}px` }">
+              <h1 ref="shareImageH1" style="display:inline" :style="{ color: shareImageH1Color, fontSize: `${shareImageH1Size}px` }"><span>{{ shareImageText }}</span></h1>
+              <div>{{ shareImageURL }}</div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="#" @click.prevent="screen = 'links'" class="text-decoration-none fw-bold small text-dark">&laquo; Back to links</a>
+            <div class="btn-group">
+              <button class="btn" :class="isPortrait ? 'btn-dark text-white' : 'btn-outline-dark text-dark'" @click="setPortraitImage()">Portrait</button>
+              <button class="btn" :class="isPortrait ? 'btn-outline-dark text-dark' : 'btn-dark text-white'" @click="setSquareImage()">Square</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <a :href="shareImageDownloadLink" target="_blank" class="d-flex align-items-center">
+            <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="download-icon me-2">
+              <path d="M20 26.6667L11.6667 18.3333L14 15.9167L18.3333 20.25V6.66666H21.6667V20.25L26 15.9167L28.3333 18.3333L20 26.6667ZM10 33.3333C9.08334 33.3333 8.29889 33.0072 7.64667 32.355C6.99445 31.7028 6.66778 30.9178 6.66667 30V25H10V30H30V25H33.3333V30C33.3333 30.9167 33.0072 31.7017 32.355 32.355C31.7028 33.0083 30.9178 33.3344 30 33.3333H10Z" fill="white"/>
+            </svg>
+            <span>Download and share image</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Teleport>
+</script>
+<script>
+  VUE_COMPONENTS['share-modal'] = {
+    template: '#share-modal-template',
+
+    props: {
+      id: {
+        type: String,
+        default: 'share-modal'
+      },
+      url: {
+        type: String,
+        default: "https:\/\/battleforthenet.com\/privacy\/"      },
+      tweet: {
+        type: String,
+        default: "The Senate must (finally) fill the FCC so it can restore net neutrality! Act now: battleforthenet.com"      },
+      emailSubject: {
+        type: String,
+        default: "Battle for the Net Privacy Policy"      },
+      emailBody: {
+        type: String,
+        default: "I just took action here, and I think you should too!\n\nhttps://battleforthenet.com/privacy/"
+      }
+    },
+
+    data() {
+      const startingH1Size = 200
+
+      return {
+        copyLinkLabel: 'Copy Link',
+        startingH1Size,
+        screen: 'links',
+        shareImageH1Size: startingH1Size,
+        shareImageH1Color: 'var(--bs-primary)',
+        shareImageBGColor: 'var(--bs-body-bg)',
+        shareImageTextColor: 'var(--bs-body-color)',
+        shareImageTextSize: 48,
+        shareImageText: "Battle for the Net Privacy Policy",
+        shareImageWidth: 1080,
+        shareImageHeight: 1920,
+        shareImageDownloadLink: null
+      }
+    },
+
+    watch: {
+      async screen(newVal) {
+        if (newVal === 'image') {
+          this.$nextTick(this.setPortraitImage)
+        }
+      }
+    },
+
+    async mounted() {
+      this.$refs.modal.addEventListener('show.bs.modal', this.onShow)
+      this.$refs.modal.addEventListener('shown.bs.modal', this.onShown)
+      this.$refs.modal.addEventListener('hidden.bs.modal', this.onHidden)
+
+      const bodyStyle = getComputedStyle(document.body)
+      this.shareImageBGColor = bodyStyle.getPropertyValue('background-color')
+
+      const h1 = document.querySelector('main h1')
+
+      if (h1) {
+        this.shareImageH1Color = getComputedStyle(h1).getPropertyValue('color')
+        this.shareImageText = h1.innerText
+      }
+
+      const firstP = document.querySelector('main p')
+
+      if (firstP) {
+        this.shareImageTextColor = getComputedStyle(firstP).getPropertyValue('color')
+      }
+    },
+
+    computed: {
+      isPortrait() {
+        return this.shareImageHeight > this.shareImageWidth
+      },
+
+      shareImageURL() {
+        // if we're sharing a fightforthefuture.org URL, use the short URL
+        if (this.url.match(/fightforthefuture.org/) || this.url.match(/localhost/)) {
+          return 'https://fftf.xyz/6739'
+        }
+        // if it's on a custom domain, just pretty print it
+        else {
+          return this.url.replace(/^https?:\/\//, '').replace(/\/$/, '')
+        }
+      },
+
+      twitterLink() {
+        let twitterLink = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(this.tweet)
+
+        // remove https:// + www from the URL
+        let baseURL = this.url.replace(/^https?:\/\/(www\.)?/, '')
+
+        // also remove trailing slashes
+        baseURL = baseURL.replace(/\/$/, '')
+
+        // and lowercase it
+        baseURL = baseURL.toLowerCase()
+
+        // if tweet doesn't contain the base url, add it as a param
+        if (this.tweet.toLowerCase().indexOf(baseURL) === -1) {
+          twitterLink += '&url=' + encodeURIComponent(this.url)
+        }
+
+        return twitterLink
+      },
+
+      facebookLink() {
+        return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.url)}`
+      },
+
+      linkedinLink() {
+        return `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(this.url)}`
+      },
+
+      emailLink() {
+        return `mailto:?subject=${encodeURIComponent(this.emailSubject)}&body=${encodeURIComponent(this.emailBody)}`
+      },
+
+      gmailLink() {
+        return `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(this.emailSubject)}&body=${encodeURIComponent(this.emailBody)}`
+      },
+
+      protonMailLink() {
+        return `https://mail.proton.me/inbox/#mailto=${encodeURIComponent(this.emailLink)}`
+      },
+
+      fastMailLink() {
+        return `https://app.fastmail.com/mail/compose?mailto=${encodeURIComponent(this.emailLink)}`
+      }
+    },
+
+    methods: {
+      async onScriptsLoaded() {
+        if (typeof html2canvas !== 'undefined' && typeof colorjs !== 'undefined') {
+          const canvas = await html2canvas(document.body, {
+            scrollX: 0,
+            scrollY: 0,
+            width: window.innerWidth,
+            height: 800,
+            onclone(clone) {
+              const modal = clone.querySelector('.modal')
+
+              if (modal) {
+                modal.parentNode.removeChild(modal)
+              }
+
+              const backdrop = clone.querySelector('.modal-backdrop')
+              if (backdrop) {
+                backdrop.parentNode.removeChild(backdrop)
+              }
+            }
+          })
+
+          canvas.toBlob(async blob => {
+            const imageDataURL = URL.createObjectURL(blob)
+            const colors = await colorjs.prominent(imageDataURL, { format: 'array', amount: 2 })
+
+            this.shareImageBGColor = `rgb(${colors[0].join(',')})`
+          })
+        }
+      },
+
+      onShow() {
+        this.screen = 'links'
+
+        // load html2canvas.min.js if it's not already loaded
+        if (typeof html2canvas === 'undefined') {
+          const script = document.createElement('script')
+          script.src = '/wp-content/themes/fight/js/html2canvas.min.js'
+          script.async = true
+          document.head.appendChild(script)
+          script.onload = this.onScriptsLoaded
+        }
+
+        // load color.js if it's not already loaded
+        if (typeof colorjs === 'undefined') {
+          const script = document.createElement('script')
+          script.src = '/wp-content/themes/fight/js/color.js'
+          script.async = true
+          document.head.appendChild(script)
+          script.onload = this.onScriptsLoaded
+        }
+      },
+
+      onShown() {
+        let index = 0
+
+        const platforms = [
+          'mastodon',
+          'bluesky',
+          'discord',
+          'reddit',
+          'signal',
+          'telegram',
+          'whatsapp',
+          'slack',
+          'threads',
+        ]
+
+        this.rotatingIconInterval = setInterval(() => {
+          if (index < platforms.length - 1) {
+            index++
+          }
+          else {
+            index = 0
+          }
+
+          if (this.$refs.rotatingIcon) {
+            this.$refs.rotatingIcon.src = `/wp-content/themes/fight/images/share-icon-${platforms[index]}.svg`
+          }
+        }, 1500)
+      },
+
+      onHidden() {
+        clearInterval(this.rotatingIconInterval)
+      },
+
+      copyLink() {
+        // Copy the share URL to the clipboard
+        navigator.clipboard.writeText(this.url)
+
+        // change label to indicate that it worked
+        const copiedText = '<em>Copied</em>'
+
+        if (this.copyLinkLabel !== copiedText) {
+          const originalText = this.copyLinkLabel
+          this.copyLinkLabel = copiedText
+
+          setTimeout(() => {
+            this.copyLinkLabel = originalText
+          }, 3000)
+        }
+      },
+
+      async resizeShareImageText() {
+        if (!this.$refs.shareImageH1) return
+
+        this.shareImageH1Size = this.startingH1Size
+        await this.$nextTick()
+
+        const isTooBig = () => {
+          const padding = 100
+          const isTooWide = this.$refs.shareImageH1.querySelector('span').offsetWidth > this.shareImageWidth - padding
+          const isTooTall = this.$refs.shareImageH1.offsetHeight > this.shareImageHeight * 0.75
+
+          if (isTooWide || isTooTall) {
+            return true
+          }
+          else {
+            return false
+          }
+        }
+
+        while (isTooBig()) {
+          this.shareImageH1Size -= 4
+          console.log('Resizing share image text to ', this.shareImageH1Size)
+
+          if (this.shareImageH1Size <= 48) {
+            break
+          }
+
+          // wait for DOM
+          await this.$nextTick()
+        }
+      },
+
+      setSquareImage() {
+        this.shareImageWidth = 1080
+        this.shareImageHeight = 1080
+        this.resizeShareImageText()
+        setTimeout(this.createImage, 300)
+      },
+
+      async setPortraitImage() {
+        this.shareImageWidth = 1080
+        this.shareImageHeight = 1920
+        this.resizeShareImageText()
+        setTimeout(this.createImage, 300)
+      },
+
+      async createImage() {
+        const canvas = await html2canvas(this.$refs.shareImage, {
+          scale: 2,
+          backgroundColor: this.shareImageBGColor
+        })
+
+        canvas.toBlob(blob => {
+          this.shareImageDownloadLink = URL.createObjectURL(blob)
+        })
+      }
+    }
+  }
+</script>
 <script>
 const FATHOM_EVENTS = {
   signPetition: "1M0OMB9D",
@@ -272,8 +656,8 @@ const FATHOM_EVENTS = {
 </script>
 <script src="/wp-content/themes/fight/js/bootstrap.min.js"></script>
 <script src="/wp-content/themes/fight/js/vue3.js"></script>
-<script type="module" src="/wp-content/themes/fight/js/app.js?v=1713813561"></script>
-<script type="module" src="/wp-content/themes/fight/js/block-scripts.js?v=1713813561"></script>
+<script type="module" src="/wp-content/themes/fight/js/app.js?v=1718328140"></script>
+<script type="module" src="/wp-content/themes/fight/js/block-scripts.js?v=1718328140"></script>
 
 <script src="https://cdn.usefathom.com/script.js" data-site="XQZYLDUQ" defer></script>
 
