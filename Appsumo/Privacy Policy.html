@@ -1187,6 +1187,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     
 
 
+<script
+  src="https://js.sentry-cdn.com/b6dd1e3b824a48dcbf7e7c16e62a8ebd.min.js"
+  crossorigin="anonymous"
+></script>
+<script>
+  Sentry.init({
+    dsn: 'https://b6dd1e3b824a48dcbf7e7c16e62a8ebd@sentry.io/2714354',
+    environment: 'PROD',
+    beforeSend: function (event, hint) {
+      // group deal page exceptions
+      if (document.body.className.indexOf('sumo-product-pg') >= 0) {
+        // not every event will have an originalException set, it's optional
+        if (hint && hint.originalException) {
+          event.fingerprint = ['deal-detail', hint.originalException.toString()];
+        }
+      }
+
+      return event;
+    },
+    denyUrls: [
+      // Browser extensions
+      /extensions\//i,
+      /^chrome:\/\//i,
+      /^chrome-extension:\/\//i,
+    ],
+  });
+</script>
+
 
     <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/project.5640bc1dd69d.js"></script>
 
