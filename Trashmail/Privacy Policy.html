@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://trashmail.com">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="trashmail, trash-mail, trash, mail, jetable, e-mail, pourriel, transfert, anti-spam, temporaire, e-mail">
+<meta name="description" content="Créez des redirections e-mails pour vous protéger contre du spam et des newsletters.">
+<meta name="language" content="fr">
+<meta http-equiv="Content-Language" content="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-itunes-app" content="app-id=1537396822">
+<link rel="apple-touch-icon" href="https://trashmail.com/images/trashmail-152x152.png" />
+<title>TrashMail - Adresses jetable</title>
+<link href="https://trashmail.com/css/all-home.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" hreflang="x-default" href="https://trashmail.com/" />
+<link rel="alternate" hreflang="de" href="https://trashmail.com/?lang=de" />
+<link rel="alternate" hreflang="fr" href="https://trashmail.com/?lang=fr" />
+<script src="https://trashmail.com/js/dist/all-home.js"></script><script>Raven.config('https://630abd942d0d4261b9141191e6443536@sentry.io/264999').install();</script><!--[if lt IE 9]><script src="https://trashmail.com/js/libs/html5shiv_3.7.2.min.js"></script><script src="https://trashmail.com/js/libs/respond_1.4.2.min.js"></script><![endif]-->
+</head>
+<body ng-app="trashmail">
+<script>
+        "use strict";
+
+        // Enable when system color scheme is dark
+        DarkReader.auto({
+            brightness: 100,
+            contrast: 90,
+            sepia: 10
+        });
+
+        var app		= angular.module('trashmail', [
+            'ngAnimate',
+            'mgcrea.ngStrap',
+            'mgcrea.ngStrap.helpers.dimensions',
+            'mgcrea.ngStrap.tooltip',
+            'mgcrea.ngStrap.helpers.parseOptions',
+            'mgcrea.ngStrap.select'
+        ]);
+
+        app.controller('Menu', function($scope, $http, $sce, $alert) {
+            var trustValueList = function(list) {
+                for (var i = 0; i < list.length; i++) {
+                    list[i].name = $sce.trustAsHtml("" + list[i].name);
+                }
+            };
+
+            $scope.menuList			= [{"name":"Page d'accueil","url":"\/?cmd=&lang=fr","current":false,"cmd":""},{"name":"Installer l'add-on pour Mozilla Firefox","url":"\/?cmd=addon_firefox&lang=fr","current":false,"cmd":"addon_firefox"},{"name":"Fonctions","url":"\/?cmd=features&lang=fr","current":false,"cmd":"features"},{"name":"TrashMail Plus","url":"\/?cmd=register&lang=fr","current":false,"cmd":"register"},{"name":"API","url":"\/?cmd=api&lang=fr","current":false,"cmd":"api"},{"name":"Pour entreprises","url":"\/?cmd=business&lang=fr","current":false,"cmd":"business"},{"name":"Forum","url":"\/?cmd=forum&lang=fr","current":false,"cmd":"forum"},{"name":"Presse","url":"\/?cmd=press&lang=fr","current":false,"cmd":"press"},{"name":"Protection des donn\u00e9es","url":"\/?cmd=privacy&lang=fr","current":true,"cmd":"privacy"},{"name":"CGU","url":"\/?cmd=tos&lang=fr","current":false,"cmd":"tos"},{"name":"Contact & Mentions l\u00e9gales","url":"\/?cmd=legal&lang=fr","current":false,"cmd":"legal"}];
+            trustValueList($scope.menuList);
+        });
+
+        // Filter out add-on menu item for the mobile version, as TrashMail add-ons can't be installed on the
+        // mobile phone.
+        app.filter('filterCmdMobile', function ()
+        {
+            return function(itemList) {
+                var resultList = [];
+                for (var i in itemList) {
+                    var item = itemList[i];
+
+                    if (item.cmd.indexOf('addon_') !== 0) {
+                        resultList.push(item);
+                    }
+                }
+                return resultList;
+            }
+        });
+    </script>
+
+<div class="tm-visible-if-not-hd-display-block tm-hide-if-hd-display tm-phone">
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tm-navbar-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="/?lang=fr">
+<span class="tm-light">
+<img class="trashmail-mobile-logo" alt="TrashMail.com" height="20" src="https://trashmail.com/images/mobile/tm_logo_mobile@2x.png">
+<sup>&reg;</sup>
+&nbsp;TrashMail.com
+</span>
+<span class="tm-dark">
+<img class="trashmail-mobile-logo" alt="TrashMail.com" height="20" src="https://trashmail.com/images/mobile/tm_logo_mobile-dark@2x.png">
+<sup>&reg;</sup>
+&nbsp;TrashMail.com
+</span>
+</a>
+</div>
+
+<div class="collapse navbar-collapse" id="tm-navbar-collapse" ng-controller="Menu">
+<ul class="nav navbar-nav">
+<li ng-repeat="item in menuList | filterCmdMobile" class="{{item.current ? 'active' : ''}}">
+<a href="{{item.url}}">{{item.name}}</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div>
+<div class="tm-phone-content">
+<h2>
+Protection des données
+</h2>
+<div class="row">
+<div class="col-sm-12">
+<h3>1. GÉNÉRAL</h3>
+<p>
+TrashMail.com est soumis aux lois de protection de données allemandes et n'est
+pas un service anonyme.
+Les données clients (exemple les addresses courriel réel) ne vont pas être vendu.
+Aucun service de publicité en ligne est utilisé.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>2. SAUVEGARDE DES DONNÉES</h3>
+<p>
+Nous essayons de sauvegarder le moins possible de données. Un minimum de données
+est réquis pour le fonctionement du service.
+Sauvegarde de la base de donnée: La base de donnée est hautement crypté et sauvegardé
+sur un serveur externe. La clée privée ne se trouve pas sur les serveurs.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>3. TRAFFIC DE COURRIELS</h3>
+<p>
+Tout courriel sortant essai d'etre transmit par le mode de cryptage TLS passive.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>4. SITE WEB</h3>
+<p>
+Le site web est uniquement utilisable par le protocole HTTPS (certificat en 2048 bits),
+il a obtenu <a href="https://www.ssllabs.com/ssltest/analyze.html?d=trashmail.com" target="new">la note "A+"</a> de l'entreprise de sécurité Qalys SSL Lab.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>5. COOKIES</h3>
+<p>
+Ce site web utilise des cookies pour des raisons techniques:
+Nous utilisons des cookies pour des sessions.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>6. RÉSEAU DE LIVRAISON DE CONTENU PAR CLOUDFLARE</h3>
+<p>
+Ce site web utilise un réseau de diffusion de contenu (CDN) de Cloudflare, Inc. 101 Townsend St,
+San Francisco, CA 94107, États-Unis. Cloudflare est certifié et garanti en vertu de l'accord sur la protection de la vie privée,
+respecter la législation européenne en matière de protection des données
+(<a href="https://www.privacyshield.gov/participant?id=a2zt0000000GnZKAA0&status=Active" target="_blank">https://www.privacyshield.gov/participant?id=a2zt0000000GnZKAA0&status=Active</a>).
+Un CDN est un réseau de serveurs répartis régionalement et connectés via Internet, avec lequel des contenus - notamment des
+fichiers multimédia - peuvent être livrés. Un CDN offre des capacités de stockage et de livraison évolutives
+et garantit un débit de données optimal même en cas de pics de charge élevés
+(<a href="https://de.wikipedia.org/wiki/Content_Delivery_Network" target="_blank">https://de.wikipedia.org/wiki/Content_Deliver
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tm-hidden-if-not-hd-display">
+<div id="tm-view">
+<div id="tm-header-background">
+<div class="tm-header-wrapper">
+<div id="tm-header">
+<a href="https://trashmail.com/?lang=fr" alt="Startseite">
+<img class="tm-light" src="https://trashmail.com/images/layout/logo_reg_eur@2x.png" width="290" height="82" />
+<img class="tm-dark" src="https://trashmail.com/images/layout/logo_reg_eur_dark@2x.png" width="290" height="82" />
+</a>
+<div id="tm-header-text">
+<a href="?cmd=privacy&lang=fr">Protection des données</a> | <a href="?cmd=tos&lang=fr">CGU</a> | <a href="?cmd=legal&lang=fr">Contact &amp; Mentions légales</a>
+<form id="tm-login-form" action="?cmd=manager&login=1&lang=fr" method="post">
+<input type="text" name="fe-login-user" placeholder="Nom d'utilisateur" required>
+<input type="password" name="fe-login-pass" placeholder="Mot de passe" required>
+<input type="submit" name="create_submit" value="Connexion">
+</form>
+</div>
+</div>
+<div id="tm-navbar">
+<div id="tm-navleft"></div>
+<div id="tm-navright"></div>
+<div id="tm-navmiddle">
+<ul class="tm-navtext">
+<li id="tm-nav-home"><a href="?lang=fr"><span>PAGE D'ACCUEIL</span></a></li>
+<li id="tm-nav-addon"><a href="?lang=fr&cmd=addon_firefox"><span>INSTALLER L'ADD-ON POUR FIREFOX</span></a></li>
+<li id="tm-nav-demo"><a href="?cmd=tour&lang=fr"><span>VIDÉO DÉMO</span></a></li>
+<li id="tm-nav-features"><a href="?cmd=features&lang=fr"><span>FONCTIONS</span></a></li>
+<li id="tm-nav-forum"><a href="?cmd=forum&lang=fr"><span>FORUM</span></a></li>
+<li id="tm-nav-api"><a href="?cmd=api&lang=de"><span>API</span></a></li>
+<li id="tm-nav-business"><a href="?cmd=business&lang=fr"><span>POUR ENTREPRISES</span></a></li>
+<li id="tm-nav-press"><a href="?cmd=press&lang=fr"><span>PRESSE</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="tm-main">
+<div id="tm-bodyleft-blank-text">
+<br/>
+<b><font face="Verdana, Arial, Helvetica, sans-serif" size="+2">
+Protection des données</font></b><br><br/>
+<pre>
+1. GÉNÉRAL
+TrashMail.com est soumis aux lois de protection de données allemandes et n'est
+pas un service anonyme.
+Les données clients (exemple les addresses e-mail réel) ne vont pas être vendu.
+Aucun service de publicité en ligne est utilisé.
+
+2. SAUVEGARDE DES DONNÉES
+Nous essayons de sauvegarder le moins possible de données. Un minimum de données
+est réquis pour le fonctionement du service.
+Sauvegarde de la base de donnée: La base de donnée est hautement crypté et sauvegardé
+sur un serveur externe. La clée privée ne se trouve pas sur les serveurs.
+
+3. TRAFFIC DE e-mailS
+Tout e-mail sortant essai d'etre transmit par le mode de cryptage TLS passive.
+Les messages transmit sont enregistré dans la fonction "Journal" que chaque utilisateur
+peut consulter pour soi-même.
+
+4. SITE WEB
+Le site web est uniquement utilisable par le protocole HTTPS (certificat en 2048 bits),
+il a obtenu <a href="https://www.ssllabs.com/ssltest/analyze.html?d=trashmail.com" target="new">la note "A+"</a> de l'entreprise de sécurité Qalys SSL Lab.
+
+5. COOKIES
+Ce site web utilise des cookies pour des raisons techniques:
+Nous utilisons des cookies pour des sessions.
+
+6. RÉSEAU DE LIVRAISON DE CONTENU PAR CLOUDFLARE
+Ce site web utilise un réseau de diffusion de contenu (CDN) de Cloudflare, Inc. 101 Townsend St,
+San Francisco, CA 94107, États-Unis. Cloudflare est certifié et garanti en vertu de l'accord sur la protection de la vie privée,
+respecter la législation européenne en matière de protection des données
+(<a href="https://www.privacyshield.gov/participant?id=a2zt0000000GnZKAA0&status=Active" target="_blank">https://www.privacyshield.gov/participant?id=a2zt0000000GnZKAA0&status=Active</a>).
+
+Un CDN est un réseau de serveurs répartis régionalement et connectés via Internet, avec lequel des contenus - notamment des
+fichiers multimédia - peuvent être livrés. Un CDN offre des capacités de stockage et de livraison évolutives
+et garantit un débit de données optimal même en cas de pics de charge élevés
+(<a href="https://de.wikipedia.org/wiki/Content_Delivery_Network" target="_blank">https://de.wikipedia.org/wiki/Content_Deliver
+</pre>
+</div>
+<div id="tm-bodyleft-blank-1"></div>
+<div id="tm-bodyright-blank-1"></div>
+<div id="tm-bodymiddle-blank-1"></div>
+<div id="tm-bodyleft-blank-2" style="height: 460px;"></div>
+<div id="tm-bodyright-blank-2" style="height: 460px;"></div>
+<div id="tm-bodymiddle-blank-2" style="height: 460px;"></div>
+<div id="tm-bodyleft-blank-3"></div>
+<div id="tm-bodyright-blank-3"></div>
+<div id="tm-bodymiddle-blank-3"></div>
+<div id="tm-compatibility">
+<div class="tm-cl-title">PRIX</div><br/>
+- gratuit avec des fonctions restreint<br/>
+- tous les fonctions avec Plus pour seulement 18,49 EUR par an
+</div>
+<div id="tm-disposable-stats">
+<div class="tm-cl-title">TRASHMAIL - ADRESSES JETABLES</div><br/>
+Protégez-vous contre le spam.<br>Suivez-nous sur Twitter: <a href="https://twitter.com/MailTrashmail" target="_blank">@MailTrashmail</a>
+</div>
+<div id="tm-note">
+</div>
+<div id="tm-button">
+<a href="https://trashmail.com/?cmd=register&lang=fr">MEMBRE-PLUS</a>
+</div>
+<div class="tm-copyright">
+&copy; 2002-2024 <a href="http://aionda.com">Aionda GmbH</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
