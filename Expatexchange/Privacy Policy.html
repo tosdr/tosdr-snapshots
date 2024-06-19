@@ -1,0 +1,1393 @@
+<!-- START OF INJECTION BELOW-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+.partner-modal {
+display: none;
+position: fixed;
+z-index: 1000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,0.4);
+justify-content: center;
+align-items: center;
+}
+.partner-modal-content {
+position: relative; /* Add this to position the close button relative to this container */
+background-color: #33c3f0;
+margin: 5% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+max-width: 800px;
+display: flex;
+flex-direction: column;
+align-items: center;
+border-radius: 15px; /* Rounded edges */
+}
+.close {
+position: absolute; /* Position relative to partner-modal-content */
+top: 3px; /* Adjust to desired vertical position */
+right: 20px; /* Adjust to desired horizontal position */
+color: #fff;
+font-size: 45px;
+font-weight: bold;
+z-index: 2; /* Ensure it is on top */
+}
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+.partner-login-forms {
+display: flex;
+flex-direction: column;
+width: 100%;
+}
+.close {
+position: absolute; /* Position relative to partner-modal-content */
+top: -10px; /* Adjust to desired vertical position */
+right: 20px; /* Adjust to desired horizontal position */
+color: #fff;
+font-size: 45px;
+font-weight: bold;
+z-index: 2; /* Ensure it is on top */
+}
+.close:hover,
+.close:focus {
+color: black;
+text-decoration: none;
+cursor: pointer;
+}
+@media (min-width: 1000px) {
+.partner-login-forms {
+flex-direction: row;
+align-items: flex-start;
+}
+.partner-login-left, .partner-login-right {
+width: 50%;
+padding: 10px;
+}
+.partner-modal-header {
+width: 80%;
+background-color: #33c3f0; /* Adjust this color as needed */
+padding: 20px 30px;
+text-align: center;
+margin-bottom: 20px; /* Space between the header and the forms */
+} 
+}
+@media (max-width: 999px) {
+.partner-login-left, .partner-login-right {
+width: 100%;
+padding: 10px;
+}
+.partner-modal-header {
+display: none;
+}
+}
+</style>
+<style>
+.content {
+height: 100%; /* Simulate a long article */
+padding: 20px;
+}
+input[type="text"],
+input[type="password"] {
+color: black; /* Ensure text color is black */
+background-color: white;
+}
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+color: black; /* Placeholder color */
+}
+input[type="text"]:-webkit-autofill,
+input[type="password"]:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 1000px white inset; /* Override autofill background color */
+box-shadow: 0 0 0px 1000px white inset; /* Override autofill background color */
+color: black !important; /* Ensure autofilled text is black */
+}
+input[type="text"]:-moz-autofill,
+input[type="password"]:-moz-autofill {
+background-color: white !important; /* Override autofill background color */
+color: black !important; /* Ensure autofilled text is black */
+}
+input[type="text"]:-ms-autofill,
+input[type="password"]:-ms-autofill {
+background-color: white !important; /* Override autofill background color */
+color: black !important; /* Ensure autofilled text is black */
+}
+/* Mobile specific styles */
+@media only screen and (min-width:0px) and (max-width:449px) {
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+padding-right: 25px;
+background-color: rgba(0,0,0,.8);
+padding-top: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.modal-content {
+background: url('/imagesnew/modal-login-mobile2.png') no-repeat center center;
+background-size: cover;
+color: #ffffff;
+font-weight: 800;
+padding: 15px 10px 10px 10px;
+width: 85%; /* Adjust width for mobile */
+max-width: none;
+height: 75vh; /* Make the modal taller */
+display: flex;
+border: 5px solid white; /* White border */
+flex-direction: column;
+justify-content: center;
+border-radius: 15px; /* Rounded edges */
+}
+}
+@media only screen and (min-width:450px) and (max-width:680px) {
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+padding-right: 25px;
+background-color: rgba(0,0,0,.8);
+padding-top: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.modal-content {
+background: url('/imagesnew/modal-login-mobile2.png') no-repeat center center;
+background-size: cover;
+color: #ffffff;
+font-weight: 800;
+padding: 15px 10px 10px 10px;
+width: 85%; /* Adjust width for mobile */
+max-width: none;
+height: 75vh; /* Make the modal taller */
+display: flex;
+border: 5px solid white; /* White border */
+flex-direction: column;
+justify-content: center;
+border-radius: 15px; /* Rounded edges */
+} 
+}
+@media only screen and (min-width:681px) and (max-width:999px) { 
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,.8);
+padding-top: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.modal-content {
+background: url('/imagesnew/modal-login-desktop2.png') no-repeat center center;
+background-size: cover;
+margin: 5% auto;
+padding: 20px 50px 20px 40px;
+width: 75%;
+border: 5px solid white; /* White border */
+max-width: 600px; /* Ensure the modal doesn't get too wide on large screens */
+border-radius: 15px; /* Rounded edges */
+}
+}
+@media only screen and (min-width:1000px) { 
+.modal {
+display: none;
+position: fixed;
+z-index: 1;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,.8);
+padding-top: 60px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.modal-content {
+background: url('/imagesnew/modal-login-desktop2.png') no-repeat center center;
+background-size: cover;
+margin: 5% auto;
+padding: 40px 50px 40px 40px;
+width: 75%;
+border: 5px solid white; /* White border */
+max-width: 600px; /* Ensure the modal doesn't get too wide on large screens */
+border-radius: 15px; /* Rounded edges */
+}
+}
+</style>
+<div id="partnerLoginModal" class="partner-modal">
+<div class="partner-modal-content">
+<span style="text-align: left; color: #fff; font-weight: 800;">
+<span class="close">&times;</span>
+<div class="partner-login-forms">
+<div class="partner-login-left">
+<h2 style="margin-top: 10px; margin-bottom: 4px;">
+<span style="font-size: 35px; color: #fff; font-weight: 800;">Login</span>
+</h2>
+<form id="partnerloginForm">
+<label for="username"><span style="color: #fff; font-weight: 800;">E-mail</span></label><br>
+<input type="text" id="username" name="username" style="color: black !important;" required><br>
+<label for="password"><span style="color: #fff; font-weight: 800;">Password</span></label><br>
+<input type="password" id="userpass" name="userpass" style="color: black !important;" required><br>
+<button type="submit" class="button orangebackground" style="margin-left: -1px;">Login</button>
+</form>
+<div id="partnerloginError" style="background-color: #fff; color: #000; padding-left: 10px; font-weight: 800;"></div>
+</div>
+<div class="partner-login-right">
+<h2 style="margin-top: 10px; margin-bottom: 14px;">
+<span style="font-size: 35px; color: #fff; font-weight: 800;">Or, Send Login Link</span>
+</h2>
+<form id="sendLoginLinkForm">
+<label for="partnerEmail"><span style="color: #fff; font-weight: 800;">Enter your e-mail address & we'll send you a temporary login link.</span></label><br>
+<input type="email" id="partnerEmail" name="partnerEmail" style="color: black !important;" required><br>
+<button type="submit" class="button orangebackground" style="margin-left: -1px;">Send Login Link</button>
+</form>
+<div id="partnerlinkError" style="background-color: #fff; color: #000; padding-left: 10px; font-weight: 800;"></div>
+</div>
+</div>
+<div class="partner-modal-header">
+<span style="color: #fff; font-weight: 800;">
+Interested in our Partner Program for businesses or our Local Guide Program for experienced expats and digital nomads?
+<a style="color: #fff; font-size: 19px; line-height: 1.1; font-weight: 800;" href="https://www.expatexchange.com/partnering">Click here to learn more</a>.
+</span>
+</div>
+</div>
+</div>
+<script>
+// Get the modal and close button elements
+var partnerModal = document.getElementById("partnerLoginModal");
+var closeModal = document.getElementsByClassName("close")[0];
+// Function to open the modal
+function openPartnerLoginModal() {
+partnerModal.style.display = "flex";
+document.body.style.overflow = 'hidden'; // Prevent scrolling
+}
+// Function to close the modal
+function closePartnerLoginModal() {
+partnerModal.style.display = "none";
+document.body.style.overflow = 'auto'; // Allow scrolling again
+}
+// Add event listener to the close button
+closeModal.onclick = function() {
+closePartnerLoginModal();
+};
+// AJAX Login
+document.getElementById("partnerloginForm").onsubmit = function(event) {
+event.preventDefault();
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "https://www.expatexchange.com/ajaxpartnerlogin.cfm", true);
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+if (xhr.readyState == 4 && xhr.status == 200) {
+var response = JSON.parse(xhr.responseText);
+if (response.success) {
+closePartnerLoginModal();
+window.location.href = 'https://www.expatexchange.com/partner/security'; // Redirect to the specific link
+} else {
+document.getElementById("partnerloginError").innerText = response.message;
+}
+}
+};
+var formData = "username=" + encodeURIComponent(document.getElementById("username").value) +
+"&userpass=" + encodeURIComponent(document.getElementById("userpass").value);
+xhr.send(formData);
+};
+// AJAX Send Login Link
+document.getElementById("sendLoginLinkForm").onsubmit = function(event) {
+event.preventDefault();
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "https://www.expatexchange.com/ajaxpartnerloginlink.cfm", true);
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function () {
+if (xhr.readyState == 4 && xhr.status == 200) {
+var response = JSON.parse(xhr.responseText);
+var messageElement = document.getElementById("partnerlinkError");
+if (response.success) {
+messageElement.innerText = "We've e-mailed a temporary Login Link to that address.";
+messageElement.style.color = "black"; // Change text color to green for success message
+messageElement.style.display = "block"; // Ensure the message is visible
+document.getElementById("sendLoginLinkForm").reset(); // Reset the form fields
+} else {
+messageElement.innerText = response.message;
+messageElement.style.color = "red"; // Change text color to red for error message
+messageElement.style.display = "block"; // Ensure the message is visible
+}
+}
+};
+var formData = "partnerEmail=" + encodeURIComponent(document.getElementById("partnerEmail").value);
+xhr.send(formData);
+};
+// Event listener to close the modal when clicking outside the modal content
+window.onclick = function(event) {
+if (event.target == partnerModal) {
+closePartnerLoginModal();
+}
+}
+</script>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="e6be85cb-89a8-4d64-b3b4-21060840f1da" type="text/javascript" data-blockingmode="auto" async></script>
+<!DOCTYPE html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!--[if IE]>
+<style type="text/css">
+.boxstyle .box2 {
+width: 41%;/* Width of right column content (column width minus padding on either side) */
+border:none;
+position: relative; 
+margin: 0px;
+float: left;
+border: 0px solid #cc3333;
+padding: 15px 3px 10px 5px;
+}
+.center {
+height: 100%;
+}
+</style>
+<![endif]-->
+
+<META NAME="Author" CONTENT="Expat Exchange">
+<meta property="fb:admins" content="694271626" />
+<meta property="fb:app_id" content="203969636280523" />
+<title>Privacy Policy | Expat Exchange</title>
+<META NAME="Description" CONTENT="Privacy Policy for Expat Exchange">
+<META NAME="Author" CONTENT="Betsy Burlingame, Joshua Wood">
+<meta property="og:title" content="Privacy Policy | Expat Exchange" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.expatexchange.com/privacypolicy" />
+<link rel="canonical" href="https://www.expatexchange.com/privacypolicy" />
+<meta property="og:site_name" content="Expat Exchange" />
+<meta property="og:description" content="Privacy Policy | Expat Exchange" />
+</head>
+<link rel="dns-prefetch" href="https://consentcdn.cookiebot.com">
+<link rel="preconnect" href="https://consentcdn.cookiebot.com" crossorigin>
+<link rel="preconnect" href="https://s3.amazonaws.com" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/raleway-v14-latin-300.woff2">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/raleway-v14-latin-regular.woff2">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/raleway-v14-latin-600.woff2">
+<link rel="preload" as="font" type="font/woff2" href="/webfonts/fa-regular-400.woff2">
+<link rel="preload" as="style" href="https://www.expatexchange.com/raleway.css">
+<link href="https://www.expatexchange.com/raleway.css" rel="stylesheet" type="text/css">
+<link rel="preload" as="style" href="https://www.expatexchange.com/skeleton_mobile4.css">
+<link rel="preload" as="style" href="https://www.expatexchange.com/normalize.css">
+<link rel="stylesheet" href="https://www.expatexchange.com/normalize.css">
+<link rel="stylesheet" href="https://www.expatexchange.com/skeleton_mobile4.css">
+<link href="https://www.expatexchange.com/css/fontawesome.css" rel="stylesheet">
+<link href="https://www.expatexchange.com/css/brands.css" rel="stylesheet">
+<link href="https://www.expatexchange.com/css/regular.css" rel="stylesheet">
+<link href="https://www.expatexchange.com/css/solid.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript">
+function init() {
+var vidDefer = document.getElementsByTagName('iframe');
+for (var i=0; i<vidDefer.length; i++) {
+if(vidDefer[i].getAttribute('data-src')) {
+vidDefer[i].setAttribute('src',vidDefer[i].getAttribute('data-src'));
+} } }
+window.onload = init;
+</script>
+<script type="text/javascript">
+// When the user scrolls down 20px from the top of the document, slide down the navbar
+// When the user scrolls to the top of the page, slide up the navbar (50px out of the top view)
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+if (document.body.scrollTop > 145 || document.documentElement.scrollTop > 145) {
+document.getElementById("navbarmobilescroll").style.top = "0";
+} else {
+document.getElementById("navbarmobilescroll").style.top = "-150px";
+}
+}
+</script>
+<script type="text/javascript">
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+googlempuright = "no";
+googleskyscraperright = "no";
+googlebottom = "no";
+}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="shortcut icon" href="https://www.expatexchange.com/favicon.ico" type="image/x-icon">
+<style type="text/css">
+#menuToggle
+{
+display: block;
+position: relative;
+top: 10px;
+left: 15px;
+z-index: 1;
+-webkit-user-select: none;
+user-select: none;
+}
+#menuToggle a
+{
+text-decoration: none;
+color: #ffffff;
+transition: color 0.3s ease;
+}
+#menuToggle a:hover
+{
+color: #000000; background-color: #33c3f0;
+}
+#menuToggle input
+{
+display: block;
+width: 40px;
+height: 32px;
+position: absolute;
+top: -7px;
+left: -5px;
+cursor: pointer;
+opacity: 0; /* hide this */
+z-index: 2; /* and place it over the hamburger */
+-webkit-touch-callout: none;
+}
+/*
+* Just a quick hamburger
+*/
+#menuToggle span
+{
+display: block;
+width: 33px;
+height: 4px;
+margin-bottom: 5px;
+position: relative;
+background: #ffffff;
+border-radius: 3px;
+z-index: 1;
+transform-origin: 4px 0px;
+transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+opacity 0.55s ease;
+overflow: hidden;
+}
+#menuToggle span:first-child
+{
+transform-origin: 0% 0%;
+}
+#menuToggle span:nth-last-child(2)
+{
+transform-origin: 0% 100%;
+}
+/* 
+* Transform all the slices of hamburger
+* into a crossmark.
+*/
+#menuToggle input:checked ~ span
+{
+opacity: 1;
+transform: rotate(45deg) translate(-2px, -1px);
+background: #ffffff;
+}
+/*
+* But let's hide the middle one.
+*/
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+opacity: 0;
+transform: rotate(0deg) scale(0.2, 0.2);
+}
+/*
+* Ohyeah and the last one should go the other direction
+*/
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+transform: rotate(-45deg) translate(0, -1px);
+}
+/*
+* Make this absolute positioned
+* at the top left of the screen
+*/
+#menuburger
+{
+position: absolute;
+width: 230px;
+margin: -100px 0 0 -50px;
+padding: 50px;
+padding-top: 125px; 
+background: #33c3f0;
+list-style-type: none;
+-webkit-font-smoothing: antialiased;
+/* to stop flickering of text in safari */
+transform-origin: 0% 0%;
+transform: translate(-100%, 0);
+transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+#menuburger li, #menuburger li a
+{
+padding: 8px 0;
+font-size: 18px;
+font-weight: 700;
+margin-bottom: 5px;
+}
+#menuburger li a: hover
+{
+background-color: #33c3f0 !important;
+color: #000000;
+}
+/*
+* And let's slide it in from the left
+*/
+#menuToggle input:checked ~ ul
+{
+transform: none;
+}
+#navbarmobilescroll {
+background-color: #000000; /* Black background color */
+position: fixed; /* Make it stick/fixed */
+top: -120px; /* Hide the navbar 50 px outside of the top view */
+width: 100%; /* Full width */
+padding: 10px 15px 10px 0px;
+transition: top 0.3s; /* Transition effect when sliding down (and up) */
+text-align: center;
+z-index: 2; 
+}
+/* Style the navbar links */
+#navbarmobilescroll a {
+color: white;
+text-align: center;
+text-decoration: none;
+font-weight: bold;
+font-size: 16px;
+}
+#navbarmobilescroll a:hover {
+background-color: #000000;
+color: white;
+}
+.search22 {
+width: 100%;
+position: relative;
+display: flex;
+margin-top: 0px;
+}
+.searchTerm22, .search22 .searchTerm22 {
+width: 100%;
+border: 3px solid #000000;
+border-radius: 25px;
+border-right: none;
+padding: 5px 5px 5px 15px;
+height: 45px;
+outline: none;
+color: #333333;
+font-weight: 600;
+}
+.searchTerm22:focus{
+color: #333333;
+font-weight: 600;
+}
+.searchButton, .search22 .searchButton22 {
+width: 40px;
+height: 36px;
+border: 1px solid #ffffff;
+background: #ffffff;
+text-align: center;
+color: #333333;
+border-radius: 25px;
+margin-left: -60px;
+cursor: pointer;
+font-size: 25px;
+font-weight: 700;
+}
+/*Resize the wrap to see the search bar change!*/
+.wrap22{
+width: 25%;
+padding-left: 25px;
+margin-top: -13px;
+padding-top: 0px;
+}
+.img-fluid200, .expertimg .img-fluid200 
+{ /* basic responsive img */
+max-width: 200px; 
+height: auto;
+width: auto\9; /* IE8 */
+width: 100%; /* IE11 fix. */
+}
+.navbarmobilescroll .buttondesktop, .navbarmobilescroll .buttondesktop a {background-color: #000000 !important;color:#ffffff !important;}
+.buttondesktop, .buttondesktop a, .backgroundframe .buttondesktop, .backgroundframe .buttondesktop a {background-color: #ffffff !important;color:#000000 !important;}
+.buttondesktop, .buttondesktop a, .backgroundframe .buttondesktop, .backgroundframe .buttondesktop a {background-color: #ffffff !important;color:#000000 !important;}
+.backgroundframe .buttondesktop a:hover, .buttondesktop a:hover, .buttondesktop:hover, .backgroundnavbar .navbar2 a:hover, .backgroundnavbar .subnav2 a:hover, #navbarmobilescroll .navbar2 a:hover, #navbarmobilescroll .subnav2 a:hover, #navbarmobilescroll .subnav a:hover, #navbarmobilescroll a:hover, #navbarmobilescroll a:hover, .navbarmobilescroll .navbar2 a:hover, .navbarmobilescroll .subnav2 a:hover, .subnav a:hover, .navbarmobilescroll a:hover, .navbarmobilescroll a:hover {color:#33c3f0 !important;}
+.buttonmobile, .buttonmobile a, .backgroundframemobile .buttonmobile, .backgroundframemobile .buttonmobile a {background-color: #ffffff!important;color:#000000 !important;}
+.backgroundframe .buttondesktop a:hover, .buttondesktop a:hover, .buttondesktop:hover, .backgroundnavbar .navbar2 a:hover, .backgroundnavbar .subnav2 a:hover {color:#33c3f0 !important;}
+.backgroundframemobile .buttonmobile a:hover, .buttonmobile a:hover, .buttonmobile:hover {color:#000000 !important;}
+.backgroundframe, .backgroundframe a {background-color: #33c3f0 !important;color:#ffffff !important;}
+.backgroundframemyaccount, .backgroundframemyaccount a {background-color:#33c3f0 !important;color:#ffffff !important;}
+.backgroundframemyaccount, .backgroundframemyaccount a:hover {background-color:#33c3f0 !important;color:#000000 !important;}
+.backgroundframemobile, .displaybothmobile .backgroundframemobile, .twelve .columns .displaybothmobile .backgroundframemobile {background-color: #33c3f0 !important;color:#ffffff !important;}
+.backgroundnavbar {background-color: #000000 !important;color:#ffffff !important;}
+.select, .select a, .twelvecolumns .displaybothmobile .backgroundframemobile .select, .twelvecolumns .displaybothmobile .backgroundframemobile .select a {background-color: #ffffff;font-weight: 600 !important;font-size: 17px; color: #000000 !important; }
+.destinationdrop {background-color: #ffffff;font-weight:600;text-transform: uppercase;font-size: 15px;color:#000000;}
+.subnav:hover .subnav-content {padding-left: 20%;} 
+.topnavlogo {width: 400px;}
+.topnavdrop {display: table-cell; vertical-align: top;padding-left: 20px; padding-top:3px;}
+.subnav a, .subnav { background-color: #000000; color: #ffffff; text-transform:none;font-size:18px;}
+.subnav:hover, subnav a:hover {background-color: #000000; color: #33c3f0; text-transform:none;font-size:18px;}
+/* Style the subnav content - positioned absolute */
+.subnav-content { background-color: #000000;}
+.subnav-content-items { background-color: #000000;}
+.subnav-content:hover { background-color: #000000; color: #33c3f0; }
+/* Style the subnav links */
+.subnav-content a {color: #ffffff;}
+.subnav-content-item a {color: #ffffff; background-color:#000000;}
+/* Add a background color on hover */
+.subnav-content a:hover, .subnav-content-item a:hover { background-color: #000000; color: #33c3f0; }
+.googleadsense_mpuresponsive_1 { width: 250px; height: 250px; }
+</style>
+<style type="text/css">
+/* TOP NAV For devices smaller than 450px */
+@media only screen and (min-width:0px) and (max-width:449px) {
+.twelve columns displaybothmobile backgroundframemobile {display: inline; background-color: #33c3f0 !important;color:#ffffff !important;} 
+#navbarmobilescroll {padding: 10px 15px 10px 0px; top: -160px}
+.navbar2 a, .subnav a, .subnav, .subnav:hover { font-size: 16px; }
+#navbarmobilescroll .buttondesktopfontcolorhover, .buttondesktopfontcolorhover, .buttondesktopfontcolor {color: #000000 !important; }
+#navbarmobilescroll .button, #navbarmobilescroll .button a {text-transform: none; font-size: 13px;height: 33px; margin: 4px 8px 4px 8px; line-height: 33px;}
+.navbar a:hover, .navbar:hover, .navbar2 a:hover, .navbar2:hover, .subnav:hover {background-color: #33c3f0 !important; color: #000000; }
+.navbar2, navbar2 a {background-color: #33c3f0 !important;}
+.navbar3 a:hover, .navbar3:hover {font-weight: 700; background-color: #000000 !important; color: #33c3f0 !important; }
+.navbar3, .navbar3 a {font-weight: 700; padding-right: 3px; color: #ffffff; background-color: #000000 !important; font-size: 17px; text-align: center; align: middle; text-decoration: none; font-weight:600; line-height: 23px; }
+.ag-format-container {width: 96%;}
+.googleresponsive-ad-wrapper-mpu { width: 250px !important; height: 250px !important; text-align: center;}
+.googleresponsive-ad-wrapper-wider { width: 350px !important; height: 250px !important; text-align: center;}
+}
+/* TOP NAV For devices larger than 450 and smaller than 680px */
+@media only screen and (min-width:450px) and (max-width:680px) {
+.twelve columns displaybothmobile backgroundframemobile {display: inline; background-color: #33c3f0 !important;color:#ffffff !important;} 
+#navbarmobilescroll {padding: 10px 15px 10px 0px; top: -160px}
+.navbar2 a, .subnav a, .subnav, .subnav:hover { font-size: 16px; }
+#navbarmobilescroll .button, #navbarmobilescroll .button a {text-transform: none; font-size: 13px;height: 33px; margin: 4px 8px 4px 8px; line-height: 33px;}
+#navbarmobilescroll .buttondesktopfontcolorhover, .buttondesktopfontcolorhover, .buttondesktopfontcolor {color: #000000 !important; }
+.navbar2, .twelve .columns .displaybothmobile .backgroundframemobile .navbar2 {background-color: 33c3f0 !important;color:ffffff !important;}
+.navbar a:hover, .navbar:hover, .navbar2 a:hover, .navbar2:hover, .subnav:hover {background-color: #33c3f0 !important; color: #000000; }
+.navbar2, navbar2 a {background-color: #33c3f0 !important;}
+.navbar3 a:hover, .navbar3:hover {font-weight: 700; background-color: #000000 !important; color: #33c3f0 !important; }
+.navbar3, .navbar3 a {font-weight: 700; padding-right: 3px; color: #ffffff; background-color: #000000 !important; font-size: 17px; text-align: center; align: middle; text-decoration: none; font-weight:600; line-height: 23px; }
+.ag-format-container {width: 96%;}
+.googleresponsive-ad-wrapper-mpu { width: 250px !important; height: 250px !important; text-align: center;}
+.googleresponsive-ad-wrapper-wider { width: 350px !important; height: 250px !important; text-align: center;}
+}
+@media only screen and (min-width:681px) and (max-width:999px) { 
+.twelve columns displaybothmobile backgroundframemobile {display: inline; background-color: #33c3f0 !important;color:#ffffff !important;} 
+#navbarmobilescroll {padding: 10px 15px 10px 0px; top: -160px}
+#navbarmobilescroll .button, #navbarmobilescroll .button a {text-transform: none; font-size: 13px;height: 33px; margin: 4px 8px 4px 8px; line-height: 33px;}
+#navbarmobilescroll .buttondesktopfontcolorhover, .buttondesktopfontcolorhover, .buttondesktopfontcolor {color: #000000 !important; }
+.navbar2 a, .subnav a, .subnav, .subnav:hover { font-size: 16px; }
+.navbar2, .twelve .columns .displaybothmobile .backgroundframemobile .navbar2, .subnav:hover, {background-color: 33c3f0 !important;color:ffffff !important;}
+.navbar a:hover, .navbar:hover, .navbar2 a:hover, .navbar2:hover {background-color: #33c3f0 !important; color: #000000; }
+.navbar2, navbar2 a {background-color: #33c3f0 !important;}
+.navbar3 a:hover, .navbar3:hover {font-weight: 700; background-color: #000000 !important; color: #33c3f0 !important; }
+.navbar3, .navbar3 a {font-weight: 700; padding-right: 3px; color: #ffffff; background-color: #000000 !important; font-size: 17px; text-align: center; align: middle; text-decoration: none; font-weight:600; line-height: 23px; }
+.ag-format-container {width: 660px;}
+.googleresponsive-ad-wrapper-mpu { width: 250px !important; height: 250px !important; text-align: center;}
+.googleresponsive-ad-wrapper-wider { width: 350px !important; height: 250px !important; text-align: center;}
+}
+/* For devices larger than 1000px */
+@media only screen and (min-width:1000px) {
+.twelve columns displaybothmobile backgroundframemobile {display: none;} 
+#navbarmobilescroll {padding: 30px 15px 10px 0px; top: -160px;}
+#navbarmobilescroll .button, #navbarmobilescroll .button a {text-transform: none; font-size: 13px;height: 33px; padding: 0 10px; margin: 15px 8px 4px 8px; line-height: 33px;}
+#navbarmobilescroll select {height: 33px; margin-top: 5px; margin-left: 20px; line-height: 33px;}
+.navbar2 a, .subnav a, .subnav { font-size: 17px; padding-left: 0px padding-right: 0px;}
+.backgroundnavbar .navbar2 a:hover, .backgroundnavbar .subnav2 a:hover, .subnav a:hover, .subnav:hover, .subnav hover, .subnav, .backgroundnavbar .navbar a:hover, #navbarmobilescroll .subnav a:hover { font-size: 17px;}
+#navbarmobilescroll a {font-size: 17px;}
+#menuToggle input {margin-top: 0px;}
+#menuToggle {position: fixed; top: 13px; left: 15px;}
+.navbar a:hover, .navbar:hover, .navbar2 a:hover, .subnav:hover {background-color: #000000; color: #33c3f0; }
+.navbar2, navbar2 a {background-color: #000000 !important;}
+.navbar3, .navbar3 a {font-weight: 700; padding-right: 5px; color: #ffffff; background-color: #000000 !important; font-size: 18px; text-align: center; align: middle; text-decoration: none; font-weight:600; line-height: 23px; }
+.ag-format-container {width: 960px;}
+.googleresponsive-ad-wrapper-mpu { width: 250px !important; height: 250px !important; text-align: center;}
+.googleresponsive-ad-wrapper-wider {padding-top: 25px; padding-bottom: 25px; width: 600px !important; height: 250px !important; text-align: center;}
+.googleresponsive-ad-wrapper-wider #google_image_div {padding-top: 25px; padding-bottom: 25px; width: 600px !important; height: 250px !important; text-align: center;}
+}
+</style>
+</head>
+<body>
+<div class="container" style="margin: 0px; padding: 0px;">
+<div class="twelve columns displaybothmobile backgroundframemobile" style="padding-top: 0px; margin-top: 0px; text-align: center;">
+<div class="twelve columns displaybothmobile backgroundframemobile" style="margin: 0px; text-align: center;">
+<div>
+
+
+
+<nav role="navigation">
+<div id="menuToggle">
+
+<input type="checkbox" />
+
+<span></span>
+<span></span>
+<span></span>
+
+<ul id="menuburger">
+<li><a title="Expat Exchange Home" href="https://www.expatexchange.com">Home</a></li>
+<li><a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()"><i class="fa-solid fa-star"></i></a> <a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()">Partners & Local Guides</a></li>
+<li><a title="Countries" href="https://www.expatexchange.com/countries">Explore Countries</a></li>
+<li><a title="Living Overseas Forum" href="https://www.expatexchange.com/feed/popular/260/Living-International">Community</a></li>
+<li><a title="Newsletter" href="https://www.expatexchange.com/membersubscription/159"> Newsletter</a></li>
+<li><a title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a></li>
+<li><a title="International Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Health Insurance</a></li>
+<li><a title="International Real Estate" href="https://www.expatexchange.com/realestate">Real Estate</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/expatresources">Other Services</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/mypreferences">Account</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/signout">Sign Out</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="twelve columns displaybothmobile backgroundframemobile" style="display: flex; flex-direction: column; top: 13px; margin-top:-25px; text-align: center"> <a title="Expat Exchange Home" style="text-decoration: none; color: #ffffff; font-size: 25px; font-weight: bold; line-height: 1.0; padding-top: 16px; padding-bottom: 7px; margin-bottom: 0px; vertical-align: top;" href="https://www.expatexchange.com">Expat Exchange</a></div>
+</div>
+<div class="twelve columns displaybothmobile backgroundframemobile" style="margin-top: 5px; margin-bottom: -15px; text-align: center;">
+<form action method="post"><select class="select" name="countrydesk" onchange="location = this.value;" size="1"><option value>Choose Your Destination:</option>
+<option value="https://www.expatexchange.com/feed/popular/161/Living-in-Algeria">Algeria</option>
+<option value="https://www.expatexchange.com/feed/popular/661/Living-in-Antigua-barbuda">Antigua & Barbuda</option>
+<option value="https://www.expatexchange.com/feed/popular/163/Living-in-Argentina">Argentina</option>
+<option value="https://www.expatexchange.com/feed/popular/168/Living-in-Australia">Australia</option>
+<option value="https://www.expatexchange.com/feed/popular/169/Living-in-Austria">Austria</option>
+<option value="https://www.expatexchange.com/feed/popular/171/Living-in-Bahamas">Bahamas</option>
+<option value="https://www.expatexchange.com/feed/popular/664/Living-in-Barbados">Barbados</option>
+<option value="https://www.expatexchange.com/feed/popular/173/Living-in-Belgium">Belgium</option>
+<option value="https://www.expatexchange.com/feed/popular/174/Living-in-Belize">Belize</option>
+<option value="https://www.expatexchange.com/feed/popular/175/Living-in-Bermuda">Bermuda</option>
+<option value="https://www.expatexchange.com/feed/popular/179/Living-in-Brazil">Brazil</option>
+<option value="https://www.expatexchange.com/feed/popular/180/Living-in-Bvi">Brit. Virgin Isl.</option>
+<option value="https://www.expatexchange.com/feed/popular/181/Living-in-Bulgaria">Bulgaria</option>
+<option value="https://www.expatexchange.com/feed/popular/183/Living-in-Canada">Canada</option>
+<option value="https://www.expatexchange.com/feed/popular/187/Living-in-Chile">Chile</option>
+<option value="https://www.expatexchange.com/feed/popular/188/Living-in-China">China</option>
+<option value="https://www.expatexchange.com/feed/popular/190/Living-in-Colombia">Colombia</option>
+<option value="https://www.expatexchange.com/feed/popular/194/Living-in-Costa-rica">Costa Rica</option>
+<option value="https://www.expatexchange.com/feed/popular/671/Living-in-Croatia">Croatia</option>
+<option value="https://www.expatexchange.com/feed/popular/196/Living-in-Cyprus">Cyprus</option>
+<option value="https://www.expatexchange.com/feed/popular/197/Living-in-Czech-rep">Czech Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/198/Living-in-Denmark">Denmark</option>
+<option value="https://www.expatexchange.com/feed/popular/102/Living-in-Dominican-rep">Dominican Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/202/Living-in-Ecuador">Ecuador</option>
+<option value="https://www.expatexchange.com/feed/popular/203/Living-in-Egypt">Egypt</option>
+<option value="https://www.expatexchange.com/feed/popular/204/Living-in-El-salvador">El Salvador</option>
+<option value="https://www.expatexchange.com/feed/popular/205/Living-in-Estonia">Estonia</option>
+<option value="https://www.expatexchange.com/feed/popular/208/Living-in-Fiji">Fiji</option>
+<option value="https://www.expatexchange.com/feed/popular/209/Living-in-Finland">Finland</option>
+<option value="https://www.expatexchange.com/feed/popular/211/Living-in-France">France</option>
+<option value="https://www.expatexchange.com/feed/popular/214/Living-in-Georgia-rep">Georgia Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/215/Living-in-Germany">Germany</option>
+<option value="https://www.expatexchange.com/feed/popular/216/Living-in-Greece">Greece</option>
+<option value="https://www.expatexchange.com/feed/popular/676/Living-in-Grenada">Grenada</option>
+<option value="https://www.expatexchange.com/feed/popular/217/Living-in-Guatemala">Guatemala</option>
+<option value="https://www.expatexchange.com/feed/popular/103/Living-in-Haiti">Haiti</option>
+<option value="https://www.expatexchange.com/feed/popular/220/Living-in-Honduras">Honduras</option>
+<option value="https://www.expatexchange.com/feed/popular/221/Living-in-Hong-kong">Hong Kong</option>
+<option value="https://www.expatexchange.com/feed/popular/225/Living-in-Hungary">Hungary</option>
+<option value="https://www.expatexchange.com/feed/popular/226/Living-in-Iceland">Iceland</option>
+<option value="https://www.expatexchange.com/feed/popular/227/Living-in-India">India</option>
+<option value="https://www.expatexchange.com/feed/popular/228/Living-in-Indonesia">Indonesia</option>
+<option value="https://www.expatexchange.com/feed/popular/229/Living-in-Ireland">Ireland</option>
+<option value="https://www.expatexchange.com/feed/popular/230/Living-in-Israel">Israel</option>
+<option value="https://www.expatexchange.com/feed/popular/231/Living-in-Italy">Italy</option>
+<option value="https://www.expatexchange.com/feed/popular/232/Living-in-Ivory-coast">Ivory Coast</option>
+<option value="https://www.expatexchange.com/feed/popular/233/Living-in-Jamaica">Jamaica</option>
+<option value="https://www.expatexchange.com/feed/popular/234/Living-in-Japan">Japan</option>
+<option value="https://www.expatexchange.com/feed/popular/237/Living-in-Jordan">Jordan</option>
+<option value="https://www.expatexchange.com/feed/popular/239/Living-in-Kenya">Kenya</option>
+<option value="https://www.expatexchange.com/feed/popular/241/Living-in-Korea">Korea</option>
+<option value="https://www.expatexchange.com/feed/popular/244/Living-in-Laos">Laos</option>
+<option value="https://www.expatexchange.com/feed/popular/245/Living-in-Latvia">Latvia</option>
+<option value="https://www.expatexchange.com/feed/popular/247/Living-in-Lithuania">Lithuania</option>
+<option value="https://www.expatexchange.com/feed/popular/248/Living-in-Luxembourg">Luxembourg</option>
+<option value="https://www.expatexchange.com/feed/popular/251/Living-in-Malaysia">Malaysia</option>
+<option value="https://www.expatexchange.com/feed/popular/105/Living-in-Martinique">Martinique</option>
+<option value="https://www.expatexchange.com/feed/popular/254/Living-in-Mexico">Mexico</option>
+<option value="https://www.expatexchange.com/feed/popular/106/Living-in-Monaco">Monaco</option>
+<option value="https://www.expatexchange.com/feed/popular/259/Living-in-Morocco">Morocco</option>
+<option value="https://www.expatexchange.com/feed/popular/264/Living-in-Nepal">Nepal</option>
+<option value="https://www.expatexchange.com/feed/popular/310/Living-in-Netherlands">Netherlands</option>
+<option value="https://www.expatexchange.com/feed/popular/266/Living-in-New-zealand">New Zealand</option>
+<option value="https://www.expatexchange.com/feed/popular/654/Living-in-Nicaragua">Nicaragua</option>
+<option value="https://www.expatexchange.com/feed/popular/267/Living-in-Norway">Norway</option>
+<option value="https://www.expatexchange.com/feed/popular/269/Living-in-Pakistan">Pakistan</option>
+<option value="https://www.expatexchange.com/feed/popular/270/Living-in-Panama">Panama</option>
+<option value="https://www.expatexchange.com/feed/popular/271/Living-in-Paraguay">Paraguay</option>
+<option value="https://www.expatexchange.com/feed/popular/274/Living-in-Peru">Peru</option>
+<option value="https://www.expatexchange.com/feed/popular/275/Living-in-Philippines">Philippines</option>
+<option value="https://www.expatexchange.com/feed/popular/277/Living-in-Poland">Poland</option>
+<option value="https://www.expatexchange.com/feed/popular/278/Living-in-Portugal">Portugal</option>
+<option value="https://www.expatexchange.com/feed/popular/281/Living-in-Qatar">Qatar</option>
+<option value="https://www.expatexchange.com/feed/popular/285/Living-in-Romania">Romania</option>
+<option value="https://www.expatexchange.com/feed/popular/286/Living-in-Russia">Russia</option>
+<option value="https://www.expatexchange.com/feed/popular/687/Living-in-Saint-lucia">Saint Lucia</option>
+<option value="https://www.expatexchange.com/feed/popular/289/Living-in-Saudi-arabia">Saudi Arabia</option>
+<option value="https://www.expatexchange.com/feed/popular/290/Living-in-Scotland">Scotland</option>
+<option value="https://www.expatexchange.com/feed/popular/291/Living-in-Singapore">Singapore</option>
+<option value="https://www.expatexchange.com/feed/popular/293/Living-in-Slovenia">Slovenia</option>
+<option value="https://www.expatexchange.com/feed/popular/294/Living-in-South-africa">South Africa</option>
+<option value="https://www.expatexchange.com/feed/popular/296/Living-in-Spain">Spain</option>
+<option value="https://www.expatexchange.com/feed/popular/299/Living-in-Sri-lanka">Sri Lanka</option>
+<option value="https://www.expatexchange.com/feed/popular/300/Living-in-Sweden">Sweden</option>
+<option value="https://www.expatexchange.com/feed/popular/301/Living-in-Switzerland">Switzerland</option>
+<option value="https://www.expatexchange.com/feed/popular/302/Living-in-Taiwan">Taiwan</option>
+<option value="https://www.expatexchange.com/feed/popular/309/Living-in-Thailand">Thailand</option>
+<option value="https://www.expatexchange.com/feed/popular/312/Living-in-Trinidadtobago">Trinidad & Tobago</option>
+<option value="https://www.expatexchange.com/feed/popular/313/Living-in-Turkey">Turkey</option>
+<option value="https://www.expatexchange.com/feed/popular/317/Living-in-Uae">UAE</option>
+<option value="https://www.expatexchange.com/feed/popular/318/Living-in-Uk">UK</option>
+<option value="https://www.expatexchange.com/feed/popular/316/Living-in-Ukraine">Ukraine</option>
+<option value="https://www.expatexchange.com/feed/popular/262/Living-in-Us">United States</option>
+<option value="https://www.expatexchange.com/feed/popular/320/Living-in-Uruguay">Uruguay</option>
+<option value="https://www.expatexchange.com/feed/popular/324/Living-in-Vietnam">Vietnam</option>
+<option value="https://www.expatexchange.com/countryforums">MORE COUNTRIES</option></SELECT>
+</form>
+</div>
+<div class="twelve columns displaybothmobile backgroundframemobile" style="margin-top: -10px; text-align: center;">
+<a title="Join Expat Exchange" class="button buttondesktop" href="https://www.expatexchange.com/jointhecommunity">Free Membership</a><a title="Sign In" class="button buttondesktop" href="https://www.expatexchange.com/signin">Sign In</a><br>
+</div>
+<div class="twelve columns displaybothmobile backgroundframemobile" style="margin-top: 7px; text-align: center;">
+
+
+<div class="displaybothmobile">
+<div class="navbar2" style="padding-bottom: 5px;">
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Destination Countries" href="https://www.expatexchange.com/countries"><i class="fa-solid fa-glasses"></i></a><a style="padding-left:0;" title="Destination Countries" href="https://www.expatexchange.com/countries">Countries</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Living Overseas Community" href="https://www.expatexchange.com/feed/popular/260/living-international"><i class="fa-regular fa-comment"></i></a><a style="padding-left:0;" title="Living Overseas Community" href="https://www.expatexchange.com/feed/popular/260/living-international">Community</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159">Newsletter</a>
+<div style="display: block; margin-top: 10px !important;">
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 2px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a><a style="padding-left:0;" title="Move Planning" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left:0;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a>
+</div>
+</div>
+</div>
+<div class="mobilenoshow">
+<div class="navbar2" style="padding-bottom: 5px;">
+<a title="Expat Exchange Home" href="https://www.expatexchange.com">Home</a>
+<img src="/imagesnew/destinations-icon-000000.png" width="22" height="21" style="margin-bottom: 4px; padding-left: 0px; margin-right: 2px; vertical-align:middle;" border="0" alt="Destination Countries"><a style="padding-left: 0px;" title="Destination Countries" href="https://www.expatexchange.com/countries">Explore Countries</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Living Internationally Community" href="https://www.expatexchange.com/feed/popular/260/living-international" "><i class="fa-regular fa-comment"></i></a><a title="Living Internationally Community" style="padding-left:0;padding-right: 10px;" href="https://www.expatexchange.com/feed/popular/260/living-international">Community</a>
+<a style="color: #33c3f0;padding-left:5px;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0px;padding-right: 13px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription">Newsletter</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 2px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a><a style="padding-left:0;padding-right: 10px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a style="color: #33c3f0; padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left: 0px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a>
+</div>
+</div>
+</div>
+</div>
+<div class="twelve columns displaybothmobile backgroundframemobile" style="margin: 0; height: 20px; text-align: center; padding-bottom: 6px;">
+</div>
+<div class="row mobilenoshow backgroundframemyaccount" style="padding-bottom: 0;">
+<div class="twelve columns backgroundframemyaccount" style="text-align: right; margin-top: 7px; margin-bottom: -20px; text-align: right; padding: 0px 10px 3px 3px; border: 0px solid ##33c3f0;">
+<a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()" style="font-size: 17px; font-weight: bold;"><i class="fa-solid fa-star"></i></a> <a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()" style="font-size: 17px; font-weight: bold;">Partners & Local Guides</a>
+</div>
+</div>
+<div class="row mobilenoshow backgroundframe" style="padding-bottom: 0; padding-top: 10px;">
+<div class="twelve columns backgroundframe" style="text-align:center;">
+<a title="Expat Exchange Home" href="https://www.expatexchange.com"><img src="https://www.expatexchange.com/imagesnew/expat-exchange-logo2022.jpg" width="400" height="66" border="0" alt="Expat Exchange" style="padding:0px;"></a><br>
+<a title="Join Expat Exchange" class="button buttondesktop" style="margin-bottom: 20px;" href="https://www.expatexchange.com/jointhecommunity">Free Membership</a><a title="Sign In" style="margin-bottom: 20px;" class="button buttondesktop" href="https://www.expatexchange.com/signin">Sign In</a>
+<form action method="post"><select class="select" name="countrydesk" onchange="location = this.value;" size="1"><option value>Choose Your Destination:</option>
+<option value="https://www.expatexchange.com/feed/popular/161/Living-in-Algeria">Algeria</option>
+<option value="https://www.expatexchange.com/feed/popular/661/Living-in-Antigua-barbuda">Antigua & Barbuda</option>
+<option value="https://www.expatexchange.com/feed/popular/163/Living-in-Argentina">Argentina</option>
+<option value="https://www.expatexchange.com/feed/popular/168/Living-in-Australia">Australia</option>
+<option value="https://www.expatexchange.com/feed/popular/169/Living-in-Austria">Austria</option>
+<option value="https://www.expatexchange.com/feed/popular/171/Living-in-Bahamas">Bahamas</option>
+<option value="https://www.expatexchange.com/feed/popular/664/Living-in-Barbados">Barbados</option>
+<option value="https://www.expatexchange.com/feed/popular/173/Living-in-Belgium">Belgium</option>
+<option value="https://www.expatexchange.com/feed/popular/174/Living-in-Belize">Belize</option>
+<option value="https://www.expatexchange.com/feed/popular/175/Living-in-Bermuda">Bermuda</option>
+<option value="https://www.expatexchange.com/feed/popular/179/Living-in-Brazil">Brazil</option>
+<option value="https://www.expatexchange.com/feed/popular/180/Living-in-Bvi">Brit. Virgin Isl.</option>
+<option value="https://www.expatexchange.com/feed/popular/181/Living-in-Bulgaria">Bulgaria</option>
+<option value="https://www.expatexchange.com/feed/popular/183/Living-in-Canada">Canada</option>
+<option value="https://www.expatexchange.com/feed/popular/187/Living-in-Chile">Chile</option>
+<option value="https://www.expatexchange.com/feed/popular/188/Living-in-China">China</option>
+<option value="https://www.expatexchange.com/feed/popular/190/Living-in-Colombia">Colombia</option>
+<option value="https://www.expatexchange.com/feed/popular/194/Living-in-Costa-rica">Costa Rica</option>
+<option value="https://www.expatexchange.com/feed/popular/671/Living-in-Croatia">Croatia</option>
+<option value="https://www.expatexchange.com/feed/popular/196/Living-in-Cyprus">Cyprus</option>
+<option value="https://www.expatexchange.com/feed/popular/197/Living-in-Czech-rep">Czech Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/198/Living-in-Denmark">Denmark</option>
+<option value="https://www.expatexchange.com/feed/popular/102/Living-in-Dominican-rep">Dominican Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/202/Living-in-Ecuador">Ecuador</option>
+<option value="https://www.expatexchange.com/feed/popular/203/Living-in-Egypt">Egypt</option>
+<option value="https://www.expatexchange.com/feed/popular/204/Living-in-El-salvador">El Salvador</option>
+<option value="https://www.expatexchange.com/feed/popular/205/Living-in-Estonia">Estonia</option>
+<option value="https://www.expatexchange.com/feed/popular/208/Living-in-Fiji">Fiji</option>
+<option value="https://www.expatexchange.com/feed/popular/209/Living-in-Finland">Finland</option>
+<option value="https://www.expatexchange.com/feed/popular/211/Living-in-France">France</option>
+<option value="https://www.expatexchange.com/feed/popular/214/Living-in-Georgia-rep">Georgia Rep</option>
+<option value="https://www.expatexchange.com/feed/popular/215/Living-in-Germany">Germany</option>
+<option value="https://www.expatexchange.com/feed/popular/216/Living-in-Greece">Greece</option>
+<option value="https://www.expatexchange.com/feed/popular/676/Living-in-Grenada">Grenada</option>
+<option value="https://www.expatexchange.com/feed/popular/217/Living-in-Guatemala">Guatemala</option>
+<option value="https://www.expatexchange.com/feed/popular/103/Living-in-Haiti">Haiti</option>
+<option value="https://www.expatexchange.com/feed/popular/220/Living-in-Honduras">Honduras</option>
+<option value="https://www.expatexchange.com/feed/popular/221/Living-in-Hong-kong">Hong Kong</option>
+<option value="https://www.expatexchange.com/feed/popular/225/Living-in-Hungary">Hungary</option>
+<option value="https://www.expatexchange.com/feed/popular/226/Living-in-Iceland">Iceland</option>
+<option value="https://www.expatexchange.com/feed/popular/227/Living-in-India">India</option>
+<option value="https://www.expatexchange.com/feed/popular/228/Living-in-Indonesia">Indonesia</option>
+<option value="https://www.expatexchange.com/feed/popular/229/Living-in-Ireland">Ireland</option>
+<option value="https://www.expatexchange.com/feed/popular/230/Living-in-Israel">Israel</option>
+<option value="https://www.expatexchange.com/feed/popular/231/Living-in-Italy">Italy</option>
+<option value="https://www.expatexchange.com/feed/popular/232/Living-in-Ivory-coast">Ivory Coast</option>
+<option value="https://www.expatexchange.com/feed/popular/233/Living-in-Jamaica">Jamaica</option>
+<option value="https://www.expatexchange.com/feed/popular/234/Living-in-Japan">Japan</option>
+<option value="https://www.expatexchange.com/feed/popular/237/Living-in-Jordan">Jordan</option>
+<option value="https://www.expatexchange.com/feed/popular/239/Living-in-Kenya">Kenya</option>
+<option value="https://www.expatexchange.com/feed/popular/241/Living-in-Korea">Korea</option>
+<option value="https://www.expatexchange.com/feed/popular/244/Living-in-Laos">Laos</option>
+<option value="https://www.expatexchange.com/feed/popular/245/Living-in-Latvia">Latvia</option>
+<option value="https://www.expatexchange.com/feed/popular/247/Living-in-Lithuania">Lithuania</option>
+<option value="https://www.expatexchange.com/feed/popular/248/Living-in-Luxembourg">Luxembourg</option>
+<option value="https://www.expatexchange.com/feed/popular/251/Living-in-Malaysia">Malaysia</option>
+<option value="https://www.expatexchange.com/feed/popular/105/Living-in-Martinique">Martinique</option>
+<option value="https://www.expatexchange.com/feed/popular/254/Living-in-Mexico">Mexico</option>
+<option value="https://www.expatexchange.com/feed/popular/106/Living-in-Monaco">Monaco</option>
+<option value="https://www.expatexchange.com/feed/popular/259/Living-in-Morocco">Morocco</option>
+<option value="https://www.expatexchange.com/feed/popular/264/Living-in-Nepal">Nepal</option>
+<option value="https://www.expatexchange.com/feed/popular/310/Living-in-Netherlands">Netherlands</option>
+<option value="https://www.expatexchange.com/feed/popular/266/Living-in-New-zealand">New Zealand</option>
+<option value="https://www.expatexchange.com/feed/popular/654/Living-in-Nicaragua">Nicaragua</option>
+<option value="https://www.expatexchange.com/feed/popular/267/Living-in-Norway">Norway</option>
+<option value="https://www.expatexchange.com/feed/popular/269/Living-in-Pakistan">Pakistan</option>
+<option value="https://www.expatexchange.com/feed/popular/270/Living-in-Panama">Panama</option>
+<option value="https://www.expatexchange.com/feed/popular/271/Living-in-Paraguay">Paraguay</option>
+<option value="https://www.expatexchange.com/feed/popular/274/Living-in-Peru">Peru</option>
+<option value="https://www.expatexchange.com/feed/popular/275/Living-in-Philippines">Philippines</option>
+<option value="https://www.expatexchange.com/feed/popular/277/Living-in-Poland">Poland</option>
+<option value="https://www.expatexchange.com/feed/popular/278/Living-in-Portugal">Portugal</option>
+<option value="https://www.expatexchange.com/feed/popular/281/Living-in-Qatar">Qatar</option>
+<option value="https://www.expatexchange.com/feed/popular/285/Living-in-Romania">Romania</option>
+<option value="https://www.expatexchange.com/feed/popular/286/Living-in-Russia">Russia</option>
+<option value="https://www.expatexchange.com/feed/popular/687/Living-in-Saint-lucia">Saint Lucia</option>
+<option value="https://www.expatexchange.com/feed/popular/289/Living-in-Saudi-arabia">Saudi Arabia</option>
+<option value="https://www.expatexchange.com/feed/popular/290/Living-in-Scotland">Scotland</option>
+<option value="https://www.expatexchange.com/feed/popular/291/Living-in-Singapore">Singapore</option>
+<option value="https://www.expatexchange.com/feed/popular/293/Living-in-Slovenia">Slovenia</option>
+<option value="https://www.expatexchange.com/feed/popular/294/Living-in-South-africa">South Africa</option>
+<option value="https://www.expatexchange.com/feed/popular/296/Living-in-Spain">Spain</option>
+<option value="https://www.expatexchange.com/feed/popular/299/Living-in-Sri-lanka">Sri Lanka</option>
+<option value="https://www.expatexchange.com/feed/popular/300/Living-in-Sweden">Sweden</option>
+<option value="https://www.expatexchange.com/feed/popular/301/Living-in-Switzerland">Switzerland</option>
+<option value="https://www.expatexchange.com/feed/popular/302/Living-in-Taiwan">Taiwan</option>
+<option value="https://www.expatexchange.com/feed/popular/309/Living-in-Thailand">Thailand</option>
+<option value="https://www.expatexchange.com/feed/popular/312/Living-in-Trinidadtobago">Trinidad & Tobago</option>
+<option value="https://www.expatexchange.com/feed/popular/313/Living-in-Turkey">Turkey</option>
+<option value="https://www.expatexchange.com/feed/popular/317/Living-in-Uae">UAE</option>
+<option value="https://www.expatexchange.com/feed/popular/318/Living-in-Uk">UK</option>
+<option value="https://www.expatexchange.com/feed/popular/316/Living-in-Ukraine">Ukraine</option>
+<option value="https://www.expatexchange.com/feed/popular/262/Living-in-Us">United States</option>
+<option value="https://www.expatexchange.com/feed/popular/320/Living-in-Uruguay">Uruguay</option>
+<option value="https://www.expatexchange.com/feed/popular/324/Living-in-Vietnam">Vietnam</option>
+<option value="https://www.expatexchange.com/countryforums">MORE COUNTRIES</option></SELECT>
+</form>
+</div>
+</div>
+<div class="row mobilenoshow backgroundframemyaccount" style="padding-bottom: 0;">
+<div class="twelve columns backgroundframemyaccount" style="text-align: right; margin-top: -40px; text-align: right; padding: 0px 10px 3px 3px; border: 0px solid ##33c3f0;">
+<a title="My Account" href="https://www.expatexchange.com/mypreferences" style="font-size: 17px; font-weight: bold;"><i class="fa-solid fa-user"></i></a> <a title="My Account" href="https://www.expatexchange.com/mypreferences" style="font-size: 17px; font-weight: bold;">Account</a> <a href="https://www.expatexchange.com/feedsearching/260" style="padding-right: 5px; font-size: 15px; weight: bold;"><i class="fa fa-search"></i></a><a href="https://www.expatexchange.com/feedsearching/260" style="font-size: 17px; font-weight: bold;">Search</a>
+</div>
+</div>
+<div class="row topnavbuttons mobilenoshow backgroundnavbar" style="padding-top: 5px;">
+<div class="twelve columns backgroundnavbar" style="margin: 0; text-align: center; padding: 8px 3px 8px 3px; border: 0px solid #c7d2e3;">
+
+
+<div class="displaybothmobile">
+<div class="navbar2" style="padding-bottom: 5px;">
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Destination Countries" href="https://www.expatexchange.com/countries"><i class="fa-solid fa-glasses"></i></a><a style="padding-left:0;" title="Destination Countries" href="https://www.expatexchange.com/countries">Countries</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Living Overseas Community" href="https://www.expatexchange.com/feed/popular/260/living-international"><i class="fa-regular fa-comment"></i></a><a style="padding-left:0;" title="Living Overseas Community" href="https://www.expatexchange.com/feed/popular/260/living-international">Community</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159">Newsletter</a>
+<div style="display: block; margin-top: 10px !important;">
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 2px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a><a style="padding-left:0;" title="Move Planning" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a class="buttondesktopfontcolor" style="padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left:0;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a>
+</div>
+</div>
+</div>
+<div class="mobilenoshow">
+<div class="navbar2" style="padding-bottom: 5px;">
+<a title="Expat Exchange Home" href="https://www.expatexchange.com">Home</a>
+<img src="/imagesnew/destinations-icon-000000.png" width="22" height="21" style="margin-bottom: 4px; padding-left: 0px; margin-right: 2px; vertical-align:middle;" border="0" alt="Destination Countries"><a style="padding-left: 0px;" title="Destination Countries" href="https://www.expatexchange.com/countries">Explore Countries</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Living Internationally Community" href="https://www.expatexchange.com/feed/popular/260/living-international" "><i class="fa-regular fa-comment"></i></a><a title="Living Internationally Community" style="padding-left:0;padding-right: 10px;" href="https://www.expatexchange.com/feed/popular/260/living-international">Community</a>
+<a style="color: #33c3f0;padding-left:5px;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0px;padding-right: 13px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription">Newsletter</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 2px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a><a style="padding-left:0;padding-right: 10px;" title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a style="color: #33c3f0; padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left: 0px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a>
+</div>
+</div>
+</div>
+</div>
+<div id="navbarmobilescroll">
+<div>
+
+
+
+<nav role="navigation">
+<div id="menuToggle">
+
+<input type="checkbox" />
+
+<span></span>
+<span></span>
+<span></span>
+
+<ul id="menuburger">
+<li><a title="Expat Exchange Home" href="https://www.expatexchange.com">Home</a></li>
+<li><a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()"><i class="fa-solid fa-star"></i></a> <a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()">Partners & Local Guides</a></li>
+<li><a title="Countries" href="https://www.expatexchange.com/countries">Explore Countries</a></li>
+<li><a title="Living Overseas Forum" href="https://www.expatexchange.com/feed/popular/260/Living-International">Community</a></li>
+<li><a title="Newsletter" href="https://www.expatexchange.com/membersubscription/159"> Newsletter</a></li>
+<li><a title="Plan Your Move" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a></li>
+<li><a title="International Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Health Insurance</a></li>
+<li><a title="International Real Estate" href="https://www.expatexchange.com/realestate">Real Estate</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/expatresources">Other Services</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/mypreferences">Account</a></li>
+<li><a title="Resources" href="https://www.expatexchange.com/signout">Sign Out</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div class="displaybothmobile" style="text-align:center;">
+<div style="display: flex; flex-direction: column; margin-top: -25px; text-align: center;">
+<a title="Expat Exchange Home" href="https://www.expatexchange.com"><img src="https://www.expatexchange.com/imagesnew/expatexchange-blackbg2-450-68.jpg" width="250" height="38" style="text-align: center;padding-top: 5px;" border="0" alt="Expat Exchange"></a>
+</div>
+</div>
+<div class="displaybothmobile" style="text-align:center !important;">
+<div style="text-align: center !important;">
+
+
+<div class="displaybothmobile">
+<div class="navbar3">
+<img src="/imagesnew/destinations-icon-000000.png" width="25" height="24" style="margin-bottom: 4px; padding-left: 0px; margin-right: 2px; vertical-align:middle;" border="0" alt="Destination Countries"><a style="padding-left: 0px;padding-right: 10px;" title="Destination Countries" href="https://www.expatexchange.com/countries">Countries</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Global Forum" title="Global Forum" href="https://www.expatexchange.com/livingoverseasforum" "><i class="fa-regular fa-comment"></i></a><a title="Global Forum" style="padding-left:0;padding-right: 10px;" href="https://www.expatexchange.com/livingoverseasforum">Community</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0;padding-right: 10px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription">Newsletter</a>
+</div>
+</div>
+<div class="displaybothmobile">
+<div class="navbar3">
+<div style="display: block; margin-top: 13px !important;">
+<a style="color: #33c3f0;padding-left:0;padding-right: 2px;" title="Relo Tools" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a>
+<a style="padding-left:0;padding-right: 10px;" title="Relo Tools" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a style="color: #33c3f0; padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left: 0px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a>
+</div>
+</div>
+</div>
+
+<div class="mobilenoshow">
+<div class="navbar3">
+<img src="/imagesnew/destinations-icon-000000.png" width="25" height="24" style="margin-bottom: 4px; padding-left: 0px; margin-right: 2px; vertical-align:middle;" border="0" alt="Destination Countries"><a style="padding-left: 0px;padding-right: 10px;" title="Destination Countries" href="https://www.expatexchange.com/countries">Countries</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Global Forum" title="Global Forum" href="https://www.expatexchange.com/livingoverseasforum" "><i class="fa-regular fa-comment"></i></a><a title="Global Forum" style="padding-left:0;padding-right: 10px;" href="https://www.expatexchange.com/livingoverseasforum">Communty</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 4px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription/159"><i class="fa-regular fa-envelope"></i></a><a style="padding-left:0;padding-right: 10px;" title="Subscribe" href="https://www.expatexchange.com/membersubscription">Newsletter</a>
+<a style="color: #33c3f0;padding-left:0;padding-right: 2px;" title="Relo Tools" href="https://www.expatexchange.com/partnerconnect"><i class="fa-solid fa-list"></i></a>
+<a style="padding-left:0;padding-right: 10px;" title="Relo Tools" href="https://www.expatexchange.com/partnerconnect">Plan Your Move</a>
+<a style="color: #33c3f0; padding-left:0;padding-right: 4px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html"><i class="fa-solid fa-stethoscope"></i></a><a style="padding-left: 0px;" title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Insurance</a> <a href="https://www.expatexchange.com/feedsearching/260" style="color: #33c3f0;padding-left:0;padding-right: 4px;"><i class="fa fa-search"></i></a>
+</div>
+</div>
+
+</div>
+</div>
+</DIV>
+<div class="row" style="border: 0px solid #c7d2e3; padding: 0; background: #ffffff;">
+<div class="leftnav two columns" style="padding-left: 1%; padding-right: 1%; margin-top: 1%; border: 0px solid #c7d2e3">
+<div style="padding-top: 10px;">
+
+<ul>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Health Insurance" href="https://www.expatexchange.com/expat-health-insurance.html">Expat Health Insurance</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Moving & Shipping" href="https://www.expatexchange.com/international-shipping.html">Moving & Shipping</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Visa & Residency" href="https://www.expatexchange.com/visa-immigration.html">Visa & Residency</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Relocation Companies" href="https://www.expatexchange.com/international-relocation-companies.html">Relocation Companies</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Language Schools" href="https://www.expatexchange.com/language-training.html">Language Schools</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Expat Tax & Finance" href="https://www.expatexchange.com/expat-tax.html">Expat Tax & Finance</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Expat Counseling" href="https://www.expatexchange.com/expat-counseling.html">Expat Counseling</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Mail & Mail Forwarding" href="https://www.expatexchange.com/international-mail-forwarding.html">Mail & Mail Forwarding</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Expat Banking" href="https://www.expatexchange.com/expat-banking.html">Expat Banking</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Real Estate Firms" href="https://www.expatexchange.com/international-real-estate-agencies.html">Real Estate Firms</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="Real Estate International" href="https://www.expatexchange.com/realestate">Real Estate Listings</a></li>
+<li class="regular" style="line-height: 1.3; font-weight: 600 !important; text-decoration: underline; font-size: 19px !important;"><a title="More Resources" href="https://www.expatexchange.com/expatresources">More Resources</a></li>
+</ul>
+</div>
+</div>
+<div class="maincontent eight columns" style="min-height: 90vh;">
+<div class="displaybothmobile" style="text-align: center !important; padding-bottom: 10px; padding-top: 10px;">
+<div style="text-align: center !important; padding-bottom: 10px; padding-top: 10px;">
+</div>
+</div>
+
+
+<div class="mobilenoshow">
+<div style="text-align: center; padding-bottom: 25px;"><a href="https://www.expatexchange.com/partnerdirect/182/35556-DESKTOP-leader-leaderad-vrs-A-Global-leader" rel="nofollow"><img src="https://www.expatexchange.com/banner/SJB-GlobalSJB-Global-Financial-Planning-for-Expats-ldr1.jpg" class="leader-fluid" border="0" width="728" height="90" alt="SJB Global"></a></div>
+</div>
+
+<div class="displaybothmobile">
+<div style="text-align: center; padding-bottom: 10px;"><a href="https://www.expatexchange.com/partnerdirect/182/35556-MOBILE-leader-leaderad-vrs-A-Global-leader" rel="nofollow"><img src="https://www.expatexchange.com/banner/SJB-GlobalSJB-Global-Financial-Planning-for-Expats-mpu-1.jpg" class="mpu-fluid" border="0" width="300" height="250" alt="SJB Global"></a></div>
+</div>
+
+
+
+
+
+
+
+<style type="text/css">
+.new2flexbox.flex {
+display: flex;
+flex-wrap: wrap;
+flex-direction:row;
+align-items: center !important;
+justify-content: center !important;
+}
+.new2flexbox p, .new2flexbox p a, .new2flexbox p a:hover, .new2flexbox p a:link, .new2flexbox p a:visited, .new2flexbox p a:active{
+background: #ffffff;
+width: 200px;
+margin: .25rem;
+padding: .25rem;
+color: #1eaedb;
+font-size: 19px;
+margin: 10px;
+font-weight: 400;
+}
+.new2flexcontainer{
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+}
+.new3flexcontainer{
+display:flex;
+flex-direction:row;
+flex-wrap:wrap;
+justify-content: center !important;
+align-items: stretch;
+}
+/* TOP NAV For devices smaller than 1000px */
+@media only screen and (max-width:999px) {
+.newflexbox.flex {
+display: flex;
+justify-content: center !important;
+align-items: center !important;
+flex-direction: column;
+border: 1px solid ##c7d2e3; 
+margin-top: 20px;
+margin-bottom: 20px;
+margin-left: 30px;
+margin-right: 30px;
+}
+.newflexbox {
+padding-top: 20px;
+padding-left: 20px;
+padding-right: 20px;
+padding-bottom: 7px;
+background: #ff6600;
+}
+.newflexbox p {
+text-align: center;
+background: #ff6600;
+margin-bottom: 10px;
+width: 90%;
+color: #ffffff;
+}
+.newflexbox p:verticalalign {
+text-align: center;
+background: #ff6600;
+margin-top: 10px;
+padding-top: 5px;
+width: 100%;
+}
+.new2flexbox{
+color: #1eaedb;
+font-size: 19px;
+font-weight: 200;
+padding:7px;
+margin: 10px;
+width:95%;
+}
+.new2flexboxgray{
+color: #222222;
+font-size: 19px;
+font-weight: 200;
+padding:13px;
+margin: 10px;
+background: #f8f8f8;
+width:85%;
+}
+.new2flexbox h2, .new2flexbox h2 a {
+text-align: center;
+color: #1eaedb;
+font-size: 26px;
+font-weight: 600; 
+} 
+} 
+/* TOP NAV For devices larger than 999px */
+@media only screen and (min-width:1000px) {
+.newflexbox.flex {
+display: flex;
+justify-content: center !important;
+align-items: center !important;
+flex-direction: column;
+border: 1px solid ##c7d2e3; 
+margin-top: 20px;
+margin-bottom: 10px;
+margin-left: 60px;
+margin-right: 60px;
+}
+.newflexbox {
+padding-top: 20px;
+padding-left: 20px;
+padding-right: 20px;
+padding-bottom: 7px;
+background: #1eaedb;
+}
+.newflexbox p {
+text-align: center;
+background: #1eaedb;
+margin-bottom: 10px;
+width: 90%;
+color: #ffffff;
+}
+.newflexbox p:verticalalign {
+text-align: center;
+background: #1eaedb;
+margin-top: 10px;
+padding-top: 5px;
+width: 90%;
+}
+.new2flexbox{
+color: #1eaedb;
+font-size: 19px;
+font-weight: 200;
+padding:7px;
+margin: 10px;
+width:200px;
+} 
+.new2flexboxgray{
+color: #1eaedb;
+font-size: 19px;
+font-weight: 200;
+padding:13px;
+margin: 10px;
+background: #f8f8f8;
+width:200px;
+}
+.new2flexbox h2, .new2flexbox h2 a {
+text-align: left;
+color: #1eaedb;
+font-size: 26px;
+font-weight: 600; 
+} 
+}
+</style>
+<style>
+input.largerinputbox {
+width: 25px;
+height: 25px;
+}
+</style>
+<div class="guide">
+<h1>Privacy Policy</h1>
+<p> Last updated <br>August 01, 2022</p>
+<p> This privacy notice for Burlingame Interactive, Inc. ("Company," "we," "us," or "our"), describes how and why we might collect, store, use, and/or share ("process") your information when you use our services ("Services"), such as when you:<ul><li>Visit our website at <a href="https://www.expatexchange.com" target="_blank">https://www.expatexchange.com</a>, or any of Burlingame Interactive's website</li><li>Engage with us in other related ways, including any sales, marketing, or events</li></ul></p><P>Questions or concerns?  If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a0c8c5ccd0e0c5d8d0c1d4c5d8c3c8c1cec7c58ec3cfcd">[email&#160;protected]</a>.<br><h2>1. WHAT INFORMATION DO WE COLLECT?</h2><p><b>Personal information you disclose to us. </b></p><P>In Short: We collect personal information that you provide to us.</p><P> We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</p><P><b>Personal Information Provided by You. </b><p>The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:<ul><li>names</li><li>phone numbers</li><li>email addresses</li><li>job titles</li><li>usernames</li><li>passwords</li><li>contact preferences</li><li>contact or authentication data</li><li>billing addresses</li><li>debit/credit card numbers</li><li>mailing addresses</li><li>whatsapp number</li><li>destination</li><li>origin country</li></ul></p><p><b>Sensitive Information.</b> </p><P>We do not process sensitive information.</P><P><b>Payment Data.</b></P><P>We may collect data necessary to process your payment if you make purchases, such as your payment instrument number (such as a credit card number), and the security code associated with your payment instrument. All payment data is stored by PayPal. You may find their privacy notice link(s) here: <a href="https://www.paypal.com/us/webapps/mpp/ua/privacy-full" target="_blank">https://www.paypal.com/us/webapps/mpp/ua/privacy-full</a>.</p><P>All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</p><P><em>In Short:</em><em> </em><em>Some information — such as your Internet Protocol (IP) address and/or browser and device characteristics — is collected automatically when you visit our Services.</em></p><P>We automatically collect certain information when you visit, use, or navigate the Services. This information does not reveal your specific identity (like your name or contact information) but may include device and usage information, such as your IP address, browser and device characteristics, operating system, language preferences, referring URLs, device name, country, location, information about how and when you use our Services, and other technical information. This information is primarily needed to maintain the security and operation of our Services, and for our internal analytics and reporting purposes.</P>
+<P>Like many businesses, we also collect information through cookies and similar technologies. You can find out more about this in our Cookie Notice: <a href="https://www.expatexchange.com/cookiepolicy" target="_blank">https://www.expatexchange.com/cookiepolicy</a>.</p><P>The information we collect includes:</p><P><ul><li><em>Log and Usage Data.</em> Log and usage data is service-related, diagnostic, usage, and performance information our servers automatically collect when you access or use our Services and which we record in log files. Depending on how you interact with us, this log data may include your IP address, device information, browser type, and settings and information about your activity in the Services (such as the date/time stamps associated with your usage, pages and files viewed, searches, and other actions you take such as which features you use), device event information (such as system activity, error reports (sometimes called "crash dumps"), and hardware settings).</li><li><em>Location Data.</em> We collect location data such as information about your device's location, which can be either precise or imprecise. How much information we collect depends on the type and settings of the device you use to access the Services. For example, we may use GPS and other technologies to collect geolocation data that tells us your current location (based on your IP address). You can opt out of allowing us to collect this information either by refusing access to the information or by disabling your Location setting on your device. However, if you choose to opt out, you may not be able to use certain aspects of the Services.</li></ul></p>
+<h2>2. HOW DO WE PROCESS YOUR INFORMATION?</h2><P><em>In Short: </em><em>We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</em></p><P>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</p><P><ul><li>To facilitate account creation and authentication and otherwise manage user accounts. We may process your information so you can create and log in to your account, as well as keep your account in working order.</li><li>To deliver and facilitate delivery of services to the user. We may process your information to provide you with the requested service.</li><li>To respond to user inquiries/offer support to users. We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.</li><li>To send administrative information to you. We may process your information to send you details about our products and services, changes to our terms and policies, and other similar information.</li><li>To fulfill and manage your orders. We may process your information to fulfill and manage your orders, payments, returns, and exchanges made through the Services.</li></ul></p><P><ul><li>To enable user-to-user communications. We may process your information if you choose to use any of our offerings that allow for communication with another user.</li><li>To save or protect an individual's vital interest. We may process your information when necessary to save or protect an individual’s vital interest, such as to prevent harm.</li></ul></P><h2>3. WHAT LEGAL BASES DO WE RELY ON TO PROCESS YOUR INFORMATION?</h2><p><em>In Short: We only process your personal information when we believe it is necessary and we have a valid legal reason (i.e., legal basis) to do so under applicable law, like with your consent, to comply with laws, to provide you with services to enter into or fulfill our contractual obligations, to protect your rights, or to fulfill our legitimate business interests.</em></p><P><em><u>If you are located in the EU or UK, this section applies to you.</u></em><br>The General Data Protection Regulation (GDPR) and UK GDPR require us to explain the valid legal bases we rely on in order to process your personal information. As such, we may rely on the following legal bases to process your personal information:</p><P><ul><li>Consent. We may process your information if you have given us permission (i.e., consent) to use your personal information for a specific purpose. You can withdraw your consent at any time. </li><li>Performance of a Contract. We may process your personal information when we believe it is necessary to fulfill our contractual obligations to you, including providing our Services or at your request prior to entering into a contract with you.</li><li>Legal Obligations. We may process your information where we believe it is necessary for compliance with our legal obligations, such as to cooperate with a law enforcement body or regulatory agency, exercise or defend our legal rights, or disclose your information as evidence in litigation in which we are involved.<br></li><li>Vital Interests. We may process your information where we believe it is necessary to protect your vital interests or the vital interests of a third party, such as situations involving potential threats to the safety of any person.</li></ul></p><P><u><em>If you are located in Canada, this section applies to you.</em></u></p><P>We may process your information if you have given us specific permission (i.e., express consent) to use your personal information for a specific purpose, or in situations where your permission can be inferred (i.e., implied consent). You can withdraw your consent at any time. <br><br>In some exceptional cases, we may be legally permitted under applicable law to process your information without your consent, including, for example: <ul><li>If collection is clearly in the interests of an individual and consent cannot be obtained in a timely way</li><li>For investigations and fraud detection and prevention</li><li>For business transactions provided certain conditions are met</li><li>If it is contained in a witness statement and the collection is necessary to assess, process, or settle an insurance claim</li><li>For identifying injured, ill, or deceased persons and communicating with next of kin</li><li>If we have reasonable grounds to believe an individual has been, is, or may be victim of financial abuse</li><li>If it is reasonable to expect collection and use with consent would compromise the availability or the accuracy of the information and the collection is reasonable for purposes related to investigating a breach of an agreement or a contravention of the laws of Canada or a province</li><li>If disclosure is required to comply with a subpoena, warrant, court order, or rules of the court relating to the production of records</li><li>If it was produced by an individual in the course of their employment, business, or profession and the collection is consistent with the purposes for which the information was produced</li><li>If the collection is solely for journalistic, artistic, or literary purposes</li><li>If the information is publicly available and is specified by the regulations</li></ul></P><h2>4. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</h2><p><em>In Short:</em><em> We may share information in specific situations described in this section and/or with the following categories of third parties.</em></p><P>Vendors, Consultants, and Other Third-Party Service Providers. We may share your data with third-party vendors, service providers, contractors, or agents ("third parties") who perform services for us or on our behalf and require access to such information to do that work. We have contracts in place with our third parties, which are designed to help safeguard your personal information. This means that they cannot do anything with your personal information unless we have instructed them to do it. They will also not share your personal information with any organization apart from us. They also commit to protect the data they hold on our behalf and to retain it for the period we instruct. The categories of third parties we may share personal information with are as follows:</p><P><ul><li>When user requests to be contacted and/or receive information from partner companies that the user selects to have contact them</li></ul></p><P>We also may need to share your personal information in the following situations:</p><P><ul><li>Business Transfers. We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.</li><li>When we use Google Maps Platform APIs. We may share your information with certain Google Maps Platform APIs (e.g., Google Maps API, Places API). To find out more about Google’s Privacy Policy, please refer to this <a href="https://policies.google.com/privacy" rel="noopener noreferrer" target="_blank">link</a>.</li></ul></p><h2>5. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</h2><P><em>In Short:</em><em> We may use cookies and other tracking technologies to collect and store your information.</em></p><P>We may use cookies and similar tracking technologies (like web beacons and pixels) to access or store information. Specific information about how we use such technologies and how you can refuse certain cookies is set out in our Cookie Notice: <a href="https://www.expatexchange.com/cookiepolicy" target="_blank">https://www.expatexchange.com/cookiepolicy</a>.</P><h2>6. IS YOUR INFORMATION TRANSFERRED INTERNATIONALLY?</h2><P>In Short: </em><em>We may transfer, store, and process your information in countries other than your own.</em></p><P>Our servers are located in the United States. If you are accessing our Services from outside the United States, please be aware that your information may be transferred to, stored, and processed by us in our facilities and by those third parties with whom we may share your personal information (see "WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?" above), in and other countries.</p><P>If you are a resident in the European Economic Area (EEA) or United Kingdom (UK), then these countries may not necessarily have data protection laws or other similar laws as comprehensive as those in your country. However, we will take all necessary measures to protect your personal information in accordance with this privacy notice and applicable law.</p><P>European Commission's Standard Contractual Clauses:</p><P>We have implemented measures to protect your personal information, including by using the European Commission's Standard Contractual Clauses for transfers of personal information between our group companies and between us and our third-party providers. These clauses require all recipients to protect all personal information that they process originating from the EEA or UK in accordance with European data protection laws and regulations. Our Standard Contractual Clauses can be provided upon request. We have implemented similar appropriate safeguards with our third-party service providers and partners and further details can be provided upon request.</p><h2>7. HOW LONG DO WE KEEP YOUR INFORMATION?</h2><p><em>In Short: </em><em>We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law.</em></p><P>We will only keep your personal information for as long as it is necessary for the purposes set out in this privacy notice, unless a longer retention period is required or permitted by law (such as tax, accounting, or other legal requirements). No purpose in this notice will require us keeping your personal information for longer than the period of time in which users have an account with us.</p><P>When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymize such information, or, if this is not possible (for example, because your personal information has been stored in backup archives), then we will securely store your personal information and isolate it from any further processing until deletion is possible.</p><h2>8. HOW DO WE KEEP YOUR INFORMATION SAFE?</h2><P><em>In Short: </em><em>We aim to protect your personal information through a system of organizational and technical security measures.</em></p><P>We have implemented appropriate and reasonable technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information. Although we will do our best to protect your personal information, transmission of personal information to and from our Services is at your own risk. You should only access the Services within a secure environment.</p><h2>9. DO WE COLLECT INFORMATION FROM MINORS?</h2><p><em>In Short:</em><em> We do not knowingly collect data from or market to children under 18 years of age.</em></p><P>We do not knowingly solicit data from or market to children under 18 years of age. By using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent’s use of the Services. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0d6568617d4d68757d6c7968756e656c636a68236e6260">[email&#160;protected]</a>.</p><h2>10. WHAT ARE YOUR PRIVACY RIGHTS?</h2><P><em>In Short:</em> In some regions, such as the European Economic Area (EEA), United Kingdom (UK), and Canada, you have rights that allow you greater access to and control over your personal information.<em></em> You may review, change, or terminate your account at any time.</em><br><br>In some regions (like the EEA, UK, and Canada), you have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; and (iv) if applicable, to data portability. In certain circumstances, you may also have the right to object to the processing of your personal information. You can make such a request by contacting us by using the contact details provided in the section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?" below.<br>We will consider and act upon any request in accordance with applicable data protection laws.</p><P>If you are located in the EEA or UK and you believe we are unlawfully processing your personal information, you also have the right to complain to your local data protection supervisory authority. You can find their contact details here: <a href="https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm" rel="noopener noreferrer" target="_blank">https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm</a>.<br>If you are located in Switzerland, the contact details for the data protection authorities are available here: <a href="https://www.edoeb.admin.ch/edoeb/en/home.html" rel="noopener noreferrer" target="_blank">https://www.edoeb.admin.ch/edoeb/en/home.html</a>.</P><P><u>Withdrawing your consent:</u> If we are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?" below or updating your preferences.</P><P>However, please note that this will not affect the lawfulness of the processing before its withdrawal, nor when applicable law allows, will it affect the processing of your personal information conducted in reliance on lawful processing grounds other than consent.</p><P><u>Opting out of marketing and promotional communications:</u><u> </u>You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided in the section "HOW CAN YOU CONTACT US ABOUT THIS NOTICE?" below. You will then be removed from the marketing lists. However, we may still communicate with you — for example, to send you service-related messages that are necessary for the administration and use of your account, to respond to service requests, or for other non-marketing purposes.</P><P>Account Information</p><P>If you would at any time like to review or change the information in your account or terminate your account, you can:</p><P><ul><li>Log in to your account settings and update your user account.</li><li>Contact us using the contact information provided.</li></ul></p><P>Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, enforce our legal terms and/or comply with applicable legal requirements.</p><P><u>Cookies and similar technologies:</u> Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Services. To opt out of interest-based advertising by advertisers on our Services visit <a href="http://www.aboutads.info/choices/" rel="noopener noreferrer" target="_blank">http://www.aboutads.info/choices/</a>. For further information, please see our Cookie Notice: <a href="https://www.expatexchange.com/cookiepolicy" target="_blank">https://www.expatexchange.com/cookiepolicy</a>.</p><P>If you have questions or comments about your privacy rights, you may email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c2aaa7aeb282a7bab2a3b6a7baa1aaa3aca5a7eca1adaf">[email&#160;protected]</a>.</p><h2>11. CONTROLS FOR DO-NOT-TRACK FEATURES</h2><P>Most web browsers and some mobile operating systems and mobile applications include a Do-Not-Track ("DNT") feature or setting you can activate to signal your privacy preference not to have data about your online browsing activities monitored and collected. At this stage no uniform technology standard for recognizing and implementing DNT signals has been finalized. As such, we do not currently respond to DNT browser signals or any other mechanism that automatically communicates your choice not to be tracked online. If a standard for online tracking is adopted that we must follow in the future, we will inform you about that practice in a revised version of this privacy notice.</p><h2>12. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</h2><P><em>In Short: </em><em>Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information.</em></p><P>California Civil Code Section 1798.83, also known as the "Shine The Light" law, permits our users who are California residents to request and obtain from us, once a year and free of charge, information about categories of personal information (if any) we disclosed to third parties for direct marketing purposes and the names and addresses of all third parties with which we shared personal information in the immediately preceding calendar year. If you are a California resident and would like to make such a request, please submit your request in writing to us using the contact information provided below.</p><P>If you are under 18 years of age, reside in California, and have a registered account with Services, you have the right to request removal of unwanted data that you publicly post on the Services. To request removal of such data, please contact us using the contact information provided below and include the email address associated with your account and a statement that you reside in California. We will make sure the data is not publicly displayed on the Services, but please be aware that the data may not be completely or comprehensively removed from all our systems (e.g., backups, etc.).</p><P>CCPA Privacy Notice</p><P>The California Code of Regulations defines a "resident" as:</p><P>(1) every individual who is in the State of California for other than a temporary or transitory purpose and</P><P>(2) every individual who is domiciled in the State of California who is outside the State of California for a temporary or transitory purpose</p><P>All other individuals are defined as "non-residents."</p><P>If this definition of "resident" applies to you, we must adhere to certain rights and obligations regarding your personal information.</p><P>What categories of personal information do we collect?</p><P>We have collected the following categories of personal information in the past twelve (12) months:</p><P><table style="width: 100%;"><tbody><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">Category</td><td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">Examples</td><td style="width: 14.9084%; border-right: 1px solid black; border-top: 1px solid black; text-align: center;">Collected</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">A. Identifiers</td><td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">Contact details, such as real name, alias, postal address, telephone or mobile contact number, unique personal identifier, online identifier, Internet Protocol address, email address, and account name</td><td style="width: 14.9084%; text-align: center; vertical-align: middle; border-right: 1px solid black; border-top: 1px solid black;">YES</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">B. Personal information categories listed in the California Customer Records statute</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Name, contact information, education, employment, employment history, and financial information</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">YES</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">C. Protected classification characteristics under California or federal law</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Gender and date of birth</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">YES</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">D. Commercial information</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Transaction information, purchase history, financial details, and payment information</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">YES</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">E. Biometric information</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Fingerprints and voiceprints</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">NO</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">F. Internet or other similar network activity</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Browsing history, search history, online behavior, interest data, and interactions with our and other websites, applications, systems, and advertisements</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">Yes, interactions with our websites and partners.</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">G. Geolocation data</div></td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Device location</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">YES</td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">H. Audio, electronic, visual, or similar information</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Images and audio, video or call recordings created or submitted in connection with our business activities</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;"><br><div data-custom-class="body_text" style="line-height: 1.5;">YES<br></td></tr><tr><td style="width: 33.8274%; padding-left: 4px;border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">I. Professional or employment-related information</td><td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">Business contact details in order to provide you our services at a business level or job title, work history, and professional qualifications if you apply for a job with us</td><td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">YES<br></td></tr><tr><td style=" padding-left: 4px; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black; width: 33.8274%;">J. Education Information</td><td style="border-right: 1px solid black; border-top: 1px solid black; width: 51.4385%;">Student records and directory information</td><td style="text-align: center; border-right: 1px solid black; border-top: 1px solid black; width: 14.9084%;">NO</td></tr><tr><td style=" padding-left: 4px;border-width: 1px; border-color: black; border-style: solid; width: 33.8274%;">K. Inferences drawn from other personal information</td><td style="border-bottom: 1px solid black; border-top: 1px solid black; border-right: 1px solid black; width: 51.4385%;">Inferences drawn from any of the collected personal information listed above to create a profile or summary about, for example, an individual’s preferences and characteristics</td><td style="text-align: center; border-right: 1px solid black; border-bottom: 1px solid black; border-top: 1px solid black; width: 14.9084%;">YES</td></tr></tbody></table></p><P>We may also collect other personal information outside of these categories instances where you interact with us in person, online, or by phone or mail in the context of:</p><P><ul><li>Receiving help through our customer support channels;</li><li>Participation in customer surveys or contests; and</li><li>Facilitation in the delivery of our Services and to respond to your inquiries.</li></ul>How do we use and share your personal information?</p><P>More information about our data collection and sharing practices can be found in this privacy notice and our Cookie Notice: <a href="https://www.expatexchange.com/cookiepolicy" target="_blank">https://www.expatexchange.com/cookiepolicy</a>.</p><p>You may contact us by visiting <a href="https://www.expatexchange.com/contactus" target="_blank">https://www.expatexchange.com/contactus</a>, or by referring to the contact details at the bottom of this document.</p><P>If you are using an authorized agent to exercise your right to opt out we may deny a request if the authorized agent does not submit proof that they have been validly authorized to act on your behalf.</p><P>Will your information be shared with anyone else?</p><P>We may disclose your personal information with our service providers pursuant to a written contract between us and each service provider. Each service provider is a for-profit entity that processes the information on our behalf.</p><P>We may use your personal information for our own business purposes, such as for undertaking internal research for technological development and demonstration. This is not considered to be "selling" of your personal information.</p><P>Burlingame Interactive, Inc. has disclosed the following categories of personal information to third parties for a business or commercial purpose in the preceding twelve (12) months:</p><P><ul><li>Category A. Identifiers, such as contact details like your real name, alias, postal address, telephone or mobile contact number, unique personal identifier, online identifier, Internet Protocol address, email address, and account name.</li><li>Category B. Personal information, as defined in the California Customer Records law, such as your name, contact information, education, employment, employment history, and financial information.</li></ul></p><P>The categories of third parties to whom we disclosed personal information for a business or commercial purpose can be found under "WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?".</p<p>Burlingame Interactive, Inc. has sold the following categories of personal information to third parties in the preceding twelve (12) months:</p><P><ul><li>Category A. Identifiers, such as contact details, like your real name, alias, postal address, telephone or mobile contact number, unique personal identifier, email address.</li><li>Category B. Personal information, as defined in the California Customer Records law, such as your name, contact information.</li></ul></p><P><b>The categories of third parties to whom we sold personal information are:</b></p><P><ul><li><b>Partner Companies that the user opts to be directly contacted by and/or the user opts to receive information/quote for services from</b></li></ul></p><P>Your rights with respect to your personal data</p><P><u>Right to request deletion of the data — Request to delete</u></p><P>You can ask for the deletion of your personal information. If you ask us to delete your personal information, we will respect your request and delete your personal information, subject to certain exceptions provided by law, such as (but not limited to) the exercise by another consumer of his or her right to free speech, our compliance requirements resulting from a legal obligation, or any processing that may be required to protect against illegal activities.<br><br><u>Right to be informed — Request to know</u></p><P>Depending on the circumstances, you have a right to know:</p><P><ul><li>whether we collect and use your personal information;</li><li>the categories of personal information that we collect;</li><li>the purposes for which the collected personal information is used;</li><li>whether we sell your personal information to third parties;</li><li>the categories of personal information that we sold or disclosed for a business purpose;</li><li>the categories of third parties to whom the personal information was sold or disclosed for a business purpose; and</li><li>the business or commercial purpose for collecting or selling personal information.</li></ul>In accordance with applicable law, we are not obligated to provide or delete consumer information that is de-identified in response to a consumer request or to re-identify individual data to verify a consumer request.</p><P><u>Right to Non-Discrimination for the Exercise of a Consumer’s Privacy Rights</u></p><P>We will not discriminate against you if you exercise your privacy rights.</p><P><u>Verification process</u></p><P>Upon receiving your request, we will need to verify your identity to determine you are the same person about whom we have the information in our system. These verification efforts require us to ask you to provide information so that we can match it with information you have previously provided us. For instance, depending on the type of request you submit, we may ask you to provide certain information so that we can match the information you provide with the information we already have on file, or we may contact you through a communication method (e.g., phone or email) that you have previously provided to us. We may also use other verification methods as the circumstances dictate.</p><P>We will only use personal information provided in your request to verify your identity or authority to make the request. To the extent possible, we will avoid requesting additional information from you for the purposes of verification. However, if we cannot verify your identity from the information already maintained by us, we may request that you provide additional information for the purposes of verifying your identity and for security or fraud-prevention purposes. We will delete such additionally provided information as soon as we finish verifying you.</p><P><u>Other privacy rights</u></p><P><ul><li>You may object to the processing of your personal information.</li><li>You may request correction of your personal data if it is incorrect or no longer relevant, or ask to restrict the processing of the information.</li><li>You can designate an authorized agent to make a request under the CCPA on your behalf. We may deny a request from an authorized agent that does not submit proof that they have been validly authorized to act on your behalf in accordance with the CCPA.</li></li></ul>To exercise these rights, you can contact us by visiting <a href="https://www.expatexchange.com/contactus" target="_blank">https://www.expatexchange.com/contactus</a>, or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.</p><h2>13. DO WE MAKE UPDATES TO THIS NOTICE?</h2><P><em>In Short: Yes, we will update this notice as necessary to stay compliant with relevant laws.</em></p><P>We may update this privacy notice from time to time. The updated version will be indicated by an updated "Revised" date and the updated version will be effective as soon as it is accessible. If we make material changes to this privacy notice, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification. We encourage you to review this privacy notice frequently to be informed of how we are protecting your information.</p><h2>14. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</h2><P>If you have questions or comments about this notice, you may contact our Data Protection Officer (DPO), Joshua Wood, by email at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="452f2a362d302405203d352431203d262d242b22206b262a28">[email&#160;protected]</a>, or by post to:</p><P>Burlingame Interactive, Inc.<br>Joshua Wood<br>PO Box 67<br>Bernardsville, NJ 07924<br>United States</p><h2>15. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</h2><P>Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you, change that information, or delete it. To request to delete your personal information, please visit: <a href="https://www.expatexchange.com/contactus" target="_blank">https://www.expatexchange.com/contactus</a>.</p>
+<div style="color: #595959;font-size: 14px;font-family: Arial;padding-top:16px;">
+This privacy policy was created using Termly's <a href="https://termly.io/products/privacy-policy-generator/">Privacy Policy Generator</a>.
+</div>
+</div>
+
+</div>
+
+<div class="two columns rightcolumn" style="padding-left: 1%; padding-right: 3%; margin-top: 1%; border: 0px solid #c7d2e3">
+<div style="padding-top: 30px;">
+<div class="boxborder mobilenoshow" style="background-color: #f8f8f8 !important;">
+<div class="mobilenoshow">
+<a href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-DESKTOP-cbar-vrs-A-hicontent-Global-62" rel="nofollow"><img src="https://www.expatexchange.com/images/baby_abruzzo_italy_fb.jpg" class="img-fluid200" alt="Allianz Care"></a><div class="thumbnailitemrg" style="padding-top: 15px;"><a class="thumbnailtitlerg" style="font-size: 21px; line-height: 1.2 !important; color: #1eaedb; font-weight: 600; text-decoration: none;" href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-DESKTOP-cbar-vrs-A-hicontent-Global-62" rel="nofollow">Allianz Care</a><P>Flexible solutions allow you to tailor your cover to meet your needs and budget. Use Promocode: LIFE10 and get 10% off your international health insurance for life!<br><a class="bigbutton bluebackground" style="margin-top: 5px; align: center;" title="Get Quote" href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-DESKTOP-cbar-vrs-A-hicontent-Global-62" rel="nofollow">Get Quote</a></P>
+</div>
+</div>
+<div class="displaybothmobile">
+<div class="thumbnailitemrg"><a class="thumbnailtitlerg" href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-MOBILE-cbar-vrs-A-hicontent-Global-62" rel="nofollow"><img src="https://www.expatexchange.com/images/baby_abruzzo_italy_fb.jpg" width="120" height="120" class="thumbnailimg2" alt="Allianz Care" rel="nofollow"></a><a class="thumbnailtitlerg" style="font-size: 21px; line-height: 1.2 !important; color: #1eaedb; font-weight: 600; text-decoration: none;" href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-MOBILE-cbar-vrs-A-hicontent-Global-62" rel="nofollow">Allianz Care</a><P>Flexible solutions allow you to tailor your cover to meet your needs and budget. Use Promocode: LIFE10 and get 10% off your international health insurance for life!<br><a class="bigbutton bluebackground" style="margin-top: 5px; align: center;" title="Get Quote" href="https://www.kqzyfj.com/click-1462468-13892475?sid=10976-MOBILE-cbar-vrs-A-hicontent-Global-62" rel="nofollow">Get Quote</a></P>
+</div>
+</div>
+</p>
+<div class="thumbnailitem" style="padding-top: 2px; padding-bottom: 2px;">
+<p>
+<font style="font-size: 23px; vertical-align: top; line-height: 1.2 !important; color: #1eaedb; font-weight: 600; text-decoration: none;">How do I use Expat Exchange?</font>
+<br>You'll gain access to the best information and features when you <a title="Join Expat Exchange" style="font-size: 23px; color: #1eaedb; font-weight: 600; text-decoration: none;" href="https://www.expatexchange.com/jointhecommunity">join our site</a> (it's free). Then, choose your destination and you'll find many of these features for your country:</br>
+</p>
+</div>
+<ul style="padding-left: 25px;">
+<li>Country Forums</li>
+<li>Country Guides</li>
+<li> City Guides</li>
+<li> Best Places to Live</li>
+<li> Healthcare Guides</li>
+</li>
+<li> Real Estate</li>
+<li> Cost of Living</li>
+<li> Pros & Cons</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row" style="padding-bottom: 10px; padding-top: 20px; background: #33c3f0; margin-top: 20px;">
+<div class="twelve columns" style="background: #33c3f0; margin: 0; text-align: center; padding: 10px 3px 3px 3px; border: 0px solid #c7d2e3;">
+<a title="About Us" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/aboutus">Our Story</a> <a title="Our Team" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/ourteam">Our Team</a> <a title="Contact Us" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/contactus">Contact Us</a> <a title="Partner with Us" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/partnering">Partner with Us</a>
+</div>
+</div>
+
+<div class="row" style="padding-bottom: 0; background: #33c3f0; margin: 0px;">
+<div class="twelve columns" style="background: #33c3f0; margin-top: -15px; text-align: center; padding: 15px 3px 3px 3px; border: 0px solid #c7d2e3;">
+<div class="bottomheadings" style="padding-bottom: 4px;">Other Resources</div>
+<a title="Health Insurance" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/health-insurance-global.html">Health Insurance</a>
+<a title="Moving & Shipping" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/shipping-to-global.html">Moving & Shipping</a>
+<a title="Language Schools" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/language-training-global.html">Language Schools</a>
+<a title="Real Estate Firms" class="button" style="background: #ffffff;" href="https://www.expatexchange.com/real-estate-agencies-global.html">Real Estate Firms</a>
+<a title="International Schools" class="button" style="background: #ffffff;" alt="International Schools in Global" href="https://www.expatexchange.com/eetr/159/1/c/international-schools-in/">International Schools</a>
+<a title="More Resources" class="button" style="background: #ffffff;" alt="Expat Resources" href="https://www.expatexchange.com/expatresources">More Resources</a>
+</div>
+</div>
+
+<div class="row" style="padding-bottom: 0; background: #33c3f0; margin: 0px;">
+<div class="twelve columns" style="background: #33c3f0; margin-top: -7px; text-align: center; padding: 5px 3px 3px 3px; border: 0px solid #c7d2e3;">
+<p>Copyright 1997-2024 Burlingame Interactive, Inc.</p>
+<p><a title="Privacy Policy" style="color: #ffffff; padding-right: 5px;" href="https://www.expatexchange.com/privacypolicy">Privacy Policy</a> <a title="Legal" style="color: #ffffff;padding-right: 5px;" href="https://www.expatexchange.com/legal">Legal</a> <a title="Partners and Local Guides" href="javascript:void(0);" onclick="openPartnerLoginModal()" style="font-size: 17px; color: #ffffff;">Partners & Local Guides</a> </p>
+</div>
+</div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var nav = responsiveNav(".nav-collapse", { // Selector
+animate: true, // Boolean: Use CSS3 transitions, true or false
+transition: 284, // Integer: Speed of the transition, in milliseconds
+label: "", // String: Label for the navigation toggle
+insert: "before", // String: Insert the toggle before or after the navigation
+customToggle: "", // Selector: Specify the ID of a custom toggle
+closeOnNavClick: false, // Boolean: Close the navigation when one of the links are clicked
+openPos: "relative", // String: Position of the opened nav, relative or static
+navClass: "nav-collapse", // String: Default CSS class. If changed, you need to edit the CSS too!
+navActiveClass: "js-nav-active", // String: Class that is added to element when nav is active
+jsClass: "js", // String: 'JS enabled' class which is added to element
+init: function(){}, // Function: Init callback
+open: function(){}, // Function: Open callback
+close: function(){} // Function: Close callback
+});
+</script>
+
+</body>
+</html>
