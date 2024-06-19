@@ -1,0 +1,1026 @@
+
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+<script type="text/javascript">
+/* <![CDATA[ */
+ 
+//----------------------------------------------------------
+//------ JAVASCRIPT HOOK FUNCTIONS FOR GRAVITY FORMS -------
+//----------------------------------------------------------
+
+if ( ! gform ) {
+	document.addEventListener( 'gform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
+	window.addEventListener( 'DOMContentLoaded', function() { gform.domLoaded = true; } );
+
+	var gform = {
+		domLoaded: false,
+		scriptsLoaded: false,
+		initializeOnLoaded: function( fn ) {
+			if ( gform.domLoaded && gform.scriptsLoaded ) {
+				fn();
+			} else if( ! gform.domLoaded && gform.scriptsLoaded ) {
+				window.addEventListener( 'DOMContentLoaded', fn );
+			} else {
+				document.addEventListener( 'gform_main_scripts_loaded', fn );
+			}
+		},
+		hooks: { action: {}, filter: {} },
+		addAction: function( action, callable, priority, tag ) {
+			gform.addHook( 'action', action, callable, priority, tag );
+		},
+		addFilter: function( action, callable, priority, tag ) {
+			gform.addHook( 'filter', action, callable, priority, tag );
+		},
+		doAction: function( action ) {
+			gform.doHook( 'action', action, arguments );
+		},
+		applyFilters: function( action ) {
+			return gform.doHook( 'filter', action, arguments );
+		},
+		removeAction: function( action, tag ) {
+			gform.removeHook( 'action', action, tag );
+		},
+		removeFilter: function( action, priority, tag ) {
+			gform.removeHook( 'filter', action, priority, tag );
+		},
+		addHook: function( hookType, action, callable, priority, tag ) {
+			if ( undefined == gform.hooks[hookType][action] ) {
+				gform.hooks[hookType][action] = [];
+			}
+			var hooks = gform.hooks[hookType][action];
+			if ( undefined == tag ) {
+				tag = action + '_' + hooks.length;
+			}
+			if( priority == undefined ){
+				priority = 10;
+			}
+
+			gform.hooks[hookType][action].push( { tag:tag, callable:callable, priority:priority } );
+		},
+		doHook: function( hookType, action, args ) {
+
+			// splice args from object into array and remove first index which is the hook name
+			args = Array.prototype.slice.call(args, 1);
+
+			if ( undefined != gform.hooks[hookType][action] ) {
+				var hooks = gform.hooks[hookType][action], hook;
+				//sort by priority
+				hooks.sort(function(a,b){return a["priority"]-b["priority"]});
+
+				hooks.forEach( function( hookItem ) {
+					hook = hookItem.callable;
+
+					if(typeof hook != 'function')
+						hook = window[hook];
+					if ( 'action' == hookType ) {
+						hook.apply(null, args);
+					} else {
+						args[0] = hook.apply(null, args);
+					}
+				} );
+			}
+			if ( 'filter'==hookType ) {
+				return args[0];
+			}
+		},
+		removeHook: function( hookType, action, priority, tag ) {
+			if ( undefined != gform.hooks[hookType][action] ) {
+				var hooks = gform.hooks[hookType][action];
+				hooks = hooks.filter( function(hook, index, arr) {
+					var removeHook = (undefined==tag||tag==hook.tag) && (undefined==priority||priority==hook.priority);
+					return !removeHook;
+				} );
+				gform.hooks[hookType][action] = hooks;
+			}
+		}
+	};
+}
+ 
+/* ]]> */
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="manifest" href="https://www.c40.org/wp-content/themes/c40-cities/assets/general/site.webmanifest">
+    <meta name="theme-color" content="#02C245" />
+
+    <script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Privacy Notice - C40 Cities</title>
+	<meta name="description" content="Details of the Privacy Policy for C40 Cities." />
+	<link rel="canonical" href="https://www.c40.org/privacy-notice/" />
+	<meta property="og:locale" content="en_GB" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Privacy Notice - C40 Cities" />
+	<meta property="og:description" content="Details of the Privacy Policy for C40 Cities." />
+	<meta property="og:url" content="https://www.c40.org/privacy-notice/" />
+	<meta property="og:site_name" content="C40 Cities" />
+	<meta property="article:modified_time" content="2023-07-10T09:24:19+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Estimated reading time" />
+	<meta name="twitter:data1" content="10 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.c40.org/privacy-notice/","url":"https://www.c40.org/privacy-notice/","name":"Privacy Notice - C40 Cities","isPartOf":{"@id":"https://www.c40.org/#website"},"datePublished":"2021-09-29T09:55:27+00:00","dateModified":"2023-07-10T09:24:19+00:00","description":"Details of the Privacy Policy for C40 Cities.","breadcrumb":{"@id":"https://www.c40.org/privacy-notice/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https://www.c40.org/privacy-notice/"]}]},{"@type":"BreadcrumbList","@id":"https://www.c40.org/privacy-notice/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.c40.org/"},{"@type":"ListItem","position":2,"name":"Privacy Notice"}]},{"@type":"WebSite","@id":"https://www.c40.org/#website","url":"https://www.c40.org/","name":"C40 Cities","description":"A global network of mayors taking urgent action to confront the climate crisis and create a future where everyone can thrive.","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.c40.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-GB"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//plausible.io' />
+            <link rel="dns-prefetch" href="//plausible.io">
+        <link rel='stylesheet' id='wp-block-library-css' href='https://www.c40.org/wp-includes/css/dist/block-library/style.css?ver=6.5.3' type='text/css' media='all' />
+<style id='safe-svg-svg-icon-style-inline-css' type='text/css'>
+.safe-svg-cover{text-align:center}.safe-svg-cover .safe-svg-inside{display:inline-block;max-width:100%}.safe-svg-cover svg{height:100%;max-height:100%;max-width:100%;width:100%}
+
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/**
+ * These rules are needed for backwards compatibility.
+ * They should match the button element rules in the base theme.json file.
+ */
+.wp-block-button__link {
+	color: #ffffff;
+	background-color: #32373c;
+	border-radius: 9999px; /* 100% causes an oval, but any explicit but really high value retains the pill shape. */
+
+	/* This needs a low specificity so it won't override the rules from the button element if defined in theme.json. */
+	box-shadow: none;
+	text-decoration: none;
+
+	/* The extra 2px are added to size solids the same as the outline versions.*/
+	padding: calc(0.667em + 2px) calc(1.333em + 2px);
+
+	font-size: 1.125em;
+}
+
+.wp-block-file__button {
+	background: #32373c;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+</style>
+<link rel='stylesheet' id='granola-styles-css' href='https://www.c40.org/wp-content/themes/c40-cities/assets/styles/main.1716376961.css' type='text/css' media='screen' />
+<link rel='stylesheet' id='granola-print-css' href='https://www.c40.org/wp-content/themes/c40-cities/assets/styles/print.1716376961.css' type='text/css' media='print' />
+<script type="text/javascript" defer data-domain='c40.org' data-api='https://plausible.io/api/event' src="https://plausible.io/js/plausible.outbound-links.js?ver=2.0.9" id="plausible"></script>
+<script type="text/javascript" id="plausible-analytics-js-after">
+/* <![CDATA[ */
+window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+/* ]]> */
+</script>
+<link rel='shortlink' href='https://www.c40.org/?p=17093' />
+<link rel="alternate" type="application/json+oembed" href="https://www.c40.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.c40.org%2Fprivacy-notice%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.c40.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.c40.org%2Fprivacy-notice%2F&#038;format=xml" />
+		<style type="text/css">
+						ol.footnotes>li {list-style-type:decimal;}
+						ol.footnotes { color:#666666; }
+ol.footnotes li { font-size:80%; }
+		</style>
+		<meta name='plausible-analytics-version' content='2.0.9' />
+            <script type="text/javascript" id="spai_js" data-cfasync="false">
+                document.documentElement.className += " spai_has_js";
+                (function(w, d){
+                    var b = d.getElementsByTagName('head')[0];
+                    var s = d.createElement("script");
+                    var v = ("IntersectionObserver" in w) ? "" : "-compat";
+                    s.async = true; // This includes the script as async.
+                    s.src = "https://cdn.shortpixel.ai/assets/js/bundles/spai-lib-bg" + v
+                        + ".1.1.min.js?v=3.9.0";
+                    w.spaiDomain = "cdn.shortpixel.ai";
+                    w.spaiData = {
+                        version: "3.9.0",
+                        key: "spai",
+                        quality: "glossy",
+                        convert: "webp",
+                        lqip: false,
+                                                rootMargin: "500px",
+                        crop: true,
+                        sizeBreakpoints: {"on":true,"base":50,"rate":10},
+                        backgroundsMaxWidth: 1920,
+                        resizeStyleBackgrounds: false,
+                        nativeLazyLoad: false,
+                        safeLazyBackgrounds: false,
+                        asyncInitialParsing: true,
+                        debug: false,
+                        doSelectors: [{"selectors":"img","type":"attr","targetAttr":"src","attrType":"url","lazy":true,"resize":true}],
+                        exclusions: {"selectors":{".team-members .team-members__item img":{"lazy":1,"cdn":1,"resize":0,"lqip":0,"crop":-1},".page-header .hero__media img":{"lazy":0,"cdn":1,"resize":1,"lqip":0,"crop":0}},"urls":{"regex:\/\\\/\\\/([^\\\/]*\\.|)gravatar.com\\\/\/":{"lazy":0,"cdn":0,"resize":0,"lqip":0,"crop":-1}}},
+                        sizeFromImageSuffix: true                    };
+                    b.appendChild(s);
+                }(window, document));
+            </script>
+                        <script async defer data-domain="c40.org"
+                src="https://plausible.io/js/script.file-downloads.outbound-links.js"></script>
+
+                <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PBJJMNB');</script>
+    <!-- End Google Tag Manager -->
+<link rel="icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-32x32.png" data-spai-egr="1" sizes="32x32" />
+<link rel="icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-192x192.png" data-spai-egr="1" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-180x180.png" data-spai-egr="1" />
+<meta name="msapplication-TileImage" content="https://www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-270x270.png" />
+<link href="https://cdn.shortpixel.ai" rel="preconnect" crossorigin></head>
+
+<body class="page-template-default page page-id-17093 wp-embed-responsive">
+        <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBJJMNB"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+        <a
+                    href="#main"
+                class="skip-link screen-reader-text">Skip to content</a>
+    <header class="header">
+
+    
+    <div class="header__inner">
+        <div class="header__top">
+            <a class="header__logo is-square" href="https://www.c40.org/">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA0OCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjQ4IiBkYXRhLXU9Imh0dHBzJTNBJTJGJTJGd3d3LmM0MC5vcmclMkZ3cC1jb250ZW50JTJGdGhlbWVzJTJGYzQwLWNpdGllcyUyRmFzc2V0cyUyRmltYWdlcyUyRmM0MC1sb2dvLnN2ZyIgZGF0YS13PSI3MiIgZGF0YS1oPSI0OCIgZGF0YS1iaXA9IiI+PC9zdmc+" data-spai="1" alt="C40 Cities" width="72" height="48">            </a>
+
+            <form class="header-search--mobile header-search" autocomplete="off" method="get" action="https://www.c40.org/">
+    <div class="header-search__inner">
+        <div class="header-search__control">
+            <label class="header-search__label" for="header-search6660766be56bd">
+                <span class="screen-reader-text">Search</span>
+            </label>
+
+            <button class="header-search__close js-header-search-toggle burger" type="button">
+            <span class="screen-reader-text">Close header menu</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+        <div class="header-search__search-bar">
+            <div class="header-search__search-bar-inner">
+                <input id="header-search6660766be56bd" aria-label="Search" class="header-search__input" name="s" type="text" placeholder="Search...">
+
+                <button class="header-search__submit" type="submit"><span class="screen-reader-text">Submit search form</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+            <button class="header__burger js-header-toggle burger" type="button" aria-controls="main-menu" aria-expanded="false">
+            <span class="screen-reader-text">Main menu button</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+
+        <div class="header__bottom">
+                            <nav class="header__navigation">
+                    <ul id="main-menu" class="header__main-menu  header__navigation__menu"><li id="menu-item-15" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-15"><a href="#">Who We Are</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-13073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13073"><a href="https://www.c40.org/about-c40/">About C40</a></li>
+	<li id="menu-item-13114" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13114"><a href="https://www.c40.org/leadership/">Leadership</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-36918" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36918"><a href="https://www.c40.org/leadership/the-c40-co-chairs/">The C40 Co-Chairs</a></li>
+		<li id="menu-item-7175" class="menu-item menu-item-type-post_type_archive menu-item-object-steering-committee menu-item-7175"><a href="https://www.c40.org/steering-committee/">Steering Committee</a></li>
+		<li id="menu-item-7292" class="menu-item menu-item-type-taxonomy menu-item-object-team menu-item-7292"><a href="https://www.c40.org/our-team/teams/board-of-directors/">Board of Directors</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-7891" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7891"><a href="https://www.c40.org/funders-partners/">Funders &#038; Partners</a></li>
+	<li id="menu-item-7209" class="menu-item menu-item-type-post_type_archive menu-item-object-person menu-item-7209"><a href="https://www.c40.org/our-team/">Our Team</a></li>
+</ul></div>
+</li>
+<li id="menu-item-13075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item--columns menu-item--columns-4 menu-item-13075"><a href="https://www.c40.org/what-we-do/">What We Do</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-13101" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13101"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/">Raising Climate Ambition</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-13100" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13100"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/1-5c-climate-action-plans/">1.5°C Climate Action Plans</a></li>
+		<li id="menu-item-13067" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13067"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/high-impact-accelerators/">High-Impact Accelerators</a></li>
+		<li id="menu-item-13104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13104"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/inclusive-thriving-cities/">Inclusive &#038; Thriving Cities</a></li>
+		<li id="menu-item-29621" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-29621"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/research-and-knowledge/">Research &#038; Knowledge</a></li>
+		<li id="menu-item-38263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38263"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/climate-budgeting-programme/">Climate Budgeting</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-21596" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-21596"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/">Influencing the Global Agenda</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-29068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29068"><a href="https://www.c40.org/what-we-do/green-just-transition/">Green &#038; Just Transition</a></li>
+		<li id="menu-item-13107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13107"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/global-diplomacy-advocacy/">Global Diplomacy &#038; Advocacy</a></li>
+		<li id="menu-item-13110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13110"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/financing-the-green-transition/">Financing the Green Transition</a></li>
+		<li id="menu-item-13109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13109"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/engaging-the-private-sector/">Engaging the Private Sector</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-13111" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13111"><a href="https://www.c40.org/what-we-do/building-a-movement/">Building a Movement</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-13103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13103"><a href="https://www.c40.org/what-we-do/building-a-movement/global-green-new-deal/">Global Green New Deal</a></li>
+		<li id="menu-item-13108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13108"><a href="https://www.c40.org/what-we-do/building-a-movement/youth-engagement/">Youth Engagement</a></li>
+		<li id="menu-item-13074" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13074"><a href="https://www.c40.org/what-we-do/building-a-movement/cities-race-to-zero/">Cities Race to Zero</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-8184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-8184"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/">Scaling Up Climate Action</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-10973" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10973"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/adaptation-water/">Adaptation &#038; Water</a></li>
+		<li id="menu-item-8424" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8424"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/air-quality/">Air Quality</a></li>
+		<li id="menu-item-8423" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8423"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/energy-and-buildings/">Energy &#038; Buildings</a></li>
+		<li id="menu-item-17487" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17487"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/food-systems/">Food Systems</a></li>
+		<li id="menu-item-8308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8308"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/transportation/">Transportation</a></li>
+		<li id="menu-item-33649" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33649"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/ports-and-shipping/">Ports &#038; Shipping</a></li>
+		<li id="menu-item-8185" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8185"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/urban-planning-design/">Urban Planning &#038; Design</a></li>
+		<li id="menu-item-8425" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8425"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/waste-management/">Waste Management</a></li>
+	</ul></div>
+</li>
+</ul></div>
+</li>
+<li id="menu-item-4258" class="menu-item menu-item-type-post_type_archive menu-item-object-city menu-item-4258"><a href="https://www.c40.org/cities/">Our Cities</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18"><a href="/news">Latest</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-7253" class="menu-item menu-item-type-post_type_archive menu-item-object-news menu-item-7253"><a href="https://www.c40.org/news/">News &#038; Insights</a></li>
+	<li id="menu-item-30862" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-30862"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/research-and-knowledge/">Research &#038; Knowledge</a></li>
+	<li id="menu-item-29010" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-29010"><a href="https://www.c40.org/campaigns/">Campaigns</a></li>
+	<li id="menu-item-17459" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17459"><a href="https://www.c40.org/events/">Events</a></li>
+	<li id="menu-item-32938" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-32938"><a href="https://www.c40.org/case-studies/">Case Studies</a></li>
+</ul></div>
+</li>
+</ul>                </nav>
+            
+            <form class="header-search--desktop header-search" autocomplete="off" method="get" action="https://www.c40.org/">
+    <div class="header-search__inner">
+        <div class="header-search__control">
+            <label class="header-search__label" for="header-search6660766be798f">
+                <span class="screen-reader-text">Search</span>
+            </label>
+
+            <button class="header-search__close js-header-search-toggle burger" type="button">
+            <span class="screen-reader-text">Close header menu</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+        <div class="header-search__search-bar">
+            <div class="header-search__search-bar-inner">
+                <input id="header-search6660766be798f" aria-label="Search" class="header-search__input" name="s" type="text" placeholder="Search...">
+
+                <button class="header-search__submit" type="submit"><span class="screen-reader-text">Submit search form</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+            <div class="header__widgets">
+                                    <nav class="header__navigation header__language-switcher">
+                        <ul class="header__navigation__menu">
+                            <li class="menu-item menu-item-has-children is-language-switcher">
+                                <a class="current-language-name">Language</a>
+                                <div class="sub-menu-wrap sub-menu--depth-0">
+                                    <ul class="sub-menu">
+                                                                                <div class="gtranslate_wrapper" id="gt-wrapper-46518343"></div>                                    </ul>
+                                </div>
+                            </li>
+
+                                                            <li class="menu-item menu-item-has-children is-newsletter">
+                                    <a class="newsletter">Subscribe</a>
+                                    <div class="sub-menu-wrap sub-menu--depth-0">
+                                        <div class="sub-menu">
+                                            <h2>Subscribe to our newsletter</h2>
+<p>Stay up to date with C40.</p>
+<script type="text/javascript"></script>
+                <div class='gf_browser_unknown gform_wrapper gform_legacy_markup_wrapper gform-theme--no-framework' data-form-theme='legacy' data-form-index='0' id='gform_wrapper_26' ><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_26' id='gform_26'  action='/privacy-notice/' data-formid='26' novalidate>
+                        <div class='gform-body gform_body'><ul id='gform_fields_26' class='gform_fields top_label form_sublabel_below description_below validation_below'><li id="field_26_5" class="gfield gfield--type-email gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_5" ><label class='gfield_label gform-field-label' for='input_26_5'>Email<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_5' id='input_26_5' type='email' value='' class='large'    aria-required="true" aria-invalid="false"  />
+                        </div></li><li id="field_26_3" class="gfield gfield--type-name gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_3" ><label class='gfield_label gform-field-label gfield_label_before_complex' >Name<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_complex ginput_container ginput_container--name no_prefix has_first_name no_middle_name has_last_name no_suffix gf_name_has_2 ginput_container_name gform-grid-row' id='input_26_3'>
+                            
+                            <span id='input_26_3_3_container' class='name_first gform-grid-col gform-grid-col--size-auto' >
+                                                    <input type='text' name='input_3.3' id='input_26_3_3' value=''   aria-required='true'     />
+                                                    <label for='input_26_3_3' class='gform-field-label gform-field-label--type-sub '>First</label>
+                                                </span>
+                            
+                            <span id='input_26_3_6_container' class='name_last gform-grid-col gform-grid-col--size-auto' >
+                                                    <input type='text' name='input_3.6' id='input_26_3_6' value=''   aria-required='true'     />
+                                                    <label for='input_26_3_6' class='gform-field-label gform-field-label--type-sub '>Last</label>
+                                                </span>
+                            
+                        </div></li><li id="field_26_6" class="gfield gfield--type-text gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_6" ><label class='gfield_label gform-field-label' for='input_26_6'>City<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_text'><input name='input_6' id='input_26_6' type='text' value='' class='large'     aria-required="true" aria-invalid="false"   /> </div></li><li id="field_26_9" class="gfield gfield--type-consent gfield--type-choice gfield--input-type-consent gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_9" ><label class='gfield_label gform-field-label gfield_label_before_complex' >Consent *<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_consent'><input name='input_9.1' id='input_26_9_1' type='checkbox' value='1'   aria-required="true" aria-invalid="false"   /> <label class="gform-field-label gform-field-label--type-inline gfield_consent_label" for='input_26_9_1' >I agree to the <a href="https://www.c40.org/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://www.c40.org/terms-of-use/" target="_blank">Terms & Conditions</a> of C40 Cities Climate Leadership Group, Inc.</label><input type='hidden' name='input_9.2' value='I agree to the &lt;a href=&quot;https://www.c40.org/privacy-policy/&quot; target=&quot;_blank&quot;&gt;Privacy Policy&lt;/a&gt; and &lt;a href=&quot;https://www.c40.org/terms-of-use/&quot; target=&quot;_blank&quot;&gt;Terms &amp; Conditions&lt;/a&gt; of C40 Cities Climate Leadership Group, Inc.' class='gform_hidden' /><input type='hidden' name='input_9.3' value='21' class='gform_hidden' /></div></li></ul></div>
+        <div class='gform_footer top_label'> <input type='submit' id='gform_submit_button_26' class='gform_button button' value='Subscribe'  onclick='if(window["gf_submitting_26"]){return false;}  if( !jQuery("#gform_26")[0].checkValidity || jQuery("#gform_26")[0].checkValidity()){window["gf_submitting_26"]=true;}  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_26"]){return false;} if( !jQuery("#gform_26")[0].checkValidity || jQuery("#gform_26")[0].checkValidity()){window["gf_submitting_26"]=true;}  jQuery("#gform_26").trigger("submit",[true]); }' /> <input type='hidden' name='gform_ajax' value='form_id=26&amp;title=&amp;description=&amp;tabindex=0&amp;theme=legacy' />
+            <input type='hidden' class='gform_hidden' name='is_submit_26' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='26' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_26' value='WyJ7XCI5LjFcIjpcImU5NDg5ZTM3NTgxYzlhZTM3NDczNTZkYzJhNDM5YjQwXCIsXCI5LjJcIjpcIjAzMTYyMTMwNWQ5MzgwYmE0OTAyM2IyNzYzZWM2NTVjXCIsXCI5LjNcIjpcImIzZGRkMDk0ZmZlYWZlZWUzOTBkYzI2MmViZTdiZDcwXCJ9IiwiZTc1NzE0NzUxNmU0MzY5YTgwYjQ5YjA2N2Q3ZmM1ZjEiXQ==' />
+            <input type='hidden' class='gform_hidden' name='gform_target_page_number_26' id='gform_target_page_number_26' value='0' />
+            <input type='hidden' class='gform_hidden' name='gform_source_page_number_26' id='gform_source_page_number_26' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        </form>
+                        </div>
+		                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_26' id='gform_ajax_frame_26' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
+		                <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 26, 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true );jQuery('#gform_ajax_frame_26').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_26');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_26').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_26').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_26').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_26').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */  }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_26').val();gformInitSpinner( 26, 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true );jQuery(document).trigger('gform_page_loaded', [26, current_page]);window['gf_submitting_26'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_26').replaceWith(confirmation_content);jQuery(document).trigger('gform_confirmation_loaded', [26]);window['gf_submitting_26'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_26').text());}else{jQuery('#gform_26').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "26", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);                if (event && event.defaultPrevented) {                return;         }        const gformWrapperDiv = document.getElementById( "gform_wrapper_26" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_26";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_26" );        let postRenderFired = false;                function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            jQuery( document ).trigger( 'gform_post_render', [26, current_page] );            gform.utils.trigger( { event: 'gform/postRender', native: false, data: { formId: 26, currentPage: current_page } } );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]&gt; */
+</script>
+
+
+                                            <div class="social-icons">
+        <ul class="social-icons__icons">
+                        <li class="social-icons__icon social-icons__icon--twitter">
+                    <a target="_blank" rel="noopener noreferrer" href="https://x.com/c40cities">
+                                                    <span class="screen-reader-text">
+                                Visit our twitter page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.2 8.4v.8l-.8-.1a13 13 0 01-7.2-3.6l-1-1-.3.7a4.5 4.5 0 001 4.6c.6.6.5.7-.6.4l-.7-.2c-.1.1.3 1.5.6 2.1a5 5 0 002.1 2l.7.3h-.9c-.9 0-.9 0-.8.3.3 1 1.5 2.1 2.9 2.5l.9.3-.8.5a8.4 8.4 0 01-4.1 1.1l-1.3.1c0 .2 1.9 1 2.9 1.4 3.3 1 7.1.6 10-1.1a13 13 0 006.1-10.6c0-.7 0-.8.9-1.6l1.1-1.2c.2-.3.1-.3-.6 0-1.3.5-1.5.4-.8-.3.5-.5 1-1.4 1-1.6l-.5.2a5 5 0 01-1.3.5l-.8.3-.7-.5-1.3-.7a5 5 0 00-2.7.1 4.3 4.3 0 00-3 4.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--linkedin">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/c40-cities-climate-leadership-group">
+                                                    <span class="screen-reader-text">
+                                Visit our linkedin page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M7.3 8.9v12.3H3.2V8.9h4.1zm.3-3.8c0 1.2-.9 2.1-2.3 2.1S3 6.3 3 5.1C3 3.9 3.9 3 5.3 3s2.3.9 2.3 2.1zm14.5 9v7H18v-6.6c0-1.6-.6-2.8-2.1-2.8-1.1 0-1.8.8-2.1 1.5-.1.3-.1.6-.1 1v6.9H9.6s.1-11.1 0-12.3h4.1v1.7c.5-.8 1.5-2 3.7-2 2.7.1 4.7 1.9 4.7 5.6z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--instagram">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/c40cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our instagram page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.5 2.5c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.5.4-.6.3-1.2.6-1.7 1.2-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.5 2.5 0 1.1-.1 1.4-.1 4.1s0 3.1.1 4.1c0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5 1.1 0 1.4.1 4.1.1 2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1s0-3.1-.1-4.1c-.1-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5h-4.1zm-.9 1.8h.9c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.2.7.4.3.6.7.7 1.1.1.4.3.9.3 1.9 0 1.1.1 1.4.1 4s0 3-.1 4c0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.4.4-.7.6-1.2.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.5-.2-.8-.4-1.2-.7s-.6-.7-.7-1.1c-.1-.4-.3-.9-.3-1.9 0-1.1-.1-1.4-.1-4s0-3 .1-4c0-1 .2-1.5.3-1.9.2-.5.4-.8.7-1.2s.7-.6 1.2-.7c.4-.1.9-.3 1.9-.3h3.1zM17.8 6c-.7 0-1.2.5-1.2 1.2s.5 1.2 1.2 1.2S19 7.9 19 7.2 18.5 6 17.8 6zm-5.3 1.4c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 1.8c1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--facebook">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/C40Cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our facebook page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M13.6 21.2v-9.1h2.5l.4-3.1h-2.8V7.4c0-.8.1-1.3 1.3-1.3h1.6V3H14c-3 0-4.1 1.5-4.1 4.1V9H8v3.1h1.9v9.1h3.7z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--youtube">
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.youtube.com/user/C40CitiesLive">
+                                                    <span class="screen-reader-text">
+                                Visit our youtube page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" role="img" aria-hidden="true" width="30" height="25"><path d="M15.1 4c1.6 0 7.1.1 8.6.5 1 .3 1.8 1.1 2.1 2.1.2.6.3 1.5.3 2.3v.5l.1 2.9v.2l-.1 2.9v.5l-.3 2.3c-.3 1-1.1 1.8-2.1 2.1-.7.2-2.1.3-3.6.4h-.5l-4.8.1h-.3l-4.8-.1h-.5c-1.5-.1-2.9-.2-3.6-.4-1-.3-1.8-1.1-2.1-2.1a8 8 0 01-.3-2.3v-.5C3 14 3 12.8 3 12.5v-.2l.1-2.9v-.5l.3-2.3c.3-1 1.1-1.8 2.1-2.1 1.5-.4 7-.5 8.6-.5h1zm-2.6 5.1v7.3l5.8-3.6-5.8-3.7z"/></svg>                    </a>
+                </li>
+                    </ul>
+    </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                                    </ul>
+                    </nav>
+
+                
+                            </div>
+        </div>
+    </div>
+
+</header>
+<main class="main" id="main">
+    <article id="post-17093" class="article post-17093 page type-page status-publish hentry">
+            <div class="article__header entry-header">
+            <div class="page-header alignfull hero wp-block alignwide has-back-button has-blue-background-color has-background hero--media-type-image">
+    <div class="hero__inner">
+        
+                    <h1 class="hero__heading">Privacy Notice</h1>        
+        
+        
+        
+            </div>
+    </div>
+        </div>
+                <div class="article__content entry-content">
+            
+<h3 class="wp-block-heading is-style-left-align">Updated: July, 2023</h3>
+
+
+
+<p>C40 Cities Climate Leadership Group, Inc., a Delaware incorporated, non-stock, non-profit corporation whose registered office is at 120 Park Avenue, Floor 23, New York, NY, USA, and its Affiliates (collectively, “we” “us” or “C40”), are committed to protecting and respecting the privacy of the individuals who help us fulfil our charitable mission. <br><br>Our Affiliates are:</p>
+
+
+
+<ul>
+<li>C40 Cities Climate Leadership UK, a charity registered in England and Wales with company number 10401717 and charity number 1173124 whose registered office is at 3 Queen Victoria Street, London, EC4N 4TQ, UK.</li>
+
+
+
+<li>C40 Cities Climate Leadership South Africa NPC, a Non Profit Company registered in South Africa with a company number of 2017/243962/08 whose registered office is at Traduna House, 118 Jorissen Street, Braamfontein, 2001 Gauteng, South Africa.</li>
+
+
+
+<li>Foreningen C40 Cities Climate Leadership Denmark, an Association registered in Denmark with a CVR number of 40708243 whose registered office is at c/o BLOXHUB, Bryghuspladsen 8, 1473 Copenhagen K, Denmark.</li>
+
+
+
+<li>C40 Cities Climate Leadership Group (USA) Beijing Representative Office, a Representative Office registered in China with unified social credit code G1110000MCW1706939 whose registered office is at Room 101, 10th floor, 12# Diplomatic Residence Compound, No.1 Xiushui Street, Chaoyang District, Beijing, China.</li>
+</ul>
+
+
+
+<p>Each of these Affiliates may be data controllers of your personal information and it may be shared internally between these Affiliates to achieve the purposes set out below.</p>
+
+
+
+<p>Please read the following carefully to understand how C40 uses your personal information and for information about your privacy rights.</p>
+
+
+
+<p>This Privacy Notice applies to C40.org and any other C40 sites, forms, or services, in addition to any event attendance or general interactions with C40 or its representatives (&#8221;&nbsp;C40 Services&nbsp;”).</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">1. What personal information do we collect and process?</h3>
+
+
+
+<p>The personal information we may collect includes name, email address, employer, job title, business address, telephone number, location or any additional information you elect to provide directly to us.</p>
+
+
+
+<p>In providing C40 Services, we may also log technical information such as you Internet Protocol (IP) address, browser type, cookie information, access times and device type.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">2. How do we collect <br>personal information?</h3>
+
+
+
+<p>We obtain personal information from when you provide it&nbsp;<strong>directly</strong>&nbsp;to us, for example when you engage with our staff, fill in a form on our website, or use C40 Services. We also obtain personal information&nbsp;<strong>indirectly</strong>&nbsp;from you when you visit our websites, including technical information about your device and browsing such as IP address and your interactions with the sites, and via cookies.</p>
+
+
+
+<p>We may also receive information about you from&nbsp;<strong>third parties</strong>&nbsp;, for example from one of our member cities (see&nbsp;<a href="https://www.c40.org/cities/">www.c40.org/cities</a>&nbsp;), partner organizations, or from individuals or third party organisations who share our charitable interests and may introduce you to us. We also receive some personal information about you when you use social logins (see section 4 below).</p>
+
+
+
+<p>We may collect your information from publicly available sources, such as your organisation’s or employer’s website (for example, your business contact details including your email address). Depending on your privacy settings for social media services, we may access information from those accounts or services, including from LinkedIn, Facebook, Instagram and Twitter.</p>
+
+
+
+<p>In general, we may combine your personal information from these different sources to use in accordance with purposes listed in this Privacy Notice.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">3. How and why do we use <br>this personal information?</h3>
+
+
+
+<p>We may use your personal information in a number of ways, including:</p>
+
+
+
+<ul>
+<li>to promote C40’s charitable and educational mission (including to hold a list of relevant city contacts to communicate with, and network with and between city contacts, in pursuit of our mission);</li>
+
+
+
+<li>to provide you with services or information that you have requested and to communicate with you in general;</li>
+
+
+
+<li>to facilitate your, or your organization’s, participation in C40’s network or one of our programs and/ or events – and to administer those programs and events;</li>
+
+
+
+<li>to provide you with information about our charitable activities, including C40 and third-party events, work and other services related to our charitable and educational mission that we think may be of interest to you;</li>
+
+
+
+<li>to analyse and improve our work, including our services and activities and to report on the impact and effectiveness of our work;</li>
+
+
+
+<li>for administration purposes including to create an account for you if you register with us; to notify you about changes to C40 Services; to keep C40 Services safe and secure; and to ensure that content is presented in the most effective manner;</li>
+
+
+
+<li>for company administration purposes including to satisfy legal obligations which are binding on us (e.g. in relation to tax and law enforcement bodies), for the prevention of fraud or misuse of services, and for the establishment, defence and/ or enforcement of legal claims;</li>
+
+
+
+<li>We may provide you separately with specific further information about our use of your personal information (for example if you apply to work at C40). Also, if we anticipate processing your information in a way that could reasonably be considered outside of what you could reasonably expect, then we will notify you in advance, obtain your consent, where appropriate, or refrain from processing your information in the new way.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">4. Social logins</h3>
+
+
+
+<p>Some C40 Services (for example, our Knowledge Hub) enable you to register or log-in to your account through a third-party platform such as Google or LinkedIn. When you do so, the third-party platform will share some of your (basic account) personal information with us, such as the name and email address you use for your third-party account. We use this personal information to identify you when you log-in and allow you to access C40 Services.</p>
+
+
+
+<p>We do not require you to use social log-ins – if you prefer, you can always register or log-in using your email address and creating a C40 account. You can also un-link your Google or LinkedIn account from your C40 account by updating your settings/ preferences with Google or LinkedIn respectively:</p>
+
+
+
+<ul>
+<li><a href="https://support.google.com/accounts/answer/112802?co=GENIE.Platform%3DDesktop&amp;hl=en#:~:text=Remove%20a%20site%20or%20app%20with%20access%20to%20your%20account&amp;text=You%20might%20need%20to%20sign,choose%20Signing%20in%20with%20Google.&amp;text=Remove%20Access.">How to un-link your account from Google</a></li>
+
+
+
+<li><a href="https://www.linkedin.com/help/linkedin/answer/5070/log-in-with-linkedin-credentials?lang=en">How to un-link your account from Linkedin</a></li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">5. What is our lawful basis <br>for using your personal information?</h3>
+
+
+
+<p>The General Data Protection Regulation (GDPR) requires us to rely on one or more lawful basis to process your personal information. The following are relevant to us:</p>
+
+
+
+<ul>
+<li>Where you give&nbsp;<strong>consent</strong>&nbsp;(for example, to receive our newsletter).</li>
+
+
+
+<li>We have entered into a&nbsp;<strong>contractual arrangement</strong>&nbsp;or taken steps at your request prior to entering into one (with you).</li>
+
+
+
+<li>Where necessary to comply with a&nbsp;<strong>legal obligation</strong>&nbsp;to which we are subject.</li>
+
+
+
+<li>Where there is a&nbsp;<strong>legitimate interest</strong>&nbsp;in us doing so provided our use is fair, balanced and does not unduly impact your rights and freedoms – in general,&nbsp;<strong>C40’s legitimate interests are aimed at furthering</strong>&nbsp;our charitable and educational mission (for example, company governance and reporting, delivering services and programs, and networking and campaigning).</li>
+
+
+
+<li>If you are <strong>under eighteen</strong>, please ensure you have the consent of your parent or guardian to share your personal information with C40.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">6. Do we share your personal information with anyone else?</h3>
+
+
+
+<p>We provide your information to our contractors, suppliers and partners who provide services on our behalf, or with whom we collaborate, to the extent necessary to enable us to provide you C40 Services – provided we are satisfied that they provide sufficient guarantees in respect of safeguarding your personal information and privacy rights, and that we have in place an appropriate agreement with them.</p>
+
+
+
+<p>We may also share your information between our Affiliates (described in the introduction to this Notice), in accordance with applicable data protection law and where appropriate to deliver our charitable mission and C40 Services.</p>
+
+
+
+<p>We may also need to disclose your information to local authorities or law enforcement agencies, if required to do so by law, or as expressly permitted under relevant data protection regulations. If we merge or undergo a reorganisation, in doing so we may acquire or transfer personal information as part of that transaction, but your personal information would continue to be used for the same purposes.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">7. International Transfers</h3>
+
+
+
+<p>As an international organization, we will occasionally need to transfer data outside the European Economic Area – including between C40’s Affiliates and branch offices but also when we use suppliers and engage with other third parties based outside the European Economic Area. Please note that some countries outside of the EEA may have a lower standard of protection for personal information, including lower security requirements and fewer rights for individuals. In these instances, adequate safeguards, such as European Commission-approved contractual clauses and technical measures, have been put in place to adequately protect personal information.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">8. Security</h3>
+
+
+
+<p>C40 is committed to keeping your personal information safe and secure. We take appropriate and proportionate measures to ensure that your personal information is kept secure and to prevent its loss, destruction and misuse. We use strict procedure and security features, such as encryption, permission controls, and audit logging, to ensure your data is handled securely. However, you should be aware that the transfer of information over the Internet is not entirely secure and although we will do our best to protect your personal data, we cannot guarantee the security or integrity of any personal information which is transferred online from or to you.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">9. Cookies</h3>
+
+
+
+<p>Our website uses cookies to distinguish you from other users of our website. This helps us to provide you with a good experience when you browse our website and also allows us to improve our site.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">10. Your privacy rights <br>and choices</h3>
+
+
+
+<p>If we rely on your consent to use your personal information (for example if you sign up for one of our newsletters and consent to us providing you with marketing information), you can withdraw that consent (including the right to ‘opt–out’ of our using your information for marketing purposes generally) at any time by emailing&nbsp;<a href="mailto:privacy@c40.org">privacy@c40.org</a>&nbsp;or by clicking “Unsubscribe” at the bottom of any marketing email.</p>
+
+
+
+<p>You also have the following rights:</p>
+
+
+
+<ul>
+<li>To request from us access to (including a copy of) your personal information.</li>
+
+
+
+<li>To ask us to update your personal information if it is inaccurate (and you can ask us to check if you are unsure)</li>
+
+
+
+<li>To ask us to delete your personal information in some cases.</li>
+
+
+
+<li>To ask us to restrict processing, if there is disagreement about its accuracy or legitimate usage.</li>
+
+
+
+<li>To object to processing where we are (i) relying on the basis of legitimate interests, or (ii) using your personal information for direct marketing or (iii) using your personal information for statistical purposes.</li>
+
+
+
+<li>To data portability in certain circumstances &#8211; where we are processing your personal information (i) on the basis of your consent, (ii) because the processing is necessary for the performance of a contract with you or to take steps at your request prior to entering into a contract, and the processing is carried out by automated means, you may ask us to provide it to you or another service provider in a machine-readable format.</li>
+</ul>
+
+
+
+<p>To exercise your rights, email privacy@c40.org. Please note that these rights are subject to exemptions and may only apply in limited circumstances. We may also ask for additional information to confirm your identity and for security purposes before we are able to comply.</p>
+
+
+
+<p>If your data is subject to the GDPR, you have the right to lodge a complaint to the Supervisory Authority in your country, if you believe that we have not complied with the requirements of the GDPR with regards to your personal information (in the UK, for example, this would be the Information Commissioner’s Office, or ICO –&nbsp;<a href="https://ico.org.uk/global/contact-us" target="_blank" rel="noreferrer noopener">www.ico.org.uk/global/contact-us</a>&nbsp;).</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">11. How long will we keep <br>your personal information?</h3>
+
+
+
+<p>In general terms, we will retain your information for as long as necessary to fulfil the purposes for which it was collected and/ or it is used. However, if before that date (i) your personal information is no longer required in connection with such purpose(s), (ii) we are no longer lawfully entitled to process it or (iii) you validly exercise your right of deletion (please see section 10 above), we will remove it from our records at the relevant time.</p>
+
+
+
+<p>Where required, in some cases we will keep personal information at least as long as necessary to comply with relevant regulatory or statutory requirements. We will also retain information, when and as long as necessary, to resolve legal disputes.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">12. Changes to this notice</h3>
+
+
+
+<p>Any changes we may make to this Privacy Notice in the future will be posted on this page and, where appropriate, notified to you by e-mail. Please check back frequently to see any updates or changes to our Privacy Notice.</p>
+
+
+
+<hr class="wp-block-separator has-css-opacity"/>
+
+
+
+<h3 class="wp-block-heading is-style-left-align">13. Contact Us</h3>
+
+
+
+<p>Any questions about this Privacy Notice or the ways in which your information is being used should be addressed to privacy@c40.org or ATTN: C40 Legal, 120 Park Ave, Floor 23, New York, NY 10017.</p>
+        </div>
+    </article>
+</main>
+<footer class="footer">
+    <div class="footer__inner">
+        <a class="footer__logo is-square" href="https://www.c40.org/">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA0OCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjQ4IiBkYXRhLXU9Imh0dHBzJTNBJTJGJTJGd3d3LmM0MC5vcmclMkZ3cC1jb250ZW50JTJGdGhlbWVzJTJGYzQwLWNpdGllcyUyRmFzc2V0cyUyRmltYWdlcyUyRmM0MC1sb2dvLnN2ZyIgZGF0YS13PSI3MiIgZGF0YS1oPSI0OCIgZGF0YS1iaXA9IiI+PC9zdmc+" data-spai="1" alt="C40 Cities" width="72" height="48">        </a>
+
+        <div class="footer__who-we-are">
+                            <h3 class="footer__menu-header">Who We Are</h3>
+                <div class="menu-footer-who-we-are-container"><ul id="menu-footer-who-we-are" class="footer__menu"><li id="menu-item-7293" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7293"><a href="https://www.c40.org/about-c40/">About C40</a></li>
+<li id="menu-item-13119" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13119"><a href="https://www.c40.org/leadership/">Leadership</a></li>
+<li id="menu-item-13118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13118"><a href="https://www.c40.org/funders-partners/">Funders &#038; Partners</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43"><a href="/our-team/">Our Team</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__what-we-do">
+                            <h3 class="footer__menu-header">What We Do</h3>
+                <div class="menu-footer-what-we-do-container"><ul id="menu-footer-what-we-do" class="footer__menu"><li id="menu-item-13125" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13125"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/">Raising Climate Ambition</a></li>
+<li id="menu-item-22234" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22234"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/">Influencing the Global Agenda</a></li>
+<li id="menu-item-13123" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13123"><a href="https://www.c40.org/what-we-do/building-a-movement/">Building a Movement</a></li>
+<li id="menu-item-13126" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13126"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/">Scaling Up Climate Action</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__site-sections">
+                            <div class="menu-footer-site-sections-container"><ul id="menu-footer-site-sections" class="footer__menu"><li id="menu-item-48" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-48"><a href="/cities/">Our Cities</a></li>
+<li id="menu-item-49" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-49"><a href="/news/">News &#038; Insights</a></li>
+<li id="menu-item-13391" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13391"><a href="https://www.c40.org/careers/">Careers</a></li>
+<li id="menu-item-13400" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13400"><a href="https://www.c40.org/contact/">Contact</a></li>
+<li id="menu-item-35204" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-35204"><a href="https://c40.us6.list-manage.com/subscribe?u=529235039ea48b192727b37a9&#038;id=c8eaa84d3a">Subscribe</a></li>
+<li id="menu-item-11679" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11679"><a href="https://www.c40.org/location-and-policies/">Locations &#038; Policies</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__actions">
+            <div class="footer__actions__item footer__cta-1">
+                                        <a
+                    href="https://www.c40knowledgehub.org/"
+                rel="noopener" target="_blank">C40 Knowledge Hub</a>
+                            </div>
+
+            <div class="footer__actions__item footer__cta-2">
+                            </div>
+
+            <div class="social-icons">
+        <ul class="social-icons__icons">
+                        <li class="social-icons__icon social-icons__icon--twitter">
+                    <a target="_blank" rel="noopener noreferrer" href="https://x.com/c40cities">
+                                                    <span class="screen-reader-text">
+                                Visit our twitter page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.2 8.4v.8l-.8-.1a13 13 0 01-7.2-3.6l-1-1-.3.7a4.5 4.5 0 001 4.6c.6.6.5.7-.6.4l-.7-.2c-.1.1.3 1.5.6 2.1a5 5 0 002.1 2l.7.3h-.9c-.9 0-.9 0-.8.3.3 1 1.5 2.1 2.9 2.5l.9.3-.8.5a8.4 8.4 0 01-4.1 1.1l-1.3.1c0 .2 1.9 1 2.9 1.4 3.3 1 7.1.6 10-1.1a13 13 0 006.1-10.6c0-.7 0-.8.9-1.6l1.1-1.2c.2-.3.1-.3-.6 0-1.3.5-1.5.4-.8-.3.5-.5 1-1.4 1-1.6l-.5.2a5 5 0 01-1.3.5l-.8.3-.7-.5-1.3-.7a5 5 0 00-2.7.1 4.3 4.3 0 00-3 4.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--linkedin">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/c40-cities-climate-leadership-group">
+                                                    <span class="screen-reader-text">
+                                Visit our linkedin page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M7.3 8.9v12.3H3.2V8.9h4.1zm.3-3.8c0 1.2-.9 2.1-2.3 2.1S3 6.3 3 5.1C3 3.9 3.9 3 5.3 3s2.3.9 2.3 2.1zm14.5 9v7H18v-6.6c0-1.6-.6-2.8-2.1-2.8-1.1 0-1.8.8-2.1 1.5-.1.3-.1.6-.1 1v6.9H9.6s.1-11.1 0-12.3h4.1v1.7c.5-.8 1.5-2 3.7-2 2.7.1 4.7 1.9 4.7 5.6z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--instagram">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/c40cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our instagram page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.5 2.5c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.5.4-.6.3-1.2.6-1.7 1.2-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.5 2.5 0 1.1-.1 1.4-.1 4.1s0 3.1.1 4.1c0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5 1.1 0 1.4.1 4.1.1 2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1s0-3.1-.1-4.1c-.1-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5h-4.1zm-.9 1.8h.9c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.2.7.4.3.6.7.7 1.1.1.4.3.9.3 1.9 0 1.1.1 1.4.1 4s0 3-.1 4c0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.4.4-.7.6-1.2.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.5-.2-.8-.4-1.2-.7s-.6-.7-.7-1.1c-.1-.4-.3-.9-.3-1.9 0-1.1-.1-1.4-.1-4s0-3 .1-4c0-1 .2-1.5.3-1.9.2-.5.4-.8.7-1.2s.7-.6 1.2-.7c.4-.1.9-.3 1.9-.3h3.1zM17.8 6c-.7 0-1.2.5-1.2 1.2s.5 1.2 1.2 1.2S19 7.9 19 7.2 18.5 6 17.8 6zm-5.3 1.4c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 1.8c1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--facebook">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/C40Cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our facebook page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M13.6 21.2v-9.1h2.5l.4-3.1h-2.8V7.4c0-.8.1-1.3 1.3-1.3h1.6V3H14c-3 0-4.1 1.5-4.1 4.1V9H8v3.1h1.9v9.1h3.7z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--youtube">
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.youtube.com/user/C40CitiesLive">
+                                                    <span class="screen-reader-text">
+                                Visit our youtube page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" role="img" aria-hidden="true" width="30" height="25"><path d="M15.1 4c1.6 0 7.1.1 8.6.5 1 .3 1.8 1.1 2.1 2.1.2.6.3 1.5.3 2.3v.5l.1 2.9v.2l-.1 2.9v.5l-.3 2.3c-.3 1-1.1 1.8-2.1 2.1-.7.2-2.1.3-3.6.4h-.5l-4.8.1h-.3l-4.8-.1h-.5c-1.5-.1-2.9-.2-3.6-.4-1-.3-1.8-1.1-2.1-2.1a8 8 0 01-.3-2.3v-.5C3 14 3 12.8 3 12.5v-.2l.1-2.9v-.5l.3-2.3c.3-1 1.1-1.8 2.1-2.1 1.5-.4 7-.5 8.6-.5h1zm-2.6 5.1v7.3l5.8-3.6-5.8-3.7z"/></svg>                    </a>
+                </li>
+                    </ul>
+    </div>
+        </div>
+
+        <div class="footer__bottom">
+            <div class="footer__utility-menu">
+                <div class="menu-footer-utility-menu-container"><ul id="menu-footer-utility-menu" class="footer__menu"><li id="menu-item-17537" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17537"><a href="https://www.c40.org/accessibility/">Accessibility</a></li>
+<li id="menu-item-53" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-53"><a href="/privacy-notice" aria-current="page">Privacy Notice</a></li>
+<li id="menu-item-17546" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17546"><a href="https://www.c40.org/terms-of-use/">Terms of Use</a></li>
+<li id="menu-item-55" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-55"><a href="https://www.wholegraindigital.com/">Website by Wholegrain Digital</a></li>
+</ul></div>            </div>
+
+            <div class="footer__text">
+                <span>&copy; 2024</span>
+
+                                    <p>C40 Cities Climate Leadership Group, Inc. All rights reserved.</p>
+                
+                            </div>
+        </div>
+    </div>
+</footer>
+<style id='core-block-supports-inline-css' type='text/css'>
+/**
+ * Core styles: block-supports
+ */
+
+</style>
+<script type="text/javascript" id="granola-scripts-js-extra">
+/* <![CDATA[ */
+var params = {"ajax_url":"https:\/\/www.c40.org\/wp-admin\/admin-ajax.php","home_url":"https:\/\/www.c40.org"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.c40.org/wp-content/themes/c40-cities/assets/scripts/main.1a1166cc649c857b6081.js" id="granola-scripts-js"></script>
+<script type="text/javascript" id="gt_widget_script_46518343-js-before">
+/* <![CDATA[ */
+window.gtranslateSettings = /* document.write */ window.gtranslateSettings || {};window.gtranslateSettings['46518343'] = {"default_language":"en","languages":["af","zh-CN","nl","en","fr","de","it","pl","pt","ru","es"],"url_structure":"sub_directory","flag_style":"2d","wrapper_selector":"#gt-wrapper-46518343","alt_flags":[],"float_switcher_open_direction":"bottom","switcher_horizontal_position":"inline","flags_location":"\/wp-content\/plugins\/gtranslate\/flags\/"};
+/* ]]> */
+</script><script src="https://www.c40.org/wp-content/plugins/gtranslate/js/float.js?ver=6.5.3" data-no-optimize="1" data-no-minify="1" data-gt-orig-url="/privacy-notice/" data-gt-orig-domain="www.c40.org" data-gt-widget-id="46518343" defer></script><script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/wp-polyfill-inert.js?ver=3.1.2" id="wp-polyfill-inert-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/regenerator-runtime.js?ver=0.14.0" id="regenerator-runtime-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/wp-polyfill.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/dom-ready.js?ver=5b9fa8df0892dc9a7c41" id="wp-dom-ready-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/hooks.js?ver=2e6d63e772894a800ba8" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/i18n.js?ver=2aff907006e2aa00e26e" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" id="wp-a11y-js-translations">
+/* <![CDATA[ */
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2024-04-09 12:18:08+0000","generator":"GlotPress\/4.0.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"Notifications":["Notifications"]}},"comment":{"reference":"wp-includes\/js\/dist\/a11y.js"}} );
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/a11y.js?ver=e4f0f9508f80ce638f3d" id="wp-a11y-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/jquery/jquery.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/js/jquery.json.js?ver=2.8.12" id="gform_json-js"></script>
+<script type="text/javascript" id="gform_gravityforms-js-extra">
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mo","tuesday":"Tu","wednesday":"We","thursday":"Th","friday":"Fr","saturday":"Sa","sunday":"Su"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1,"iconText":"Select date"}};
+var gf_legacy_multi = [];
+var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file is not allowed. Must be one of the following:","delete_file":"Delete this file","in_progress":"in progress","file_exceeds_limit":"File exceeds size limit","illegal_extension":"This type of file is not allowed.","max_reached":"Maximum number of files reached","unknown_error":"There was a problem while saving the file on the server","currently_uploading":"Please wait for the uploading to complete","cancel":"Cancel","cancel_upload":"Cancel this upload","cancelled":"Cancelled"},"vars":{"images_url":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/images"}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","version_hash":"32dfd3111c0a3463aafa2eca6f54c38e","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/js/gravityforms.js?ver=2.8.12" id="gform_gravityforms-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/utils.min.js?ver=50c7bea9c2320e16728e44ae9fde5f26" id="gform_gravityforms_utils-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/vendor-theme.min.js?ver=54e7080aa7a02c83aa61fae430b9d869" id="gform_gravityforms_theme_vendors-js"></script>
+<script type="text/javascript" id="gform_gravityforms_theme-js-extra">
+/* <![CDATA[ */
+var gform_theme_config = {"common":{"form":{"honeypot":{"version_hash":"32dfd3111c0a3463aafa2eca6f54c38e"}}},"hmr_dev":"","public_path":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/assets\/js\/dist\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/scripts-theme.min.js?ver=bab19fd84843dabc070e73326d787910" id="gform_gravityforms_theme-js"></script>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+           document.querySelectorAll("ul.nav-menu").forEach(
+               ulist => { 
+                    if (ulist.querySelectorAll("li").length == 0) {
+                        ulist.style.display = "none";
+
+                                            } 
+                }
+           );
+            /* ]]> */
+        </script>
+        <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 26) {jQuery( "#gform_26" ).on( 'submit', function( event ) {
+	jQuery( '<input>' )
+		.attr( 'type', 'hidden' )
+		.attr( 'name', 'gf_zero_spam_key' )
+		.attr( 'value', 'N8B2B2jhu9Huo6RE8Hc6D5h1HB8j6oHkYO4xblrAtrndNSPyrebaeeo4ad9AcE2x' )
+		.attr( 'autocomplete', 'new-password' )
+		.appendTo( jQuery( this ) );
+} );} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "26", currentPage: "1", abort: function() { this.preventDefault(); } }]);                if (event && event.defaultPrevented) {                return;         }        const gformWrapperDiv = document.getElementById( "gform_wrapper_26" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_26";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_26" );        let postRenderFired = false;                function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            jQuery( document ).trigger( 'gform_post_render', [26, 1] );            gform.utils.trigger( { event: 'gform/postRender', native: false, data: { formId: 26, currentPage: 1 } } );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+</script>
+    <div class="cookie-notice">
+        <div class="cookie-notice__banner">
+            <div class="cookie-notice__message">
+                <p>We use cookies. Learn more about how in our <a href="https://www.c40.org/privacy-policy/">Privacy Policy</a>.</p>
+            </div>
+
+            <ul class="cookie-notice__actions">
+                <li class="cookie-notice__action">
+                    <button type="button" class="button cookie-notice__accept js-cookie-notice-accept">
+                        Accept                    </button>
+                </li>
+
+                                    <li class="cookie-notice__action">
+                        <button type="button" class="cookie-notice__reject js-cookie-notice-reject">
+                            Decline                        </button>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
