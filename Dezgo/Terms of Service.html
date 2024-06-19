@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
+    <link href="/app.css" rel="stylesheet" />
+    <link href="Dezgo.Web.Client.styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    
+    <link rel="icon"  type="image/png" href="/favicon.png" />
+    <link href='https://fonts.googleapis.com/css?family=Abel|Rubik|Lato|Montserrat:300' rel='stylesheet' type='text/css'>
+    
+    <link rel="preload" as="image" href="/img/power_onoff_cursor.gif">
+    <link rel="preload" as="image" href="/img/cost.gif">
+    <link rel="preload" as="image" href="/img/steps.gif">
+    <link rel="preload" as="image" href="/img/ellipsis.gif">
+    <link rel="preload" as="image" href="/img/my_account.gif">
+    <link rel="preload" as="image" href="/img/history.gif">
+    
+    <meta name="description" content="Generate high-quality images from text. Dozens of general & anime Stable Diffusion models, with a free tier. Let the AI draw!">
+    
+    
+    <meta name="p:domain_verify" content="b97bcc8906e7401bb2e683b10e33fa44"/>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V8L8E563W6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-V8L8E563W6');
+    </script>
+    
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@dezgo">
+    <meta name="twitter:title" content="Dezgo.com">
+<meta name="twitter:description" content="Generate high-quality images from any text prompt. Let the AI draw!">
+<meta name="twitter:image" content="https://static.dezgo.com/favicon.png">
+
+<meta property="og:url"                content="https://dezgo.com/" />
+<meta property="og:type"               content="website" />
+<meta property="og:title"              content="Dezgo.com" />
+<meta property="og:description"        content="Generate high-quality images from any text prompt. Let the AI draw!" />
+<meta property="og:image"              content="https://static.dezgo.com/favicon.png" />
+
+<link rel="apple-touch-icon" href="https://static.dezgo.com/favicon.png">
+<meta name="apple-mobile-web-app-title" content="Dezgo">
+
+<meta name="propeller" content="4b9c21729407fe9ab95dcc86fcb4dc9c">
+<meta name="a.validate.02" content="-O2x8CNSSiX_t8ICV0stjTdWiHrs3eR_MKBJ" />
+
+    <script type="text/javascript">
+    function isElementInViewport (el, verticalOffset) {
+        var rect = el.getBoundingClientRect();
+    
+        var containerWidth = (window.innerWidth || document.documentElement.clientWidth);
+        var containerHeight = (window.innerHeight || document.documentElement.clientHeight);
+        
+        containerHeight -= verticalOffset;
+        
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= containerHeight && 
+            rect.right <= containerWidth
+        );
+    }
+    
+    function getPersistentRandomNumber() {
+        var key = "com.dezgo.rand";
+        
+        try {
+            if (!localStorage.getItem(key)) {
+                var randomNumber = Math.random();
+                localStorage.setItem(key, randomNumber.toString());
+                return randomNumber;
+            } else {
+                return parseFloat(localStorage.getItem(key));
+            }
+        } catch (error) {
+            return 0;
+        }
+    }
+
+    
+    function scrollToTop()
+    {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+    }
+    
+    function dScrollTo(elementId)
+    {
+        var el = document.getElementById(elementId);
+        var check = isElementInViewport(el, 250);
+        
+        console.log("is element visible:", check);
+        
+        if (!check)
+        {
+            el.scrollIntoView({
+                //alignToTop:  true, 
+                
+                block: "start",
+                inline: "nearest",
+                behavior: "smooth"
+            })
+        }
+      
+    }
+    async function getImageSize(imgBase64)
+    {
+        var img = new Image();
+        img.src = imgBase64;
+        
+        await img.decode();
+        
+        return [img.width, img.height];
+    }
+    
+    function fireClick(element)
+    {
+        element.click();
+    }
+    
+    function setSecureCookie(key, value)
+    {
+        document.cookie = key + "=" + encodeURIComponent(value) + ";secure;domain=dezgo.com";
+    }
+    
+    
+    IS_TURNSTILE_READY = false;
+    
+    function getTurnstileStatus()
+    {
+        return IS_TURNSTILE_READY;
+    }
+    function turnstileRender(container, callbackObj, options)
+    {
+        options["callback"] = function (token) {
+            callbackObj.invokeMethodAsync("OnTurnstileSuccess", token);
+        };
+        
+        var widgetId = turnstile.render(container, options);
+        console.log("Turnstile widget id:", widgetId);
+        return widgetId;
+    }
+    
+    function onloadTurnstileCallback() 
+    {
+        IS_TURNSTILE_READY = true;
+    }
+    
+    async function safeOpenTab(url, method, headers, body) {
+        
+        if (url === null) {
+            return;
+        }
+        
+        var tab = window.open("/dezgo_store_redirect.html", '_blank');
+        if (!tab) {
+            alert("Failed to open tab: " + tab);
+            return;
+        }
+        
+        var fetch_url = url;
+        var fetch_params = {
+            method: method,
+            headers: headers,
+            body: body,
+        };
+        
+        // React to DOMContentLoaded event
+        tab.addEventListener('DOMContentLoaded', function(event) {
+            console.log("tab dom loaded");
+            tab.executeFetchRedirect(fetch_url, fetch_params);
+        });
+        
+        tab.addEventListener('load', function(event) {
+            console.log("tab loaded");
+            tab.executeFetchRedirect(fetch_url, fetch_params);
+        });
+    }
+    
+    
+    window.document.addEventListener('keydown', function (e) {
+        if (!e) return;
+        e = {
+            key: e.key,
+            code: e.code, 
+            location: e.location,
+            repeat: e.repeat,
+            ctrlKey: e.ctrlKey,
+            shiftKey: e.shiftKey,
+            altKey: e.altKey,
+            metaKey: e.metaKey,
+            type: e.type
+        };
+        DotNet.invokeMethod('Dezgo.Web.Client', 'JsKeyDown', e);
+    });
+    
+    </script>
+    
+    <!--Blazor:{"type":"webassembly","assembly":"Microsoft.AspNetCore.Components.Web","typeName":"Microsoft.AspNetCore.Components.Web.HeadOutlet","parameterDefinitions":"W10=","parameterValues":"W10=","prerenderId":"27d246d3c64c4c41ba6f834a525482ce"}--><!--Blazor:{"prerenderId":"27d246d3c64c4c41ba6f834a525482ce"}-->
+    
+    
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer></script>
+    
+    <script type="text/javascript">
+    
+    ADS_STARTED = false;
+    
+    function startAds() {
+    }
+    
+    </script>
+    
+    
+
+    <!-- Start of dezgo Zendesk Widget script -->
+    <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=fc8c7f77-8414-45ee-9865-23de1f9ed867"> </script>
+    <script type="text/javascript">
+    window.zESettings = {
+        webWidget: {
+            zIndex: 1000
+        }
+    };
+    zE(function() {
+        // Closed by default
+        zE.hide();
+    });
+    
+    zeIdentify = function (email, name) {
+        zE(function() {
+            zE.identify({
+                name: name,
+                email: email
+            });
+        });
+    };
+        
+    zeActivate = function () {
+        zE(function() {
+            zE.activate();
+        });
+    }
+    </script>
+    <!-- End of dezgo Zendesk Widget script -->
+
+    <!-- FREESTAR -->
+    <link rel="preconnect" href="https://a.pub.network/" crossorigin />
+    <link rel="preconnect" href="https://b.pub.network/" crossorigin />
+    <link rel="preconnect" href="https://c.pub.network/" crossorigin />
+    <link rel="preconnect" href="https://d.pub.network/" crossorigin />
+    <link rel="preconnect" href="https://c.amazon-adsystem.com" crossorigin />
+    <link rel="preconnect" href="https://s.amazon-adsystem.com" crossorigin />
+    <link rel="preconnect" href="https://secure.quantserve.com/" crossorigin />
+    <link rel="preconnect" href="https://rules.quantcount.com/" crossorigin />
+    <link rel="preconnect" href="https://pixel.quantserve.com/" crossorigin />
+    <link rel="preconnect" href="https://cmp.quantcast.com/" crossorigin />
+    <link rel="preconnect" href="https://btloader.com/" crossorigin />
+    <link rel="preconnect" href="https://api.btloader.com/" crossorigin />
+    <link rel="preconnect" href="https://confiant-integrations.global.ssl.fastly.net" crossorigin />
+
+    <link rel="stylesheet" href="https://a.pub.network/dezgo-com/cls.css">
+    <!-- CSS for geo depending button -->
+    <style>    
+        #pmLink {        
+            visibility: hidden;               
+            text-decoration: underline;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.698); 
+        }
+    </style>
+    
+    <script data-cfasync="false" type="text/javascript">
+      var freestar = freestar || {};
+      freestar.queue = freestar.queue || [];
+      freestar.config = freestar.config || {};
+      freestar.config.enabled_slots = [];
+      freestar.config.enabled_slots.push({ placementName: "dezgo_standalone_video", slotId: "dezgo_standalone_video" });
+      freestar.initCallback = function () {
+          console.log("fs.initCallback");
+      }
+    </script>
+    <script src="https://a.pub.network/dezgo-com/pubfig.min.js" data-cfasync="false" async></script>
+    
+    <script type="text/javascript">
+    
+        window.addEventListener('readyConfigPlayerApi', function (e){
+      
+            var primisConfig = e.detail;
+       
+            primisConfig.setConfig ({
+                floatInitalStatus : "disable"
+            })
+        });
+    
+        function primisFwd(id, e){
+            DotNet.invokeMethod('Dezgo.Web.Client', 'OnPrimisCallback', id,  e);
+        }
+       
+        
+        window.addEventListener('primisPlayerInit', function (e) {
+            console.log("primis: primisPlayerInit", e);
+            
+            var p = e.detail;
+            
+            
+           function primisReg(id) {
+               p.addEventListener(id, function (e) {
+                   if(e !== null && e !== undefined){
+                        e = JSON.stringify(e);
+                   }
+                   else {
+                        e = "{}";
+                   }
+                   
+                   primisFwd(id, e);
+                });
+           }
+            
+           var eventIds = [
+                "adStarted",
+                "adCompleted",
+                "adFirstQuartile",
+                "adMidQuartile",
+                "adThirdQuartile",
+                "adClickthrough",
+                "adPause",
+                "adPlay",
+                "adSkip",
+                
+                "videoStart",
+                "videoEnd",
+                "videoSkip",
+                "videoClickthrough",
+                
+                "volumeChange",
+                "playerModeChange",
+                "floatStatusChange",
+                "userFloatClose"
+               ];
+            
+            eventIds.forEach(primisReg);
+            
+            primisFwd("primisPlayerInit", "{}");
+        });
+    
+        function getUserAgent() {
+            return navigator.userAgent;
+        }
+    
+        function getMaxTouchPoints() {
+            return navigator.maxTouchPoints || 0;
+        }
+        
+        function fsTest() {
+            return true;
+        }
+    
+        function fsOnPageview()
+        {
+            freestar.queue.push(function(){
+               freestar.trackPageview()
+            });
+        }
+        
+        function fsHelperCallback(name) {
+          return function () {
+            console.log("fs: callback " + name + ":", arguments);
+          }
+        }
+        
+        
+        function fsNewVideo(containerId, placementName) {
+            freestar.queue.push(function()
+            {
+                var attrName = "data-video-initialized";
+                
+                var container = document.getElementById(containerId);
+                if (!container)
+                {
+                    console.log("fs: newVideo: container not found");
+                    return;
+                }
+                
+                
+                // Check if the container is already initialized using data attribute
+                if (container.getAttribute(attrName) === "true") {
+                    console.log("fs: newVideo: container already initialized");
+                    return;
+                }
+             
+                container.setAttribute(attrName, "true");
+                
+                
+                var div1 = document.createElement("div");
+                div1.id = placementName;
+                container.appendChild(div1);
+                
+                var div2 = document.createElement("div");
+                div2.id = "freestar-video-parent";
+                div1.appendChild(div2);
+                
+                var div3 = document.createElement("div");
+                div3.id = "freestar-video-child";
+                div2.appendChild(div3);
+                
+                primisFwd("freestar_newVideo", "{}");
+                freestar.newVideo(placementName);
+                
+                console.log("fs: newVideo: container initialized");
+            });
+        } 
+        
+        
+        function fsDeleteVideo(containerId) {
+            var attrName = "data-video-initialized";
+            
+            var container = document.getElementById(containerId);
+            if (!container) {
+                console.log("fs: deleteVideo: container not found");
+                return;
+            }
+            
+            container.innerHTML = "";
+            container.setAttribute(attrName, "false");
+            
+            console.log("fs: deleteVideo: container deleted");
+        }
+        
+        
+        /*function fsDeleteVideo(placementName)
+        {
+            freestar.queue.push(function()
+            {
+                // not supported
+               freestar.deleteVideo({
+                    placementName: placementName,
+                    name: placementName,
+                    callback: fsHelperCallback("deleteVideo")
+               });
+            });
+        }*/
+        
+        
+        function fsNewStandAlonePlayer(placementName, caller)
+        {
+            freestar.queue.push(function()
+            {
+               freestar.newStandAlonePlayer(
+               {
+                   placementName: placementName,
+                   name: placementName,
+                   callback: function(a, state) {
+                       console.log("fs: callback newStandAlonePlayer:", arguments);
+                       
+                       if (caller)
+                           caller.invokeMethodAsync("OnJsCallback", JSON.stringify(state) );
+                   }
+                })
+            });
+        }
+        
+        function fsDeleteStandAlonePlayer(placementName)
+        {
+            freestar.queue.push(function()
+            {
+               freestar.deleteStandAlonePlayer({
+                placementName: placementName,
+                name: placementName,
+                callback: fsHelperCallback("deleteStandAlonePlayer")
+               });
+            });
+        }
+        
+      
+        function getExpPrimisValue() {
+            
+            return 0.75;
+        }
+    </script>
+    
+    <!-- END FREESTAR -->
+    
+    
+    <!-- BEGIN IMPACT -->
+    <script type="text/javascript">
+    (function(a,b,c,d,e,f,g){e['ire_o']=c;e[c]=e[c]||function(){(e[c].a=e[c].a||[]).push
+    (arguments)};f=d.createElement(b);g=d.getElementsByTagName(b)[0];f.async=1;f.src=a;g
+    .parentNode.insertBefore(f,g);})('https://utt.impactcdn.com/A5028821-02d8-402b-ad16-51c32432d5771.js','script','ire',document,window);
+    </script>
+    <script type="text/javascript">
+        IMPACT_CLICK_ID = "";
+    
+        function interopImpactGetClickId() {
+            return IMPACT_CLICK_ID;
+        }
+        
+        function interopImpactIre(opId, cObj) {
+            if (cObj)
+                ire(opId, JSON.parse(cObj));
+            else 
+                ire(opId);
+        }
+        
+        function interopImpactRefreshClickId() {
+            ire('generateClickId', function (cId) {
+                if (cId && cId !== IMPACT_CLICK_ID) 
+                {
+                    IMPACT_CLICK_ID = cId;
+                    console.log("Impact: refresh click id:", cId);
+                }
+            }); 
+        }
+    </script>
+    <!-- END IMPACT -->
+ 
+    
+</head>
+<body>
+
+<!-- BEGIN IMPACT -->
+<script type="text/javascript">
+     interopImpactRefreshClickId();  
+     setTimeout(interopImpactRefreshClickId, 1000 * 2);
+     setTimeout(interopImpactRefreshClickId, 1000 * 5);
+     setTimeout(interopImpactRefreshClickId, 1000 * 10);
+     setTimeout(interopImpactRefreshClickId, 1000 * 30);
+</script>
+<!-- END IMPACT -->
+
+
+<!--Blazor:{"type":"webassembly","assembly":"Dezgo.Web.Client","typeName":"Dezgo.Web.Client.App","parameterDefinitions":"W10=","parameterValues":"W10=","prerenderId":"8f0eb71c18614e15abcd91978c0f7a65"}--><style>
+::-webkit-scrollbar {width: 8px;height: 8px;z-index: 1;}
+::-webkit-scrollbar-track {background: transparent;}
+::-webkit-scrollbar-thumb {background: #c4c4c4;border-radius: 1px;}
+::-webkit-scrollbar-thumb:hover {background: #a6a6a6;}
+html, body * {scrollbar-color: #c4c4c4 transparent;scrollbar-width: thin;}
+</style>
+<style>
+    .mud-chart-serie:hover {
+        filter: url(#lighten);
+    }
+</style>
+
+<style>
+:root{
+--mud-palette-black: #27272fff;
+--mud-palette-white: #ffffffff;
+--mud-palette-primary: #1976d2ff;
+--mud-palette-primary-rgb: 25,118,210;
+--mud-palette-primary-text: #ffffffff;
+--mud-palette-primary-darken: rgb(20,97,173);
+--mud-palette-primary-lighten: rgb(45,138,230);
+--mud-palette-primary-hover: rgba(25,118,210,0.058823529411764705);
+--mud-palette-secondary: #ff4081ff;
+--mud-palette-secondary-rgb: 255,64,129;
+--mud-palette-secondary-text: #ffffffff;
+--mud-palette-secondary-darken: rgb(255,31,105);
+--mud-palette-secondary-lighten: rgb(255,102,153);
+--mud-palette-secondary-hover: rgba(255,64,129,0.058823529411764705);
+--mud-palette-tertiary: #1ec8a5ff;
+--mud-palette-tertiary-rgb: 30,200,165;
+--mud-palette-tertiary-text: #ffffffff;
+--mud-palette-tertiary-darken: rgb(25,169,140);
+--mud-palette-tertiary-lighten: rgb(42,223,187);
+--mud-palette-tertiary-hover: rgba(30,200,165,0.058823529411764705);
+--mud-palette-info: #3299ffff;
+--mud-palette-info-rgb: 50,153,255;
+--mud-palette-info-text: #ffffffff;
+--mud-palette-info-darken: rgb(10,133,255);
+--mud-palette-info-lighten: rgb(92,173,255);
+--mud-palette-info-hover: rgba(50,153,255,0.058823529411764705);
+--mud-palette-success: #0bba83ff;
+--mud-palette-success-rgb: 11,186,131;
+--mud-palette-success-text: #ffffffff;
+--mud-palette-success-darken: rgb(9,154,108);
+--mud-palette-success-lighten: rgb(13,222,156);
+--mud-palette-success-hover: rgba(11,186,131,0.058823529411764705);
+--mud-palette-warning: #ffa800ff;
+--mud-palette-warning-rgb: 255,168,0;
+--mud-palette-warning-text: #ffffffff;
+--mud-palette-warning-darken: rgb(214,143,0);
+--mud-palette-warning-lighten: rgb(255,182,36);
+--mud-palette-warning-hover: rgba(255,168,0,0.058823529411764705);
+--mud-palette-error: #f64e62ff;
+--mud-palette-error-rgb: 246,78,98;
+--mud-palette-error-text: #ffffffff;
+--mud-palette-error-darken: rgb(244,47,70);
+--mud-palette-error-lighten: rgb(248,119,134);
+--mud-palette-error-hover: rgba(246,78,98,0.058823529411764705);
+--mud-palette-dark: #27272fff;
+--mud-palette-dark-rgb: 39,39,47;
+--mud-palette-dark-text: #ffffffff;
+--mud-palette-dark-darken: rgb(23,23,28);
+--mud-palette-dark-lighten: rgb(56,56,67);
+--mud-palette-dark-hover: rgba(39,39,47,0.058823529411764705);
+--mud-palette-text-primary: #ffffffb2;
+--mud-palette-text-secondary: #ffffff7f;
+--mud-palette-text-disabled: #ffffff33;
+--mud-palette-action-default: #adadb1ff;
+--mud-palette-action-default-hover: rgba(0,0,0,0.058823529411764705);
+--mud-palette-action-disabled: #ffffff42;
+--mud-palette-action-disabled-background: #ffffff1e;
+--mud-palette-surface: #373740ff;
+--mud-palette-background: #32333dff;
+--mud-palette-background-grey: #27272fff;
+--mud-palette-drawer-background: #27272fff;
+--mud-palette-drawer-text: #ffffff7f;
+--mud-palette-drawer-icon: #ffffff7f;
+--mud-palette-appbar-background: #27272fff;
+--mud-palette-appbar-text: #ffffffb2;
+--mud-palette-lines-default: #ffffff1e;
+--mud-palette-lines-inputs: #ffffff4c;
+--mud-palette-table-lines: #ffffff1e;
+--mud-palette-table-striped: #ffffff33;
+--mud-palette-table-hover: #0000000a;
+--mud-palette-divider: #ffffff1e;
+--mud-palette-divider-light: #ffffff0f;
+--mud-palette-grey-default: #9E9E9E;
+--mud-palette-grey-light: #BDBDBD;
+--mud-palette-grey-lighter: #E0E0E0;
+--mud-palette-grey-dark: #757575;
+--mud-palette-grey-darker: #616161;
+--mud-palette-overlay-dark: rgba(33,33,33,0.4980392156862745);
+--mud-palette-overlay-light: rgba(255,255,255,0.4980392156862745);
+--mud-elevation-0: none;
+--mud-elevation-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+--mud-elevation-2: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+--mud-elevation-3: 0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);
+--mud-elevation-4: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+--mud-elevation-5: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);
+--mud-elevation-6: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);
+--mud-elevation-7: 0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12);
+--mud-elevation-8: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+--mud-elevation-9: 0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12);
+--mud-elevation-10: 0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12);
+--mud-elevation-11: 0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12);
+--mud-elevation-12: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12);
+--mud-elevation-13: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12);
+--mud-elevation-14: 0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12);
+--mud-elevation-15: 0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12);
+--mud-elevation-16: 0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12);
+--mud-elevation-17: 0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12);
+--mud-elevation-18: 0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12);
+--mud-elevation-19: 0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12);
+--mud-elevation-20: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12);
+--mud-elevation-21: 0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12);
+--mud-elevation-22: 0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12);
+--mud-elevation-23: 0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12);
+--mud-elevation-24: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);
+--mud-elevation-25: 0 5px 5px -3px rgba(0,0,0,.06), 0 8px 10px 1px rgba(0,0,0,.042), 0 3px 14px 2px rgba(0,0,0,.036);
+--mud-default-borderradius: 4px;
+--mud-drawer-width-left: 240px;
+--mud-drawer-width-right: 240px;
+--mud-drawer-width-mini-left: 56px;
+--mud-drawer-width-mini-right: 56px;
+--mud-appbar-height: 64px;
+--mud-typography-default-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-default-size: .875rem;
+--mud-typography-default-weight: 400;
+--mud-typography-default-lineheight: 1.43;
+--mud-typography-default-letterspacing: .01071em;
+--mud-typography-default-text-transform: none;
+--mud-typography-h1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h1-size: 6rem;
+--mud-typography-h1-weight: 300;
+--mud-typography-h1-lineheight: 1.167;
+--mud-typography-h1-letterspacing: -.01562em;
+--mud-typography-h1-text-transform: none;
+--mud-typography-h2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h2-size: 3.75rem;
+--mud-typography-h2-weight: 300;
+--mud-typography-h2-lineheight: 1.2;
+--mud-typography-h2-letterspacing: -.00833em;
+--mud-typography-h2-text-transform: none;
+--mud-typography-h3-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h3-size: 3rem;
+--mud-typography-h3-weight: 400;
+--mud-typography-h3-lineheight: 1.167;
+--mud-typography-h3-letterspacing: 0;
+--mud-typography-h3-text-transform: none;
+--mud-typography-h4-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h4-size: 2.125rem;
+--mud-typography-h4-weight: 400;
+--mud-typography-h4-lineheight: 1.235;
+--mud-typography-h4-letterspacing: .00735em;
+--mud-typography-h4-text-transform: none;
+--mud-typography-h5-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h5-size: 1.5rem;
+--mud-typography-h5-weight: 400;
+--mud-typography-h5-lineheight: 1.334;
+--mud-typography-h5-letterspacing: 0;
+--mud-typography-h5-text-transform: none;
+--mud-typography-h6-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-h6-size: 1.25rem;
+--mud-typography-h6-weight: 500;
+--mud-typography-h6-lineheight: 1.6;
+--mud-typography-h6-letterspacing: .0075em;
+--mud-typography-h6-text-transform: none;
+--mud-typography-subtitle1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-subtitle1-size: 1rem;
+--mud-typography-subtitle1-weight: 400;
+--mud-typography-subtitle1-lineheight: 1.75;
+--mud-typography-subtitle1-letterspacing: .00938em;
+--mud-typography-subtitle1-text-transform: none;
+--mud-typography-subtitle2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-subtitle2-size: .875rem;
+--mud-typography-subtitle2-weight: 500;
+--mud-typography-subtitle2-lineheight: 1.57;
+--mud-typography-subtitle2-letterspacing: .00714em;
+--mud-typography-subtitle2-text-transform: none;
+--mud-typography-body1-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-body1-size: 1rem;
+--mud-typography-body1-weight: 400;
+--mud-typography-body1-lineheight: 1.5;
+--mud-typography-body1-letterspacing: .00938em;
+--mud-typography-body1-text-transform: none;
+--mud-typography-body2-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-body2-size: .875rem;
+--mud-typography-body2-weight: 400;
+--mud-typography-body2-lineheight: 1.43;
+--mud-typography-body2-letterspacing: .01071em;
+--mud-typography-body2-text-transform: none;
+--mud-typography-button-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-button-size: .875rem;
+--mud-typography-button-weight: 500;
+--mud-typography-button-lineheight: 1.75;
+--mud-typography-button-letterspacing: .02857em;
+--mud-typography-button-text-transform: uppercase;
+--mud-typography-caption-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-caption-size: .75rem;
+--mud-typography-caption-weight: 400;
+--mud-typography-caption-lineheight: 1.66;
+--mud-typography-caption-letterspacing: .03333em;
+--mud-typography-caption-text-transform: none;
+--mud-typography-overline-family: 'Roboto','Helvetica','Arial','sans-serif';
+--mud-typography-overline-size: .75rem;
+--mud-typography-overline-weight: 400;
+--mud-typography-overline-lineheight: 2.66;
+--mud-typography-overline-letterspacing: .08333em;
+--mud-typography-overline-text-transform: none;
+--mud-zindex-drawer: 1100;
+--mud-zindex-appbar: 1300;
+--mud-zindex-dialog: 1400;
+--mud-zindex-popover: 1200;
+--mud-zindex-snackbar: 1500;
+--mud-zindex-tooltip: 1600;
+}
+</style>
+
+
+
+<div class="mud-popover-provider"></div>
+<div id="mud-snackbar-container" class="mud-snackbar-location-top-right"></div>
+
+<div class="mud-layout mud-drawer-open-responsive-md-left mud-drawer-left-clipped-never" style=""><header class="mud-appbar mud-appbar-fixed-top mud-elevation-0"><div class="mud-toolbar mud-toolbar-gutters mud-toolbar-appbar"><button type="button" class="mud-button-root mud-icon-button mud-inherit-text hover:mud-inherit-hover mud-ripple mud-ripple-icon mud-icon-button-edge-start" __internal_stopPropagation_onclick><span class="mud-icon-button-label"><svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></span></button>
+            <p class="mud-typography mud-typography-body1"></p>
+            <div class="flex-grow-1"></div></div></header>
+        
+        <aside class="mud-drawer mud-drawer-fixed mud-drawer-pos-left mud-drawer--open mud-drawer--initial mud-drawer-md mud-drawer-clipped-never mud-theme-surface mud-elevation-1 mud-drawer-responsive" style=""><div class="mud-drawer-content"><div class="mud-drawer-header"><img src="https://static.dezgo.com/favicon.png" class="mud-image object-fill object-center rounded-lg mud-paper-outlined" style="margin-right: 1rem;" width="40" height="40" />
+                
+                <h6 class="mud-typography mud-typography-h6" style="margin-top: 4px">Dezgo</h6></div>
+            <div class="mud-navmenu mud-navmenu-default mud-navmenu-margin-none"><div class="mud-nav-item mud-ripple"><a href="/account" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg><div class="mud-nav-link-text">Login</div></a></div><hr class="mud-divider my-4" /><div class="mud-nav-item mud-ripple"><a href="/text2image/sdxl" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg><div class="mud-nav-link-text">Text-to-Image XL</div></a></div>
+        <hr class="mud-divider my-4" /><div class="mud-nav-item mud-ripple"><a href="/txt2img" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg><div class="mud-nav-link-text">Text-to-Image</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/controlnet" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.54 5.54L13.77 7.3 12 5.54 10.23 7.3 8.46 5.54 12 2zm2.92 10l-1.76-1.77L18.46 12l-1.76-1.77 1.76-1.77L22 12zm-10 2.92l1.77-1.76L12 18.46l1.77-1.76 1.77 1.76L12 22zm-2.92-10l1.76 1.77L5.54 12l1.76 1.77-1.76 1.77L2 12z"/><circle cx="12" cy="12" r="3"/></svg><div class="mud-nav-link-text">Controlled Text-to-Image</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/image2image" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg><div class="mud-nav-link-text">Image-to-Image</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/upscale" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg><div class="mud-nav-link-text">Upscale</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/text-inpainting" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M4 19h6v-2H4v2zM20 5H4v2h16V5zm-3 6H4v2h13.25c1.1 0 2 .9 2 2s-.9 2-2 2H15v-2l-3 3 3 3v-2h2c2.21 0 4-1.79 4-4s-1.79-4-4-4z"/></svg><div class="mud-nav-link-text">Inpainting from text</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/edit-image" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><rect fill="none" height="24" width="24"/><path d="M3,10h11v2H3V10z M3,8h11V6H3V8z M3,16h7v-2H3V16z M18.01,12.87l0.71-0.71c0.39-0.39,1.02-0.39,1.41,0l0.71,0.71 c0.39,0.39,0.39,1.02,0,1.41l-0.71,0.71L18.01,12.87z M17.3,13.58l-5.3,5.3V21h2.12l5.3-5.3L17.3,13.58z"/></svg><div class="mud-nav-link-text">Edit image from text</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/remove-background" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><g><rect fill="none" height="24" width="24"/></g><g><g><path d="M21,5c0-1.1-0.9-2-2-2H5.83L21,18.17V5z"/><path d="M2.81,2.81L1.39,4.22L3,5.83V19c0,1.1,0.9,2,2,2h13.17l1.61,1.61l1.41-1.41L2.81,2.81z M6,17l3-4l2.25,3l0.82-1.1l2.1,2.1 H6z"/></g></g></svg><div class="mud-nav-link-text">Remove background</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="/text2video" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg><div class="mud-nav-link-text">Text-to-video [BETA]</div></a></div>
+    
+    
+    
+    
+
+
+    <hr class="mud-divider my-4" /><div class="mud-nav-item mud-ripple"><a href="/info/faq" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><g><rect fill="none" height="24" width="24"/></g><g><path d="M11.07,12.85c0.77-1.39,2.25-2.21,3.11-3.44c0.91-1.29,0.4-3.7-2.18-3.7c-1.69,0-2.52,1.28-2.87,2.34L6.54,6.96 C7.25,4.83,9.18,3,11.99,3c2.35,0,3.96,1.07,4.78,2.41c0.7,1.15,1.11,3.3,0.03,4.9c-1.2,1.77-2.35,2.31-2.97,3.45 c-0.25,0.46-0.35,0.76-0.35,2.24h-2.89C10.58,15.22,10.46,13.95,11.07,12.85z M14,20c0,1.1-0.9,2-2,2s-2-0.9-2-2c0-1.1,0.9-2,2-2 S14,18.9,14,20z"/></g></svg><div class="mud-nav-link-text">FAQ / Support</div></a></div><div class="mud-nav-item mud-ripple"><a href="/info/models" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><g><rect fill="none" height="24" width="24"/><path d="M15.5,13.5c0,2-2.5,3.5-2.5,5h-2c0-1.5-2.5-3-2.5-5c0-1.93,1.57-3.5,3.5-3.5h0C13.93,10,15.5,11.57,15.5,13.5z M13,19.5h-2 V21h2V19.5z M19,13c0,1.68-0.59,3.21-1.58,4.42l1.42,1.42C20.18,17.27,21,15.23,21,13c0-2.74-1.23-5.19-3.16-6.84l-1.42,1.42 C17.99,8.86,19,10.82,19,13z M16,5l-4-4v3c0,0,0,0,0,0c-4.97,0-9,4.03-9,9c0,2.23,0.82,4.27,2.16,5.84l1.42-1.42 C5.59,16.21,5,14.68,5,13c0-3.86,3.14-7,7-7c0,0,0,0,0,0v3L16,5z"/></g></svg><div class="mud-nav-link-text">Models</div></a></div><div class="mud-nav-item mud-ripple"><a href="https://dev.dezgo.com/" rel="" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg><div class="mud-nav-link-text"><span>API</span></div></a></div>
+    
+    <div class="mud-nav-item mud-ripple"><a href="https://app.impact.com/campaign-campaign-info-v2/Dezgocom-Affiliation.brand" target="_blank" rel="noopener noreferrer" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><rect fill="none" height="24" width="24"/><g><path d="M12,12.75c1.63,0,3.07,0.39,4.24,0.9c1.08,0.48,1.76,1.56,1.76,2.73L18,18H6l0-1.61c0-1.18,0.68-2.26,1.76-2.73 C8.93,13.14,10.37,12.75,12,12.75z M4,13c1.1,0,2-0.9,2-2c0-1.1-0.9-2-2-2s-2,0.9-2,2C2,12.1,2.9,13,4,13z M5.13,14.1 C4.76,14.04,4.39,14,4,14c-0.99,0-1.93,0.21-2.78,0.58C0.48,14.9,0,15.62,0,16.43V18l4.5,0v-1.61C4.5,15.56,4.73,14.78,5.13,14.1z M20,13c1.1,0,2-0.9,2-2c0-1.1-0.9-2-2-2s-2,0.9-2,2C18,12.1,18.9,13,20,13z M24,16.43c0-0.81-0.48-1.53-1.22-1.85 C21.93,14.21,20.99,14,20,14c-0.39,0-0.76,0.04-1.13,0.1c0.4,0.68,0.63,1.46,0.63,2.29V18l4.5,0V16.43z M12,6c1.66,0,3,1.34,3,3 c0,1.66-1.34,3-3,3s-3-1.34-3-3C9,7.34,10.34,6,12,6z"/></g></svg><div class="mud-nav-link-text">Affiliate <svg class="mud-icon-root mud-svg-icon mud-info-text mud-icon-size-small" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><g><rect fill="none" height="24" width="24" x="0"/></g><g><g><g><path d="M20,4H4C2.89,4,2.01,4.89,2.01,6L2,18c0,1.11,0.89,2,2,2h16c1.11,0,2-0.89,2-2V6C22,4.89,21.11,4,20,4z M8.5,15H7.3 l-2.55-3.5V15H3.5V9h1.25l2.5,3.5V9H8.5V15z M13.5,10.26H11v1.12h2.5v1.26H11v1.11h2.5V15h-4V9h4V10.26z M20.5,14 c0,0.55-0.45,1-1,1h-4c-0.55,0-1-0.45-1-1V9h1.25v4.51h1.13V9.99h1.25v3.51h1.12V9h1.25V14z"/></g></g></g></svg></div></a></div>
+       
+    
+    <div class="mud-nav-item mud-ripple"><a href="https://twitter.com/dezgo" target="_blank" rel="noopener noreferrer" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/></svg><div class="mud-nav-link-text">Twitter</div></a></div>
+    <div class="mud-nav-item mud-ripple"><a href="https://discord.gg/RQrGpUhPhx" target="_blank" rel="noopener noreferrer" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M19,6.75A9.2017,9.2017,0,0,0,14.625,5l-.2135.4274a8.4519,8.4519,0,0,1,4.151,2.1976A12.87,12.87,0,0,0,12,5.875a12.87,12.87,0,0,0-6.5625,1.75,8.6339,8.6339,0,0,1,4.151-2.1976L9.375,5A9.1429,9.1429,0,0,0,5,6.75S2.76,9.9989,2.375,16.375A8.2659,8.2659,0,0,0,8.0625,19l.7175-.9555A8.7654,8.7654,0,0,1,5,15.5a11.032,11.032,0,0,0,7,2.1875A11.032,11.032,0,0,0,19,15.5a8.7609,8.7609,0,0,1-3.78,2.5445L15.9375,19a8.2659,8.2659,0,0,0,5.6875-2.625C21.24,9.9989,19,6.75,19,6.75ZM9.1562,14.625a1.6511,1.6511,0,0,1-1.5312-1.75,1.6511,1.6511,0,0,1,1.5312-1.75,1.6511,1.6511,0,0,1,1.5313,1.75A1.6511,1.6511,0,0,1,9.1562,14.625Zm5.6876,0a1.6511,1.6511,0,0,1-1.5313-1.75,1.6511,1.6511,0,0,1,1.5313-1.75,1.6511,1.6511,0,0,1,1.5312,1.75A1.6511,1.6511,0,0,1,14.8438,14.625Z"/></svg><div class="mud-nav-link-text">Discord</div></a></div>
+
+
+
+
+  
+   
+
+    <div class="mud-nav-item mud-ripple"><a href="https://status.dezgo.com/" target="_blank" rel="noopener noreferrer" class="mud-nav-link"><svg class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium mud-nav-link-icon mud-nav-link-icon-default" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg><div class="mud-nav-link-text">System Status</div></a></div><div class="mud-container mud-container-maxwidth-lg" style="margin-top:16px;"><span class="mud-typography mud-typography-caption mud-typography-align-center">
+            powered by Stable Diffusion AI<br><a href="/terms" class="mud-typography mud-link mud-default-text mud-link-underline-always mud-typography-caption">Terms</a><span> - </span><a href="/privacy" class="mud-typography mud-link mud-default-text mud-link-underline-always mud-typography-caption">Privacy</a> - 
+            <a href="/license" class="mud-typography mud-link mud-default-text mud-link-underline-always mud-typography-caption">Open RAIL-M License</a>
+            <br>
+            <button id="pmLink">Privacy Manager</button></span></div></div></div></aside>
+
+        <div class="mud-main-content">
+            
+
+            <div class="mud-container mud-container-maxwidth-false my-5 pt-5 pl-0 pr-0"><div class="mud-container mud-container-maxwidth-lg"><h3 class="mud-typography mud-typography-h3 mud-typography-gutterbottom">TERMS OF SERVICE</h3><br><p class="mud-typography mud-typography-body1">Last Revised: 2023-02-05</p><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">OVERVIEW</h4><p class="mud-typography mud-typography-body1">This Terms of Service Agreement (&quot;Agreement&quot;) is entered into by and between Dezgo SAS (&quot;Company&quot;) and you, and is made effective as of the date of your use of this website https://dezgo.com/ (&quot;Site&quot;) or the date of electronic acceptance. This Agreement sets forth the general terms and conditions of your use of the https://dezgo.com/ as well as the products and/or services purchased or accessed through this Site (the &quot;Services&quot;).Whether you are simply browsing or using this Site or purchase Services, your use of this Site and your electronic acceptance of this Agreement signifies that you have read, understand, acknowledge and agree to be bound by this Agreement our Privacy policy (https://dezgo.com/privacy). The terms &quot;we&quot;, &quot;us&quot; or &quot;our&quot; shall refer to Company. The terms &quot;you&quot;, &quot;your&quot;, &quot;User&quot; or &quot;customer&quot; shall refer to any individual or entity who accepts this Agreement, uses our Site, has access or uses the Services. Nothing in this Agreement shall be deemed to confer any third-party rights or benefits. Company may, in its sole and absolute discretion, change or modify this Agreement, and any policies or agreements which are incorporated herein, at any time, and such changes or modifications shall be effective immediately upon posting to this Site. Your use of this Site or the Services after such changes or modifications have been made shall constitute your acceptance of this Agreement as last revised. IF YOU DO NOT AGREE TO BE BOUND BY THIS AGREEMENT AS LAST REVISED, DO NOT USE (OR CONTINUE TO USE) THIS SITE OR THE SERVICES.</p><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">SERVICE</h4><p class="mud-typography mud-typography-body1">Dezgo offers a Software as a Service (SaaS) platform, enabling users to execute complex programs without the need for configuring or installing software and hardware. This is achieved by leveraging our computing resources and infrastructure.</p><br><p class="mud-typography mud-typography-body1">This encompasses, but is not limited to, Artificial Intelligence (AI) services.</p><br><p class="mud-typography mud-typography-body1">Access to the Service is granted via a web interface and a remote API, both of which are governed by the terms of this Agreement. Additionally, users are bound by the fees and charges in place at the moment of each request.</p><br><p class="mud-typography mud-typography-body1">It is essential to understand that Dezgo does not guarantee the accuracy or completeness of the AI software&#x27;s results. Users are responsible for validating these results and determining the subsequent actions.</p><br><p class="mud-typography mud-typography-body1">Charges are based on the execution and computing resources consumed to run an algorithm or program. You are billed for this consumption irrespective of the correctness, adequacy, or satisfaction derived from the results.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">ELIGIBILITY</h4><p class="mud-typography mud-typography-body1">This Site and the Services are available only to Users who can form legally binding contracts under applicable law. By using this Site or the Services, you represent and warrant that you are (i) at least eighteen (18) years of age, (ii) otherwise recognized as being able to form legally binding contracts under applicable law, and (iii) are not a person barred from purchasing or receiving the Services found under the laws of the France or other applicable jurisdiction. If you are entering into this Agreement on behalf of a company or any corporate entity, you represent and warrant that you have the legal authority to bind such corporate entity to the terms and conditions contained in this Agreement, in which case the terms &quot;you&quot;, &quot;your&quot;, &quot;User&quot; or &quot;customer&quot; shall refer to such corporate entity. If, after your electronic acceptance of this Agreement, Company finds that you do not have the legal authority to bind such corporate entity, you will be personally responsible for the obligations contained in this Agreement.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">RULES OF USER CONDUCT</h4><p class="mud-typography mud-typography-body1">By using this Site You acknowledge and agree that:</p><br><p class="mud-typography mud-typography-body1">- Your use of this Site, including any content you submit, will comply with this Agreement and all applicable local, state, national and international laws, rules and regulations.</p><br><p class="mud-typography mud-typography-body1">You will not use this Site in a manner that:</p><br><p class="mud-typography mud-typography-body1">- Is illegal, or promotes or encourages illegal activity;</p><p class="mud-typography mud-typography-body1">- Promotes, encourages or engages in child pornography or the exploitation of children;</p><p class="mud-typography mud-typography-body1">- Promotes, encourages or engages in terrorism, violence against people, animals, or property;</p><p class="mud-typography mud-typography-body1">- Promotes, encourages or engages in any spam or other unsolicited bulk email, or computer or network hacking or cracking;</p><p class="mud-typography mud-typography-body1">- Infringes on the intellectual property rights of another User or any other person or entity;</p><p class="mud-typography mud-typography-body1">- Violates the privacy or publicity rights of another User or any other person or entity, or breaches any duty of confidentiality that you owe to another User or any other person or entity;</p><p class="mud-typography mud-typography-body1">- Interferes with the operation of this Site;</p><p class="mud-typography mud-typography-body1">- Contains or installs any viruses, worms, bugs, Trojan horses, Cryptocurrency Miners or other code, files or programs designed to, or capable of, using many resources, disrupting, damaging, or limiting the functionality of any software or hardware.</p><br><p class="mud-typography mud-typography-body1">You will not:</p><br><p class="mud-typography mud-typography-body1">- copy or distribute in any medium any part of this Site, except where expressly authorized by Company,</p><p class="mud-typography mud-typography-body1">- modify or alter any part of this Site or any of its related technologies,</p><p class="mud-typography mud-typography-body1">- access Companies Content (as defined below) or User Content through any technology or means other than through this Site itself.</p><br><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">INTELLECTUAL PROPERTY</h4><p class="mud-typography mud-typography-body1">In addition to the general rules above, the provisions in this Section apply specifically to your use of Companies Content posted to Site. Companies Content on this Site, including without limitation the text, software, scripts, source code, API, graphics, photos, sounds, music, videos and interactive features and the trademarks, service marks and logos contained therein (&quot;Companies Content&quot;), are owned by or licensed to Dezgo in perpetuity, and are subject to copyright, trademark, and/or patent protection. Companies Content is provided to you &quot;as is&quot;, &quot;as available&quot; and &quot;with all faults&quot; for your information and may not be downloaded, copied, reproduced, distributed, transmitted, broadcast, displayed, sold, licensed, or otherwise exploited for any purposes whatsoever without the express prior written consent of Company. No right or license under any copyright, trademark, patent, or other proprietary right or license is granted by this Agreement.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">YOUR USE OF USER CONTENT</h4><p class="mud-typography mud-typography-body1">Some of the features of this Site may allow Users to view, post, publish, share, or manage (a) ideas, opinions, recommendations, or advice (&quot;User Submissions&quot;), or (b) literary, artistic, musical, or other content, including but not limited to photos and videos (together with User Submissions, &quot;User Content&quot;). By posting or publishing User Content to this Site, you represent and warrant to Company that (i) you have all necessary rights to distribute User Content via this Site or via the Services, either because you are the author of the User Content and have the right to distribute the same, or because you have the appropriate distribution rights, licenses, consents, and/or permissions to use, in writing, from the copyright or other owner of the User Content, and (ii) the User Content does not violate the rights of any third party. You agree not to circumvent, disable or otherwise interfere with the security-related features of this Site (including without limitation those features that prevent or restrict use or copying of any Companies Content or User Content) or enforce limitations on the use of this Site, the Companies Content or the User Content therein.</p><br><br><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">DISCLAIMER OF REPRESENTATIONS AND WARRANTIES</h4><p class="mud-typography mud-typography-body1">YOU SPECIFICALLY ACKNOWLEDGE AND AGREE THAT YOUR USE OF THIS SITE SHALL BE AT YOUR OWN RISK AND THAT THIS SITE ARE PROVIDED &quot;AS IS&quot;, &quot;AS AVAILABLE&quot; AND &quot;WITH ALL FAULTS&quot;. COMPANY, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. COMPANY, ITS OFFICERS, DIRECTORS, EMPLOYEES, AND AGENTS MAKE NO REPRESENTATIONS OR WARRANTIES ABOUT (I) THE ACCURACY, COMPLETENESS, OR CONTENT OF THIS SITE, (II) THE ACCURACY, COMPLETENESS, OR CONTENT OF ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, AND/OR (III) THE SERVICES FOUND AT THIS SITE OR ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, AND COMPANY ASSUMES NO LIABILITY OR RESPONSIBILITY FOR THE SAME. IN ADDITION, YOU SPECIFICALLY ACKNOWLEDGE AND AGREE THAT NO ORAL OR WRITTEN INFORMATION OR ADVICE PROVIDED BY COMPANY, ITS OFFICERS, DIRECTORS, EMPLOYEES, OR AGENTS, AND THIRD-PARTY SERVICE PROVIDERS WILL (I) CONSTITUTE LEGAL OR FINANCIAL ADVICE OR (II) CREATE A WARRANTY OF ANY KIND WITH RESPECT TO THIS SITE OR THE SERVICES FOUND AT THIS SITE, AND USERS SHOULD NOT RELY ON ANY SUCH INFORMATION OR ADVICE. THE FOREGOING DISCLAIMER OF REPRESENTATIONS AND WARRANTIES SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW, and shall survive any termination or expiration of this Agreement or your use of this Site or the Services found at this Site.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">LIMITATION OF LIABILITY</h4><p class="mud-typography mud-typography-body1">IN NO EVENT SHALL COMPANY, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND ALL THIRD PARTY SERVICE PROVIDERS, BE LIABLE TO YOU OR ANY OTHER PERSON OR ENTITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING ANY DAMAGES THAT MAY RESULT FROM (I) THE ACCURACY, COMPLETENESS, OR CONTENT OF THIS SITE, (II) THE ACCURACY, COMPLETENESS, OR CONTENT OF ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, (III) THE SERVICES FOUND AT THIS SITE OR ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, (IV) PERSONAL INJURY OR PROPERTY DAMAGE OF ANY NATURE WHATSOEVER, (V) THIRD-PARTY CONDUCT OF ANY NATURE WHATSOEVER, (VI) ANY INTERRUPTION OR CESSATION OF SERVICES TO OR FROM THIS SITE OR ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, (VII) ANY VIRUSES, WORMS, BUGS, TROJAN HORSES, OR THE LIKE, WHICH MAY BE TRANSMITTED TO OR FROM THIS SITE OR ANY SITES LINKED (THROUGH HYPERLINKS, BANNER ADVERTISING OR OTHERWISE) TO THIS SITE, (VIII) ANY USER CONTENT OR CONTENT THAT IS DEFAMATORY, HARASSING, ABUSIVE, HARMFUL TO MINORS OR ANY PROTECTED CLASS, PORNOGRAPHIC, &quot;X-RATED&quot;, OBSCENE OR OTHERWISE OBJECTIONABLE, AND/OR (IX) ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF YOUR USE OF THIS SITE OR THE SERVICES FOUND AT THIS SITE, WHETHER BASED ON WARRANTY, CONTRACT, TORT, OR ANY OTHER LEGAL OR EQUITABLE THEORY, AND WHETHER OR NOT COMPANY IS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN ADDITION, You SPECIFICALLY ACKNOWLEDGE AND agree that any cause of action arising out of or related to this Site or the Services found at this Site must be commenced within one (1) year after the cause of action accrues, otherwise such cause of action shall be permanently barred. THE FOREGOING LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW, AND shall survive any termination or expiration of this Agreement or your use of this Site or the Services found at this Site.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">INDEMNITY</h4><p class="mud-typography mud-typography-body1">You agree to protect, defend, indemnify and hold harmless Company and its officers, directors, employees, agents from and against any and all claims, demands, costs, expenses, losses, liabilities and damages of every kind and nature (including, without limitation, reasonable attorneys&#x2019; fees) imposed upon or incurred by Company directly or indirectly arising from (i) your use of and access to this Site; (ii) your violation of any provision of this Agreement or the policies or agreements which are incorporated herein; and/or (iii) your violation of any third-party right, including without limitation any intellectual property or other proprietary right. The indemnification obligations under this section shall survive any termination or expiration of this Agreement or your use of this Site or the Services found at this Site.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">DATA TRANSFER</h4><p class="mud-typography mud-typography-body1">If you are visiting this Site from a country other than the country in which our servers are located, your communications with us may result in the transfer of information across international boundaries. By visiting this Site and communicating electronically with us, you consent to such transfers.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">AVAILABILITY OF WEBSITE / API</h4><p class="mud-typography mud-typography-body1">Subject to the terms and conditions of this Agreement and our policies, we shall use commercially reasonable efforts to attempt to provide this Site on 24/7 basis. You acknowledge and agree that from time to time this Site may be inaccessible for any reason including, but not limited to, periodic maintenance, repairs or replacements that we undertake from time to time, or other causes beyond our control including, but not limited to, interruption or failure of telecommunication or digital transmission links or other failures. You acknowledge and agree that we have no control over the availability of this Site on a continuous or uninterrupted basis, and that we assume no liability to you or any other party with regard thereto.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">DISCONTINUED SERVICES</h4><p class="mud-typography mud-typography-body1">Company reserves the right to cease offering or providing any of the Services at any time, for any or no reason, and without prior notice. Although Company makes great effort to maximize the lifespan of all its Services, there are times when a Service we offer will be discontinued. If that is the case, that product or service will no longer be supported by Company. In such case, Company will either offer a comparable Service for you to migrate to or a refund. Company will not be liable to you or any third party for any modification, suspension, or discontinuance of any of the Services we may offer or facilitate access to.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">FEES AND PAYMENTS</h4><p class="mud-typography mud-typography-body1">You acknowledge and agree that your payment will be charged and processed by Dezgo. You commit to paying any and all prices and fees due for Services purchased or obtained on this Site when you order the Services. The Company expressly reserves the right to change or modify its prices and fees at any time. Any such changes or modifications will be posted online on this Site and will take effect immediately without the need for further notice to you.</p><br><p class="mud-typography mud-typography-body1">Unless expressly stated in these Terms, all charges and payments are non-refundable, non-cancellable, and non-creditable, even if your Services are suspended, terminated, or transferred before the end of the Service term.</p><br><p class="mud-typography mud-typography-body1">Billing operates on a prepaid account basis. You can top up your account at any time using any of the payment methods available on the Site. Once your payment is confirmed, your account will be credited with the amount paid. You can use the funds in your account to pay for any of the Services available on the Site.</p><br><p class="mud-typography mud-typography-body1">Prepaid credit balances do not expire and are not subjected to any fees or charges.</p><br><p class="mud-typography mud-typography-body1">The cost of each request sent to the Service will be deducted from your account balance.</p><br><p class="mud-typography mud-typography-body1">You can preview the cost of your request before submitting it to the Service in the top right corner of the page.</p><br><p class="mud-typography mud-typography-body1">The Company reserves the right to change any of the following:</p><p class="mud-typography mud-typography-body1">- the list of payment methods available on the Site.</p><p class="mud-typography mud-typography-body1">- the fees and charges associated with the payment methods on the Site.</p><p class="mud-typography mud-typography-body1">- the fees and charges associated with the Services on the Site.</p><p class="mud-typography mud-typography-body1">- the fees and charges related to account balances or expiration of balances.</p><p class="mud-typography mud-typography-body1">- the discounts and promotions available on the Site.</p><br><p class="mud-typography mud-typography-body1">You are responsible for:</p><p class="mud-typography mud-typography-body1">- keeping your account information current and accurate.</p><p class="mud-typography mud-typography-body1">- ensuring the security of your account, which includes any API keys, passwords, and access to the email address linked to your account.</p><br><p class="mud-typography mud-typography-body1">The Company shall not be held liable for any failures in securing your account or for any unauthorized use of your account.</p><br><p class="mud-typography mud-typography-body1">You agree to maintain a positive balance at all times. Should your balance become negative, you commit to paying the Company the amount of the negative balance promptly upon demand.</p><br><p class="mud-typography mud-typography-body1">In case of a payment dispute, the disputed amount will be deducted from your Dezgo account balance, accompanied by a $25 USD fee.</p><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">NO THIRD-PARTY BENEFICIARIES</h4><p class="mud-typography mud-typography-body1">Nothing in this Agreement shall be deemed to confer any third-party rights or benefits.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">COMPLIANCE WITH LOCAL LAWS</h4><p class="mud-typography mud-typography-body1">Company makes no representation or warranty that the content available on this Site are appropriate in every country or jurisdiction, and access to this Site from countries or jurisdictions where its content is illegal is prohibited. Users who choose to access this Site are responsible for compliance with all local laws, rules and regulations.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">GOVERNING LAW</h4><p class="mud-typography mud-typography-body1">This Agreement and any dispute or claim arising out of or in connection with it or its subject matter or formation shall be governed by and construed in accordance with the laws of France, to the exclusion of conflict of law rules.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">DISPUTE RESOLUTION</h4><p class="mud-typography mud-typography-body1">Any controversy or claim arising out of or relating to these Terms of Services will be settled by binding arbitration. Any such controversy or claim must be arbitrated on an individual basis, and must not be consolidated in any arbitration with any claim or controversy of any other party. The arbitration must be conducted in France, -, and judgment on the arbitration award may be entered into any court having jurisdiction thereof.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">TITLES AND HEADINGS</h4><p class="mud-typography mud-typography-body1">The titles and headings of this Agreement are for convenience and ease of reference only and shall not be utilized in any way to construe or interpret the agreement of the parties as otherwise set forth herein.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">SEVERABILITY</h4><p class="mud-typography mud-typography-body1">Each covenant and agreement in this Agreement shall be construed for all purposes to be a separate and independent covenant or agreement. If a court of competent jurisdiction holds any provision (or portion of a provision) of this Agreement to be illegal, invalid, or otherwise unenforceable, the remaining provisions (or portions of provisions) of this Agreement shall not be affected thereby and shall be found to be valid and enforceable to the fullest extent permitted by law.</p><br><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">LEGAL INFORMATION</h4><p class="mud-typography mud-typography-body1">Dezgo SAS is a simplified limited liability company with capital of &#x20AC;1,000 ; registered under no. 951 132 968 RCS Paris and whose registered office is situated at 60 rue Fran&#xE7;ois 1er, 75008 Paris, France.</p><br><p class="mud-typography mud-typography-body1">The site is hosted by Cloudflare, Inc., located at 101 Townsend Street San Francisco, CA 94107 United States. Phone: &#x2B;1 (650) 319-8930</p><br><h4 class="mud-typography mud-typography-h4 mud-typography-gutterbottom">CONTACT INFORMATION</h4><p class="mud-typography mud-typography-body1">If you have any questions about this Agreement, please contact us through our online contact form below:</p><button type="button" class="mud-button-root mud-button mud-button-outlined mud-button-outlined-default mud-button-outlined-size-small mud-ripple my-2" __internal_stopPropagation_onclick><span class="mud-button-label">Write message</span></button><div class="mud-container mud-container-maxwidth-lg mb-4"></div></div></div>
+
+            <div class="mud-container mud-container-maxwidth-lg" style="margin-top: 250px;"></div></div></div>
+
+
+
+<!--Blazor:{"prerenderId":"8f0eb71c18614e15abcd91978c0f7a65"}-->
+
+<div id="blazor-error-ui" style="color:black;">
+    
+        An error has occurred. This application may need to be reloaded.
+    
+    
+    <a href="" class="reload" style="color:blue;">Reload</a>
+    <a class="dismiss" style="color:blue;">Dismiss</a>
+</div>
+
+<script src="_framework/blazor.webassembly.js" autostart="false"></script>
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+<script>
+  Blazor.start({
+    loadBootResource: function (type, name, uri, integrity) {
+      console.log(`Loading: '${type}', '${name}', '${uri}', '${integrity}'`);
+      
+      uri += "?" + integrity;
+      return uri;
+      return fetch(uri,  {
+          cache: 'default',
+          integrity: integrity,
+          headers: {
+            "X-Blazor-Load": "1"
+          }
+      });
+      
+      return null;
+    }
+  });
+</script>
+
+</body>
+</html>
