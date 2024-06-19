@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Terms of Service |:| Wolvden</title>
+	<link rel="shortcut icon" href="//static.wolvden.com/images/layout/favicon.ico" type="image/x-icon">
+	<link rel="preload" href="https://static.wolvden.com/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://static.wolvden.com/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+	<meta name="google" content="notranslate">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=0.75, minimum-scale=0.5">
+	<!-- Testing defaulting to initial-scale=1 -->
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5"> -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://static.wolvden.com/css/chat.1712644896.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/wolvden.min.1716885900.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/wolvden-default.extra.1712644896.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/common.1712644896.css">
+	<!-- <link rel="stylesheet" href="https://static.wolvden.com/css/chat.202105171200.css"> -->
+	
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178640444-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-178640444-1');
+	</script>
+	
+
+	<script type="text/javascript">
+		const URL_STATIC = 'https://static.wolvden.com';
+
+		window.loggerConfig = {
+			"logEndpoint": 'https://www.wolvden.com/ajax/log/',
+			"enableSC": false,
+			"urlH2C": URL_STATIC + '/js/h2c.js'
+		};
+
+		var inputEvent = document.createEvent('Event');
+		inputEvent.initEvent('input', true, true);
+
+		"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,t){"use strict";if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var n=Object(e),r=1;r<arguments.length;r++){var o=arguments[r];if(null!=o)for(var c in o)Object.prototype.hasOwnProperty.call(o,c)&&(n[c]=o[c])}return n},writable:!0,configurable:!0});
+		"remove"in Element.prototype||(Element.prototype.remove=function(){this.parentNode&&this.parentNode.removeChild(this)});
+
+		var b_lsis=null;function localStorageIsSupported(){if(null!==b_lsis)return b_lsis;try{var o="__na8h4oak4g302kk__";return storage.setItem(o,o),storage.removeItem(o),b_lsis=!0}catch(o){return b_lsis=!1}}function setSetting(o,t){localStorageIsSupported()?localStorage.setItem(o,t):CK.create(o,t,365)}function getSetting(o){return localStorageIsSupported()?localStorage.getItem(o):CK.read(o)}
+		var CK={create:function(e,t,n){var r;if(n){var i=new Date;i.setTime(i.getTime()+24*n*60*60*1e3),r="; expires="+i.toGMTString()}else r="";document.cookie=e+"="+t+r+"; path=/"},read:function(e){for(var t=e+"=",n=document.cookie.split(";"),r=0;r<n.length;r++){for(var i=n[r];" "===i.charAt(0);)i=i.substring(1,i.length);if(0===i.indexOf(t))return i.substring(t.length,i.length)}return null},erase:function(e){utils.createCookie(e,"",-1)}};
+
+		var User = (function() {
+			var roles = {
+				'mod'    : false,
+				'admin'  : false
+			};
+
+			var mid = '';
+			var sid = 'dWVzODI4YmE1Y29jbHFvMzdtY2MzbmJmdWw=';
+
+			var currencyDisplay = {};
+			var currencyUsesComma = false;
+
+			var currencies = {
+				"SC": 0,
+				"GC": 0
+			};
+
+			var siteTheme = 'default';
+
+			document.addEventListener("DOMContentLoaded", function() {
+				currencyDisplay['SC'] = document.querySelector('.user_current_sc');
+				currencyDisplay['GC'] = document.querySelector('.user_current_gc');
+				if (currencyDisplay['SC']) {
+					currencyUsesComma = currencyDisplay['SC'].textContent.indexOf(',') >= 0;
+				}
+			});
+
+			function tkIsValid(tk) {
+				if (typeof tk === 'undefined') {
+					return false;
+				}
+
+				if (tk !== 'dWVzODI4YmE1Y29jbHFvMzdtY2MzbmJmdWw=') {
+					return false;
+				}
+
+				return true;
+			}
+
+			function commifyAmount(amount) {
+				return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			}
+
+			function updateCurrency(type, amount) {
+				var type = type.toUpperCase();
+				var oldAmount = currencies[type];
+				var newAmount = oldAmount + parseInt(amount.toString().replace(/[^0-9\-]/, ''));
+
+				currencies[type] = newAmount;
+
+				if (currencyUsesComma) {
+					newAmount = commifyAmount(newAmount);
+				}
+
+				currencyDisplay[type].textContent = newAmount;
+
+				return true;
+			}
+
+			function getCurrency(type) {
+				var type = type.toUpperCase();
+				return currencies[type];
+			}
+
+			function setCurrency(type, amount) {
+				var newAmount = parseInt(amount.toString().replace(/[^0-9\-]/, ''));
+				currencies[type] = newAmount;
+
+				if (currencyUsesComma) {
+					newAmount = commifyAmount(newAmount);
+				}
+
+				currencyDisplay[type].textContent = newAmount;
+
+				return true;
+			}
+
+			return {
+				SC: {
+					set: function(amount) { setCurrency('SC', amount); },
+					get: function() { return getCurrency('SC'); },
+					add: function(amount) { updateCurrency('SC', amount); }
+				},
+				GC: {
+					set: function(amount) { setCurrency('GC', amount); },
+					get: function() { return getCurrency('GC'); },
+					add: function(amount) { updateCurrency('GC', amount); }
+				},
+				hasRole: function(role) {
+					return roles[role];
+				},
+				getTheme: function() {
+					return siteTheme;
+				},
+				getMID: function(tk) {
+					return tkIsValid(tk) ? mid : null;
+				},
+				getSID: function(tk) {
+					return tkIsValid(tk) ? sid : null;
+				}
+			}
+		}());
+	</script>
+	<script src="https://static.wolvden.com/js/scripts.1712644896.js"></script>
+
+			<script>
+	var Achievement;
+	runOnDOMReady.push(function() {
+		Achievement = (function () {
+			var fraContainer = document.getElementById('fraAchievements');
+			var fraAchievementLink = document.getElementById('fraAchievementLink');
+			fraAchievementLink.style.display = 'none';
+
+			function applyClasses(target) {
+				target.classList.add('alert');
+				target.classList.add('alert-info');
+				target.classList.add('achievement');
+			}
+
+			function checkIfEmpty() {
+				fraAchievementLink.style.display = fraContainer.childElementCount <= 1 ? 'none' : 'block';
+			}
+
+			function display(achievements) {
+				achievements.forEach(function(html) {
+					var blockAchievement = document.createElement('div');
+					applyClasses(blockAchievement);
+					blockAchievement.innerHTML = html;
+					blockAchievement.addEventListener('click', function() {
+						this.classList.add('removed');
+						window.setTimeout(function(target) {
+							target.remove();
+							checkIfEmpty();
+						}, 750, this);
+					});
+					var firstEl = fraContainer.firstChild;
+					fraContainer.insertBefore(blockAchievement, firstEl);
+				});
+				checkIfEmpty();
+			}
+
+			return {
+				display: display
+			}
+		}());
+	});
+	</script>
+
+	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+	<script type="text/javascript">
+		window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-bottom"};
+	</script>
+
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+	<!-- End Cookie Consent plugin -->
+	</head>
+<body class="theme_default">
+	<script src="https://static.wolvden.com/js/mezr.min.js" type="text/javascript"></script>
+	<div id="fraCopyPlaceholder"></div>
+	<div id="fraAchievements"><div class="alert alert-info achievement no-close" style="display: none" id="fraAchievementLink"><a href="/achievements" class="alert-link blockLink">View your Achievements</a></div></div>
+
+<a class="sr-only sr-only-focusable" href="#content" style="position: absolute;">Skip to main content</a>
+<div id="header" class="container">
+	<nav class="navbar navbar-main navbar-dark navbar-expand-lg">
+		<a class="navbar-brand" href="/"><span class="sr-only">Home</span></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="main-menu">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/den/"><i class="fa fa-paw"></i>Den</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/crossroads"><i class="fa fa-globe-americas"></i>Crossroads</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/hoard"><i class="fa fa-drumstick-bite"></i>Hoard</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/chatter"><i class="fa fa-comments"></i>Chatter</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/news"><i class="fa fa-feather-alt"></i>News</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/event"><i class="fa fa-calendar-alt"></i>Event</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/grove"><i class="fa fa-gem"></i>Grove</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help"><i class="fa fa-question-circle"></i>Help</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<nav class="navbar navbar-status navbar-expand">
+		You aren't logged in!&nbsp;<a href="/">Log in <i class="fas fa-chevron-right"></i></a>	</nav>
+
+	<nav class="breadcrumb-nav" aria-label="breadcrumb">
+		<ol class="breadcrumb col-lg-9 ml-auto text-break">
+			<li class="breadcrumb-item"><a href="/">Home</a></li>
+			<li class="breadcrumb-item active">Terms of Service</li>			<li class="ml-auto"><i class="fas fa-bookmark text-danger" id="bookmarkPage"  data-toggle-tooltip="true" data-placement="bottom" title="Bookmark this page" data-html="true" data-original-title="Bookmark this page" data-boundary="viewport"></i></li>		</ol>
+	</nav>
+
+</div>
+
+<div class="container">
+	<div class="row justify-content-end">
+
+		<div id="main" class="col-lg-9 order-lg-2">
+		<a name="content" class="sr-only sr-only-focusable">Main Content</a>
+			
+<h1>Terms of Service</h1>
+
+
+<style>
+.terms ol {
+  list-style-type: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+}
+
+.terms ol > li {
+  display: table;
+  counter-increment: item;
+  margin-bottom: 0.6em;
+  padding: 3px 0;
+}
+
+.terms ol > li:before {
+  content: counters(item, ".") ". ";
+  display: table-cell;
+  padding-right: 0.6em;
+  color: #888;
+}
+
+.terms li ol > li {
+  margin: 0;
+}
+
+.terms li ol > li:before {
+  content: counters(item, ".") " ";
+  color: #888;
+}
+
+.terms li ol > li > ol {
+  counter-reset: listStyle;
+}
+.terms li ol > li > ol > li {
+  margin: 0;
+  counter-increment: listStyle;
+}
+
+.terms li ol > li > ol > li::before {
+  content: counter(listStyle, lower-alpha) ") ";
+  color: #888;
+}
+
+.terms-section {
+	font-weight: bold;
+	font-size: 17px;
+	color: #6D381F;
+}
+</style>
+
+<p><b>Effective Date:</b> 19th March 2020</p>
+
+<div class="terms">
+	<ol>
+		<li><b>Introduction</b>
+			<ol>
+				<li>We are Lioden Ltd trading as "Wolvden". Our company information is at the end of this document.</li>
+				<li>Please read these Terms of Service carefully. They replace any previous versions. By registering for or playing our Game (as defined below) you agree to be bound by these Terms of Service. Please print or save these terms for future use as we will not keep a file copy specifically for the transaction with you and we cannot guarantee that they will remain accessible on our website in future. These Terms of Service are available in the English language only.</li>
+			</ol>
+		</li>
+		<li><b>Definitions</b>
+			<ol>
+				<li>Capitalised terms have the following meanings in these Terms of Service:
+					<ol>
+						<li>"Content" - all information of whatever kind (including posts, comments, blogs, chat, images, photos, audio, video, messages etc.), published, stored or sent on or in connection with our Game.</li>
+						<li>"our Game" – our online game called "Wolvden" - including our website and any related software and services.</li>
+						<li>"Currency" – our in-game virtual currencies including GC and SC.</li>
+						<li>"GC" – "Gold Cones", one kind of Currency.</li>
+						<li>"SC" – "Silver Cones" another kind of Currency.</li>
+						<li>"User" – any person using our Game (whether or not registered with us).</li>
+						<li>"Virtual Items" - virtual features which can be acquired within the Game such as wolves or decorations for your wolf.</li>
+					</ol>
+				</li>
+			</ol>
+		</li>
+		<li><b>Changes to the Terms of Service</b>
+			<ol>
+				<li>We may change these Terms of Service by posting the revised version on our website. Please check our Terms of Service from time to time. You will be bound by the revised agreement if you continue to use our Game following the effective date shown.</li>
+			</ol>
+		</li>
+		<li><b>Your contract with us</b>
+			<ol>
+				<li>By registering for our Game, you offer to contract with us. We will send you a confirmation email after you register. This is our acceptance of your offer and the point at which a legally binding contract is formed. Note that future orders (e.g., to buy GC) are part of this contract and subject to the then-current version of these Terms of Service.</li>
+			</ol>
+		</li>
+		<li><b>Use of our Game</b>
+			<ol>
+				<li>We grant Users a limited personal non-transferable right to use our Game subject to these Terms of Service. Just to be clear – we remain the owner all of the assets within the Game including Currency and Virtual Items. You have permission to use them only in accordance with the Terms of Service and for so long as this agreement lasts.</li>
+				<li>You must not play or register for our Game if:
+					<ol>
+						<li>you are below 16 years of age; or</li>
+						<li>display of or access to any aspect of this Game is illegal under the laws (if applicable) of the country from which you are accessing the Game (e.g. because the country does not permit such a Game or display of or access to such material at all or because you are under the relevant age limit in that country); or</li>
+						<li>you have been convicted of any offence, or subject to any court order, relating to assault, violence, sexual misconduct or harassment.</li>
+					</ol>
+				</li>
+				<li>You must comply with any guidelines or requirements on our website.</li>
+				<li>You must promptly comply with any reasonable request or instruction by us in connection with the Game.</li>
+				<li>We are entitled to impose and/or change limitations on usage of our Game.</li>
+				<li>You must ensure that any contact or other information which you supply to us is accurate and not misleading and you will update it so that it remains so.</li>
+				<li>We do not supply support except to the extent specifically stated in the Game.</li>
+			</ol>
+		</li>
+		<li><b>User Conduct</b>
+			<ol>
+				<li>You are bound by, and must comply with, our <a href="/code">Code of Conduct</a>.</li>
+				<li>You also agree that you will not in connection with the Game:
+					<ol>
+						<li>breach any applicable law, regulation or code of conduct;</li>
+						<li>publish or send any Content (including links or references to other content), or otherwise behave in a manner, which:
+							<ul>
+								<li>is defamatory, threatening, harassing, invasive of privacy, offensive, vulgar, racist, hateful, discriminatory, obscene, pornographic, sexually suggestive, misleading, abusive or deceptive or which attacks sexual orientation, promotes self-harm or eating disorders, involves murder, rape, suicide, terrorism, excessive gore or hacking;</li>
+								<li>infringes any intellectual property or other rights of others;</li>
+								<li>involves phishing or scamming or similar; or </li>
+								<li>we otherwise reasonably consider to be inappropriate;</li>
+							</ul>
+						</li>
+						<li>reveal any information that enables you to be personally identified or contacted by other Users other than through the Game such as your last name, postal / email address or telephone number;</li>
+						<li>publish or send any Content which involves revealing any personal data of another person (i.e. information enabling someone to be identified or contacted);</li>
+						<li>impersonate any person or entity to mislead others;</li>
+						<li>publish or send any Content which links to any third party websites which are unlawful or contain inappropriate Content; </li>
+						<li>sell access to the Game;</li>
+						<li>use the Game to provide a similar service to third parties or otherwise with a view to competing with us;</li>
+						<li>sell advertising, sponsorship or promotions on or in connection with Content except where explicitly authorized by us;</li>
+						<li>use the Game for any commercial or non-private purposes;</li>
+						<li>use the Game for junk mail, spam, pyramid or similar or fraudulent schemes;</li>
+						<li>do anything which may have the effect of disrupting the Game including denial of service attacks, worms, viruses, software bombs or mass mailings; </li>
+						<li>do anything which may negatively affect other Users’ enjoyment of the Game;</li>
+						<li>gain unauthorised access to any part of the Game or equipment used to provide the Game; </li>
+						<li>use any automated means to interact with our systems excluding public search engines; or</li>
+						<li>attempt, encourage or assist any of the above or any other obligations under these Terms of Service.</li>
+					</ol>
+				</li>
+				<li>If we think that you have broken these Terms of Service (including the Code of Conduct), then we are entitled to impose punishments relating to the Game in our discretion (with or without notice or explanation) including:
+					<ol>
+						<li>permanent or temporary removal of Currency or Virtual Items or of account privileges (such as using the custom tool, breeding wolves, battling, exploring, conversing with other Users on the message boards, using private messaging, buying Currency);</li>
+						<li>warnings placed on your account; or</li>
+						<li>suspension or (permanent) banning of your account.</li>
+					</ol>
+				These punishments may involve loss of Currency or Virtual Items or scores associated with an account.
+				</li>
+			</ol>
+		</li>
+		<li><b>Your Content</b>
+			<ol>
+				<li>You are responsible for your Content.</li>
+				<li>You promise to us that you have (and will retain) all rights and permissions needed to enable use of your Content as contemplated by the Game and these Terms of Service, for example from copyright owners (if you are not the owner). Please contact us via our contact form with full details if you think there is any infringing material in the Game.</li>
+				<li>We reserve the right without notice or refund to reject, suspend, alter, remove or delete Content or to disclose to the relevant authorities or to a complainant any Content or behaviour if it is the subject of complaint or where we have reason to believe that it breaches our Terms of Service, or that such steps are necessary to protect us or others, or that a criminal act has been committed, or if we are required to do so by law or appropriate authority.  If so, you must not attempt to re-publish or re-send the relevant Content.</li>
+				<li>We do not accept responsibility if your Content is misused by other Users as this is outside our reasonable control.</li>
+				<li>It is your responsibility to make your own backup of any Content stored within the Game to protect you in case of loss or damage to such material. We are not responsible for such loss or damage.</li>
+				<li>We reserve the right to place advertisements adjacent to or within your Content. We retain all revenue from such advertisements.</li>
+				<li>We may irretrievably delete your Content without telling you after this agreement ends or if your account has been inactive for twelve months.</li>
+			</ol>
+		</li>
+		<li><b>Content of other Users</b>
+			<ol>
+				<li>You accept that we have no obligation to vet or monitor Users or their Content. You deal with other Users at your own risk. We accept no legal responsibility in relation to, any such Content or to any dealings between Users. You should not assume that any Content from another User is accurate and be aware that a person may not be who he or she claims to be. </li>
+				<li>You acknowledge that in using the Game you may be exposed to offensive or other inappropriate Content or behaviour. If so, you must notify us immediately by using the report buttons. We are under no obligation to enter into dialogue on the receipt of a complaint, nor are we obliged to act on every complaint received or to advise you of any action we do decide to take. All complaints must clearly explain the reason for complaint. You should also use the built-in facility to delete comments, block messages and/or seek appropriate external help, for example from law enforcement authorities. If you continue to suffer problems, or are dissatisfied, then you must stop using the Game.</li>
+				<li>If you have any complaint about Content or behaviour which you think is defamatory or otherwise infringes your rights, please email us at support@wolvden.com</li>
+				<li>In your own interests, you should not attempt to contact any other User other than through the Game.</li>
+			</ol>
+		</li>
+		<li><b>Third party services / advertising / websites</b>
+			<ol>
+				<li>We may display third party-provided services or display third party advertising within our Game and/or link to third party websites which may be of interest to you. We do not recommend or endorse, nor are we legally responsible for, those sites or services.  You use them at your own risk.</li>
+			</ol>
+		</li>
+		<li><b>Guidance by us</b>
+			<ol>
+				<li>Any guidance or similar information which we ourselves make available on our Game is intended as very general guidance information but we cannot guarantee that it is accurate or up to date and we do not accept legal responsibility for it. Before acting on such information, you must make your own appropriate and careful enquiries including as to its accuracy and suitability for your purposes. You rely on such information at your own risk.</li>
+			</ol>
+		</li>
+		<li><b>Your account</b>
+			<ol>
+				<li>You must notify us immediately of any apparent breach of security such as loss, theft, misuse or unauthorised disclosure or use of a password. You are responsible for third parties who use your account or identity (unless and to the extent that we are at fault).</li>
+			</ol>
+		</li>
+		<li><b>Currency (including Gold Cones and Silver Cones) and Virtual Items</b>
+			<ol>
+				<li>Payment for any chargeable features of our Game (currently GC) must be made in advance. The prices shown on our website include VAT unless we say otherwise. We may at any time change the price payable for future GC or other purchases.</li>
+				<li>It is your responsibility to check that Currency and Virtual Items have been correctly credited to your account and to tell us immediately if not. You must contact us immediately with full details if you dispute any payment.</li>
+				<li>We do not provide any refunds for chargeable Currency or Virtual Items except where we specifically say otherwise in these Terms of Service or you have a legal right to a refund.</li>
+				<li>If we tell you that we have mis-priced any chargeable feature, you have the option of acquiring it at the correct price. If not, we can cancel the purchase subject to giving you a full refund of any payment already made.</li>
+				<li>We may restrict access to or delete Currency and Virtual Items if they were awarded in error or if a payment is charged back.</li>
+				<li>Currency and Virtual Items can only be used within the Game and have no inherent value.</li>
+				<li>We can at any time change how Currency or Virtual Items may be used; for example how much Currency is needed to acquire a Virtual Item.</li>
+				<li>See further restrictions on dealings with Currency and Virtual Items in the <a href="/code">Code of Conduct</a>.</li>
+				<li>Currency and Virtual Items will be deleted when this agreement ends.</li>
+			</ol>
+		</li>
+		<li><b>Discount codes</b>
+			<ol>
+				<li>We may offer discount codes from time to time. Such codes may only be applied to purchases made through the account in respect of which the discount code was offered and registered and are not transferrable or redeemable for cash. Unless otherwise stated: codes (1) are only available for future new orders placed online; (2) cannot be used retrospectively; (3) can only be redeemed once per customer; and (4) expire after 12 months. You cannot use more than one discount code per transaction unless we state otherwise; if we do so, the order in which the codes are to be applied is in our sole discretion.</li>
+				<li>We reserve the right to reject any discount code if we consider that it is being used in breach of these terms. Discount codes are subject to any additional specific Terms of Service which are specified at the point of issue.  We reserve the right to discontinue or otherwise modify any discount codes at any time without prior notice.</li>
+			</ol>
+		</li>
+		<li><b>Ending or suspending this contract</b>
+			<ol>
+				<li>You may at any time end this contract without refund by closing your account in accordance with the instructions within the Game. (Ending the contract doesn't entitle you to a refund unless you have Consumer "cooling off" rights, explained below.)</li>
+				<li>We are entitled at any time to end this contract without refund if we terminate our Game as a whole.</li>
+				<li>We are entitled at any time (with or without notice) to end this contract (including permanently banning an account) or suspend part or all of our Game (including suspending an account or removal of certain account privileges) if we have reason to believe that you have breached our Terms of Service or if any payment is charged back or if it is necessary to protect us or others or if we are required to do so by law or appropriate authority. There will be no refund.</li>
+				<li>If this contract ends: Your right to use our Game and all licences are terminated. Currency, Virtual Items and scores associated with the account will be deleted. Existing rights and liabilities are unaffected. All clauses in this contract which are stated or intended to continue after termination will continue to apply. You must not attempt to re-register for or continue to use our Game if we have given you notice of termination.</li>
+			</ol>
+		</li>
+		<li><b>Right to cancel ("cooling off")</b>
+			<ol>
+				<li>If you live in the "European Economic Area", you have the right to cancel this contract subject to the provisions set out below.  However, you lose the right to cancel where the supply of digital content began before the end of cancellation period with your specific agreement and you acknowledged that your right to cancel would be lost in such case.</li>
+				<li>If you do have the right to cancel, the following apply:</li>
+
+				<br><i>Right to cancel</i>
+				<li>You have the right to cancel this contract within 14 days without giving any reason.</li>
+				<li>The cancellation period will expire after 14 days from the day of the conclusion of the contract (i.e. when you first registered with us).</li>
+				<li>To exercise the right to cancel, you must inform us, Lioden Ltd of SUITE 106 MILTON KEYNES BUSINESS CENTRE, FOXHUNTER DRIVE, MILTON KEYNES, BUCKINGHAMSHIRE, MK14 6GD, UNITED KINGDOM, email address support@lioden.com of your decision to cancel this contract by a clear statement (e.g. a letter sent by post or e-mail). You may use the model cancellation form at the end of this document but it is not obligatory.</li>
+				<li>To meet the cancellation deadline, it is sufficient for you to send your communication concerning your exercise of the right to cancel before the cancellation period has expired.</li>
+
+				<br><i>Effects of cancellation</i>
+				<li>If you cancel this contract, we will reimburse to you all payments received from you.</li>
+				<li>We will make the reimbursement without undue delay, and not later than 14 days after the day on which we are informed about your decision to cancel this contract.</li>
+				<li>We will make the reimbursement using the same means of payment as you used for the initial transaction, unless you have expressly agreed otherwise; in any event, you will not incur any fees as a result of the reimbursement.</li>
+				<li>If you requested to begin the performance of services during the cancellation period, you shall pay us an amount which is in proportion to what has been performed until you have communicated to us your cancellation of this contract in comparison with the full coverage of the contract.</li>
+			</ol>
+		</li>
+		<li><b>Functioning of our Game</b>
+			<ol>
+				<li>We do not guarantee that the Game will be uninterrupted or error-free.</li>
+				<li>We are not responsible for any loss of account-related data due to technical errors.</li>
+				<li>We are entitled, without notice and without liability, to suspend the Game for repair, maintenance, improvement or other technical reason.</li>
+				<li>We are entitled, without notice and without liability, to make changes to the Game provided these do not have a material adverse effect.</li>
+			</ol>
+		</li>
+		<li><b>Liability</b>
+			<ol>
+				<li>Nothing in this agreement in any way limits or excludes our liability for negligence causing death or personal injury or for fraud or fraudulent misrepresentation or for anything which may not legally be excluded or limited. In this section, any reference to us includes our employees and agents.</li>
+				<li><b>Very important:</b> You will be liable for any reasonably foreseeable loss or damage we suffer arising from your breach of this agreement or misuse of our Game (subject of course to our obligation to mitigate any losses).</li>
+			</ol>
+		</li>
+		<li><b>Intellectual property rights</b>
+			<ol>
+				<li>All intellectual property rights in connection with our Game are owned by us or our partners. For the purposes of your personal and non-commercial use only, you may use such material on your device to play the Game yourself in accordance with these Terms of Service.  You may not otherwise use, sublicense, retrieve, display, modify, copy, print, sell, distribute, download, hire, reverse engineer (unless permitted by applicable law) or create extracts of, or derivative works from, such material without our specific prior written consent. You may request permission to use our copyright materials by writing to us via our <a href="/contact">contact form</a>.</li>
+				<li>Just to be clear - you must not collect, scrape, harvest or frame any Content on our Game without our specific prior written consent. You can deep link to pages such as forum threads but not to specific game assets such as art.</li>
+				<li>You must not circumvent or otherwise interfere with any security related features of the Game or features that limit or prevent copying of Content or which restrict use of Content.</li>
+				<li>If you publish any Content on our Game or otherwise submit Content to us (e.g., fan art, overlays, suggestions and ideas) you grant us a worldwide, perpetual, non-exclusive, royalty-free licence to copy, alter, adapt or display or otherwise such Content on our Game. We can also use your Content to promote the Game elsewhere, e.g. on social media.  You grant each User a licence to use your Content in accordance with these Terms of Service.</li>
+			</ol>
+		</li>
+		<li><b>Privacy</b>
+			<ol>
+				<li>You acknowledge and agree that we may process your personal data in accordance with the terms of our <a href="/privacy">privacy and cookies policy</a> which is subject to change from time to time.</li>
+			</ol>
+		</li>
+		<li><b>Events outside our control</b>
+			<ol>
+				<li>We are not liable for failure to perform or delay in performing any obligation under this agreement if the failure or delay is caused by any circumstances beyond our reasonable control including third party telecommunication failures.</li>
+			</ol>
+		</li>
+		<li><b>Transfer</b>
+			<ol>
+				<li>We may transfer all or part of our rights or duties under this agreement provided we take reasonable steps to ensure that your rights under this agreement are not prejudiced. As this agreement is personal to you, you may not transfer any of your rights or duties under it without our prior written consent.</li>
+			</ol>
+		</li>
+		<li><b>English law</b>
+			<ol>
+				<li>These Terms of Service shall be governed by English law and any disputes will be decided only by the courts of the United Kingdom.  You may be entitled to use an EU online dispute resolution service to assist with any contractual dispute you may have with us. This service can be found at <a href="http://ec.europa.eu/consumers/odr/">http://ec.europa.eu/consumers/odr/</a>. Our email address is support@lioden.com.</li>
+			</ol>
+		</li>
+		<li><b>General</b>
+			<ol>
+				<li>We may send all notices under this agreement by email to the most recent email address you have supplied to us (unless otherwise stated in this agreement). Headings used in this agreement are for information and not binding. Any failure by either party to exercise or enforce any right or provision of this agreement does not mean this is a "waiver" (i.e. that it cannot be enforced later). If any part of this agreement is ineffective or unenforceable for any reason, the rest of the agreement shall continue to apply. A person who is not a party to this agreement shall have no rights to enforce this agreement except insofar as expressly stated otherwise. The parties are independent contractors and, except as otherwise specifically stated above, nothing in this agreement constitutes any party as agent, employee or representative of the other.</li>
+			</ol>
+		</li>
+		<li><b>Complaints</b>
+			<ol>
+				<li>If you have any complaints, please contact us via the contact details shown below.</li>
+			</ol>
+		</li>
+		<li><b>Company information</b>
+			<ol>
+				<li>Company name: Lioden Ltd</li>
+				<li>Trading name: Wolvden</li>
+				<li>Country of incorporation: England and Wales</li>
+				<li>Registered number: 9846917</li>
+				<li>Registered office and main trading address: SUITE 106 MILTON KEYNES BUSINESS CENTRE, FOXHUNTER DRIVE, MILTON KEYNES, BUCKINGHAMSHIRE, MK14 6GD, UNITED KINGDOM</li>
+				<li>Other contact information: See our <a href="/contact">contact page</a>.</li>
+				<li>VAT number (where applicable): 234362915</li>
+			</ol>
+		</li>
+	</ol>
+</div>
+
+<h3>Model Cancellation Form</h3>
+<p>Complete and return this form only if you wish to cancel the contract:</p>
+
+<p>— To Lioden Ltd of SUITE 106 MILTON KEYNES BUSINESS CENTRE, FOXHUNTER DRIVE, MILTON KEYNES, BUCKINGHAMSHIRE, MK14 6GD, UNITED KINGDOM, support@lioden.com:</p>
+<p>— I/We [*] hereby give notice that I/We [*] cancel my/our [*] contract of sale of the following goods [*]/ for the supply of the following service [*], </p>
+<p>— Ordered on [*]/received on [*],</p>
+<p>— Name of consumer(s),</p>
+<p>— Address of consumer(s),</p>
+<p>— Signature of consumer(s) (only if this form is notified on paper),</p>
+<p>— Date</p>
+
+<p>[*] Delete as appropriate</p>
+
+
+<p class="center"><br><br>
+<i>This Terms of Service was last modified on 2024-04-08 23:41:36.  Last change: Company address update.</i></p>
+
+
+
+<br class="clear"><br>
+</div>
+
+		<div id="sidebar" class="col-lg-3 order-lg-1">
+			
+						<div class="multi-column no-gutters"> <!-- container for cards above chat -->
+			
+				<div class="card d-lg-none"> <!-- hidden on lg+ -->
+					<div class="card-body">
+						<h4 class="card-title">Activity</h4>
+						<a href="/online"><b>387 members online</b></a><br>
+											</div>
+				</div>
+
+			</div>
+			<div class="no-gutters"> <!-- container for chat and cards below it -->
+
+				
+				<div class="card d-none d-lg-inline-block"> <!-- hidden on xs/sm/md, shown in lg+ -->
+					<div class="card-body">
+						<h4 class="card-title">Activity</h4>
+						<a href="/online"><b>387 members online</b></a><br>
+											</div>
+				</div>
+
+				
+				
+				<br><br>
+
+			
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="footer" class="container">
+	<div class="row justify-content-center">
+		<span class="copyright">Wolvden is property of <a href="https://www.lioden.com">Lioden Ltd</a> &copy; 2012-2024. All rights reserved.<br>Company number 09846917 registered in England &amp;&nbsp;Wales. VAT&nbsp;number&nbsp;234362915.</span>
+		<nav class="navbar navbar-expand navbar-dark flex-wrap justify-content-center">
+			<ul class="navbar-nav flex-wrap justify-content-center pt-0 pb-1">
+				<li class="nav-item">
+					<a class="nav-link" href="/terms">Terms of Service</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/code">Code of Conduct</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/privacy">Privacy Policy</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contact">Contact Us</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/modbox">Modbox</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bugbox">Bugbox</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help">Help</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/flatpickr.min.js"></script>
+<script src="/js/popper.min.js"></script>
+
+<script>
+function disableSubmit(form) { // Submit button clicked
+	// var buttons = form.querySelectorAll('button');
+
+	// buttons.forEach(function(button) {
+	// 	var buttonWidth = button.getBoundingClientRect().width;
+	// 	var buttonLabel = '<i class="fas fa-spinner mr-2 fa-spin"></i>';
+	// 	if (buttonWidth > 105) {
+	// 		buttonLabel += ' Loading...';
+	// 	}
+	// 	button.innerHTML = buttonLabel;
+	// 	button.style.width = buttonWidth + 'px';
+	// 	button.disabled = 1;
+	// });
+
+	// return true;
+
+	var buttonWidth = form.submitBtn.getBoundingClientRect().width;
+	var buttonLabel = '<i class="fas fa-spinner mr-2 fa-spin"></i>';
+	if (buttonWidth > 105) {
+		buttonLabel += ' Loading...';
+	}
+	form.submitBtn.innerHTML = buttonLabel;
+	form.submitBtn.style.width = buttonWidth + 'px';
+	form.submitBtn.disabled = 1;
+	return true;
+}
+
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip({ boundary: 'window' });
+	$('[data-toggle-tooltip="true"]').tooltip({ boundary: 'window' });
+})
+$(function () {
+	$('[data-toggle="popover"]').popover()
+})
+$( '.flatpickr' ).flatpickr({
+    enableTime: true,
+    dateFormat: 'Y-m-d H:i'
+  });
+
+$(document).ready(function () {
+	$('#showhide').click(function() {
+		$('#toggleAngle').toggleClass('fas fa-angle-down');
+		$('#toggleAngle').toggleClass('fas fa-angle-right');
+	});
+});
+
+function checkUncheckAll(theElement) {
+	var theForm = theElement.form, z = 0;
+	for(z=0; z<theForm.length;z++){
+		if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+			theForm[z].checked = theElement.checked;
+		}
+	}
+}
+
+function copyTextButton(id) {
+  /* Get the text field */
+  var copyText = document.getElementById(id);
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  //alert("Copied the text: " + copyText.value);
+}
+
+(function() {
+	if (document.getElementById('main')) {
+		var timestamps = document.getElementById('main').querySelectorAll('[data-timestamp]');
+		function fnToggleTimeDisplay(e) {
+			let t1 = this.innerText;
+			let t2 = this.getAttribute('data-original-title');
+			$(this).tooltip('dispose');
+			this.innerText = t2;
+			this.setAttribute('data-original-title', t1);
+			$(this).tooltip({ boundary: 'window' });
+		}
+
+		timestamps.forEach(function(el) {
+			el.addEventListener('click', fnToggleTimeDisplay);
+		});
+	}
+}());
+
+</script>
+<script>
+	// better button disable
+	
+	const buttons = document.querySelectorAll('button');
+
+	// detect all button clicks
+	buttons.forEach(function (button) {
+		button.addEventListener('click', function (event) {
+			// if a button has a data-disable property, disable the button once it's been clicked
+			if (button.dataset.disable) {
+				button.form.submit();
+				button.disabled = true;
+				button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+			}
+		});
+	});
+
+	
+(function() {
+	var btnToggleSidebarChat = document.getElementById('btnToggleSidebarChat');
+	var fraSidebarChat = document.getElementById('fraSidebarChat');
+	var uiM = document.createElement('div');
+	uiM.setAttribute('id', 'uimid'); uiM.setAttribute('data-mid', User.getMID('dWVzODI4YmE1Y29jbHFvMzdtY2MzbmJmdWw='));
+	document.body.appendChild(uiM);
+
+	if (fraSidebarChat) {
+		var fraSidebarContent = fraSidebarChat.querySelector('iframe');
+		if (btnToggleSidebarChat) {
+			btnToggleSidebarChat.addEventListener('click', function(e) {
+				e.preventDefault();
+				var icon = this.querySelector('i');
+
+				if (this.getAttribute('title') == 'Hide') {
+					var visibility = (CK.read('chat_sidebar') == 2 ? 3 : 0);
+					this.setAttribute('title', 'Show');
+					fraSidebarChat.classList.add('hidden');
+					icon.classList.add('fa-plus');
+					icon.classList.remove('fa-minus');
+					updateChatboxSetting(visibility);
+				} else {
+					var visibility = (CK.read('chat_sidebar') == 3 ? 2 : 1);
+					this.setAttribute('title', 'Hide');
+					fraSidebarChat.classList.remove('hidden');
+					icon.classList.add('fa-minus');
+					icon.classList.remove('fa-plus');
+					updateChatboxSetting(visibility);
+					loadChat();
+				}
+
+			});
+		}
+
+		function loadChat() {
+			var sidebarState = CK.read('chat_sidebar');
+			if (!([3, 0].includes(sidebarState))) {
+				fraSidebarContent.src = fraSidebarContent.getAttribute('data-src');
+			}
+		}
+
+			}
+}());
+</script>
+</body>
+</html>
