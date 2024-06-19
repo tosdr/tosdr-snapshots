@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Zenju">
+<meta property="og:title" content="FreeFileSync">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://freefilesync.org/">
+<meta property="og:image" content="https://freefilesync.org/images/FreeFileSync.png">
+<meta property="og:description" content="Download FreeFileSync 13.6. FreeFileSync is a free open source data backup software that helps you synchronize files and folders on Windows, Linux and macOS.">
+<meta property="og:site_name" content="FreeFileSync.org">
+<link rel="icon" type="image/x-icon" href="/images/freefilesync.ico">
+<link rel="alternate" type="application/rss+xml" title="FreeFileSync News Feed" href="/news-feed.php">
+<style>
+				*
+{
+    margin:  0;
+    padding: 0;
+}
+
+h1
+{
+    display: inline-block;
+	vertical-align: middle;
+}
+
+h2
+{
+	font-size: 26px;
+	font-weight: normal;
+	margin: 10px 0;
+    text-align: left;
+}
+
+h3
+{
+	font-size: 22px;
+	font-weight: normal;
+	margin: 10px 0;
+    text-align: left;
+}
+
+html
+{
+    text-align: center;
+	background: linear-gradient(white, #e6e6e6 800px);
+}
+
+body
+{
+    min-height: 100vh;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+
+	font-family: -apple-system, 'Segoe UI', Arial, Tahoma, Helvetica, sans-serif;
+    /*-> Arial: Ubuntu/FireFox bug with padded input control and THB or TRY currency symbols => seems fixed */
+    font-size: 16px;
+    line-height: 150%;
+    color: black;
+	background: linear-gradient(to right, #ededed, #c9d7ce);
+    box-shadow: 1px 1px 4px #888;
+}
+
+a
+{
+  color: #368ad2;
+}
+
+a:hover
+{
+	color: #4ae;
+}
+
+a:visited
+{
+    color: #4b279b;
+}
+
+.direct-download-link
+{
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 110%;
+
+    /*Fix "Clickable elements too close together" */
+    display: block;
+    margin-bottom: 1px;
+}
+
+a.direct-download-link:hover
+{
+	text-decoration: underline;
+}
+
+a.direct-download-link:visited
+{
+    color: #368ad2; /*same color as default!*/
+}
+
+a.ffs-download-button
+{
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #000;
+    text-decoration: none;
+    outline: none;
+    background: linear-gradient(#1fa526, #7bff4b 60%);
+    border-radius: 5px;
+    border: 2px solid #3f3e3e;
+    box-shadow: 1px 1px 2px #888;
+    padding: 3px 55px;
+}
+a.ffs-download-button:hover
+{
+    box-shadow: 0px 0px 0px 4px #4ae
+}
+
+#centerArea
+{
+    flex-grow: 1;
+	background: url(/images/background-logo.png) no-repeat;
+	background-position: 20px 125px;
+}
+
+.topnav
+{
+    display: none;
+    margin: 0 10px;
+    text-align: left;
+}
+
+header
+{
+    background: linear-gradient(30deg, rgb(21, 161, 29), rgb(85, 186, 102), white 36%);
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px #888;
+    margin: 10px 20px;
+}
+
+footer
+{
+    flex-shrink: 0; /*as child of body*/
+    border-top: 1px solid #AAA;
+    padding: 15px 25px;
+    display: flex; /*for child elements*/
+    gap: 10px;
+}
+
+section
+{
+    width: 748px; /*make exact room for banner: leaderboard (728 x 90) + 20px margin */
+    margin-bottom: 10px;
+	text-align: left;
+	overflow: hidden;
+}
+
+.sub-section
+{
+	box-shadow: 3px 3px 5px #888;
+	border-radius: 10px;
+	background-color: white;
+	padding: 10px 0;
+	margin: 0 20px 10px 0; /*coordinate right margin with leaderboard size (728x90)!!! */
+}
+
+.center-parent
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.section-banner
+{
+    /*min-height: 90px; width: 728px; -> support Google ad size optimization*/
+    line-height: 0;
+	background: rgba(255, 255, 255, 0.6); /* #fffa, #ffffffaa forms not working in Chrome!*/
+    margin: 0 20px 10px 0;
+}
+
+.inline-banner
+{
+    /*min-height: 90px; width: 728px; -> support Google ad size optimization*/
+    line-height: 0;
+}
+
+.floating-banner
+ {
+     min-width: 336px; /*support 336 x 280, large rectangle*/
+     /*min-height: 250px; -> support Google ad size optimization*/
+     float: right;
+     margin-left: 5px;
+     line-height: 0;
+ }
+
+ /* #header-banner
+ {
+     line-height: 0;
+ 	background: rgba(255, 255, 255, 0.6);
+     margin: 0 20px 10px 0;
+ } */
+
+#alt-banner
+{
+	display: none;
+	border: 1px solid black;
+    margin: 0 20px 10px 0;
+	background: linear-gradient(to right, #ffd6d6, #eeecff);
+	text-align: justify;
+	padding: 10px 20px;
+}
+.alt-banner-image
+{
+	float: right;
+	margin-left: 10px;
+	line-height: 0;
+	border: 3px solid #3fa44b;
+	border-radius: 10px;
+	background: linear-gradient(to right, #c8e7a6, #f0f3ed);
+    box-shadow: 1px 1px 8px #888;
+}
+a.alt-banner-image:hover
+{
+	background: #bcbff5;
+	border-color: #f9fff9;
+}
+
+a.header-url-area
+{
+	display: block;
+	text-decoration: none;
+	outline: none;
+    padding: 3px 0;
+}
+
+.header-logo
+{
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.header-label
+{
+    background: linear-gradient(to right, #1da514, #7ff62b, #80e642);
+    /*http://nimbupani.com/using-background-clip-for-text-with-css-fallback.html*/
+    -webkit-background-clip: text; /*still required by Chrome*/
+    /*background-clip: text; -> W3C validation error!*/
+    color: transparent;
+    -webkit-text-stroke: 1px #888;
+    font-size: 52px;
+    line-height: 52px;
+}
+
+/* IE11-specific hackery: no support for "background-clip: text" */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active)
+{
+	.header-label
+	{
+        color: #3eb334;
+		background: inherit;
+	}
+}
+
+.header-description
+{
+    font-family: 'Indie Flower', cursive;
+    font-size: 21px;
+    line-height: 32px;
+	color: #777;
+    display: block;
+}
+
+.noselect
+{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.screen-snippet
+{
+	box-shadow: 1px 1px 2px #888;
+    max-width: 100%;
+    height: auto;
+}
+
+.description
+{
+	padding: 0 30px;
+	text-align: justify;
+}
+
+.content-padding
+{
+    padding: 0 30px;
+}
+
+.content-margin
+{
+    margin: 0 30px;
+}
+
+.half-line { line-height: 50%; }
+
+.horizontal-line
+{
+	border-bottom: 1px solid #AAA;
+	margin: 10px 0;
+}
+
+nav
+{
+	float:left;
+	margin: 0px 15px 20px 20px;
+}
+
+
+.menu-links a
+{
+	box-shadow: 1px 1px 2px #888;
+	/*bug Safari incorrectly considers the color part of fully transparent ARGB colors! => use rgba(255, 255, 255, 0)); => seems fixed?*/
+    background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+	border-radius: 3px;
+	outline: none;
+    margin-bottom: 8px;
+    text-decoration: none;
+}
+
+.menu-links a:hover
+{
+	background: linear-gradient(to right, rgba(1, 129, 0, 0.30), rgba(54, 205, 12, .30), rgba(225, 254, 188, .30));
+}
+
+.topnav .menu-links a
+{
+	display: inline-block;
+}
+
+nav .menu-links a
+{
+	display: block;
+    font-weight: 300;
+}
+
+nav a.download-link,
+nav a.forum-link
+{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+nav a.forum-link
+{
+    margin-right: 8px;
+	line-height: 90%;
+}
+
+a.donation-link,
+a.thank-you-link
+{
+	border: solid 2px #99aabb;
+	box-shadow: 3px 3px 4px #777;
+    background: #f8f8f8;
+}
+
+body#about       a.about-link,
+body#videos      a.videos-link,
+body#screenshots a.screenshots-link,
+body#download    a.download-link,
+body#faq         a.faq-link,
+body#manual      a.manual-link,
+body#archive     a.archive-link,
+body#vision      a.vision-link,
+body#thank-you   a.thank-you-link
+{
+	box-shadow: 3px 3px 2px 1px #777;
+	background: linear-gradient(to right, rgb(1, 129, 0), rgb(54, 205, 12), rgb(225, 254, 188));
+    /*font-weight: initial;*/
+}
+
+.menu-label
+{
+	display: inline-block;
+    color: black;
+	font-size: 20px;
+    text-shadow: #fff 1px 1px 1px;
+    padding: 10px;
+}
+
+nav .donation-link  .menu-label,
+nav .thank-you-link .menu-label
+{
+    padding: 0;
+}
+
+.menu-label-description
+{
+	font-size: 70%;
+}
+
+.changelog-header
+{
+	font-size: 16px;
+}
+
+section ul, section ol
+{
+	padding-left: 20px;
+}
+
+a.social-button
+{
+	display: inline-block !important;
+	line-height: 0;
+	padding: 3px;
+}
+a.social-button:hover
+{
+	background-color: #4ae
+}
+
+.accordion-button
+{
+    background-color: #eee;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+	white-space: normal;
+}
+.accordion-button.active,
+.accordion-button:hover
+{
+    background-color: #ddd;
+}
+.accordion-button:after
+{
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+.accordion-button.active:after
+{
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+
+/*remove dotted selection border on FireFox*/
+button::-moz-focus-inner
+{
+	border: 0;
+}
+
+input::-moz-focus-inner
+{
+	border: 0;
+}
+
+a.thumbnail
+{
+	display:inline-block;
+	padding: 4px;
+	line-height: 0;
+	border-radius: 6px;
+}
+a.thumbnail:hover
+{
+	background-color:#4ae
+}
+
+.link-image-left
+{
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.highlight-border
+{
+    display: inline-block;
+    padding: 2px;
+    border-radius: 3px;
+    outline: none;
+}
+.highlight-border:hover
+{
+    box-shadow: 0px 0px 0px 3px #4ae
+}
+
+.command-line
+{
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+}
+.command-line-wrapped
+{
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    text-indent: -30px;
+    margin-left: 30px;
+    overflow-wrap: anywhere;
+}
+.file-path
+{
+    text-align: left;
+    font-family: Consolas, 'Courier New', Courier, monospace;
+}
+
+.command-line-comment
+{
+	color: #808080;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.external-link
+{
+    background: url(/images/external-link.svg) no-repeat 0 5px;
+    background-size: .9em;
+    padding-left: 1.1em;
+}
+/* alternative? this is patently insane! https://stackoverflow.com/a/53336754 https://codepen.io/sosuke/pen/Pjoqqp */
+
+.greybox
+{
+	padding: 6px 15px;
+	background: #f8f8f8;
+	box-shadow: 1px 1px 4px #888;
+    margin: 5px 0; /*compensate for box-shadow*/
+}
+.bluebox
+{
+	padding: 6px 15px;
+	background: #ccccff;
+	border: 1px solid #000080;
+    margin: 5px 0;
+}
+
+.greybox li, .bluebox li
+{
+    margin-bottom: 10px;
+}
+
+.rounded-box
+{
+	border-radius: 7px;
+	background: #f8f8f8;
+	box-shadow: 1px 1px 4px #888;
+}
+
+.os-logo
+{
+	vertical-align: middle;
+	padding-right: 5px;
+}
+
+.modern-button
+{
+	padding: 6px 12px;
+	font-weight: bold;
+    font-size: 15px; /*Safari defaults most controls to 11px!*/
+	background-image: linear-gradient(#fcfcfc,#eee);
+	border: 1px solid #d5d5d5;
+	border-radius: 3px;
+	color: #333;
+	cursor: pointer;
+    transition: border-color .2s ease-in-out,box-shadow .2s ease-in-out;
+    box-shadow: 1px 1px 2px #888;
+}
+.modern-button:hover
+{
+	background-image: linear-gradient(#eee, #ddd);
+}
+.modern-button:focus
+{
+	border-color: #51a7e8;
+    box-shadow: 1px 1px 2px #51a7e8;
+}
+.modern-button.active
+{
+    background-image: none;
+    border-color: #b5b5b5;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.modern-input
+{
+	padding: 6px 0 6px 6px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	color: #333;
+    font-family: inherit; /*fixes Ubuntu Firefox bug with padded input control and THB or TRY currency symbols in the Arial font*/
+    font-size: 14px; /*Safari defaults most controls to 11px!*/
+    transition: border-color .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+.modern-input:focus
+{
+	border-color: #51a7e8;
+	box-shadow: 0 0 5px rgba(81,167,232,0.5);
+}
+
+
+@keyframes spinner-item
+{
+    to { transform: rotate(360deg); }
+}
+
+
+/*do NOT apply to @media print! consider user manual PDF*/
+@media screen and (max-width: 1050px)
+{
+    .responsive-hide { display: none !important; }
+    .responsive-show { display: block !important; }
+
+    header
+    {
+        border-radius: initial;
+        margin: 0 0 10px 0;
+    }
+    body
+    {
+        display: flex;
+    }
+    .topnav
+    {
+        display: block;
+    }
+    section
+    {
+        width: initial;
+    }
+    .sub-section, #header-banner, #alt-banner, .section-banner
+    {
+        margin-right: 0;
+    }
+    .description, .content-padding
+    {
+        padding: 0 15px;
+    }
+    .content-margin
+    {
+        margin: 0 15px;
+    }
+    .floating-banner
+    {
+        float:  initial;
+        margin: initial;
+    }
+}
+	</style>
+<style>
+    @font-face
+    {
+        font-family: 'Indie Flower';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Indie Flower'), local('IndieFlower'), url(/IndieFlower.woff2?assets_version=jnogpHK9) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        font-display: swap;
+    }
+</style>
+<script>
+	function canUseCookies()
+	{
+		return true; //cookie handling now managed by Google's "GDPR message"
+
+		// if (canUseCookies.buf === undefined) 		// 	canUseCookies.buf = document.cookie.search("cookieconsent_status=dismiss") >= 0;
+		// return canUseCookies.buf;
+	}
+
+		if (!canUseCookies())
+	{
+		var script = document.createElement("script");
+		script.async = "async";
+		script.src = "/cookie/cookieconsent.min.js?assets_version=nWsjYnra";
+		script.onload = initCookies;
+		document.head.appendChild(script);
+
+		var link  = document.createElement("link");
+		link.rel  = "stylesheet";
+		link.href = "/cookie/cookieconsent.min.css?assets_version=XLhzduNu";
+		document.head.appendChild(link);
+	}
+
+		function initCookies()
+	{
+				var style = document.createElement("style");
+		document.head.appendChild(style);
+		style.sheet.insertRule(".cc-banner .cc-message { text-align: left; }", 0);
+
+		window.cookieconsent.initialise({
+			"palette" :
+			{
+				"popup" :
+				{
+					"background" : "#fff",
+					"text" :       "#999"
+				},
+				"button" :  { "background" : "#4b81e8" }
+			},
+						"content" :
+			{
+				"message" : "We use cookies to personalize the website and to analyze our traffic. \
+							They are generated and processed by our advertising partners. \
+							You consent to this by clicking on \"I consent\" or by continuing your use of this website. \
+							Further information can be found in our Privacy Policy.",
+				"dismiss" : "I consent",
+								"href"    : "/privacy.php",
+				"target"  : "_self"
+			},
+			"law" :
+			{
+				"regionalLaw" : false,
+				"countryCode" : "FR"
+							},
+			"cookie" :
+			{
+				 "domain" : ".freefilesync.org",
+							   "secure" : true,   
+				"expiryDays" : 3650 			}
+		});
+	}
+</script>
+<script>//-----------------------------------------
+// KEEP IT SHORT! => file will be inlined!
+//-----------------------------------------
+
+function toggleBlock(id)
+{
+	var e = document.getElementById(id);
+	if (e.style.display == "none")
+		e.style.display = "block";
+	else
+		e.style.display = "none";
+}
+
+
+//https://www.w3schools.com/howto/howto_js_accordion.asp
+function toggleArcadion(button, panel)
+{
+	//toggle between adding and removing the "active" class, to highlight the button that controls the panel
+
+	if (panel.style.display === "none")
+		panel.style.display = "block";
+	else
+		panel.style.display = "none";
+
+	if (panel.style.display === "none")
+		button.classList.remove("active");
+	else
+		button.classList.add("active");
+}
+
+
+function forEachByClassName(className, onItem)
+{
+	var items = document.getElementsByClassName(className);
+	for (var i = 0; i < items.length; ++i)
+		onItem(items[i]);
+}
+
+
+function sendHttpPost(url, params)
+{
+	var form = document.createElement("form");
+	form.setAttribute("method", "POST");
+	form.setAttribute("action", url);
+
+	for (const name in params)
+		if (params.hasOwnProperty(name))
+		{
+			var field = document.createElement("input");
+			field.setAttribute("type", "hidden");
+			field.setAttribute("name",  name);
+			field.setAttribute("value", params[name]);
+			form.appendChild(field);
+		}
+
+	document.body.appendChild(form);
+	form.submit();
+	//alternative: XMLHttpRequest
+}
+
+
+function xWwwFormUrlEncode(params)
+{
+	return Object.entries(params).
+		map(pair => pair.map(encodeURIComponent)).
+		map(pair => pair.join('=')).
+		join('&');
+}
+
+
+function xWwwFormUrlDecode(str)
+{
+	return Object.fromEntries(str.split('&').
+		map(s => s.split('=')).
+		map(pair => pair.map(decodeURIComponent)));
+}
+
+
+function getCookie(name)
+{
+	const value = '; ' + document.cookie;
+	const parts = value.split('; ' + name + '=');
+	return parts.length != 2 ? '' : decodeURIComponent(parts.pop().split(';').shift());
+}
+
+
+function setCookie(name, value, expiryDays)
+{
+	const exdate = new Date();
+	exdate.setDate(exdate.getDate() + expiryDays);
+
+	const cookie =
+	[
+		name + '=' + encodeURIComponent(value),
+		'expires=' + exdate.toUTCString(),
+		'path=/',
+		'domain=.freefilesync.org', //consider local Apache server: it doesn't use HTTPS and domain is local IP
+		'secure'                    //
+	];
+
+	document.cookie = cookie.join(';');
+}
+
+
+// //list of country codes returned: http://country.io/names.json
+// function detectCountryByIP(onResponse)
+// {
+// 	const cc = getCookie("country_code");
+// 	if (cc)
+// 		return onResponse(cc);
+//
+// 	//examples of free geo ip providers: https://github.com/insites/cookieconsent/blob/master/src/cookieconsent.js
+// 	var request = new XMLHttpRequest()
+// 	request.open("GET", "https://ipinfo.io/json", true /*async*/);
+// 	request.onload = function(event)
+// 	{
+// 		if (event.target.status != 200)
+// 			throw "Failed to load ipinfo.io. Status code: " + event.target.status;
+//
+// 		const cc = event.target.response.country;
+// 		if (!cc)
+// 			throw "Failed to parse ipinfo.io response: " + JSON.stringify(event.target.response);
+//
+// 		setCookie("country_code", cc, 1 /*expiryDays*/);
+// 		onResponse(cc);
+// 	};
+// 	request.onerror = function(event) { throw "Failed to load ipinfo.io."; };
+// 	request.responseType = "json";
+// 	request.send(); //throw Exception
+// }
+</script>
+
+<script>
+		function registerOnAdcodeFailed(fun)
+		{
+			if (window.adcodeFailed === true)
+				fun();
+			else
+				(onAdcodeFailed = window.onAdcodeFailed || []).push(fun);
+		}
+
+		function notifyAdcodeFailed()
+		{
+			if (window.onAdcodeFailed !== undefined)
+			{
+				window.onAdcodeFailed.forEach(fun => fun());
+				window.onAdcodeFailed = [];
+			}
+			window.adcodeFailed = true;
+		}
+	</script>
+<style>
+			.email-crypt::before { content: attr(data-name) attr(data-at); }
+			.email-crypt::after  { content: attr(data-domain); }
+		</style> <title>Privacy Policy - FreeFileSync</title>
+</head>
+<body id="privacy">
+<div id="centerArea">
+<header>
+<a class="header-url-area" href="/">
+<img src="/images/FreeFileSync.png" width="64" height="64" class="header-logo responsive-hide" alt>
+<h1>
+<span class="header-label">FreeFileSync</span>
+<span class="header-description">Open Source File Synchronization</span>
+</h1>
+</a>
+</header>
+<div class="topnav">
+<span class="menu-links">
+<a class="about-link" href="/"><span class="menu-label">About</span></a>
+<a class="videos-link" href="/tutorials.php"><span class="menu-label">Tutorials</span></a>
+<a class="screenshots-link" href="/screenshots.php"><span class="menu-label">Screenshots</span></a>
+<a class="vision-link" href="/vision.php"><span class="menu-label">Vision</span></a>
+<a class="download-link" href="/download.php">
+<span class="menu-label">
+<img src="/images/download-arrow.png" width="26" height="22" style="vertical-align:middle; margin:-12px 0 -10px 0;" alt> Download</span>
+</a>
+<a class="archive-link" href="/archive.php"><span class="menu-label">Archive</span></a>
+<a class="forum-link" href="/forum/"><span class="menu-label">
+<img src="/images/forum.png" width="24" height="24" style="vertical-align:middle; margin:-15px 0 -10px 0;" alt> Forum</span>
+</a>
+<a class="faq-link" href="/faq.php"><span class="menu-label">F.A.Q.</span></a>
+<a class="manual-link" href="/manual.php"><span class="menu-label">Manual</span></a>
+<a class="donation-link" href="/donate">
+<span class="menu-label"><img src="/images/freefilesync-heart.png" width="32" height="30" style="vertical-align:middle; margin:-12px 0 -10px 0;" alt> Donate</span>
+</a>
+<a class="thank-you-link" href="#" style="display:none">
+<span class="menu-label"><img src="/images/freefilesync-heart.png" width="32" height="30" style="vertical-align:middle; margin:-12px 0 -10px 0;" alt> Thanks,
+<span class="supporter-name" style="font-weight:600"></span>
+</span>
+</a>
+<span style="display:inline-block; vertical-align:middle;">
+<a class="social-button" target="_blank" rel="nofollow noopener" href="https://twitter.com/intent/tweet?text=Download+FreeFileSync%2C+the+free+data+backup+software+to+synchronize+files+and+folders%3A+https%3A%2F%2Ffreefilesync.org&url=https%3A%2F%2Ffreefilesync.org">
+<img src="/images/share-twitter.png" width="32" height="32" alt="Tweet with Twitter" title="Tweet with Twitter"></a>
+<a class="social-button" target="_blank" rel="nofollow noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffreefilesync.org">
+<img src="/images/share-facebook.png" width="32" height="32" alt="Like on Facebook" title="Like on Facebook"></a>
+<a class="social-button" href="/news-feed.php" rel="alternate" type="application/rss+xml">
+<img src="/images/share-rss.png" width="32" height="32" alt="FreeFileSync News Feed" title="Follow the FreeFileSync news feed"></a>
+</span>
+</span>
+</div>
+<nav class="responsive-hide">
+<div class="menu-links">
+<a class="about-link" href="/"><span class="menu-label">About FreeFileSync</span></a>
+<div style="display:flex">
+<div>
+<a class="videos-link" href="/tutorials.php"><span class="menu-label">Tutorials</span></a>
+<a class="screenshots-link" href="/screenshots.php"><span class="menu-label">Screenshots</span></a>
+<a class="vision-link" href="/vision.php"><span class="menu-label">Vision</span></a>
+</div>
+<div style="flex-grow:1; margin-left:8px; display:flex; flex-direction:column">
+<a class="download-link" href="/download.php">
+<span class="menu-label">
+<img src="/images/download-arrow.png" width="26" height="22" style="vertical-align:middle; margin-top:-10px; margin-bottom:-10px" alt><br>
+Download
+</span>
+</a>
+<a class="archive-link" href="/archive.php"><span class="menu-label">Archive</span></a>
+</div>
+</div>
+<div style="display:flex">
+<a class="forum-link" href="/forum/">
+<div class="menu-label">
+<div style="margin-bottom: 8px">
+<img src="/images/forum.png" width="24" height="24" style="vertical-align:middle; margin-top:-15px; margin-bottom:-10px" alt> Forum
+</div>
+<div class="menu-label-description">
+Report Bugs<br>
+Discuss Features
+</div>
+</div>
+</a>
+<div>
+<a class="faq-link" href="/faq.php"><span class="menu-label">F.A.Q.</span></a>
+<a class="manual-link" href="/manual.php"><span class="menu-label">Manual</span></a>
+</div>
+</div>
+<a class="donation-link" href="/donate">
+<span class="menu-label">
+<img src="/images/freefilesync-heart.png" width="47" height="44" style="vertical-align:middle; padding:5px 0;" alt> Donate
+</span>
+</a>
+<a class="thank-you-link" href="#" style="display:none">
+<span class="menu-label" style="font-size:initial; padding:5px 0;">
+<span style="margin-bottom:-5px;"><img src="/images/freefilesync-heart.png" width="24" height="22" style="vertical-align:middle;" alt> Thank you,</span><br>
+<span class="supporter-name" style="font-weight:600"></span>
+</span>
+</a>
+<script>
+										const supporterPage = getCookie('supporter_page');
+					const supporterName = getCookie('supporter_name');
+
+					if (supporterPage != '') //avoid CLS: change GUI only if non-default view
+					{
+						forEachByClassName('donation-link',  function(item){ item.style.display = "none"; });
+						forEachByClassName('thank-you-link', function(item){ item.style.display = ""; });
+						forEachByClassName('thank-you-link', function(item){ item.href = supporterPage; });
+						forEachByClassName('supporter-name', function(item){ item.textContent = supporterName; });
+					}
+				</script>
+<div class="half-line">&nbsp;</div>
+<div>
+<a class="social-button" target="_blank" rel="nofollow noopener" href="https://twitter.com/intent/tweet?text=Download+FreeFileSync%2C+the+free+data+backup+software+to+synchronize+files+and+folders%3A+https%3A%2F%2Ffreefilesync.org&url=https%3A%2F%2Ffreefilesync.org">
+<img src="/images/share-twitter.png" width="32" height="32" alt="Tweet with Twitter" title="Tweet with Twitter"></a>
+<a class="social-button" target="_blank" rel="nofollow noopener" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffreefilesync.org">
+<img src="/images/share-facebook.png" width="32" height="32" alt="Like on Facebook" title="Like on Facebook"></a>
+<a class="social-button" href="/news-feed.php" rel="alternate" type="application/rss+xml">
+<img src="/images/share-rss.png" width="32" height="32" alt="FreeFileSync News Feed" title="Follow the FreeFileSync news feed"></a>
+</div>
+</div>
+</nav>
+<section>
+<div id="alt-banner">
+<!--googleoff: snippet-->
+<b>It looks like an ad blocker has blocked the ads.</b>
+<a href="/donate#support" class="alt-banner-image"><img src="/images/freefilesync-heart.png" width="65" height="60" alt></a>
+The FreeFileSync project is 100% dependent on ad revenue and donations to stay alive. Instead of the ads, and
+after FreeFileSync has proven useful to you, please think about supporting with a donation.
+<!--googleon: snippet-->
+</div>
+<script>
+				function showBannerAlternative()
+				{
+					
+					var banner = document.getElementById("alt-banner");
+					banner.style.display = "block";
+
+										var img = document.createElement('img');
+					img.src = "/privacy.php.adblock";
+					img.height="70";
+					img.style.cssText = "float:left; margin:0 5px 0 -10px;";
+					banner.prepend(img);
+				}
+
+								registerOnAdcodeFailed(showBannerAlternative);
+			</script>
+<div class="sub-section">
+<div class="description">
+<h2>Privacy Policy</h2>
+We respect the privacy of our visitors. This privacy policy document describes in detail the
+types of personal information that are collected and recorded by freefilesync.org and how they are used.
+Please direct all questions regarding this policy to <a href="#" class="email-crypt" id="email1" onclick="const urlScraps = 'mailto40fre%65files%79n%63%2Eor%67';
+						 	 window.location.href = urlScraps.substr(0, 6) + String.fromCharCode(58) + this.dataset.name +
+													String.fromCharCode(37) + urlScraps.substr(6);
+							return false;"><noscript>[Turn on JavaScript to see the email address]</noscript></a><script>
+				var email = document.getElementById('email1');
+
+				email.setAttribute('data-name', 'privacy');
+				email.setAttribute('data-at', String.fromCharCode(1 << 6));
+				email.setAttribute('data-domain', 'freefilesync.org');
+			</script>.
+<br><br>
+<h3>Log Files</h3>
+Like many other websites, freefilesync.org makes use of log files. These files merely log visitors of the site - usually
+a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log
+files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit
+pages, and possibly the number of clicks. This information is used to analyze trends, administer the site, track user's
+movement around the site, and gather demographic information. IP addresses, and other such information is not linked to
+any information that is personally identifiable.
+<br><br>
+<h3>FreeFileSync Forum</h3>
+This section explains in detail how the "FreeFileSync Forum" (hereinafter "we", "us", "FreeFileSync Forum", "https://freefilesync.org/forum")
+and phpBB (hereinafter "phpBB software") use any information collected during any session of usage by you (hereinafter "your information").<br>
+<br>
+Your information is collected via two ways. Firstly, browsing the "FreeFileSync Forum" will cause the phpBB software to create a number of cookies,
+which are small text files that are downloaded on to your computer’s web browser temporary files. The first two cookies just contain a user
+identifier (hereinafter "user-id") and an anonymous session identifier (hereinafter "session-id"), automatically assigned to you by the phpBB
+software. A third cookie will be created once you have browsed topics within the "FreeFileSync Forum" and is used to store which topics have
+been read, thereby improving your user experience.<br>
+<br>
+We may also create cookies external to the phpBB software whilst browsing the "FreeFileSync Forum", though these are outside the scope of
+this section which is intended to only cover the pages created by the phpBB software. The second way in which we collect your information
+is by what you submit to us. This can be, and is not limited to: posting as an anonymous user, registering on the "FreeFileSync Forum"
+(hereinafter "your account") and posts submitted by you after registration and whilst logged in (hereinafter "your posts").<br>
+<br>
+Your account will at a bare minimum contain a uniquely identifiable name (hereinafter "your user name"), a personal password used for
+logging into your account (hereinafter "your password") and a personal, valid email address (hereinafter "your email"). Your information
+for your account at the "FreeFileSync Forum" is protected by data-protection laws applicable in the country that hosts us. Any information
+beyond your user name, your password, and your email address required by the "FreeFileSync Forum" during the registration process is
+either mandatory or optional, at the discretion of the "FreeFileSync Forum". In all cases, you have the option of what information in
+your account is publicly displayed. Furthermore, within your account, you have the option to opt-in or opt-out of automatically
+generated emails from the phpBB software.<br>
+<br>
+Your password is ciphered (a one-way hash) so that it is secure. However, it is recommended that you do not reuse the same password
+across a number of different websites. Your password is the means of accessing your account at the "FreeFileSync Forum", so please
+guard it carefully and under no circumstance will anyone affiliated with the "FreeFileSync Forum", phpBB or another 3rd party,
+legitimately ask you for your password. Should you forget your password for your account, you can use the "I forgot my password"
+feature provided by the phpBB software. This process will ask you to submit your user name and your email, then the phpBB software
+will generate a new password to reclaim your account.<br>
+<br>
+<h3>Our Advertising Partners</h3>
+Third party vendors, including Google, use cookies to serve ads on freefilesync.org.
+Google's use of the DoubleClick cookie enables it and its partners to serve ads to our site's visitors
+based on their visit to freefilesync.org and/or other sites on the internet.
+Users may opt out of the use of the DoubleClick cookie for interest-based advertising by visiting
+<a href="https://adssettings.google.com/" rel="nofollow" class="external-link">
+Google Ad Settings</a>.
+<br>
+Third-party ad servers or ad networks use technology in their respective advertisements and links that
+appear on freefilesync.org and which are sent directly to your browser. They automatically receive your
+IP address when this occurs. Other technologies (such as cookies, JavaScript, or Web Beacons) may also be
+used by our site's third-party ad networks to measure the effectiveness of their advertising campaigns and/or
+to personalize the advertising content that you see on the site.<br>
+<br>
+freefilesync.org has no access to or control over these cookies that are used by third-party advertisers.
+If you wish to disable cookies, you may do so through your individual browser options.
+More detailed information about cookie management with specific web browsers can be found at the browsers' respective websites.
+<br><br>
+<h3>Third Party Privacy Policies</h3>
+You should consult the respective privacy policies of these third-party servers for more detailed information on their practices
+as well as for instructions about how to opt-out of certain practices. freefilesync.org's privacy policy does not apply to,
+and we cannot control the activities of, such other advertisers or web sites:<br><br>
+<ul>
+<li><a href="https://www.youtube.com/t/privacy" rel="nofollow" class="external-link">
+YouTube Privacy Guidelines</a>
+(embedded demo videos)
+<li><a href="https://policies.google.com/technologies/partner-sites" rel="nofollow" class="external-link">
+Google Privacy Policies</a>
+(AdSense website advertisements)
+</ul>
+<br>
+<h3>Financial Contributions</h3>
+In order to comply with accounting regulations, the following personal data related to donations is stored:
+transaction id, email, donor name, and donation amount.<br>
+Regarding payments for the FreeFileSync Business Edition the following information is stored:
+transaction id, email, buyer name, company name, address, VAT ID (only for EU), and payment amount.<br>
+In order to enable software features of the FreeFileSync "Donation Edition" and FreeFileSync "Business Edition"
+(calculation of update interval, device count determination, email notifications),
+user name and hardware id are recorded during the first start of the respective FreeFileSync edition.
+This personal data will be used exclusively for the purposes described here,
+and not made accessible to third parties.
+In the case of email notifications, the email content is not stored by the freefilesync.org server
+and is directly forwarded for delivery.
+<br><br>
+<h3>Children's Information</h3>
+freefilesync.org does not knowingly collect any personally identifiable information from children under the age of 13.
+If a parent or guardian believes that freefilesync.org has in its database the personally-identifiable information of
+a child under the age of 13, please contact us and we will use our best efforts to promptly remove such information from our records.
+<br><br>
+<h3>Online Privacy Policy Only</h3>
+This privacy policy applies only to our online activities and is valid for visitors to our website and regarding information shared and/or collected there.
+This policy does not apply to any information collected offline or via channels other than this website.
+<br><br>
+<h3>Consent</h3>
+By using our website, you hereby consent to our privacy policy and agree to its terms.
+<br><br>
+<h3>Update</h3>
+This Privacy Policy was last updated on:
+<time datetime="2023-09-12T00:00:00+00:00">Sep 12, 2023</time>
+<br><br>
+</div>
+</div>
+</section>
+<div style="clear:both"></div>
+</div>
+<footer>
+<a href="/privacy.php" rel="nofollow" style="flex-grow:1;">Privacy Policy</a>
+<a href="/imprint.php" rel="nofollow" style="flex-grow:1;">Imprint</a>
+<a href="https://fto.freefilesync.org" target="_blank" rel="nofollow noopener" class="social-button responsive-hide" style="border-radius:5px;">
+<img src="https://fto.freefilesync.org/images/FreeTemplateOffice.ico" width="24" height="24" title="FreeTemplateOffice" alt="FreeTemplateOffice">
+</a>
+<div style="flex-grow:1;">
+Copyright &copy; 2024 Zenju: <a href="#" class="email-crypt" id="email2" onclick="const urlScraps = 'mailto40fre%65files%79n%63%2Eor%67';
+						 	 window.location.href = urlScraps.substr(0, 6) + String.fromCharCode(58) + this.dataset.name +
+													String.fromCharCode(37) + urlScraps.substr(6);
+							return false;"><noscript>[Turn on JavaScript to see the email address]</noscript></a><script>
+				var email = document.getElementById('email2');
+
+				email.setAttribute('data-name', 'zenju');
+				email.setAttribute('data-at', String.fromCharCode(1 << 6));
+				email.setAttribute('data-domain', 'freefilesync.org');
+			</script> </div>
+</footer>
+</body>
+</html>
