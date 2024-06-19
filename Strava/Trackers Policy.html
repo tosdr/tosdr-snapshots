@@ -1,0 +1,1201 @@
+<!-- Orion-App Layout -->
+<!DOCTYPE html>
+<html class='logged-out responsive feed3p0 old-login strava-orion responsive' dir='ltr' lang='en-US' xmlns:fb='http://www.facebook.com/2008/fbml' xmlns:og='http://opengraphprotocol.org/schema/' xmlns='http://www.w3.org/TR/html5'>
+<!--
+layout orion app
+-->
+<head>
+<head>
+<meta charset='UTF-8'>
+<meta content='width = device-width, initial-scale = 1, maximum-scale = 5, user-scalable = yes' name='viewport'>
+<style type='text/css'>
+.spinner, .spinner .status {
+  position: relative;
+}
+.spinner {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.spinner .status {
+  top: 2px;
+  margin-left: 0.5em;
+}
+.spinner .status:empty {
+  display: none;
+}
+.spinner.lg .graphic {
+  border-width: 3px;
+  height: 32px;
+  width: 32px;
+}
+.spinner.tiny {
+  height: 10px;
+  width: 10px;
+}
+.spinner.centered, .spinner.vcentered {
+  box-sizing: border-box;
+  width: 100%;
+}
+.spinner.vcentered {
+  left: 0;
+  margin-top: -12px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%;
+}
+.spinner .graphic, .ajax-loading-image {
+  animation: spin 1.2s infinite linear;
+  box-sizing: border-box;
+  border-color: #eee;
+  border-radius: 50%;
+  border-style: solid;
+  border-top-color: #666;
+  border-top-style: solid;
+  border-width: 2px;
+  content: "";
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  vertical-align: middle;
+  width: 20px;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+</style>
+
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-app-icons-e8d91d8541e118b538db6536a798f7e2a80d47b38b3832628fa2e048c5f8260e.css" media="screen" />
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-orion-15b7053b2269a3dbb123feb3d204e7011fc055af0162ff8a91248091255a47bf.css" media="screen" />
+
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-180x180.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='180x180'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-152x152.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='152x152'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-144x144.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='144x144'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-120x120.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='120x120'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-114x114.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='114x114'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-76x76.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='76x76'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-72x72.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='72x72'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-60x60.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='60x60'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-57x57.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='57x57'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-32x32.png?v=dLlWydWlG8' rel='icon' sizes='32x32' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/icon-strava-chrome-192.png?v=dLlWydWlG8' rel='icon' sizes='192x192' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-96x96.png?v=dLlWydWlG8' rel='icon' sizes='96x96' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-16x16.png?v=dLlWydWlG8' rel='icon' sizes='16x16' type='image/png'>
+<link href='/manifest.json?v=dLlWydWlG8' rel='manifest'>
+<meta content='#FC5200' name='msapplication-TileColor'>
+<meta content='https://d3nn82uaxijpm6.cloudfront.net/mstile-144x144.png?v=dLlWydWlG8' name='msapplication-TileImage'>
+<meta content='#F7F7FA' name='theme-color'>
+<meta content='Strava' name='apple-mobile-web-app-title'>
+<meta content='Strava' name='application-name'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<script type='application/ld+json'>
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "Strava",
+  "url": "https://www.strava.com/",
+  "logo": "https://d3nn82uaxijpm6.cloudfront.net/assets/website_v2/svgs/strava-orange-c33577e7257d5ac4a2e972564c5c7556037f3d005c5b5cb2f0e0d06ac7b84c47.svg",
+  "sameAs": [
+    "https://facebook.com/Strava",
+    "https://twitter.com/strava",
+    "https://instagram.com/strava",
+    "https://youtube.com/stravainc",
+    "https://www.linkedin.com/company/strava-inc./",
+    "https://stories.strava.com",
+    "https://github.com/strava",
+    "https://medium.com/strava-engineering"
+  ]
+}
+
+
+</script>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="bXS4uMUnDaWSVnk5RPW_zFt_BZnfrvGgxLzfzfUjHUO-ysnjPEkflikhdZHGGgiFgx_PvWwazOA0j4XYB7ovKQ" />
+<script>
+  window.StravaSentry = { 
+    enabled: false,
+    release: "0dd6fadb1a8276f3bafe3bccaab4018b6a4b48dc",
+    userId: null,
+    environment: "production",
+    dsn: "https://6ffc1c27d92347b49d7659886aab9deb@o352714.ingest.sentry.io/5816222",
+    debug: "false",
+    sampleRate: 1,
+    pageProperties: null,
+    mobileOS: "Web",
+    isMobile: false
+  }
+  
+  window.StravaDevTools = {
+    enabled: null
+  }
+</script>
+<link rel="stylesheet" href="//d3nn82uaxijpm6.cloudfront.net/packs/css/global-c6da620d.css" media="screen" />
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/runtime-e3a2d10023bc2ab9f716.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/21944-04ab950ff0d3b7f9a661.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/10603-0d2522db11b3d61a86c0.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/20459-3bc8c6cf573225ac4291.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/73170-6a2a12718c143cf50118.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/global-1cd4fdee497f548d12a0.js"></script>
+
+<script>
+  !function() {
+    if (!!window.stravaPublicServiceEnv) {
+      // Object containing no secret key value pairs that are expected to be seen and used in the browser.
+      // This keys are commonly passed to 3rd party libs or tooling.
+      window.stravaPublicServiceEnv({
+        MUX_ENV_KEY: "bqst82u23r97a7fuo892gfpn2",
+        MUX_DATA_VIEWER_USER_ID: null,
+        VIDEOJS_LOG_LEVEL: "error"
+      });
+    }
+  }();
+</script>
+
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-head-ceb9519e86fef9d99673025e70fdccf83c2eef2f91b8899ddebc50ec183ba5d9.js"></script>
+
+
+<link href='https://www.strava.com/legal/cookie_policy' rel='canonical'>
+<link href='https://www.strava.com/legal/cookie_policy' hreflang='x-default' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy' hreflang='en' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=en-GB' hreflang='en-gb' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=fr-FR' hreflang='fr' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=de-DE' hreflang='de' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=pt-BR' hreflang='pt-br' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=es-ES' hreflang='es-es' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=it-IT' hreflang='it' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=ru-RU' hreflang='ru' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=es-419' hreflang='es-419' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=ja-JP' hreflang='ja' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=nl-NL' hreflang='nl' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=zh-TW' hreflang='zh-tw' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=pt-PT' hreflang='pt-pt' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=zh-CN' hreflang='zh-cn' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=pt-PT' hreflang='pt' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=es-ES' hreflang='es' rel='alternate'>
+<link href='https://www.strava.com/legal/cookie_policy?hl=zh-CN' hreflang='zh' rel='alternate'>
+
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/legal/show-0b3506ea295f8c6fd41f5a97b1408beda1af59b83b031998f74c8b591f79284a.css" media="screen" />
+<title>Cookie Policy</title>
+<script>
+  function loadGTM() {
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+    {'gtm.start': new Date().getTime(),event:'gtm.js'}
+    );var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','googleTagManagerDataLayer', "GTM-TP845S");
+  }
+</script>
+<script>
+  window.__LOAD_NON_ESSENTIAL_COOKIES__ =
+    Array.isArray(window.__LOAD_NON_ESSENTIAL_COOKIES__) ? 
+      window.__LOAD_NON_ESSENTIAL_COOKIES__ : [];
+  window.__LOAD_NON_ESSENTIAL_COOKIES__.push(loadGTM);
+</script>
+
+</head>
+
+<script>
+  !function(options){
+    window.Strava = window.Strava || {};
+    var _enabled = true;
+    var _options = options;
+    var _snowplowReady = null;
+  
+    window.Strava.ExternalAnalytics = window.Strava.ExternalAnalytics || (
+      {
+        isEnabled: function() {
+          return _enabled;
+        },
+        isDebug: function() {
+          return _options.debug;
+        },
+        track: function() {
+        },
+        trackV2: function(event) {
+          var eventData = {
+            'category': event.category,
+            'page': event.page,
+            'action': event.action,
+            'element': event.element || null,
+            'properties': event.properties || {}
+          }
+          if (this.isEnabled()) {
+            var a = snowplow('getUserId');
+            this.log("trackV2", {athleteId: a});
+            snowplow('trackSelfDescribingEvent', {
+              schema: 'iglu:com.strava/track/jsonschema/1-0-0',
+              data: eventData
+            });
+          } else {
+            if(this.isDebug()){
+              // toggle defined in - https://github.com/strava/active/blob/main/lib/strava/external_analytics.rb
+              // to turn on - Strava::ExternalAnalytics.turn_on_debug
+              // to turn off - Strava::ExternalAnalytics.turn_off_debug
+              !!console.table && console.table(eventData);
+            }
+          }
+        },
+        trackLink: function() {
+        },
+        trackForm: function() {
+        },
+        identifyV2: function () {
+        },
+        getExperimentContext: function(pageProperties) {
+          var experiment = ( pageProperties || {} ).experiment_info || {};
+          if (experiment.experiment_cohort && experiment.experiment_name) {
+            this.log('found experiment with values', experiment);
+            return {
+              schema: 'iglu:com.strava/web_experiment/jsonschema/1-0-0',
+              data: {
+                experiment_name: experiment.experiment_name,
+                cohort: experiment.experiment_cohort,
+                forced: experiment.experiment_forced === true
+              }
+            };
+          } else {
+            return null;
+          }
+        },
+        page: function(pageProperties) {
+          if(this.isEnabled()) {
+            snowplow('trackPageView');
+          }
+        },
+        identify: function(athleteId, options, eventName) {
+          if (this.isEnabled()) {
+            this.log("identify user", {athleteId: athleteId});
+            var properties = options || {}
+            properties.athlete_id = athleteId;
+            var eventData = {
+              'category': 'identify',
+              'page': null,
+              'action': eventName,
+              'element': null,
+              'properties': properties
+            };
+            snowplow('trackSelfDescribingEvent', {
+              schema: 'iglu:com.strava/track/jsonschema/1-0-0',
+              data: eventData
+            });
+          }
+        },
+        reset: function() {
+          if(this.isEnabled()) {
+            this.log("reseting athlete id",{});
+            snowplow('setUserId', null)
+            var spCookie = document.cookie.match('_sp_id\\.[a-f0-9]+')
+            if(spCookie != null) {
+              document.cookie = spCookie[0] + "= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+            }
+          }
+        },
+        setup: function(athleteId, pageProperties) {
+          if(this.isEnabled()) {
+            this.log("setup snowplow", {athleteId: athleteId});
+            snowplow("newTracker", "cf", "c.strava.com", {
+              appId: "strava-web",
+              platform: "web"
+            });
+            snowplow('setUserId', athleteId);
+            var experimentContext = this.getExperimentContext(pageProperties);
+            if (experimentContext) {
+              snowplow('addGlobalContexts', [experimentContext]);
+            }
+            snowplow('enableFormTracking');
+          }
+        },
+        getDomainUserId: function() {
+          var d = jQuery.Deferred();
+          if (this.isEnabled()) {
+            if (!_snowplowReady) {
+              _snowplowReady = jQuery.Deferred();
+              snowplow(function(){
+                _snowplowReady.resolve(this.cf.getDomainUserId());
+              });
+            }
+            _snowplowReady.always(function(getDomainUserId){
+              d.resolve(getDomainUserId);
+            });
+          } else {
+            d.reject(null);
+          }
+          return d;
+        },
+        log: function(message, values) {
+          if(this.isDebug()) {
+            console.log(message, 'background-color: yellow; color: blue; font-size: medium;', values);
+          }
+        },
+        debug: function(value) {
+          _options.debug = value;
+        }
+      }
+    )
+  }({
+    is_mobile: false,
+    os: "",
+    debug: false,
+    athlete_id: null,
+    locale: "en-US"
+  });
+</script>
+
+<script>
+  !function(){
+    var analytics = window.analytics = window.analytics || [];
+    if(analytics.invoked) {
+      window.console && console.error && console.error("Segment snippet included twice.");
+    } else {
+      (function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://d3nn82uaxijpm6.cloudfront.net/8f96b1247cf4359f8fec.js","snowplow"));
+      var pageProperties = null;
+      var athleteId = null;
+      Strava.ExternalAnalytics.setup(athleteId, pageProperties);
+      Strava.ExternalAnalytics.page(pageProperties);
+    }
+  }();
+</script>
+
+<script>
+  !function(debug){
+    window.Strava = window.Strava || {};
+    var _enabled = false;
+    var _debug = !!debug;
+    var _branchData = null;
+  
+    window.Strava.BranchIO = window.Strava.BranchIO || (
+      {
+        isEnabled: function() {
+          return _enabled;
+        },
+        isDebug: function() {
+          return _debug;
+        },
+        dataToLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+  
+          var d = this.data()
+          var that = this;
+          d.done(function(data) {
+            that.log('storing data %o to local storage', data)
+            _branchData.data(data)
+          });
+          d.fail(function(message) {
+            that.log('failed to retrieve data from branch');
+            _branchData.data({})
+          });
+          return d;
+        },
+        createLink: function(options) {
+          var d = jQuery.Deferred();
+          var data = null;
+          const that = this;
+          var callback = function(e, l) {
+            if (!e) {
+              d.resolve(l);
+            } else {
+              d.reject(e);
+            }
+          }
+  
+          Strava.ExternalAnalytics
+            .getDomainUserId()
+            .always(function(domainUserId){
+              if (domainUserId) {
+                options.data['domainUserId'] = domainUserId;
+              }
+  
+              if(that.isEnabled()) {
+                branch.link(options, callback);
+              };
+          });
+  
+          return d;
+        },
+        dataFromLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+          return _branchData.data();
+        },
+        clearLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+          _branchData.data({});
+        },
+        data: function(checkLocalStorage) {
+          var d = jQuery.Deferred();
+          var that = this;
+          var c = function(message, meta_data) {
+            var storedData = null;
+  
+            if(message) {
+              d.reject(message);
+            } else {
+              if (checkLocalStorage == true && (meta_data == null || meta_data.data == "" || meta_data.data == null)) {
+                storedData = that.dataFromLocalStorage();
+                that.clearLocalStorage();
+  
+                d.resolve(storedData);
+              } else {
+                d.resolve(meta_data);
+              }
+            }
+          };
+  
+          if(this.isEnabled()) {
+            branch.data(c);
+            this.log('%cdata (branch enabled)');
+          } else {
+            this.log('%cdata (branch disabled)');
+            d.resolve({});
+          }
+          return d;
+        },
+        identify: function(hashedAthleteId) {
+          var that = this;
+          var callback = function(error, data) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          if(this.isEnabled() && hashedAthleteId) {
+            branch.setIdentity(hashedAthleteId, callback);
+            this.log('identifying athlete %o', hashedAthleteId);
+          }
+        },
+        logout: function() {
+          var that = this;
+          var callback = function(error) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          branch.logout(callback);
+        },
+        track: function(eventName, metaData) {
+          var that = this;
+          var callback = function(error, data) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          if(this.isEnabled()) {
+              this.log('tracking event - ', eventName);
+              branch.logEvent(eventName, metaData, callback);
+          }
+        },
+        log: function(message, values = '') {
+          if(this.isDebug()) {
+            console.log(`[branch] :::  ${message}`, values);
+          }
+        },
+        debug: function(value) {
+          _debug = value;
+        }
+      }
+    )
+  }(false);
+</script>
+
+<script>
+  function loadBranch() {
+    // load Branch
+    (function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener banner closeBanner closeJourney data deepview deepviewCta first init link logout removeListener setBranchViewData setIdentity track trackCommerceEvent logEvent disableTracking getBrowserFingerprintId crossPlatformIds lastAttributedTouchData setAPIResponseCallback qrCode".split(" "), 0);
+    
+    var options = {"metadata":{"external_identity_version":5,"next":false,"external_identity_hash":null}}
+  
+    // clean legacy identities (non-hashed athlete ids)
+    var branchSessionIdentity = JSON.parse(sessionStorage.getItem('branch_session') || '{}').identity;
+    options.metadata.session_identity = branchSessionIdentity;
+  
+    if(branchSessionIdentity && branchSessionIdentity.length !== 64) {
+      Strava.BranchIO.log('clearing legacy branch session identity %o', branchSessionIdentity);
+      sessionStorage.removeItem('branch_session');
+      options.metadata.session_identity_cleared = true;
+    }else{
+      options.metadata.session_identity_cleared = false;
+    }
+    
+    // init Branch
+    branch.init("key_live_lmpPsfj2DP8CflI4rmzfiemerte7sgwm", options, (err, data) => {
+      const branchInitialized = new CustomEvent('BranchInitialized', { detail: { err, data } });
+      window.dispatchEvent(branchInitialized);
+  
+      var identity = data && data['identity'];
+      var hashedAthleteId = "";
+      
+      if(hashedAthleteId && identity && identity.length !== 64) {
+        Strava.BranchIO.log('purging branch session %o', identity);
+        Strava.BranchIO.track("web_session_reset", {identity: identity});
+        Strava.BranchIO.logout();
+        Strava.BranchIO.identify(hashedAthleteId);
+      }else{
+        if (hashedAthleteId) {
+          Strava.BranchIO.identify(hashedAthleteId);
+        }else{
+          Strava.BranchIO.log('no athlete to identify');
+          Strava.BranchIO.logout();
+        }
+      }
+    });
+  }
+</script>
+<script>
+  window.__LOAD_NON_ESSENTIAL_COOKIES__ =
+    Array.isArray(window.__LOAD_NON_ESSENTIAL_COOKIES__) ?
+      window.__LOAD_NON_ESSENTIAL_COOKIES__ : [];
+  window.__LOAD_NON_ESSENTIAL_COOKIES__.push(loadBranch);
+  Strava.BranchIO.log('branch is disabled on this page');
+</script>
+
+</head>
+<body>
+
+<header id='global-header'><!--
+deploy: 0dd6fadb1a8276f3bafe3bccaab4018b6a4b48dc
+-->
+<!--[if lte IE 8]>
+<div class='alert alert-warning message warning mb-0 text-center'>
+<p>It looks like you're using a version of Internet Explorer that Strava no longer supports. Please <a href='http://www.microsoft.com/en-us/download/ie.aspx?q=internet+explorer'>upgrade your web browser</a> &mdash; <a href='https://strava.zendesk.com/entries/20420212-Supported-Browsers-on-Strava'>Learn more</a>.</p>
+</div>
+<![endif]-->
+<nav class='nav-bar container collapsable-nav' role='navigation'>
+<div title="Return to the Strava home page" class="branding"><a class="branding-content" href="/"><span class="sr-only">Strava</span></a></div>
+<!-- / Nav Menu Button -->
+<a href="#container-nav" aria-expanded="false" aria-controls="container-nav" data-toggle="collapse" class="btn btn-default btn-mobile-menu" role="button">Menu</a>
+<div class='nav-container collapse' id='container-nav'>
+<ul class='user-nav nav-group'>
+<li class='nav-item'>
+<a class="nav-link" href="/mobile">Mobile</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/features">Features</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/subscribe?cta=premium&amp;element=nav&amp;origin=logged_out_global_nav">Subscription</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/maps">Maps</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="https://stories.strava.com/?utm_source=website-header">Stories</a>
+</li>
+<li class='nav-object-group'>
+<div class='nav-item logged_out_nav'>
+<a class='btn btn-primary btn-signup' data-segioevent='{&quot;name&quot;:&quot;Signup Flow&quot;,&quot;method&quot;:&quot;web&quot;,&quot;source&quot;:&quot;Global Header&quot;}' href='/register?cta=sign-up&amp;element=global-header&amp;plan=free&amp;source=legal_show'>
+Sign Up
+</a>
+</div>
+<div class='nav-item logged_out_nav'>
+<a class='btn btn-default btn-login' data-segioevent='{&quot;name&quot;:&quot;Login Flow&quot;,&quot;method&quot;:&quot;web&quot;,&quot;source&quot;:&quot;Global Header&quot;}' href='https://www.strava.com/login?cta=log-in&amp;element=global-header&amp;source=legal_show'>
+Log In
+</a>
+</div>
+</li>
+</ul>
+
+</div>
+</nav>
+</header>
+
+
+
+<div class='container' id='view-legal'>
+<div class='row'>
+<div class='col-lg-3 col-md-3' id='legal-nav' role='navigation'>
+<ul class='collapse' id='legal-nav-items'>
+<li class=''>
+<a aria-selected="false" href="/legal/terms">Terms of Service</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/privacy">Privacy Policy</a>
+</li>
+<li class='selected'>
+<a aria-selected="true" href="/legal/cookie_policy">Cookie Policy</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/acceptable_use">Acceptable Use Policy</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/legal_bases">Legal Bases</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/api">API Agreement</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/supplier_guidelines">Supplier Guidelines</a>
+</li>
+</ul>
+
+</div>
+<article class='col-lg-7 col-md-9' id='legal-body'>
+<h1>Cookie Policy</h1>
+<p class='effective-date'>Effective Date: December 12, 2023</p>
+<section class='actions-wrapper' id='deny-or-accept-buttons'>
+<h2>Set your cookies preferences</h2>
+<p>We use Non-Essential Third-Party Cookies to improve your experience, perform analytics, and serve relevant ads. Please select your Non-Essential Third-Party Cookies preferences below. If you click “Accept” we will use Non-Essential Third-Party Cookies. If you click “Deny,” we will not use Non-Essential Third-Party Cookies. You can change this preference at any time.</p>
+<div class='radio'>
+<label>
+<input type="radio" name="cookies" id="cookies_accept" value="accept" class="radio-accept-cookies" disabled="disabled" />
+Accept
+</label>
+</div>
+<div class='radio'>
+<label>
+<input type="radio" name="cookies" id="cookies_deny" value="deny" class="radio-deny-cookies" disabled="disabled" />
+Deny
+</label>
+</div>
+</section>
+<script>
+  jQuery(document).ready(function(){
+    highlightPreviouslySelectedPreference();
+  
+    function highlightPreviouslySelectedPreference() {
+      var hasDenied;
+      var hasAccepted;
+      var loggedInPref;
+      var loggedOutCookieName;
+      var loggedIn = "false" === "true";
+  
+      loggedInPref = "";
+      loggedOutCookieName = "_strava_cbv3";
+  
+      if (loggedIn) {
+        hasDenied = loggedInPref === 'false';
+        hasAccepted = loggedInPref === 'true';
+      } else {
+        hasDenied = document.cookie.includes(loggedOutCookieName + "=false");
+        hasAccepted = document.cookie.includes(loggedOutCookieName + "=true");
+      }
+  
+      if (hasDenied) {
+        highlightDenyOption();
+      }
+  
+      if (hasAccepted) {
+        highlightAcceptOption();
+      }
+  
+      enableRadioOptions();
+    }
+  
+    jQuery('input[type=radio][name=cookies]').change(function (e) {e.preventDefault(); handlePreferenceChange(e.target.value);});
+  
+    function handlePreferenceChange(choice) {
+      disableRadioOptions();
+      if (choice === 'accept') {
+        handleAccept();
+      } else if (choice === 'deny') {
+        handleDeny();
+      }
+    }
+  
+    function handleDeny() {
+      updateCookiePreference('false');
+    }
+  
+    function handleAccept() {
+      updateCookiePreference('true');
+    }
+  
+    function highlightAcceptOption() {
+      jQuery('.radio-deny-cookies').prop("checked", false);
+      jQuery('.radio-accept-cookies').prop("checked", true);
+    }
+  
+    function highlightDenyOption() {
+      jQuery('.radio-deny-cookies').prop("checked", true);
+      jQuery('.radio-accept-cookies').prop("checked", false);
+    }
+  
+    function setDisabledOnRadioOptions(value) {
+      jQuery('input[type=radio][name=cookies]').prop("disabled", value);
+    }
+  
+    function disableRadioOptions() {
+      setDisabledOnRadioOptions(true);
+    }
+  
+    function enableRadioOptions() {
+      setDisabledOnRadioOptions(false);
+    }
+  
+    function updateCookiePreference(value) {
+      // When the athlete is logged in, this will save their answer to the db
+    
+      var name = 'allow_nonessential_cookies_v3';
+  
+      if ("false" === "true") {
+        jQuery.ajax({
+          type: 'PUT',
+          url: '/athlete/athlete_preferences/set',
+          data: { value, name }
+        });  
+      }
+      
+      // When testing locally the domain might be 'localhost', but on prod it should be '.strava.com'
+      var domain = window.location.hostname.replace('www', '');
+      var cookieExpiration = new Date();
+      cookieExpiration.setFullYear(cookieExpiration.getFullYear() + 1);
+  
+      var cookieName = "_strava_cbv3";
+  
+      document.cookie =
+        cookieName + "=" + value + ';' +
+        'expires=' + cookieExpiration.toGMTString() + ';' +
+        'domain=' + domain + ';' +
+        'path=/;';
+  
+      window.location.reload();
+    }
+  });
+</script>
+<section id='what-is-a-cookie'>
+<h2>What is a cookie?</h2>
+<p>A cookie is a piece of data that may be stored in the browser you use to access Strava, which enables features and functionality. It allows our website to “remember” your activity or preferences over a length of time or during a particular session. If you&#39;re signed in to Strava, cookies allow us to show you the right information and personalize your experience.</p>
+<p>Some of the cookies we use are set by us (strava.com) to facilitate our provision of the service. These are known as First Party Cookies. We also utilize Third-Party Cookies, which are set by other sites (for example, google.com) and employed on our website, and are explained further below.</p>
+</section>
+<section id='how-we-use-cookies'>
+<h2>How does Strava use cookies?</h2>
+<p>We use session cookies and persistent cookies. Session cookies are temporary cookies that are not stored in your browser beyond the session in question. They are used for authentication and security purposes and to ensure the effective and necessary functioning of the Strava features which you are utilizing. We may also use a session cookie to remember your preferences when viewing the site. These session cookies are erased when you exit your browser.</p>
+<p>Persistent cookies are those placed on your browser for a pre-determined length of time when you visit this site. They expire on a set expiration date, or when they are deleted manually. To learn more about how you can delete cookies manually, read the section below entitled “Managing and refusing the use of cookies.”</p>
+</section>
+<section id='first-party-cookies'>
+<h2>First-Party Cookies</h2>
+<p>We develop and use cookies via our website to authenticate users, block malicious use of login credentials and shield unauthorized access to member data. We also develop and use cookies to collect information on website and app usage in order to understand and improve Strava. These cookies also help us learn how well our website and app operate across different locations and identify any issues in the operation and provision of our products.</p>
+</section>
+<section id='third-party-cookies'>
+<h2>Third-Party Cookies</h2>
+<p>We also permit the setting of Third-Party Cookies on our website. Some of these cookies are necessary to provide you with services you have requested (“Essential Third-Party Cookies”), whereas others are not necessary to provide you with services you have requested (“Non-Essential Third-Party Cookies”).</p>
+<h3><i>Essential Third-Party Cookies</i></h3>
+<p>We use Essential Third-Party Cookies to allow you to navigate our site and use its services and features. For example, we allow you to sign up and log in using accounts you create with third-party products and services, such as Facebook, Google, or Apple (collectively, “Third-Party Accounts”). When you sign up or log in using Third-Party Accounts, we use Essential Third-Party Cookies which are necessary to authenticate you.</p>
+<h3><i>Non-Essential Third Party Cookies</i></h3>
+<p>We use Non-Essential Third-Party Cookies to assist us in measuring and understanding how our products are used and how they can be optimized. We may also receive other analytics information from these third parties.</p>
+<p>Some of these cookies are advertising cookies, which we employ to serve relevant ads to users who have already visited our website. We use the following cookies for advertising purposes: Meta Pixel, Google Ads, Snap and Branch.</p>
+<p>Other cookies are used to assess performance and analytics, or to perform business research. We use the following cookies for performance, analytics and research purposes: Meta Pixel, Google Analytics, Snap and Branch.</p>
+</section>
+<section id='managing-cookies'>
+<h2>Managing and refusing the use of cookies</h2>
+<p>When you first visit our site, you will see a banner asking whether you would like to accept the use of cookies. By clicking “I accept,” you agree to the use of all cookies as described here, including Non-Essential Third-Party Cookies.</p>
+<p>We will only use Non-Essential Third-Party Cookies if you click “I accept” on the cookies banner, or in your cookies preferences. You can manage your cookies preferences at any time by toggling the radio button at the top of this policy. If you click “deny” in your cookies preferences or on the cookies banner, we will not use Non-Essential Third-Party Cookies.</p>
+<p>Most browsers allow you to choose whether you wish to accept cookies. Different browsers make different controls available to you and so we provide links below to popular browser instructions on how you can do this. Generally, your browser will offer you the choice to accept, refuse or delete all cookies, or third-party cookies on a website, or those from specific websites. However, if you restrict our capability to set cookies, you may limit the full functionality of Strava, which will make some of our services and features unavailable to you.</p>
+<ul>
+<li><a target="_blank" href="https://support.google.com/chrome/answer/95647">Google Chrome</a></li>
+<li><a target="_blank" href="https://support.microsoft.com/en-ie/help/17442/windows-internet-explorer-delete-manage-cookies">Internet Explorer</a></li>
+<li><a target="_blank" href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences">Firefox</a></li>
+<li><a target="_blank" href="https://support.apple.com/en-us/HT201265">Safari</a></li>
+<li><a target="_blank" href="https://www.opera.com/help/tutorials/security/cookies">Opera</a></li>
+</ul>
+<p>In some cases, you can manage or opt out of third-party cookies on a cookie-by-cookie basis. Learn more about how to manage these individual cookie settings and review their corresponding privacy policies by visiting the websites below:</p>
+<table class='table'>
+<thead>
+<tr>
+<th></th>
+<th>Where to manage cookie settings</th>
+<th>Privacy Policy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Ads</td>
+<td>
+<a href='https://adssettings.google.com/'>https://adssettings.google.com/</a>
+</td>
+<td>
+<a href='https://policies.google.com/technologies/ads'>https://policies.google.com/technologies/ads</a>
+</td>
+</tr>
+<tr>
+<td>Google Analytics</td>
+<td>
+<a href='https://tools.google.com/dlpage/gaoptout'>https://tools.google.com/dlpage/gaoptout</a>
+</td>
+<td>
+<a href='https://support.google.com/analytics/answer/6004245'>https://support.google.com/analytics/answer/6004245</a>
+</td>
+</tr>
+<tr>
+<td>Meta Pixel</td>
+<td>
+<a href='https://www.facebook.com/help/336858938174917/'>https://www.facebook.com/help/336858938174917/</a>
+</td>
+<td>
+<a href='https://www.facebook.com/policies/cookies'>https://www.facebook.com/policies/cookies</a>
+</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td>
+<a href='https://branch.app.link/optout'>https://branch.app.link/optout</a>
+</td>
+<td>
+<a href='https://www.branchapp.com/privacy'>https://www.branchapp.com/privacy</a>
+</td>
+</tr>
+<tr>
+<td>Snap</td>
+<td>
+<a href='https://snap.com/cookie-settings'>https://snap.com/cookie-settings</a>
+</td>
+<td>
+<a href='https://snap.com/cookie-policy'>https://snap.com/cookie-policy</a>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id='do-not-track'>
+<h2>Do Not Track (DNT)</h2>
+<p>We may not recognize Do-Not-Track (“DNT”) signals from your web browsers or device. This is because there is not yet a universally accepted standard on how to interpret and respond to DNT signals, which often conflict with other settings. If and when a standard is established, we will re-examine how we can appropriately respond to DNT signals.</p>
+</section>
+<section id='changes-to-policy'>
+<h2>Changes to this policy</h2>
+<p>This policy may change from time to time, so it should be reviewed frequently for the most up to date cookie information. We will notify you of any changes by updates to this page.</p>
+<p>If you have questions about this policy, you may reach us at DPO@strava.com.</p>
+</section>
+
+<p class='copyright'>&copy;&nbsp; 2024 Strava</p>
+</article>
+</div>
+<a class='nav-back-to-top' href='#view-legal'>↑ Back to top</a>
+</div>
+
+<footer id='global-footer'>
+<div class='container-fluid'>
+<div class='row footer-nav footer-row'>
+<div class='footer-nav-wrapper'>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Our Community
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='/about'>
+About
+</a>
+</li>
+<li>
+<a href='/community-standards'>
+Strava Community Standards
+</a>
+</li>
+<li>
+<a href='/careers'>
+Careers
+</a>
+</li>
+<li>
+<a href='https://press.strava.com'>
+Press
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Follow
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='https://stories.strava.com/' target='_blank'>
+Stories
+</a>
+</li>
+<li>
+<a href='https://www.facebook.com/Strava/' target='_blank'>
+Facebook
+</a>
+</li>
+<li>
+<a href='https://instagram.com/strava' target='_blank'>
+Instagram
+</a>
+</li>
+<li>
+<a href='http://twitter.com/strava' target='_blank'>
+Twitter
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Support
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='https://strava.zendesk.com/entries/61608110-How-to-contact-Strava-Support-Submit-a-ticket'>
+Contact
+</a>
+</li>
+<li>
+<a href='https://communityhub.strava.com'>
+Community Forum
+</a>
+</li>
+<li>
+<a href='https://support.strava.com/hc/en-us/articles/216917717-About-Strava-Maps'>
+About Our Maps
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='https://business.strava.com?utm_source=footer&amp;utm_medium=referral'>
+Business
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/mobile'>
+Mobile
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/subscribe?origin=global_footer'>
+Subscription
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/student?origin=global_footer'>
+Student Discount
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-md-3 col-sm-3 col-xs-6 hidden-lg'>
+<h4 class='more'>
+<span class="app-icon-wrapper  "><span class="app-icon icon-ellipsis icon-xl">More</span></span>
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='/mobile'>
+Mobile
+</a>
+</li>
+<li>
+<a href='/premium'>
+Subscription
+</a>
+</li>
+<li>
+<a href='https://business.strava.com?utm_source=footer&amp;utm_medium=referral'>
+Business
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class='row footer-other'>
+<div class='col-md-12'>
+<div class='privacy-terms'>
+<a href='/legal/privacy'>
+Privacy Policy
+</a>
+|
+<a href='/legal/terms'>
+Terms and Conditions
+</a>
+</div>
+<div class='copyright'>
+<p>© 2024 Strava</p>
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+
+
+<script id='lightbox-template' type='text/template'>
+<div class='lightbox-window modal-content'>
+<div class='close-lightbox'>
+<button class='btn btn-unstyled btn-close'>
+<div class='app-icon icon-close icon-xs icon-dark'></div>
+</button>
+</div>
+</div>
+</script>
+<script id='popover-template' type='text/template'>
+<div class='popover'></div>
+</script>
+<script>
+  window._asset_host = "https://d3nn82uaxijpm6.cloudfront.net";
+  window._measurement_preference = "meters";
+  window._date_preference = "%m/%d/%Y";
+  window._datepicker_preference_format = "mm/dd/yy";
+  
+  jQuery(document).ready(function() {
+    Strava.Util.EventLogging.createInstance("https://analytics.strava.com","7215fa60b5f01ecc3967543619f7e3d9", null);
+  });
+</script>
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/strava/i18n/locales/en-US-2ecfbb249e59dd1b58367df1825cf017d86b9cd176a9d2147199db7f8c094bdc.js"></script>
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/application-35fb3d833b6ac1fd03e76741286320e16b3bef64cdb547033ad0184413114310.js"></script>
+
+<script src="https://www.strava.com/cookie-banner"></script>
+<script>
+  jQuery(document).ready(function(){
+    typeof StravaCookieBanner !== 'undefined' && StravaCookieBanner.render();
+  });
+</script>
+
+
+<div id='fb-root'></div>
+<script>
+  // set fbInitialized so we know FB is being initialized async (safegaurd against react loading FB twice)
+  if (window.Strava) window.Strava.fbInitialized = true;
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: "284597785309",
+      status: true,
+      cookie: true,
+      xfbml: true,
+      version: "v7.0"
+    });
+    Strava.Facebook.PermissionsManager.getInstance().facebookReady();
+    jQuery('#fb-root').trigger('facebook:init');
+  };
+  (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+</script>
+
+
+<script>
+  var currentAthlete = new Strava.Models.CurrentAthlete({"logged_in":false});
+  HAML.globals = function() {
+    return {
+      currentAthlete: currentAthlete,
+      renderPartial: function(name, context) {
+        if (context == null) {
+          context = this;
+        }
+        return JST[name](context);
+      }
+    }
+  }
+</script>
+
+<script>
+  new Strava.Initializer();
+</script>
+<script>
+  var mqTimeout;
+  var pinTimeout;
+  var mq;
+  var legalNav = jQuery('#legal-nav');
+  var legalNavItems = jQuery('#legal-nav-items');
+  
+  var bindActions = function(){
+    mq = window.matchMedia("(max-width: 767px)");
+    if (mq.matches) {
+      legalNav.on('click', function(){
+        legalNavItems.collapse('toggle');
+      });
+    } else {
+      legalNav.unbind('click');
+      legalNavItems.removeAttr('style');
+    }
+  }
+  
+  var windowTop;
+  var windowHeight;
+  var backToTop = jQuery('.nav-back-to-top');
+  var backToTopPinning = function(){
+    windowTop = jQuery(window).scrollTop();
+    windowHeight = jQuery(window).height();
+  
+    if (windowTop > windowHeight) {
+      if (!backToTop.hasClass('pinned')) {
+        backToTop.addClass('pinned');
+      }
+    } else {
+      jQuery('.nav-back-to-top.pinned').removeClass('pinned');
+    }
+  
+    if (windowTop + windowHeight > jQuery('#view-legal').height()) {
+      if (!backToTop.hasClass('pinned-bottom')) {
+        backToTop.addClass('pinned-bottom');
+      }
+    } else {
+      jQuery('.nav-back-to-top.pinned-bottom').removeClass('pinned-bottom');
+    }
+  }
+  
+  jQuery(document).ready(function(){
+    bindActions();
+    backToTopPinning();
+  
+    if (matchMedia) {
+      window.onresize = function(){
+        clearTimeout(mqTimeout);
+        mqTimeout = setTimeout(bindActions, 200);
+      };
+    }
+  
+    window.onscroll = function(){
+      clearTimeout(pinTimeout);
+      pinTimeout = setTimeout(backToTopPinning, 40);
+    }
+  });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register("/service_worker.js?v=dLlWydWlG8").then(function(registration) {
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
+<script>
+  jQuery(document).ready(function() {
+    // Scroll Tracking
+    jQuery(document).one('scroll', function(){
+      Strava.ExternalAnalytics.trackV2({
+        category: 'page_scrolled'
+      });
+    });
+  });
+</script>
+<script>
+  // Mobile Menu transition handler
+  jQuery('.collapsable-nav #container-nav')
+    .on('show.bs.collapse', function(){
+      jQuery('#smartbanner-loading-placeholder').slideUp(100);
+      jQuery('html').addClass('mobile-menu-open');
+    })
+    .on('hidden.bs.collapse', function(){
+      jQuery('#smartbanner-loading-placeholder').slideDown(100);
+      jQuery('html').removeClass('mobile-menu-open');
+    });
+</script>
+
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/bootstrap.min-a7bfdfbd2fee539589ef513eefe26b630e543cbde9d99a371757033189d830e9.js"></script>
+
+</body>
+</html>
