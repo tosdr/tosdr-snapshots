@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <script>
+      const fallback = '/terms0';
+      const rules = [{"redirect":"/terms1","countryCode":"gb"}];
+      let redirect = '';
+      let countryCode = '';
+
+      function processCountryCodeRule(rule) {
+        if (rule.countryCode && rule.countryCode.toLowerCase() === countryCode.toLowerCase()) {
+          return rule.redirect;
+        }
+
+        return '';
+      }
+
+      const ruleFuncs = [processCountryCodeRule];
+
+      try {
+        if (document.cookie) {
+          const countryCodeIndex = document.cookie.indexOf('countryCode=');
+          if (countryCodeIndex >= 0) {
+            countryCode = document.cookie.substring(countryCodeIndex + 12).split(';')[0];
+          }
+        }
+
+        for (let rulesIndex = 0; rulesIndex < rules.length && !redirect; rulesIndex++) {
+          for (let ruleFuncsIndex = 0; ruleFuncsIndex < ruleFuncs.length && !redirect; ruleFuncsIndex++) {
+            redirect = ruleFuncs[ruleFuncsIndex](rules[rulesIndex]);
+          }
+        }
+      } finally {
+        if (redirect || fallback) {
+          window.location.replace(redirect || fallback);
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
