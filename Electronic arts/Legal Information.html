@@ -1,0 +1,4965 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" wf-loading>
+    <head>
+        
+    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+
+
+    <script>
+        window.newrelicAttributes = {
+            accountId: "1796917",
+            trustKey: "1796917",
+            agentId: "149134891",
+            licenseKey: "f701a6c63c",
+            applicationId: "149134891"
+        };
+    </script>
+    <script src="/newrelic.js"></script>
+
+
+
+<!-- Compliant Google Optimize -->
+<script>
+        (() => {
+            const getPrivacyCookie = () => {
+                const privacyCookie = document.cookie.match('(^|;)\\s*cmapi_cookie_privacy\\s*=\\s*([^;]+)');
+
+                return privacyCookie ? privacyCookie.pop() : null;
+            };
+
+            const getBehaviorCookie = () => {
+                const behaviorCookie = document.cookie.match('(^|;)\\s*notice_behavior\\s*=\\s*([^;]+)');
+
+                return behaviorCookie ? behaviorCookie.pop() : null;
+            };
+
+            const hasOptedIn = () => {
+                const behaviorCookie = getBehaviorCookie();
+                const privacyCookie = getPrivacyCookie();
+
+                return behaviorCookie && behaviorCookie.match(/^none$/) || privacyCookie && privacyCookie.match(/2|3/);
+            }
+
+            const appendOptimize = () => {
+                const head = document.getElementsByTagName('head')[0];
+
+                if (head) {
+                    const script = document.createElement('script');
+
+                    script.src = 'https://www.googleoptimize.com/optimize.js?id=GTM-M6BQF2W';
+                    script.id = "google-optimize"
+                    head.append(script);
+                }
+            };
+
+            const removeOptimize = () => {
+                const head = document.getElementsByTagName('head')[0];
+                const optimizeScript = document.getElementById('google-optimize');
+
+                if (head && optimizeScript) {
+                    head.removeChild(optimizeScript);
+                }
+            }
+
+            /**
+             * Append or remove Google Optimize script to head,
+             * depending on whether user's cookie preferences
+             * have opted in and Google Optimize script already
+             * exists in head.
+             */
+            const handleConsentDecision = () => {
+                const googleOptimizeScript = document.getElementById('google-optimize');
+                if (hasOptedIn() && !googleOptimizeScript) {
+                    appendOptimize();
+                } else if (!hasOptedIn() && googleOptimizeScript) {
+                    removeOptimize();
+                }
+            }
+
+            /**
+             * Callbacks will occur in the form of a PostMessage event. This code listens for the
+             * appropriately formatted PostMessage event, gets the new consent decision, and then sets
+             * the new cookie preferences.
+             */
+            const handlePreferencesUpdated = (e) => {
+                try {
+                    const { capabilities, action } = JSON.parse(e.data).PrivacyManagerAPI || {};
+                    if (capabilities && action === 'getConsentDecision') {
+                        handleConsentDecision();
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            /**
+             * Registers with the TrustArc Content Manager (CM) API to receive callbacks when
+             * a preference update occurs, and initialized dispatched preferences array to
+             * the user's current preferences. You must wait for the CM API (PrivacyManagerAPI object)
+             * to exist on the page before registering.
+             */
+            const CMICallbackRegister = () => {
+                const interval = setInterval(() => {
+                    if (window.PrivacyManagerAPI && interval) {
+                        const apiObject = {
+                            PrivacyManagerAPI: {
+                                action: 'getConsentDecision',
+                                timestamp: new Date().getTime(),
+                                self: window.location.host
+                            }
+                        };
+                        window.top.postMessage(JSON.stringify(apiObject), '*');
+                        clearInterval(interval);
+                    }
+                }, 50);
+            }
+
+            /**
+             * Listener registers a message callback on the TrustArc Content Manager when
+             * user's cookie preferences are updated and adds an event listener
+             * on the message events that occur when said preference updates occur.
+             */
+            const trustArcScriptLoadListener = () => {
+                if (typeof window.truste === 'object') {
+                    CMICallbackRegister();
+                    window.addEventListener('message', handlePreferencesUpdated);
+                }
+            }
+
+            window.addEventListener('load', trustArcScriptLoadListener);
+            const behaviorCookie = getBehaviorCookie();
+
+            if (behaviorCookie === null) {
+                // wait for TrustArc script to load before checking cookies
+                let numIntervals = 0;
+                const scriptLoadInterval = setInterval( () => {
+                    if(getBehaviorCookie()) {
+                        handleConsentDecision();
+                        clearInterval(scriptLoadInterval);
+                    }
+                    // Stop running interval after 8 times (8x the documented 500ms it
+                    // should take to load the TrustArc script on the BE) to prevent running forever
+                    if (++numIntervals >= 10) {
+                        clearInterval(scriptLoadInterval);
+                    }
+                } , 500);
+            } else {
+                handleConsentDecision();
+            }
+        })();
+</script>
+    <!-- End Compliant Google Optimize -->
+
+
+<!-- Google Tag Manager -->
+<script>
+    (function(w, d, s, l) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+
+        var f = d.getElementsByTagName(s)[0];
+        var j = d.createElement(s);
+        var dl = l !== 'dataLayer' ? '&l=' + l : '';
+
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-TG32RCX' + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer');
+</script>
+<!-- End Google Tag Manager -->
+
+
+
+<style>
+    [unresolved] {
+        visibility: hidden !important;
+    }
+</style>
+
+
+<noscript>
+    <style>
+        [unresolved] {
+            visibility: visible !important;
+        }
+    </style>
+</noscript>
+
+<style>
+    body {
+        margin: 0;
+    }
+
+    .image img {
+        max-width: 100%;
+    }
+</style>
+
+
+<script>
+    
+    if (!CSS.supports('width', 'calc((var(--test))')) {
+        window.ShadyCSS = {
+            shimcssproperties: true
+        };
+    }
+
+    document.addEventListener('nds.typeKit.active', function() {
+        document.querySelector('html').removeAttribute('wf-loading');
+    });
+</script>
+
+<script src="//unpkg.com/@webcomponents/webcomponentsjs@2.2.7/webcomponents-loader.js"
+    integrity="sha384-3HK5hxQbkFqOIxMbpROlRmRtYl2LBZ52t+tqcjzsmr9NJuOWQxl8RgQSyFvq2lhy"
+    crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"
+    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D"
+    crossorigin="anonymous"></script>
+<script src="//w.soundcloud.com/player/api.js"></script>
+
+
+
+
+
+
+<script>
+    window.nds = window.nds || {};
+    window.nds.componentUrlPrefix = '//pl.ea.com/release/4.67.2/elements/ea-elements.min.js'.substring(0, '//pl.ea.com/release/4.67.2/elements/ea-elements.min.js'.lastIndexOf('/') + 1);
+    window.nds.contentfulUrl = 'https://contentful-proxy.juno.ea.com/graphql';
+    window.nds.salUrl = 'https://service-aggregation-layer.juno.ea.com/graphql';
+    window.nds.useApq = true;
+    window.nds.salClientId = 'eacom-fe';
+    window.nds.xGameDistMethod = 'eacom';
+    window.nds.lockboxGameId = 'eacom';
+    window.nds.lockboxInvoiceSource = 'EACOM-STORE-WEB-%countryCode%';
+    window.nds.lockboxExternalPaymentPath = '/lockbox-external-payment';
+</script>
+
+
+
+<script type="module" src="//pl.ea.com/release/4.67.2/elements/ea-elements.min.js"></script>
+<script nomodule defer src="//pl.ea.com/release/4.67.2/elements/ea-elements.min.js"></script>
+
+
+
+    
+        
+    
+
+<style>
+    @font-face {
+    font-family: 'ElectronicArtsDisplay';
+    src: url(/assets/fonts/display/ElectronicArtsDisplay-Regular.woff2) format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsDisplay';
+    src: url(/assets/fonts/display/ElectronicArtsDisplay-Bold.woff2) format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Light.woff2) format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-LightItalic.woff2) format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Regular.woff2) format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Italic.woff2) format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-Bold.woff2) format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ElectronicArtsText';
+    src: url(/assets/fonts/text/ElectronicArtsText-BoldItalic.woff2) format('woff');
+    font-weight: 600;
+    font-style: italic;
+}
+
+</style>
+
+
+
+
+
+
+    <title>Legal - Official EA Site</title>
+    
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Legal - Official EA Site">
+<meta property="og:description" content="Welcome to EA’s Legal and Privacy Information page, where you can find legal information and resources for EA’s products and services. Use of EA’s games and services are offered subject to EA’s User Agreement and Privacy and Cookie Policy. You can also find more information and choices about your Privacy in EA’s Privacy Portal.">
+
+    <meta property="og:url" content="https://www.ea.com/legal">
+
+<meta property="og:site_name" content="Electronic Arts Inc.">
+
+    <meta property="og:image" content="https://media.contentapi.ea.com/content/dam/eacom/images/2021/03/ea-featured-tile-generic-electronic-arts.png.adapt.crop191x100.1200w.png">
+
+
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="628">
+
+
+<meta name="description" content="Welcome to EA’s Legal and Privacy Information page, where you can find legal information and resources for EA’s products and services. Use of EA’s games and services are offered subject to EA’s User Agreement and Privacy and Cookie Policy. You can also find more information and choices about your Privacy in EA’s Privacy Portal.">
+<meta name="author" content="Electronic Arts">
+<meta property="article:modified_time" content="2024-01-17T21:58:19Z">
+<meta property="article:published_time" content="2021-11-01T21:24+01:00">
+
+
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@ea">
+<meta name="twitter:title" content="Legal - Official EA Site">
+<meta name="twitter:description" content="Welcome to EA’s Legal and Privacy Information page, where you can find legal information and resources for EA’s products and services. Use of EA’s games and services are offered subject to EA’s User Agreement and Privacy and Cookie Policy. You can also find more information and choices about your Privacy in EA’s Privacy Portal.">
+
+    <meta name="twitter:image" content="https://media.contentapi.ea.com/content/dam/eacom/images/2021/03/ea-featured-tile-generic-electronic-arts.png.adapt.crop16x9.1023w.png">
+
+<meta name="twitter:creator" content="@ea">
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+     
+"image": {
+    "@type": "ImageObject",
+    "url": "https://media.contentapi.ea.com/content/dam/eacom/images/2021/03/ea-featured-tile-generic-electronic-arts.png.adapt.crop191x100.1200w.png"
+},
+ 
+    "author": {
+      "@type": "Organization",
+      "name": "Electronic Arts",
+      "sameAs": "https://en.wikipedia.org/wiki/Electronic_Arts"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "Electronic Arts",
+        "sameAs": "https://en.wikipedia.org/wiki/Electronic_Arts",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://media.contentapi.ea.com/content/dam/ea/EA_logo.png",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "inLanguage": "en",
+    "description": "Welcome to EA’s Legal and Privacy Information page, where you can find legal information and resources for EA’s products and services. Use of EA’s games and services are offered subject to EA’s User Agreement and Privacy and Cookie Policy. You can also find more information and choices about your Privacy in EA’s Privacy Portal.",
+    "datePublished": "2021-11-01T21:24+01:00",
+    "dateModified": "2024-01-17T21:58:19Z",
+    "headline": "Legal - Official EA Site",
+    "url": "https://www.ea.com/legal"
+}
+</script>
+
+
+
+    </head>
+    <body unresolved>
+        
+    
+
+
+<custom-style><style include="ea-shared-styles-base-common"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-headings"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-lists"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-links"></style></custom-style>
+<custom-style><style include="ea-shared-styles-base-images"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-headings"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-paragraphs"></style></custom-style>
+<custom-style><style include="ea-shared-styles-typography-labels"></style></custom-style>
+
+
+    
+        
+            <custom-style>
+                <style>
+                    html {
+                        
+                            --origin-brand-color: #FCA00D;
+                        
+                            --eaCorporate-landingSection-spacerTop-XS: 32px;
+                        
+                            --eaCorporate-landingSection-spacerTop-SM: 32px;
+                        
+                            --eaCorporate-landingSection-spacerTop-MD: 80px;
+                        
+                            --eaCorporate-landingSection-spacerTop-LG: 104px;
+                        
+                            --eaCorporate-landingSection-spacerTop-XL: 128px;
+                        
+                            --eaCorporate-landingSection-spacerBottom-XS: 32px;
+                        
+                            --eaCorporate-landingSection-spacerBottom-SM: 32px;
+                        
+                            --eaCorporate-landingSection-spacerBottom-MD: 40px;
+                        
+                            --eaCorporate-landingSection-spacerBottom-LG: 48px;
+                        
+                            --eaCorporate-landingSection-spacerBottom-XL: 56px;
+                        
+                            --eaCorporate-standardSection-spacerTop-XS: 48px;
+                        
+                            --eaCorporate-standardSection-spacerTop-SM: 48px;
+                        
+                            --eaCorporate-standardSection-spacerTop-MD: 80px;
+                        
+                            --eaCorporate-standardSection-spacerTop-LG: 80px;
+                        
+                            --eaCorporate-standardSection-spacerTop-XL: 80px;
+                        
+                            --eaCorporate-standardSection-spacerBottom-XS: 48px;
+                        
+                            --eaCorporate-standardSection-spacerBottom-SM: 48px;
+                        
+                            --eaCorporate-standardSection-spacerBottom-MD: 80px;
+                        
+                            --eaCorporate-standardSection-spacerBottom-LG: 80px;
+                        
+                            --eaCorporate-standardSection-spacerBottom-XL: 80px;
+                        
+                            --ea-theme-stream-ui-paddle-default: #161616;
+                        
+                            --ea-theme-stream-ui-paddle-disabled: #BFBFBF;
+                        
+                            --ea-theme-stream-ui-progress-indicator-default: rgb(255,255,255);
+                        
+                            --ea-theme-stream-ui-progress-indicator-hover: rgb(255,255,255);
+                        
+                            --ea-theme-stream-ui-progress-bar-stroke-default: #ff8e8e;
+                        
+                            --ea-theme-stream-ui-progress-bar-stroke-hover: #ff8e8e;
+                        
+                            --ea-theme-stream-ui-progress-bar-fill-hover: #ff8e8e;
+                        
+                            --ea-theme-toaster-eyebrow-font-size-mobile: 16px;
+                        
+                            --ea-theme-toaster-eyebrow-font-size-tablet: 18px;
+                        
+                            --ea-theme-toaster-eyebrow-font-size-desktop: 20px;
+                        
+                            --ea-theme-toaster-copy-font-size-tablet: 16px;
+                        
+                            --ea-theme-toaster-copy-font-size-desktop: 18px;
+                        
+                            --ea-theme-tabs-background-color: #003181;
+                        
+                            --ea-theme-tabs-indicator-color: rgba(255, 255, 255, 0);
+                        
+                            --ea-theme-tabs-interface-color: #ffffff;
+                        
+                            --ea-theme-tabs-unselected-type: #ffffff;
+                        
+                            --ea-theme-tabs-selected-type: #000000;
+                        
+                            --ea-theme-tabs-selected-state: #ffffff;
+                        
+                             --ea-theme-tabs-accent-elements: rgba(0, 0, 0, 0.08);
+                        
+                            --ea-theme-tabs-inactive-interface-color: rgba(255, 255, 255, 0.1);
+                        
+                            --ea-theme-tabs-tab-text-transform: none;
+                        
+                            --ea-theme-h5-font-size-tablet-landscape: 22px;
+                        
+                            --ea-theme-tabs-accent-elements: rgba(255, 255, 255, 0.5);
+                        
+                            --ea-theme-color: #004DEB;
+                        
+                    }
+                </style>
+            </custom-style>
+        
+    
+
+
+
+<ea-elements-loader elements="ea-network-nav, ea-player, ea-type-kit">
+</ea-elements-loader>
+
+
+    <ea-network-nav
+        unresolved
+        userData="/user-data"
+        content="//nds-network-nav.ea.com//en-us/network-nav"
+        login-url="/login"
+        logout-url="/logout"
+            
+                
+                    
+                        hide-logo
+                    
+                
+            
+    ></ea-network-nav>
+
+
+
+
+
+
+
+    
+        
+            
+                
+<ea-elements-loader elements="ea-local-nav-advanced, ea-link">
+</ea-elements-loader>
+<ea-local-nav-advanced
+    
+    
+        home-text="Electronic Arts Home"
+        home-tooltip="Electronic Arts Home"
+        home-link="https://www.ea.com/"
+    
+    
+        logo-image="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-spectrum-blue-wordmark-nav-logo.svg"
+        
+            logo-tooltip="Electronics Arts Home"
+        
+    
+    
+        theme="dark"
+    
+    
+        shelf-type="band"
+    
+    
+        open-drawer-text="Menu"
+    
+    
+        close-drawer-text="Close"
+    
+    
+        mini
+    
+    
+
+    
+        show-franchise-nav
+    
+
+    
+        show-breadcrumbs
+    
+
+    
+
+    
+
+    
+        franchise-link-text="All Games"
+    
+
+    
+        franchise-link-url="/games"
+    
+    unresolved
+>
+    
+
+    
+
+    
+        <a title="Electronic Arts Home" href="https://www.ea.com/">
+            Electronic Arts Home
+            
+                <img
+                    src="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-spectrum-blue-wordmark-nav-logo.svg"
+                    
+                        alt="Electronics Arts Home"
+                    
+                />
+            
+        </a>
+    
+
+    
+        
+            
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav
+    slot="local-nav-shelf-link"
+    toggle-text="Games"
+    theme="dark"
+    type="narrow"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text="BROWSE GAMES"
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Featured Games"
+    link-href="https://www.ea.com/games"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games">Featured Games</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="All Games"
+    link-href="https://www.ea.com/games/library"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library">All Games</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Coming Soon"
+    link-href="https://www.ea.com/games/coming-soon"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/coming-soon">Coming Soon</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Free-To-Play"
+    link-href="https://www.ea.com/games/library/freetoplay"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/freetoplay">Free-To-Play</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Subscribe"
+    link-href="https://www.ea.com/subscribe"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/subscribe">Subscribe</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text="PLATFORMS"
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="PC"
+    link-href="https://www.ea.com/games/library/pc-download"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/pc-download">PC</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="PlayStation 5"
+    link-href="https://www.ea.com/games/library/ps5"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/ps5">PlayStation 5</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Xbox Series X|S"
+    link-href="https://www.ea.com/games/library/xbox-series-x"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/xbox-series-x">Xbox Series X|S</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Nintendo Switch"
+    link-href="https://www.ea.com/games/library/nintendo-switch"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/nintendo-switch">Nintendo Switch</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Mobile"
+    link-href="https://www.ea.com/games/library/mobile"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/games/library/mobile">Mobile</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+</ea-local-nav-shelf-sub-nav>
+
+        
+    
+        
+            
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav
+    slot="local-nav-shelf-link"
+    toggle-text="More Experiences"
+    theme="dark"
+    type="simple"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text=" "
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Subscribe"
+    link-href="https://www.ea.com/subscribe"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/subscribe">Subscribe</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Origin"
+    link-href="https://www.origin.com"
+    link-target="_blank"
+    
+    unresolved
+>
+    <a href="https://www.origin.com">Origin</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Competitive Gaming"
+    link-href="https://www.ea.com/compete"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/compete">Competitive Gaming</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="EA Play Live "
+    link-href="https://www.ea.com/ea-play-live"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/ea-play-live">EA Play Live </a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+</ea-local-nav-shelf-sub-nav>
+
+        
+    
+        
+            
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav
+    slot="local-nav-shelf-link"
+    toggle-text="About"
+    theme="dark"
+    type="simple"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text=""
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Company"
+    link-href="https://www.ea.com/about"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/about">Company</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="EA Studios"
+    link-href="https://www.ea.com/studios"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/studios">EA Studios</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Our Technology"
+    link-href="https://www.ea.com/technology"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/technology">Our Technology</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="EA Partners"
+    link-href="/ea-partners"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/ea-partners">EA Partners</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="News"
+    link-href="https://www.ea.com/news"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/news">News</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Inside EA"
+    link-href="https://ea.com/inside-ea"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://ea.com/inside-ea">Inside EA</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+</ea-local-nav-shelf-sub-nav>
+
+        
+    
+        
+            
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav
+    slot="local-nav-shelf-link"
+    toggle-text="Commitments"
+    theme="dark"
+    type="simple"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text="Commitments"
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Positive Play"
+    link-href="/commitments/positive-play"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/positive-play">Positive Play</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Inclusion &amp; Diversity"
+    link-href="/commitments/inclusion-and-diversity"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/inclusion-and-diversity">Inclusion &amp; Diversity</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Community Investment"
+    link-href="/commitments/community-investment"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/community-investment">Community Investment</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="People &amp; Culture"
+    link-href="/commitments/people-and-culture"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/people-and-culture">People &amp; Culture</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Environment "
+    link-href="/commitments/environment"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/environment">Environment </a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+</ea-local-nav-shelf-sub-nav>
+
+        
+    
+        
+            
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav
+    slot="local-nav-shelf-link"
+    toggle-text="Resources"
+    theme="dark"
+    type="simple"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section
+    title-text=""
+    slot="sub-nav-section"
+    unresolved
+>
+    
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Help"
+    link-href="https://help.ea.com/"
+    link-target="_blank"
+    
+    unresolved
+>
+    <a href="https://help.ea.com/">Help</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Forums"
+    link-href="https://www.ea.com/forums"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.ea.com/forums">Forums</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Parental Controls"
+    link-href="/commitments/positive-play/parental-controls"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/commitments/positive-play/parental-controls">Parental Controls</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Accessibility "
+    link-href="https://ea.com/able"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://ea.com/able">Accessibility </a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Press"
+    link-href="https://www.eapressportal.com/"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://www.eapressportal.com/">Press</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Investors"
+    link-href="https://ir.ea.com/"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="https://ir.ea.com/">Investors</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+<ea-elements-loader elements="ea-local-nav-shelf-sub-nav-section-link">
+</ea-elements-loader>
+<ea-local-nav-shelf-sub-nav-section-link
+    slot="sub-nav-section-link"
+    link-text="Playtesting"
+    link-href="/playtesting"
+    link-target="_self"
+    
+    unresolved
+>
+    <a href="/playtesting">Playtesting</a>
+</ea-local-nav-shelf-sub-nav-section-link>
+
+</ea-local-nav-shelf-sub-nav-section>
+
+</ea-local-nav-shelf-sub-nav>
+
+        
+    
+
+    
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-advanced">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-advanced
+        
+            slot="local-nav-drawer-link"
+        
+        toggle-text="Games"
+        toggle-tooltip=""
+        theme="dark"
+        
+            type="narrow"
+        
+        unresolved
+    >
+        
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-section, ea-link">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-section
+        slot="local-nav-drawer-sub-nav-section"
+        title-text="BROWSE GAMES"
+        unresolved
+    >
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games"
+            link-title=""
+            link-text="Featured Games"
+            unresolved
+        >
+            <a href="https://www.ea.com/games">Featured Games</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library"
+            link-title=""
+            link-text="All Games"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library">All Games</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/coming-soon"
+            link-title=""
+            link-text="Coming Soon"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/coming-soon">Coming Soon</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/freetoplay"
+            link-title=""
+            link-text="Free-To-Play"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/freetoplay">Free-To-Play</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/subscribe"
+            link-title=""
+            link-text="Subscribe"
+            unresolved
+        >
+            <a href="https://www.ea.com/subscribe">Subscribe</a>
+        </ea-link>
+    
+    </ea-local-nav-drawer-sub-nav-section>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-section, ea-link">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-section
+        slot="local-nav-drawer-sub-nav-section"
+        title-text="PLATFORMS"
+        unresolved
+    >
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/pc-download"
+            link-title=""
+            link-text="PC"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/pc-download">PC</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/ps5"
+            link-title=""
+            link-text="PlayStation 5"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/ps5">PlayStation 5</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/xbox-series-x"
+            link-title=""
+            link-text="Xbox Series X|S"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/xbox-series-x">Xbox Series X|S</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/nintendo-switch"
+            link-title=""
+            link-text="Nintendo Switch"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/nintendo-switch">Nintendo Switch</a>
+        </ea-link>
+    
+        <ea-link
+            slot="local-nav-drawer-sub-nav-section-link"
+            link-href="https://www.ea.com/games/library/mobile"
+            link-title=""
+            link-text="Mobile"
+            unresolved
+        >
+            <a href="https://www.ea.com/games/library/mobile">Mobile</a>
+        </ea-link>
+    
+    </ea-local-nav-drawer-sub-nav-section>
+
+
+        
+    </ea-local-nav-drawer-sub-nav-advanced>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-advanced">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-advanced
+        
+            slot="local-nav-drawer-link"
+        
+        toggle-text="More Experiences"
+        toggle-tooltip=""
+        theme="dark"
+        
+            type="simple"
+        
+        unresolved
+    >
+        
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/subscribe"
+        link-title=""
+        link-text="Subscribe"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/subscribe">Subscribe</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.origin.com"
+        link-title=""
+        link-text="Origin"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.origin.com">Origin</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/compete"
+        link-title=""
+        link-text="Competitive Gaming"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/compete">Competitive Gaming</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/ea-play-live"
+        link-title=""
+        link-text="EA Play Live "
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/ea-play-live">EA Play Live </a>
+    </ea-link>
+
+
+        
+    </ea-local-nav-drawer-sub-nav-advanced>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-advanced">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-advanced
+        
+            slot="local-nav-drawer-link"
+        
+        toggle-text="About"
+        toggle-tooltip=""
+        theme="dark"
+        
+            type="simple"
+        
+        unresolved
+    >
+        
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/about"
+        link-title=""
+        link-text="Company"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/about">Company</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/studios"
+        link-title=""
+        link-text="EA Studios"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/studios">EA Studios</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/technology"
+        link-title=""
+        link-text="Our Technology"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/technology">Our Technology</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/ea-partners"
+        link-title=""
+        link-text="EA Partners"
+        text-color=""
+        unresolved
+    >
+        <a href="/ea-partners">EA Partners</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/news"
+        link-title=""
+        link-text="News"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/news">News</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://ea.com/inside-ea"
+        link-title=""
+        link-text="Inside EA"
+        text-color=""
+        unresolved
+    >
+        <a href="https://ea.com/inside-ea">Inside EA</a>
+    </ea-link>
+
+
+        
+    </ea-local-nav-drawer-sub-nav-advanced>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-advanced">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-advanced
+        
+            slot="local-nav-drawer-link"
+        
+        toggle-text="Commitments"
+        toggle-tooltip=""
+        theme="dark"
+        
+            type="simple"
+        
+        unresolved
+    >
+        
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/positive-play"
+        link-title=""
+        link-text="Positive Play"
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/positive-play">Positive Play</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/inclusion-and-diversity"
+        link-title=""
+        link-text="Inclusion &amp; Diversity"
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/inclusion-and-diversity">Inclusion &amp; Diversity</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/community-investment"
+        link-title=""
+        link-text="Community Investment"
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/community-investment">Community Investment</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/people-and-culture"
+        link-title=""
+        link-text="People &amp; Culture"
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/people-and-culture">People &amp; Culture</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/environment"
+        link-title=""
+        link-text="Environment "
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/environment">Environment </a>
+    </ea-link>
+
+
+        
+    </ea-local-nav-drawer-sub-nav-advanced>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-local-nav-drawer-sub-nav-advanced">
+    </ea-elements-loader>
+    <ea-local-nav-drawer-sub-nav-advanced
+        
+            slot="local-nav-drawer-link"
+        
+        toggle-text="Resources"
+        toggle-tooltip=""
+        theme="dark"
+        
+            type="simple"
+        
+        unresolved
+    >
+        
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://help.ea.com/"
+        link-title=""
+        link-text="Help"
+        text-color=""
+        unresolved
+    >
+        <a href="https://help.ea.com/">Help</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.ea.com/forums"
+        link-title=""
+        link-text="Forums"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.ea.com/forums">Forums</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/commitments/positive-play/parental-controls"
+        link-title=""
+        link-text="Parental Controls"
+        text-color=""
+        unresolved
+    >
+        <a href="/commitments/positive-play/parental-controls">Parental Controls</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://ea.com/able"
+        link-title=""
+        link-text="Accessibility "
+        text-color=""
+        unresolved
+    >
+        <a href="https://ea.com/able">Accessibility </a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://www.eapressportal.com/"
+        link-title=""
+        link-text="Press"
+        text-color=""
+        unresolved
+    >
+        <a href="https://www.eapressportal.com/">Press</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="https://ir.ea.com/"
+        link-title=""
+        link-text="Investors"
+        text-color=""
+        unresolved
+    >
+        <a href="https://ir.ea.com/">Investors</a>
+    </ea-link>
+
+
+        
+            
+
+    <ea-elements-loader elements="ea-link">
+    </ea-elements-loader>
+    <ea-link
+        slot="local-nav-drawer-sub-link"
+        class="eapl-local-nav__drawer-sub-link"
+        link-href="/playtesting"
+        link-title=""
+        link-text="Playtesting"
+        text-color=""
+        unresolved
+    >
+        <a href="/playtesting">Playtesting</a>
+    </ea-link>
+
+
+        
+    </ea-local-nav-drawer-sub-nav-advanced>
+
+
+        
+    
+
+    
+</ea-local-nav-advanced>
+
+            
+        
+    
+
+
+
+
+    
+        
+            
+                
+
+    <div>
+        <style>
+  /* GENERIC STYLES */
+  .eaCorporate__textContainer + .eaCorporate__textContainer {
+    margin: 48px 0 0 0;
+  }
+  .eaCorporate__textContainer .gradientText {
+		color: var(--ea-theme-color);
+    background: linear-gradient(-115deg, #ff4747 20%, #0d1042 80%);
+    background: -webkit-linear-gradient(-115deg, #ff4747 20%, #0d1042 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  .eaCorporate__textContainer .header {
+    margin: 0 0 0.35em 0;
+  }
+  .eaCorporate__textContainer .subHeader {
+    margin: 0 0 1.5em 0;
+  }
+  .eaCorporate__textContainer .subHeader:last-child {
+    margin-bottom: 0;
+  }
+  .eaCorporate__textContainer .bodyCopy {
+    margin: 0;
+  }
+  .eaCorporate__textContainer .bodyCopy + .bodyCopy {
+    margin-top: 1em;
+  }
+  .eaCorporate__textContainer.textAlignCenter {
+    text-align: center;
+  }
+  /* COLUMN TEXT */
+  .eaCorporate__textContainer.columnText .header {
+    margin: 0;
+  }
+  .eaCorporate__textContainer.columnText .subHeader:first-child {
+    margin: 0 0 0.35em 0;
+  }
+  .eaCorporate__textContainer.columnText .header + .subHeader {
+    margin: 0.35em 0;
+  }
+  /* LEADING ICON */
+  .eaCorporate__textContainer.leadingIconList .listItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .eaCorporate__textContainer.leadingIconList .listImage {
+    width: 40px;
+    height: 40px;
+    margin: 0 16px 0 0;
+  }
+  .eaCorporate__textContainer.leadingIconList .listCopy {
+    margin: 0;
+  }
+  .eaCorporate__textContainer.leadingIconList .listItem + .listItem {
+    margin: 32px 0 0 0;
+  }
+  /* MEDIA QUERIES */
+  @media only screen and (min-width: 768px) {
+    .eaCorporate__textContainer.textAlignCenter {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .eaCorporate__textContainer + .eaCorporate__textContainer {
+      margin: 64px 0 0 0;
+    }
+    .eaCorporate__textContainer.leadingIconList .listImage {
+      width: 56px;
+      height: 56px;
+    }
+    .eaCorporate__textContainer.leadingIconList .listItem + .listItem {
+      margin: 24px 0 0 0;
+    }
+  }
+html {
+  scroll-behavior: smooth;
+}
+
+
+</style>
+    </div>
+
+
+            
+                
+
+    <div>
+        <style>
+  .stickyNav {
+    border-radius: 8px;
+    -webkit-box-shadow: 0 0 2px lightgrey, 0 0 6px lightgrey;
+            box-shadow: 0 0 2px lightgrey, 0 0 6px lightgrey;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    font-size: 16px;
+    max-height: calc(100vh - 220px); /* navBarHeightSum + topValue */
+    overflow-y: scroll;
+    padding: 1em;
+    position: sticky;
+    top: 120px;
+  }
+  .stickyNav ol {
+    margin: 0 0 0 1.75em;
+    list-style-type: none;
+  }
+  .stickyNav li {
+    margin: 0;
+    padding: 0;
+    text-indent: -0.75em;
+  }
+  .stickyNav li + li {
+    margin: 0.5em 0 0 0;
+  }
+  .stickyNav li::before {
+    display: none;
+  }
+  .stickyNav li span {
+    width: 0.75em;
+    display: inline-block;
+  }
+  @media only screen and (max-width: 767px) {
+    .stickyNav {
+      display: none;
+    }
+  }
+</style>
+    </div>
+
+
+            
+                
+
+    <div>
+        <style>
+  .legalPageTitle {
+    margin-top: 0;
+  }
+  .legalSectionTitle, .previousVersion {
+    margin-top: 3em;
+    scroll-margin-top: 100px;
+  }
+  /* Subtle Emphasis */
+  .legalSummary {
+    font-weight: bolder;
+    background-color: #eeeeee;
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+</style>
+    </div>
+
+
+            
+        
+    
+
+
+<main>
+    
+
+
+
+    
+<ea-elements-loader elements="ea-spacer">
+</ea-elements-loader>
+<ea-spacer
+    unresolved
+    
+        smallest="96px"
+    
+    
+        small="96px"
+    
+    
+        medium="96px"
+    
+    
+        large="96px"
+    
+    
+        largest="100px"
+    
+>
+</ea-spacer>
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="railed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="hidden"
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="none"
+    
+    
+    
+    
+        background-image-smallest="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.320w.jpg"
+        background-image-small="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.768w.jpg"
+        background-image-medium="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1024w.jpg"
+        background-image-large="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1456w.jpg"
+        background-image-largest="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1920w.jpg"
+        image-tooltip=""
+    
+    
+>
+    
+        <img
+            src="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.320w.jpg"
+            alt=""
+            srcset="https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.320w.jpg 320w, https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.768w.jpg 768w, https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1024w.jpg 1024w, https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1456w.jpg 1320w, https://media.contentapi.ea.com/content/dam/eacom/careers/2021-refresh/common/ea-careers-location-section-bkg-xl.jpg.adapt.1920w.jpg 1456w"
+        />
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+    
+        indent-right="3"
+    
+    
+        text-align="left"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-spacer">
+</ea-elements-loader>
+<ea-spacer
+    unresolved
+    
+        smallest="var(--eaCorporate-landingSection-spacerTop-XS)"
+    
+    
+        small="var(--eaCorporate-landingSection-spacerTop-SM)"
+    
+    
+        medium="var(--eaCorporate-landingSection-spacerTop-MD)"
+    
+    
+        large="var(--eaCorporate-landingSection-spacerTop-LG)"
+    
+    
+        largest="var(--eaCorporate-landingSection-spacerTop-XL)"
+    
+>
+</ea-spacer>
+
+<ea-elements-loader elements="ea-subheading">
+</ea-elements-loader>
+<ea-subheading
+    unresolved
+    
+        type="ordered"
+    
+    
+        layout="large"
+    
+    
+        text-align="left"
+    
+    
+        text-color="light"
+    
+    
+    
+        title-text="Legal & Privacy"
+    
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="none"
+    
+>
+    
+    
+        <h3>Legal &amp; Privacy</h3>
+    
+    
+</ea-subheading>
+
+<ea-elements-loader elements="ea-spacer">
+</ea-elements-loader>
+<ea-spacer
+    unresolved
+    
+        smallest="var(--eaCorporate-landingSection-spacerBottom-XS)"
+    
+    
+        small="var(--eaCorporate-landingSection-spacerBottom-SM)"
+    
+    
+        medium="var(--eaCorporate-landingSection-spacerBottom-MD)"
+    
+    
+        large="var(--eaCorporate-landingSection-spacerBottom-LG)"
+    
+    
+        largest="var(--eaCorporate-landingSection-spacerBottom-XL)"
+    
+>
+</ea-spacer>
+
+</ea-section-column>
+
+    
+</ea-section>
+
+
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="railed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="visible"
+    
+    
+        spacing-top="medium"
+    
+    
+        spacing-bottom="small"
+    
+    
+    
+    
+    
+>
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+    
+        indent-right="3"
+    
+    
+        text-align="left"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-text">
+</ea-elements-loader>
+<ea-text
+    unresolved
+    slot="text"
+    
+        text-color="dark"
+    
+>
+    <p>Welcome to EA’s Legal and Privacy Information page, where you can find legal information and resources for EA’s products and services. Use of EA’s games and services are offered subject to EA’s <a href="/en-us/legal/user-agreement"><b>User Agreement</b></a> and <a href="/en-us/legal/privacy-and-cookie-policy"><b>Privacy and Cookie Policy</b></a>.&nbsp; You can also find more information and choices about your Privacy in EA’s <a href="/en-us/legal/privacy-portal"><b>Privacy Portal</b></a>.</p>
+<p>What you can find here:</p>
+
+    
+</ea-text>
+
+</ea-section-column>
+
+    
+</ea-section>
+
+<ea-elements-loader elements="ea-section">
+</ea-elements-loader>
+<ea-section
+    unresolved
+    slot="section"
+    
+    
+        type="railed"
+    
+    
+        layout="100"
+    
+    
+    
+        background-color="none"
+    
+    
+    
+        background-overflow="visible"
+    
+    
+        spacing-top="none"
+    
+    
+        spacing-bottom="medium"
+    
+    
+    
+    
+    
+>
+    
+    
+
+
+<ea-section-column
+    slot="section-column"
+    
+        indent-left=""
+    
+    
+        indent-right=""
+    
+    
+        text-align="left"
+    
+    
+    
+        mobile-order="0"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-grid">
+</ea-elements-loader>
+<ea-grid
+    
+
+    type="ordered"
+
+
+    tile-media-shape="rectangle"
+
+
+
+    layout="3up"
+
+
+    tile-type="vertical"
+
+
+    tile-text-align="left"
+
+
+    tile-text-color="dark"
+
+
+    tile-color="none"
+
+
+
+
+
+
+
+    hide-ctas
+
+
+    hide-brand-stroke
+
+
+    hide-byline
+
+
+    spacing-top="medium"
+
+
+    spacing-bottom="medium"
+
+
+    hide-tags
+
+
+
+    
+    
+    
+        tile-scrim-color="none"
+    
+    
+        tile-scrim-opacity="medium"
+    
+    tile-align="left"
+    
+    
+    
+    
+    
+    
+    
+    animate-in-order=""
+    animate-out-order=""
+    
+    unresolved
+>
+    
+    
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:0"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-1-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="User Agreement"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>User Agreement</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/user-agreement"
+    
+    
+    
+        link-text="User Agreement"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/user-agreement"
+        
+        
+    >
+        
+            User Agreement
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:1"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-2-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Privacy and Cookie Policy"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Privacy and Cookie Policy</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/privacy-and-cookie-policy"
+    
+    
+    
+        link-text="Privacy and Cookie Policy"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/privacy-and-cookie-policy"
+        
+        
+    >
+        
+            Privacy and Cookie Policy
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:2"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-3-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="My Privacy Rights"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>My Privacy Rights</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/privacy-portal"
+    
+    
+    
+        link-text="My Privacy Rights"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/privacy-portal"
+        
+        
+    >
+        
+            My Privacy Rights
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:3"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-4-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Copyright Infringement Notice"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Copyright Infringement Notice</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/copyright-infringement-notice"
+    
+    
+    
+        link-text="Copyright Infringement Notice"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/copyright-infringement-notice"
+        
+        
+    >
+        
+            Copyright Infringement Notice
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:4"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-5-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="EA Play Terms"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>EA Play Terms</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/ea-play-terms"
+    
+    
+    
+        link-text="EA Play Terms"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/ea-play-terms"
+        
+        
+    >
+        
+            EA Play Terms
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:5"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-6-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Legal Disclosures"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Legal Disclosures</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/legal-disclosures"
+    
+    
+    
+        link-text="Legal Disclosures"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/legal-disclosures"
+        
+        
+    >
+        
+            Legal Disclosures
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:6"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-7-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Great Game Guarantee"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Great Game Guarantee</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/great-game-guarantee-terms"
+    
+    
+    
+        link-text="Great Games Guarantee"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/great-game-guarantee-terms"
+        
+        
+    >
+        
+            Great Games Guarantee
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:7"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-8-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Terms of Sale"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Terms of Sale</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/terms-of-sale"
+    
+    
+    
+        link-text="Terms of Sale"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/terms-of-sale"
+        
+        
+    >
+        
+            Terms of Sale
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:8"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-10-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="EA Wallet &amp; Gift Card Terms and Conditions"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>EA Wallet &amp; Gift Card Terms and Conditions</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/ea-card-terms-and-conditions"
+    
+    
+    
+        link-text="EA Wallet &amp; Gift Card Terms"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/ea-card-terms-and-conditions"
+        
+        
+    >
+        
+            EA Wallet &amp; Gift Card Terms
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:9"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-11-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Service Updates"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Service Updates</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/service-updates"
+    
+    
+    
+        link-text="Service Updates"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/service-updates"
+        
+        
+    >
+        
+            Service Updates
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:10"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-9-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Candidate Privacy Notice"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Candidate Privacy Notice</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/careers/data-privacy-policy"
+    
+    
+    
+        link-text="Candidate Privacy Notice"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/careers/data-privacy-policy"
+        
+        
+    >
+        
+            Candidate Privacy Notice
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:11"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-tile-image-data-privacy-notice-for-athletes.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="Data Privacy Notice for Athletes"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>Data Privacy Notice for Athletes</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/data-privacy-notice-for-athletes"
+    
+    
+    
+        link-text="Data Privacy Notice"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/data-privacy-notice-for-athletes"
+        
+        
+    >
+        
+            Data Privacy Notice
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+<ea-elements-loader elements="ea-tile">
+</ea-elements-loader>
+<ea-container
+    slot="container"
+    
+        filter-key="All"
+    
+    >
+    <ea-tile
+        unresolved
+        slot="tile"
+        style="--ea-animation-index:12"
+        
+        
+        
+        
+            media="https://media.contentapi.ea.com/content/dam/eacom/legal/images/2021/10/ea-legal-gridtiles-6-16x9.jpg.adapt.crop16x9.652w.jpg"
+        
+        
+        
+        
+        
+            title-text="DSA Enforcement Requests"
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+
+        
+
+        
+
+        tooltip=""
+
+        
+
+        
+    >
+        
+            <h3>DSA Enforcement Requests</h3>
+        
+        
+        
+        
+        <ea-tile-copy slot="copy">
+        
+        </ea-tile-copy>
+        
+        
+            
+<ea-elements-loader elements="ea-cta">
+</ea-elements-loader>
+<ea-cta
+    
+        slot="cta"
+    
+    
+        type="standard"
+    
+    
+    
+        link-url="/en-us/legal/dsa-enforcement-requests"
+    
+    
+    
+        link-text="DSA Enforcement Requests"
+    
+    
+        icon="none"
+    
+    
+    
+        fill-color="none"
+    
+    
+        text-color="dark"
+    
+    
+        stroke-color="dark"
+    
+    
+        target="_self"
+    
+    
+    
+    
+        intent="navigation"
+    
+    
+    
+    
+        emphasis="primary"
+    
+    
+    
+    
+    
+    unresolved
+>
+    <a
+        
+            href="/en-us/legal/dsa-enforcement-requests"
+        
+        
+    >
+        
+            DSA Enforcement Requests
+        
+    </a>
+</ea-cta>
+
+        
+        
+        
+    </ea-tile>
+</ea-container>
+
+    
+
+
+</ea-grid>
+
+</ea-section-column>
+
+    
+</ea-section>
+
+
+
+
+    
+        
+            
+                
+
+    
+
+
+    
+
+
+
+
+            
+        
+    
+
+
+
+    
+    <div style="display: none;"></div>
+</main>
+<footer role="contentinfo">
+    
+
+    
+        
+            
+                
+<ea-elements-loader elements="ea-local-footer, ea-local-links, ea-local-link, ea-social-links, ea-social-link, ea-hybrid-regional-rating">
+</ea-elements-loader>
+<ea-local-footer
+    theme="dark"
+    sal-game-slug=""
+    rating-lang="en"
+    unresolved
+>
+    <ea-local-links
+        slot="local-links"
+        title-text=""
+        text-color="dark"
+        unresolved
+    >
+    
+        <ea-local-link
+            slot="local-link"
+            link-url="/careers"
+            link-title="Careers"
+            link-text="Careers"
+            text-color="dark"
+            unresolved
+        >
+            <a
+                href="/careers"
+                title="Careers"
+            >Careers</a>
+        </ea-local-link>
+    
+        <ea-local-link
+            slot="local-link"
+            link-url="/executives"
+            link-title="Executives"
+            link-text="Executives"
+            text-color="dark"
+            unresolved
+        >
+            <a
+                href="/executives"
+                title="Executives"
+            >Executives</a>
+        </ea-local-link>
+    
+        <ea-local-link
+            slot="local-link"
+            link-url="/news/2023-impact-report"
+            link-title="Impact Report"
+            link-text="Impact Report"
+            text-color="dark"
+            unresolved
+        >
+            <a
+                href="/news/2023-impact-report"
+                title="Impact Report"
+            >Impact Report</a>
+        </ea-local-link>
+    
+        <ea-local-link
+            slot="local-link"
+            link-url="/commitments"
+            link-title="Our Commitments"
+            link-text="Our Commitments"
+            text-color="dark"
+            unresolved
+        >
+            <a
+                href="/commitments"
+                title="Our Commitments"
+            >Our Commitments</a>
+        </ea-local-link>
+    
+        <ea-local-link
+            slot="local-link"
+            link-url="/brand-partnerships"
+            link-title="Partner With Us"
+            link-text="Partner With Us"
+            text-color="dark"
+            unresolved
+        >
+            <a
+                href="/brand-partnerships"
+                title="Partner With Us"
+            >Partner With Us</a>
+        </ea-local-link>
+    
+    </ea-local-links>
+
+    <ea-social-links
+        slot="social-links"
+        text-color="dark"
+        title-text="Join The Conversation"
+        unresolved
+    >
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.facebook.com/EA/"
+            link-title="Facebook"
+            link-target="_blank"
+            text-color="dark"
+            social-network="facebook"
+            unresolved
+        >
+            <a
+                href="https://www.facebook.com/EA/"
+                title="Facebook"
+            >facebook</a>
+        </ea-social-link>
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.twitter.com/ea"
+            link-title="Twitter"
+            link-target="_blank"
+            text-color="dark"
+            social-network="twitter"
+            unresolved
+        >
+            <a
+                href="https://www.twitter.com/ea"
+                title="Twitter"
+            >twitter</a>
+        </ea-social-link>
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.youtube.com/EA"
+            link-title="YouTube"
+            link-target="_blank"
+            text-color="dark"
+            social-network="youtube"
+            unresolved
+        >
+            <a
+                href="https://www.youtube.com/EA"
+                title="YouTube"
+            >youtube</a>
+        </ea-social-link>
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.instagram.com/ea"
+            link-title="Instagram"
+            link-target="_blank"
+            text-color="dark"
+            social-network="instagram"
+            unresolved
+        >
+            <a
+                href="https://www.instagram.com/ea"
+                title="Instagram"
+            >instagram</a>
+        </ea-social-link>
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.twitch.tv/ea"
+            link-title="Twitch"
+            link-target="_blank"
+            text-color="dark"
+            social-network="twitch"
+            unresolved
+        >
+            <a
+                href="https://www.twitch.tv/ea"
+                title="Twitch"
+            >twitch</a>
+        </ea-social-link>
+    
+        <ea-social-link
+            slot="social-link"
+            link-url="https://www.linkedin.com/company/electronic-arts/"
+            link-title="LinkedIn"
+            link-target="_blank"
+            text-color="dark"
+            social-network="linkedin"
+            unresolved
+        >
+            <a
+                href="https://www.linkedin.com/company/electronic-arts/"
+                title="LinkedIn"
+            >linkedin</a>
+        </ea-social-link>
+    
+    </ea-social-links>
+
+    
+
+    
+
+    
+
+    
+</ea-local-footer>
+
+            
+        
+    
+
+
+    
+
+    
+        
+            
+                
+<ea-elements-loader elements="ea-network-footer, ea-network-legal, ea-link, ea-content-loader">
+</ea-elements-loader>
+<ea-network-footer
+    theme="dark"
+    
+    
+        logo-image="https://media.contentapi.ea.com/content/dam/eacom/common/medallion-violet.png"
+        logo-tooltip="Electronics Arts Home"
+    
+    
+        logo-link-url="https://www.ea.com"
+        logo-link-text="Electronics Arts Home"
+        logo-link-tooltip="Electronics Arts Home"
+    
+    unresolved
+>
+    
+        <img
+            src="https://media.contentapi.ea.com/content/dam/eacom/common/medallion-violet.png"
+            alt=""
+        />
+    
+    
+        
+            <ea-link
+                slot="link"
+                link-href="/games/library"
+                link-title="Game Library"
+                link-text="Game Library"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/games/library"
+                    title="Game Library"
+                >Game Library</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/subscribe"
+                link-title="Subscribe"
+                link-text="Subscribe"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/subscribe"
+                    title="Subscribe"
+                >Subscribe</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/redeem"
+                link-title="Redeem Code"
+                link-text="Redeem Code"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/redeem"
+                    title="Redeem Code"
+                >Redeem Code</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/ea-app"
+                link-title="EA app"
+                link-text="EA app"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/ea-app"
+                    title="EA app"
+                >EA app</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/about"
+                link-title="About"
+                link-text="About"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/about"
+                    title="About"
+                >About</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/able"
+                link-title="Accessibility"
+                link-text="Accessibility"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/able"
+                    title="Accessibility"
+                >Accessibility</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="https://help.ea.com/"
+                link-title="Help"
+                link-text="Help"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="https://help.ea.com/"
+                    title="Help"
+                >Help</a>
+            </ea-link>
+        
+    
+    <ea-elements-loader elements="ea-regional-pricing-selector">
+</ea-elements-loader>
+<ea-regional-pricing-selector
+slot="regional-pricing-selector"
+theme="dark"
+label-text="Regional Pricing"
+
+unresolved
+    >
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="AT"
+    >Austria</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="BE"
+    >Belgium</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="BG"
+    >Bulgaria</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="HR"
+    >Croatia</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="CY"
+    >Cyprus</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="CZ"
+    >Czech Republic</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="DK"
+    >Denmark</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="EE"
+    >Estonia</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="FI"
+    >Finland</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="FR"
+    >France</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="DE"
+    >Germany</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="GR"
+    >Greece</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="HU"
+    >Hungary</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="IS"
+    >Iceland</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="IE"
+    >Ireland</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="IT"
+    >Italy</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="LV"
+    >Latvia</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="LI"
+    >Liechtenstein</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="LT"
+    >Lithuania</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="LU"
+    >Luxembourg</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="MT"
+    >Malta</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="NL"
+    >Netherlands</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="NO"
+    >Norway</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="PL"
+    >Poland</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="PT"
+    >Portugal</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="RO"
+    >Romania</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="SK"
+    >Slovakia</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="SL"
+    >Slovenia</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="ES"
+    >Spain</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="SE"
+    >Sweden</ea-regional-pricing-selector-option>
+
+    <ea-regional-pricing-selector-option
+    slot="regional-pricing-selector-option"
+    value="CH"
+    >Switzerland</ea-regional-pricing-selector-option>
+
+</ea-regional-pricing-selector>
+    
+<ea-elements-loader elements="ea-locale-selector">
+</ea-elements-loader>
+<ea-locale-selector
+    slot="locale-selector"
+    theme="dark"
+    value="en-us"
+    label-text="Language"
+    
+    unresolved
+    >
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="en-us"
+        >United States</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="en-gb"
+        >United Kingdom</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="en-au"
+        >Australia</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="fr-fr"
+        >France</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="de-de"
+        >Deutschland</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="it-it"
+        >Italia</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="ja-jp"
+        >日本</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="pl-pl"
+        >Polska</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="pt-br"
+        >Brasil</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="ru-ru"
+        >Россия</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="es-es"
+        >España</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="cs-cz"
+        >Česká republika</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="en-ca"
+        >Canada (En)</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="fr-ca"
+        >Canada (Fr)</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="da-dk"
+        >Danmark</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="fi-fi"
+        >Suomi</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="es-mx"
+        >México</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="nl-nl"
+        >Nederland</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="nb-no"
+        >Norge</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="sv-se"
+        >Sverige</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="zh-cn"
+        >中国</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="ko-kr"
+        >대한민국</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="zh-tw"
+        >繁體中文</ea-locale-selector-option>
+    
+        <ea-locale-selector-option
+            slot="locale-selector-option"
+            value="tr-tr"
+        >Türkiye</ea-locale-selector-option>
+    
+</ea-locale-selector>
+
+    <ea-network-legal
+        slot="network-legal"
+        copyright-text="© 2024 Electronic Arts Inc. "
+        text-color="dark"
+        unresolved
+    >
+        
+            <ea-link
+                slot="link"
+                link-href="http://www.ea.com/legal"
+                link-title="Legal &amp; Privacy"
+                link-text="Legal &amp; Privacy"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="http://www.ea.com/legal"
+                    title="Legal &amp; Privacy"
+                >Legal &amp; Privacy</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="https://www.ea.com/terms-of-service"
+                link-title="NEW User Agreement"
+                link-text="User Agreement"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="https://www.ea.com/terms-of-service"
+                    title="NEW User Agreement"
+                >User Agreement</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="https://www.ea.com/legal/privacy-and-cookie-policy"
+                link-title="Privacy &amp; Cookie Policy (Your Privacy Rights)"
+                link-text="Privacy &amp; Cookie Policy (Your Privacy Rights)"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="https://www.ea.com/legal/privacy-and-cookie-policy"
+                    title="Privacy &amp; Cookie Policy (Your Privacy Rights)"
+                >Privacy &amp; Cookie Policy (Your Privacy Rights)</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/service-updates"
+                link-title="Online Service Updates"
+                link-text="Online Service Updates"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/service-updates"
+                    title="Online Service Updates"
+                >Online Service Updates</a>
+            </ea-link>
+        
+            <ea-link
+                slot="link"
+                link-href="/security"
+                link-title="Security"
+                link-text="Security"
+                text-color="dark"
+                unresolved
+            >
+                <a
+                    href="/security"
+                    title="Security"
+                >Security</a>
+            </ea-link>
+        
+        <ea-content-loader
+            slot="link"
+            content-url="https://www.ea.com/ccpa/footer-link"
+        >
+        </ea-content-loader>
+        
+            <ea-content-loader
+                slot="link"
+                content-url="/about/reporting-concerns-romania/geotargeted-link"
+            >
+            </ea-content-loader>
+        
+    </ea-network-legal>
+    
+<ea-elements-loader elements="ea-truste">
+</ea-elements-loader>
+
+
+    <script id="ea-trustarc-script" data-domain="ea.com" async>
+        (() => {
+    function createElement(id, hidden) {
+        const element = document.createElement("div");
+
+        element.id = id;
+        element.hidden = hidden;
+
+        return element;
+    }
+
+    function createScriptTag() {
+        const domain = document.querySelector('#ea-trustarc-script').dataset.domain;
+        const script = document.createElement("script");
+        let src = `//consent.trustarc.com/notice?domain=${domain}&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1&pn=1`;
+
+        if (shouldAutoShowCookiePreferences()) {
+            src = src + "&behavior=expressed";
+        }
+
+        script.src = src;
+        script.setAttribute("crossorigin", "");
+
+        return script;
+    }
+
+    function shouldAutoShowCookiePreferences() {
+        const showCookiePreferencesParam = "show=cookiePreferences";
+        const urlSearchParams = window.location.search.slice(1).split("&");
+
+        return urlSearchParams.includes(showCookiePreferencesParam);
+    }
+
+    function isLocalNDS(componentUrlPrefix) {
+        return componentUrlPrefix && componentUrlPrefix.includes('local');
+    }
+
+    function isNDSBranch(componentUrlPrefix) {
+        return componentUrlPrefix && componentUrlPrefix.includes('branch');
+    }
+
+    function isNDSVersionGreaterOrEqual(componentUrlPrefix) {
+        let ndsVersion = componentUrlPrefix && componentUrlPrefix.match('/release\/([^\/]*)/')[1];
+        let isGreaterOrEqual = ndsVersion && ndsVersion.localeCompare("4.40.5", undefined, { numeric: true, sensitivity: 'base' });
+
+        return isGreaterOrEqual >= 0;
+    }
+
+    const componentUrlPrefix = window.nds.componentUrlPrefix;
+
+    /**
+     * Check for backwards compatibility with NDS version greater or equal to when TrustArc was integrated
+     */
+    if (
+        isLocalNDS(componentUrlPrefix) ||
+        isNDSBranch(componentUrlPrefix) ||
+        isNDSVersionGreaterOrEqual(componentUrlPrefix)
+    )
+    {
+        const trustArcScript = createScriptTag();
+        const elements = document.createDocumentFragment();
+
+        elements.appendChild(createElement("consent_blackbar", false));
+        elements.appendChild(createElement("teconsent", true));
+        elements.appendChild(trustArcScript);
+
+        document.body.appendChild(elements);
+    }
+})();
+
+    </script>
+
+
+<ea-truste
+    unresolved
+    slot="truste"
+    
+        domain="ea.com"
+    
+>
+    <div>
+        
+            <a href="//privacy.truste.com/privacy-seal/validation?rid=f1a11c5d-0232-4077-8498-2e69a38c1335" target="_blank">
+                <img style="border: none" src="//privacy-policy.truste.com/privacy-seal/seal?rid=f1a11c5d-0232-4077-8498-2e69a38c1335" alt="TRUSTe"/>
+            </a>
+        
+    </div>
+</ea-truste>
+
+</ea-network-footer>
+
+            
+        
+    
+
+
+</footer>
+<ea-player player-endpoint="/user-data"></ea-player>
+
+
+    
+        
+            
+                
+<ea-elements-loader elements="ea-modal">
+</ea-elements-loader>
+<ea-modal
+    modal
+    restore-focus-on-close
+    unresolved
+    
+        id="eacomagegate"
+    
+    
+        theme="dark"
+    
+    
+>
+    
+<ea-elements-loader elements="ea-age-gate">
+</ea-elements-loader>
+<ea-age-gate
+    unresolved
+    slot="age-gate"
+    age-gate-id="eacomagegate"
+    
+        age="18"
+    
+    
+        error="You are not eligible to view this content."
+    
+    
+    
+        message="Please provide your birth date. "
+    
+>
+    
+        
+<ea-elements-loader elements="ea-date-field">
+</ea-elements-loader>
+<ea-date-field
+    
+        slot="date-field"
+    
+    
+        type="date"
+    
+    
+    
+    
+    
+    
+        text-color="light"
+    
+    
+    
+        month-placeholder="MM"
+    
+    
+        day-placeholder="DD"
+    
+    
+        year-placeholder="YYYY"
+    
+    
+    
+        label-text="Enter your birthdate"
+    
+    
+    
+    
+    unresolved
+>
+</ea-date-field>
+
+    
+    
+        
+<ea-elements-loader elements="ea-submit">
+</ea-elements-loader>
+<ea-submit
+    unresolved
+    
+        slot="submit"
+    
+    
+        value-text="Submit"
+    
+    
+        text-color="light"
+    
+    
+    
+    
+    
+    
+></ea-submit>
+
+    
+</ea-age-gate>
+
+</ea-modal>
+
+            
+        
+    
+
+
+
+
+    
+        
+            
+                <script src="//pl.ea.com/release/4.67.2/elements/browser-support.min.js"></script>
+<script>
+    eaBrowserSupport.requiredFeatures = 'picture';
+    eaBrowserSupport.requiredHeading = 'Sorry, this browser is not supported';
+    eaBrowserSupport.requiredText = 'Please download a supported browser to view this webpage.';
+    eaBrowserSupport.recommendedFeatures = 'cssgrid';
+    eaBrowserSupport.recommendedText = 'This browser is not recommended and the webpage may not display properly.';
+    eaBrowserSupport.ctas = [{"text":"Download Chrome","url":"https://www.google.com/chrome/"},{"text":"Download Firefox","url":"https://www.mozilla.org/firefox/new/"},{"text":"Download Edge","url":"https://www.microsoft.com/edge/"}];
+    eaBrowserSupport.dismissText = 'Dismiss';
+    eaBrowserSupport.svgLogo = '';
+    eaBrowserSupport.init();
+</script>
+
+            
+        
+    
+
+
+
+
+    <ea-type-kit kit-url="//use.typekit.net/txn1klh.js"></ea-type-kit>
+
+
+    </body>
+</html>
+
