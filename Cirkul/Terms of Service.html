@@ -1,0 +1,2455 @@
+<!doctype html>
+<html lang="en" class="no-js">
+    
+        <head>
+            
+<script src="https://cmp.osano.com/16CV35U5YZl1zH1f/c2a2f954-46e5-4c19-8f20-bd66c0713837/osano.js"></script>
+<style>
+    .osano-cm-widget {
+        display: none;
+    }
+</style>
+
+<meta charset="utf-8">
+
+<script>
+    (function () {
+        customerId = '';
+        orderCount = parseInt('' || 0);
+
+        // Save customer ID in case of log out...
+        if (customerId.length && orderCount) {
+            localStorage.setItem('cirkul::lastKnownCustomerId', customerId);
+        }
+
+        // Check separately from above, in case they've logged out but it's been saved
+        if (localStorage.getItem('cirkul::lastKnownCustomerId')) {
+            window.existingCustomer = true;
+        } else {
+            window.existingCustomer = false;
+        }
+
+        console.warn('[experimentation] audience variable - existingCustomer', window.existingCustomer);
+    })();
+</script>
+<!-- Init Optimizely and custom experiment loader -->
+<script src="https://cdn.optimizely.com/js/24708110218.js"></script>
+<script>
+    const loadedOptimizelyExperiments = {}; // Keep track of loaded experiments, prevent loading same experiments multiple times and warn if attempted.
+
+    window.cirkulServices = window.cirkulServices || {};
+    window.cirkulServices.experimentation = {
+        manuallyTriggerPage: manuallyTriggerPage,
+        fireOptimizelyEvent: fireOptimizelyEvent,
+        loadOptimizelyUnauthedExperiment: loadOptimizelyUnauthedExperiment,
+        loadOptimizelyAuthedExperiment: loadOptimizelyAuthedExperiment,
+        getHashedUserGroupNumber: getHashedUserGroupNumber,
+        getEvenSplitVariantId: getEvenSplitVariantId,
+        hideItems: hideItems,
+        showItems: showItems,
+        moveItem: moveItem,
+        addClass: addClass,
+        removeClass: removeClass,
+        changeStyle: changeStyle,
+        rescrollIfHash: rescrollIfHash,
+        runWhenItemIsVisible: runWhenItemIsVisible,
+        getUrlParameterByName: getUrlParameterByName,
+    };
+
+    function manuallyTriggerPage(pageName) {
+        window['optimizely'] = window['optimizely'] || [];
+        window['optimizely'].push({
+            type: 'page',
+            pageName: pageName,
+        });
+    }
+
+    // NOTE: Must manually register any events in Optimizely prior to firing!
+    function fireOptimizelyEvent(eventName, eventParams) {
+        window['optimizely'] = window['optimizely'] || [];
+        window['optimizely'].push({
+            type: 'event',
+            eventName: eventName,
+            tags: eventParams,
+        });
+    }
+
+    // options.experimentId = Optimizely Experiment ID
+    // options.devVariationId = DEV ONLY. Force a specific variation ID (and allow Experiment ID to not match a live experiment).
+    // options.variationImplementers = Callback functions that will be run for each variation, keyed by their variation IDs.
+    // options.fallback = Callback for when experiment is not found / not published or variation is not found (ie. JS that needs to be run only for the control version)
+    function loadOptimizelyUnauthedExperiment(options) {
+        const experiments = window['optimizely'] && window['optimizely'].get ? window['optimizely'].get('state').getExperimentStates() : {};
+        const targetExperiment = options.devVariationId ? { id: options.experimentId } : experiments[options.experimentId];
+
+        if (options.devVariationId) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variant %s - FORCE LOAD (DEV ONLY)', options.experimentId, options.devVariationId);
+        } else if (!targetExperiment) {
+            console.warn('[experimentation] WARNING: Experiment %s - NOT FOUND', options.experimentId);
+            if (options.fallback) options.fallback();
+            return;
+        } else if (!targetExperiment.isActive) {
+            console.warn('[experimentation] WARNING: Experiment %s - NOT ACTIVE', options.experimentId);
+            if (options.fallback) options.fallback();
+            return;
+        }
+
+        const assignedVariationId = options.devVariationId || targetExperiment.variation.id;
+
+        if (loadedOptimizelyExperiments[targetExperiment.id]) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALREADY LOADED', options.experimentId, assignedVariationId);
+            if (options.allowReload) {
+                console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALLOWING RELOAD', options.experimentId, assignedVariationId);
+                options.variationImplementers[assignedVariationId]();
+            }
+        } else if (options.variationImplementers && options.variationImplementers[assignedVariationId]) {
+            // Call the provided implementer function, and make note of loaded variation.
+            options.variationImplementers[assignedVariationId]();
+            loadedOptimizelyExperiments[targetExperiment.id] = assignedVariationId;
+
+            console.log('[experimentation] Experiment %s - Variation %s - LOADED', options.experimentId, assignedVariationId);
+        } else {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - NO IMPLEMENTER PROVIDED', options.experimentId, assignedVariationId);
+            if (options.fallback) options.fallback();
+        }
+    }
+
+    // NOTE: Manually bucketing here means we can't make use of Optimizely features such as Stats Accelerator, etc...
+    // options.experimentId = Optimizely Experiment ID
+    // options.variationId = manually selected Variation ID. TODO: Implement bucketing algorithm here instead. Hash combination of customer ID / experiment ID and bucket based on that?
+    // options.pageName = the Optimizely "API Page Name" to manually trigger the experiment
+    // options.variationImplementers = Callback functions that will be run for each variation, keyed by their variation IDs.
+    // options.devVariationId = DEV ONLY. Force a specific variation ID (and allow Variation ID to not match what it otherwise would).
+    function loadOptimizelyAuthedExperiment(options) {
+        if (options.devVariationId) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variant %s - FORCE LOAD (DEV ONLY)', options.experimentId, options.devVariationId);
+        }
+
+        const assignedVariationId = options.devVariationId || options.variationId;
+
+        if (loadedOptimizelyExperiments[options.experimentId]) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALREADY LOADED', options.experimentId, assignedVariationId);
+        } else if (options.variationImplementers && options.variationImplementers[assignedVariationId]) {
+            if (!options.devVariationId) {
+                // Manually Bucket the Visitor
+                window['optimizely'].push({
+                    type: 'bucketVisitor',
+                    experimentId: options.experimentId.toString(),
+                    variationId: assignedVariationId.toString(),
+                });
+
+                // Manually Trigger the Experiment in Optimizely
+                window['optimizely'].push({
+                    type: 'page',
+                    pageName: options.pageName,
+                });
+            }
+
+            const activeVariationId = options.devVariationId || getActiveOptimizelyVariant(options.experimentId);
+
+            if (activeVariationId) {
+                options.variationImplementers[assignedVariationId](); // Call the variant implementer
+                loadedOptimizelyExperiments[options.experimentId] = activeVariationId; // Make note of loaded variation.
+                console.log('[experimentation] Experiment %s - Variation %s - LOADED', options.experimentId, activeVariationId);
+            } else {
+                console.warn('[experimentation] WARNING: Experiment %s - NOT ACTIVE', options.experimentId);
+            }
+        } else {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - NO IMPLEMENTER PROVIDED', options.experimentId, assignedVariationId);
+        }
+    }
+
+    // Returns a number from 0 - 99 based on a hash of the experiment ID and customer ID, for use in placing a customer in a group...
+    function getHashedUserGroupNumber(experimentId, customerId) {
+        const str = (experimentId + customerId).toString();
+
+        let hash = 0;
+        for (let i = 0, len = str.length; i < len; i++) {
+            let chr = str.charCodeAt(i);
+            hash = (hash << 5) - hash + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return Math.abs(hash) % 100;
+    }
+
+    // Return a variantId for evenly split experiment
+    function getEvenSplitVariantId(variantImplementers, hashedUserGroupNumber) {
+        const variantCount = Object.keys(variantImplementers).length;
+        const variantGroupSize = 100 / variantCount;
+
+        for (let i = 1; i <= variantCount; i++) {
+            if (hashedUserGroupNumber % 100 <= i * variantGroupSize) {
+                return Object.keys(variantImplementers)[i - 1];
+            }
+        }
+    }
+
+    function getActiveOptimizelyVariant(experimentId) {
+        const experiments = window['optimizely'] && window['optimizely'].get ? window['optimizely'].get('state').getExperimentStates() : {};
+        if (experiments[experimentId] && experiments[experimentId].isActive) {
+            return experiments[experimentId].variation.id; // returns the active variantId
+        } else {
+            return 0;
+        }
+    }
+
+    function hideItems(querySelector) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+
+        for (const el of querySelectorAllResult) {
+            el.classList.add('hide');
+        }
+    }
+
+    function showItems(querySelector) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+
+        for (const el of querySelectorAllResult) {
+            el.classList.remove('hide');
+        }
+    }
+
+    function moveItem(oldParentSelector, newParentSelector) {
+        var oldParent = document.querySelector(oldParentSelector);
+        var newParent = document.querySelector(newParentSelector);
+
+        // console.log('old and new', newParent, oldParent);
+        console.log('oldParen', oldParent);
+        console.log('oldParent.childNodes', oldParent.childNodes);
+
+        // NOTE... for loop seems not to work here, presumably because appendChild is changing the object...
+        while (oldParent.childNodes.length > 0) {
+            console.log('moving');
+            newParent.appendChild(oldParent.childNodes[0]);
+        }
+    }
+
+    function addClass(querySelector, className) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.classList.add(className);
+        }
+    }
+
+    function removeClass(querySelector, className) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.classList.remove(className);
+        }
+    }
+
+    function changeStyle(querySelector, styleName, styleValue) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.style[styleName] = styleValue;
+        }
+    }
+
+    // Used when position of an anchor changes in a test, to ensure user is scrolled to correct new position.
+    // Does nothing if hash does not exactly match the provided one (so as not to affect users not in the test)
+    function rescrollIfHash(movedAnchorHash) {
+        const currentHash = window.location.hash;
+        const finalMovedAnchorHash = ('#' + movedAnchorHash).replace('##', '#'); // support movedAnchorHash beginning with # or not, by always adding one and then condensing duplicates down to a single.
+
+        if (currentHash === finalMovedAnchorHash) {
+            window.location.hash = '#';
+            window.location.hash = currentHash;
+        }
+    }
+
+    function runWhenItemIsVisible(querySelector, func) {
+        // console.log('TJN - runWhenItemIsVisible', querySelector);
+
+        window.expTimeouts = window.expTimeouts || {};
+        if (!window.expTimeouts[querySelector]) {
+            window.expTimeouts[querySelector] = 0;
+        }
+
+        setTimeout(() => {
+            if (document.querySelectorAll(querySelector).length) {
+                func();
+            } else {
+                window.expTimeouts[querySelector] += 100;
+
+                if (window.expTimeouts[querySelector] < 10000) {
+                    runWhenItemIsVisible(querySelector, func);
+                } else {
+                    // console.log('TJN - Done checking for', querySelector);
+                }
+            }
+        }, 100);
+    }
+
+    // Courtesy of https://stackoverflow.com/a/901144
+    function getUrlParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+</script>
+
+
+<!-- Init data layer (must be before GTM and anti-flicker snippet) -->
+<script>
+    dataLayer = [{
+      'customerId': null,
+      'customerEmail': null,
+      'customerPhone': null,
+      'sha1Email': null,
+      'sha256Email': null,
+      'sha256Phone': null
+    }];
+</script>
+
+
+
+
+<!-- anti-flicker snippet (must be before GTM) -->
+<style>
+    .async-hide {
+        opacity: 0 !important;
+    }
+</style>
+<script>
+    (function (a, s, y, n, c, h, i, d, e) {
+        s.className += ' ' + y;
+        h.start = 1 * new Date();
+        h.end = i = function () {
+            s.className = s.className.replace(RegExp(' ?' + y), '');
+        };
+        (a[n] = a[n] || []).hide = h;
+        setTimeout(function () {
+            i();
+            h.end = null;
+        }, c);
+        h.timeout = c;
+    })(window, document.documentElement, 'async-hide', 'dataLayer', 4000, { 'GTM-KT7B2TZ': true });
+</script>
+
+<!-- Google Tag Manager (must be before everything) -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KT7B2TZ');
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Set up gtag function -->
+<script>
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+</script>
+<!-- End Set up gtag function -->
+
+<!-- Set up klaviyo object -->
+<script>
+    !(function () {
+        if (!window.klaviyo) {
+            window._klOnsite = window._klOnsite || [];
+            try {
+                window.klaviyo = new Proxy(
+                    {},
+                    {
+                        get: function (n, i) {
+                            return 'push' === i
+                                ? function () {
+                                      var n;
+                                      (n = window._klOnsite).push.apply(n, arguments);
+                                  }
+                                : function () {
+                                      for (var n = arguments.length, o = new Array(n), w = 0; w < n; w++) o[w] = arguments[w];
+                                      var t = 'function' == typeof o[o.length - 1] ? o.pop() : void 0,
+                                          e = new Promise(function (n) {
+                                              window._klOnsite.push(
+                                                  [i].concat(o, [
+                                                      function (i) {
+                                                          t && t(i), n(i);
+                                                      },
+                                                  ])
+                                              );
+                                          });
+                                      return e;
+                                  };
+                        },
+                    }
+                );
+            } catch (n) {
+                (window.klaviyo = window.klaviyo || []),
+                    (window.klaviyo.push = function () {
+                        var n;
+                        (n = window._klOnsite).push.apply(n, arguments);
+                    });
+            }
+        }
+    })();
+</script>
+<!-- End set up klaviyo object -->
+
+<!-- LiveConnectTag for advertisers -->
+<script async src="//b-code.liadm.com/a-03g2.min.js"></script>
+<!-- LiveConnectTag for advertisers -->
+
+<!-- Set the viewport width to device width for mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Please read these Terms of Service (collectively with Cirkul Privacy Policy, the “Terms of Service”) fully and carefully before using www.drinkcirkul.com (the “Site”) and the services, features, promotions, credits, content, applications, or products offered by Cirkul, Inc. and its affiliates (“we”, “us”, “our” or “Cir">
+
+
+
+
+
+
+
+    <title>Terms of Service</title>
+
+
+
+    <link rel="icon" type="image/png" href="//drinkcirkul.com/cdn/shop/files/General--Favicon_Image_16x16.png?v=1613600445">
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/ls-core.css?v=33851013710108243491556874087">
+    
+
+    <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/jquery-ui.min.css?v=143165884827486638561566750534">
+
+    
+    
+        <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/app.min.css?v=15179202298114329351708731042">
+    
+
+
+<!-- START: Open Graph / Twitter Card tags -->
+<meta property="og:title" content="Cirkul | Finally, Water Is Your Favorite Beverage.">
+<meta property="og:url" content="https://drinkcirkul.com">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Transform your water with the turn of a dial. Take control of your beverage to drink more water. The only bottle that is custom, convenient, and clean. | Cirkul">
+
+    <meta property="og:image" content="https://drinkcirkul.com/cdn/shop/files/Presentation_Bottle1200x630_3_2x_1697d886-8281-4bd5-a53e-64496b646013.png?v=1642707954">
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cirkul | Finally, Water Is Your Favorite Beverage.">
+<meta name="twitter:description" content="Transform your water with the turn of a dial. Take control of your beverage to drink more water. The only bottle that is custom, convenient, and clean. | Cirkul">
+<meta name="twitter:url" content="https://drinkcirkul.com">
+
+    <meta name="twitter:image" content="https://drinkcirkul.com/cdn/shop/files/Meta_Tags--Home_Page_-_Twitter_Card_-_Image.jpeg?v=1613600445">
+
+<!-- END: Open Graph / Twitter Card tags -->
+
+<script>
+    window.zakekeUrl = '/tools/customizer';
+</script>
+
+<meta name="facebook-domain-verification" content="9vghwrqsaex6rwm893fr23e63l8ywo">
+<meta name="google-site-verification" content="49xGXVMjC049mK9XCNCDGK_C_DOLgL0WVisnFCrCbD0">
+
+<!-- START: Amplitude -->
+<script>
+    !(function (e, t) {
+        var n = e.amplitude || { _q: [], _iq: {} },
+            r = t.createElement('script');
+        (r.type = 'text/javascript'),
+            (r.integrity = 'sha384-u0hlTAJ1tNefeBKwiBNwB4CkHZ1ck4ajx/pKmwWtc+IufKJiCQZ+WjJIi+7C6Ntm'),
+            (r.crossOrigin = 'anonymous'),
+            (r.async = !0),
+            (r.src = 'https://cdn.amplitude.com/libs/amplitude-8.1.0-min.gz.js'),
+            (r.onload = function () {
+                e.amplitude.runQueuedFunctions || console.log('[Amplitude] Error: could not load SDK');
+            });
+        var i = t.getElementsByTagName('script')[0];
+        function s(e, t) {
+            e.prototype[t] = function () {
+                return this._q.push([t].concat(Array.prototype.slice.call(arguments, 0))), this;
+            };
+        }
+        i.parentNode.insertBefore(r, i);
+        for (
+            var o = function () {
+                    return (this._q = []), this;
+                },
+                a = ['add', 'append', 'clearAll', 'prepend', 'set', 'setOnce', 'unset', 'preInsert', 'postInsert', 'remove'],
+                c = 0;
+            c < a.length;
+            c++
+        )
+            s(o, a[c]);
+        n.Identify = o;
+        for (
+            var u = function () {
+                    return (this._q = []), this;
+                },
+                l = ['setProductId', 'setQuantity', 'setPrice', 'setRevenueType', 'setEventProperties'],
+                p = 0;
+            p < l.length;
+            p++
+        )
+            s(u, l[p]);
+        n.Revenue = u;
+        var d = [
+            'init',
+            'logEvent',
+            'logRevenue',
+            'setUserId',
+            'setUserProperties',
+            'setOptOut',
+            'setVersionName',
+            'setDomain',
+            'setDeviceId',
+            'enableTracking',
+            'setGlobalUserProperties',
+            'identify',
+            'clearUserProperties',
+            'setGroup',
+            'logRevenueV2',
+            'regenerateDeviceId',
+            'groupIdentify',
+            'onInit',
+            'logEventWithTimestamp',
+            'logEventWithGroups',
+            'setSessionId',
+            'resetSessionId',
+        ];
+        function f(e) {
+            function t(t) {
+                e[t] = function () {
+                    e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
+                };
+            }
+            for (var n = 0; n < d.length; n++) t(d[n]);
+        }
+        f(n),
+            (n.getInstance = function (e) {
+                return (e = (e && 0 !== e.length ? e : '$default_instance').toLowerCase()), Object.prototype.hasOwnProperty.call(n._iq, e) || ((n._iq[e] = { _q: [] }), f(n._iq[e])), n._iq[e];
+            }),
+            (e.amplitude = n);
+    })(window, document);
+
+    amplitude.getInstance().init('ffe5da71e5c3f7c3193fbbb42af9781d', null, { includeReferrer: true, includeUtm: true, includeGclid: true, includeFbclid: true });
+    amplitude.getInstance().logEvent('Viewed Page', {
+        url: window.location.pathname,
+        domain: window.location.host,
+        params: window.location.search.substring(1),
+        hash: window.location.hash,
+    });
+
+    window.addEventListener('error', function (e) {
+        try {
+            if (e.message === 'Script error.' || e.message === 'Script error') {
+                console.log('Ignored Script error', e);
+                return; // Don't log 3rd-party script errors. Nothing we can do about them right now.
+            }
+            if (e.message === 'ResizeObserver loop limit exceeded') {
+                return; // Ignore per https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
+            }
+
+            window.logErrorToAmplitude(e);
+        } catch (e) {
+            console.log('Error in Error Handling', e);
+        }
+    });
+
+    window.amplitudeErrorsLogged = 0;
+    window.logErrorToAmplitude = function (e) {
+        window.amplitudeErrorsLogged++;
+
+        if (window.amplitudeErrorsLogged < 10) {
+            try {
+                console.log('window.amplitudeErrorsLogged', window.amplitudeErrorsLogged);
+                amplitude.getInstance().logEvent('Error Encountered', {
+                    message: e.message,
+                    fileName: e.filename,
+                    lineNumber: e.lineno,
+                    url: window.location.pathname,
+                    domain: window.location.host,
+                    handled: true,
+                });
+            } catch (e) {
+                console.log('Error in Error Handling', e);
+            }
+        }
+    };
+
+    // // TJN: For forcing error logs for debugging
+    // const scriptError = document.querySelector('*');
+    // scriptError.addEventListener('click', function() {
+    //     const badCode = 'const s;';
+    //     eval(badCode);
+    // });
+</script>
+<!-- END: Amplitude -->
+
+<!-- Hide injected RC login -->
+<style>
+    #rc_login {
+        display: none !important;
+    }
+    [class*='kl-teaser-'] {
+        z-index: 4 !important;
+    }
+</style>
+
+<!--MNTN Tracking Pixel-->
+<!-- INSTALL ON ALL PAGES OF SITE-->
+<script type="text/javascript">
+	(function(){"use strict";var e=null,b="4.0.0",
+	n="34777",
+	additional="term=value",
+	t,r,i;try{t=top.document.referer!==""?encodeURIComponent(top.document.referrer.substring(0,2048)):""}catch(o){t=document.referrer!==null?document.referrer.toString().substring(0,2048):""}try{r=window&&window.top&&document.location&&window.top.location===document.location?document.location:window&&window.top&&window.top.location&&""!==window.top.location?window.top.location:document.location}catch(u){r=document.location}try{i=parent.location.href!==""?encodeURIComponent(parent.location.href.toString().substring(0,2048)):""}catch(a){try{i=r!==null?encodeURIComponent(r.toString().substring(0,2048)):""}catch(f){i=""}}var l,c=document.createElement("script"),h=null,p=document.getElementsByTagName("script"),d=Number(p.length)-1,v=document.getElementsByTagName("script")[d];if(typeof l==="undefined"){l=Math.floor(Math.random()*1e17)}h="dx.mountain.com/spx?"+"dxver="+b+"&shaid="+n+"&tdr="+t+"&plh="+i+"&cb="+l+additional;c.type="text/javascript";c.src=("https:"===document.location.protocol?"https://":"http://")+h;v.parentNode.insertBefore(c,v)})()
+</script>
+
+            <script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="facebook-domain-verification" content="7k4zrm7kp4p3u38na7fh29v5knigyf">
+<meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/5052170330/digital_wallets/dialog">
+<meta name="shopify-checkout-api-token" content="4d4478467d5a8db889a60b913f43d3ba">
+<script async="async" src="/checkouts/internal/preloads.js?locale=en-US"></script>
+<script async="async" src="https://shop.app/checkouts/internal/preloads.js?locale=en-US&shop_id=5052170330" crossorigin="anonymous"></script>
+<script id="apple-pay-shop-capabilities" type="application/json">{"shopId":5052170330,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/5052170330","merchantName":"Cirkul","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Cirkul","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script>
+<script id="shopify-features" type="application/json">{"accessToken":"4d4478467d5a8db889a60b913f43d3ba","betas":["rich-media-storefront-analytics"],"domain":"drinkcirkul.com","predictiveSearch":true,"shopId":5052170330,"smart_payment_buttons_url":"https:\/\/drinkcirkul.com\/cdn\/shopifycloud\/payment-sheet\/assets\/latest\/spb.en.js","dynamic_checkout_cart_url":"https:\/\/drinkcirkul.com\/cdn\/shopifycloud\/payment-sheet\/assets\/latest\/dynamic-checkout-cart.en.js","locale":"en"}</script>
+<script>var Shopify = Shopify || {};
+Shopify.shop = "cirkul-dev.myshopify.com";
+Shopify.locale = "en";
+Shopify.currency = {"active":"USD","rate":"1.0"};
+Shopify.country = "US";
+Shopify.theme = {"name":"DrinkCirkul","id":39287423066,"theme_store_id":null,"role":"main"};
+Shopify.theme.handle = "null";
+Shopify.theme.style = {"id":null,"handle":null};
+Shopify.cdnHost = "drinkcirkul.com/cdn";
+Shopify.routes = Shopify.routes || {};
+Shopify.routes.root = "/";</script>
+<script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script>
+<script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
+<script id="shop-js-features" type="application/json">{"compact":true,"defer_modal_on_autofill":true}</script>
+<script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script>
+<script>(function() {
+  function asyncLoad() {
+    var urls = ["https:\/\/static.rechargecdn.com\/static\/js\/recharge.js?shop=cirkul-dev.myshopify.com","https:\/\/portal.zakeke.com\/Scripts\/integration\/shopify\/product.js?shop=cirkul-dev.myshopify.com","https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=JvEbhp\u0026shop=cirkul-dev.myshopify.com","https:\/\/apps.bazaarvoice.com\/deployments\/cirkul\/main_site\/production\/en_US\/bv.js?shop=cirkul-dev.myshopify.com","https:\/\/raze06rt.drinkcirkul.com\/assets\/shopify.js?rb_init_key=ZHJpbmtjaXJrdWx8dmlld3xwdXJjaGFzZXxzaWdudXB8bG9naW4=\u0026shop=cirkul-dev.myshopify.com","https:\/\/intg.snapchat.com\/shopify\/shopify-scevent-init.js?id=462f9051-84dc-483a-98a8-8f8cadf78a82\u0026shop=cirkul-dev.myshopify.com","https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=JvEbhp\u0026shop=cirkul-dev.myshopify.com","https:\/\/sdk.postscript.io\/sdk-script-loader.bundle.js?shopId=339430\u0026shop=cirkul-dev.myshopify.com"];
+    for (var i = 0; i < urls.length; i++) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = urls[i];
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+  };
+  if(window.attachEvent) {
+    window.attachEvent('onload', asyncLoad);
+  } else {
+    window.addEventListener('load', asyncLoad, false);
+  }
+})();</script>
+<script id="__st">var __st={"a":5052170330,"offset":-14400,"reqid":"a626edf1-acba-4904-bb21-c9ab1af4b3ee-1718762591","pageurl":"drinkcirkul.com\/pages\/terms","s":"pages-23212621914","u":"febcf5705972","p":"page","rtyp":"page","rid":23212621914};</script>
+<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+<script integrity="sha256-n5Uet9jVOXPHGd4hH4B9Y6+BxkTluaaucmYaxAjUcvY=" data-source-attribution="shopify.loadfeatures" defer="defer" src="//drinkcirkul.com/cdn/shopifycloud/shopify/assets/storefront/load_feature-9f951eb7d8d53973c719de211f807d63af81c644e5b9a6ae72661ac408d472f6.js" crossorigin="anonymous"></script>
+<script integrity="sha256-HAs5a9TQVLlKuuHrahvWuke+s1UlxXohfHeoYv8G2D8=" data-source-attribution="shopify.dynamic-checkout" defer="defer" src="//drinkcirkul.com/cdn/shopifycloud/shopify/assets/storefront/features-1c0b396bd4d054b94abae1eb6a1bd6ba47beb35525c57a217c77a862ff06d83f.js" crossorigin="anonymous"></script>
+
+
+<style id="shopify-dynamic-checkout-cart">@media screen and (min-width: 750px) {
+  #dynamic-checkout-cart {
+    min-height: 50px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #dynamic-checkout-cart {
+    min-height: 120px;
+  }
+}
+</style><script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+            <!-- Header hook for plugins -->
+            <script>
+    window.zakekeProductAdvancedProcessing = true;
+
+    
+    window.zakekePricingData = {
+      variantId: 17612343640154,
+      cart: {"note":null,"attributes":{},"original_total_price":0,"total_price":0,"total_discount":0,"total_weight":0.0,"item_count":0,"items":[],"requires_shipping":false,"currency":"USD","items_subtotal_price":0,"cart_level_discount_applications":[],"checkout_charge_amount":0},
+      product: {"id":1907289456730,"title":"Zakeke Customization (do not edit\/delete)","handle":"customization","description":"","published_at":"2019-07-25T03:37:14-04:00","created_at":"2019-07-25T03:38:57-04:00","vendor":"Cirkul","type":"zakeke-design","tags":[],"price":1,"price_min":1,"price_max":1,"available":true,"price_varies":false,"compare_at_price":null,"compare_at_price_min":0,"compare_at_price_max":0,"compare_at_price_varies":false,"variants":[{"id":17612343640154,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":"","requires_shipping":false,"taxable":false,"featured_image":null,"available":true,"name":"Zakeke Customization (do not edit\/delete)","public_title":null,"options":["Default Title"],"price":1,"weight":0,"compare_at_price":null,"inventory_management":null,"barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":[],"featured_image":null,"options":["Title"],"requires_selling_plan":false,"selling_plan_groups":[],"content":""}
+    };
+    
+
+    window.zakekeShopLocales = [
+      
+      {
+        iso_code: "en",
+        root_url: "\/",
+        primary: true
+      },
+      
+    ];
+</script>
+
+<script>
+    function zakekePostprocessProperties(props) {
+        if (props.customization) {
+            props._customization = props.customization;
+            delete props.customization;
+        }
+        if (props.Preview) {
+            delete props.Preview;
+        }
+        return props;
+    }
+</script>
+
+<script src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js"></script>
+<!-- Required Core Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.core.css">
+<!-- Optional Theme Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.theme.css">
+
+<style>
+    .glide__arrow.prev {
+        left: 0;
+    }
+
+    .glide__arrow.next {
+        right: 0;
+    }
+
+    .glide__slides {
+        margin: 0px;
+        list-style: none;
+    }
+
+    .glide__arrow {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .zakeke-cart-preview-window {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.94);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+    }
+
+    .zakeke-cart-preview-window-label {
+        padding: 20px;
+    }
+
+    .zakeke-cart-preview-window-label h3 {
+        color: white;
+    }
+
+    .zakeke-cart-previews {
+        position: relative;
+        max-width: 260px;
+    }
+
+    @media (max-width: 768px) {
+        .zakeke-cart-previews {
+            max-width: 130px;
+        }
+    }
+
+    .zakeke-cart-preview {
+        cursor: pointer;
+    }
+</style>
+
+        <link rel="canonical" href="https://drinkcirkul.com/pages/terms">
+<link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
+<script>(function(){if ("sendBeacon" in navigator && "performance" in window) {var session_token = document.cookie.match(/_shopify_s=([^;]*)/);function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 5052170330,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token: session_token && session_token.length === 2 ? session_token[1] : "",page_type: "page"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
+<script id="web-pixels-manager-setup">(function e(e,n,a,t,r){var o="function"==typeof BigInt&&-1!==BigInt.toString().indexOf("[native code]")?"modern":"legacy";window.Shopify=window.Shopify||{};var i=window.Shopify;i.analytics=i.analytics||{};var s=i.analytics;s.replayQueue=[],s.publish=function(e,n,a){return s.replayQueue.push([e,n,a]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l=[a,"/wpm","/b",r,o.substring(0,1),".js"].join("");!function(e){var n=e.src,a=e.async,t=void 0===a||a,r=e.onload,o=e.onerror,i=document.createElement("script"),s=document.head,l=document.body;i.async=t,i.src=n,r&&i.addEventListener("load",r),o&&i.addEventListener("error",o),s?s.appendChild(i):l?l.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:l,async:!0,onload:function(){var a=window.webPixelsManager.init(e);n(a);var t=window.Shopify.analytics;t.replayQueue.forEach((function(e){var n=e[0],t=e[1],r=e[2];a.publishCustomEvent(n,t,r)})),t.replayQueue=[],t.publish=a.publishCustomEvent,t.visitor=a.visitor},onerror:function(){var n=e.storefrontBaseUrl.replace(/\/$/,""),a="".concat(n,"/.well-known/shopify/monorail/unstable/produce_batch"),r=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/2.0",payload:{version:t||"latest",page_url:self.location.href,status:"failed",error_msg:"".concat(l," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(a,r))return!0}catch(e){}var o=new XMLHttpRequest;try{return o.open("POST",a,!0),o.setRequestHeader("Content-Type","text/plain"),o.send(r),!0}catch(e){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 5052170330,storefrontBaseUrl: "https://drinkcirkul.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938"],webPixelsConfigList: [{"id":"18612314","configuration":"{\"pixelId\":\"462f9051-84dc-483a-98a8-8f8cadf78a82\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"bb41bf091d86ec09beb5141ead6fafc0","type":"APP","apiClientId":2556259,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"090","apiClientId":"shopify-pixel","type":"APP","purposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"090","apiClientId":"shopify-pixel","type":"CUSTOM","purposes":["ANALYTICS","MARKETING"]}],initData: {"cart":null,"checkout":null,"customer":null,"productVariants":[],"shop":{"name":"Cirkul","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"cirkul-dev.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/drinkcirkul.com"}},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed");},"https://drinkcirkul.com/cdn","a64ed00e496c8c32981f1178b2aaa15187d8df6e","b55a905fw9ecbde0dp236da2aame8f2f1ce",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+window.ShopifyAnalytics.meta.currency = 'USD';
+var meta = {"page":{"pageType":"page","resourceType":"page","resourceId":23212621914}};
+for (var attr in meta) {
+  window.ShopifyAnalytics.meta[attr] = meta[attr];
+}</script>
+<script>window.ShopifyAnalytics.merchantGoogleAnalytics = function() {
+  
+};
+</script>
+<script class="analytics">(function () {
+    var customDocumentWrite = function(content) {
+      var jquery = null;
+
+      if (window.jQuery) {
+        jquery = window.jQuery;
+      } else if (window.Checkout && window.Checkout.$) {
+        jquery = window.Checkout.$;
+      }
+
+      if (jquery) {
+        jquery('body').append(content);
+      }
+    };
+
+    var hasLoggedConversion = function(token) {
+      if (token) {
+        return document.cookie.indexOf('loggedConversion=' + token) !== -1;
+      }
+      return false;
+    }
+
+    var setCookieIfConversion = function(token) {
+      if (token) {
+        var twoMonthsFromNow = new Date(Date.now());
+        twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+        document.cookie = 'loggedConversion=' + token + '; expires=' + twoMonthsFromNow;
+      }
+    }
+
+    var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+    if (trekkie.integrations) {
+      return;
+    }
+    trekkie.methods = [
+      'identify',
+      'page',
+      'ready',
+      'track',
+      'trackForm',
+      'trackLink'
+    ];
+    trekkie.factory = function(method) {
+      return function() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift(method);
+        trekkie.push(args);
+        return trekkie;
+      };
+    };
+    for (var i = 0; i < trekkie.methods.length; i++) {
+      var key = trekkie.methods[i];
+      trekkie[key] = trekkie.factory(key);
+    }
+    trekkie.load = function(config) {
+      trekkie.config = config || {};
+      trekkie.config.initialDocumentCookie = document.cookie;
+      var first = document.getElementsByTagName('script')[0];
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.onerror = function(e) {
+        var scriptFallback = document.createElement('script');
+        scriptFallback.type = 'text/javascript';
+        scriptFallback.onerror = function(error) {
+                var Monorail = {
+      produce: function produce(monorailDomain, schemaId, payload) {
+        var currentMs = new Date().getTime();
+        var event = {
+          schema_id: schemaId,
+          payload: payload,
+          metadata: {
+            event_created_at_ms: currentMs,
+            event_sent_at_ms: currentMs
+          }
+        };
+        return Monorail.sendRequest("https://" + monorailDomain + "/v1/produce", JSON.stringify(event));
+      },
+      sendRequest: function sendRequest(endpointUrl, payload) {
+        // Try the sendBeacon API
+        if (window && window.navigator && typeof window.navigator.sendBeacon === 'function' && typeof window.Blob === 'function' && !Monorail.isIos12()) {
+          var blobData = new window.Blob([payload], {
+            type: 'text/plain'
+          });
+
+          if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+            return true;
+          } // sendBeacon was not successful
+
+        } // XHR beacon
+
+        var xhr = new XMLHttpRequest();
+
+        try {
+          xhr.open('POST', endpointUrl);
+          xhr.setRequestHeader('Content-Type', 'text/plain');
+          xhr.send(payload);
+        } catch (e) {
+          console.log(e);
+        }
+
+        return false;
+      },
+      isIos12: function isIos12() {
+        return window.navigator.userAgent.lastIndexOf('iPhone; CPU iPhone OS 12_') !== -1 || window.navigator.userAgent.lastIndexOf('iPad; CPU OS 12_') !== -1;
+      }
+    };
+    Monorail.produce('monorail-edge.shopifysvc.com',
+      'trekkie_storefront_load_errors/1.1',
+      {shop_id: 5052170330,
+      theme_id: 39287423066,
+      app_name: "storefront",
+      context_url: window.location.href,
+      source_url: "//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js"});
+
+        };
+        scriptFallback.async = true;
+        scriptFallback.src = '//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js';
+        first.parentNode.insertBefore(scriptFallback, first);
+      };
+      script.async = true;
+      script.src = '//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js';
+      first.parentNode.insertBefore(script, first);
+    };
+    trekkie.load(
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":5052170330,"isMerchantRequest":null,"themeId":39287423066,"themeCityHash":"11937133925828100988","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"Google Gtag Pixel":{"conversionId":"G-XJD9HF51YV","eventLabels":[{"type":"purchase","action_label":"G-XJD9HF51YV"},{"type":"page_view","action_label":"G-XJD9HF51YV"},{"type":"view_item","action_label":"G-XJD9HF51YV"},{"type":"search","action_label":"G-XJD9HF51YV"},{"type":"add_to_cart","action_label":"G-XJD9HF51YV"},{"type":"begin_checkout","action_label":"G-XJD9HF51YV"},{"type":"add_payment_info","action_label":"G-XJD9HF51YV"}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":false,"source":"trekkie-storefront-renderer"}}
+    );
+
+    var loaded = false;
+    trekkie.ready(function() {
+      if (loaded) return;
+      loaded = true;
+
+      window.ShopifyAnalytics.lib = window.trekkie;
+
+  
+      var originalDocumentWrite = document.write;
+      document.write = customDocumentWrite;
+      try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch(error) {};
+      document.write = originalDocumentWrite;
+
+      window.ShopifyAnalytics.lib.page(null,{"pageType":"page","resourceType":"page","resourceId":23212621914});
+
+      var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/)
+      var token = match? match[1]: undefined;
+      if (!hasLoggedConversion(token)) {
+        setCookieIfConversion(token);
+        
+      }
+    });
+
+
+        var eventsListenerScript = document.createElement('script');
+        eventsListenerScript.async = true;
+        eventsListenerScript.src = "//drinkcirkul.com/cdn/shopifycloud/shopify/assets/shop_events_listener-61fa9e0a912c675e178777d2b27f6cbd482f8912a6b0aa31fa3515985a8cd626.js";
+        document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+
+})();</script>
+<script class="boomerang">
+(function () {
+  if (window.BOOMR && (window.BOOMR.version || window.BOOMR.snippetExecuted)) {
+    return;
+  }
+  window.BOOMR = window.BOOMR || {};
+  window.BOOMR.snippetStart = new Date().getTime();
+  window.BOOMR.snippetExecuted = true;
+  window.BOOMR.snippetVersion = 12;
+  window.BOOMR.application = "storefront-renderer";
+  window.BOOMR.themeName = "DrinkCirkul";
+  window.BOOMR.themeVersion = "1.0.0";
+  window.BOOMR.shopId = 5052170330;
+  window.BOOMR.themeId = 39287423066;
+  window.BOOMR.renderRegion = "gcp-europe-west1";
+  window.BOOMR.url =
+    "https://drinkcirkul.com/cdn/shopifycloud/boomerang/shopify-boomerang-1.0.0.min.js";
+  var where = document.currentScript || document.getElementsByTagName("script")[0];
+  var parentNode = where.parentNode;
+  var promoted = false;
+  var LOADER_TIMEOUT = 3000;
+  function promote() {
+    if (promoted) {
+      return;
+    }
+    var script = document.createElement("script");
+    script.id = "boomr-scr-as";
+    script.src = window.BOOMR.url;
+    script.async = true;
+    parentNode.appendChild(script);
+    promoted = true;
+  }
+  function iframeLoader(wasFallback) {
+    promoted = true;
+    var dom, bootstrap, iframe, iframeStyle;
+    var doc = document;
+    var win = window;
+    window.BOOMR.snippetMethod = wasFallback ? "if" : "i";
+    bootstrap = function(parent, scriptId) {
+      var script = doc.createElement("script");
+      script.id = scriptId || "boomr-if-as";
+      script.src = window.BOOMR.url;
+      BOOMR_lstart = new Date().getTime();
+      parent = parent || doc.body;
+      parent.appendChild(script);
+    };
+    if (!window.addEventListener && window.attachEvent && navigator.userAgent.match(/MSIE [67]./)) {
+      window.BOOMR.snippetMethod = "s";
+      bootstrap(parentNode, "boomr-async");
+      return;
+    }
+    iframe = document.createElement("IFRAME");
+    iframe.src = "about:blank";
+    iframe.title = "";
+    iframe.role = "presentation";
+    iframe.loading = "eager";
+    iframeStyle = (iframe.frameElement || iframe).style;
+    iframeStyle.width = 0;
+    iframeStyle.height = 0;
+    iframeStyle.border = 0;
+    iframeStyle.display = "none";
+    parentNode.appendChild(iframe);
+    try {
+      win = iframe.contentWindow;
+      doc = win.document.open();
+    } catch (e) {
+      dom = document.domain;
+      iframe.src = "javascript:var d=document.open();d.domain='" + dom + "';void(0);";
+      win = iframe.contentWindow;
+      doc = win.document.open();
+    }
+    if (dom) {
+      doc._boomrl = function() {
+        this.domain = dom;
+        bootstrap();
+      };
+      doc.write("<body onload='document._boomrl();'>");
+    } else {
+      win._boomrl = function() {
+        bootstrap();
+      };
+      if (win.addEventListener) {
+        win.addEventListener("load", win._boomrl, false);
+      } else if (win.attachEvent) {
+        win.attachEvent("onload", win._boomrl);
+      }
+    }
+    doc.close();
+  }
+  var link = document.createElement("link");
+  if (link.relList &&
+    typeof link.relList.supports === "function" &&
+    link.relList.supports("preload") &&
+    ("as" in link)) {
+    window.BOOMR.snippetMethod = "p";
+    link.href = window.BOOMR.url;
+    link.rel = "preload";
+    link.as = "script";
+    link.addEventListener("load", promote);
+    link.addEventListener("error", function() {
+      iframeLoader(true);
+    });
+    setTimeout(function() {
+      if (!promoted) {
+        iframeLoader(true);
+      }
+    }, LOADER_TIMEOUT);
+    BOOMR_lstart = new Date().getTime();
+    parentNode.appendChild(link);
+  } else {
+    iframeLoader(false);
+  }
+  function boomerangSaveLoadTime(e) {
+    window.BOOMR_onload = (e && e.timeStamp) || new Date().getTime();
+  }
+  if (window.addEventListener) {
+    window.addEventListener("load", boomerangSaveLoadTime, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", boomerangSaveLoadTime);
+  }
+  if (document.addEventListener) {
+    document.addEventListener("onBoomerangLoaded", function(e) {
+      e.detail.BOOMR.init({
+        ResourceTiming: {
+          enabled: true,
+          trackedResourceTypes: ["script", "img", "css"]
+        },
+      });
+      e.detail.BOOMR.t_end = new Date().getTime();
+    });
+  } else if (document.attachEvent) {
+    document.attachEvent("onpropertychange", function(e) {
+      if (!e) e=event;
+      if (e.propertyName === "onBoomerangLoaded") {
+        e.detail.BOOMR.init({
+          ResourceTiming: {
+            enabled: true,
+            trackedResourceTypes: ["script", "img", "css"]
+          },
+        });
+        e.detail.BOOMR.t_end = new Date().getTime();
+      }
+    });
+  }
+})();</script>
+</head>
+
+        <body class="old-template--page">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript
+                ><iframe
+                    src="https://www.googletagmanager.com/ns.html?id=GTM-KT7B2TZ"
+                    height="0"
+                    width="0"
+                    style="display:none;visibility:hidden"
+                ></iframe
+            ></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+
+            <div class="off-canvas-wrapper">
+                <div class="off-canvas position-left navigation-off-canvas" id="offCanvasMenu" data-off-canvas data-transition="overlap">
+                    <div class="off-canvas-container">
+    <a class="off-canvas-close" data-toggle="offCanvasMenu"><img class="close-icon" src="//drinkcirkul.com/cdn/shop/t/4/assets/icon-close-blue.svg?v=10197444204773661521565156097" alt="Close"></a>
+
+    
+        <ul class="menu vertical menu-login-register">
+            <li><a href="/account/login">Log In</a></li>
+            <li><a href="/account/register">Create Account</a></li>
+        </ul>
+    
+
+    <ul class="menu vertical menu-navigation" data-accordion-menu data-submenu-toggle="true">
+        <li data-optimize-target="hide-plans-link">
+            <a href="/pages/plans">Plans</a>
+        </li>
+        <li>
+            <a class="has-submenu" href="/products">Products</a>
+            <ul class="menu vertical nested">
+                <li>
+                    <a href="/pages/flvr-lab" data-toggle="offCanvasMenu"><span class="menu-item-text">FLVR LAB</span></a>
+                </li>
+                <li>
+                    <a href="/pages/bottle-drops" data-toggle="offCanvasMenu"><span class="menu-item-text">Bottle Drops</span></a>
+                </li>
+                <li>
+                    <a href="/pages/bundle-builder" data-toggle="offCanvasMenu"><span class="menu-item-text">Bundles</span></a>
+                </li>
+                <li>
+                    <a href="/products#bottles" data-toggle="offCanvasMenu"><span class="menu-item-text">Bottles</span></a>
+                </li>
+                <li>
+                    <a href="/products#basics" data-toggle="offCanvasMenu"><span class="menu-item-text">Basics</span></a>
+                </li>
+                <li>
+                    <a href="/pages/flavors" data-toggle="offCanvasMenu"><span class="menu-item-text">Flavors</span></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="/pages/why-cirkul">Why Cirkul</a>
+        </li>
+        <li>
+            <a href="/pages/getting-started">Getting Started</a>
+        </li>
+        <li>
+            <a href="/pages/about">Learn More</a>
+        </li>
+        <li>
+            <a href="/pages/faq">FAQ</a>
+        </li>
+        <li>
+            <a href="/blogs/cirkular">Cirkular</a>
+        </li>
+    </ul>
+
+    <ul class="menu vertical menu-core">
+        <li>
+            
+                <a href="/account/login">Account</a>
+            
+        </li>
+        <li>
+            
+                <a href="/?showCart=true"> Cart </a>
+            
+        </li>
+        <li><a href="/pages/faq">Help</a></li>
+    </ul>
+
+    
+</div>
+
+                </div>
+
+                <div class="off-canvas-content" data-off-canvas-content>
+                    
+                    
+                    <div class="new-page-header page-header-use-light-theme">
+                        <div data-sticky-container>
+                            <div class="sticky is-anchored" data-sticky data-margin-top="0" data-stick-to="top" data-top-anchor="20" data-sticky-on="small">
+                                
+
+
+
+
+
+
+<div class="grid-container page-header-inner">
+    <div class="page-header-logo">
+        <a href="/">
+            <img class="header-logo page-header-dark-theme" src="//drinkcirkul.com/cdn/shop/files/2021-header-logo-white.svg?v=14923287801012519565" alt="Cirkul">
+            <img class="header-logo page-header-light-theme" src="//drinkcirkul.com/cdn/shop/files/2021-header-logo-blue.svg?v=4439436544074754903" alt="Cirkul">
+        </a>
+    </div>
+
+    <div class="row collapse page-header-grid">
+        <div class="columns shrink page-header-navigation-menu show-for-large-custom">
+            <ul class="menu dropdown" data-dropdown-menu>
+                <li>
+                    <a href="/"><span class="menu-item-text">Home</span></a>
+                </li>
+                <li data-optimize-target="hide-plans-link">
+                    <a href="/pages/plans"><span class="menu-item-text">Plans</span></a>
+                </li>
+                <li>
+                    <a class="has-submenu" href="/products"><span class="menu-item-text">Products</span></a>
+                    <ul class="menu">
+                        <li>
+                            <a href="/pages/flvr-lab"><span class="menu-item-text">FLVR LAB</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/bottle-drops"><span class="menu-item-text">Bottle Drops</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/bundle-builder"><span class="menu-item-text">Bundles</span></a>
+                        </li>
+                        <li>
+                            <a href="/products#bottles"><span class="menu-item-text">Bottles</span></a>
+                        </li>
+                        <li>
+                            <a href="/products#basics"><span class="menu-item-text">Basics</span></a>
+                        </li>
+                        <li>
+                            <a class="has-submenu" href="/pages/flavors"><span class="menu-item-text">Flavors</span></a>
+                            <ul class="menu">
+                                <li>
+                                    <a href="/collections/lifesip"><span class="menu-item-text">LifeSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/fitsip"><span class="menu-item-text">FitSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/gosip"><span class="menu-item-text">GoSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/gateway-tea"><span class="menu-item-text">Gateway Tea</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/wild-splash"><span class="menu-item-text">Wild Splash</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/sabrocita"><span class="menu-item-text">Sabrocita</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/inflow-energy"><span class="menu-item-text">Inflow Energy</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/flyte"><span class="menu-item-text">Flyte</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/squeeze"><span class="menu-item-text">Squeeze Lemonade</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/fission"><span class="menu-item-text">Fission</span></a>
+                                </li>
+                                
+                                
+                                
+                                
+                                    <li>
+                                        <a href="/collections/frosted-refreshers"><span class="menu-item-text">Frosted Refreshers</span></a>
+                                    </li>
+                                
+                                <li>
+                                    <a href="/collections/frosted"><span class="menu-item-text">Frosted Iced Coffee</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/stage"><span class="menu-item-text">Stage</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/verda"><span class="menu-item-text">Verda</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/puressence"><span class="menu-item-text">Puressence</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="is-dropdown-submenu-parent">
+                    <a class="has-submenu" href="/pages/about"><span class="menu-item-text">About</span></a>
+                    <ul class="menu">
+                        <li>
+                            <a href="/pages/why-cirkul"><span class="menu-item-text">Why Cirkul</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/getting-started"><span class="menu-item-text">Getting Started</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/about"><span class="menu-item-text">Learn More</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/faq"><span class="menu-item-text">FAQ</span></a>
+                        </li>
+                        <li>
+                            <a href="/blogs/cirkular"><span class="menu-item-text">Cirkular</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/careers"><span class="menu-item-text">Careers</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/pages/faq"><span class="menu-item-text">Help</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="columns shrink page-header-mobile-menu hide-for-large-custom">
+            <ul class="menu">
+                <li>
+                    <a data-toggle="offCanvasMenu"><svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Menu</title>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12C21.5523 12 22 12.4477 22 13C22 13.5128 21.614 13.9355 21.1166 13.9933L21 14H1C0.447715 14 0 13.5523 0 13C0 12.4872 0.38604 12.0645 0.883379 12.0067L1 12H21ZM21 6C21.5523 6 22 6.44772 22 7C22 7.51284 21.614 7.93551 21.1166 7.99327L21 8H1C0.447715 8 0 7.55228 0 7C0 6.48716 0.38604 6.06449 0.883379 6.00673L1 6H21ZM21 0C21.5523 0 22 0.447715 22 1C22 1.51284 21.614 1.93551 21.1166 1.99327L21 2H1C0.447715 2 0 1.55228 0 1C0 0.487164 0.38604 0.0644928 0.883379 0.00672773L1 0H21Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+</a>
+                </li>
+                <li>
+                    
+                        <a href="/?showCart=true">
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Cart</title>
+    <path d="M7.34126 17.875C6.21504 17.875 5.3391 18.8203 5.3391 19.9375C5.3391 21.0977 6.21504 22 7.34126 22C8.42576 22 9.34342 21.0977 9.34342 19.9375C9.34342 18.8203 8.42576 17.875 7.34126 17.875ZM19.3542 17.875C18.228 17.875 17.3521 18.8203 17.3521 19.9375C17.3521 21.0977 18.228 22 19.3542 22C20.4387 22 21.3564 21.0977 21.3564 19.9375C21.3564 18.8203 20.4387 17.875 19.3542 17.875ZM23.7339 1.93359C23.4837 1.58984 23.1083 1.375 22.6494 1.375H5.04711L4.96369 0.859375C4.88027 0.386719 4.46315 0 4.00432 0H1.00108C0.417117 0 0 0.472656 0 1.03125C0 1.63281 0.417117 2.0625 1.00108 2.0625H3.17009L5.67279 15.6836C5.75621 16.1562 6.17333 16.5 6.67387 16.5H20.3553C20.8976 16.5 21.3564 16.0703 21.3564 15.4688C21.3564 14.9102 20.8976 14.4375 20.3553 14.4375H7.46639L7.09099 12.375H20.397C20.981 12.375 21.4815 11.9883 21.6484 11.3867L23.9425 3.13672C24.0676 2.75 23.9842 2.27734 23.7339 1.93359ZM19.8965 10.3125H6.71558L5.46423 3.4375H21.7735L19.8965 10.3125Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+
+                        </a>
+                    
+                </li>
+            </ul>
+        </div>
+
+        <div class="columns shrink page-header-quick-menu">
+            <ul class="menu show-for-large-custom">
+                <li>
+                    
+                        <a href="/account/login"><svg width="19" height="22" viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Account</title>
+    <path d="M13.2746 13.0625C12.0446 13.0625 11.4933 13.75 9.5 13.75C7.46429 13.75 6.91295 13.0625 5.68304 13.0625C2.54464 13.0625 0 15.6836 0 18.8633V19.9375C0 21.0977 0.890625 22 2.03571 22H16.9643C18.067 22 19 21.0977 19 19.9375V18.8633C19 15.6836 16.4129 13.0625 13.2746 13.0625ZM16.9643 19.9375H2.03571V18.8633C2.03571 16.8008 3.64732 15.125 5.68304 15.125C6.3192 15.125 7.29464 15.8125 9.5 15.8125C11.6629 15.8125 12.6384 15.125 13.2746 15.125C15.3103 15.125 16.9643 16.8008 16.9643 18.8633V19.9375ZM9.5 12.375C12.8504 12.375 15.6071 9.625 15.6071 6.1875C15.6071 2.79297 12.8504 0 9.5 0C6.10714 0 3.39286 2.79297 3.39286 6.1875C3.39286 9.625 6.10714 12.375 9.5 12.375ZM9.5 2.0625C11.7054 2.0625 13.5714 3.95312 13.5714 6.1875C13.5714 8.46484 11.7054 10.3125 9.5 10.3125C7.25223 10.3125 5.42857 8.46484 5.42857 6.1875C5.42857 3.95312 7.25223 2.0625 9.5 2.0625Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+</a>
+                    
+                </li>
+                <li>
+                    
+                        <a href="/?showCart=true">
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Cart</title>
+    <path d="M7.34126 17.875C6.21504 17.875 5.3391 18.8203 5.3391 19.9375C5.3391 21.0977 6.21504 22 7.34126 22C8.42576 22 9.34342 21.0977 9.34342 19.9375C9.34342 18.8203 8.42576 17.875 7.34126 17.875ZM19.3542 17.875C18.228 17.875 17.3521 18.8203 17.3521 19.9375C17.3521 21.0977 18.228 22 19.3542 22C20.4387 22 21.3564 21.0977 21.3564 19.9375C21.3564 18.8203 20.4387 17.875 19.3542 17.875ZM23.7339 1.93359C23.4837 1.58984 23.1083 1.375 22.6494 1.375H5.04711L4.96369 0.859375C4.88027 0.386719 4.46315 0 4.00432 0H1.00108C0.417117 0 0 0.472656 0 1.03125C0 1.63281 0.417117 2.0625 1.00108 2.0625H3.17009L5.67279 15.6836C5.75621 16.1562 6.17333 16.5 6.67387 16.5H20.3553C20.8976 16.5 21.3564 16.0703 21.3564 15.4688C21.3564 14.9102 20.8976 14.4375 20.3553 14.4375H7.46639L7.09099 12.375H20.397C20.981 12.375 21.4815 11.9883 21.6484 11.3867L23.9425 3.13672C24.0676 2.75 23.9842 2.27734 23.7339 1.93359ZM19.8965 10.3125H6.71558L5.46423 3.4375H21.7735L19.8965 10.3125Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+
+                        </a>
+                    
+                </li>
+            </ul>
+
+            
+                
+                    <a class="button" href="/pages/bundle-builder" data-optimize-target="cta-button" data-trial-link id="new-2021-layout-header-trycirkul-cta">Try Cirkul</a>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    const isAuthed = window.meta.page.customerId;
+
+    if (!isAuthed) {
+        window.cirkulServices.experimentation.manuallyTriggerPage('unauthed_header_with_plans_link');
+
+        window.cirkulServices.experimentation.loadOptimizelyUnauthedExperiment({
+            experimentId: 26590820040, // Hide Plans Header Link for Unauthed Users
+            variationImplementers: {
+                26611430097: function () {}, // Do nothing (control)
+                26595850109: function () {
+                    window.cirkulServices.experimentation.hideItems('[data-optimize-target="hide-plans-link"]');
+                },
+            },
+            // devVariationId: 26595850109,
+        });
+    }
+</script>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="loading-overlay " data-loading-overlay>
+    <div class="loading-overlay-inner">
+        <p><span data-loading-message>Working... </span> <span class="fa fa-spinner fa-pulse fa-lg"></span></p>
+    </div>
+</div>
+
+                    <div class="page-content">
+                        
+                            <section class="row padded-row align-center basic-page-hero">
+    <h1>Terms of Service</h1>
+</section>
+<section class="row padded-row basic-page-content">
+    <div class="columns">
+        <p>
+    Please read these Terms of Service (collectively with Cirkul Privacy Policy, the “Terms of Service”) fully and carefully before using www.drinkcirkul.com (the “Site”) and the services, features,
+    promotions, credits, content, applications, or products offered by Cirkul, Inc. and its affiliates (“we”, “us”, “our” or “Cirkul”) (together with the Site and the Application (as defined below),
+    the ”Services”) in the United States and Canada. If you are using the Services outside of the United States and Canada, a location-specific set of terms may apply to you instead, so please check
+    the applicable country-specific website. These Terms of Service set forth the legally binding terms and conditions for your use of the Site and the Services and your purchase of the Auto-Ship
+    items and products sold through the Services.
+</p>
+<h4>ACCEPTANCE OF TERMS OF SERVICE</h4>
+<p>
+    By registering for and/or using the Services in any manner, including, but not limited to, visiting, browsing or making purchases through the Site or Services, you agree to these Terms of Service
+    and all other operating rules, policies and procedures that may be published from time to time on the Site or through the Services by us, each of which is incorporated by reference and each of
+    which may be updated by us from time to time. If you do not accept these Terms of Service, you are not permitted to, and you must not, access or use the Services or purchase Auto-Ship
+    items or products from us.
+</p>
+<p>
+    Certain of the Services may be subject to additional terms and conditions specified by us from time to time; your use of such Services is subject to those additional terms and conditions, which
+    are incorporated into these Terms of Service by this reference. IF YOU HAVE SIGNED UP FOR A CIRKUL PLAN OR OTHER AUTOMATICALLY RENEWING AUTO-SHIP SERVICE, PLEASE READ THE “AUTO-RENEWALS AND
+    RECURRING BILLING FOR PLANS AND OTHER AUTO-SHIP SERVICES” SECTION BELOW.
+</p>
+<p>
+    These Terms of Service apply to all users of the Services, including, without limitation, registered and unregistered users. We have a Privacy Policy that you should refer to in order to fully
+    understand how we collect and use your information. The Privacy Policy is hereby incorporated by reference into these Terms of Service.
+</p>
+<p>
+    ARBITRATION NOTICE AND CLASS ACTION WAIVER: EXCEPT FOR CERTAIN TYPES OF DISPUTES DESCRIBED IN THE “DISPUTES” SECTION BELOW, YOU AGREE THAT DISPUTES BETWEEN YOU AND US WILL BE RESOLVED BY BINDING,
+    INDIVIDUAL ARBITRATION AND YOU WAIVE YOUR RIGHT TO PARTICIPATE IN A CLASS ACTION LAWSUIT OR CLASS-WIDE ARBITRATION.
+</p>
+<h4>ELIGIBILITY</h4>
+<p>
+    You represent and warrant that you are at least 16 years of age, or if you are under 16 years of age but are at least 13 years old, that you are using the Services with the consent of your parent
+    or legal guardian and that you have received your parent’s or legal guardian’s permission to use the Services. If you are under 16 years of age and have not received such permission from your
+    parent or legal guardian, you may not, under any circumstances or for any reason, use the Services. We may, in our sole discretion, refuse to offer the Services to any person or entity and change
+    our eligibility criteria at any time. You are solely responsible for ensuring that these Terms of Service are in compliance with all laws, rules and regulations applicable to you and the right to
+    access the Services is revoked where these Terms of Service or use of the Services is prohibited or to the extent offering, sale or provision of the Services conflicts with any applicable law,
+    rule or regulation. Further, the Services are offered only for your use, and not for the use or benefit of any third party.
+</p>
+<h4>REGISTRATION</h4>
+<p>
+    To sign up for the Services, you must register for an account on the Services (an “Account”). You must provide accurate and complete information and keep your Account information updated. You
+    shall not: (i) select or use as a username a name of another person with the intent to impersonate that person; (ii) use as a username a name subject to any rights of a person other than you
+    without appropriate authorization; or (iii) use as a username a name that is otherwise offensive, vulgar or obscene. You are solely responsible for the activity that occurs on your Account, and
+    for keeping your Account password secure. You may never use another person’s user account or registration information for the Services without permission. You must notify us immediately of any
+    change in your eligibility to use the Services (including, but not limited to, any changes to or revocation of any licenses from state authorities), breach of security or unauthorized use of your
+    Account. You should never publish, distribute or post login information for your Account. You have the ability to delete your Account, either directly or through a request made to one of our
+    employees or affiliates.
+</p>
+<h3><strong>CONTENT</strong></h3>
+<h4>DEFINITION</h4>
+<p>
+    For purposes of these Terms of Service, the term “Content” includes, without limitation, information, data, text, photographs, illustrations, videos, audio clips, artwork, interfaces, products,
+    written posts and comments, software, scripts, graphics, interactive features and other content generated, provided or otherwise made accessible on or through the Services. While we try to make
+    sure that all Content contained in the Services (other than any user-generated content, if applicable) is correct, it is not intended to amount to authority or advice on which reliance should be
+    placed. Information made available through the Services is not a substitute for information from experts or professionals in the applicable area. You acknowledge that all Content accessed by you
+    while using the Services is at your own risk and you will be solely responsible for any damage or loss to you or any other party resulting therefrom. We do not guarantee that any Content you
+    access on or through the Services is or will continue to be accurate.
+</p>
+<h4>NOTICES AND RESTRICTIONS</h4>
+<p>
+    The Services may contain Content specifically provided by us or our partners and such Content is protected by copyrights, trademarks, service marks, patents, trade secrets or other proprietary
+    rights and laws. You shall abide by and maintain all copyright notices, information and restrictions contained in any Content accessed through the Services. You shall not sell, license, rent or
+    otherwise use or exploit any Content for commercial use or in any way that violates any third party right. Use, reproduction, modification, distribution or storage of any Content for any purpose
+    other than using the Services as contemplated by us and these Terms of Service is expressly prohibited without prior written permission from us.
+</p>
+<p>
+    Cirkul, “Your water. Your way.”, LifeSip, FitSip, GoSip, other Cirkul trademarks, service marks, graphics and logos used in connection with the Services are trademarks or registered trademarks of
+    Cirkul (collectively “Cirkul Marks”). Other trademarks, service marks, graphics and logos used in connection with the Services are the trademarks of their respective owners (collectively
+    “Third-Party Marks”). The Cirkul Marks and Third-Party Marks may not be copied, imitated or used, in whole or in part, without the prior written permission of Cirkul or the applicable trademark
+    holder.
+</p>
+<h4>USE LICENSE</h4>
+<p>
+    The Content, as well as the design, structure, selection, coordination, expression, “look and feel” and arrangement of the Services, are owned, controlled, and licensed by Cirkul or its licensors,
+    unless otherwise indicated. Subject to these Terms of Service, we grant each user of the Services a worldwide, non-exclusive, non-sublicensable and non-transferable license to use (i.e., to
+    download and display locally) Content solely for purposes of using the Services.
+</p>
+<h4>AVAILABILITY OF CONTENT</h4>
+<p>
+    We do not guarantee that any Content will be made available on the Site or through the Services. We reserve the right, but do not have any obligation, to (i) remove, edit or modify any Content in
+    our sole discretion, at any time, without notice to you and for any reason (including, but not limited to, upon receipt of claims or allegations from third parties or authorities relating to such
+    Content or if we are concerned that you may have violated these Terms of Service), or for no reason at all and (ii) remove or block any Content from the Services.
+</p>
+<h4>SMS, MMS AND OTHER TEXT MESSAGING</h4>
+<p>
+    As part of some of our Services, you may receive SMS, MMS or other text message notifications and communications from us and our business partners (each, a “Text Message”) as well as other
+    messages that Cirkul and our business partners send you (for example, via email). When signing up for the Services, you will receive a welcome message and instructions on how to stop receiving
+    messages. The frequency of Text Messages Cirkul and our providers may send varies and these Text Messages may include, without limitation, messages about your Cirkul orders, card reminders and
+    other messages about products and services that Cirkul thinks may be of interest to you by or on behalf of Cirkul. You hereby acknowledge that consent to receive Text Messages is not a condition
+    of purchase of Cirkul products and services.
+</p>
+<p>
+    In addition to any fee of which you are notified, your mobile provider’s standard message and data rates may apply to our confirmation Text Message and all subsequent Text Message correspondence
+    according to your individual rate plan provided by your wireless carrier. Please consult your mobile service carrier’s pricing plan to determine the charges for browsing data and sending and
+    receiving Text Messages. Under no circumstances will we be responsible for any text messaging or wireless charges incurred by you or by a person that has access to your wireless device or
+    telephone number. If your carrier does not permit text alerts, you may not receive the Text Messages from us. Carriers are not liable for delayed or undelivered text messages. You can opt out of
+    receiving any further Text Messages from us by replying “STOP,” “QUIT,” “END,” “REVOKE,” “CANCEL,” “OPT OUT,” or “UNSUBSCRIBE” to any Text Message you receive from us. You understand and agree
+    that use of different words, spellings or additional words or phrases as part of the command are not an effective means of opting out of receipt of further Text Messages and that Cirkul and our
+    business partners will have no liability for failure to honor such requests. If you submit a valid opt out, you may receive an additional Text Message confirming your decision to opt out.
+</p>
+<p>
+    We will not be liable for any delays in the receipt of any Text Messages, as delivery is subject to effective transmission from your network operator. Text Message services are provided on an “AS
+    IS” basis and may not be available in all areas at all times and may not continue to work in the event of product, software, coverage or other changes made by your wireless carrier. Data obtained
+    from you in connection with any text message services may include your cell phone number, your provider’s name and the date, time and content of your messages, and such other information as
+    described further in our Privacy Policy. You hereby expressly acknowledge and agree that you will not provide, upload, transmit or send any content or data that is contains, reflects, embodies or
+    references any personal health information that is protected by the Health Insurance Portability and Accountability Act (“HIPAA”) or the Health Information Technology for Economic and Clinical
+    Health Act (“HITECH Act”), or any other content that you do not have full right and legal authority to provide, upload, transmit or send to Cirkul.
+</p>
+<p>
+    <strong>By signing up for the Services or otherwise joining our mailing list at checkout and providing us with your wireless phone number, you confirm that you want us to send you information that we
+        think may be of interest to you to such phone number, which may include using automated dialing technology to send you Text Messages at the wireless number you provided, and </strong><strong>you agree to receive communications from Cirkul. You represent and warrant that each person you register for the Services or for whom you provide a wireless phone number has consented to
+        receive communications from Cirkul.</strong>
+    You agree to indemnify and hold Cirkul harmless from and against any and all claims, liabilities, damages (actual and consequential), losses and expenses (including attorneys’ fees) arising from
+    or in any way related to your breach of the foregoing.
+</p>
+<p>For more information on how we use telephone numbers, please read our Privacy Policy or contact our support team at <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>.</p>
+<h4>USER CONTENT</h4>
+<p>
+    Any Content that is submitted to us or to the Services by users, or otherwise added, uploaded, distributed or posted to the Services, whether publicly or privately transmitted, including, without
+    limitation, product reviews, survey responses and comments (“User Content”), is the sole responsibility of the person who originated such User Content. User Content also includes Content provided
+    by users through third party services such as a user’s social media account (e.g., Facebook, Instagram, Twitter, etc.) if such Content mentions, tags or otherwise interacts with Cirkul, the
+    Services or any of our products or services. You represent that all User Content submitted by you is accurate, complete, up-to-date and in compliance with all applicable laws, rules and
+    regulations. User Content that you submit must not: (i) contain any content that infringes intellectual property rights, data protection or privacy rights of an individual; (ii) be defamatory or
+    threatening; (iii) impersonate any person or entity; (iv) contain unauthorized advertising; or (v) transmit or distribute any virus and/or other code that has contaminating or destructive
+    elements. We make no representations, warranties or guarantees with respect to any User Content that you access on or through the Services.
+</p>
+<p>
+    By submitting User Content through the Services, you hereby grant us a worldwide, perpetual, irrevocable, non-exclusive, sub-licensable (through multiple tiers), fully paid, royalty-free license
+    and right to use, copy, transmit, distribute, publicly perform and display (through all media now known or hereafter created), edit, modify and make derivative works from your User Content
+    (including, without limitation, your name and likeness, photographs and testimonials) for any purpose whatsoever, commercial or otherwise, without compensation to you. You also hereby do and shall
+    grant each user of the Site and/or the Services a non-exclusive, perpetual license to access your User Content through the Site and/or the Services, and to use, edit, modify, reproduce,
+    distribute, prepare derivative works of, display and perform such User Content, including after your termination of your Account or the Services. In addition, you waive any so-called “moral
+    rights” or rights of privacy or publicity in your User Content. For clarity, the foregoing license grants to us and our users does not affect your other ownership or license rights in your User
+    Content, including the right to grant additional licenses to your User Content, unless otherwise agreed in writing. You represent and warrant that you have all rights to grant such licenses to us
+    without infringement or violation of any third party rights, including, without limitation, any privacy rights, publicity rights, copyrights, trademarks, contract rights or any other intellectual
+    property or proprietary rights.
+</p>
+<p>
+    Any feedback, reviews, comments, suggestions or recommendations for modifications, improvements or changes to the Services that you provide to us (“Feedback”) shall be solely owned by us
+    (including all intellectual property rights therein and thereto). You hereby irrevocably assign to us and agree to irrevocably assign to us all of your right, title and interest in and to all
+    Feedback, including, without limitation, all worldwide patent, copyright, trade secret, moral and other proprietary or intellectual property rights therein. At our request and expense, you will
+    execute documents and take such further acts as we may reasonably request to assist us to acquire, perfect and maintain our intellectual property rights and other legal protections for the
+    Feedback.
+</p>
+<h3><strong>RULES OF CONDUCT</strong></h3>
+<p>
+    As a condition of use, you agree not to use the Services for any purpose that is prohibited by these Terms of Service. You are responsible for all of your activity in connection with the Services.
+    You represent and warrant to Cirkul that you have all necessary rights, power, and authority to agree to these Terms of Service and perform your obligations hereunder, and nothing contained in
+    this herein or in the performance of such obligations will place you in breach of any other contract or obligation.
+</p>
+<p>
+    You shall not: (i) take any action that imposes or may impose (as determined by us in our sole discretion) an unreasonable or disproportionately large load on our (or our third party providers’)
+    infrastructure; (ii) interfere or attempt to interfere with the proper working of the Services or any activities conducted on the Services; (iii) bypass, circumvent or attempt to bypass or
+    circumvent any measures we may use to prevent or restrict access to the Services (or other accounts, computer systems or networks connected to the Services); (iv) run any form of auto-responder or
+    “spam” on the Services; (v) use manual or automated software, devices or other processes to “crawl” or “spider” any page of the Site; (vi) harvest or scrape any Content from the Services; (vii)
+    distribute information you know is false, misleading, untruthful, unlawful or inaccurate; (viii) upload any software viruses or any other computer codes, files or programs that are designed or
+    intended to disrupt, damage, limit or interfere with the proper function of any software, hardware, or telecommunications equipment or to damage or obtain unauthorized access to any system, data,
+    password or other information of ours or of any third party; or (ix) otherwise take any action in violation of our guidelines and policies.
+</p>
+<p>
+    You may not use the Services: (i) to engage in any fraudulent, libelous, defamatory, scandalous, threatening, harassing, or stalking activity; (ii) to transmit any objectionable content, including
+    profanity, obscenity, lasciviousness, violence, bigotry, hatred, and discrimination on the basis of race, sex, religion, nationality, disability, sexual orientation, or age; (iii) in connection or
+    combination with any pirated computer programs, viruses, worms, Trojan horses, or other harmful code; or (iv) to engage in any promotion of any activity, product or service that is unlawful.
+</p>
+<p>
+    You shall not (directly or indirectly): (i) decipher, decompile, disassemble, reverse engineer or otherwise attempt to derive any source code or underlying ideas or algorithms of any part of the
+    Services (including, without limitation, any application), except to the limited extent applicable laws specifically prohibit such restriction; (ii) modify, translate or otherwise create
+    derivative works of any part of the Services; or (iii) copy, rent, lease, distribute or otherwise transfer any of the rights that you receive hereunder. You shall abide by all applicable local,
+    state, national and international laws and regulations.
+</p>
+<p>
+    We also reserve the right to access, read, preserve and disclose any information or content as we reasonably believe is necessary to: (i) satisfy any applicable law, regulation, legal process or
+    governmental request; (ii) enforce these Terms of Service, including, without limitation, the investigation of potential violations hereof; (iii) detect, prevent or otherwise address fraud,
+    security or technical issues; (iv) respond to user support requests; or (v) protect the rights, property or safety of us, our users and the public.
+</p>
+<p>
+    All orders of our products must be for personal use only. By purchasing our products, you hereby agree not to resell or distribute such products for any commercial purposes. If we have reason to
+    believe that your order is not for personal use, we reserve the right to reject or cancel any order that you place.
+</p>
+<h4>THIRD PARTY SERVICES</h4>
+<p>
+    The Services may permit you to link to other websites, services or resources on the Internet, and other websites, services or resources may contain links to the Services. When you access third
+    party resources on the Internet, you do so at your own risk. These other resources are not under our control, and you acknowledge that we are not responsible or liable for the content, functions,
+    accuracy, legality, appropriateness or any other aspect of such websites or resources. The inclusion of any such link does not imply our endorsement or any association between us and their
+    operators. You further acknowledge and agree that we shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the
+    use of or reliance on any such content, goods or services available on or through any such website or resource.
+</p>
+<h4>APP STORE</h4>
+<p>
+    If and when we release an Application dedicated to our products, you acknowledge and agree that the availability of the Application is dependent on the third party websites from which you download
+    the Application, e.g., the App Store from Apple or the Android app market from Google (each, an “App Store”). Each App Store may have its own terms and conditions to which you must agree before
+    downloading mobile applications from such store, including the Apple, Inc. Device and Application Terms for the Apple App Store set forth below. You agree to comply with, and your license to use
+    the Application is conditioned upon your compliance with, such App Store terms and conditions. To the extent such other terms and conditions from such App Store are less restrictive than, or
+    otherwise conflict with, the terms and conditions of these Terms of Service, the more restrictive or conflicting terms and conditions in these Terms of Service shall apply.
+</p>
+<h4>APPLE DEVICE AND APPLICATION TERMS</h4>
+<p>If you are accessing the Services via an application on a device provided by Apple, Inc. (“Apple”) or an application obtained through the Apple App Store, the following shall apply:</p>
+<p>
+    Both you and Cirkul acknowledge that these Terms of Service are concluded between you and Cirkul only, and not with Apple, and that Apple is not responsible for, does not endorse, and is not
+    involved in the application;
+</p>
+<p>
+    The application is licensed to you on a limited, non-exclusive, non-transferrable, non-sublicensable basis, solely to be used in connection with the Services for your private, personal,
+    non-commercial use, subject to all of the terms and conditions of these Terms of Service as they are applicable to the Services;
+</p>
+<p>You will only use the application in connection with an Apple device that you own or control;</p>
+<p>You acknowledge and agree that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the application;</p>
+<p>
+    In the event of any failure of the application to conform to any applicable warranty, including those implied by law, you may notify Apple of such failure; upon notification, Apple’s sole warranty
+    obligation to you will be to refund to you the purchase price, if any, of the application;
+</p>
+<p>You acknowledge and agree that Cirkul, and not Apple, is responsible for addressing any claims you or any third party may have in relation to the application;</p>
+<p>
+    You acknowledge and agree that, in the event of any third party claim that the application or your possession and use of the application infringes that third party’s intellectual property rights,
+    Cirkul, and not Apple, will be responsible for the investigation, defense, settlement and discharge of any such infringement claim;
+</p>
+<p>
+    You represent and warrant that you are not located in a country subject to a U.S. government embargo, or that has been designated by the U.S. government as a “terrorist supporting” country, and
+    that you are not listed on any U.S. government list of prohibited or restricted parties;
+</p>
+<p>
+    Both you and Cirkul acknowledge and agree that, in your use of the application, you will comply with any applicable third party terms of agreement which may affect or be affected by such use; and
+</p>
+<p>
+    Both you and Cirkul acknowledge and agree that Apple and Apple’s subsidiaries are third party beneficiaries of these Terms of Service, and that upon your acceptance of these Terms of Service,
+    Apple will have the right (and will be deemed to have accepted the right) to enforce these Terms of Service against you as a third party beneficiary hereof.
+</p>
+<h4>IN APP PURCHASES</h4>
+<p>
+    Through the applications, you may purchase (“In App Purchase”) certain goods or services designed to enhance the performance of the Services (“Goods”). When you purchase Goods, you are doing so
+    through the Apple iTunes service and you are agreeing to its Terms and Conditions. We are not a party to any In App Purchase.
+</p>
+<h3><strong>ORDERING, DELIVERY, PAYMENTS AND BILLING</strong></h3>
+<h4>PAID SERVICES AND TERMS OF SALE</h4>
+<p>
+    Certain of our Services, including the purchase of any products or Auto-Ship items (such as plans) offered by us, may be subject to payments now or in the future (the “Paid Services”),
+    which in certain cases may include recurring, automatically renewing payment obligations (as further described in the “AUTO-RENEWALS AND RECURRING BILLING FOR  PLANS AND OTHER AUTO-SHIP
+    SERVICES” section below). Please see our Help / FAQ for a description of the current Paid Services, our shipping terms, and cancellation and refund policies. Please note that any payment terms
+    presented to you in the process of using or signing up for a Paid Service are deemed part of these Terms of Service.
+</p>
+<p>
+    You may place an order for Paid Services at any time (subject to any planned or unplanned downtime). You may check and correct any input errors in your order up until the point at which you submit
+    your order to us by clicking the “Submit Purchase” button on the checkout page. An order submitted by you constitutes a legally binding offer given by you to us to purchase the Paid Services
+    specified in that order, subject to these Terms of Service, at the price and on the terms stated when you sign up or place your order. All orders are subject to acceptance by us. Your order will
+    not be considered accepted until we have received payment of the purchase price of your order. We may send an acknowledgment of our receipt of your order to the email address you provide, after
+    your payment for the order has been processed, so that you may print the information for your records. Unless otherwise stated at the time you place your order, title and risk of loss pass to
+    you at the point you receive a shipping confirmation number to the email address you specified when you placed the order, provided full payment of all sums due in respect of the product(s),
+    including any delivery charges, has been received.
+</p>
+<p>
+    Delivery of orders is confirmed via shipping carrier and you are notified by email from Cirkul when delivery is confirmed. If you claim non-delivery you must contact Cirkul by email at
+    <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a> within 5 days from the delivery date as noted by the carrier. You are entitled to one reshipment of one order if you notify Cirkul
+    within the 5 day window. Any notification after 5 days will not be honored and neither a replacement nor a refund will be provided.
+</p>
+<p>
+    Our products and services, including, without limitation, our Paid Services, are for your personal, non-commercial use, and once delivered to you may not be resold, redistributed, exported or used
+    for any other commercial purpose. The rights you have under these Terms of Service are personal to you and are non-transferable.
+</p>
+<p>
+    Unfortunately, we don't accept returns of product or do exchanges of product. If your order was damaged in-transit, or if you've received the wrong Cirkul order, please reach out to our customer
+    service team immediately on our help page or by emailing <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a> - and we will do our best to make sure that your issue is
+    resolved. If you believe there is a quality issue with your order, please take note of the code and the "best by" date printed on the packaging of the Sip, so that we can trace the specific batch
+    of product you have received. These inquiries will be handled on a case by case basis.
+</p>
+<p>
+    Please note that we cannot offer refunds, exchanges or customer service for products that have been acquired from an unauthorized reseller, including, but not limited to, any seller on Amazon,
+    eBay or similar online marketplaces.
+</p>
+<p>
+    We hope you're satisfied with your purchase but due to the nature of our consumable products we are unable to accept returns or provide refunds. If your order arrived damaged you have 45 days from
+    the date the order processed to notify us via our help desk at <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>. Our Customer Experience Team will respond to your inquiry at
+    their earliest convenience. After examining the issue associated with your product, they may determine they are able to provide a replacement product. We reserve the right to offer only one
+    replacement per account customer. We do not provide replacements on damaged Cirkul products purchased from any unauthorized reseller, including but not limited to any seller on Amazon, eBay, or
+    any other reseller or group that trades or sells Cirkul products.
+</p>
+<h4>BILLING</h4>
+<p>
+    We use third-party payment processors, Shopify, Recharge and Braintree, (the “Payment Processors”) to bill you through a payment account linked to your Account on the Services (your “Billing
+    Account”) for the Paid Services. The processing of payments will be subject to the terms, conditions and privacy policies of the Payment Processors in addition to these Terms of Service. More
+    information is available in our Privacy Policy. We are not responsible for errors by the Payment Processors. By choosing to use Paid Services, you agree to pay us, through the Payment Processors,
+    all charges at the prices then in effect for any use of such Paid Services in accordance with the applicable payment terms and you authorize us, through the Payment Processors, to charge your
+    chosen payment provider (your “Payment Method”). You agree to make payments using that selected Payment Method. We reserve the right to correct any errors or mistakes that the Payment Processors
+    make even if they have already requested or received payment.
+</p>
+<h4>PAYMENT METHOD</h4>
+<p>
+    The terms of your payment will be based on your Payment Method and may be determined by agreements between you and the financial institution, credit card issuer or other provider of your chosen
+    Payment Method. If we, through the Payment Processors, do not receive payment from you, you agree to pay all amounts due on your Billing Account upon demand.
+</p>
+<h4>IMPORTANT NOTICE TO CONSUMERS:</h4>
+<h4>AUTO-RENEWALS AND RECURRING BILLING FOR PLANS AND OTHER AUTO-SHIP SERVICES</h4>
+<p>
+    Some of the Paid Services, such as the purchase of auto-replacing cartridges or other products in a plan, may consist of an initial period for which there is a one-time charge or a Trial Offer (as
+    defined below), followed by recurring periodic charges as agreed to by you when you sign up for such auto-replacing products (“Auto-Ship Services”). The Auto-Ship Services give you the
+    ability to specify the quantity you would like to order any auto-replacing products. Unless you opt out of a Auto-Ship Service, which can be done via the methods described below,
+    the Auto-Ship Services that you have signed up for will be automatically extended for successive renewal periods of the same duration as the auto-ship term you originally selected,
+    at the then-current non-promotional rate. More information on Auto-Ship Services can be found at our Help / FAQ page. By choosing a Auto-Ship Service, you acknowledge that
+    such Auto-Ship Service has an initial and recurring payment feature, and you accept responsibility for all recurring charges prior to the effective date of cancellation of such Auto-Ship
+    Service. All recurring payments relating to Auto-Ship Services are fully earned upon payment.
+</p>
+<p>
+    To cancel your Auto-Ship Services at any time, log in to your profile page and click "your details" and then select "cancel plan" in red. On the next page select the option that best applies
+    as to why you are cancelling. Read over the tip and then a cancel button will appear at the bottom of the page. Close the dialogue box and then the "Cancel Plan" button.
+</p>
+<p>WE MAY SUBMIT PERIODIC CHARGES (E.G., MONTHLY) WITHOUT FURTHER AUTHORIZATION FROM YOU, UNTIL YOU CANCEL YOUR AUTO-SHIP AGREEMENT BY ACCESSING YOUR ONLINE ACCOUNT AND SELECTING THAT OPTION.</p>
+<h4>CURRENT INFORMATION REQUIRED</h4>
+<p>
+    You must provide current, complete and accurate information for your Billing Account. You must promptly update all information to keep your Billing Account current, complete and accurate (such as
+    a change in billing address, credit card number or credit card expiration date), and you must promptly notify us or our Payment Processors if your Payment Method is canceled (e.g., for loss or
+    theft) or if you become aware of a potential breach of security, such as the unauthorized disclosure or use of your user name or password. Changes to such information can be made on your Account.
+    IF YOU FAIL TO PROVIDE ANY OF THE FOREGOING INFORMATION, YOU AGREE THAT WE MAY CONTINUE CHARGING YOU FOR ANY USE OF PAID SERVICES UNDER YOUR BILLING ACCOUNT UNLESS YOU HAVE TERMINATED YOUR PAID
+    SERVICES AS SET FORTH ABOVE.
+</p>
+<h4>CHANGE IN AMOUNT AUTHORIZED</h4>
+<p>
+    If the amount to be charged to your Billing Account varies from the amount you preauthorized (other than due to the imposition or change in the amount of state sales taxes), you have the right to
+    receive, and we shall provide, notice of the amount to be charged and the date of the charge before the scheduled date of the transaction. If, on receipt of such notice, you do not wish to
+    continue with the purchase, you may cancel at any time before the scheduled date of the transaction. Any agreement you have with your payment provider will govern your use of your Payment Method.
+    You agree that we may accumulate charges incurred and submit them as one or more aggregate charges during or at the end of each billing cycle.
+</p>
+<h4>REAFFIRMATION OF AUTHORIZATION</h4>
+<p>
+    Your non-termination or continued use of a Paid Service (including, without limitation, Auto-Ship Services) reaffirms that we are authorized to charge your Payment Method for that Paid
+    Service. We may submit those charges for payment and you will be responsible for such charges. This does not waive our right to seek payment directly from you. Your charges may be payable in
+    advance, in arrears, per usage or as otherwise described when you initially selected to use the Paid Service.
+</p>
+<h4>FREE TRIALS AND OTHER PROMOTIONS</h4>
+<p>
+    Any free trial or other promotion that provides access to a Paid Service (a “Trial Offer”) must be used within the specified time of the Trial Offer. You will be required to have a valid Payment
+    Method on file in order to initiate a Trial Offer. You must stop using a Paid Service before the end of the Trial Offer period in order to avoid being charged for that Paid Service. If you cancel
+    prior to the end of the Trial Offer period and are inadvertently charged for a Paid Service, please contact us at <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>. Trial Offers are
+    one-time only for new customers and are limited to one per household. Additional terms and limitations may apply and will be more fully explained at the time you sign up for the Trial Offer. Any
+    such additional terms and limitations are deemed part of these Terms of Service.
+</p>
+<h4>INNER CIRKUL REWARDS PROGRAM</h4>
+<p>
+    Inner Cirkul is a rewards program designed to reward Cirkul customers with reward points based on purchases of Cirkul products on the Cirkul Website or other participation, engagement and
+    milestones. For the terms and conditions applicable to the Inner Cirkul rewards program, please see our <a href="https://drinkcirkul.com/pages/inner-cirkul-terms">Inner Cirkul Terms and Conditions</a>. The Inner Cirkul Terms and Conditions are hereby incorporated by reference into these Terms of Service. Cirkul reserves the right to modify or terminate the Inner Cirkul Terms and Conditions at
+    any time at Cirkul’s discretion for any reason or for no reason whatsoever. If Cirkul determines that you are attempting to obtain unfair advantage or otherwise violate the Inner Cirkul Terms and
+    Conditions or spirit of the Inner Cirkul rewards program, Cirkul reserves the right to revoke any rewards or incentives issued.
+</p>
+<h4>TERMINATION</h4>
+<p>
+    We may terminate your access to all or any part of the Services at any time, with or without cause, with or without notice, effective immediately, which may result in the forfeiture and
+    destruction of all information associated with your Account. If you wish to terminate your Account, you may do so by following the instructions on the Site or through the Services. Any fees paid
+    hereunder are non-refundable. All provisions of these Terms of Service which by their nature should survive termination shall survive termination, including, without limitation, ownership
+    provisions, warranty disclaimers, indemnity provisions and limitations of liability.
+</p>
+<h3><strong>WARRANTY DISCLAIMER AND RELEASE</strong></h3>
+<p>
+    We have no special relationship with or fiduciary duty to you. You acknowledge that we have no duty to take any action regarding which users gain access to the Services, or how you may interpret
+    or use the Content. You release us and our officers, directors and employees from all liability arising out of or relating to your having acquired or not acquired Content through the Services. We
+    make no representations concerning any Content contained in or accessed through the Services, and we will not be responsible or liable for the accuracy, copyright compliance or legality of
+    material or Content contained in or accessed through the Services.
+</p>
+<p>
+    You shall and hereby do waive California Civil Code Section 1542 or any other similar law of any jurisdiction, which says in substance: "A general release does not extend to claims which the
+    creditor does not know or suspect to exist in his favor at the time of executing the release, which, if known by him must have materially affected his settlement with the debtor."
+</p>
+<p>
+    TO THE FULLEST EXTENT PERMITTED BY LAW, THE SERVICES AND CONTENT ARE PROVIDED “AS IS”, “AS AVAILABLE” AND WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND ANY WARRANTIES IMPLIED BY ANY COURSE OF PERFORMANCE OR USAGE OF TRADE, ALL OF WHICH ARE
+    EXPRESSLY DISCLAIMED. WITHOUT LIMITING THE FOREGOING, WE AND OUR OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, SUPPLIERS, PARTNERS AND CONTENT PROVIDERS DO NOT WARRANT THAT: (I) THE SERVICES WILL BE
+    SECURE OR AVAILABLE AT ANY PARTICULAR TIME OR LOCATION; (II) ANY DEFECTS OR ERRORS WILL BE CORRECTED; (III) ANY CONTENT OR SOFTWARE AVAILABLE AT OR THROUGH THE SERVICES IS FREE OF VIRUSES OR OTHER
+    HARMFUL COMPONENTS; OR (IV) THE RESULTS OF USING THE SERVICES WILL MEET YOUR REQUIREMENTS. YOUR USE OF THE SERVICES IS SOLELY AT YOUR OWN RISK. SOME JURISDICTIONS LIMIT OR DO NOT ALLOW THE
+    DISCLAIMER OF IMPLIED OR OTHER WARRANTIES, SO THE ABOVE DISCLAIMERS MAY NOT APPLY TO YOU.
+</p>
+<h4>INDEMNIFICATION</h4>
+<p>
+    You shall defend, indemnify and hold harmless us and our employees, contractors, directors, officers, suppliers and representatives from all liabilities, claims and expenses, including reasonable
+    attorneys’ fees, that arise from or relate to your use or misuse of, or access to, the Services or Content in violation of these Terms of Service, or infringement by you, or any third party using
+    your Account or identity in the Services, of any intellectual property or other right of any person or entity. We reserve the right to assume the exclusive defense and control of any matter
+    otherwise subject to indemnification by you, in which event you will assist and cooperate with us in asserting any available defenses.
+</p>
+<h4>LIMITATION OF LIABILITY</h4>
+<p>
+    Our liability to you is limited, as stated in our Terms and Conditions and other policies. Nothing in our policies limits liability for fraudulent misrepresentation or our liability to you in the
+    event of death or personal injury resulting from our negligence.
+</p>
+<p>
+    We are not liable or responsible in any way for any user-generated content. We provide strict guidelines on the use and reproduction of trademarks, logos and other user-generated content but we do
+    not control and are not responsible for what users submit on or through our websites. We also are not responsible for offensive, obscene, unlawful or objectionable user-generated content, or any
+    content that infringes on others' rights that may be found when using our websites.
+</p>
+<p>
+    Because some jurisdictions do not allow the exclusion of implied warranties or certain types of limitations or exclusions of liability, the limitations and exclusions set out in our policies or
+    Terms and Conditions may not apply to you.
+</p>
+<p>
+    TO THE GREATEST EXTENT PERMITTED BY LAW, IN NO EVENT SHALL WE OR OUR EXECUTIVES, DIRECTORS, EMPLOYEES, AGENTS, PARTNERS, SUPPLIERS OR CONTENT OR SERVICE PROVIDERS BE LIABLE UNDER CONTRACT, TORT,
+    STRICT LIABILITY, NEGLIGENCE OR ANY OTHER LEGAL OR EQUITABLE THEORY WITH RESPECT TO THE SERVICES (I) FOR ANY LOST PROFITS OR REVENUE, DATA LOSS, LOSS OF USE, BUSINESS INTERRUPTION, LOSS OF OR
+    DAMAGE TO PROPERTY, COST OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, OR SPECIAL, INDIRECT, INCIDENTAL, PUNITIVE, EXTRAORDINARY, EXEMPLARY, COMPENSATORY OR CONSEQUENTIAL DAMAGES OF ANY KIND
+    WHATSOEVER (HOWEVER ARISING AND WHETHER OR NOT WE ARE AWARE OF THE POSSIBILITY OF SUCH DAMAGES), (II) FOR ANY BUGS, VIRUSES, TROJAN HORSES OR THE LIKE (REGARDLESS OF THE SOURCE OF ORIGINATION) OR
+    (III) FOR ANY DIRECT DAMAGES IN EXCESS (IN THE AGGREGATE) OF THE GREATER OF (A) FEES PAID TO US FOR THE PARTICULAR SERVICES DURING THE IMMEDIATELY PREVIOUS THREE (3) MONTH PERIOD OR (B) $100.00.
+    THESE LIMITATIONS WILL ONLY APPLY TO THE EXTENT PERMITTED BY LAW AND DO NOT APPLY TO DEATH OR PERSONAL INJURY RESULTING FROM OUR ACTS OR OMISSIONS OR TO LIABILITY RESULTING FROM OUR GROSS
+    NEGLIGENCE OR WILLFUL MISCONDUCT. YOU ARE SOLELY RESPONSIBLE FOR ENSURING THAT YOU IMPLEMENT PROPER PROCEDURES FOR DATA BACKUP AND VIRUS CHECKING.
+</p>
+<h4>DISPUTES</h4>
+<h4>ARBITRATION CLAUSE AND CLASS ACTION WAIVER – IMPORTANT – PLEASE REVIEW AS THIS AFFECTS YOUR LEGAL RIGHTS</h4>
+<p>
+    ARBITRATION; WAIVER OF TRIAL BY JURY. YOU AGREE THAT ALL DISPUTES BETWEEN YOU AND US OR ANY OF OUR OFFICERS, DIRECTORS OR EMPLOYEES ACTING IN THEIR CAPACITY AS SUCH (WHETHER OR NOT SUCH DISPUTE
+    INVOLVES A THIRD PARTY) WITH REGARD TO YOUR RELATIONSHIP WITH US, INCLUDING, WITHOUT LIMITATION, DISPUTES RELATED TO THESE TERMS OF SERVICE, YOUR USE OF THE SERVICES AND/OR RIGHTS OF PRIVACY
+    AND/OR PUBLICITY, WILL BE RESOLVED BY BINDING, INDIVIDUAL ARBITRATION UNDER THE JAMS, INC. (“JAMS”) RULES FOR ARBITRATION OF CONSUMER-RELATED DISPUTES, AND YOU AND WE HEREBY EXPRESSLY WAIVE TRIAL
+    BY JURY; PROVIDED, HOWEVER, THAT WE OR YOU MAY SEEK INJUNCTIVE OR OTHER EQUITABLE RELIEF IN ANY STATE OR FEDERAL COURT HAVING JURISDICTION TO GRANT IT IN THE EVENT OF AN ACTUAL OR THREATENED
+    INFRINGEMENT OR MISAPPROPRIATION OF INTELLECTUAL PROPERTY RIGHTS. DISCOVERY AND RIGHTS TO APPEAL IN ARBITRATION ARE GENERALLY MORE LIMITED THAN IN A LAWSUIT, AND OTHER RIGHTS THAT YOU AND WE WOULD
+    HAVE IN COURT MAY NOT BE AVAILABLE IN ARBITRATION.
+</p>
+<p>
+    <u>Small Claims Court; Class Action Waiver.</u> As an alternative, you may bring your claim in your local “small claims” court, if permitted by that small claims court's rules and if such
+    claim is within such court’s jurisdiction, unless such action is transferred, removed or appealed to a different court. You may bring claims only on your own behalf. Neither you nor we will
+    participate in a class action or class-wide arbitration for any claims covered by this agreement. YOU ARE GIVING UP YOUR RIGHT TO PARTICIPATE AS A CLASS REPRESENTATIVE OR CLASS MEMBER ON ANY CLASS
+    CLAIM YOU MAY HAVE AGAINST US, INCLUDING, WITHOUT LIMITATION, ANY RIGHT TO CLASS ARBITRATION OR ANY CONSOLIDATION OF INDIVIDUAL ARBITRATIONS. You also agree not to participate in claims brought in
+    a private attorney general or representative capacity, or consolidated claims involving another person’s account, if we are a party to the proceeding.
+</p>
+<p>
+    <u>Procedures.</u> These dispute resolution provisions will be governed by the Federal Arbitration Act and not by any state law concerning arbitration. In the event that JAMS is unwilling or
+    unable to set a hearing date within one hundred and sixty (160) days of filing the case, then either we or you can elect to have the arbitration administered instead by the American Arbitration
+    Association. Judgment on the award rendered by the arbitrator may be entered in any court having competent jurisdiction. Any provision of applicable law notwithstanding, the arbitrator will not
+    have authority to award damages, remedies or awards that conflict with these Terms of Service. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising
+    out of, related to or connected with the use of the Services or these Terms of Service must be filed within one (1) year after such claim or cause of action arose or be forever banned.
+</p>
+<p>
+    <u>30-Day Opt-Out Period.</u> If you do not wish to be bound by the arbitration and class-action waiver provisions in this Disputes section, you must notify us in writing within thirty (30)
+    days of the date that you first accept these Terms of Service (unless a longer period is required by applicable law), and then you must litigate any disputes against us in accordance with the
+    “Governing Law and Jurisdiction” section below. Your written notification must be mailed to us at the address set out at the end of these Terms of Service. If you do not notify us in accordance
+    with this paragraph, you agree to be bound by the terms of this Disputes section, including, without limitation, the arbitration and class-action waiver provisions, and further including such
+    provisions in any revisions we make to these Terms of Service after the date of your first acceptance. Such notification must include: (i) your name; (ii) your email address and mailing address;
+    and (iii) a statement that you do not wish to resolve disputes with us through arbitration or waive your ability to participate in a class action. If we make any changes to this Disputes section
+    (other than a change to the address at which we will receive notices or rejections of future changes to this Disputes section), you may reject any such change by sending us written notice, within
+    thirty (30) days of the change, to the address set out at the end of these Terms of Service. It is not necessary to send us a rejection of a future change to this Disputes section if you had
+    properly opted out within the first thirty (30) days after you first accepted the provisions in this Disputes section. If you have not properly opted out, then by rejecting a future change, you
+    are agreeing that you will arbitrate any dispute between us in accordance with the language of this Disputes section, as modified by any changes you did not reject. A notification sent pursuant to
+    this paragraph solely affects these Terms of Service; if you previously entered into other arbitration or dispute resolution agreements with us or enter into other such agreements in the future,
+    your notification that you are opting out of the provisions in this Disputes section shall not affect the other arbitration agreements between you and us.
+</p>
+<p>
+    <u>Severability.</u> If any of the prohibitions against class actions and other claims brought on behalf of third parties contained above is found to be unenforceable, then all of the
+    preceding language in this Disputes section will be null and void. This Disputes section, including, without limitation, the arbitration agreement and class action waivers contained herein, will
+    survive the termination of your relationship with us.
+</p>
+<h4>GOVERNING LAW AND JURISDICTION</h4>
+<p>
+    Subject to the Disputes section above, these Terms of Service shall be governed by and construed in accordance with the laws of the State of Florida, including its conflicts of law rules, and the
+    laws of the United States of America. Subject to the Disputes section above, you agree that any dispute arising from or relating to the subject matter of these Terms of Service shall be governed
+    by the exclusive jurisdiction and venue of the state and federal courts of Middle District of Florida.
+</p>
+<h4>MODIFICATION</h4>
+<p>
+    We reserve the right, in our sole discretion, to modify or replace any of these Terms of Service, or change, suspend or discontinue the Services, in whole or in part, (including, without
+    limitation, the availability of any feature, database or content) at any time by posting a notice on the Site or by sending you notice through the Services, via e-mail or by another appropriate
+    means of electronic communication. We may also impose limits on certain features and services or restrict your access to parts or all of the Services without notice or liability. While we will use
+    commercially reasonable efforts to timely provide notice of modifications, it is also your responsibility to check these Terms of Service periodically for changes. Subject to the Disputes section,
+    your continued use of the Services following notification of any changes to these Terms of Service constitutes acceptance of those changes.
+</p>
+<h4>UNACCEPTABLE ARTWORK SUBMISSIONS</h4>
+<p>
+    Cirkul, Inc. has the sole discretion to reject any orders or submissions that contain text or design that could be considered libelous, profane, obscene or defamatory (as established by the
+    Federal Communications Commission), displays or portrays irresponsible use of alcohol and/or other substances, promotes persecution based on race, age, gender, disability or national origin, or
+    contains explicit sexual content or is in any way inappropriate for Totally Promotional's production.
+</p>
+<p>
+    You agree not to use Cirkul, Inc. or the services it provides to create any materials or products that are threatening, abusive, unlawful, tortuous, harassing, vulgar, defamatory, obscene,
+    libelous, hateful or racially, ethnically or otherwise objectionable. Cirkul, Inc. has the right to deny any submission for any reason including, but not limited to, the reasons discussed in the
+    Terms &amp; Conditions.
+</p>
+<h4>TRADEMARKS SUBMITTED TO US</h4>
+<p>
+    You, individually, or any company ordering custom, printed bottles from Cirkul, Inc., warrants and represents that you are the sole legal owner or licensee of all rights, including copyright, to
+    each trademark, logo, statement or any other intellectual property included in the design that you instruct us to imprint on the merchandise you order. You also warrant that the designs you
+    approve for reproduction are in accordance with the guidelines of the owner of the trademark or logo. You warrant and represent that no part of the design violates or infringes upon the rights of
+    any person or entity, and that there are no restrictions or rights of any kind or nature that would prevent Cirkul, Inc. from legally reproducing the images or text that you submit. You agree to
+    defend, at your sole expense, any claim, lawsuit or proceeding brought against Cirkul, Inc. for reproduction of the trademarks, logo or written information that you supply to us, which causes
+    wrongful use of any copyright, trademark or other right of any third party. Cirkul, Inc. shall not be held liable for the unauthorized, improper or illegal use of any logo or trademark that is
+    imprinted on promotional products purchased from us. Cirkul, Inc. will not accept liability for the actions of customers who have misrepresented their ownership of licenses or trademarks. You
+    agree to indemnify and hold Cirkul, Inc. harmless from any loss or damage associated with any such claim, lawsuit or proceeding.
+</p>
+<p>
+    We reserve the right to request written permission from the owner of all copyrighted or trademarked materials before reproducing them for your order. We also reserve the right to refuse your
+    order, at our sole discretion, if it appears the final product would violate applicable laws. Failure on our part to obtain legal permission to reproduce copyrighted or trademarked materials could
+    result in legal action by the owner of the copyrighted or trademarked materials.
+</p>
+<p>
+    We also reserve the right to refuse subject matter that is deemed by us to contain derogatory, inflammatory or objectionable remarks, symbols or images. Examples of these include derogatory,
+    inflammatory or objectionable content about an individual or a group's race, religion, physical attributes, national origin, sexual preference, or content that contains profanity or pornography.
+</p>
+<h4>COPYRIGHT VIOLATION NOTICE</h4>
+<p>
+    The Digital Millennium Copyright Act of 1998 (known as the DMCA) provides recourse for copyright owners who believe material on the Internet infringes their rights under U.S. copyright law. If you
+    believe your own work, or the work of a third party that you represent, is displayed on any of our websites or has been otherwise copied or made available on our websites in a manner that
+    constitutes copyright infringement, we request you send us a notice of the alleged infringement and include:
+</p>
+<ul>
+    <li>an electronic or physical signature of the copyright owner or person authorized to act on the owner's behalf for the copyright interest.</li>
+    <li>a description of the alleged copyrighted work.</li>
+    <li>a description of where the alleged copyrighted material is located on our websites. (Include the URL, title and/or item number if applicable, or other identifying means.)</li>
+    <li>your name, address, telephone number and email address. If you are not the owner of the copyright, provide the name of the owner.</li>
+    <li>a written statement by you stating that you believe the disputed use is not authorized by the copyright owner, its agent or the law.</li>
+    <li>
+        a statement by you, made under penalty of perjury, that the information you are providing is accurate and that you are the copyright owner or are authorized to act on the copyright owner's
+        behalf.
+    </li>
+</ul>
+<p>
+    Any notification to us by a copyright owner or a person acting on a copyright owner's behalf that fails to comply with DMCA requirements shall not be considered sufficient notice, and shall not be
+    deemed to confer upon us actual knowledge of facts or circumstances from which infringing material or acts are evident. Notice of claims for alleged copyright infringement should be sent to:
+    Cirkul, Inc. 4456 Eagle Falls PL Tampa, FL 33619
+</p>
+<h4>INTELLECTUAL PROPERTY RIGHTS OF CIRKUL, INC.</h4>
+<p>
+    Cirkul, Inc. is committed to the appropriate and legal use of the intellectual property of others, and we require our users to behave similarly. Unless otherwise noted, all materials, including
+    images, illustrations, designs, icons, photographs and written and other materials that appear on the DrinkCirkul.com Site (collectively the "Contents") are copyrights, trademarks, trade dress
+    and/or other intellectual properties owned, controlled or licensed by Cirkul, Inc.
+</p>
+<p>
+    Cirkul, Inc. is the owner of the CIRKUL trademark; other trademarks made available through this Site, including logos, slogans, color schemes and design trademarks, are licensed for use by Cirkul,
+    Inc from Institutions and other third parties (the "Licensed Marks"). By using the DrinkCirkul.com Site, you agree to limit your use of Licensed Marks to uses that are directly related to such
+    third parties and to comply with any restrictions or conditions imposed on the use and access of the Licensed Marks by the third parties. Cirkul,Inc will notify you of such terms if your usage is
+    in violation of such terms.
+</p>
+<p>
+    Generally, products created using images available on the site should not be resold commercially. In the event that you wish to resell such products, you agree to contact
+    <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a> and verify the legality of reselling such products prior to doing so. Designs created using the text tools and images available
+    through the site are in no way the exclusive property of the customers who assemble such designs. Cirkul, Inc. retains the right to display such designs or offer them (or variations of such
+    designs) to other customers.
+</p>
+<p>
+    Additionally, Cirkul, Inc. has the sole discretion to reject any order that it considers libelous, defamatory, obscene, profane (according to standards established by the FCC), portraying
+    irresponsible use of alcohol or other substances, advocating persecution based on gender, age, race, religion, disability or national origin, containing explicit sexual content or is otherwise
+    inappropriate for Cirkul, Inc. production.
+</p>
+<p>
+    You agree to not use Cirkul, Inc's Service to create any material that is unlawful, harmful, threatening, abusive, harassing, tortious, defamatory, vulgar, obscene, libelous, invasive of another's
+    privacy, hateful, or racially, ethnically or otherwise objectionable, or that infringes on any patent, trademark, trade secret, copyright or other proprietary rights of any third party.
+</p>
+<h4>INTELLECTUAL PROPERTY CLAIMS</h4>
+<p>
+    Cirkul, Inc. respects the intellectual property rights of others. We have a policy of removing user submissions that violate copyright, trademark, or other intellectual property laws, suspending
+    or blocking access to the design-saving or other features of our site to any user who uses our site in violation of any such law, and/or terminating in appropriate circumstances the account (if
+    any) of any user who uses our site in violation of any such law. Pursuant to Title 17 of the United States Code, Section 512, we have implemented procedures for receiving written notification of
+    claimed copyright infringement and for processing such claims in accordance with such law. If you believe your copyright, trademark, or other intellectual property right is being infringed by a
+    user of DrinkCirkul.com, please provide written notice to the following agent for notice of claims of infringement:
+</p>
+<p>Cirkul, Inc.</p>
+<p>3620 Queen Palm Dr.</p>
+<p>Tampa, FL 33619</p>
+<p>Email: ip-notices@drinkcirkul.com</p>
+<h4>UPLOADING ARTWORK</h4>
+<p>Our online order form allows you to upload your own logo/text. Please read the instructions located on the order form carefully to ensure a successful upload of your logo.</p>
+<p>
+    The design studio is helpful in providing you with a very general image of your custom bottle; however it is not accurate in logo placement, as each item has a 'specific' imprint area. Our artists
+    will therefore have to resize the entire imprint you submit in order to "fit" it into the actual imprint area.
+</p>
+<p>
+    Finally, unless you "save" your design on the design studio, the design will not be saved and we will not receive it. Therefore do ensure that you have carefully followed all the directions so
+    that we will receive your artwork/logo in its entirety.
+</p>
+<p>
+    Customers will assume complete responsibility to obtain permission for reproduction of logos, patents, trademarks and copyrights. By agreeing to print any submitted artwork, Cirkul will not be
+    held liable under any circumstances.
+</p>
+<h3><strong>MISCELLANEOUS</strong></h3>
+<h4>ENTIRE AGREEMENT AND SEVERABILITY</h4>
+<p>
+    These Terms of Service are the entire agreement between you and us with respect to the Services, including use of the Site and the Application, and supersede all prior or contemporaneous
+    communications and proposals (whether oral, written or electronic) between you and us with respect to the Services. If any provision of these Terms of Service is found to be unenforceable or
+    invalid, that provision will be limited or eliminated to the minimum extent necessary so that these Terms of Service will otherwise remain in full force and effect and enforceable. The failure of
+    either party to exercise in any respect any right provided for herein shall not be deemed a waiver of any further rights hereunder.
+</p>
+<h4>FORCE MAJEURE</h4>
+<p>
+    We shall not be liable for any failure to perform our obligations hereunder where such failure results from any cause beyond our reasonable control, including, without limitation, mechanical,
+    electronic or communications failure or degradation.
+</p>
+<h4>ASSIGNMENT</h4>
+<p>
+    These Terms of Service are personal to you, and are not assignable, transferable or sublicensable by you except with our prior written consent. We may assign, transfer or delegate any of our
+    rights and obligations hereunder without consent.
+</p>
+<h4>COUPON CODES</h4>
+<p>
+    Coupon codes have no cash value and cannot be redeemable for cash, and cannot be combined with any other offers. Limit one coupon code per order. Coupon codes generally expire and are no longer
+    valid for redemption 30 days after their date of generation, but certain coupon codes may have their own redemption period as specified in connection with the coupon code itself. The unauthorized
+    reproduction, resale, modification or trade of coupon codes is prohibited. Coupon codes are void where prohibited, taxed or restricted. Cirkul reserves the right to change or limit coupon codes in
+    its sole discretion.
+</p>
+<h4>AGENCY</h4>
+<p>
+    No agency, partnership, joint venture or employment relationship is created as a result of these Terms of Service and neither you nor Cirkul has any authority of any kind to bind the other in any
+    respect.
+</p>
+<h4>NOTICES</h4>
+<p>
+    Unless otherwise specified in these Terms of Service, all notices under these Terms of Service will be in writing and will be deemed to have been duly given: (i) when received, if personally
+    delivered or sent by certified or registered mail, return receipt requested; (ii) when receipt is electronically confirmed, if transmitted by facsimile or e-mail; or (iii) the day after it is
+    sent, if sent for next day delivery by recognized overnight delivery service. Electronic notices should be sent to <a href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>.
+</p>
+<h4>NO WAIVER</h4>
+<p>
+    Our failure to enforce any part of these Terms of Service shall not constitute a waiver of our right to later enforce that or any other part of these Terms of Service. Waiver of compliance in any
+    particular instance does not mean that we will waive compliance in the future. In order for any waiver of compliance with these Terms of Service to be binding, we must provide you with written
+    notice of such waiver through one of our authorized representatives.
+</p>
+<h4>HEADINGS; INTERPRETATION</h4>
+<p>
+    The section and paragraph headings in these Terms of Service are for convenience only and shall not affect their interpretation. Any use of the words “including”, “for example” or “such as” in
+    these Terms of Service shall be read as being followed by “without limitation” where appropriate.
+</p>
+<h4>CONTACT</h4>
+<p>You may contact us at the following address: Cirkul, Inc., 3620 Queen Palm Dr. Tampa, FL 33619.</p>
+<h4>EFFECTIVE DATE OF TERMS OF SERVICE:</h4>
+<p>March 19, 2024</p>
+
+    </div>
+</section>
+
+                        
+                    </div>
+
+                    <div class="new-page-footer">
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-footer-facebook-community">
+    
+        
+
+
+<div class="background-transition-container">
+    
+        <svg
+            class="background-transition background-transition-desktop"
+            style="transform: scale(-1,-1) translateY(-1px);"
+            width="1920"
+            height="47"
+            viewBox="0 0 1920 47"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M900.717 23.4431C1266.17 47.1627 1354.56 48.9848 1499.99 43.1931C1679.9 36.0024 1825.42 15.8456 1920 0H0V47C71.6381 33.6597 158.455 20.6774 257.653 12.3316C376.338 2.35895 471.465 -4.40879 900.717 23.4431Z" fill="#005fae"/>
+        </svg>
+        <svg
+            class="background-transition background-transition-mobile"
+            style="transform: scale(-1,-1) translateY(-1px);"
+            width="414"
+            height="16"
+            viewBox="0 0 414 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M194.217 7.98062C273.017 16.0554 292.077 16.6757 323.436 14.704C362.229 12.2561 393.605 5.39425 414 0H0V16C15.447 11.4586 34.1669 7.03911 55.5564 4.19799C81.1478 0.803046 101.66 -1.50087 194.217 7.98062Z" fill="#005fae"/>
+        </svg>
+    
+</div>
+
+    
+
+    <div class="section-inner">
+        <div class="grid-container">
+            <div class="row collapse">
+                <div class="columns small-12 medium-6-custom text-column">
+                    <h2>Join our Facebook Community</h2>
+                    <p>Connect with thousands of Sipsters on their healthy hydration journey.</p>
+                    <a href="https://facebook.com/DrinkCirkul" target="_blank" class="button" data-social-track-link>Join Us</a>
+                </div>
+
+                <div class="columns small-12 medium-6-custom images-column">
+                    <img
+                        class="community-image-1"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-1.jpg?v=8502631590133481459, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-1.jpg?v=8502631590133481459"
+                        alt=""
+                        width="517"
+                        height="517"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-2"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-2.png?v=736511717068765619, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-2.png?v=736511717068765619"
+                        alt=""
+                        width="133"
+                        height="133"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-3"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-3.jpg?v=14818127148548916438, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-3.jpg?v=14818127148548916438"
+                        alt=""
+                        width="122"
+                        height="122"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-4"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-4.jpg?v=16868228057167676521, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-4.jpg?v=16868228057167676521"
+                        alt=""
+                        width="152"
+                        height="152"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-5"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-5.jpg?v=10239697554410755523, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-5.jpg?v=10239697554410755523"
+                        alt=""
+                        width="236"
+                        height="236"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-6"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-6.jpg?v=6354468595782607384, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-6.jpg?v=6354468595782607384"
+                        alt=""
+                        width="228"
+                        height="228"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-footer-main">
+    
+
+
+<div class="background-transition-container">
+    
+        <svg class="background-transition background-transition-desktop" width="1920" height="47" viewBox="0 0 1920 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M900.717 23.4431C1266.17 47.1627 1354.56 48.9848 1499.99 43.1931C1679.9 36.0024 1825.42 15.8456 1920 0H0V47C71.6381 33.6597 158.455 20.6774 257.653 12.3316C376.338 2.35895 471.465 -4.40879 900.717 23.4431Z" fill="#00aaf5"/>
+        </svg>
+        <svg class="background-transition background-transition-mobile" width="414" height="16" viewBox="0 0 414 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M194.217 7.98062C273.017 16.0554 292.077 16.6757 323.436 14.704C362.229 12.2561 393.605 5.39425 414 0H0V16C15.447 11.4586 34.1669 7.03911 55.5564 4.19799C81.1478 0.803046 101.66 -1.50087 194.217 7.98062Z" fill="#00aaf5"/>
+        </svg>
+    
+</div>
+
+
+    <div class="section-inner">
+        <div class="grid-container">
+            <div class="row collapse footer-main-grid">
+                <div
+                    class="columns small-12 small-order-1-custom large-auto-custom large-order-3-custom footer-main-newsletter"
+                >
+                    <h4>Want to know the latest from Cirkul?</h4>
+
+                    <p>Sign up to be first to receive the latest Cirkul news!</p>
+
+                    <form novalidate data-abide data-newsletter-signup-form>
+                        <label for="email" class="hide">Email Address</label>
+                        <div class="input-group">
+                            <input
+                                class="input-group-field"
+                                name="emailAddress"
+                                type="email"
+                                id="email"
+                                placeholder="Your Email"
+                                required
+                            >
+                            <div class="input-group-button">
+                                <button type="submit" class="button">
+                                    <img
+                                        src="//drinkcirkul.com/cdn/shop/files/2021-submit-arrow.svg?v=99064018637792798"
+                                        alt="Submit"
+                                    >
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div
+                    class="columns small-12 small-order-2-custom medium-shrink-custom medium-order-3-custom large-order-2-custom footer-main-navigation"
+                >
+                    <ul class="menu vertical nav-menu">
+                        <li><a href="/pages/bundle-builder" data-trial-link>Try Cirkul</a></li>
+                        <li><a href="/pages/plans">Plans</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/pages/why-cirkul">How it Works</a></li>
+                        <li><a href="/pages/faq">Help</a></li>
+                        <li><a href="/pages/store-locator">Store Locator</a></li>
+                        <li><a href="/pages/about">About</a></li>
+                        <li class="custom-mobile-only"><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open'); return false;">Cookie Preferences</a></li>
+                        <li class="custom-mobile-only"><a href="/pages/careers">Careers</a></li>
+                        <li><a href="/pages/why-cirkul">Why Cirkul</a></li>
+                        <li><a href="/pages/faq">FAQ</a></li>
+                        <li><a href="/blogs/cirkular">Cirkular</a></li>
+                        
+                        <li class="custom-desktop-only"><a href="/pages/careers">Careers</a></li>
+                        <li class="custom-desktop-only"><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open'); return false;">Cookie Preferences</a></li>
+                    </ul>
+                </div>
+
+                <div
+                    class="columns small-12 small-order-3-custom medium-shrink-custom medium-order-2-custom large-order-1-custom footer-main-core"
+                >
+                    <a class="footer-logo-link" href="/"
+                        ><img
+                            class="footer-logo"
+                            src="//drinkcirkul.com/cdn/shop/files/2021-footer-logo.svg?v=2599490955650269684"
+                            alt="Cirkul"
+                            width="119"
+                            height="35"
+                            loading="lazy"
+                    ></a>
+
+                    <a class="help-link" href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>
+                    <a class="help-link" style="margin-top: -14px;" href="tel:18444247585">1-844-4-CIRKUL</a>
+
+                    <ul class="menu social-menu">
+                        <li>
+                            <a href="https://facebook.com/DrinkCirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-facebook-f" role="img" aria-label="Facebook"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/DrinkCirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-twitter" role="img" aria-label="Twitter"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/drinkcirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-instagram" role="img" aria-label="Instagram"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.tiktok.com/@drinkcirkul?lang=en"
+                                target="_blank"
+                                data-social-track-link
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 2859 3333"
+                                    shape-rendering="geometricPrecision"
+                                    text-rendering="geometricPrecision"
+                                    image-rendering="optimizeQuality"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    role="img"
+                                    aria-label="TikTok"
+                                >
+                                    <path d="M2081 0c55 473 319 755 778 785v532c-266 26-499-61-770-225v995c0 1264-1378 1659-1932 753-356-583-138-1606 1004-1647v561c-87 14-180 36-265 65-254 86-398 247-358 531 77 544 1075 705 992-358V1h551z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="menu legal-menu">
+                        <li>
+                            <a href="/pages/privacy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="/pages/terms">Terms of Use</a>
+                        </li>
+                    </ul>
+
+                    <div class="footer-copyright">© 2021 Cirkul, Inc.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+                    </div>
+                </div>
+
+                <div data-cart-lock-check=""></div>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.25/moment-timezone-with-data-10-year-range.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+            <script src="//cdn.jsdelivr.net/npm/bluebird@3.5.3/js/browser/bluebird.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.24.0/dist/tagify.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.24.0/dist/tagify.polyfills.min.js"></script>
+            <script defer src="//drinkcirkul.com/cdn/shop/t/4/assets/app.min.js?v=1923822146747328961718669339"></script>
+
+            <!-- Gorgias Chat Widget -->
+
+
+
+
+
+
+
+
+
+<div id="gorgias-chat" data-gorgias-chat="continue" data-gorgias-customer-email="" data-gorgias-customer-id="">
+    <style>
+        #gorgias-chat-container,
+        #gorgias-chat-container #chat-button {
+            z-index: 1000 !important; // Should be above modals, which are 999
+        }
+    </style>
+    
+
+    <!-- Gorgias Chat Widget Start -->
+    <script id="gorgias-chat-widget-install">
+        !(function (_) {
+            (_.GORGIAS_CHAT_APP_ID = '281'), (_.GORGIAS_CHAT_BASE_URL = 'us-east1-898b.production.gorgias.chat'), (_.GORGIAS_API_BASE_URL = 'config.gorgias.chat');
+            var e = new XMLHttpRequest();
+            e.open('GET', 'https://config.gorgias.chat/applications/281', !0),
+                (e.onload = function (t) {
+                    if (4 === e.readyState)
+                        if (200 === e.status) {
+                            var n = JSON.parse(e.responseText);
+                            if (!n.application || !n.bundleVersion) throw new Error('Missing fields in the response body - https://config.gorgias.chat/applications/281');
+                            if (
+                                ((_.GORGIAS_CHAT_APP = n.application),
+                                (_.GORGIAS_CHAT_BUNDLE_VERSION = n.bundleVersion),
+                                n && n.texts && (_.GORGIAS_CHAT_TEXTS = n.texts),
+                                n && n.sspTexts && (_.GORGIAS_CHAT_SELF_SERVICE_PORTAL_TEXTS = n.sspTexts),
+                                !document.getElementById('gorgias-chat-container'))
+                            ) {
+                                var o = document.createElement('div');
+                                (o.id = 'gorgias-chat-container'), document.body.appendChild(o);
+                                var r = document.createElement('script');
+                                r.setAttribute('defer', !0),
+                                    (r.src = 'https://client-builds.production.gorgias.chat/{bundleVersion}/static/js/main.js'.replace('{bundleVersion}', n.bundleVersion)),
+                                    document.body.appendChild(r);
+                            }
+                        } else console.error('Failed request GET - https://config.gorgias.chat/applications/281');
+                }),
+                (e.onerror = function (_) {
+                    console.error(_);
+                }),
+                e.send();
+        })(window || {});
+    </script>
+    <!-- Gorgias Chat Widget End -->
+</div>
+
+            <div data-trial-subscription-ab-test="8CART-A"></div>
+
+            
+
+            <script>
+    window.Shopify.loadFeatures(
+        [
+            {
+                name: 'consent-tracking-api',
+                version: '0.1',
+            },
+        ],
+        function (error) {
+            if (!error) {
+                try {
+                    window.Osano.cm.ready('shopify');
+                } catch (error) {
+                    console.error('Osano must be loaded before initializing th Shopify API.');
+                }
+            }
+        }
+    );
+</script>
+
+
+            <script>
+                window.cirkulServices.experimentation.manuallyTriggerPage('24708110218_url_targeting_for_redirect_product_clicks_to_bb');
+
+                window.cirkulServices.experimentation.loadOptimizelyUnauthedExperiment({
+                    experimentId: 28012660245,
+                    variationImplementers: {
+                        28049760255: function () {
+                            // Do nothing (control)
+                        },
+                        28079750013: function () {
+                            var links = document.querySelectorAll('a[href="/products"]');
+                            for (var i = 0; i < links.length; i++) {
+                                links[i].setAttribute('href', '/pages/bundle-builder');
+                            }
+                        },
+                    },
+                    //devVariationId: 28079750013,
+                });
+            </script>
+        </body>
+    
+</html>
