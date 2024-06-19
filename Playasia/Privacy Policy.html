@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="//s.pacn.ws/main.min.css?v=PX-364" onload="main_css_load=true">
+<script>
+let cdn_host = '//s.pacn.ws/';
+let $ph = {
+see_all: 'See all',
+buy_btn: 'Buy',
+login_to_use: 'In order to use this function, you need to log in first!',
+add_favorites: 'Click to Add this Item to your Favorites!',
+rem_favorites: 'Click to remove your favorites!',
+buy_now: 'Buy Now!'
+}
+</script>
+<script type="text/javascript" src="//s.pacn.ws/jquery.min.js?v=PX-364"></script>
+<script type="text/javascript" src="//s.pacn.ws/jsbase.min.js?v=PX-364"></script>
+<script id="init_js">
+$(document).ready(function () {
+initialize();
+})
+if (typeof initialize === 'undefined') {
+console.log("Deactivate CDN from JS");
+document.write('<script src="/s/jsbase.min.js?v=PX-364"></' + 'script>');
+loadExtCss('/s/main.min.css?v=PX-364');
+killcdn = true;
+}
+</script>
+<script>
+if (typeof mobile === "undefined")
+mobile = window.innerWidth <= 640;
+if (typeof killcdn === "undefined")
+killcdn = false;
+if (typeof g_ime_r === "undefined")
+g_ime_r = [];
+if (typeof nsfwpc === "undefined")
+nsfwpc = '//s.pacn.ws/gallery/170/GA.06661.0001.jpg?1610439952&v=PX-364-nsfw-&crop=0,0&width=150';
+var g_curr_id = 30, over18 = 0, g_nick = '',
+spco = 1, g_cid = false, last_session_time = new Date().getTime(),
+p_query = '', p_view = '',
+p_search_cat = 0,
+p_advanced_search = '%22%22',
+p_hide_digital = 0, g_cat = 1, loc = 1, bHLr = js_loaded = false,
+lang_id = 1, script = 41,
+cdn_alt_host = '/s/', cacheKey = 'PX-364',
+theme_beta = '1',
+dialog_width = mobile ? window.innerWidth : 1000;
+g_cur_r = [{"c":"1","v":1,"N":"USD","n":"US$","d":"2"},{"c":"2","v":0.122436,"N":"HKD","n":"HK$&nbsp;","d":"0"},{"c":"27","v":1.032215,"N":"EUR","n":"&#8364;","d":2},{"c":"30","v":1.226571,"N":"GBP","n":"&pound;","d":"2"},{"c":"47","v":0.635479,"N":"AUD","n":"A$&nbsp;","d":"2"},{"c":"48","v":1.086536,"N":"CHF","n":"SFr&nbsp;","d":"2"},{"c":"49","v":0.590141,"N":"NZD","n":"NZ$","d":"2"},{"c":"50","v":0.697391,"N":"CAD","n":"C$&nbsp;","d":"2"},{"c":"51","v":0.029591,"N":"TWD","n":"NT$","d":0},{"c":"52","v":0.203411,"N":"MYR","n":"RM&nbsp;","d":"0"},{"c":"53","v":0.706298,"N":"SGD","n":"S$&nbsp;","d":2},{"c":"54","v":0.177243,"N":"BRL","n":"R$&nbsp;","d":"0"},{"c":"56","v":0.000697,"N":"KRW","n":"&#8361;","d":0},{"c":"57","v":5.8e-5,"N":"IDR","n":"Rp&nbsp;","d":0},{"c":"58","v":0.026094,"N":"THB","n":"&#3647;","d":0},{"c":"59","v":0.016361,"N":"PHP","n":"&#8369;","d":"0"},{"c":"60","v":0.052091,"N":"MXN","n":"MXN&nbsp;","d":"0"},{"c":"61","v":0.261366,"N":"AED","n":"Dhs&nbsp;","d":"0"},{"c":"62","v":0.006123,"N":"JPY","n":"&yen;","d":0},{"c":"63","v":0.011557,"N":"INR","n":"&#8377;&nbsp;","d":0},{"c":"64","v":0.132304,"N":"CNY","n":"&#165;","d":"0"},{"c":"65","v":0.053204,"N":"ZAR","n":"Rs&nbsp;","d":0},{"c":"67","v":0.090304,"N":"NOK","n":"kr&nbsp;","d":"0"},{"c":"69","v":0.091745,"N":"SEK","n":"kr&nbsp;","d":"0"},{"c":"71","v":0.137422,"N":"DKK","n":"kr.&nbsp;","d":"0"},{"c":"73","v":0.041508,"N":"CZK","n":"K\u010d","d":0},{"c":"75","v":0.238475,"N":"PLN","n":"z\u0142","d":2},{"c":"77","v":0.00261,"N":"HUF","n":"Ft","d":0},{"c":"79","v":0.258155,"N":"ILS","n":"\u20aa","d":"0"},{"c":"81","v":0.011244,"N":"RUB","n":"\u20bd","d":0},{"c":"83","v":0.001057,"N":"ARS","n":"AR$","d":0},{"c":"85","v":0.001027,"N":"CLP","n":"CLP$","d":0},{"c":"87","v":0.000234,"N":"COP","n":"COL$","d":0},{"c":"89","v":0.253404,"N":"PEN","n":"S\/","d":2},{"c":"91","v":0.13903,"N":"BOB","n":"Bs","d":"0"},{"c":"93","v":0.01,"N":"COIN","n":"Coin&nbsp;","d":"0"},{"c":"95","v":2.547081,"N":"BHD","n":".\u062f.\u0628","d":"2"},{"c":"97","v":0.000232,"N":"KHR","n":"\u179a\u17c0\u179b","d":0},{"c":"99","v":3.121494,"N":"KWD","n":"\u062f\u064a\u0646\u0627\u0631 \u0643\u0648\u064a\u062a\u064a","d":"2"},{"c":"101","v":0.255911,"N":"SAR","n":"\u0631\u064a\u0627\u0644 \u0633\u0639\u0648\u062f\u064a","d":"2"},{"c":"105","v":0.263468,"N":"QAR","n":"\u0631.\u0642","d":"2"},{"c":"107","v":0.029238,"N":"TRY","n":"\u20ba","d":0},{"c":"109","v":0.024433,"N":"UYU","n":"$U","d":0},{"c":"111","v":0.001831,"N":"CRC","n":"\u20a1","d":0},{"c":"113","v":3.8e-5,"N":"VND","n":"\u20ab","d":0},{"c":"115","v":0.000674,"N":"SATS","n":"sats","d":"0"}];
+cart = {"cart":[],"0":[]};
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="alternate" type="application/rss+xml" title="Playasia.com General News Feed" href="https://www.play-asia.com/36/771.rss"/>
+<link rel="alternate" type="application/rss+xml" title="Playasia.com News in " href="https://www.play-asia.com/36/711-771.rss"/>
+<meta property="og:type" content="article" /><meta property="og:url" content="https://www.play-asia.com/info/privacy" /><meta property="og:title" content="Playasia.com Privacy Policy" /><meta property="twitter:title" content="Playasia.com Privacy Policy" /><meta property="og:image" content="https://www.play-asia.com/play-asia_logo.jpg?a10" /><meta property="twitter:image" content="https://www.play-asia.com/play-asia_logo.jpg?a10" /><meta property="twitter:card" content="summary_large_image" /><meta property="og:site_name" content="Playasia" /><meta property="og:description" content="Online shopping for Import Video Games, Digital Codes, iTunes Cards, Mobage &amp; PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care,  Toys &amp; more." /><meta property="fb:app_id" content="193378651805" /><meta name="robots" content="noindex,nofollow" /><meta name="description" content="Online shopping for Import Video Games, Digital Codes, iTunes Cards, Mobage &amp; PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care,  Toys &amp; more." /><meta name="keywords" content="Online shopping, Japanese games, Hong Kong games, Asian Video Games, Digital Codes, iTunes Cards, Gift Cards, Mobage, PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care, Toys & more" />                    <link rel="canonical" href="https://www.play-asia.com/info/privacy"/>
+<title>Playasia.com Privacy Policy</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=PX-364">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=PX-364">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=PX-364">
+<link rel="manifest" href="/site.webmanifest?v=PX-364">
+<link rel="mask-icon" href="/safari-pinned-tab.svg?v=PX-364" color="#002d72">
+<meta name="apple-mobile-web-app-title" content="Playasia">
+<meta name="application-name" content="Playasia">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+</head><body id="main_parent"><div id="bgtest"></div>
+<div class="hamburger"><span></span></div>
+<!-- <div id="body_ad"></div>-->
+<div id="website"><div id="top-bar">
+<div class="logo" onclick="window.location = '/'; return false;" title="Playasia Logo">
+<a href="/"><img src="//s.pacn.ws/gallery/large/GA.07993.0001.svg?1713501412&v=PX-364" alt="Playsia Logo"></a>
+</div>
+<div id="search">
+<form method="get" action="/gosearch/" name="sbs">
+<div id="search-wrap">
+<div class="search_overlay"></div>
+<button tabindex=3 aria-label="Search" class="icon search_button somemagn"></button>
+<div id="view-all" onclick="$( 'form[name=&quot;sbs&quot;]').submit();">View All</div>
+<input tabindex=1 placeholder="search codes, games, toys, music, ..." type="search" id="search_input" class="__autocomplete stype"
+name="p_query" value=""/>
+</div>
+<div id="topsearch">
+<div style="padding: 5px">
+<div class="table_like fullwidth">
+<div class="input-like-size">Search&nbsp;</div>
+<div class="aleft">
+<select  tabindex=2 name="search_cat" id="sc">
+<option value="0" style="color: var(--pa-blue )">everything</option>
+<option value="3171" selected>PLAY Exclusives</option>
+<option value="333" selected>Games</option>
+<option value="2555" selected>Digital</option>
+<option value="13" selected>Toys</option>
+<option value="1747" selected>Lifestyle</option>
+<option value="9" selected>Movies</option>
+<option value="355" selected>Music</option>
+<option value="286" selected>Books</option>
+<option value="1601" selected>Electronics</option>
+</select>
+</div>
+<div  tabindex=4 class="aright dialog-close clsbut invert" style="right: 0" id="close-top-search"></div>
+</div>
+<div id="sug-blur"></div>
+<div id="sugexpand"></div>
+</div>
+</div>
+</form>
+<div class="veil"></div>
+</div>    <div id="header-extra">
+<a target="_blank" href="https://www.play-asia.com/blog/2022/06/01/freeshippingplayasia/">
+<img alt="Free Delivery on select items!" class="smallicon" src="//s.pacn.ws/gallery/large/GA.06771.0233.svg?1606996510&v=PX-364">
+FREE WORLDWIDE DELIVERY when spending over <span>&pound;</span><span >97.83</span> on select items!                    </a>
+</div>    <div class="show_logged_in hidall">
+<a href="/account/">
+<span class="smallicon tion007"></span>
+<div class="login_name"></div>
+</a>
+</div>
+<div class="hide_logged_in ">
+<a href="/login/">
+<div class="smallicon tion007"></div>
+<div>Sign In</div>
+</a>
+</div>
+<div class="showmob" id="share" style="display:none;">
+<span class="smallicon shareit"></span>
+</div>
+<div id="cart-holder">
+<a href="/cart/"><span class="erce035 extra-cart smallicon cart_none" ></span><span
+class="erce036 extra-cart smallicon cart_have" style="display: none"></span>
+<div class="hidmob">Cart</div>
+</a>
+</div>
+<div class="hidmob">
+<a href="/help/">
+<span class="smallicon p2ort017"></span>
+<div>Help</div>
+</a>
+</div>
+<div class="hidmob">
+<div>
+<a onclick="openDialog( 'langcurr_box', {width: mobile? $( '#website' ).width() : 400} ); loadDialog( 'langcurr_box' ); return false;" href="#">
+<span class="smallicon" style="height:26px;filter: none!important;">
+<img style="width: 23px; height: unset;"
+src="//s.pacn.ws/gallery/large/GA.07871.0271.svg?1715421745&v=PX-364">
+</span>
+<br/>
+EN | GBP                    </a>
+</div>
+</div>            </div>
+<div id="hamburger-menu" class="showmob">
+</div>
+<div id="hamburger-veil"></div>
+<script>
+loadBurger = function () {
+$.get('/5a/?module=hamburger&render_menu=1', function (a, b) {
+$('#hamburger-menu').html(a).stdHTMLUpdates();
+theme.toggleTheme();
+})
+}
+</script>                <div class="top_bar_wrap ">
+</div>
+<div id="sales_area">                <div id="dynamic_content"></div>
+<div class="theme">
+<div class="layout">
+<div class="layout-content">
+<span class="layout-close" style="background: rgb(0, 45, 114);">✖</span>
+<label class="layout-text" style="color: rgb(0, 0, 0);">theme</label>
+<div class="layout-slider" style="background: rgb(0, 45, 114);">
+<span class="moon">
+<svg class="fullwidth" style="height: 100%;" fill="none" stroke="#eef" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+</svg>
+</span>
+<span class="sun">
+<svg class="fullwidth" style="height: 100%;" fill="none" stroke="#eef" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
+</svg>
+</span>
+<span class="circle" style="left: 0.25rem; background: rgb(238, 238, 255);">
+</span>
+</div>
+</div>
+</div>
+<div class="toggle">
+<label class="toggle-label">
+theme beta
+</label>
+</div>
+</div>
+<script>
+let theme =
+{
+mode: 1, /* 1=light;0=dark; */
+button: false,
+request: null,
+toggleMode: async () =>
+{
+theme.mode = theme.mode == 1 ? 0 : 1;
+await theme.localMode( theme.mode );
+theme.toggleTheme();
+},
+/**
+--pa-high: #eef;
+--pa-mid: #B5B8D3;
+--pa-blue: #002d72;
+*/
+toggleTheme: () =>
+{
+const mobileTheme = () => {
+let content = document.getElementById('theme-beta-mode');
+if (!content)
+return false;
+return {
+body: content.querySelector('.slider'),
+light: content.querySelector('.light'),
+dark: content.querySelector('.dark'),
+square: content.querySelector('.square')
+};
+};
+if ( theme.mode == 1 )
+{
+$(document.body).removeClass('dark');
+$(document.body)[0].style.setProperty("--pa-blue", "#002d72");
+$(document.body)[0].style.setProperty("--pa-high", "#B5B8D3");
+theme.toggle.style.background = "#002d72";
+theme.toggleText.style.color = "rgb(238, 238, 255)";
+if ( theme.mobile.matches )
+{
+let mobileElement = mobileTheme();
+if ( mobileElement ) {
+mobileElement.square.style.left = "30px";
+mobileElement.square.style.background = "#002d72";
+}
+}
+else
+{
+theme.circle.style.left = ".250rem";
+theme.layoutText.style.color = "#000";
+theme.toggle.style.background = "#002d72";
+theme.switchOpt.style.background = "#002d72";
+theme.layoutClose.style.background = "#002d72";
+theme.toggleText.style.color = theme.styles.getPropertyValue('--pa-high');
+theme.circle.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.moon.querySelector('svg').setAttribute('stroke', theme.styles.getPropertyValue('--pa-high'));
+theme.sun.querySelector('svg').setAttribute('stroke', theme.styles.getPropertyValue('--pa-high'));
+}
+}
+else
+{
+$(document.body).addClass('dark');
+$(document.body)[0].style.setProperty("--pa-blue", "#2f2f2f");
+$(document.body)[0].style.setProperty("--pa-high", "#d2d2d2");
+theme.toggle.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.toggleText.style.color = "#000";
+if ( theme.mobile.matches )
+{
+let mobileElement = mobileTheme();
+if ( mobileElement ) {
+mobileElement.square.style.left = "4px";
+mobileElement.square.style.background = "#000";
+}
+}
+else
+{
+theme.circle.style.left = "3rem";
+theme.toggleText.style.color = "#000";
+theme.circle.style.background = "#373838";
+theme.layoutClose.style.background = "#993232";
+theme.layoutText.style.color = theme.styles.getPropertyValue('--pa-high');
+theme.switchOpt.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.moon.querySelector('svg').setAttribute('stroke', "#000");
+theme.sun.querySelector('svg').setAttribute('stroke', "#000");
+}
+}
+},
+localMode: async ( mode = false ) =>
+{
+if ( theme.request !== null ) {
+theme.request.abort();
+theme.request = null;
+}
+theme.request = $.get('/5a/?module=theme_beta', { theme_mode: Number( mode ) }, (res) => theme.mode = JSON.parse(res));
+await theme.request;
+theme.request = null;
+},
+Listener: () =>
+{
+if ( theme.button ) {
+theme.layoutClose.addEventListener('click', () => {
+theme.layout.style.right = "-130px";
+theme.toggle.style.width = "28px";
+});
+theme.toggle.addEventListener('click', () => {
+theme.layout.style.right = "30px";
+theme.toggle.style.width = "0";
+});
+} else {
+theme.parent.addEventListener('mouseover', () => {
+theme.parent.style.width = "130px";
+theme.layout.style.right = "30px";
+theme.toggle.style.width = "0";
+});
+theme.parent.addEventListener('mouseout', () => {
+theme.parent.style.width = "28px";
+theme.layout.style.right = "-130px";
+theme.toggle.style.width = "28px";
+});
+}
+theme.switchOpt.addEventListener('click', () => theme.toggleMode());
+},
+Skeleton: () =>
+{
+if ( !theme.button )
+theme.layoutClose.style.display = "none";
+theme.toggleText.innerHTML = "theme beta";
+theme.layoutText.innerText = "theme";
+theme.layoutClose.innerHTML = "&#10006;";
+theme.moon.innerHTML = `<svg class="fullwidth" style="height: 100%;" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+</svg>`;
+theme.sun.innerHTML = `<svg class="fullwidth" style="height: 100%;" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
+</svg>`;
+theme.toggleTheme();
+},
+Init: async () =>
+{
+theme.mode = theme_beta;
+theme.parent = document.querySelector('div.theme');
+theme.toggle = theme.parent.querySelector('.toggle');
+theme.layout = theme.parent.querySelector('.layout');
+theme.layoutContent = theme.parent.querySelector('div.layout-content');
+theme.layoutClose = theme.parent.querySelector('span.layout-close');
+theme.toggleText = theme.parent.querySelector('label.toggle-label');
+theme.layoutText = theme.parent.querySelector('label.layout-text');
+theme.switchOpt = theme.parent.querySelector('div.layout-slider');
+theme.moon = theme.parent.querySelector('span.moon');
+theme.sun = theme.parent.querySelector('span.sun');
+theme.circle = theme.parent.querySelector('span.circle');
+theme.styles = getComputedStyle(document.body);
+theme.mobile = window.matchMedia("(max-width: 640px)");
+theme.Skeleton();
+theme.Listener();
+}
+};
+theme.Init();
+</script>
+<div class="cb"></div>   <div class="account_spacer">
+<style>
+@media only screen and ( max-width: 640px ) {
+.bh {
+display: none
+}
+}
+@media only screen and ( min-width: 641px ) {
+.gb {
+box-shadow: 0 0 4px 1px #dcdcdc;
+}
+.gb { /*border: solid #002D72 1px;*/
+padding: 5px 5px 5px 5px;
+}
+.bh {
+font-variant: small-caps;
+font-family: lucida, Helvetica, Arial, sans-serif;
+font-size: 1.15em;
+line-height: 20px;
+text-transform: lowercase;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+box-shadow: 0 2px 3px 0 #f8f8f8 inset;
+padding: 5px 15px;
+}
+.bh {
+box-shadow: 0 2px 3px 0 #f8f8f8 inset, 5px 5px 5px #eee;
+vertical-align: bottom;
+}
+.bh_br {
+background: #99764F;
+color: #eeeeee;
+text-align: center;
+border: solid #99764F 1px;
+}
+.bh_gr {
+background: #002D72;
+color: #FFFFFF;
+padding-left: 5px;
+min-width: 150px;
+border: solid #002D72 1px;
+border-top-right-radius: 4px;
+display: inline-block
+}
+.bh_grs {
+background: #002D72;
+color: #FFFFFF;
+padding-left: 5px;
+text-align: center;
+border: 1px solid #002D72;
+}
+.bh_gra {
+background: #002D72;
+border: solid #002D72 1px;
+color: #fff;
+padding-left: 5px;
+}
+.bh_gy {
+background: #666;
+border: solid 1px #666666;
+color: #fff;
+padding-left: 5px;
+}
+.bh_gys {
+background: #666;
+color: #E5E5E5;
+text-align: center;
+border: 1px solid #666666;
+}
+}
+h1, h2, h3, h4, .normtext, td, body, textarea, li {
+font-size: 12px
+}
+.n_box h2 {
+width: 144px;
+}
+.n_agent_btn {
+width: 146px;
+}
+#sidebar {
+right: -155px;
+}
+</style>
+<div class="hidmob"><!--
+<div class="showmob navlangbar"><a href="">&laquo; Back to </a></div>
+--><div class="hidmob">
+</div>
+</div>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="20"><td 3e--=""> </td></tr><tr><td class="box0" style="line-height: 150%"><div><strong>PRIVACY POLICY</strong><br />
+last updated 2021-10-26 (Hong Kong Time)<br /><br /><strong>1. Introduction</strong><br />
+ <br />
+1.1.<br />
+Playasia.com knows that, how your information is used and shared, is important to you and we believe that users should be treated equally no matter where they are located. Please read this Privacy Policy to learn about the ways in which we use and protect your personal information.<br />
+ <br />
+1.2.<br />
+By visiting Playasia.com, you hereby accept this Privacy Policy and expressly consent to our use and disclosure of your personal information in the manner prescribed herein. If you object to this use and disclosure, please do not provide any information to or use Playasia.com. The information you do provide us will be used in a manner that is consistent to this Privacy Policy.<br />
+ <br /><br /><strong>2. What Personal Information About Customers Does Playasia.com Gather?</strong><br /><br />
+2.1.<br />
+The information we learn from customers helps us personalize and continually improve your shopping experience at Playasia.com. Most of the personal data will thereby be processed in order to meet our contractual obligations to our users or to support our users’ request of entering into a contract with them. Here are the types of information we gather:<br />
+ <br />
+2.2.<br />
+Information You Give Us: We receive and store any information you enter on our Web site or give us in any other ways. Those include your personal details you enter when creating a customer account as well as product pages you are visiting and E-Mail subscriptions you are making. We use the information that you provide for such purposes as responding to your requests, customizing future shopping for you, improving our store, and communicating with you. When required by law, and in cases of absolute necessity, we handle personal data on the basis of your implied or expressed consent.<br />
+ <br />
+2.3.<br />
+Automatic Information: We receive and store certain types of information whenever you interact with us. For example, like many Web sites, we use "cookies," and we obtain certain types of information when your Web browser accesses Playasia.com, such as your IP address, your web browser type, operating system and similar. We use cookies for a number of purposes, for instance, to enable us to simplify the logging on process for registered users, to help ensure the security and authenticity of registered users, to provide the mechanisms for online shopping and to enable traffic monitoring on our website.<br />
+ <br />
+2.4.<br />
+Information from Other Sources: We might receive information about you from other sources and add it to our account information. Those include for example:<br />
+ <br />
+- updated delivery and address information from our carriers or other third parties, which we use to correct our records and deliver your next purchase or communication more easily;<br />
+ <br />
+- account information, purchase or redemption information, and page-view information from some merchants with which we operate co-branded businesses or for which we provide technical, fulfilment, advertising, or other services.<br />
+ <br /><br /><strong>3. What About Cookies?</strong><br />
+ <br />
+3.1.<br />
+Cookies are alphanumeric identifiers that we transfer to your computer&#39;s storage system through your Web browser to enable our systems to recognize your browser and to provide certain features for you, such as automatic login, product recommendations etc.<br /><br />
+3.2.<br />
+The Help portion of the toolbar on most browsers will tell you how to prevent your browser from accepting new cookies, how to have the browser notify you when you receive a new cookie, or how to disable cookies altogether. However, cookies allow you to take full advantage of some of Playasia.com&#39;s most convenient features, and we recommend that you leave them turned on.<br /><br />For more general information on our cookie policy, please read <a href="https://www.play-asia.com/info/cookies">the Cookie Policy article</a>.<br />    <br /><br /><strong>4. Does Playasia.com Share the Information It Receives?</strong><br /><br />
+Information about our customers is an important part of our business, and we are not in the business of selling it to others. We share customer information only in the events as described below:<br /><br />
+a. Agents:<br />
+We employ other companies and individuals to perform functions on our behalf. Examples may include fulfilling orders, delivering packages, sending postal mail and E-Mail (For marketing purposes only. Customers have the option of unsubscribing from these newsletters by following the included unsubscribe link on the bottom of each email. Unsubscribing or opting out is free of charge), removing repetitive information from customer lists, analyzing data, providing marketing assistance, processing credit card payments, and providing customer service. They have access to personal information needed to perform their functions, but may not use it for other purposes.<br /><br />
+b. Business Transfers:<br />
+As we continue to develop our business, we might sell or buy stores, subsidiaries, or business units. Your information may be passed to and used by the associated companies of Playasia.com or its successors in title. To provide an enjoyable user experience, this information will only be provided amongst aforementioned entities.<br />
+ <br />
+c. Protection of Playasia.com and Others:<br />
+We release account and other personal information when we believe release is appropriate to cooperate with law enforcement inquiries and other third parties, to enforce laws and third party rights, such as intellectual property rights; to enforce or apply the Terms and Conditions of Playasia.com; or protect the rights, property, or safety of Playasia.com, our users, or others.<br /><br />
+d. With Your Consent:<br />
+Other than as set out above, you will receive notice when information about you might go to third parties, and you will have an opportunity to choose not to share the information.<br /><br /><br /><strong>5. How Secure Is My Information?</strong><br /><br />
+5.1.<br />
+We work to protect the security of your information during transmission by using Secure Sockets Layer (SSL), which encrypts information you input. We take these steps to protect the information from alteration, loss, misuse and unauthorised access. Nonetheless, you should take special care in deciding what information you send to us via email or other channel of communication via the internet.<br />
+ <br />
+5.2.<br />
+We cannot ensure that all of your communications with our Web site and other personally identifiable information will never be disclosed in ways not otherwise described in this Privacy Policy. For example, third parties may unlawfully intercept or access transmissions or private communications, or users may abuse or misuse your information that they collect from this Website. Personal data will be retained for as long as it is relevant to above mentioned purposes. Once irrelevant, it will be anonymized or deleted or disposed of using appropriate steps.<br />
+ <br /><br /><strong>6. What Choices Do You Have?</strong><br /><br />
+6.1.<br />
+As discussed above, you can always choose not to provide certain information, even though it might be needed to make a purchase or to use all the interactive features of Playasia.com.<br /><br />
+6.2.<br />
+The Help portion of the toolbar on most browsers will tell you how to prevent your browser from accepting new cookies, how to have the browser notify you when you receive a new cookie, or how to disable cookies altogether. However, you will not be able to use certain important features if you do not use cookies.<br /><br /><br /><strong>7. External Data Sources</strong><br /><br />
+In the case that you use 3rd Party Solutions to log into, or access our website, additional data will be stored.<br /><br />
+This data is used to enable or improve
+<ul><li>Login Experience (ie., enables Logon with "Single Sign On" functionality)</li><li>Checkout Experience (by pre-filling forms with shipping addresses etc.)</li><li>Browsing Experience (setting user language and prices in local currency, shipping indicators, etc)</li></ul><br /><br />
+a. Login with Facebook<br />
+If you use the "Login with Facebook" option on our website, additional data, obtained from Facebook, will be stored. This includes
+<ul><li>Firstname</li><li>Last name</li><li>Facebook profile link</li><li>Birthday</li><li>Gender</li><li>Email</li><li>Timezone</li><li>User Locale (Language Setting)</li><li>Whether your E-Mail is verified or not. </li></ul><br />
+b. Login with Paypal, Google, etc<br /><br />
+Various data points that are used to identify you such as
+<ul><li>E-Mail</li><li>Name</li><li>Telephone Number (if available)</li><li>Country of Residence (if available)</li><li>Profile Picture (if available)</li><li>Shipping Address (if available)</li></ul><br /><br /><strong>8. Data Deletion</strong><br /><strong> </strong><br />
+If you wish to delete the personal data we have stored about you, there are several ways to do that.<br /><br />
+a. Account Deletion<br /><br />
+To delete all your information, including but not limited to
+<ul><li>E-Mail Address</li><li>Personal Information</li><li>Order History</li><li>Browsing History</li><li>3rd Party Data (Google, Facebook, PayPal and all other separate data sources you may have enabled)</li></ul>
+simply send an E-Mail to cs@play-asia.com and we will guide you through the deletion process.<br /><br />
+b. Third Party Acquired Data<br /><br />
+To delete all your data obtained through 3rd Party Applications (Facebook, Paypal, Google, etc), please use the "Unlink from [...]" option on your account page here: <a href="https://www.play-asia.com/account">https://www.play-asia.com/account</a><br /><br />
+Important: If you use one of these Third Party sources of data for log in, please follow the process to set up a password, or alternatively use the "Forgot Password" option on our website to not lose access to your account. Please make sure your e-mail address associated with your account is correct.<br /><br /><br /><strong>9. CCPA Privacy Rights (Do Not Sell My Personal Information)</strong><br /><br />
+Under the CCPA, among other rights, California consumers have the right to:<br />
+Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.<br />
+Request that a business delete any personal data about the consumer that a business has collected.<br />
+Request that a business that sells a consumer's personal data, not sell the consumer's personal data.<br />
+If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.<br /><br /><br /><strong>10. GDPR Data Protection Rights</strong><br /><br />
+We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:<br />
+The right to access – You have the right to request copies of your personal data. We may charge you a small fee for this service.<br />
+The right to rectification – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.<br />
+The right to erasure – You have the right to request that we erase your personal data, under certain conditions.<br />
+The right to restrict processing – You have the right to request that we restrict the processing of your personal data, under certain conditions.<br />
+The right to object to processing – You have the right to object to our processing of your personal data, under certain conditions.<br />
+The right to data portability – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.<br /><br />
+If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.<br /><br /><br /><strong>11. Children</strong><br /><br />
+Our services are not available to children. If you are under 18, you are not allowed to submit any personal information to us and you may use Playasia.com only with the supervision of your parent or guardian. <br /><br /><br /><strong>12. Contact</strong><br /><br />
+If you have question regarding our policy, you can contact us either through our customer service page <strong><a href="https://www.play-asia.com/contact/"><u>here</u></a></strong> or<br /><br />
+Playasia.com<br />
+8/F Ka Ming Court 8-B<br />
+Castle Peak Road 688-690<br />
+Lai Chi Kok, Kowloon<br />
+Hong Kong SAR<br /><br />
+Or by phone 24 hours Tel.: +852 3145 0013 <br /><br /><br /><strong>13. Amendment</strong><br /><br />
+We may amend this Privacy Policy from time to time so that it accurately reflects the regulatory environment and our own data collection and disclosures practices. All amended terms shall automatically be effective 3 days after they are posted on this Web site. You should check our Web site frequently to see recent changes. <br /></div>
+ </td></tr><tr><td class="box0" style="line-height: 150%"> </td></tr></tbody></table>
+ 
+<center><a class="acbut big" href="/info/helpdesk">Back to Helpdesk</a></center>   </div>
+<div id="footer" class="footer centre">
+<a href="#top">Back to top</a>
+</div>
+<div class="footer">
+<div class="we_accept_out" style="width: 70px">
+<div>
+We accept                        </div>
+<!--                        <div class="we_accept_out arrow chevron rot180 xsmallicon" style="float: left;"></div>-->
+</div>
+<div class="we_accept_out" style="float: right">
+<div class="we_accept_out arrow chevron xsmallicon" style="float: right;"></div>
+</div>
+<div class="we_accept_out" style="float: left">
+<div class="we_accept_out arrow chevron rot180 xsmallicon" style="float: left;"></div>
+</div>
+<div class="we_accept" style="margin-left: 94px">
+<div id="accept_imgs" style="overflow: hidden">
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0168.jpg?1716182591&v=PX-364" alt="Payment Paypal" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0127.png?1716182638&v=PX-364" alt="Payment Worldpay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/large/GA.03963.0189.svg?1716211370&v=PX-364" alt="Payment Bitcoin" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0174.png?1716211382&v=PX-364" alt="Payment Binancepay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0178.png?1716211379&v=PX-364" alt="Payment Bitpay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0126.png?1716182640&v=PX-364" alt="Payment Worldpay2" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0190.jpg?1716197822&v=PX-364" alt="Payment Manual" class="pay_now_logo nofade"/>&nbsp;
+</div>
+</div>                </div>
+<div class="footer helpdesk">
+<table border="0" cellpadding="1" cellspacing="1" style="width:100%;">
+<tbody>
+<tr>
+<td><strong>About</strong></td>
+<td><strong>Legal</strong></td>
+<td><strong>Services</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/helpabout">Why us?</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/tou">Terms of Use</a></u></td>
+<td><u><a href="http://www.play-asia.com/info/helpshippingoptions">Shipping</a></u></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/helpjobs">Careers</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/tos">Terms &amp; Conditions</a></u></td>
+<td><a href="http://www.play-asia.com/info/digiorder"><u>Digital Codes</u></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/loyalty">Loyalty Program</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/privacy">Privacy Policy</a></u></td>
+<td><u><a href="http://www.trustpilot.com/review/www.play-asia.com">Feedback</a></u></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="http://www.play-asia.com/blog">Blog</a></u></td>
+<td>&nbsp;</td>
+<td><a href="http://www.play-asia.com/info/helprefund"><u>Returns</u></a></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>                </div>
+<div class="footer">
+<div class="centre nl_holder" style="display: flex;   justify-content: space-between;
+">
+<div class="hidmob"></div>
+<div class="nl_sub" onclick="openDialog( 'newsletter_box', {width: mobile? $( '#website' ).width() : 640} ); loadDialog( 'newsletter_box' );">
+<div class="nomargin middle invert smallicon tion005"></div>
+<div style="display: inline-block;">
+Subscribe to our Newsletter!                            </div>
+</div>
+<div class="hidmob"></div>
+<div class="nl_sub" style="display: inline-block" onclick="window.location=&quot;/contact&quot;">
+<div class="nomargin middle invert smallicon"><img alt="Customer Service" class="smallicon"
+src="//s.pacn.ws/gallery/large/GA.06753.0011.svg?1606379152&v=PX-364">
+</div>
+Contact Us!                        </div>
+<div class="hidmob"></div>
+</div>
+<script>$('.nl_sub').mx('width');</script>
+</div>
+<div class="footer">
+<br/>
+<div class="centre">
+<div id="no_link_hl">
+<div align="center" id="socialfarm">
+<span class="text">
+Be sure to visit our social media pages !<br />
+</span>
+<a href="https://discord.gg/hUebN6M" target="_blank" title="Playasia Discord Server" alt="Playasia Discord Server" rel="noopener noreferrer">
+<span class="icon isocdc"></span>
+</a>
+<a href="https://twitter.com/playasia" target="_blank" title="Playasia Twitter" alt="Playasia Twitter" rel="noopener noreferrer">
+<span class="icon isoctw"></span>
+</a>
+<a href="https://facebook.com/playasia" target="_blank" title="Playasia Facebook Page" alt="Playasia Facebook Page" rel="noopener noreferrer">
+<span class="icon isocfb"></span>
+</a>
+<a href="https://instagram.com/playasia" target="_blank" title="Playasia Instagram Page" alt="Playasia Instagram Page" rel="noopener noreferrer">
+<span class="icon isocig"></span>
+</a>
+<a href="https://youtube.com/c/playasiatv" target="_blank" title="Playasia Youtube Channel" alt="Playasia Youtube Channel" rel=" noopener noreferrer">
+<span class="icon isocyt"></span>
+</a>
+<a href="https://weibo.com/playasia" target="_blank" title="Playasia Weibo Page" alt="Playasia Weibo Page" rel="noopener noreferrer">
+<span class="icon isocwb"></span>
+</a>
+</div>
+<br />
+Playasia and its logo are trademarks of Playasia. Website & content copyright 2002-2024 Playasia.                        </div>
+</div>
+<div id="debug">SN: 114 | 1001,1007                                { 57 } | A:  | WS: 1                                | PT: 0.022 | CDN:  | Ro: ,
+Cl: 1 |
+Q: 15                                | T:  | Cf:  | CO:  | bot: </div>
+</div>
+<script type="text/javascript">initialize();</script>
+</div>
+</div>
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "WebSite",
+"url": "https://www.play-asia.com/",
+"potentialAction": {
+"@type": "SearchAction",
+"target": {
+"@type": "EntryPoint",
+"urlTemplate": "https://www.play-asia.com/gosearch/?p_query={search_term_string}"
+},
+"query-input": "required name=search_term_string"
+}
+}
+</script>
+</body>
+</html>
