@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NHSW3XN');</script>
+
+    <script>
+    var _rollbarConfig = {
+      accessToken: "960f75f328a7491893c07c20aab57359",
+      captureUncaught: true,
+      captureUnhandledRejections: true,
+      ignoredMessages: [
+        /All ins elements in the DOM with class=adsbygoogle already have ads in them/i,
+        /TagError: adsbygoogle\.push\(\) error: All 'ins' elements in the DOM with class=adsbygoogle already have ads in them/i,
+        /TagError: adsbygoogle\.push\(\) error: No slot size for availableWidth=0/i,
+        "Script error."
+      ],
+      checkIgnore: function(isUncaught, args, payload) {
+        const userAgent = window.navigator.userAgent;
+
+        // Define an array of regex patterns for browsers/user agents to ignore
+        const ignoredBrowsersPatterns = [
+          /Sogou\s*web\s*spider/i
+        ];
+
+        if (userAgent && ignoredBrowsersPatterns.some(pattern => pattern.test(userAgent))) {
+          return false;
+        }
+
+        return this.ignoredMessages.some(function(ignoredMessage) {
+          if (typeof args[0] === "string") {
+            return ignoredMessage === args[0];
+          } else {
+            return ignoredMessage.test(args[0]);
+          }
+        });
+      },
+      payload: {
+        environment: "production",
+        client: {
+          javascript: {
+            code_version: "d42d54511e511a8470901142d4652bcf44c0b779",
+            source_map_enabled: true,
+            guess_uncaught_frames: true
+          }
+        }
+      }
+    };
+    !function(r){var e={};function o(n){if(e[n])return e[n].exports;var t=e[n]={i:n,l:!1,exports:{}};return r[n].call(t.exports,t,t.exports,o),t.l=!0,t.exports}o.m=r,o.c=e,o.d=function(r,e,n){o.o(r,e)||Object.defineProperty(r,e,{enumerable:!0,get:n})},o.r=function(r){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(r,"__esModule",{value:!0})},o.t=function(r,e){if(1&e&&(r=o(r)),8&e)return r;if(4&e&&"object"==typeof r&&r&&r.__esModule)return r;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:r}),2&e&&"string"!=typeof r)for(var t in r)o.d(n,t,function(e){return r[e]}.bind(null,t));return n},o.n=function(r){var e=r&&r.__esModule?function(){return r.default}:function(){return r};return o.d(e,"a",e),e},o.o=function(r,e){return Object.prototype.hasOwnProperty.call(r,e)},o.p="",o(o.s=0)}([function(r,e,o){"use strict";var n=o(1),t=o(5);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdn.rollbar.com/rollbarjs/refs/tags/v2.26.3/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,e,o){"use strict";var n=o(2),t=o(3);function a(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}var l=0;function i(r,e){this.options=r,this._rollbarOldOnError=null;var o=l++;this.shimId=function(){return o},"undefined"!=typeof window&&window._rollbarShims&&(window._rollbarShims[o]={handler:e,messages:[]})}var s=o(4),d=function(r,e){return new i(r,e)},c=function(r){return new s(d,r)};function u(r){return a((function(){var e=this,o=Array.prototype.slice.call(arguments,0),n={shim:e,method:r,args:o,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)}))}i.prototype.loadFull=function(r,e,o,n,t){var l=!1,i=e.createElement("script"),s=e.getElementsByTagName("script")[0],d=s.parentNode;i.crossOrigin="",i.src=n.rollbarJsUrl,o||(i.async=!0),i.onload=i.onreadystatechange=a((function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){i.onload=i.onreadystatechange=null;try{d.removeChild(i)}catch(r){}l=!0,function(){var e;if(void 0===r._rollbarDidLoad){e=new Error("rollbar.js did not load");for(var o,n,a,l,i=0;o=r._rollbarShims[i++];)for(o=o.messages||[];n=o.shift();)for(a=n.args||[],i=0;i<a.length;++i)if("function"==typeof(l=a[i])){l(e);break}}"function"==typeof t&&t(e)}()}})),d.insertBefore(i,s)},i.prototype.wrap=function(r,e,o){try{var n;if(n="function"==typeof e?e:function(){return e||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){o&&"function"==typeof o&&o.apply(this,arguments);try{return r.apply(this,arguments)}catch(o){var e=o;throw e&&("string"==typeof e&&(e=new String(e)),e._rollbarContext=n()||{},e._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=e),e}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(e){return r}};for(var p="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad".split(","),f=0;f<p.length;++f)i.prototype[p[f]]=u(p[f]);r.exports={setupShim:function(r,e){if(r){var o=e.globalAlias||"Rollbar";if("object"==typeof r[o])return r[o];r._rollbarShims={},r._rollbarWrappedError=null;var l=new c(e);return a((function(){e.captureUncaught&&(l._rollbarOldOnError=r.onerror,n.captureUncaughtExceptions(r,l,!0),e.wrapGlobalEventHandlers&&t(r,l,!0)),e.captureUnhandledRejections&&n.captureUnhandledRejections(r,l,!0);var a=e.autoInstrument;return!1!==e.enabled&&(void 0===a||!0===a||function(r){return!("object"!=typeof r||void 0!==r.page&&!r.page)}(a))&&r.addEventListener&&(r.addEventListener("load",l.captureLoad.bind(l)),r.addEventListener("DOMContentLoaded",l.captureDomContentLoaded.bind(l))),r[o]=l,l}))()}},Rollbar:c}},function(r,e,o){"use strict";function n(r,e,o,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null);var t=e.handleUncaughtException.apply(e,n);o&&o.apply(r,n),"anonymous"===t&&(e.anonymousErrorsPending+=1)}r.exports={captureUncaughtExceptions:function(r,e,o){if(r){var t;if("function"==typeof e._rollbarOldOnError)t=e._rollbarOldOnError;else if(r.onerror){for(t=r.onerror;t._rollbarOldOnError;)t=t._rollbarOldOnError;e._rollbarOldOnError=t}e.handleAnonymousErrors();var a=function(){var o=Array.prototype.slice.call(arguments,0);n(r,e,t,o)};o&&(a._rollbarOldOnError=t),r.onerror=a}},captureUnhandledRejections:function(r,e,o){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var o,n,t;try{o=r.reason}catch(r){o=void 0}try{n=r.promise}catch(r){n="[unhandledrejection] error getting `promise` from event"}try{t=r.detail,!o&&t&&(o=t.reason,n=t.promise)}catch(r){}o||(o="[unhandledrejection] error getting `reason` from event"),e&&e.handleUnhandledRejection&&e.handleUnhandledRejection(o,n)};n.belongsToShim=o,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}}},function(r,e,o){"use strict";function n(r,e,o){if(e.hasOwnProperty&&e.hasOwnProperty("addEventListener")){for(var n=e.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(e,o,t){n.call(this,e,r.wrap(o),t)};t._rollbarOldAdd=n,t.belongsToShim=o,e.addEventListener=t;for(var a=e.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,e,o){a.call(this,r,e&&e._rollbar_wrapped||e,o)};l._rollbarOldRemove=a,l.belongsToShim=o,e.removeEventListener=l}}r.exports=function(r,e,o){if(r){var t,a,l="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(t=0;t<l.length;++t)r[a=l[t]]&&r[a].prototype&&n(e,r[a].prototype,o)}}},function(r,e,o){"use strict";function n(r,e){this.impl=r(e,this),this.options=e,function(r){for(var e=function(r){return function(){var e=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,e)}},o="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureEvent,captureDomContentLoaded,captureLoad".split(","),n=0;n<o.length;n++)r[o[n]]=e(o[n])}(n.prototype)}n.prototype._swapAndProcessMessages=function(r,e){var o,n,t;for(this.impl=r(this.options);o=e.shift();)n=o.method,t=o.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],o.ts]):this[n].apply(this,t));return this},r.exports=n},function(r,e,o){"use strict";r.exports=function(r){return function(e){if(!e&&!window._rollbarInitialized){for(var o,n,t=(r=r||{}).globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;o=window._rollbarShims[i++];)n||(n=o.handler),o.handler._swapAndProcessMessages(l,o.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+    </script>
+
+  <meta name="referrer" content="unsafe-url">
+  <meta name="robots" content="index,follow" />
+
+  <meta name="copyright" content="Copyright (c) Setlisting. All rights reserved.">
+
+  <meta property="fb:admins" content="506941198" />
+  <meta property="fb:app_id" content="272971863372" />
+
+      <meta name="description" content="Cookies and privacy policy." />
+<meta property="og:description" content="Cookies and privacy policy." />
+
+    
+
+    <title>Cookies and Privacy Policy | Setlisting</title>
+
+  <link rel="stylesheet" href="https://assets0.setlisting.cdn.crowds.dk/assets/application-f6b5fb6ef65fb5434df3163bbb123682bc7ea7c76cad0f2c17e68f66945d9ea6.css" />
+    <script src="https://assets2.setlisting.cdn.crowds.dk/assets/application-31a8a4caa8b992a625f8a1a792352207610b6fbb99335a8634c2dc928234c65a.js" data-turbo-track="reload"></script>
+
+
+  <link rel="icon" type="image/x-icon" href="https://assets0.setlisting.cdn.crowds.dk/assets/favicon-2252317b9a1c4f5434c0520847deee9de7f1bd5c5184bba5ae614b14dfa52cd4.ico" />
+  
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="v2pNGdDqGiJaxPwwnAQWfq6fKRce9OCB-9vgLGb_Tde3IhdawBz5fOPQXjqH4sK3_bGJ-o8n4XqVYOoNOKVdyg" />
+</head>
+
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NHSW3XN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div id="flash">
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
+
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1">
+<defs>
+<!-- names reversed due to adblock stuff -->
+<symbol id="icon-koobecaf" viewBox="0 0 16 28">
+<path d="M14.984 0.187v4.125h-2.453c-1.922 0-2.281 0.922-2.281 2.25v2.953h4.578l-0.609 4.625h-3.969v11.859h-4.781v-11.859h-3.984v-4.625h3.984v-3.406c0-3.953 2.422-6.109 5.953-6.109 1.687 0 3.141 0.125 3.563 0.187z"></path>
+</symbol>
+<symbol id="icon-laiciffo-koobecaf" viewBox="0 0 24 28">
+<path d="M22.672 2c0.734 0 1.328 0.594 1.328 1.328v21.344c0 0.734-0.594 1.328-1.328 1.328h-6.109v-9.297h3.109l0.469-3.625h-3.578v-2.312c0-1.047 0.281-1.75 1.797-1.75l1.906-0.016v-3.234c-0.328-0.047-1.469-0.141-2.781-0.141-2.766 0-4.672 1.687-4.672 4.781v2.672h-3.125v3.625h3.125v9.297h-11.484c-0.734 0-1.328-0.594-1.328-1.328v-21.344c0-0.734 0.594-1.328 1.328-1.328h21.344z"></path>
+</symbol>
+<symbol id="icon-yfitops" viewBox="0 0 24 28">
+<path d="M17.609 18.906c0-0.438-0.172-0.609-0.469-0.797-2.016-1.203-4.359-1.797-6.984-1.797-1.531 0-3 0.203-4.484 0.531-0.359 0.078-0.656 0.313-0.656 0.812 0 0.391 0.297 0.766 0.766 0.766 0.141 0 0.391-0.078 0.578-0.125 1.219-0.25 2.5-0.422 3.797-0.422 2.297 0 4.469 0.562 6.203 1.609 0.187 0.109 0.313 0.172 0.516 0.172 0.391 0 0.734-0.313 0.734-0.75zM19.109 15.547c0-0.422-0.156-0.719-0.547-0.953-2.391-1.422-5.422-2.203-8.563-2.203-2.016 0-3.391 0.281-4.734 0.656-0.5 0.141-0.75 0.484-0.75 1s0.422 0.938 0.938 0.938c0.219 0 0.344-0.063 0.578-0.125 1.094-0.297 2.406-0.516 3.922-0.516 2.969 0 5.672 0.781 7.625 1.937 0.172 0.094 0.344 0.203 0.594 0.203 0.531 0 0.938-0.422 0.938-0.938zM20.797 11.672c0-0.578-0.25-0.875-0.625-1.094-2.703-1.578-6.406-2.312-9.938-2.312-2.078 0-3.984 0.234-5.688 0.734-0.438 0.125-0.844 0.5-0.844 1.156 0 0.641 0.484 1.141 1.125 1.141 0.234 0 0.453-0.078 0.625-0.125 1.516-0.422 3.156-0.578 4.797-0.578 3.25 0 6.625 0.719 8.797 2.016 0.219 0.125 0.375 0.187 0.625 0.187 0.594 0 1.125-0.469 1.125-1.125zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path>
+</symbol>
+<symbol id="icon-rettiwt" viewBox="0 0 26 28">
+<path d="M25.312 6.375c-0.688 1-1.547 1.891-2.531 2.609 0.016 0.219 0.016 0.438 0.016 0.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-0.828-7.75-2.266 0.406 0.047 0.797 0.063 1.219 0.063 2.359 0 4.531-0.797 6.266-2.156-2.219-0.047-4.078-1.5-4.719-3.5 0.313 0.047 0.625 0.078 0.953 0.078 0.453 0 0.906-0.063 1.328-0.172-2.312-0.469-4.047-2.5-4.047-4.953v-0.063c0.672 0.375 1.453 0.609 2.281 0.641-1.359-0.906-2.25-2.453-2.25-4.203 0-0.938 0.25-1.797 0.688-2.547 2.484 3.062 6.219 5.063 10.406 5.281-0.078-0.375-0.125-0.766-0.125-1.156 0-2.781 2.25-5.047 5.047-5.047 1.453 0 2.766 0.609 3.687 1.594 1.141-0.219 2.234-0.641 3.203-1.219-0.375 1.172-1.172 2.156-2.219 2.781 1.016-0.109 2-0.391 2.906-0.781z"></path>
+</symbol>
+
+<symbol id="icon-arrow-circle-right" viewBox="0 0 24 28">
+<path d="M20.078 14c0-0.266-0.094-0.516-0.281-0.703l-7.078-7.078c-0.187-0.187-0.438-0.281-0.703-0.281s-0.516 0.094-0.703 0.281l-1.422 1.422c-0.187 0.187-0.281 0.438-0.281 0.703s0.094 0.516 0.281 0.703l2.953 2.953h-7.844c-0.547 0-1 0.453-1 1v2c0 0.547 0.453 1 1 1h7.844l-2.953 2.953c-0.187 0.187-0.297 0.438-0.297 0.703s0.109 0.516 0.297 0.703l1.422 1.422c0.187 0.187 0.438 0.281 0.703 0.281s0.516-0.094 0.703-0.281l7.078-7.078c0.187-0.187 0.281-0.438 0.281-0.703zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path>
+</symbol>
+<symbol id="icon-arrow-circle-left" viewBox="0 0 24 28">
+<path d="M20 15v-2c0-0.547-0.453-1-1-1h-7.844l2.953-2.953c0.187-0.187 0.297-0.438 0.297-0.703s-0.109-0.516-0.297-0.703l-1.422-1.422c-0.187-0.187-0.438-0.281-0.703-0.281s-0.516 0.094-0.703 0.281l-7.078 7.078c-0.187 0.187-0.281 0.438-0.281 0.703s0.094 0.516 0.281 0.703l7.078 7.078c0.187 0.187 0.438 0.281 0.703 0.281s0.516-0.094 0.703-0.281l1.422-1.422c0.187-0.187 0.281-0.438 0.281-0.703s-0.094-0.516-0.281-0.703l-2.953-2.953h7.844c0.547 0 1-0.453 1-1zM24 14c0 6.625-5.375 12-12 12s-12-5.375-12-12 5.375-12 12-12 12 5.375 12 12z"></path>
+</symbol>
+<symbol id="icon-bar-chart" viewBox="0 0 32 28">
+<path d="M10 14v8h-4v-8h4zM16 6v16h-4v-16h4zM32 24v2h-32v-24h2v22h30zM22 10v12h-4v-12h4zM28 4v18h-4v-18h4z"></path>
+</symbol>
+<symbol id="icon-bookmark" viewBox="0 0 20 28">
+<path d="M18.188 2c0.234 0 0.469 0.047 0.688 0.141 0.688 0.266 1.125 0.906 1.125 1.609v20.141c0 0.703-0.438 1.344-1.125 1.609-0.219 0.094-0.453 0.125-0.688 0.125-0.484 0-0.938-0.172-1.297-0.5l-6.891-6.625-6.891 6.625c-0.359 0.328-0.812 0.516-1.297 0.516-0.234 0-0.469-0.047-0.688-0.141-0.688-0.266-1.125-0.906-1.125-1.609v-20.141c0-0.703 0.438-1.344 1.125-1.609 0.219-0.094 0.453-0.141 0.688-0.141h16.375z"></path>
+</symbol>
+<symbol id="icon-bookmark-o" viewBox="0 0 20 28">
+<path d="M18 4h-16v19.406l8-7.672 1.391 1.328 6.609 6.344v-19.406zM18.188 2c0.234 0 0.469 0.047 0.688 0.141 0.688 0.266 1.125 0.906 1.125 1.609v20.141c0 0.703-0.438 1.344-1.125 1.609-0.219 0.094-0.453 0.125-0.688 0.125-0.484 0-0.938-0.172-1.297-0.5l-6.891-6.625-6.891 6.625c-0.359 0.328-0.812 0.516-1.297 0.516-0.234 0-0.469-0.047-0.688-0.141-0.688-0.266-1.125-0.906-1.125-1.609v-20.141c0-0.703 0.438-1.344 1.125-1.609 0.219-0.094 0.453-0.141 0.688-0.141h16.375z"></path>
+</symbol>
+<symbol id="icon-check" viewBox="0 0 28 28">
+<path d="M26.109 8.844c0 0.391-0.156 0.781-0.438 1.062l-13.438 13.438c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-7.781-7.781c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.609 10.25-10.266c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062z"></path>
+</symbol>
+<symbol id="icon-cog" viewBox="0 0 24 28">
+<path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zM24 12.297v3.469c0 0.234-0.187 0.516-0.438 0.562l-2.891 0.438c-0.172 0.5-0.359 0.969-0.609 1.422 0.531 0.766 1.094 1.453 1.672 2.156 0.094 0.109 0.156 0.25 0.156 0.391s-0.047 0.25-0.141 0.359c-0.375 0.5-2.484 2.797-3.016 2.797-0.141 0-0.281-0.063-0.406-0.141l-2.156-1.687c-0.453 0.234-0.938 0.438-1.422 0.594-0.109 0.953-0.203 1.969-0.453 2.906-0.063 0.25-0.281 0.438-0.562 0.438h-3.469c-0.281 0-0.531-0.203-0.562-0.469l-0.438-2.875c-0.484-0.156-0.953-0.344-1.406-0.578l-2.203 1.672c-0.109 0.094-0.25 0.141-0.391 0.141s-0.281-0.063-0.391-0.172c-0.828-0.75-1.922-1.719-2.578-2.625-0.078-0.109-0.109-0.234-0.109-0.359 0-0.141 0.047-0.25 0.125-0.359 0.531-0.719 1.109-1.406 1.641-2.141-0.266-0.5-0.484-1.016-0.641-1.547l-2.859-0.422c-0.266-0.047-0.453-0.297-0.453-0.562v-3.469c0-0.234 0.187-0.516 0.422-0.562l2.906-0.438c0.156-0.5 0.359-0.969 0.609-1.437-0.531-0.75-1.094-1.453-1.672-2.156-0.094-0.109-0.156-0.234-0.156-0.375s0.063-0.25 0.141-0.359c0.375-0.516 2.484-2.797 3.016-2.797 0.141 0 0.281 0.063 0.406 0.156l2.156 1.672c0.453-0.234 0.938-0.438 1.422-0.594 0.109-0.953 0.203-1.969 0.453-2.906 0.063-0.25 0.281-0.438 0.562-0.438h3.469c0.281 0 0.531 0.203 0.562 0.469l0.438 2.875c0.484 0.156 0.953 0.344 1.406 0.578l2.219-1.672c0.094-0.094 0.234-0.141 0.375-0.141s0.281 0.063 0.391 0.156c0.828 0.766 1.922 1.734 2.578 2.656 0.078 0.094 0.109 0.219 0.109 0.344 0 0.141-0.047 0.25-0.125 0.359-0.531 0.719-1.109 1.406-1.641 2.141 0.266 0.5 0.484 1.016 0.641 1.531l2.859 0.438c0.266 0.047 0.453 0.297 0.453 0.562z"></path>
+</symbol>
+<symbol id="icon-external-link" viewBox="0 0 28 28">
+<path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13c-2.484 0-4.5-2.016-4.5-4.5v-13c0-2.484 2.016-4.5 4.5-4.5h11c0.281 0 0.5 0.219 0.5 0.5v1c0 0.281-0.219 0.5-0.5 0.5h-11c-1.375 0-2.5 1.125-2.5 2.5v13c0 1.375 1.125 2.5 2.5 2.5h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-0.281 0.219-0.5 0.5-0.5h1c0.281 0 0.5 0.219 0.5 0.5zM28 1v8c0 0.547-0.453 1-1 1-0.266 0-0.516-0.109-0.703-0.297l-2.75-2.75-10.187 10.187c-0.094 0.094-0.234 0.156-0.359 0.156s-0.266-0.063-0.359-0.156l-1.781-1.781c-0.094-0.094-0.156-0.234-0.156-0.359s0.063-0.266 0.156-0.359l10.187-10.187-2.75-2.75c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h8c0.547 0 1 0.453 1 1z"></path>
+</symbol>
+<symbol id="icon-heart" viewBox="0 0 28 28">
+<path d="M14 26c-0.25 0-0.5-0.094-0.688-0.281l-9.75-9.406c-0.125-0.109-3.563-3.25-3.563-7 0-4.578 2.797-7.313 7.469-7.313 2.734 0 5.297 2.156 6.531 3.375 1.234-1.219 3.797-3.375 6.531-3.375 4.672 0 7.469 2.734 7.469 7.313 0 3.75-3.437 6.891-3.578 7.031l-9.734 9.375c-0.187 0.187-0.438 0.281-0.688 0.281z"></path>
+</symbol>
+<symbol id="icon-heart-o" viewBox="0 0 28 28">
+<path d="M26 9.312c0-4.391-2.969-5.313-5.469-5.313-2.328 0-4.953 2.516-5.766 3.484-0.375 0.453-1.156 0.453-1.531 0-0.812-0.969-3.437-3.484-5.766-3.484-2.5 0-5.469 0.922-5.469 5.313 0 2.859 2.891 5.516 2.922 5.547l9.078 8.75 9.063-8.734c0.047-0.047 2.938-2.703 2.938-5.563zM28 9.312c0 3.75-3.437 6.891-3.578 7.031l-9.734 9.375c-0.187 0.187-0.438 0.281-0.688 0.281s-0.5-0.094-0.688-0.281l-9.75-9.406c-0.125-0.109-3.563-3.25-3.563-7 0-4.578 2.797-7.313 7.469-7.313 2.734 0 5.297 2.156 6.531 3.375 1.234-1.219 3.797-3.375 6.531-3.375 4.672 0 7.469 2.734 7.469 7.313z"></path>
+</symbol>
+<symbol id="icon-power-off" viewBox="0 0 24 28">
+<path d="M24 14c0 6.609-5.391 12-12 12s-12-5.391-12-12c0-3.797 1.75-7.297 4.797-9.578 0.891-0.672 2.141-0.5 2.797 0.391 0.672 0.875 0.484 2.141-0.391 2.797-2.031 1.531-3.203 3.859-3.203 6.391 0 4.406 3.594 8 8 8s8-3.594 8-8c0-2.531-1.172-4.859-3.203-6.391-0.875-0.656-1.062-1.922-0.391-2.797 0.656-0.891 1.922-1.062 2.797-0.391 3.047 2.281 4.797 5.781 4.797 9.578zM14 2v10c0 1.094-0.906 2-2 2s-2-0.906-2-2v-10c0-1.094 0.906-2 2-2s2 0.906 2 2z"></path>
+</symbol>
+<symbol id="icon-search" viewBox="0 0 26 28">
+<path d="M18 13c0-3.859-3.141-7-7-7s-7 3.141-7 7 3.141 7 7 7 7-3.141 7-7zM26 26c0 1.094-0.906 2-2 2-0.531 0-1.047-0.219-1.406-0.594l-5.359-5.344c-1.828 1.266-4.016 1.937-6.234 1.937-6.078 0-11-4.922-11-11s4.922-11 11-11 11 4.922 11 11c0 2.219-0.672 4.406-1.937 6.234l5.359 5.359c0.359 0.359 0.578 0.875 0.578 1.406z"></path>
+</symbol>
+<symbol id="icon-sort" viewBox="0 0 16 28">
+<path d="M16 17c0 0.266-0.109 0.516-0.297 0.703l-7 7c-0.187 0.187-0.438 0.297-0.703 0.297s-0.516-0.109-0.703-0.297l-7-7c-0.187-0.187-0.297-0.438-0.297-0.703 0-0.547 0.453-1 1-1h14c0.547 0 1 0.453 1 1zM16 11c0 0.547-0.453 1-1 1h-14c-0.547 0-1-0.453-1-1 0-0.266 0.109-0.516 0.297-0.703l7-7c0.187-0.187 0.438-0.297 0.703-0.297s0.516 0.109 0.703 0.297l7 7c0.187 0.187 0.297 0.438 0.297 0.703z"></path>
+</symbol>
+<symbol id="icon-sticky-note" viewBox="0 0 24 28">
+<path d="M16 19.5v6.5h-14.5c-0.828 0-1.5-0.672-1.5-1.5v-21c0-0.828 0.672-1.5 1.5-1.5h21c0.828 0 1.5 0.672 1.5 1.5v14.5h-6.5c-0.828 0-1.5 0.672-1.5 1.5zM18 20h5.953c-0.141 0.75-0.547 1.594-1.016 2.063l-2.875 2.875c-0.469 0.469-1.313 0.875-2.063 1.016v-5.953z"></path>
+</symbol>
+<symbol id="icon-trash" viewBox="0 0 22 28">
+<path d="M8 21.5v-11c0-0.281-0.219-0.5-0.5-0.5h-1c-0.281 0-0.5 0.219-0.5 0.5v11c0 0.281 0.219 0.5 0.5 0.5h1c0.281 0 0.5-0.219 0.5-0.5zM12 21.5v-11c0-0.281-0.219-0.5-0.5-0.5h-1c-0.281 0-0.5 0.219-0.5 0.5v11c0 0.281 0.219 0.5 0.5 0.5h1c0.281 0 0.5-0.219 0.5-0.5zM16 21.5v-11c0-0.281-0.219-0.5-0.5-0.5h-1c-0.281 0-0.5 0.219-0.5 0.5v11c0 0.281 0.219 0.5 0.5 0.5h1c0.281 0 0.5-0.219 0.5-0.5zM7.5 6h7l-0.75-1.828c-0.047-0.063-0.187-0.156-0.266-0.172h-4.953c-0.094 0.016-0.219 0.109-0.266 0.172zM22 6.5v1c0 0.281-0.219 0.5-0.5 0.5h-1.5v14.812c0 1.719-1.125 3.187-2.5 3.187h-13c-1.375 0-2.5-1.406-2.5-3.125v-14.875h-1.5c-0.281 0-0.5-0.219-0.5-0.5v-1c0-0.281 0.219-0.5 0.5-0.5h4.828l1.094-2.609c0.313-0.766 1.25-1.391 2.078-1.391h5c0.828 0 1.766 0.625 2.078 1.391l1.094 2.609h4.828c0.281 0 0.5 0.219 0.5 0.5z"></path>
+</symbol>
+<symbol id="icon-user" viewBox="0 0 20 28">
+<path d="M20 21.859c0 2.281-1.5 4.141-3.328 4.141h-13.344c-1.828 0-3.328-1.859-3.328-4.141 0-4.109 1.016-8.859 5.109-8.859 1.266 1.234 2.984 2 4.891 2s3.625-0.766 4.891-2c4.094 0 5.109 4.75 5.109 8.859zM16 8c0 3.313-2.688 6-6 6s-6-2.688-6-6 2.688-6 6-6 6 2.688 6 6z"></path>
+</symbol>
+<symbol id="icon-upload" viewBox="0 0 26 28">
+<path d="M20 23c0-0.547-0.453-1-1-1s-1 0.453-1 1 0.453 1 1 1 1-0.453 1-1zM24 23c0-0.547-0.453-1-1-1s-1 0.453-1 1 0.453 1 1 1 1-0.453 1-1zM26 19.5v5c0 0.828-0.672 1.5-1.5 1.5h-23c-0.828 0-1.5-0.672-1.5-1.5v-5c0-0.828 0.672-1.5 1.5-1.5h6.672c0.422 1.156 1.531 2 2.828 2h4c1.297 0 2.406-0.844 2.828-2h6.672c0.828 0 1.5 0.672 1.5 1.5zM20.922 9.375c-0.156 0.375-0.516 0.625-0.922 0.625h-4v7c0 0.547-0.453 1-1 1h-4c-0.547 0-1-0.453-1-1v-7h-4c-0.406 0-0.766-0.25-0.922-0.625-0.156-0.359-0.078-0.797 0.219-1.078l7-7c0.187-0.203 0.453-0.297 0.703-0.297s0.516 0.094 0.703 0.297l7 7c0.297 0.281 0.375 0.719 0.219 1.078z"></path>
+</symbol>
+</defs>
+</svg>
+
+
+
+  <div class="header-fluid-wrapper mb-4 pb-1">
+    <div class="container">
+      <header>
+  <nav class="navbar navbar-expand-lg navbar-light px-0 justify-content-between flex-nowrap">
+    <a class="header-logo d-none d-sm-block my-2" href="/" title="Setlisting logo"><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  --><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0.3 358.7 592.6 124.6" enable-background="new 0.3 358.7 592.6 124.6" xml:space="preserve">
+<g>
+	<rect x="1.3" y="367.5" fill="#FFFFFF" stroke="#000000" stroke-width="2" width="83.3" height="107.8"></rect>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="18.4" y1="383.8" x2="67.4" y2="383.8"></line>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="13.5" y1="396.3" x2="72.3" y2="396.3"></line>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="18.4" y1="411.1" x2="65.8" y2="411.1"></line>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="18.4" y1="425.2" x2="67.4" y2="425.2"></line>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="13.5" y1="437.7" x2="72.3" y2="437.7"></line>
+	<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="18.4" y1="452.5" x2="65.8" y2="452.5"></line>
+
+		<rect x="23.5" y="359.9" transform="matrix(-0.998 6.299295e-02 -6.299295e-02 -0.998 109.8081 729.999)" fill="#666666" width="39.8" height="13.6"></rect>
+
+		<rect x="23.3" y="468.2" transform="matrix(-0.9982 -5.951929e-02 5.951929e-02 -0.9982 57.9311 952.0398)" fill="#666666" width="39.8" height="13.9"></rect>
+</g>
+<g enable-background="new    ">
+	<path d="M126.1,434.9c-2.7,0-5.1-0.1-7.2-0.3c-2.1-0.2-4-0.5-5.7-0.9c-1.7-0.4-3.2-0.8-4.5-1.2c-1.3-0.5-2.6-0.9-3.7-1.4l3.6-13   c2.8,0.8,5.5,1.5,8,2c2.5,0.5,5.3,0.8,8.6,0.8c1.6,0,2.9,0,3.9-0.1c1-0.1,1.8-0.2,2.4-0.4c0.6-0.2,1-0.4,1.2-0.7   c0.2-0.3,0.3-0.6,0.3-1c0-0.5-0.1-0.9-0.3-1.2c-0.2-0.3-0.6-0.5-1.2-0.6c-0.6-0.1-1.4-0.3-2.4-0.4c-1-0.1-2.3-0.3-3.8-0.4   c-3.3-0.3-6.1-0.9-8.6-1.6c-2.5-0.7-4.5-1.9-6.2-3.4c-1.7-1.5-2.9-3.4-3.8-5.8c-0.9-2.4-1.3-5.4-1.3-9.1c0-6.1,2-10.8,5.9-14.3   c3.9-3.4,10.1-5.2,18.6-5.2c4.4,0,8.1,0.3,11.1,0.8c3,0.5,5.6,1.1,7.7,1.9l-2.1,15c-2.6-0.5-5-0.8-7.3-1.2   c-2.3-0.3-4.7-0.5-7.4-0.5c-3,0-5,0.1-6,0.4c-1,0.3-1.5,0.8-1.5,1.7c0,0.5,0.1,0.9,0.3,1.2c0.2,0.3,0.5,0.5,1.1,0.6   c0.5,0.1,1.3,0.3,2.3,0.3c1,0.1,2.3,0.2,3.9,0.4c3.2,0.3,6.1,0.8,8.6,1.5c2.5,0.7,4.7,1.7,6.4,3.1c1.8,1.4,3.1,3.2,4,5.4   c0.9,2.2,1.4,5,1.4,8.3c0,3.3-0.4,6.1-1.3,8.5c-0.9,2.4-2.4,4.4-4.4,6c-2,1.6-4.7,2.8-8,3.6C135.2,434.5,131,434.9,126.1,434.9z"></path>
+	<path d="M157.2,377.8h43.7v16.2h-22.4v5.5h17.8v14.3h-17.8v5.8h23.3v14.3h-44.5V377.8z"></path>
+	<path d="M219.4,394.4h-13.9v-16.6h50.5v16.6h-14v39.4h-22.5V394.4z"></path>
+	<path d="M261.2,377.8h22.5V419h19.4v14.7h-42V377.8z"></path>
+	<path d="M309.1,377.8h23v56h-23V377.8z"></path>
+	<path d="M358.7,434.9c-2.7,0-5.1-0.1-7.2-0.3c-2.1-0.2-4-0.5-5.7-0.9c-1.7-0.4-3.2-0.8-4.5-1.2c-1.3-0.5-2.6-0.9-3.7-1.4l3.6-13   c2.8,0.8,5.5,1.5,8,2c2.5,0.5,5.3,0.8,8.6,0.8c1.6,0,2.9,0,3.9-0.1c1-0.1,1.8-0.2,2.4-0.4c0.6-0.2,1-0.4,1.2-0.7   c0.2-0.3,0.3-0.6,0.3-1c0-0.5-0.1-0.9-0.3-1.2c-0.2-0.3-0.6-0.5-1.2-0.6c-0.6-0.1-1.4-0.3-2.4-0.4c-1-0.1-2.3-0.3-3.8-0.4   c-3.3-0.3-6.1-0.9-8.6-1.6c-2.5-0.7-4.5-1.9-6.2-3.4c-1.7-1.5-2.9-3.4-3.8-5.8c-0.9-2.4-1.3-5.4-1.3-9.1c0-6.1,2-10.8,5.9-14.3   c3.9-3.4,10.1-5.2,18.6-5.2c4.4,0,8.1,0.3,11.1,0.8c3,0.5,5.6,1.1,7.7,1.9l-2.1,15c-2.6-0.5-5-0.8-7.3-1.2   c-2.3-0.3-4.7-0.5-7.4-0.5c-3,0-5,0.1-6,0.4c-1,0.3-1.5,0.8-1.5,1.7c0,0.5,0.1,0.9,0.3,1.2c0.2,0.3,0.5,0.5,1.1,0.6   c0.5,0.1,1.3,0.3,2.3,0.3c1,0.1,2.3,0.2,3.9,0.4c3.2,0.3,6.1,0.8,8.6,1.5c2.5,0.7,4.7,1.7,6.4,3.1c1.8,1.4,3.1,3.2,4,5.4   c0.9,2.2,1.4,5,1.4,8.3c0,3.3-0.4,6.1-1.3,8.5c-0.9,2.4-2.4,4.4-4.4,6c-2,1.6-4.7,2.8-8,3.6C367.8,434.5,363.6,434.9,358.7,434.9z"></path>
+	<path d="M399.7,394.4h-13.9v-16.6h50.5v16.6h-14v39.4h-22.5V394.4z"></path>
+	<path d="M441.9,377.8h23v56h-23V377.8z"></path>
+	<path d="M473,377.8h22.8l11.3,17.3l8.4,20.5l-5.6-25.4v-12.5h18.8v56h-22.1L495,416.1l-8-21.1l4.9,25.8v12.9H473V377.8z"></path>
+	<path d="M563.7,434.9c-5.2,0-9.7-0.7-13.5-2c-3.8-1.3-6.8-3.3-9.2-5.8c-2.4-2.5-4.1-5.6-5.2-9.2s-1.7-7.7-1.7-12.2   c0-4.2,0.6-8.1,1.8-11.6c1.2-3.5,3.2-6.6,5.8-9.1c2.6-2.5,6-4.5,10.1-6c4.1-1.4,9.1-2.1,15-2.1c4.5,0,8.4,0.3,11.6,1   c3.3,0.7,5.9,1.3,8,2l-2.3,16.1c-1.4-0.3-2.8-0.6-4.1-0.9c-1.3-0.3-2.6-0.5-3.8-0.6c-1.3-0.2-2.6-0.3-3.9-0.4   c-1.3-0.1-2.8-0.1-4.3-0.1c-1.7,0-3.2,0.1-4.6,0.3c-1.3,0.2-2.4,0.7-3.4,1.3c-0.9,0.6-1.6,1.5-2.1,2.8c-0.5,1.2-0.7,2.8-0.7,4.8   v4.6c0,2.9,0.2,5.2,0.6,6.9c0.4,1.7,0.9,2.9,1.6,3.7c0.7,0.8,1.5,1.3,2.5,1.5c0.9,0.2,2,0.3,3.1,0.3c1.2,0,2.3-0.1,3.3-0.3   c1-0.2,2-0.5,2.9-0.9v-5.8h-6.8v-12.1h25.8v33.6h-7.1l-4.8-10.9l-6.5,10.3c-0.4,0.1-0.9,0.2-1.6,0.4c-0.7,0.1-1.4,0.3-2.1,0.4   c-0.7,0.1-1.5,0.2-2.3,0.3C565.2,434.9,564.4,434.9,563.7,434.9z"></path>
+</g>
+<g enable-background="new    ">
+	<path d="M114.1,459.7l-9.5-17.7h6.5l5.3,10.7l1,4.6l0.9-4.6l5-10.7h5.7l-8.9,17.5v9.6h-6.1V459.7z"></path>
+	<path d="M143.4,469.7c-2.1,0-4-0.3-5.6-1c-1.6-0.7-3-1.7-4.1-2.9c-1.1-1.2-1.9-2.7-2.5-4.5c-0.6-1.7-0.8-3.7-0.8-5.8   c0-2.1,0.3-3.9,0.9-5.6c0.6-1.7,1.4-3.2,2.5-4.4c1.1-1.2,2.5-2.2,4.1-2.9c1.6-0.7,3.5-1,5.7-1s4,0.3,5.6,1c1.6,0.7,3,1.6,4.1,2.8   c1.1,1.2,1.9,2.7,2.5,4.4c0.6,1.7,0.8,3.6,0.8,5.6c0,2.1-0.3,4-0.9,5.8c-0.6,1.7-1.4,3.2-2.5,4.5c-1.1,1.3-2.5,2.2-4.1,2.9   C147.4,469.4,145.5,469.7,143.4,469.7z M143.5,465.6c1.1,0,2-0.2,2.8-0.5c0.8-0.3,1.5-0.8,2.1-1.6c0.6-0.7,1-1.8,1.3-3   s0.4-2.9,0.4-4.8v-1c0-1.7-0.1-3.1-0.4-4.2c-0.3-1.1-0.7-2-1.2-2.7s-1.2-1.1-2.1-1.4c-0.8-0.3-1.8-0.4-3-0.4   c-1.1,0-2.1,0.1-2.9,0.4c-0.8,0.3-1.5,0.8-2,1.5c-0.5,0.7-0.9,1.6-1.2,2.7c-0.3,1.1-0.4,2.5-0.4,4.2v1c0,1.9,0.1,3.5,0.4,4.8   c0.3,1.2,0.7,2.2,1.3,3c0.6,0.7,1.2,1.2,2.1,1.5C141.4,465.5,142.4,465.6,143.5,465.6z"></path>
+	<path d="M178.2,442.1h6.1v27.1h-4l-1.4-3.7l-1.8,3.1c-1.2,0.8-3.2,1.2-5.9,1.2c-1.5,0-2.8-0.2-4-0.6c-1.2-0.4-2.2-1-3-1.9   c-0.8-0.9-1.4-2-1.9-3.5c-0.4-1.4-0.6-3.2-0.6-5.3v-16.4h6.1v17.8c0,1.1,0.1,2,0.3,2.7c0.2,0.7,0.5,1.2,0.9,1.6   c0.4,0.4,0.9,0.7,1.5,0.8s1.4,0.2,2.2,0.2c1.3,0,2.4-0.1,3.2-0.4c0.8-0.3,1.6-0.7,2.3-1.2V442.1z"></path>
+	<path d="M209,459.9l5.2,9.3h-6.6l-5.5-10.3h-4.7v10.3h-6.1v-27.1h11.8c3.4,0,6,0.7,7.6,2.1c1.7,1.4,2.5,3.5,2.5,6.4   c0,1-0.1,1.9-0.4,2.8c-0.2,0.9-0.7,1.7-1.3,2.3c-0.6,0.7-1.4,1.2-2.5,1.7c-1.1,0.5-2.4,0.8-4,0.9L209,459.9z M202.4,455.1   c0.9,0,1.6-0.1,2.2-0.2c0.6-0.1,1.1-0.3,1.4-0.7c0.4-0.3,0.6-0.7,0.8-1.3c0.2-0.5,0.2-1.2,0.2-2v-0.5c0-0.8-0.1-1.5-0.2-2   c-0.2-0.5-0.4-0.9-0.8-1.2c-0.4-0.3-0.9-0.5-1.5-0.6c-0.6-0.1-1.3-0.2-2.2-0.2h-4.9v8.7H202.4z"></path>
+	<path d="M239.9,469.7c-2.2,0-4.2-0.4-5.8-1.1c-1.6-0.7-2.9-1.7-3.9-3c-1-1.3-1.8-2.8-2.2-4.5c-0.5-1.7-0.7-3.6-0.7-5.6   c0-2.1,0.3-3.9,0.8-5.6c0.5-1.7,1.3-3.2,2.3-4.4c1.1-1.2,2.4-2.2,4-2.9c1.6-0.7,3.6-1,5.8-1c1.7,0,3.2,0.2,4.5,0.5   c1.2,0.3,2.4,0.7,3.4,1.2l-1.2,4.3c-0.6-0.2-1.2-0.4-1.7-0.5c-0.5-0.2-1-0.3-1.6-0.4c-0.5-0.1-1-0.2-1.6-0.2   c-0.5-0.1-1.1-0.1-1.7-0.1c-1,0-1.9,0.1-2.7,0.3c-0.8,0.2-1.5,0.6-2.1,1.2c-0.6,0.6-1,1.5-1.4,2.6c-0.3,1.1-0.5,2.5-0.5,4.3v1.5   c0,1.9,0.2,3.4,0.5,4.6c0.3,1.2,0.7,2.1,1.3,2.8s1.3,1.1,2.1,1.4c0.8,0.2,1.7,0.4,2.8,0.4c0.7,0,1.3,0,1.9-0.1   c0.6-0.1,1.1-0.2,1.6-0.3c0.5-0.2,1-0.3,1.6-0.5c0.5-0.2,1.1-0.4,1.7-0.7l1.2,4.1c-1,0.6-2.1,1-3.5,1.4   C243.5,469.5,241.8,469.7,239.9,469.7z"></path>
+	<path d="M264,469.7c-2.1,0-4-0.3-5.6-1c-1.6-0.7-3-1.7-4.1-2.9c-1.1-1.2-1.9-2.7-2.5-4.5c-0.6-1.7-0.8-3.7-0.8-5.8   c0-2.1,0.3-3.9,0.9-5.6c0.6-1.7,1.4-3.2,2.5-4.4c1.1-1.2,2.5-2.2,4.1-2.9c1.6-0.7,3.5-1,5.7-1s4,0.3,5.6,1c1.6,0.7,3,1.6,4.1,2.8   c1.1,1.2,1.9,2.7,2.5,4.4c0.6,1.7,0.8,3.6,0.8,5.6c0,2.1-0.3,4-0.9,5.8c-0.6,1.7-1.4,3.2-2.5,4.5c-1.1,1.3-2.5,2.2-4.1,2.9   C268,469.4,266.1,469.7,264,469.7z M264.1,465.6c1.1,0,2-0.2,2.8-0.5c0.8-0.3,1.5-0.8,2.1-1.6c0.6-0.7,1-1.8,1.3-3s0.4-2.9,0.4-4.8   v-1c0-1.7-0.1-3.1-0.4-4.2c-0.3-1.1-0.7-2-1.2-2.7s-1.2-1.1-2.1-1.4c-0.8-0.3-1.8-0.4-3-0.4c-1.1,0-2.1,0.1-2.9,0.4   c-0.8,0.3-1.5,0.8-2,1.5c-0.5,0.7-0.9,1.6-1.2,2.7c-0.3,1.1-0.4,2.5-0.4,4.2v1c0,1.9,0.1,3.5,0.4,4.8c0.3,1.2,0.7,2.2,1.3,3   c0.6,0.7,1.2,1.2,2.1,1.5C262.1,465.5,263,465.6,264.1,465.6z"></path>
+	<path d="M282.3,442.1h6.4l9.2,14.9l3.1,7.2l-1.2-8.4v-13.8h5.2v27.1h-6.2l-9.7-15.5l-2.7-6.9l1.1,8.1v14.3h-5.2V442.1z"></path>
+	<path d="M322.8,469.7c-2.2,0-4.2-0.4-5.8-1.1c-1.6-0.7-2.9-1.7-3.9-3c-1-1.3-1.8-2.8-2.2-4.5c-0.5-1.7-0.7-3.6-0.7-5.6   c0-2.1,0.3-3.9,0.8-5.6c0.5-1.7,1.3-3.2,2.3-4.4c1.1-1.2,2.4-2.2,4-2.9c1.6-0.7,3.6-1,5.8-1c1.7,0,3.2,0.2,4.5,0.5   c1.2,0.3,2.4,0.7,3.4,1.2l-1.2,4.3c-0.6-0.2-1.2-0.4-1.7-0.5c-0.5-0.2-1-0.3-1.6-0.4c-0.5-0.1-1-0.2-1.6-0.2   c-0.5-0.1-1.1-0.1-1.7-0.1c-1,0-1.9,0.1-2.7,0.3c-0.8,0.2-1.5,0.6-2.1,1.2c-0.6,0.6-1,1.5-1.4,2.6c-0.3,1.1-0.5,2.5-0.5,4.3v1.5   c0,1.9,0.2,3.4,0.5,4.6c0.3,1.2,0.7,2.1,1.3,2.8s1.3,1.1,2.1,1.4c0.8,0.2,1.7,0.4,2.8,0.4c0.7,0,1.3,0,1.9-0.1   c0.6-0.1,1.1-0.2,1.6-0.3s1-0.3,1.6-0.5c0.5-0.2,1.1-0.4,1.7-0.7l1.2,4.1c-1,0.6-2.1,1-3.5,1.4S324.8,469.7,322.8,469.7z"></path>
+	<path d="M335.9,442.1h18.5v4.5H342v6.7h10.3v4.2H342v7.2h13v4.4h-19.1V442.1z"></path>
+	<path d="M377.8,459.9l5.2,9.3h-6.6l-5.5-10.3h-4.7v10.3h-6.1v-27.1H372c3.4,0,6,0.7,7.6,2.1s2.5,3.5,2.5,6.4c0,1-0.1,1.9-0.4,2.8   c-0.2,0.9-0.7,1.7-1.3,2.3c-0.6,0.7-1.4,1.2-2.5,1.7c-1.1,0.5-2.4,0.8-4,0.9L377.8,459.9z M371.2,455.1c0.9,0,1.6-0.1,2.2-0.2   s1.1-0.3,1.4-0.7c0.4-0.3,0.6-0.7,0.8-1.3c0.2-0.5,0.2-1.2,0.2-2v-0.5c0-0.8-0.1-1.5-0.2-2c-0.2-0.5-0.4-0.9-0.8-1.2   c-0.4-0.3-0.9-0.5-1.5-0.6c-0.6-0.1-1.3-0.2-2.2-0.2h-4.9v8.7H371.2z"></path>
+	<path d="M385.5,446.6v-4.5h21.6v4.5h-7.8v22.6h-6.1v-22.6H385.5z"></path>
+	<path d="M427.9,457.6v11.5h-6.1v-27.1h6.1V453h10.8v-10.9h6.1v27.1h-6.1v-11.5H427.9z"></path>
+	<path d="M451.6,442.1h6.3v27.1h-6.3V442.1z"></path>
+	<path d="M472.5,469.7c-1.1,0-2.1-0.1-3-0.2c-0.9-0.1-1.7-0.2-2.5-0.4s-1.4-0.4-2-0.6c-0.6-0.2-1.2-0.5-1.7-0.7l1.2-4   c1.2,0.4,2.4,0.8,3.5,1.1s2.5,0.5,4.1,0.5c1,0,1.8,0,2.5-0.1c0.7-0.1,1.3-0.3,1.7-0.5s0.8-0.6,1-1.1c0.2-0.4,0.3-1,0.3-1.7   c0-0.6-0.1-1-0.2-1.4c-0.1-0.4-0.3-0.7-0.7-1c-0.4-0.3-0.9-0.5-1.5-0.7c-0.7-0.2-1.6-0.4-2.7-0.6c-1.6-0.2-2.9-0.6-4.1-1   c-1.2-0.4-2.1-0.9-2.8-1.6c-0.7-0.7-1.3-1.5-1.6-2.5c-0.4-1-0.5-2.2-0.5-3.7c0-2.6,0.8-4.6,2.5-6c1.7-1.4,4.2-2.1,7.5-2.1   c1.8,0,3.4,0.1,4.6,0.4c1.3,0.3,2.4,0.6,3.4,1.1l-0.8,4.2c-0.6-0.2-1.1-0.3-1.7-0.5c-0.5-0.1-1.1-0.3-1.6-0.4   c-0.5-0.1-1.1-0.2-1.7-0.2c-0.6-0.1-1.3-0.1-2-0.1c-1.8,0-3,0.2-3.8,0.7c-0.8,0.4-1.1,1.3-1.1,2.5c0,0.6,0.1,1.1,0.2,1.5   c0.1,0.4,0.3,0.7,0.7,1c0.4,0.2,0.9,0.5,1.6,0.6c0.7,0.2,1.7,0.3,2.8,0.5c1.5,0.2,2.8,0.5,3.9,0.9c1.1,0.4,2.1,0.9,2.8,1.6   c0.8,0.7,1.3,1.5,1.7,2.5c0.4,1,0.6,2.2,0.6,3.6c0,2.8-0.8,4.9-2.5,6.3C478.8,469,476.2,469.7,472.5,469.7z"></path>
+	<path d="M485.6,446.6v-4.5h21.6v4.5h-7.8v22.6h-6.1v-22.6H485.6z"></path>
+	<path d="M522.8,469.7c-2.1,0-4-0.3-5.6-1c-1.6-0.7-3-1.7-4.1-2.9c-1.1-1.2-1.9-2.7-2.5-4.5c-0.6-1.7-0.8-3.7-0.8-5.8   c0-2.1,0.3-3.9,0.9-5.6c0.6-1.7,1.4-3.2,2.5-4.4s2.5-2.2,4.1-2.9c1.6-0.7,3.5-1,5.7-1c2.1,0,4,0.3,5.6,1c1.6,0.7,3,1.6,4.1,2.8   c1.1,1.2,1.9,2.7,2.5,4.4c0.6,1.7,0.8,3.6,0.8,5.6c0,2.1-0.3,4-0.9,5.8s-1.4,3.2-2.5,4.5c-1.1,1.3-2.5,2.2-4.1,2.9   C526.8,469.4,524.9,469.7,522.8,469.7z M522.8,465.6c1.1,0,2-0.2,2.8-0.5c0.8-0.3,1.5-0.8,2.1-1.6c0.6-0.7,1-1.8,1.3-3   s0.4-2.9,0.4-4.8v-1c0-1.7-0.1-3.1-0.4-4.2c-0.3-1.1-0.7-2-1.2-2.7s-1.2-1.1-2.1-1.4c-0.8-0.3-1.8-0.4-3-0.4   c-1.1,0-2.1,0.1-2.9,0.4s-1.5,0.8-2,1.5c-0.5,0.7-0.9,1.6-1.2,2.7c-0.3,1.1-0.4,2.5-0.4,4.2v1c0,1.9,0.1,3.5,0.4,4.8   c0.3,1.2,0.7,2.2,1.3,3c0.6,0.7,1.2,1.2,2.1,1.5S521.8,465.6,522.8,465.6z"></path>
+	<path d="M558.7,459.9l5.2,9.3h-6.6l-5.5-10.3h-4.7v10.3h-6.1v-27.1h11.8c3.4,0,6,0.7,7.6,2.1s2.5,3.5,2.5,6.4c0,1-0.1,1.9-0.4,2.8   c-0.2,0.9-0.7,1.7-1.3,2.3c-0.6,0.7-1.4,1.2-2.5,1.7c-1.1,0.5-2.4,0.8-4,0.9L558.7,459.9z M552.1,455.1c0.9,0,1.6-0.1,2.2-0.2   s1.1-0.3,1.4-0.7c0.4-0.3,0.6-0.7,0.8-1.3c0.2-0.5,0.2-1.2,0.2-2v-0.5c0-0.8-0.1-1.5-0.2-2c-0.2-0.5-0.4-0.9-0.8-1.2   c-0.4-0.3-0.9-0.5-1.5-0.6c-0.6-0.1-1.3-0.2-2.2-0.2h-4.9v8.7H552.1z"></path>
+	<path d="M575.3,459.7l-9.5-17.7h6.5l5.3,10.7l1,4.6l1-4.6l5-10.7h5.7l-8.9,17.5v9.6h-6.1V459.7z"></path>
+</g>
+</svg>
+</a>
+    <a class="header-logo--small d-block d-sm-none my-2" href="/" title="Setlisting logo"><img class="mw-100 h-auto" src="https://assets0.setlisting.cdn.crowds.dk/assets/logo/setlisting_logo-af3a50095acf809f34cd38546b58591253d5338f4d1715f7d01a0a8e78162178.png" /></a>
+
+    <form class="form-inline nav-search mx-3 mx-md-3 w-auto w-md-50" role="search" action="/search" accept-charset="UTF-8" method="get">
+      <div class="input-group w-100">
+        <input class="form-control border-end-0" name="qs" value="" />
+        <button class="btn btn-primary border-0" type="submit">Search</button>
+      </div>
+</form>
+    <ul class="navbar-nav d-none d-lg-block">
+    <li class="ps-2 d-none d-lg-block nav-item nav-item--hoverish"><a href="/accounts/sign_in"><svg class="svg-icon svg-icon-user "><use xlink:href='#icon-user'></use></svg></a></li>
+</ul>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+  <div class="offcanvas offcanvas-fade-only vh-100 vw-100 fade" tabindex="-1" id="offcanvasMenu" data-bs-backdrop="static">
+  <div class="offcanvas-header d-flex justify-content-between">
+    <a class="fw-bold nav-link text-size-small color-lighter" data-turbo="true" data-turbo-method="delete" href="/accounts/sign_out">Sign out</a>
+
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav ps-lg-2 d-block d-lg-none text-center">
+          <li class="nav-item nav-item--hoverish">
+      <a class="nav-link" href="/accounts/sign_in">Sign in</a>
+</li>
+    </ul>
+  </div>
+</div>
+
+
+  <div class="d-flex justify-content-between align-items-start">
+    <nav class="navbar navbar-expand-md pt-0">
+      <ul class="nav nav-underline flex-row justify-content-start mb-2 mb-lg-0">
+          <li class="nav-item ">
+            <a class="a nav-link py-1 " href="/setlists">Setlists</a>
+          </li>
+          <li class="nav-item ">
+            <a class="a nav-link py-1 " href="/artists">Artists</a>
+          </li>
+          <li class="nav-item d-none d-md-block">
+            <a class="a nav-link py-1  d-none d-md-block" href="/festivals">Festivals</a>
+          </li>
+          <li class="nav-item d-none d-md-block">
+            <a class="a nav-link py-1  d-none d-md-block" href="/concert-posters">Posters</a>
+          </li>
+          <li class="nav-item d-none d-md-block">
+            <a class="a nav-link py-1  d-none d-md-block" href="/setlist-photos">Setlist Photos</a>
+          </li>
+          <li class="nav-item d-none d-md-block">
+            <a class="a nav-link py-1  d-none d-md-block" href="/tours">Tours</a>
+          </li>
+          <li class="nav-item ">
+            <a class="a nav-link py-1 " href="/venues">Venues</a>
+          </li>
+      </ul>
+    </nav>
+
+    <div class="d-flex flex-nowrap pb-2">
+      
+      <a class="a btn btn-sm btn-primary fw-bold text-nowrap" href="/setlists/new">Add Setlist</a>
+    </div>
+  </div>
+</header>
+
+    </div>
+  </div>
+
+  <div class="container flex-grow-1 pb-4">
+    <div class="row">
+      <div class="col-12 typography">
+        
+        
+
+
+<h1 class="h1">Cookies and Privacy Policy</h1>
+
+<div class="row text-content">
+  <div class="col-xs-12 col-lg-10">
+    <h2 class="h3">What is the scope of this policy?</h2>
+
+    <p>This Privacy Policy covers Setlisting (www.setlisting.com) handling of personal information collected when you are on Setlisting and when
+    you use Setlisting services. This Privacy Policy also covers Setlisting treatment of any personal information that Setlisting business
+    partners share with Setlisting. This policy does not apply to the practices of third parties that Setlisting does not own or control,
+    or to individuals that Setlisting does not employ or manage.
+
+    <h2 class="h3">What information does Setlisting collect?</h2>
+
+    <p>We collect the following types of information from our users:</p>
+
+    <h3 class="h4">Personal Information That You Provide to Us</h3>
+
+    <p>We receive and store information you enter on www.setlisting.com or provide us in any other way. Personal Information during registration
+    and general access that are collected include your name, email address, IP address, Internet browser type, username, password and other
+    information necessary for us to provide this service, including the usernames and passwords for your accounts and profiles on third-party
+    sites with which Setlisting interfaces with. You can opt-out from providing certain information, but your experience on Setlisting may be limited.</p>
+
+    <h3 class="h4">Automatic Collection of Personal Information</h3>
+
+    <p>Setlisting retrieves and stores information whenever you interact with our Website or other service of our Website. Setlisting
+    automatically receives and records information in our server logs from your Internet browser including your IP address, cookie information,
+    and the page you requested. Setlisting automatically collects usage data, such as the numbers and frequency of visitors to our Website and
+    its components. This practice is similar to a store observing the number of customers on their showroom floor. Setlisting only uses this
+    data for statistical analysis of our usage, and not in a way that would identify you personally. These analyses allow us to continually
+    improve the experience on www.setlisting.com.</p>
+
+    <h3 class="h4">Email receipts</h3>
+
+    <p>When you receive and open emails from Setlisting, we may receive a confirmation if your computer supports this feature, in order to
+    help us make emails more useful. We may also send out emails with news, feature announcements or promotions. If you do not want to
+    receive email or other mail from us, you can opt-out by updating your settings under the "Settings" link on www.setlisting.com.</p>
+
+    <h2 class="h3">What about cookies?</h2>
+
+    <h3 class="h4">General</h3>
+
+    <p>This website uses cookies. By using this website and agreeing to this policy, you consent to Setlisting's use of cookies in accordance
+    with the terms of this policy.</p>
+
+    <p>Cookies are files sent by web servers to web browsers, and stored by the web browsers.</p>
+
+    <p>The information is then sent back to the server each time the browser requests a page from the server. This enables a web server to
+    identify and track web browsers.</p>
+
+    <p>There are two main kinds of cookies: session cookies and persistent cookies. Session cookies are deleted from your computer when you
+    close your browser, whereas persistent cookies remain stored on your computer until deleted, or until they reach their expiry date.</p>
+
+    <h3 class="h4">Cookies on our website</h3>
+
+    <p>Setlisting uses cookies on this website, for the purposes of identifying users, tracking actions, remembering preferences, serving
+    advertisements and messages, remarketing users with advertisements and messages, enabling interaction with third party social networks
+    and sharing platforms, and other purposes.</p>
+
+    <h3 class="h4">Third party cookies</h3>
+
+    <p>When you use this website, you may also be sent the following third party cookies, which may be used for the following purposes:</p>
+
+    <ul>
+      <li>Google AdWords conversion tracking (Google) is a service that collects cookie and usage data for purposes of tracking actions performed on this site.</li>
+      <li>Google Analytics remarketing and similar audiences features in Adwords (Google) are services that use cookie and usage data to connect activity on this site with the Adwords and Doubleclick advertising networks. The collected information enables Google and its partners, to serve advertising based on your activity.</li>
+      <li>Facebook Comments (Facebook) is a service that collects cookie and usage data and enables users to leave and share comments on the Facebook platform. If email address is provided by the user, it may be used to send notifications of comments made in the discussion.
+    Facebook Like button and social widgets (Facebook) are services that collect cookie and usage data and enable interaction with the Facebook social network.</li>
+      <li>Twitter Tweet button and social widgets (Twitter) are services that collect cookie and usage data and enable interaction with the Twitter social network.</li>
+      <li>You may opt out of the use of cookies by other third parties by visiting <a href="http://www.networkadvertising.org/choices/#completed">http://www.networkadvertising.org/choices/#completed</a>. This opt-out mechanism uses a cookie, and if you clear the cookies from your browser your opt-out will not be maintained.  You should visit this page periodically to review your preferences, or update to include new participating companies.</li>
+    </ul>
+
+    <h3 class="h4">Refusing cookies</h3>
+
+    <p>Most browsers allow you to refuse to accept cookies.</p>
+
+    <p>In Internet Explorer, you can refuse all cookies by clicking “Tools”, “Internet Options”, “Privacy”, and selecting “Block all cookies”
+    using the sliding selector.</p>
+
+    <p>In Firefox, you can adjust your cookies settings by clicking “Tools”, “Options” and “Privacy”.</p>
+
+    <p>Blocking cookies will have a negative impact upon the usability of some websites.</p>
+
+    <h2 class="h3">Does Setlisting disclose personal information?</h2>
+
+    <p>Users may, at their option, disclose their own Personal Information by providing content on www.setlisting.com, including text, link affirmations,
+     images and videos. Setlisting will also disclose Personal Information, in the following circumstances:</p>
+
+    <h3 class="h4">Content You Submit on www.setlisting.com</h3>
+
+    <p>You may post personal information on some pages on www.setlisting.com that may be viewed by other users or the public, although we strongly
+    advise against it. We advise you to use good judgment and not post personal information that you do not want other users to know. Users
+    may not be able to edit or delete public content once it is posted. Such personal information may be used by visitors of these pages to
+    send you unsolicited messages. Setlisting is not responsible for any loss of privacy or other damage resulting from your voluntary
+    disclosure of personal information.</p>
+
+    <h3 class="h4">By Law, to Protect Rights and to Comply with Setlisting Policies</h3>
+
+    <p>Setlisting will only disclose Personal Information if:</p>
+
+    <ul>
+      <li>required by law, or in response to a subpoena or court order</li>
+      <li>Setlisting discretely concludes that disclosure is necessary to protect against fraud, to protect the property or other rights
+          of Setlisting, other users, or third parties</li>
+      <li>Setlisting concludes that an individual or individuals has abused the service by using it to attack other systems or to gain
+          unauthorized access to another system, to engage in spamming or otherwise to violate applicable laws.</li>
+    </ul>
+
+    <h2 class="h3">Security</h2>
+
+    <p>Any personally identifiable information you submit on www.setlisting.com is purely voluntary and should not be of a particularly sensitive
+    nature; therefore, we use standard security measures handling this information. User accounts created on www.setlisting.com are secured by
+    user-created passwords. Setlisting cannot guarantee the security of user account information. Unauthorized entry or use, hardware or
+    software failure, and other factors may compromise the security of user information at any time.</p>
+
+    <h2 class="h3">Request Data Deletion</h2>
+
+    <p>Setlisting takes your privacy and right to be forgotten seriously. It's easy to delete your profile and any data related
+    to your account. You'll immediately be unsubscribed from any newsletters and all communication as well.</p>
+
+    <p><b>To delete your account:</b> Go to <a class="a" href="/settings">settings</a>, scroll to the bottom and follow the instructions.</p>
+
+    <p>If there are any issues with that you can also send a mail from the email address you used to sign up with to request deletion.
+    Send a request to <a class="a" href="mailto:support@setlisting.com">support@setlisting.com</a></a>.
+    Be aware we might ask you to verify your identity.</p>
+
+    <h3 class="h4">Last updated</h3>
+
+    <p>2021/Sep/28</p>
+  </div>
+</div>
+
+      </div>
+    </div>
+</div>
+  
+
+  <footer role="contentinfo" class="typography mt-5 pt-3 pb-5 line-height-smaller">
+    <div class="container pt-3">
+      <div class="row pb-4">
+        <div class="col-12 col-sm-4 col-lg-2 col-xl-3 mb-4 text-center text-sm-start">
+          <h4 class="text-size-default fw-bold">The Data</h4>
+
+          <ul class="list-unstyled">
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" rel="nofollow noopener" target="_blank" href="/songs/new">Add song</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" rel="nofollow noopener" target="_blank" href="/venues/new">Add venue</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" rel="nofollow noopener" target="_blank" href="/festivals/new">Add festival</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" rel="nofollow noopener" target="_blank" href="/artists/new">Add artist</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" rel="nofollow noopener" target="_blank" href="/setlists/new">Add setlist</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-2 col-xl-3 mb-4 text-center text-sm-start">
+          <h4 class="text-size-default fw-bold">Browse</h4>
+
+          <ul class="list-unstyled">
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/artists">Artists</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/setlists">Setlists</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/venues">Venues</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/festivals">Festivals</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/tours">Tours</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/concert-posters">Posters</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/setlist-photos">Setlist Photos</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-2 col-xl-3 mb-4 text-center text-sm-start">
+          <h4 class="text-size-default fw-bold">Setlisting</h4>
+
+          <ul class="list-unstyled">
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/site/about">About</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/site/guide">Setlist Guide</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="https://blog.setlisting.com/" target="_blank" rel="noopener">Blog</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/site/faq">F.A.Q.</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" href="/contact">Contact</a>
+            </li>
+            <li class="mb-1">
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" target="_blank" rel="noopener" href="https://www.facebook.com/setlisting">Facebook</a>
+            </li>
+            <li class="mb-1">
+              <a class="py-1 pe-1 p-md-0" target="_blank" rel="noopener" href="https://twitter.com/setlisting">Twitter</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-4 offset-lg-2 offset-xl-0 col-xl-3 text-center text-sm-start text-lg-end mb-4">
+          <div class="spotify-attribution mb-3 d-flex flex-column w-75 mx-auto w-sm-100">
+            <span class="me-2 text-size-smaller mb-2">Artist images provided by</span>
+            <a href="https://www.spotify.com" target="_blank" rel="noopener" class="mb-2">
+              <img width="150" src="https://assets2.setlisting.cdn.crowds.dk/assets/spotify-30a7ad2ff3074df27783ac16dbdc8c72a7138d5333962c413612e0eb54bbf286.png" />
+            </a>
+            <p class="text-size-smaller">Setlisting is not affiliated with Spotify. Spotify is a registered trademark of Spotify Ltd.</p>
+          </div>
+
+          <div class="support-setlisting mb-2">
+            <a href="https://www.buymeacoffee.com/setlisting" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 52px !important;" ></a>
+          </div>
+          <div class="support-setlisting mb-2">
+            <a class="patreon-btn" color="primary" tabindex="0" type="button" href="https://www.patreon.com/bePatron?u=48457668" role="button" target="_blank" rel="noopener noreferrer">
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="pe-2">
+                  <span class="d-flex">
+                    <svg viewBox="0 0 569 546" xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <circle cx="362.589996" cy="204.589996" data-fill="1" id="Oval" r="204.589996"></circle>
+                        <rect data-fill="2" height="545.799988" id="Rectangle" width="100" x="0" y="0"></rect>
+                      </g>
+                    </svg>
+                  </span>
+                </div>
+                Become a patron
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center text-sm-start">
+          <p class="text-size-small color-text-subdued">
+            <a class="d-block me-sm-4 mb-2" href="/site/cookies-and-privacy-policy">Cookies &amp; Privacy Policy</a>
+
+            <span class="d-block d-md-inline-block">Copyright © 2024 Setlisting</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
