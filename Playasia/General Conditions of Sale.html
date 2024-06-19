@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="//s.pacn.ws/main.min.css?v=PX-364" onload="main_css_load=true">
+<script>
+let cdn_host = '//s.pacn.ws/';
+let $ph = {
+see_all: 'See all',
+buy_btn: 'Buy',
+login_to_use: 'In order to use this function, you need to log in first!',
+add_favorites: 'Click to Add this Item to your Favorites!',
+rem_favorites: 'Click to remove your favorites!',
+buy_now: 'Buy Now!'
+}
+</script>
+<script type="text/javascript" src="//s.pacn.ws/jquery.min.js?v=PX-364"></script>
+<script type="text/javascript" src="//s.pacn.ws/jsbase.min.js?v=PX-364"></script>
+<script id="init_js">
+$(document).ready(function () {
+initialize();
+})
+if (typeof initialize === 'undefined') {
+console.log("Deactivate CDN from JS");
+document.write('<script src="/s/jsbase.min.js?v=PX-364"></' + 'script>');
+loadExtCss('/s/main.min.css?v=PX-364');
+killcdn = true;
+}
+</script>
+<script>
+if (typeof mobile === "undefined")
+mobile = window.innerWidth <= 640;
+if (typeof killcdn === "undefined")
+killcdn = false;
+if (typeof g_ime_r === "undefined")
+g_ime_r = [];
+if (typeof nsfwpc === "undefined")
+nsfwpc = '//s.pacn.ws/gallery/170/GA.06661.0001.jpg?1610439952&v=PX-364-nsfw-&crop=0,0&width=150';
+var g_curr_id = 30, over18 = 0, g_nick = '',
+spco = 1, g_cid = false, last_session_time = new Date().getTime(),
+p_query = '', p_view = '',
+p_search_cat = 0,
+p_advanced_search = '%22%22',
+p_hide_digital = 0, g_cat = 1, loc = 1, bHLr = js_loaded = false,
+lang_id = 1, script = 41,
+cdn_alt_host = '/s/', cacheKey = 'PX-364',
+theme_beta = '1',
+dialog_width = mobile ? window.innerWidth : 1000;
+g_cur_r = [{"c":"1","v":1,"N":"USD","n":"US$","d":"2"},{"c":"2","v":0.122436,"N":"HKD","n":"HK$&nbsp;","d":"0"},{"c":"27","v":1.032215,"N":"EUR","n":"&#8364;","d":2},{"c":"30","v":1.226571,"N":"GBP","n":"&pound;","d":"2"},{"c":"47","v":0.635479,"N":"AUD","n":"A$&nbsp;","d":"2"},{"c":"48","v":1.086536,"N":"CHF","n":"SFr&nbsp;","d":"2"},{"c":"49","v":0.590141,"N":"NZD","n":"NZ$","d":"2"},{"c":"50","v":0.697391,"N":"CAD","n":"C$&nbsp;","d":"2"},{"c":"51","v":0.029591,"N":"TWD","n":"NT$","d":0},{"c":"52","v":0.203411,"N":"MYR","n":"RM&nbsp;","d":"0"},{"c":"53","v":0.706298,"N":"SGD","n":"S$&nbsp;","d":2},{"c":"54","v":0.177243,"N":"BRL","n":"R$&nbsp;","d":"0"},{"c":"56","v":0.000697,"N":"KRW","n":"&#8361;","d":0},{"c":"57","v":5.8e-5,"N":"IDR","n":"Rp&nbsp;","d":0},{"c":"58","v":0.026094,"N":"THB","n":"&#3647;","d":0},{"c":"59","v":0.016361,"N":"PHP","n":"&#8369;","d":"0"},{"c":"60","v":0.052091,"N":"MXN","n":"MXN&nbsp;","d":"0"},{"c":"61","v":0.261366,"N":"AED","n":"Dhs&nbsp;","d":"0"},{"c":"62","v":0.006123,"N":"JPY","n":"&yen;","d":0},{"c":"63","v":0.011557,"N":"INR","n":"&#8377;&nbsp;","d":0},{"c":"64","v":0.132304,"N":"CNY","n":"&#165;","d":"0"},{"c":"65","v":0.053204,"N":"ZAR","n":"Rs&nbsp;","d":0},{"c":"67","v":0.090304,"N":"NOK","n":"kr&nbsp;","d":"0"},{"c":"69","v":0.091745,"N":"SEK","n":"kr&nbsp;","d":"0"},{"c":"71","v":0.137422,"N":"DKK","n":"kr.&nbsp;","d":"0"},{"c":"73","v":0.041508,"N":"CZK","n":"K\u010d","d":0},{"c":"75","v":0.238475,"N":"PLN","n":"z\u0142","d":2},{"c":"77","v":0.00261,"N":"HUF","n":"Ft","d":0},{"c":"79","v":0.258155,"N":"ILS","n":"\u20aa","d":"0"},{"c":"81","v":0.011244,"N":"RUB","n":"\u20bd","d":0},{"c":"83","v":0.001057,"N":"ARS","n":"AR$","d":0},{"c":"85","v":0.001027,"N":"CLP","n":"CLP$","d":0},{"c":"87","v":0.000234,"N":"COP","n":"COL$","d":0},{"c":"89","v":0.253404,"N":"PEN","n":"S\/","d":2},{"c":"91","v":0.13903,"N":"BOB","n":"Bs","d":"0"},{"c":"93","v":0.01,"N":"COIN","n":"Coin&nbsp;","d":"0"},{"c":"95","v":2.547081,"N":"BHD","n":".\u062f.\u0628","d":"2"},{"c":"97","v":0.000232,"N":"KHR","n":"\u179a\u17c0\u179b","d":0},{"c":"99","v":3.121494,"N":"KWD","n":"\u062f\u064a\u0646\u0627\u0631 \u0643\u0648\u064a\u062a\u064a","d":"2"},{"c":"101","v":0.255911,"N":"SAR","n":"\u0631\u064a\u0627\u0644 \u0633\u0639\u0648\u062f\u064a","d":"2"},{"c":"105","v":0.263468,"N":"QAR","n":"\u0631.\u0642","d":"2"},{"c":"107","v":0.029238,"N":"TRY","n":"\u20ba","d":0},{"c":"109","v":0.024433,"N":"UYU","n":"$U","d":0},{"c":"111","v":0.001831,"N":"CRC","n":"\u20a1","d":0},{"c":"113","v":3.8e-5,"N":"VND","n":"\u20ab","d":0},{"c":"115","v":0.000674,"N":"SATS","n":"sats","d":"0"}];
+cart = {"cart":[],"0":[]};
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="alternate" type="application/rss+xml" title="Playasia.com General News Feed" href="https://www.play-asia.com/36/771.rss"/>
+<link rel="alternate" type="application/rss+xml" title="Playasia.com News in " href="https://www.play-asia.com/36/711-771.rss"/>
+<meta property="og:type" content="article" /><meta property="og:url" content="https://www.play-asia.com/info/tos" /><meta property="og:title" content="Terms and Conditions of Sales" /><meta property="twitter:title" content="Terms and Conditions of Sales" /><meta property="og:image" content="https://www.play-asia.com/play-asia_logo.jpg?a10" /><meta property="twitter:image" content="https://www.play-asia.com/play-asia_logo.jpg?a10" /><meta property="twitter:card" content="summary_large_image" /><meta property="og:site_name" content="Playasia" /><meta property="og:description" content="Online shopping for Import Video Games, Digital Codes, iTunes Cards, Mobage &amp; PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care,  Toys &amp; more." /><meta property="fb:app_id" content="193378651805" /><meta name="robots" content="noindex,nofollow" /><meta name="description" content="Online shopping for Import Video Games, Digital Codes, iTunes Cards, Mobage &amp; PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care,  Toys &amp; more." /><meta name="keywords" content="Online shopping, Japanese games, Hong Kong games, Asian Video Games, Digital Codes, iTunes Cards, Gift Cards, Mobage, PSN Cards, Movies, Music, Electronics, Computers, Software, Books, Apparel, Personal Care, Toys & more" />                    <link rel="canonical" href="https://www.play-asia.com/info/tos"/>
+<title>Terms and Conditions of Sales</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=PX-364">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=PX-364">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=PX-364">
+<link rel="manifest" href="/site.webmanifest?v=PX-364">
+<link rel="mask-icon" href="/safari-pinned-tab.svg?v=PX-364" color="#002d72">
+<meta name="apple-mobile-web-app-title" content="Playasia">
+<meta name="application-name" content="Playasia">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+</head><body id="main_parent"><div id="bgtest"></div>
+<div class="hamburger"><span></span></div>
+<!-- <div id="body_ad"></div>-->
+<div id="website"><div id="top-bar">
+<div class="logo" onclick="window.location = '/'; return false;" title="Playasia Logo">
+<a href="/"><img src="//s.pacn.ws/gallery/large/GA.07993.0001.svg?1713501412&v=PX-364" alt="Playsia Logo"></a>
+</div>
+<div id="search">
+<form method="get" action="/gosearch/" name="sbs">
+<div id="search-wrap">
+<div class="search_overlay"></div>
+<button tabindex=3 aria-label="Search" class="icon search_button somemagn"></button>
+<div id="view-all" onclick="$( 'form[name=&quot;sbs&quot;]').submit();">View All</div>
+<input tabindex=1 placeholder="search codes, games, toys, music, ..." type="search" id="search_input" class="__autocomplete stype"
+name="p_query" value=""/>
+</div>
+<div id="topsearch">
+<div style="padding: 5px">
+<div class="table_like fullwidth">
+<div class="input-like-size">Search&nbsp;</div>
+<div class="aleft">
+<select  tabindex=2 name="search_cat" id="sc">
+<option value="0" style="color: var(--pa-blue )">everything</option>
+<option value="3171" selected>PLAY Exclusives</option>
+<option value="333" selected>Games</option>
+<option value="2555" selected>Digital</option>
+<option value="13" selected>Toys</option>
+<option value="1747" selected>Lifestyle</option>
+<option value="9" selected>Movies</option>
+<option value="355" selected>Music</option>
+<option value="286" selected>Books</option>
+<option value="1601" selected>Electronics</option>
+</select>
+</div>
+<div  tabindex=4 class="aright dialog-close clsbut invert" style="right: 0" id="close-top-search"></div>
+</div>
+<div id="sug-blur"></div>
+<div id="sugexpand"></div>
+</div>
+</div>
+</form>
+<div class="veil"></div>
+</div>    <div id="header-extra">
+<a target="_blank" href="https://www.play-asia.com/blog/2022/06/01/freeshippingplayasia/">
+<img alt="Free Delivery on select items!" class="smallicon" src="//s.pacn.ws/gallery/large/GA.06771.0233.svg?1606996510&v=PX-364">
+FREE WORLDWIDE DELIVERY when spending over <span>&pound;</span><span >97.83</span> on select items!                    </a>
+</div>    <div class="show_logged_in hidall">
+<a href="/account/">
+<span class="smallicon tion007"></span>
+<div class="login_name"></div>
+</a>
+</div>
+<div class="hide_logged_in ">
+<a href="/login/">
+<div class="smallicon tion007"></div>
+<div>Sign In</div>
+</a>
+</div>
+<div class="showmob" id="share" style="display:none;">
+<span class="smallicon shareit"></span>
+</div>
+<div id="cart-holder">
+<a href="/cart/"><span class="erce035 extra-cart smallicon cart_none" ></span><span
+class="erce036 extra-cart smallicon cart_have" style="display: none"></span>
+<div class="hidmob">Cart</div>
+</a>
+</div>
+<div class="hidmob">
+<a href="/help/">
+<span class="smallicon p2ort017"></span>
+<div>Help</div>
+</a>
+</div>
+<div class="hidmob">
+<div>
+<a onclick="openDialog( 'langcurr_box', {width: mobile? $( '#website' ).width() : 400} ); loadDialog( 'langcurr_box' ); return false;" href="#">
+<span class="smallicon" style="height:26px;filter: none!important;">
+<img style="width: 23px; height: unset;"
+src="//s.pacn.ws/gallery/large/GA.07871.0271.svg?1715421745&v=PX-364">
+</span>
+<br/>
+EN | GBP                    </a>
+</div>
+</div>            </div>
+<div id="hamburger-menu" class="showmob">
+</div>
+<div id="hamburger-veil"></div>
+<script>
+loadBurger = function () {
+$.get('/5a/?module=hamburger&render_menu=1', function (a, b) {
+$('#hamburger-menu').html(a).stdHTMLUpdates();
+theme.toggleTheme();
+})
+}
+</script>                <div class="top_bar_wrap ">
+</div>
+<div id="sales_area">                <div id="dynamic_content"></div>
+<div class="theme">
+<div class="layout">
+<div class="layout-content">
+<span class="layout-close" style="background: rgb(0, 45, 114);">✖</span>
+<label class="layout-text" style="color: rgb(0, 0, 0);">theme</label>
+<div class="layout-slider" style="background: rgb(0, 45, 114);">
+<span class="moon">
+<svg class="fullwidth" style="height: 100%;" fill="none" stroke="#eef" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+</svg>
+</span>
+<span class="sun">
+<svg class="fullwidth" style="height: 100%;" fill="none" stroke="#eef" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
+</svg>
+</span>
+<span class="circle" style="left: 0.25rem; background: rgb(238, 238, 255);">
+</span>
+</div>
+</div>
+</div>
+<div class="toggle">
+<label class="toggle-label">
+theme beta
+</label>
+</div>
+</div>
+<script>
+let theme =
+{
+mode: 1, /* 1=light;0=dark; */
+button: false,
+request: null,
+toggleMode: async () =>
+{
+theme.mode = theme.mode == 1 ? 0 : 1;
+await theme.localMode( theme.mode );
+theme.toggleTheme();
+},
+/**
+--pa-high: #eef;
+--pa-mid: #B5B8D3;
+--pa-blue: #002d72;
+*/
+toggleTheme: () =>
+{
+const mobileTheme = () => {
+let content = document.getElementById('theme-beta-mode');
+if (!content)
+return false;
+return {
+body: content.querySelector('.slider'),
+light: content.querySelector('.light'),
+dark: content.querySelector('.dark'),
+square: content.querySelector('.square')
+};
+};
+if ( theme.mode == 1 )
+{
+$(document.body).removeClass('dark');
+$(document.body)[0].style.setProperty("--pa-blue", "#002d72");
+$(document.body)[0].style.setProperty("--pa-high", "#B5B8D3");
+theme.toggle.style.background = "#002d72";
+theme.toggleText.style.color = "rgb(238, 238, 255)";
+if ( theme.mobile.matches )
+{
+let mobileElement = mobileTheme();
+if ( mobileElement ) {
+mobileElement.square.style.left = "30px";
+mobileElement.square.style.background = "#002d72";
+}
+}
+else
+{
+theme.circle.style.left = ".250rem";
+theme.layoutText.style.color = "#000";
+theme.toggle.style.background = "#002d72";
+theme.switchOpt.style.background = "#002d72";
+theme.layoutClose.style.background = "#002d72";
+theme.toggleText.style.color = theme.styles.getPropertyValue('--pa-high');
+theme.circle.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.moon.querySelector('svg').setAttribute('stroke', theme.styles.getPropertyValue('--pa-high'));
+theme.sun.querySelector('svg').setAttribute('stroke', theme.styles.getPropertyValue('--pa-high'));
+}
+}
+else
+{
+$(document.body).addClass('dark');
+$(document.body)[0].style.setProperty("--pa-blue", "#2f2f2f");
+$(document.body)[0].style.setProperty("--pa-high", "#d2d2d2");
+theme.toggle.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.toggleText.style.color = "#000";
+if ( theme.mobile.matches )
+{
+let mobileElement = mobileTheme();
+if ( mobileElement ) {
+mobileElement.square.style.left = "4px";
+mobileElement.square.style.background = "#000";
+}
+}
+else
+{
+theme.circle.style.left = "3rem";
+theme.toggleText.style.color = "#000";
+theme.circle.style.background = "#373838";
+theme.layoutClose.style.background = "#993232";
+theme.layoutText.style.color = theme.styles.getPropertyValue('--pa-high');
+theme.switchOpt.style.background = theme.styles.getPropertyValue('--pa-high');
+theme.moon.querySelector('svg').setAttribute('stroke', "#000");
+theme.sun.querySelector('svg').setAttribute('stroke', "#000");
+}
+}
+},
+localMode: async ( mode = false ) =>
+{
+if ( theme.request !== null ) {
+theme.request.abort();
+theme.request = null;
+}
+theme.request = $.get('/5a/?module=theme_beta', { theme_mode: Number( mode ) }, (res) => theme.mode = JSON.parse(res));
+await theme.request;
+theme.request = null;
+},
+Listener: () =>
+{
+if ( theme.button ) {
+theme.layoutClose.addEventListener('click', () => {
+theme.layout.style.right = "-130px";
+theme.toggle.style.width = "28px";
+});
+theme.toggle.addEventListener('click', () => {
+theme.layout.style.right = "30px";
+theme.toggle.style.width = "0";
+});
+} else {
+theme.parent.addEventListener('mouseover', () => {
+theme.parent.style.width = "130px";
+theme.layout.style.right = "30px";
+theme.toggle.style.width = "0";
+});
+theme.parent.addEventListener('mouseout', () => {
+theme.parent.style.width = "28px";
+theme.layout.style.right = "-130px";
+theme.toggle.style.width = "28px";
+});
+}
+theme.switchOpt.addEventListener('click', () => theme.toggleMode());
+},
+Skeleton: () =>
+{
+if ( !theme.button )
+theme.layoutClose.style.display = "none";
+theme.toggleText.innerHTML = "theme beta";
+theme.layoutText.innerText = "theme";
+theme.layoutClose.innerHTML = "&#10006;";
+theme.moon.innerHTML = `<svg class="fullwidth" style="height: 100%;" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path>
+</svg>`;
+theme.sun.innerHTML = `<svg class="fullwidth" style="height: 100%;" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
+</svg>`;
+theme.toggleTheme();
+},
+Init: async () =>
+{
+theme.mode = theme_beta;
+theme.parent = document.querySelector('div.theme');
+theme.toggle = theme.parent.querySelector('.toggle');
+theme.layout = theme.parent.querySelector('.layout');
+theme.layoutContent = theme.parent.querySelector('div.layout-content');
+theme.layoutClose = theme.parent.querySelector('span.layout-close');
+theme.toggleText = theme.parent.querySelector('label.toggle-label');
+theme.layoutText = theme.parent.querySelector('label.layout-text');
+theme.switchOpt = theme.parent.querySelector('div.layout-slider');
+theme.moon = theme.parent.querySelector('span.moon');
+theme.sun = theme.parent.querySelector('span.sun');
+theme.circle = theme.parent.querySelector('span.circle');
+theme.styles = getComputedStyle(document.body);
+theme.mobile = window.matchMedia("(max-width: 640px)");
+theme.Skeleton();
+theme.Listener();
+}
+};
+theme.Init();
+</script>
+<div class="cb"></div>   <div class="account_spacer">
+<style>
+@media only screen and ( max-width: 640px ) {
+.bh {
+display: none
+}
+}
+@media only screen and ( min-width: 641px ) {
+.gb {
+box-shadow: 0 0 4px 1px #dcdcdc;
+}
+.gb { /*border: solid #002D72 1px;*/
+padding: 5px 5px 5px 5px;
+}
+.bh {
+font-variant: small-caps;
+font-family: lucida, Helvetica, Arial, sans-serif;
+font-size: 1.15em;
+line-height: 20px;
+text-transform: lowercase;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+box-shadow: 0 2px 3px 0 #f8f8f8 inset;
+padding: 5px 15px;
+}
+.bh {
+box-shadow: 0 2px 3px 0 #f8f8f8 inset, 5px 5px 5px #eee;
+vertical-align: bottom;
+}
+.bh_br {
+background: #99764F;
+color: #eeeeee;
+text-align: center;
+border: solid #99764F 1px;
+}
+.bh_gr {
+background: #002D72;
+color: #FFFFFF;
+padding-left: 5px;
+min-width: 150px;
+border: solid #002D72 1px;
+border-top-right-radius: 4px;
+display: inline-block
+}
+.bh_grs {
+background: #002D72;
+color: #FFFFFF;
+padding-left: 5px;
+text-align: center;
+border: 1px solid #002D72;
+}
+.bh_gra {
+background: #002D72;
+border: solid #002D72 1px;
+color: #fff;
+padding-left: 5px;
+}
+.bh_gy {
+background: #666;
+border: solid 1px #666666;
+color: #fff;
+padding-left: 5px;
+}
+.bh_gys {
+background: #666;
+color: #E5E5E5;
+text-align: center;
+border: 1px solid #666666;
+}
+}
+h1, h2, h3, h4, .normtext, td, body, textarea, li {
+font-size: 12px
+}
+.n_box h2 {
+width: 144px;
+}
+.n_agent_btn {
+width: 146px;
+}
+#sidebar {
+right: -155px;
+}
+</style>
+<div class="hidmob"><!--
+<div class="showmob navlangbar"><a href="">&laquo; Back to </a></div>
+--><div class="hidmob">
+</div>
+</div>
+ 
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr height="20"><td 3e--=""> </td></tr><tr><td class="box0" style="line-height: 150%"><div><center><b><u>TERMS AND CONDITIONS OF SALES</u></b></center><br /><br /><br />
+PLEASE READ THESE TERMS AND CONDITIONS CAREFULLY BECAUSE THEY CONTAIN IMPORTANT INFORMATION ABOUT YOUR RIGHTS AND OBLIGATIONS, AS WELL AS LIMITATIONS AND EXCLUSIONS THAT MAY APPLY TO YOU.<br /><br />
+These terms and conditions apply to your purchase from us via this Website. You acknowledge that you are fully aware of the contents of these terms and conditions and, on placing any purchase order for any products, you agree to be bound by and accept these terms and conditions.<br /><br /><b>1. Definition</b><div style="margin-left: 40px"><br />
+(i) “Customer” means a person who orders Product(s) via this Website;</div>
+ 
+<div style="margin-left: 40px">(ii) “Product(s)” means any products listed as shopping items on this Website;</div>
+ 
+<div style="margin-left: 40px">(iv) “Seller” means Playasia™ - located at:</div>
+ 
+<div style="margin-left: 40px">8/F Block B Kaming Court, 688-690 Castle Peak Road, Lai Chi Kok Kowloon, Hong Kong S.A.R.</div>
+ 
+<div style="margin-left: 40px">(v) “Website” or “this Website” means www.playasia.com.<br />
+ </div><b>2. Placing an Order</b><br />
+ 
+<div style="margin-left: 40px">2.1.<br />
+The information contained on this Website constitutes an invitation to treat. No information on this Website constitutes an offer by Seller to supply any Product(s).</div>
+ 
+<div style="margin-left: 40px">2.2.<br />
+By placing an order via this Website, the Customer makes an offer to purchase the Product(s) he or she has ordered on these terms and conditions. Seller may or may not accept the Customer&#39;s offer at the Seller&#39;s absolute discretion.</div>
+ 
+<div style="margin-left: 40px">2.3.<br />
+Upon receipt of the Customer’s order, Seller will verify the availability of the Product(s) and the Customer’s credit card or other payment details. Seller has not accepted the Customer’s offer and is not obliged to supply the Product(s) until Seller has shipped the Product(s) and sent an order confirmation to the Customer by email.</div><br /><b>3. Supply of Product(s)</b><br />
+ 
+<div style="margin-left: 40px">3.1.<br />
+Subject to these terms and conditions, Seller may agree to supply the Customer with the Product(s) as specified in the Customer’s order form submitted to Seller via this Website.<br /><br />
+3.2.<br />
+When Product(s) have been shipped pursuant to the Customer’s order, Seller will email the Customer to confirm shipment.<br /><br />
+3.3.<br />
+The pictures showing the Product(s) in this Website may not be identical to the Product(s) as shipped to the Customer. The Seller shall have the right to supply the Product(s) which do not correspond to the pictures appearing in this Website, provided that the said Product(s) perform substantially the same function as described in this Website.<br /><br />
+3.4.<br />
+Seller shall have the right to make substitutions and modifications of the specification of the Product(s) ordered by the Customer, provided that such substitutions or modifications will not materially affect the overall performance of the Product(s) or the type of Product(s) ordered by the Customer.</div><br /><b>4. Price and Payment</b><br />
+ 
+<div style="margin-left: 40px">4.1.<br />
+Pricing of Product(s) shall be the price as stipulated on this Website at the time when the Customer places an order with Seller.<br /><br />
+4.2.<br />
+All prices are shown in United States Dollars exclusive of value added tax (VAT) and shipping costs. The United States Dollars and Euros are the only acceptable payment currencies. Other currencies are listed for reference purposes only.<br /><br />
+4.3.<br />
+Upon placing an order with Seller, the Customer shall provide to Seller his or her valid credit card number and other billing information as requested by the Website. Seller will usually charge the credit card on shipment of the Product(s). For other payment methods, such as PayPal, Moneybookers or bank transfer payment, the Seller will charge the Customer upon confirmation of the order or prior to shipment.<br /><br />
+4.4.<br />
+Seller will take all reasonable precautions to keep the details of Customer&#39;s order and payment secure but Seller cannot be held liable for any losses caused as a result of unauthorized access to information provided by the Customer.</div><br /><b>5. Delivery</b><br />
+ 
+<div style="margin-left: 40px">5.1.<br />
+Product(s) will be delivered to the delivery address provided by the Customer. Seller will use its discretion in selecting a reputable carrier and appropriate means of delivery.<br /><br />
+5.2.<br />
+Risk of loss and damage of Product(s) passes to the Customer on the date when the Product(s) is/are despatched by Seller to the carrier.<br /><br />
+Inquiry about lost parcels should be reported after the estimated delivery time depending from the date of dispatch in the tracking site, otherwise, the parcel will be considered lost and no refund/replacement will be given. This is in compliance with our partner service&#39;s restriction in terms of delivery investigations. e.g., Economy Mail should be reported within 14-21 business days<br /><br />
+5.3.<br />
+Any dates quoted by Seller for the delivery of Product(s) are estimates only and shall not form part of the contract. Seller aims to deliver promptly, however, delays are occasionally inevitable due to unforeseen factors. Seller shall be under no liability for any delay or failure to deliver the Product(s) within the estimated delivery time.<br /><br />
+5.4.<br />
+Seller will not be responsible for any tariffs, customs restrictions, customs clearance, or other regulations that apply in countries outside Hong Kong. It is the responsibility of Customer to pay the charges levied by the authorities and observe the respective regulations of the country in which he or she receives the Product(s).<br /><br />
+5.5.<br />
+If an order shipment is un-deliverable/returned, the Product(s) ordered by the Customer will be returned to the Seller at the Customer’s expense which includes delivery charges. The returned Product(s) can be sold to other customers and the Seller shall have no obligation to reserve or re-deliver the returned Product(s) to the Customer.<br /><br />
+5.6<br />
+If an order has been cancelled, a refund will automatically be processed the following business day. Please note that depending on the processing time of the payment provider, refunds may take up to 30 business days to show up on your account.<br /><br />
+5.7 <br />
+All orders shipped cannot be cancelled but may be subjected to our casual return policy under <a href="https://www.play-asia.com/info/helprefund">Returns & Refunds.</a><br /><br /><strong>Special arrangement for shipments to Brazil:</strong><br /><br />
+The Brazilian Tax Authority now requires all imported goods to document the following identification numbers CPF (for a natural person) or CNPJ (for a legal person).<br />
+It is the user’s responsibility to provide the correct information. If incorrect, the parcel may not be able to clear the customs in Brazil and will be returned to us. In such occurrence, any additional fee (shipping and tax) will be charged to the user and no refund will be provided by Playasia.<br />
+ </div><b>6. Returns and Refunds </b><br />
+ 
+<div style="margin-left: 40px">6.1.<br />
+Subject to Clause 6.4 below, no Product(s) shall be returned to the Seller unless:</div>
+ 
+<div style="margin-left: 40px">6.2.<br />
+Upon satisfactory return of the Product(s) to the Seller, replacement Product(s) will be shipped to the Customer if the Seller is satisfied that the Product(s) returned by the Customer is defective after suitable tests and inspections by the Seller. If the replacement Product(s) is not available, a refund of the product price only will be made to the Customer. If the product is damaged, or faulty before leaving the Sellers warehouse, the re-shipping cost will be refunded or will be shouldered by the Seller.</div>
+ 
+<div style="margin-left: 40px">Please note that the perfect condition of product packaging upon arrival is not guaranteed. Advice will be given in such cases.<br /><br />
+Additionally, the Customer should report that the Product(s) are defective within 10 days from the time the order was received. </div>
+ 
+<div style="margin-left: 40px">6.3.<br />
+If the seller is not satisfied that the returned Product(s) is defective, the Seller will deliver the returned Product(s) to the Customer at the Customer’s own cost.</div>
+ 
+<div style="margin-left: 40px">6.4.<br />
+Software, video or audio discs that have already been opened are excluded from any return unless they are faulty. The Seller shall have no responsibility regarding compatibility issues and it is for the Customer to ensure that his/her computer, video/audio player is compatible with the software, video or audio discs as ordered.</div>
+ 
+<div style="margin-left: 40px">(a) the Product(s) in question is defective;<br /><br />
+(b) the Customer has completed and filed a Request for Return Form (showing the order ID and other identifying numbers) with the Seller;<br /><br />
+(c) the Product(s) sought to be returned by the Customer was ordered by the Customer via this Website, within 6 months prior to the date the Customer submitted a Request for Return Form;<br /><br />
+(d) the Seller has notified the Customer by email that the Customer may return the Product(s) to the Seller;<br /><br />
+(e) the Product(s) is returned in a clean and well-packaged condition; and<br /><br />
+(f) the Customer returns the Product(s) at his/her own expense which will include any customs duties or taxes.<br />
+ </div><b>7. Digital Products</b><br /><br />
+Because of the nature of digital products, we are not able to know the identity of the person who ultimately redeems the code. We are unable to check if a code has been redeemed or not without redeeming it.<br /><br />
+For each order we ship, we track the day and the time at which the code was seen by the customer. Codes are guaranteed, provided they have not been seen by the customer. Once codes have been viewed, we bare no responsibility, nor can we guarantee the validity of the codes.<br /><br /><strong>Digital Delivery</strong><br /><br />
+Codes purchased will be delivered directly to our Customers Playasia account. To reveal the code, simply click the "Show your code" button. By clicking the "Show your code" button, the Customer accepts delivery of the digital code. The IP-Address used will be logged in our record for this purpose. <br /><br /><b>Errors</b><br /><br />
+We understand that there may be times where errors are encountered with digital products. With this, we need to ask for the following:<br />
+ 
+<div style="margin-left: 40px">1. Screenshot of the code entered<br /><br />
+2. Screenshot of the error encountered</div><br />
+Once the information has been received, an investigation will commence within 5 business days.<br /><br />
+Please note that this is approximate and may take longer depending on the complexity and nature of the code.<br /><br />
+After the investigation: If the error with the code is confirmed, a refund or replacement will be given.<br /><br />
+For redeemed codes issues: If the code has been redeemed after the code has been seen by the customer, this is considered as used and we are afraid that we cannot offer a refund or replacement.<br /><br />
+Errors on codes must be reported to Playasia within 45 days of the date of purchase. There will be no refund or replacement for any error reported to us more than 45 days after purchase.<br /><br /><b>Region Locked Products</b><br /><br />
+Most digital products are region locked and require the end-user to have the correct account to redeem them; for example, an iTunes Japan card can only be redeemed on a Japanese iTunes account. It is the sole responsibility of the customer to ensure that the code purchased is valid for his/her account being used. Region locks are stated in the product description. Refunds or replacements may not be available for issues concerning Region Lock.<br /><br /><b>Expired Codes</b><br /><br />
+Customers should redeem the codes immediately upon purchase. Any issues concerning code expiry may not be subject for a refund or replacement.<br /><br /><b>8. Changes</b><br /><br />
+Seller reserves the right to update, revise or change these terms and conditions, the price of the Product(s) and any other information listed on this Website at any time. Any such changes will take effect when posted on the Website and it is the Customer’s responsibility to read the terms and conditions and confirm the price of the Product(s) on each occasion when he/she uses this Website and the Customer’s continued use of the Website shall signify his/her acceptance to be bound by the latest terms and conditions.<br /><br /><b>9. Force Majeure</b><br /><br />
+Seller shall not be liable for any delay or failure in its performance caused by or resulting from acts of God, fire, flood, accident, riot, war, government intervention, embargoes, strikes, labour difficulties, equipment failures, or any other causes beyond the control of Seller. Quantities are subject to availability. In the event of a shortage, Seller may allocate sales and deliveries at its sole discretion.<br /><br /><b>10. Intellectual Property</b><br />
+ 
+<div style="margin-left: 40px">10.1.<br />
+The Customer acknowledges and agrees that all copyright, trademarks and all other intellectual property rights in all materials and/or content made available as part of the Customer’s use of this Website shall remain at all times vested in Seller or its licensors. The Customer is permitted to use this material only as expressly authorized by Seller or its licensors.<br /><br />
+10.2.<br />
+The Customer acknowledges and agrees that the material and content contained within this Website is made available for their personal non-commercial use only and that they may only download such material and content for the purpose of using this Website. The Customer further acknowledges that any other use of the material and content of this Website is strictly prohibited and they agree not to (and agree not to assist or facilitate any third party to) copy, reproduce, transmit, publish, display, distribute, commercially exploit or create derivative works of such material and content.<br /><br />
+10.3.<br />
+The prices of the Product(s) paid by the Customer are for the Product(s) and the services described herein and do not include technical data, copyright, trademarks, or other intellectual property rights or proprietary rights of any kind subsisting in the Product(s) or their packaging.</div><br /><b>11. Liability</b><div style="margin-left: 40px">11.1.<br />
+All Product(s) provided in connection with this Website are on an “as is” and “as available” basis. Except as otherwise expressly agreed, Seller makes no representations, warranties, covenants or guarantees of any kind, express or implied, as to the quality, suitability, accuracy or completeness of any information, content, service, or merchandise provided through this Website. Customer expressly agrees that the use of this Website is at his or her sole risk.<br /><br />
+11.2.<br />
+To the full extent permissible by applicable law, Seller disclaims all express or implied conditions, representations and warranties, including but not limited to, any implied warranty of merchantability, non-infringement and fitness for a particular purpose.<br /><br />
+11.3.<br />
+Subject to this Clause, Seller will not be liable for any loss of income, loss of profits, loss of contracts, loss of data or for any indirect or consequential loss or damage of any kind whatsoever arising and whether caused by tort, breach of contract or otherwise.<br /><br />
+11.4.<br />
+Subject to this Clause, Seller’s maximum aggregate liability whether in contract, tort (including negligence) or otherwise shall in no circumstances exceed the amount payable by the Customer to Seller in respect of the Product(s) in question.</div><br /><b>12. Waiver/Invalidity</b><br /><br />
+Failure of Seller to insist upon strict performance of any provisions hereof shall not be deemed a waiver of its right and remedies. The invalidity or unenforceability of any provision of these terms and conditions shall not adversely affect the validity or enforceability of the remaining provisions.<br /><br /><b>13. Headings</b><br /><br />
+The section headings used herein are for convenience or reference only and do not form a part of these terms and conditions, and no construction or inference shall be derived therefrom.<br /><br /><b>14. Entire Agreement</b><br /><br />
+These terms and conditions including the documents or other sources referred to in these terms and conditions supersede all prior representations understandings and agreements between the Customer and Seller relating to the sale and purchase of the Product(s) ordered by the Customer.<br /><br /><b>15. Governing Law</b><br /><br />
+These terms and conditions shall be governed by and construed under the laws of Hong Kong. The parties submit to the exclusive jurisdiction of the courts of Hong Kong, being the place where the Customer&#39;s order/offer has been received/accepted.<br /></div>
+ </td></tr></tbody></table>
+ 
+<center><a class="acbut big" href="/info/helpdesk">Back to Helpdesk</a></center>   </div>
+<div id="footer" class="footer centre">
+<a href="#top">Back to top</a>
+</div>
+<div class="footer">
+<div class="we_accept_out" style="width: 70px">
+<div>
+We accept                        </div>
+<!--                        <div class="we_accept_out arrow chevron rot180 xsmallicon" style="float: left;"></div>-->
+</div>
+<div class="we_accept_out" style="float: right">
+<div class="we_accept_out arrow chevron xsmallicon" style="float: right;"></div>
+</div>
+<div class="we_accept_out" style="float: left">
+<div class="we_accept_out arrow chevron rot180 xsmallicon" style="float: left;"></div>
+</div>
+<div class="we_accept" style="margin-left: 94px">
+<div id="accept_imgs" style="overflow: hidden">
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0168.jpg?1716182591&v=PX-364" alt="Payment Paypal" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0127.png?1716182638&v=PX-364" alt="Payment Worldpay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/large/GA.03963.0189.svg?1716211370&v=PX-364" alt="Payment Bitcoin" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0174.png?1716211382&v=PX-364" alt="Payment Binancepay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0178.png?1716211379&v=PX-364" alt="Payment Bitpay" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0126.png?1716182640&v=PX-364" alt="Payment Worldpay2" class="pay_now_logo nofade"/>&nbsp;
+<img loading=lazy src="//s.pacn.ws/gallery/640/GA.03963.0190.jpg?1716197822&v=PX-364" alt="Payment Manual" class="pay_now_logo nofade"/>&nbsp;
+</div>
+</div>                </div>
+<div class="footer helpdesk">
+<table border="0" cellpadding="1" cellspacing="1" style="width:100%;">
+<tbody>
+<tr>
+<td><strong>About</strong></td>
+<td><strong>Legal</strong></td>
+<td><strong>Services</strong></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/helpabout">Why us?</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/tou">Terms of Use</a></u></td>
+<td><u><a href="http://www.play-asia.com/info/helpshippingoptions">Shipping</a></u></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/helpjobs">Careers</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/tos">Terms &amp; Conditions</a></u></td>
+<td><a href="http://www.play-asia.com/info/digiorder"><u>Digital Codes</u></a></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="https://www.play-asia.com/info/loyalty">Loyalty Program</a></u></td>
+<td><u><a href="https://www.play-asia.com/info/privacy">Privacy Policy</a></u></td>
+<td><u><a href="http://www.trustpilot.com/review/www.play-asia.com">Feedback</a></u></td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td><u><a href="http://www.play-asia.com/blog">Blog</a></u></td>
+<td>&nbsp;</td>
+<td><a href="http://www.play-asia.com/info/helprefund"><u>Returns</u></a></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>                </div>
+<div class="footer">
+<div class="centre nl_holder" style="display: flex;   justify-content: space-between;
+">
+<div class="hidmob"></div>
+<div class="nl_sub" onclick="openDialog( 'newsletter_box', {width: mobile? $( '#website' ).width() : 640} ); loadDialog( 'newsletter_box' );">
+<div class="nomargin middle invert smallicon tion005"></div>
+<div style="display: inline-block;">
+Subscribe to our Newsletter!                            </div>
+</div>
+<div class="hidmob"></div>
+<div class="nl_sub" style="display: inline-block" onclick="window.location=&quot;/contact&quot;">
+<div class="nomargin middle invert smallicon"><img alt="Customer Service" class="smallicon"
+src="//s.pacn.ws/gallery/large/GA.06753.0011.svg?1606379152&v=PX-364">
+</div>
+Contact Us!                        </div>
+<div class="hidmob"></div>
+</div>
+<script>$('.nl_sub').mx('width');</script>
+</div>
+<div class="footer">
+<br/>
+<div class="centre">
+<div id="no_link_hl">
+<div align="center" id="socialfarm">
+<span class="text">
+Be sure to visit our social media pages !<br />
+</span>
+<a href="https://discord.gg/hUebN6M" target="_blank" title="Playasia Discord Server" alt="Playasia Discord Server" rel="noopener noreferrer">
+<span class="icon isocdc"></span>
+</a>
+<a href="https://twitter.com/playasia" target="_blank" title="Playasia Twitter" alt="Playasia Twitter" rel="noopener noreferrer">
+<span class="icon isoctw"></span>
+</a>
+<a href="https://facebook.com/playasia" target="_blank" title="Playasia Facebook Page" alt="Playasia Facebook Page" rel="noopener noreferrer">
+<span class="icon isocfb"></span>
+</a>
+<a href="https://instagram.com/playasia" target="_blank" title="Playasia Instagram Page" alt="Playasia Instagram Page" rel="noopener noreferrer">
+<span class="icon isocig"></span>
+</a>
+<a href="https://youtube.com/c/playasiatv" target="_blank" title="Playasia Youtube Channel" alt="Playasia Youtube Channel" rel=" noopener noreferrer">
+<span class="icon isocyt"></span>
+</a>
+<a href="https://weibo.com/playasia" target="_blank" title="Playasia Weibo Page" alt="Playasia Weibo Page" rel="noopener noreferrer">
+<span class="icon isocwb"></span>
+</a>
+</div>
+<br />
+Playasia and its logo are trademarks of Playasia. Website & content copyright 2002-2024 Playasia.                        </div>
+</div>
+<div id="debug">SN: 113 | 1001,1007                                { 57 } | A:  | WS: 1                                | PT: 0.021 | CDN:  | Ro: ,
+Cl: 1 |
+Q: 15                                | T:  | Cf:  | CO:  | bot: </div>
+</div>
+<div id="cookie-control">
+<img src="//s.pacn.ws/gallery/large/GA.06779.0013.png?1712631509&v=PX-364" alt="Cookie Control Center" title="Cookie Control Center">
+</div>
+<script>
+$('#cookie-control').on('click', function () {
+openDialog('cookie_popup', {my: 'bottom', bat: 'bottom', hide_dur: 200, hide_dir: 'left'});
+loadDialog('cookie_popup', {action: 'accepted'});
+})
+</script>
+<script>
+$__0o = function () {
+if ( typeof $__openDialogs!=="undefined"  && $__openDialogs['cookie_dialog'] ) {
+$__openDialogs['cookie_popup'].dialog('widget').position({my: 'bottom', at: 'bottom', of: window});
+}
+}
+$(window).on('resize', $__0o);
+</script>
+<style>
+#cookie-control {
+cursor: pointer;
+display: none;
+position: fixed;
+bottom: 5px;
+left: 10px;
+}
+#cookie-control img{ width: 80px; height: 80px;}
+@media only screen and ( max-width: 640px )
+{
+#cookie-control {
+cursor: pointer;
+display: none;
+position: fixed;
+bottom: -10px;
+left: -30px;
+}
+#cookie-control img{ width: 65px; height: 65px;}
+}
+#cookie_text {
+display: flex;
+align-items: center;
+}
+.ui-dialog {
+padding-bottom: 0 !important;
+}
+#cookie_text > div:not(:first-child) {
+margin-left: 10px;
+}
+.cookie_popup-dialog a {
+text-decoration: underline;
+}
+.cookie_popup-dialog {
+min-height: unset !important;
+}
+.ui-widget-overlay {
+-webkit-backdrop-filter: none
+}
+</style>
+<div class="cookie_popup-dialog pa-dialog">
+<div class="dialog-content" style="position: relative;">
+<div id="root-cookie_popup" class="stdbootstrap" data-query="">
+<div class="preldr">
+<div class="ldr"></div>
+</div>
+</div>
+</div>
+<script>
+openDialog('cookie_popup', {my: 'bottom', bat: 'bottom', noclose: true, hide_dur: 200, hide_dir: 'left'}, function () {
+$('#cookie-control').show();
+});
+loadDialog('cookie_popup', {action: 'accept'});
+</script>
+<script type="text/javascript">initialize();</script>
+</div>
+</div>
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "WebSite",
+"url": "https://www.play-asia.com/",
+"potentialAction": {
+"@type": "SearchAction",
+"target": {
+"@type": "EntryPoint",
+"urlTemplate": "https://www.play-asia.com/gosearch/?p_query={search_term_string}"
+},
+"query-input": "required name=search_term_string"
+}
+}
+</script>
+</body>
+</html>
