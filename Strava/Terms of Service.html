@@ -1,0 +1,1181 @@
+<!-- Orion-App Layout -->
+<!DOCTYPE html>
+<html class='logged-out responsive feed3p0 old-login strava-orion responsive' dir='ltr' lang='en-US' xmlns:fb='http://www.facebook.com/2008/fbml' xmlns:og='http://opengraphprotocol.org/schema/' xmlns='http://www.w3.org/TR/html5'>
+<!--
+layout orion app
+-->
+<head>
+<head>
+<meta charset='UTF-8'>
+<meta content='width = device-width, initial-scale = 1, maximum-scale = 5, user-scalable = yes' name='viewport'>
+<style type='text/css'>
+.spinner, .spinner .status {
+  position: relative;
+}
+.spinner {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.spinner .status {
+  top: 2px;
+  margin-left: 0.5em;
+}
+.spinner .status:empty {
+  display: none;
+}
+.spinner.lg .graphic {
+  border-width: 3px;
+  height: 32px;
+  width: 32px;
+}
+.spinner.tiny {
+  height: 10px;
+  width: 10px;
+}
+.spinner.centered, .spinner.vcentered {
+  box-sizing: border-box;
+  width: 100%;
+}
+.spinner.vcentered {
+  left: 0;
+  margin-top: -12px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 50%;
+}
+.spinner .graphic, .ajax-loading-image {
+  animation: spin 1.2s infinite linear;
+  box-sizing: border-box;
+  border-color: #eee;
+  border-radius: 50%;
+  border-style: solid;
+  border-top-color: #666;
+  border-top-style: solid;
+  border-width: 2px;
+  content: "";
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  vertical-align: middle;
+  width: 20px;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+</style>
+
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-app-icons-e8d91d8541e118b538db6536a798f7e2a80d47b38b3832628fa2e048c5f8260e.css" media="screen" />
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-orion-15b7053b2269a3dbb123feb3d204e7011fc055af0162ff8a91248091255a47bf.css" media="screen" />
+
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-180x180.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='180x180'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-152x152.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='152x152'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-144x144.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='144x144'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-120x120.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='120x120'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-114x114.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='114x114'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-76x76.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='76x76'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-72x72.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='72x72'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-60x60.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='60x60'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/apple-touch-icon-57x57.png?v=dLlWydWlG8' rel='apple-touch-icon' sizes='57x57'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-32x32.png?v=dLlWydWlG8' rel='icon' sizes='32x32' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/icon-strava-chrome-192.png?v=dLlWydWlG8' rel='icon' sizes='192x192' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-96x96.png?v=dLlWydWlG8' rel='icon' sizes='96x96' type='image/png'>
+<link href='https://d3nn82uaxijpm6.cloudfront.net/favicon-16x16.png?v=dLlWydWlG8' rel='icon' sizes='16x16' type='image/png'>
+<link href='/manifest.json?v=dLlWydWlG8' rel='manifest'>
+<meta content='#FC5200' name='msapplication-TileColor'>
+<meta content='https://d3nn82uaxijpm6.cloudfront.net/mstile-144x144.png?v=dLlWydWlG8' name='msapplication-TileImage'>
+<meta content='#F7F7FA' name='theme-color'>
+<meta content='Strava' name='apple-mobile-web-app-title'>
+<meta content='Strava' name='application-name'>
+<meta content='yes' name='apple-mobile-web-app-capable'>
+<meta content='black' name='apple-mobile-web-app-status-bar-style'>
+
+<script type='application/ld+json'>
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "Strava",
+  "url": "https://www.strava.com/",
+  "logo": "https://d3nn82uaxijpm6.cloudfront.net/assets/website_v2/svgs/strava-orange-c33577e7257d5ac4a2e972564c5c7556037f3d005c5b5cb2f0e0d06ac7b84c47.svg",
+  "sameAs": [
+    "https://facebook.com/Strava",
+    "https://twitter.com/strava",
+    "https://instagram.com/strava",
+    "https://youtube.com/stravainc",
+    "https://www.linkedin.com/company/strava-inc./",
+    "https://stories.strava.com",
+    "https://github.com/strava",
+    "https://medium.com/strava-engineering"
+  ]
+}
+
+
+</script>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="RcvHds0oTrMTBd--4cSz342IViqsE5LdWvmwr8Kd_PwGVs1uyuSjpKtWQOafKyC9IEOtTBeARwZwd_cI9OAGww" />
+<script>
+  window.StravaSentry = { 
+    enabled: false,
+    release: "0dd6fadb1a8276f3bafe3bccaab4018b6a4b48dc",
+    userId: null,
+    environment: "production",
+    dsn: "https://6ffc1c27d92347b49d7659886aab9deb@o352714.ingest.sentry.io/5816222",
+    debug: "false",
+    sampleRate: 1,
+    pageProperties: null,
+    mobileOS: "Web",
+    isMobile: false
+  }
+  
+  window.StravaDevTools = {
+    enabled: null
+  }
+</script>
+<link rel="stylesheet" href="//d3nn82uaxijpm6.cloudfront.net/packs/css/global-c6da620d.css" media="screen" />
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/runtime-e3a2d10023bc2ab9f716.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/21944-04ab950ff0d3b7f9a661.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/10603-0d2522db11b3d61a86c0.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/20459-3bc8c6cf573225ac4291.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/73170-6a2a12718c143cf50118.js"></script>
+<script src="//d3nn82uaxijpm6.cloudfront.net/packs/js/global-1cd4fdee497f548d12a0.js"></script>
+
+<script>
+  !function() {
+    if (!!window.stravaPublicServiceEnv) {
+      // Object containing no secret key value pairs that are expected to be seen and used in the browser.
+      // This keys are commonly passed to 3rd party libs or tooling.
+      window.stravaPublicServiceEnv({
+        MUX_ENV_KEY: "bqst82u23r97a7fuo892gfpn2",
+        MUX_DATA_VIEWER_USER_ID: null,
+        VIDEOJS_LOG_LEVEL: "error"
+      });
+    }
+  }();
+</script>
+
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/strava-head-ceb9519e86fef9d99673025e70fdccf83c2eef2f91b8899ddebc50ec183ba5d9.js"></script>
+
+
+<link href='https://www.strava.com/legal/terms' rel='canonical'>
+<link href='https://www.strava.com/legal/terms' hreflang='x-default' rel='alternate'>
+<link href='https://www.strava.com/legal/terms' hreflang='en' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=en-GB' hreflang='en-gb' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=fr-FR' hreflang='fr' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=de-DE' hreflang='de' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=pt-BR' hreflang='pt-br' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=es-ES' hreflang='es-es' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=it-IT' hreflang='it' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=ru-RU' hreflang='ru' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=es-419' hreflang='es-419' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=ja-JP' hreflang='ja' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=nl-NL' hreflang='nl' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=zh-TW' hreflang='zh-tw' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=pt-PT' hreflang='pt-pt' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=zh-CN' hreflang='zh-cn' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=pt-PT' hreflang='pt' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=es-ES' hreflang='es' rel='alternate'>
+<link href='https://www.strava.com/legal/terms?hl=zh-CN' hreflang='zh' rel='alternate'>
+
+<link rel="stylesheet" href="https://d3nn82uaxijpm6.cloudfront.net/assets/legal/show-0b3506ea295f8c6fd41f5a97b1408beda1af59b83b031998f74c8b591f79284a.css" media="screen" />
+<title>Strava Terms of Service</title>
+<script>
+  function loadGTM() {
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+    {'gtm.start': new Date().getTime(),event:'gtm.js'}
+    );var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','googleTagManagerDataLayer', "GTM-TP845S");
+  }
+</script>
+<script>
+  window.__LOAD_NON_ESSENTIAL_COOKIES__ =
+    Array.isArray(window.__LOAD_NON_ESSENTIAL_COOKIES__) ? 
+      window.__LOAD_NON_ESSENTIAL_COOKIES__ : [];
+  window.__LOAD_NON_ESSENTIAL_COOKIES__.push(loadGTM);
+</script>
+
+</head>
+
+<script>
+  !function(options){
+    window.Strava = window.Strava || {};
+    var _enabled = true;
+    var _options = options;
+    var _snowplowReady = null;
+  
+    window.Strava.ExternalAnalytics = window.Strava.ExternalAnalytics || (
+      {
+        isEnabled: function() {
+          return _enabled;
+        },
+        isDebug: function() {
+          return _options.debug;
+        },
+        track: function() {
+        },
+        trackV2: function(event) {
+          var eventData = {
+            'category': event.category,
+            'page': event.page,
+            'action': event.action,
+            'element': event.element || null,
+            'properties': event.properties || {}
+          }
+          if (this.isEnabled()) {
+            var a = snowplow('getUserId');
+            this.log("trackV2", {athleteId: a});
+            snowplow('trackSelfDescribingEvent', {
+              schema: 'iglu:com.strava/track/jsonschema/1-0-0',
+              data: eventData
+            });
+          } else {
+            if(this.isDebug()){
+              // toggle defined in - https://github.com/strava/active/blob/main/lib/strava/external_analytics.rb
+              // to turn on - Strava::ExternalAnalytics.turn_on_debug
+              // to turn off - Strava::ExternalAnalytics.turn_off_debug
+              !!console.table && console.table(eventData);
+            }
+          }
+        },
+        trackLink: function() {
+        },
+        trackForm: function() {
+        },
+        identifyV2: function () {
+        },
+        getExperimentContext: function(pageProperties) {
+          var experiment = ( pageProperties || {} ).experiment_info || {};
+          if (experiment.experiment_cohort && experiment.experiment_name) {
+            this.log('found experiment with values', experiment);
+            return {
+              schema: 'iglu:com.strava/web_experiment/jsonschema/1-0-0',
+              data: {
+                experiment_name: experiment.experiment_name,
+                cohort: experiment.experiment_cohort,
+                forced: experiment.experiment_forced === true
+              }
+            };
+          } else {
+            return null;
+          }
+        },
+        page: function(pageProperties) {
+          if(this.isEnabled()) {
+            snowplow('trackPageView');
+          }
+        },
+        identify: function(athleteId, options, eventName) {
+          if (this.isEnabled()) {
+            this.log("identify user", {athleteId: athleteId});
+            var properties = options || {}
+            properties.athlete_id = athleteId;
+            var eventData = {
+              'category': 'identify',
+              'page': null,
+              'action': eventName,
+              'element': null,
+              'properties': properties
+            };
+            snowplow('trackSelfDescribingEvent', {
+              schema: 'iglu:com.strava/track/jsonschema/1-0-0',
+              data: eventData
+            });
+          }
+        },
+        reset: function() {
+          if(this.isEnabled()) {
+            this.log("reseting athlete id",{});
+            snowplow('setUserId', null)
+            var spCookie = document.cookie.match('_sp_id\\.[a-f0-9]+')
+            if(spCookie != null) {
+              document.cookie = spCookie[0] + "= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+            }
+          }
+        },
+        setup: function(athleteId, pageProperties) {
+          if(this.isEnabled()) {
+            this.log("setup snowplow", {athleteId: athleteId});
+            snowplow("newTracker", "cf", "c.strava.com", {
+              appId: "strava-web",
+              platform: "web"
+            });
+            snowplow('setUserId', athleteId);
+            var experimentContext = this.getExperimentContext(pageProperties);
+            if (experimentContext) {
+              snowplow('addGlobalContexts', [experimentContext]);
+            }
+            snowplow('enableFormTracking');
+          }
+        },
+        getDomainUserId: function() {
+          var d = jQuery.Deferred();
+          if (this.isEnabled()) {
+            if (!_snowplowReady) {
+              _snowplowReady = jQuery.Deferred();
+              snowplow(function(){
+                _snowplowReady.resolve(this.cf.getDomainUserId());
+              });
+            }
+            _snowplowReady.always(function(getDomainUserId){
+              d.resolve(getDomainUserId);
+            });
+          } else {
+            d.reject(null);
+          }
+          return d;
+        },
+        log: function(message, values) {
+          if(this.isDebug()) {
+            console.log(message, 'background-color: yellow; color: blue; font-size: medium;', values);
+          }
+        },
+        debug: function(value) {
+          _options.debug = value;
+        }
+      }
+    )
+  }({
+    is_mobile: false,
+    os: "",
+    debug: false,
+    athlete_id: null,
+    locale: "en-US"
+  });
+</script>
+
+<script>
+  !function(){
+    var analytics = window.analytics = window.analytics || [];
+    if(analytics.invoked) {
+      window.console && console.error && console.error("Segment snippet included twice.");
+    } else {
+      (function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://d3nn82uaxijpm6.cloudfront.net/8f96b1247cf4359f8fec.js","snowplow"));
+      var pageProperties = null;
+      var athleteId = null;
+      Strava.ExternalAnalytics.setup(athleteId, pageProperties);
+      Strava.ExternalAnalytics.page(pageProperties);
+    }
+  }();
+</script>
+
+<script>
+  !function(debug){
+    window.Strava = window.Strava || {};
+    var _enabled = false;
+    var _debug = !!debug;
+    var _branchData = null;
+  
+    window.Strava.BranchIO = window.Strava.BranchIO || (
+      {
+        isEnabled: function() {
+          return _enabled;
+        },
+        isDebug: function() {
+          return _debug;
+        },
+        dataToLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+  
+          var d = this.data()
+          var that = this;
+          d.done(function(data) {
+            that.log('storing data %o to local storage', data)
+            _branchData.data(data)
+          });
+          d.fail(function(message) {
+            that.log('failed to retrieve data from branch');
+            _branchData.data({})
+          });
+          return d;
+        },
+        createLink: function(options) {
+          var d = jQuery.Deferred();
+          var data = null;
+          const that = this;
+          var callback = function(e, l) {
+            if (!e) {
+              d.resolve(l);
+            } else {
+              d.reject(e);
+            }
+          }
+  
+          Strava.ExternalAnalytics
+            .getDomainUserId()
+            .always(function(domainUserId){
+              if (domainUserId) {
+                options.data['domainUserId'] = domainUserId;
+              }
+  
+              if(that.isEnabled()) {
+                branch.link(options, callback);
+              };
+          });
+  
+          return d;
+        },
+        dataFromLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+          return _branchData.data();
+        },
+        clearLocalStorage: function() {
+          if (!_branchData) {
+            _branchData = new Strava.BranchAnalytics.BranchData();
+          }
+          _branchData.data({});
+        },
+        data: function(checkLocalStorage) {
+          var d = jQuery.Deferred();
+          var that = this;
+          var c = function(message, meta_data) {
+            var storedData = null;
+  
+            if(message) {
+              d.reject(message);
+            } else {
+              if (checkLocalStorage == true && (meta_data == null || meta_data.data == "" || meta_data.data == null)) {
+                storedData = that.dataFromLocalStorage();
+                that.clearLocalStorage();
+  
+                d.resolve(storedData);
+              } else {
+                d.resolve(meta_data);
+              }
+            }
+          };
+  
+          if(this.isEnabled()) {
+            branch.data(c);
+            this.log('%cdata (branch enabled)');
+          } else {
+            this.log('%cdata (branch disabled)');
+            d.resolve({});
+          }
+          return d;
+        },
+        identify: function(hashedAthleteId) {
+          var that = this;
+          var callback = function(error, data) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          if(this.isEnabled() && hashedAthleteId) {
+            branch.setIdentity(hashedAthleteId, callback);
+            this.log('identifying athlete %o', hashedAthleteId);
+          }
+        },
+        logout: function() {
+          var that = this;
+          var callback = function(error) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          branch.logout(callback);
+        },
+        track: function(eventName, metaData) {
+          var that = this;
+          var callback = function(error, data) {
+            if (error) {
+              console.log(error);
+            }
+          }
+          if(this.isEnabled()) {
+              this.log('tracking event - ', eventName);
+              branch.logEvent(eventName, metaData, callback);
+          }
+        },
+        log: function(message, values = '') {
+          if(this.isDebug()) {
+            console.log(`[branch] :::  ${message}`, values);
+          }
+        },
+        debug: function(value) {
+          _debug = value;
+        }
+      }
+    )
+  }(false);
+</script>
+
+<script>
+  function loadBranch() {
+    // load Branch
+    (function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener banner closeBanner closeJourney data deepview deepviewCta first init link logout removeListener setBranchViewData setIdentity track trackCommerceEvent logEvent disableTracking getBrowserFingerprintId crossPlatformIds lastAttributedTouchData setAPIResponseCallback qrCode".split(" "), 0);
+    
+    var options = {"metadata":{"external_identity_version":5,"next":false,"external_identity_hash":null}}
+  
+    // clean legacy identities (non-hashed athlete ids)
+    var branchSessionIdentity = JSON.parse(sessionStorage.getItem('branch_session') || '{}').identity;
+    options.metadata.session_identity = branchSessionIdentity;
+  
+    if(branchSessionIdentity && branchSessionIdentity.length !== 64) {
+      Strava.BranchIO.log('clearing legacy branch session identity %o', branchSessionIdentity);
+      sessionStorage.removeItem('branch_session');
+      options.metadata.session_identity_cleared = true;
+    }else{
+      options.metadata.session_identity_cleared = false;
+    }
+    
+    // init Branch
+    branch.init("key_live_lmpPsfj2DP8CflI4rmzfiemerte7sgwm", options, (err, data) => {
+      const branchInitialized = new CustomEvent('BranchInitialized', { detail: { err, data } });
+      window.dispatchEvent(branchInitialized);
+  
+      var identity = data && data['identity'];
+      var hashedAthleteId = "";
+      
+      if(hashedAthleteId && identity && identity.length !== 64) {
+        Strava.BranchIO.log('purging branch session %o', identity);
+        Strava.BranchIO.track("web_session_reset", {identity: identity});
+        Strava.BranchIO.logout();
+        Strava.BranchIO.identify(hashedAthleteId);
+      }else{
+        if (hashedAthleteId) {
+          Strava.BranchIO.identify(hashedAthleteId);
+        }else{
+          Strava.BranchIO.log('no athlete to identify');
+          Strava.BranchIO.logout();
+        }
+      }
+    });
+  }
+</script>
+<script>
+  window.__LOAD_NON_ESSENTIAL_COOKIES__ =
+    Array.isArray(window.__LOAD_NON_ESSENTIAL_COOKIES__) ?
+      window.__LOAD_NON_ESSENTIAL_COOKIES__ : [];
+  window.__LOAD_NON_ESSENTIAL_COOKIES__.push(loadBranch);
+  Strava.BranchIO.log('branch is disabled on this page');
+</script>
+
+</head>
+<body>
+
+<header id='global-header'><!--
+deploy: 0dd6fadb1a8276f3bafe3bccaab4018b6a4b48dc
+-->
+<!--[if lte IE 8]>
+<div class='alert alert-warning message warning mb-0 text-center'>
+<p>It looks like you're using a version of Internet Explorer that Strava no longer supports. Please <a href='http://www.microsoft.com/en-us/download/ie.aspx?q=internet+explorer'>upgrade your web browser</a> &mdash; <a href='https://strava.zendesk.com/entries/20420212-Supported-Browsers-on-Strava'>Learn more</a>.</p>
+</div>
+<![endif]-->
+<nav class='nav-bar container collapsable-nav' role='navigation'>
+<div title="Return to the Strava home page" class="branding"><a class="branding-content" href="/"><span class="sr-only">Strava</span></a></div>
+<!-- / Nav Menu Button -->
+<a href="#container-nav" aria-expanded="false" aria-controls="container-nav" data-toggle="collapse" class="btn btn-default btn-mobile-menu" role="button">Menu</a>
+<div class='nav-container collapse' id='container-nav'>
+<ul class='user-nav nav-group'>
+<li class='nav-item'>
+<a class="nav-link" href="/mobile">Mobile</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/features">Features</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/subscribe?cta=premium&amp;element=nav&amp;origin=logged_out_global_nav">Subscription</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="/maps">Maps</a>
+</li>
+<li class='nav-item'>
+<a class="nav-link" href="https://stories.strava.com/?utm_source=website-header">Stories</a>
+</li>
+<li class='nav-object-group'>
+<div class='nav-item logged_out_nav'>
+<a class='btn btn-primary btn-signup' data-segioevent='{&quot;name&quot;:&quot;Signup Flow&quot;,&quot;method&quot;:&quot;web&quot;,&quot;source&quot;:&quot;Global Header&quot;}' href='/register?cta=sign-up&amp;element=global-header&amp;plan=free&amp;source=legal_show'>
+Sign Up
+</a>
+</div>
+<div class='nav-item logged_out_nav'>
+<a class='btn btn-default btn-login' data-segioevent='{&quot;name&quot;:&quot;Login Flow&quot;,&quot;method&quot;:&quot;web&quot;,&quot;source&quot;:&quot;Global Header&quot;}' href='https://www.strava.com/login?cta=log-in&amp;element=global-header&amp;source=legal_show'>
+Log In
+</a>
+</div>
+</li>
+</ul>
+
+</div>
+</nav>
+</header>
+
+
+
+<div class='container' id='view-legal'>
+<div class='row'>
+<div class='col-lg-3 col-md-3' id='legal-nav' role='navigation'>
+<ul class='collapse' id='legal-nav-items'>
+<li class='selected'>
+<a aria-selected="true" href="/legal/terms">Terms of Service</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/privacy">Privacy Policy</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/cookie_policy">Cookie Policy</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/acceptable_use">Acceptable Use Policy</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/legal_bases">Legal Bases</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/api">API Agreement</a>
+</li>
+<li class=''>
+<a aria-selected="false" href="/legal/supplier_guidelines">Supplier Guidelines</a>
+</li>
+</ul>
+
+</div>
+<article class='col-lg-7 col-md-9' id='legal-body'>
+<h1>Strava Terms of Service</h1>
+<p class='effective-date'>Effective Date: February 15, 2024</p>
+<section class='highlights' id='highlights'>
+<p>Welcome to Strava! We want you to know and understand your rights and our rights relating to the provision of the Services (as defined below). Please review them carefully. Here are a few highlights:</p>
+<ul>
+<li>Your privacy is critically important to us. See how we collect and use your personal information in our <a href='https://strava.com/legal/privacy'>Privacy Policy</a>.</li>
+<li><a href="#cancellation">You can cancel your subscription or delete your account at any time.</a></li>
+<li><a href="#content-and-conduct">You own your content, but give us a right to use it.</a></li>
+<li><a href="#content_and_conduct_restriction">We expect you to be respectful and we can disable access to your account or content if you act in violation of our rules.</a></li>
+<li><a href="#disclaimer-of-warranties-and-liability">Strava is not liable for your activities and no warranties are made by Strava.</a></li>
+<li><a href="#termination">We can suspend or terminate your account if you violate our Terms.</a></li>
+<li><a href="#your-feedback">We want your feedback, and you allow us to use it.</a></li>
+<li><a href="#dispute-resolution">You agree to arbitrate if there is a dispute between us (unless you reside in the European Union).</a></li>
+<li><a href="#support-and-questions">There are easy ways to reach us if you have questions or need help.</a></li>
+</ul>
+</section>
+<section id='terms-of-service'>
+<h2>Terms of Service</h2>
+<p>The Strava websites, related mobile applications and services (collectively, the “Services”) are made available to you by Strava, Inc. with its address at 208 Utah Street, San Francisco, CA 94103, USA, subject to these Terms of Service (the “Terms”) and in accordance with the Strava <a href='https://strava.com/legal/privacy'>Privacy Policy</a> (the “Privacy Policy”). More information about the Services may be found at <a href='https://strava.com'>https://strava.com</a>. You agree to comply with these Terms and any supplemental terms which Strava makes available to you on the Services which shall form part of the Terms.  Strava reserves the right to review accounts and user actions on the Services to ensure compliance with our Terms. BY ACCESSING, USING OR UPLOADING OR DOWNLOADING ANY INFORMATION OR MATERIALS TO OR FROM THE SERVICES, OR BY INDICATING YOUR ASSENT TO THESE TERMS BY CREATING AN ACCOUNT, CLICKING “SIGN UP” OR ANY SIMILAR MECHANISM, YOU ARE AGREEING TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS, DO NOT ACCESS OR USE THE SERVICES. This agreement was written in English. To the extent a translated version of the Terms conflict with the English version, the English version controls.</p>
+<p>If you access or use the Services on behalf of a company or other entity, you represent that you have authority to bind such entity and its affiliates to these Terms and that it is fully binding on them. In such case, the term “you” will refer to such entity and its affiliates. If you do not have authority, you may not access or use the Services. These Terms contain disclaimers of warranties and limitations on liability that may be applicable to you.</p>
+<p>The Strava Services cannot be provided and the agreement described in these Terms of Service cannot be performed without Strava processing data about you, and other Strava users, including your location data. Processing of the data you share with Strava, including location data, is essential to the Services we provide and a necessary part of our performance of the agreement we have with you.</p>
+<p>
+<strong>Notice Regarding Dispute Resolution: These Terms contain provisions that govern how disputes between you and Strava are resolved, including an agreement to arbitrate, which will, unless you reside in the European Union, with limited exception, require you to submit claims you have against us to binding and final arbitration and limit you to claims against Strava on an individual basis, unless you opt-out in accordance with the instructions below.</strong>
+</p>
+</section>
+<section id='registration-and-accounts'>
+<h2>Registration and Accounts</h2>
+<p>The Services are intended solely for persons who are 13 years old or such higher age required in your country to use the Services. If you are under the legal age to form a binding contract in your jurisdiction, you represent that your parent or legal guardian has reviewed and agreed to these Terms on your behalf.</p>
+<p>To use the Services, you must register. In doing so, you agree to: (a) provide true, accurate, current and complete information about yourself (“User Data”) and (b) maintain and promptly update the User Data. You agree that Strava may use your Athlete Data to provide Services  that you access or use and as otherwise set forth in these Terms and our Privacy Policy. You also agree to create only one account for your own personal use and not share your account or Strava subscription with others. If you provide any User Data that is inaccurate or not current or that you have created multiple accounts, Strava has reasonable grounds to suspect that such Athlete Data is inaccurate or not current, Strava has the right to suspend or terminate your account and refuse current or future use of the Services. In consideration of your use of the Services, you represent that you are not a person barred from receiving services under the laws of any applicable jurisdiction.</p>
+<p>You are solely responsible for maintaining the confidentiality of the password associated with your account and for restricting access to your password, your computer and mobile device while logged into the Services. You accept responsibility for all activities that occur under your account or from your computer and mobile devices. We endeavor to use reasonable security measures to protect against unauthorized access to your account. We cannot, however, guarantee absolute security of your account, your Content (as defined below) or the personal information you provide, and we cannot promise that our security measures will prevent unauthorized third parties from illegally accessing the Services or its contents. You agree to immediately notify Strava of any unauthorized use of your account or password, or any other breach of security, and confirm that you understand all risks of unauthorized access to User Data and any other information or content you provide to Strava. The use of unique and complex passwords is highly recommended for security reasons.</p>
+<p>You may register for or log-in to your account via a third-party network, such as Facebook or Google. If you do so, you hereby authorize Strava to pre-populate the registration and other relevant information fields of your account and/or to use such third-party credentials to log you into your account. If you connect your account to a third-party network, you agree to comply with the terms and conditions and policies applicable to such third party.</p>
+<p>By virtue of certain of the Services connecting to the Google Maps API, you hereby agree to be bound by the <a href='https://maps.google.com/help/terms_maps.html'>Google Maps/Google Earth Additional Terms of Service</a> (including the <a href='https://www.google.com/intl/ALL/policies/privacy/index.html'>Google Privacy Policy</a>) in connection with your use of such Services.</p>
+</section>
+<section id='payments-and-fees'>
+<h2>Payments and Fees</h2>
+<section id='payments'>
+<h3>Payments</h3>
+<p>To pay any fee, you must designate and provide information about your preferred payment method (e.g., credit card, online payment service, a third party, like iTunes or Google Play, or any other payment method made available by Strava) (the “Payment Method”). If you provide your payment information, you authorize us and certain third party service providers, payment card networks and payment processors to receive, store and encrypt your payment information. You may switch to a different Payment Method or update your information by visiting <a href='https://strava.com/account'>https://strava.com/account</a>. If you paid through the Google Play or iTunes store, you may change your Payment Method through the corresponding store account. No refunds or credits will be provided by Strava, other than as set forth in these Terms. If your payment provider determines that there are fraudulent charges on your account resulting from use of your Payment Method at the Services, please contact us immediately via <a href='https://support.strava.com'>https://support.strava.com</a>.</p>
+</section>
+<section id='fees'>
+<h3>Fees</h3>
+<p>In order to access certain functionality of the Services, you may be required to pay <a href='https://www.strava.com/summit'>subscription fees</a>. Subscription fees, along with any required taxes, may be paid on a monthly or annual basis. All subscription fees are payable in advance. Athletes changing from monthly to annual subscriptions will have the annual rates take effect at the beginning of the next billing date. You agree to pay the subscription fees, and other charges you incur in connection with your Strava account, whether on a one-time or subscription basis. Strava reserves the right to increase subscription fees, any associated taxes, or to institute new fees at any time upon reasonable advance notice.</p>
+</section>
+<section id='auto-renewal'>
+<h3>Auto-Renewal</h3>
+<p>Subscription fees will be billed automatically at the start of the monthly or annual period, as applicable. These fees will auto-renew until your subscription is downgraded or terminated. Your subscription fee will be the same as your initial charges unless you are otherwise notified in advance. You may cancel your subscription at any time, as described below.</p>
+</section>
+<section id='cooling-off'>
+<h3>Cooling Off</h3>
+<p>If you reside outside the United States, you may be entitled to change your mind and receive a full refund within fourteen (14) days (the “Cooling-off Period”), provided that you have not logged in or otherwise redeemed or started to use the Services as a subscriber during the Cooling-off Period.</p>
+</section>
+</section>
+<section id='cancellation'>
+<h2>Cancellation</h2>
+<section id='cancellation-of-strava-premium'>
+<h3>Cancellation of Subscription</h3>
+<p>If you signed up on Strava.com, you may cancel your subscription by visiting your “My Account” page and selecting “Cancel Subscription.” If you signed up through the Google Play or iTunes store, you may cancel your subscription by downgrading through the corresponding store. The cancellation of a subscription will go into effect at the end of your current billing cycle. When your subscription ends, your account will remain and become a free subscription. You can renew your subscription at any time without opening a new account, although the subscription fees may have increased. You can <a href='https://www.strava.com/account'>delete your account</a> at any time.</p>
+</section>
+</section>
+<section id='free-trials'>
+<h2>Free Trials</h2>
+<p>Your subscription may start with a free trial. The free trial period for any subscription will last for the period of time specified when you signed up. Free trials may not be combined with certain other offers, as specified. If you begin your subscription with a free trial, we will begin billing your Payment Method for subscription fees at the end of the free trial period of your subscription unless you cancel your subscription prior to the end of the free trial period. Your Payment Method will be authorized for up to approximately one month of service as soon as you register for a free trial. In some instances, your available balance or credit limit may be reduced to reflect the authorization; however, no charges will be made against the Payment Method unless you do not cancel prior to the end of your free trial period. You may cancel your subscription at any time by going to your <a href='https://www.strava.com/account'>account settings</a>.</p>
+</section>
+<section id='content-and-conduct'>
+<h2>Content and Conduct</h2>
+<section id='content'>
+<h3>Ownership of and Use of Content</h3>
+<p>You own the information, data, text, software, sound, photographs, graphics, video, messages, posts, tags, or other materials you make available in connection with the Services (“Content”), whether publicly posted, privately transmitted, or submitted through a third party API (e.g. a video submitted via Zwift). <a href='https://support.strava.com/hc/en-us/articles/216918827'>Public segments and routes</a> created by using the Services are not considered Content. You grant us a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, publicly perform and display any Content and any name, username or likeness that you post on or in connection with the Services in all media formats and channels now known or later developed without compensation to you. This license ends when you delete your Content or your account.</p>
+<p>You understand that you, and not Strava, are entirely responsible for all Content that you upload, post, email, transmit or otherwise make available via the Services. Strava does not routinely screen or monitor the Content posted to the Services by others and, as such, does not guarantee the accuracy, integrity or quality of such Content. Strava may, in its sole discretion, screen, monitor, hide, refuse or remove any Content, or remove any Content that violates the Terms or is otherwise objectionable. You understand that by using the Services, you may be exposed to Content that is offensive, indecent or objectionable. Under no circumstances will Strava be liable in any way for any Content, including, but not limited to, any errors or omissions in any Content, or any loss or damage of any kind incurred as a result of the use of any Content made available on the Services. You agree to bear all risks associated with the use of any Content available in connection with the Services, including any reliance on the accuracy, completeness, or usefulness of such Content.</p>
+<p>You agree that Strava is not responsible for, and does not endorse, Content posted on the Services. If your Content violates these Terms, you may bear legal responsibility for that Content. As between you and Strava, any Content will be non-confidential and non-proprietary and we will not be liable for any use or disclosure of Content. You acknowledge and agree that your relationship with Strava is not a confidential, fiduciary, or other type of special relationship, and that your decision to submit any Content does not place Strava in a position that is any different from the position held by members of the general public, including with regard to your Content. Your Content will not be subject to any obligation of confidence on the part of Strava other than as set forth in our <a href='https://strava.com/legal/privacy'>Privacy Policy</a> and your <a href='https://www.strava.com/settings/privacy'>privacy controls</a>, and Strava will not be liable for any use or disclosure of any Content you provide.</p>
+<p>The Services may provide you with the ability to mark certain Content that you submit to the Services as private, public, or available only to select users of the Services. Strava will maintain the privacy of such Content in accordance with your elections. However, if you do not elect to mark your Content as private or available for a limited group of athletes, or later change such designation to allow such Content to be made available to anyone, you are responsible for the public nature of the content. Please review our <a href='https://strava.com/legal/privacy'>Privacy Policy</a> for more information on how to manage your privacy controls.</p>
+<p id='third-party-products'>You give us permission to use your profile name, profile photo, and information about your activities and actions you have taken, including your use of third party products, services, or devices, in ads, offers and other commercial contexts on the Strava service without compensation to you. For example, we may show your Strava followers that you use a certain device, product, or service available from a brand that has paid us to display its ads on Strava. You may <a href='https://support.strava.com/hc/en-us/articles/360015573312'>adjust settings</a> to prevent your profile name and profile photo from appearing in an ad.</p>
+<p>As noted in our <a href='https://www.strava.com/legal/privacy'>Privacy Policy</a>, we may suggest segments, routes, challenges, or clubs on Strava that may interest you, users that you may want to follow, or new features that you may want to try. We also use algorithmic ranking to determine what type of content (such as activity, post, route recommendation) to show in your feed. The main parameters for these recommendations can include your sport type, user engagement with the content type (e.g., impressions, clicks), activity features (e.g., activity uploads, average run distance), app usage (e.g. challenge joins, club joins), and basic demographic information (age, gender, tenure), and location information where relevant to the recommendation (e.g., for challenge and route recommendations), as well as your network (someone you follow joined this Club).</p>
+<p>For example, we may recommend challenges to you based on similar challenges you have viewed or clicked on, as well as past challenges you have joined, and challenges people you follow have joined.</p>
+<p>In addition, depending on your settings, we use algorithmic ranking to determine the order of activities that appear in your feed. You can use your Display Preferences to choose whether to order the activities in your Feed to be "Personalized" (a blend of new activities, the kinds of activities you tend to interact with, and the great efforts you may have missed) or by "Latest Activities" (chronologically, by when new activities are finished).</p>
+<p>The Services are for your personal and noncommercial use. You may not modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer or sell for any commercial purposes any portion of the Services, use of the Services or access to Content.</p>
+<p>You are granted a limited, non-exclusive right to create a text hyperlink to the Services for non-commercial use only, provided such link does not portray Strava or any of its products or services in a false, misleading, derogatory or otherwise defamatory manner, and provided further that the linking site does not contain any pornographic, illegal, offensive, harassing or otherwise objectionable material. You are further granted a right to implement any RSS feeds located on the Services for your personal, non-commercial use, solely as described on the Services. We reserve the right to revoke these licenses generally, or your right to use specific links or RSS feeds, at any time, with or without cause.</p>
+<p>You understand that use of certain features of the Services may require you to purchase third party equipment or materials (e.g., GPS systems). While Strava may recommend the equipment or materials of certain third party suppliers, Strava shall have no responsibility for your acquisition or use of any third party equipment or materials and does not guarantee that third party equipment or materials will function with the Services or will be error-free.</p>
+<p>You understand that you are responsible for any charges associated with sending communications via your device. You hereby acknowledge that you have the right to communicate with your contacts via the Services.</p>
+<p>You represent and warrant that: (i) you are authorized to create your account, whether individually or on behalf of an organization; (ii) you own the Content posted by you on or through the Services or otherwise have the right to grant the rights and licenses set forth in these Terms; (iii) the posting and use of your Content on or through the Services does not and will not violate, misappropriate or infringe on the rights of any third party, including, without limitation, privacy and data protection rights, publicity rights, copyrights, trademark and/or other intellectual property rights; and (iv) you agree to pay for all royalties, fees, and any other monies owed by reason of Content you post on or through the Services.</p>
+</section>
+</section>
+<section id='content_and_conduct_restriction'>
+<h2>Content and Conduct Restrictions</h2>
+<p>Strava’s <a href='https://strava.com/legal/acceptable_use'>Acceptable Use Policies</a> describe restrictions on content and conduct and are incorporated by reference into these terms. You agree to comply with those policies.</p>
+</section>
+<section id='interactions-with-members'>
+<h2>Interactions with Athletes</h2>
+<p>The Services function as a venue to connect athletes in a virtual information place. As a neutral facilitator, Strava is not directly involved in the actual interactions between athletes using the Services. As a result, Strava has no control over the truth, accuracy, quality, legality, or safety of postings made by athletes using the Services. Strava shall have no responsibility to confirm the identity of athletes. Strava shall also have no responsibility to confirm or verify the qualifications, background, or abilities of athletes using the Services. You shall at all time exercise common sense and good judgment when dealing with any athlete using the Services.</p>
+<p>If you elect to use our features to inform your contacts about the Services, track your activities via Strava Beacon, or share your information with others, Strava may require you to provide contact information. Strava may contact that friend via a one-time email or text message. You represent that you are authorized to provide any third party contact information that you provide to Strava, that you are authorized to use such information to contact (including for Strava to contact on your behalf) the third party and that Strava may process it pursuant to the <a href='https://strava.com/legal/privacy'>Privacy Policy</a>.</p>
+</section>
+<section id='professional-and-verified-athletes'>
+<h2>Professional and Verified Athletes</h2>
+<p>If you are a professional athlete, Strava may choose to verify your Strava account and place a badge on your profile indicating your professional status. Verified professional athletes on Strava will receive a free subscription. We expect all athletes to honor the <a href="https://strava.com/community-standards">Strava Community Standards</a> and code of conduct as listed in these Terms of Service. We reserve the right to remove your verified status and badge, as well as cease your free subscription, at any time.</p>
+</section>
+<section id='clubs'>
+<h2>Clubs</h2>
+<p>Strava creates and administers certain <a href="https://support.strava.com/hc/en-us/articles/216918347-Clubs-on-Strava">clubs</a> as well as the club verification program. Strava may choose to verify certain clubs and place a badge on their profile page. We reserve the right to revoke or transfer ownership of clubs, remove content, remove a club’s verified status and badge, and remove a club at any time. If you request a transfer of ownership of a club, Strava may require you to provide certain documentation.</p>
+<p>If you, as an athlete or partner, create a club on Strava, you are responsible for ensuring that your club: (a) abides by these Terms of Service and our <a href="https://www.strava.com/community-standards">Community Standards</a>; (b) does not claim, suggest an affiliation with, or impersonate Strava whether by using Strava’s intellectual property or otherwise; (c) has the right to use or post all club content, third party or otherwise, including rights to use name(s), logo(s), images, trademarks, trade dress, service marks, copyrights, or other intellectual property; and (d) does not, in Strava’s sole discretion, use the club to inappropriately advertise or promote any contests, sweepstakes, or other promotions. Club administrators hereby agree to indemnify and hold Strava harmless from any and all claims arising out of your club, including but not limited to claims of intellectual property infringement. </p>
+</section>
+<section id='third-parties'>
+<h2>Third Parties</h2>
+<p>Third party products and services made available on the Services are made and offered directly by the applicable third party. When you pursue or purchase any such product or service, you acknowledge that you are contracting directly with such third party and not with Strava. Your interaction with, or participation in promotions of, third parties found on or through the Services, including payment and delivery of goods or services, and any other terms, are solely between you and such third party. You are not obligated to use or transact business with any third party that appears on the Services. YOU AGREE THAT STRAVA SHALL NOT BE LIABLE FOR ANY LOSS OR DAMAGES OF ANY KIND INCURRED BY YOU AS THE RESULT OF ANY OF YOUR DEALINGS WITH THIRD PARTY SERVICE PROVIDERS OR ADVERTISERS AVAILABLE THROUGH THE SERVICES.</p>
+<p>Strava or third parties may provide links to other internet sites or resources through the Services. Strava does not endorse and is not responsible or liable for any content, information, advertising, products or other materials on or available from such sites or resources. You acknowledge and agree that Strava is not responsible for the availability of such external sites or resources.</p>
+</section>
+<section id='electronic-communications'>
+<h2>Electronic Communications</h2>
+<p>The Services may provide you with the ability to send or post messages to forums or chat rooms, speak via internet voice connections or send similar messages and communications to third party service providers, advertisers, your personal contacts, other athletes and/or Strava. You agree to use communication methods available on the Services only to send communications and materials related to the subject matter for which Strava provided the communication method, and you further agree that all such communications by you shall be deemed your Content and shall be subject to and governed by the Terms and applicable law (including laws regulating direct marketing communications with which you will need to comply with, as applicable). By using communications methods available on the Services, you agree that (a) depending on your account settings and method of communication, communications methods used by you may constitute public, and not private, means of communication between you and the other party or parties, (b) communications sent to or received from third party service providers, advertisers or other third parties are not endorsed, sponsored or approved by Strava (unless expressly stated otherwise by Strava) and (c) communications are not routinely pre-reviewed, post-reviewed, screened, archived or otherwise monitored by Strava in any manner, though Strava reserves the right to do so at any time. You agree that all notices, disclosures and other communications that we provide to you electronically shall satisfy any legal requirement that such communications be in writing.</p>
+</section>
+<section id='proprietary-rights'>
+<h2>Proprietary Rights</h2>
+<p>You acknowledge and agree that the Services, any necessary software used in connection with the Services (if any), any aggregated data based on Content on the Services, and any Content available or made available on the Services contain proprietary and confidential information that is protected by applicable intellectual property and other laws. Except as expressly permitted by applicable law or authorized by Strava or applicable third party service providers or advertisers, you agree not to modify, rent, lease, loan, sell, distribute or create derivative works based on the Services, the software or Content available on the Services (other than Content that you may submit), in whole or in part.</p>
+<p>Strava grants you a personal, revocable, non-transferable, non-sublicensable and non-exclusive right and license to access and use the Services; provided that you do not (and do not allow any third party to) copy, modify, create a derivative work from, reverse engineer, reverse assemble or otherwise attempt to discover any source code, sell, assign, sublicense, grant a security interest in or otherwise transfer any right in the Services, except where permitted by law. You agree not to access the Services by any means other than through the interfaces that are provided by Strava.</p>
+<p>The term STRAVA, the Strava logo and other Strava logos and product and service names are the exclusive trademarks of, and are owned by, Strava, Inc., and you may not use or display such trademarks in any manner without Strava’s prior written permission. Any third party trademarks or service marks displayed on the Services are the property of their respective owners.</p>
+<p>Strava reserves all rights not expressly granted hereunder.</p>
+</section>
+<section id='claims-of-infringement'>
+<h2>Claims of Infringement</h2>
+<p>The Digital Millennium Copyright Act (the “DMCA”) provides recourse for copyright owners who believe that material appearing on the internet infringes their rights under U.S. copyright law. Strava also reviews claims of trademark infringement. If you believe in good faith that materials hosted by Strava infringe your copyright or trademark rights, you (or your agent) may send us a notice requesting that the material be removed, or access to it blocked. The notice must include the following information: (a) a physical or electronic signature of a person authorized to act on behalf of the owner of an exclusive right that is allegedly infringed; (b) identification of the copyrighted work or trademark claimed to have been infringed (or, if multiple copyrighted works or trademarks located on the Services are covered by a single notification, a representative list of such works); (c) identification of the material that is claimed to be infringing or the subject of infringing activity, and information reasonably sufficient to allow Strava to locate the material on the Services; (d) the name, address, telephone number, and e-mail address (if available) of the complaining party; (e) a statement that the complaining party has a good-faith belief that use of the material in the manner complained of is not authorized by the copyright or trademark owner, its agent, or the law; and (f) a statement that the information in the notification is accurate and, under penalty of perjury, that the complaining party is authorized to act on behalf of the owner of an exclusive right that is allegedly infringed. Please be advised that Strava will not respond to complaints that do not meet these requirements. We may share your information with third parties when we forward DMCA compliant notifications, which will be forwarded as submitted to us without any deletions. If Strava determines that the materials alleged to infringe your copyright or trademark rights do not require removal, Strava will remove those materials only pursuant to a court order declaring the content or use of the materials unlawful.</p>
+<p>If you believe in good faith that a notice of copyright infringement has been wrongly filed against you, the DMCA permits you to send us a counter-notice. Counter-notices must include the following information: (a) your name, address, and telephone number; (b) the source of the content that was removed; (c) a statement under penalty of perjury that you have a good-faith belief that the content was removed in error; (d) a statement that you consent to the jurisdiction of Federal District Court for the judicial district in which your address is located; or, if your address is outside of the United States, for any judicial district in which Strava may be found, and that you will accept service of process from the person who provided the original complaint; and (e) a physical or electronic signature (for example, typing your full name).</p>
+<p>Notices and counter-notices with respect to the Services must meet the then-current statutory requirements imposed by the DMCA (see <a href='https://copyright.gov/title17/92appb.html'>https://copyright.gov/title17/92appb.html</a>) and should be sent to the agent identified below. We suggest that you consult your legal advisor before filing a notice or counter-notice. Also, be aware that there may be penalties for false claims under the DMCA.</p>
+<p>Agent to Receive Notices of Claimed Infringement:</p>
+<p><strong>Strava Copyright Agent</strong> <br> 208 Utah Street <br> San Francisco, CA 94103 <br> USA <br> ip@strava.com <br> (415) 320-7817</p>
+</section>
+<section id='your-feedback'>
+<h2>Your Feedback</h2>
+<p>We welcome your comments, feedback, suggestions, and other communications regarding the Services and the information and services we make available through the Services (collectively, “Feedback”). If you provide Feedback, you hereby grant to Strava a worldwide, non-exclusive, transferable, assignable, sub-licensable, perpetual, irrevocable, royalty-free license to copy, distribute, create derivative works of, publicly display and perform and otherwise exploit such Feedback and to use, make, have made, sell, offer for sale, import and export products and services based on such Feedback. For this reason, we ask that you not send Strava any Feedback that you do not wish to license to us as set forth above.</p>
+</section>
+<section id='disclaimer-of-warranties-and-liability'>
+<h2>Disclaimer of Warranties and Liability</h2>
+<p>THE INFORMATION, SOFTWARE, PRODUCTS, SERVICES AND CONTENT AVAILABLE THROUGH THE SERVICES ARE PROVIDED TO YOU “AS IS” AND WITHOUT WARRANTY. STRAVA AND ITS SUBSIDIARIES, AFFILIATES, OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS HEREBY DISCLAIM ALL WARRANTIES WITH REGARD TO SUCH INFORMATION, SOFTWARE, PRODUCTS, SERVICES AND CONTENT, INCLUDING, WITHOUT LIMITATION, ALL IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NONINFRINGEMENT. STRAVA AND ITS SUBSIDIARIES, AFFILIATES, OFFICERS, EMPLOYEES, AGENTS, PARTNERS AND LICENSORS MAKE NO WARRANTY THAT: (a) THE SERVICE WILL MEET YOUR REQUIREMENTS; (b) YOUR CONTENT WILL BE AVAILABLE OR THE SERVICE WILL BE UNINTERRUPTED, TIMELY, SECURE OR ERROR-FREE; (c) THE RESULTS THAT MAY BE OBTAINED FROM THE USE OF THE SERVICE WILL BE ACCURATE OR RELIABLE; (d) THE QUALITY OF ANY PRODUCTS, SERVICES, INFORMATION OR OTHER MATERIAL PURCHASED OR OBTAINED BY YOU THROUGH THE SERVICE WILL MEET YOUR EXPECTATIONS; AND (e) ANY ERRORS IN THE SERVICES WILL BE CORRECTED.</p>
+<p>YOU EXPRESSLY AGREE THAT STRAVA IS NOT PROVIDING MEDICAL ADVICE VIA THE SERVICES. THE CONTENT PROVIDED THROUGH THE SERVICES, INCLUDING ALL TEXT, PHOTOGRAPHS, IMAGES, ILLUSTRATIONS, GRAPHICS, AUDIO, VIDEO AND AUDIO-VIDEO CLIPS, AND OTHER MATERIALS, WHETHER PROVIDED BY US OR BY OTHER ACCOUNT HOLDERS OR THIRD PARTIES IS NOT INTENDED TO BE AND SHOULD NOT BE USED IN PLACE OF (a) THE ADVICE OF YOUR PHYSICIAN OR OTHER MEDICAL PROFESSIONALS, (b) A VISIT, CALL OR CONSULTATION WITH YOUR PHYSICIAN OR OTHER MEDICAL PROFESSIONALS, OR (c) INFORMATION CONTAINED ON OR IN ANY PRODUCT PACKAGING OR LABEL. SHOULD YOU HAVE ANY HEALTH RELATED QUESTIONS, PLEASE CALL OR SEE YOUR PHYSICIAN OR OTHER HEALTHCARE PROVIDER PROMPTLY. SHOULD YOU HAVE AN EMERGENCY, CALL YOUR PHYSICIAN OR 911 IMMEDIATELY. YOU SHOULD NEVER DISREGARD MEDICAL ADVICE OR DELAY IN SEEKING MEDICAL ADVICE BECAUSE OF ANY CONTENT PRESENTED ON THE SERVICES, AND YOU SHOULD NOT USE THE SERVICES OR ANY CONTENT ON THE SERVICES FOR DIAGNOSING OR TREATING A HEALTH PROBLEM. THE TRANSMISSION AND RECEIPT OF OUR CONTENT, IN WHOLE OR IN PART, OR COMMUNICATION VIA THE INTERNET, E-MAIL OR OTHER MEANS DOES NOT CONSTITUTE OR CREATE A DOCTOR-PATIENT, THERAPIST-PATIENT OR OTHER HEALTHCARE PROFESSIONAL RELATIONSHIP BETWEEN YOU AND STRAVA.</p>
+<p>YOU EXPRESSLY AGREE THAT YOUR ATHLETIC ACTIVITIES (INCLUDING, BUT NOT LIMITED TO, CYCLING, RUNNING, OR FOLLOWING A STRAVA TRAINING PLAN OFFERED ON THE SERVICES) CARRY CERTAIN INHERENT AND SIGNIFICANT RISKS OF PROPERTY DAMAGE, BODILY INJURY OR DEATH AND THAT YOU VOLUNTARILY ASSUME ALL KNOWN AND UNKNOWN RISKS ASSOCIATED WITH THESE ACTIVITIES EVEN IF CAUSED IN WHOLE OR PART BY THE ACTION, INACTION OR NEGLIGENCE OF STRAVA OR BY THE ACTION, INACTION OR NEGLIGENCE OF OTHERS.</p>
+<p>YOU EXPRESSLY AGREE THAT STRAVA DOES NOT ASSUME RESPONSIBILITY FOR THE INSPECTION, SUPERVISION, PREPARATION, OR CONDUCT OF ANY RACE, CONTEST, CHALLENGE, OR GROUP ACTIVITY THAT UTILIZES THE SERVICES, INCLUDING ANY THAT ARE ORGANIZED BY A CLUB ADMINISTRATOR.</p>
+<p>YOU EXPRESSLY AGREE TO RELEASE STRAVA, ITS SUBSIDIARIES, AFFILIATES, OFFICERS, AGENTS, REPRESENTATIVES, EMPLOYEES, PARTNERS AND LICENSORS (THE “RELEASED PARTIES”) FROM ANY AND ALL LIABILITY IN CONNECTION WITH YOUR ATHLETIC ACTIVITIES AND/OR USE OF THE STRAVA WEBSITES, MOBILE APPLICATIONS, CONTENT, SERVICES OR PRODUCTS (INCLUDING, WITHOUT LIMITATION, ANY STRAVA TRAINING PLAN), AND PROMISE NOT TO SUE THE RELEASED PARTIES FOR ANY CLAIMS, ACTIONS, INJURIES, DAMAGES, OR LOSSES ASSOCIATED WITH SUCH USE. YOU ALSO AGREE THAT IN NO EVENT SHALL THE RELEASED PARTIES BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH (a) YOUR USE OR MISUSE OF THE SERVICES, (b) YOUR USE OR MISUSE OF EQUIPMENT OR PROGRAMS CREATED OR LICENSED BY STRAVA (INCLUDING, WITHOUT LIMITATION, ANY STRAVA TRAINING PLAN) WHILE ENGAGED IN ATHLETIC ACTIVITIES, (c) YOUR DEALINGS WITH THIRD-PARTY SERVICE PROVIDERS OR ADVERTISERS AVAILABLE THROUGH THE SERVICES, (d) ANY DELAY OR INABILITY TO USE THE SERVICES EXPERIENCED BY YOU, OR (e) ANY INFORMATION, SOFTWARE, PRODUCTS, SERVICES OR CONTENT OBTAINED THROUGH THE SERVICES, WHETHER BASED ON CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF STRAVA HAS BEEN ADVISED OF THE POSSIBILITY OF DAMAGES.</p>
+<p>BECAUSE SOME STATES/JURISDICTIONS DO NOT ALLOW SOME OR ALL OF THE EXCLUSIONS OR LIMITATIONS OF LIABILITY ABOVE, SUCH AS EXCLUSIONS FOR CONSEQUENTIAL OR INCIDENTAL DAMAGES, SOME OF THE ABOVE LIMITATIONS OR EXCLUSIONS MAY NOT APPLY TO YOU. IN ENTERING INTO THIS RELEASE, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTAND, AND HEREBY EXPRESSLY WAIVE THE BENEFITS OF, SECTION 1542 OF THE CIVIL CODE OF CALIFORNIA, (AND ANY SIMILAR LAW OF ANY STATE, COUNTRY OR TERRITORY), WHICH PROVIDES AS FOLLOWS: “A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS FAVOR AT THE TIME OF EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM MUST HAVE MATERIALLY AFFECTED HIS SETTLEMENT WITH THE DEBTOR.”</p>
+<p>STRAVA DOES NOT ENDORSE YOUR CONTENT OR ANY OTHER ATHLETE’S CONTENT AND SPECIFICALLY DISCLAIMS ANY RESPONSIBILITY OR LIABILITY TO ANY PERSON OR ENTITY FOR ANY LOSS, DAMAGE (WHETHER ACTUAL, CONSEQUENTIAL, INDIRECT, PUNITIVE OR OTHERWISE), INJURY, CLAIM, LIABILITY OR OTHER CAUSE OF ANY KIND OR CHARACTER BASED UPON OR RESULTING FROM ANY CONTENT ON THE SERVICES.</p>
+<p>THE COMPANY’S MAXIMUM AGGREGATE LIABILITY TO YOU PURSUANT TO THESE TERMS SHALL NOT EXCEED THE GREATER OF EITHER (a) FIFTY DOLLARS ($50) OR (b) THE AMOUNT OF FEES PAID BY YOU TO STRAVA IN THE 12-MONTHS PRIOR TO DATE THE CLAIM.</p>
+<p>IF YOU ARE A CONSUMER RESIDING IN THE EUROPEAN UNION, YOU HAVE LEGAL REMEDIES IF WE CAUSE YOU LOSS BY OUR BREACH OR NON-PERFORMANCE OF OUR LEGAL OBLIGATIONS, OR BY OUR NEGLIGENCE, AND THESE TERMS DO NOT AFFECT THOSE STATUTORY REMEDIES.</p>
+</section>
+<section id='indemnity'>
+<h2>Indemnity</h2>
+<p>You agree to indemnify and hold Strava and its subsidiaries, affiliates, officers, agents, representatives, employees, partners and licensors harmless from any claim or demand, including reasonable attorneys’ fees, made by any third party due to or arising out of Content you submit, post, transmit or otherwise seek to make available through the Services, your use of the Services, your athletic activities which generate the Content you post or seek to post on the Services (including, but not limited to, athletic activities in connection with any contests, races, group rides, or other events which Strava sponsors, organizes, participates in, or whose Services are used in connection with), your connection to the Services, your violation of the Terms, your violation of any data protection or privacy laws, or your violation of any rights of another person or entity.  Your rights with respect to Strava are not modified by the foregoing indemnification if the laws of your country of residence, applicable as a result of your use of our Services, do not permit it.</p>
+</section>
+<section id='notice-for-california-athletes'>
+<h2>Notice for California Athletes</h2>
+<p>Under California Civil Code Section 1789.3, California Services athletes are entitled to the following specific consumer rights notice: The Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs may be contacted in writing at 1625 N. Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210.</p>
+</section>
+<section id='dispute-resolution'>
+<h2>Dispute Resolution</h2>
+<section id='arbitration'>
+<h3>Arbitration</h3>
+<p>The parties shall use their best efforts to settle any dispute, claim, question, or disagreement directly through good-faith negotiations, which shall be a precondition to either party initiating a lawsuit or arbitration. Except for disputes relating to the Strava’s intellectual property (such as trademarks, trade dress, domain names, trade secrets, copyrights, and patents) or if you opt out of this agreement to arbitrate, all claims arising out of or relating to this Agreement and your use of the Services shall be finally settled by binding arbitration administered by JAMS in accordance with its provisions and procedures for consumer-related disputes, excluding any rules or procedures governing or permitting class actions. The arbitrator, and not any court or agency, shall have exclusive authority to resolve all disputes arising out of or relating to this Agreement, including, but not limited to, any claim that all or any part of this Agreement is void or voidable. The arbitrator shall be empowered to grant whatever relief would be available in a court; provided, however, that the arbitrator will not have authority to award damages, remedies, or awards that conflict with this Agreement. The arbitrator’s award shall be binding on the parties and may be entered as a judgment in any court of competent jurisdiction. To the extent the filing fee for the arbitration exceeds the cost of filing a lawsuit, Strava will pay the additional cost. You and Strava hereby expressly waive trial by jury. You also agree not to participate in claims brought in a private attorney general or representative capacity, or consolidated claims involving another person’s account, if Strava is a party to the proceeding. This dispute resolution provision will be governed by the Federal Arbitration Act. This provision does not apply to users who live in the European Union.</p>
+<p>The parties understand that, absent this mandatory provision, they would have the right to sue in court and have a jury trial. They further understand that, in some instances, the costs of arbitration could exceed the costs of litigation and that the right to discovery may be more limited in arbitration than in court.</p>
+</section>
+<section id='class-action-waiver'>
+<h3>Class-Action Waiver</h3>
+<p>The parties further agree that any arbitration shall be conducted in their individual capacities only, and not as a class action or other representative action. If any court or arbitrator determines that the class-action waiver set forth in this section is void or unenforceable for any reason, or that an arbitration can proceed on a class basis, then the arbitration provision set forth above shall be deemed null and void in its entirety and the parties shall be deemed to have not agreed to arbitrate disputes.</p>
+</section>
+<section id='exception-litigation-of-small-claims-court-claims'>
+<h3>Exception—Litigation of Small Claims Court Claims</h3>
+<p>Notwithstanding the parties’ decision to resolve all disputes through arbitration, either party may also seek relief in a small claims court for disputes or claims within the scope of that court’s jurisdiction.</p>
+</section>
+<section id='thirty-day-right-to-opt-out'>
+<h3>Thirty-Day Right to Opt Out</h3>
+<p>You have the right to opt out and not be bound by the arbitration- and class-action-waiver provisions set forth in this section by sending written notice of your decision to opt out to the following address: Strava, Inc., Attn: Legal Department, 208 Utah Street, San Francisco, CA 94103, USA. The notice must be sent within 30 days of registering to use the Services; otherwise, you shall be bound to arbitrate disputes in accordance with these Terms. If you opt out of these arbitration provisions, Strava also will not be bound by them. In addition, if you elect to opt out of these arbitration provisions, Strava may terminate your use of the Services.</p>
+</section>
+<section id='time-limitation-on-claims'>
+<h3>Time Limitation on Claims</h3>
+<p>You agree that any claim you may have arising out of or related to your relationship with Strava and these Terms must be filed within one year after such claim arose; otherwise, your claim is permanently barred. This provision does not apply if you are based in the European Union in which case time limitations shall be determined in accordance with governing law for EU users mentioned below.</p>
+</section>
+</section>
+<section id='choice-of-law-and-forum'>
+<h2>Choice of Law and Forum</h2>
+<p>Any action related to the Terms, Content, the Services, and your relationship with the Strava shall be governed by, and construed and interpreted in accordance with, the laws of the State of California without regard to its conflict of laws principles AND WILL SPECIFICALLY NOT BE GOVERNED BY THE UNITED NATIONS CONVENTIONS ON CONTRACTS FOR THE INTERNATIONAL SALE OF GOODS, IF OTHERWISE APPLICABLE. Subject to the Section entitled “Dispute Resolution”, the parties irrevocably consent to bring any action to enforce this Agreement in the federal or state courts embracing San Francisco, California and you consent to the exclusive jurisdiction of the federal or state courts embracing San Francisco, California. If any party hereto brings any suit or action against another for relief, declaratory or otherwise, arising out of these Terms, the prevailing party will have and recover against the other party, in addition to all court costs and disbursements, such sum as the court may adjudge to be reasonable attorneys’ fees. Except to the extent prohibited by applicable law, the parties agree that any claim or cause of action arising out of or related to use of the Services or the Terms must be filed within one (1) year after such claim or cause of action arose or be forever barred. This paragraph does not apply to users who reside in the European Union.</p>
+<p>If you are a user based in the European Union, then Irish law shall apply to these Terms and the Irish courts shall have exclusive jurisdiction to hear disputes arising in relation to the Terms.  Despite this, your local laws in your European Union Member State may allow you to take legal action against Strava in your Member State and to invoke certain local laws against Strava.</p>
+</section>
+<section id='united-states-operation'>
+<h2>United States Operation</h2>
+<p>This Services are controlled by Strava from its offices within the United States of America. Strava makes no representation that the Content or the Services are appropriate or available for use in other locations. Access to or use of the Content or the Services from territories where such access or use is illegal is prohibited. Those who choose to access the Services from locations outside of the United States do so on their own initiative and are responsible for compliance with applicable local laws. You may not use or export the Content in violation of U.S. export laws and regulations.</p>
+</section>
+<section id='termination'>
+<h2>Termination</h2>
+<p>You agree that Strava may, under certain serious circumstances and without prior notice, immediately suspend or terminate your account and/or access to the Services. Cause for such suspension or termination shall include, but not be limited to, (a) breaches or violations of the Terms or other incorporated agreements, policies or guidelines, (b) requests by law enforcement or other government agencies, (c) a request by you (self-initiated account deletions), (d) discontinuance or material modification to the Services (or any portion thereof), (e) unexpected technical or security issues or problems, (f) extended periods of inactivity, and/or (g) nonpayment of any fees owed by you in connection with the Services. Termination of your account may include (x) removal of access to all offerings within the Services, (y) deletion of your information, files and Content associated with your account, and (z) barring of further use of the Services. Further, you agree that all suspensions or terminations for cause shall be made in Strava’s sole discretion and that Strava shall not be liable to you or any third party for any suspension or termination of your account or access to the Services. The following Sections shall survive termination of your account and/or the Terms: Content and Conduct, Clubs, Proprietary Rights, Your Feedback, Disclaimer of Warranties and Liability, Indemnity, Choice of Law and Forum, and General.</p>
+</section>
+<section id='general'>
+<h2>General</h2>
+<p>You agree that no joint venture, partnership, joint controllership, employment or agency relationship exists between you and Strava as a result of the Terms or your use of the Services. The Terms constitute the entire agreement between you and Strava with respect to your use of the Services. The failure of Strava to exercise or enforce any right or provision of the Terms shall not constitute a waiver of such right or provision. If any provision of the Terms is found by a court of competent jurisdiction to be invalid, the parties nevertheless agree that the court should endeavor to give effect to the parties’ intentions as reflected in the provision, and the other provisions of the Terms remain in full force and effect. You may not assign, delegate or otherwise transfer your account or your obligations under these Terms without the prior written consent of Strava. Strava has the right, in its sole discretion, to transfer or assign all or any part of its rights under these Terms and will have the right to delegate or use third party contractors to fulfill its duties and obligations under these Terms and in connection with the Services. Strava’s notice to you via email, regular mail or notices, posts, or links on the Services shall constitute acceptable notice to you under the Terms. A printed version of the Terms and of any notice given in electronic form shall be admissible in judicial or administrative proceedings based upon or relating to the Terms to the same extent and subject to the same conditions as other business documents and records originally generated and maintained in printed form. Section titles and headings in the Terms are for convenience only and have no legal or contractual effect. Any rights not expressly granted herein are reserved.</p>
+</section>
+<section id='modification-of-the-terms-and-services'>
+<h2>Modification of the Terms and Services</h2>
+<p>Certain provisions of the Terms may be supplemented or superseded by expressly designated legal notices or terms located on particular pages on the Services. Strava reserves the right to update the Terms at any time and for any reason in its sole discretion. Strava will notify you of any material changes to the Terms or to any service or other features of the Services. By continuing to access or use the Services after we have provided you with notice of a modification, you are agreeing to be bound by the modified Terms. If the modified Terms are not acceptable to you, your only recourse is to cease using the Services.</p>
+<p>Strava and its third party service providers may make improvements and/or changes in the Services, products, services, mobile applications, features, programs, and prices described at any time and for any reason in its sole discretion. The mobile application may download and install upgrades, updates and additional features in order to improve, enhance, and further develop the Services. Strava reserves the right at any time to modify or discontinue, temporarily or permanently, the Services or any portion thereof with or without notice. You agree that Strava shall not be liable to you or to any third party for any modification, suspension or discontinuance of the Services.</p>
+</section>
+<section id='support-and-questions'>
+<h2>Support and Questions</h2>
+<p>For questions regarding the Services and these Terms, please contact us via <a href='https://support.strava.com'>https://support.strava.com</a>.</p>
+</section>
+<section id='past_versions'>
+<a name='past_versions'></a>
+<ul>
+<li><a href="/legal/terms/2020">December 15, 2020</a></li>
+<li><a href="/legal/terms/2023">December 4, 2023</a></li>
+</ul>
+</section>
+
+<p class='copyright'>&copy;&nbsp; 2024 Strava</p>
+</article>
+</div>
+<a class='nav-back-to-top' href='#view-legal'>↑ Back to top</a>
+</div>
+
+<footer id='global-footer'>
+<div class='container-fluid'>
+<div class='row footer-nav footer-row'>
+<div class='footer-nav-wrapper'>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Our Community
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='/about'>
+About
+</a>
+</li>
+<li>
+<a href='/community-standards'>
+Strava Community Standards
+</a>
+</li>
+<li>
+<a href='/careers'>
+Careers
+</a>
+</li>
+<li>
+<a href='https://press.strava.com'>
+Press
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Follow
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='https://stories.strava.com/' target='_blank'>
+Stories
+</a>
+</li>
+<li>
+<a href='https://www.facebook.com/Strava/' target='_blank'>
+Facebook
+</a>
+</li>
+<li>
+<a href='https://instagram.com/strava' target='_blank'>
+Instagram
+</a>
+</li>
+<li>
+<a href='http://twitter.com/strava' target='_blank'>
+Twitter
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6'>
+<h4 tabindex='0'>
+Support
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='https://strava.zendesk.com/entries/61608110-How-to-contact-Strava-Support-Submit-a-ticket'>
+Contact
+</a>
+</li>
+<li>
+<a href='https://communityhub.strava.com'>
+Community Forum
+</a>
+</li>
+<li>
+<a href='https://support.strava.com/hc/en-us/articles/216917717-About-Strava-Maps'>
+About Our Maps
+</a>
+</li>
+</ul>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='https://business.strava.com?utm_source=footer&amp;utm_medium=referral'>
+Business
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/mobile'>
+Mobile
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/subscribe?origin=global_footer'>
+Subscription
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-lg-2 col-md-3 col-sm-3 col-xs-6 visible-lg-block'>
+<h4>
+<a href='/student?origin=global_footer'>
+Student Discount
+</a>
+</h4>
+</div>
+<div class='footer-nav-menu col-md-3 col-sm-3 col-xs-6 hidden-lg'>
+<h4 class='more'>
+<span class="app-icon-wrapper  "><span class="app-icon icon-ellipsis icon-xl">More</span></span>
+</h4>
+<ul class='footer-nav-submenu list-unstyled text-left'>
+<li>
+<a href='/mobile'>
+Mobile
+</a>
+</li>
+<li>
+<a href='/premium'>
+Subscription
+</a>
+</li>
+<li>
+<a href='https://business.strava.com?utm_source=footer&amp;utm_medium=referral'>
+Business
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class='row footer-other'>
+<div class='col-md-12'>
+<div class='privacy-terms'>
+<a href='/legal/privacy'>
+Privacy Policy
+</a>
+|
+<a href='/legal/terms'>
+Terms and Conditions
+</a>
+</div>
+<div class='copyright'>
+<p>© 2024 Strava</p>
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+
+
+<script id='lightbox-template' type='text/template'>
+<div class='lightbox-window modal-content'>
+<div class='close-lightbox'>
+<button class='btn btn-unstyled btn-close'>
+<div class='app-icon icon-close icon-xs icon-dark'></div>
+</button>
+</div>
+</div>
+</script>
+<script id='popover-template' type='text/template'>
+<div class='popover'></div>
+</script>
+<script>
+  window._asset_host = "https://d3nn82uaxijpm6.cloudfront.net";
+  window._measurement_preference = "meters";
+  window._date_preference = "%m/%d/%Y";
+  window._datepicker_preference_format = "mm/dd/yy";
+  
+  jQuery(document).ready(function() {
+    Strava.Util.EventLogging.createInstance("https://analytics.strava.com","7215fa60b5f01ecc3967543619f7e3d9", null);
+  });
+</script>
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/strava/i18n/locales/en-US-2ecfbb249e59dd1b58367df1825cf017d86b9cd176a9d2147199db7f8c094bdc.js"></script>
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/application-35fb3d833b6ac1fd03e76741286320e16b3bef64cdb547033ad0184413114310.js"></script>
+
+<script src="https://www.strava.com/cookie-banner"></script>
+<script>
+  jQuery(document).ready(function(){
+    typeof StravaCookieBanner !== 'undefined' && StravaCookieBanner.render();
+  });
+</script>
+
+
+<div id='fb-root'></div>
+<script>
+  // set fbInitialized so we know FB is being initialized async (safegaurd against react loading FB twice)
+  if (window.Strava) window.Strava.fbInitialized = true;
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId: "284597785309",
+      status: true,
+      cookie: true,
+      xfbml: true,
+      version: "v7.0"
+    });
+    Strava.Facebook.PermissionsManager.getInstance().facebookReady();
+    jQuery('#fb-root').trigger('facebook:init');
+  };
+  (function(d){
+    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); js.id = id; js.async = true;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+</script>
+
+
+<script>
+  var currentAthlete = new Strava.Models.CurrentAthlete({"logged_in":false});
+  HAML.globals = function() {
+    return {
+      currentAthlete: currentAthlete,
+      renderPartial: function(name, context) {
+        if (context == null) {
+          context = this;
+        }
+        return JST[name](context);
+      }
+    }
+  }
+</script>
+
+<script>
+  new Strava.Initializer();
+</script>
+<script>
+  var mqTimeout;
+  var pinTimeout;
+  var mq;
+  var legalNav = jQuery('#legal-nav');
+  var legalNavItems = jQuery('#legal-nav-items');
+  
+  var bindActions = function(){
+    mq = window.matchMedia("(max-width: 767px)");
+    if (mq.matches) {
+      legalNav.on('click', function(){
+        legalNavItems.collapse('toggle');
+      });
+    } else {
+      legalNav.unbind('click');
+      legalNavItems.removeAttr('style');
+    }
+  }
+  
+  var windowTop;
+  var windowHeight;
+  var backToTop = jQuery('.nav-back-to-top');
+  var backToTopPinning = function(){
+    windowTop = jQuery(window).scrollTop();
+    windowHeight = jQuery(window).height();
+  
+    if (windowTop > windowHeight) {
+      if (!backToTop.hasClass('pinned')) {
+        backToTop.addClass('pinned');
+      }
+    } else {
+      jQuery('.nav-back-to-top.pinned').removeClass('pinned');
+    }
+  
+    if (windowTop + windowHeight > jQuery('#view-legal').height()) {
+      if (!backToTop.hasClass('pinned-bottom')) {
+        backToTop.addClass('pinned-bottom');
+      }
+    } else {
+      jQuery('.nav-back-to-top.pinned-bottom').removeClass('pinned-bottom');
+    }
+  }
+  
+  jQuery(document).ready(function(){
+    bindActions();
+    backToTopPinning();
+  
+    if (matchMedia) {
+      window.onresize = function(){
+        clearTimeout(mqTimeout);
+        mqTimeout = setTimeout(bindActions, 200);
+      };
+    }
+  
+    window.onscroll = function(){
+      clearTimeout(pinTimeout);
+      pinTimeout = setTimeout(backToTopPinning, 40);
+    }
+  });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register("/service_worker.js?v=dLlWydWlG8").then(function(registration) {
+      }, function(err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }
+</script>
+<script>
+  jQuery(document).ready(function() {
+    // Scroll Tracking
+    jQuery(document).one('scroll', function(){
+      Strava.ExternalAnalytics.trackV2({
+        category: 'page_scrolled'
+      });
+    });
+  });
+</script>
+<script>
+  // Mobile Menu transition handler
+  jQuery('.collapsable-nav #container-nav')
+    .on('show.bs.collapse', function(){
+      jQuery('#smartbanner-loading-placeholder').slideUp(100);
+      jQuery('html').addClass('mobile-menu-open');
+    })
+    .on('hidden.bs.collapse', function(){
+      jQuery('#smartbanner-loading-placeholder').slideDown(100);
+      jQuery('html').removeClass('mobile-menu-open');
+    });
+</script>
+
+<script src="https://d3nn82uaxijpm6.cloudfront.net/assets/bootstrap.min-a7bfdfbd2fee539589ef513eefe26b630e543cbde9d99a371757033189d830e9.js"></script>
+
+</body>
+</html>
