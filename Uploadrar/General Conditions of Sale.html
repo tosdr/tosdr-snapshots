@@ -1,0 +1,490 @@
+<script>
+  // Delete the Funding Choices cookie if consent is more than 12 months old
+  try {
+    const nm = "FCCDCF";        // Match name of Funding Choices cookie
+    const dm = "uploadrar.com";  // Match domain of Funding Choices cookie
+    const pa = "/";             // Match path of Funding Choices cookie
+    let tc = ('; ' + document.cookie).split('; ' + nm + '=');
+    if (tc.length === 2) {
+      tc = decodeURIComponent(tc.pop().split(';').shift());
+      tc = JSON.parse(tc)[3][0].substring(1,9);
+      tc = Uint8Array.from(window.atob(tc), (v) => v.charCodeAt(0));
+      let dt = (tc[0] * 2**28) + (tc[1] * 2**20) + (tc[2] * 2**12) +
+               (tc[3] * 2**4)  + (tc[4] >> 4);
+      if (Date.now() / 1000 - dt / 10 > 86400 * 365)
+        document.cookie = nm + "=;path=" + pa + ";domain=" + dm +
+                          ";expires=" + new Date(0).toUTCString();
+    }
+  } finally {}
+</script>
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZDY9BTGRE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PZDY9BTGRE');
+</script>
+<script>
+    var frames = window.frames;
+    var i;
+
+    for (i = 0; i < frames.length; i++) {
+        frames[i].location = "";
+    }
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/in-view@0.6.1/dist/in-view.min.js"></script>
+<script>inView.offset(-200);</script>
+
+  <!-- Basic Page Needs -->
+  <meta charset="UTF-8">
+  <meta http-equiv=content-Type content="text-html; charset=UTF-8">
+  <meta name="description" content="Uploadrar - Free file upload service">
+  <meta name="keywords"    content="file upload,share files,free upload">
+  <script language="JavaScript" type="text/javascript" CHARSET="UTF-8" src="https://uploadrar.com/js/jquery-1.9.1.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="https://uploadrar.com/css/bootstrap.css"> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+  
+  
+    <script type='text/javascript'>
+    	if (top !== self) top.location.href = self.location.href;
+    </script>
+ 	
+	<!-- <title>Uploadrar - Easy way to share your files</title> -->
+	<title>Uploadrar - Easy way to share your files</title>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/v4-shims.css">
+	<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+  <script type="text/javascript" src="https://uploadrar.com/js/jquery.paging.js"></script> 
+  <script type="text/javascript" src="https://uploadrar.com/js/jquery.cookie.js"></script> 
+  <script type="text/javascript" src="https://uploadrar.com/js/paging.js"></script> 
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#showallarch").click(function() {
+        $(this).css('display', 'none'),
+        $("#fileinfoarch").css('height', '100%'),
+        $("#grad").css('display', 'none');
+      });
+    });
+  </script> 
+  <script type="text/javascript">
+    (function($) {
+			$(function() {
+      	$('ul.tabs').on('click', 'li:not(.current)', function() {
+       		var section = $(this).parents('div.section:first');
+         	var idx = $(this).index();
+         	$(this).addClass('current').siblings().removeClass('current');
+         	$(section).find('> div.box').eq(idx).fadeIn(150).siblings('div.box').hide();
+         	$.cookie($(section).attr('id') + 'tab', idx);
+      	});
+      	$('.section').each(function(i, e) {
+      		if(!e.id) return;
+         	var idx;
+         	if(idx = $.cookie(e.id + 'tab')) {
+         		$(e).find('> ul > li').eq(idx).click();
+         	}
+      	});
+   		})
+   	})(jQuery)
+	</script>      
+	
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-106553415-3']);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	
+	<!-- Mngez Files -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script type="text/javascript" src="/uploadrar_style/js/jquery.easing.min.js"></script>
+  <script type="text/javascript" src="/uploadrar_style/js/jquery.easy-ticker.min.js"></script>
+  <script type="text/javascript" src="/uploadrar_style/js/jquery.counterup.min.js"></script>
+  <script type="text/javascript" src="/uploadrar_style/js/wow.min.js"></script>
+	<link rel="icon" href="/uploadrar_style/images/favicon.png" type="image/x-icon"/>
+ 	<link rel="shortcut icon" href="/uploadrar_style/images/favicon.png" type="image/x-icon"/>
+	<link rel="stylesheet" type="text/css" href="/uploadrar_style/fonts/fonts.css">
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" media="all" rel="stylesheet">
+	
+	  <link rel="stylesheet" href="/uploadrar_style/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/uploadrar_style/css/bootstrap-theme.min.css">
+ 	
+ 	<link rel="stylesheet" href="/uploadrar_style/css/animate.css">
+	<link rel="stylesheet" type="text/css" href="/uploadrar_style/mngez.css">
+	
+	<link rel="stylesheet" type="text/css" href="/uploadrar_style/css/responsive.css">
+	<!-- Mngez Files -->
+</head>
+
+<body class="lastnewshere" >
+
+
+	<!-- <div class="loaderpage"><div class="cssload-container"><div class="cssload-whirlpool"></div></div></div> -->
+	<div id="sidebarphone">
+	  <button class="closemenu" type="button"><i class="fa fa-times" aria-hidden="true"></i></button>
+		<ul class="nav navbar-nav">
+	    <li><a href="https://uploadrar.com" title="Home">Home</a></li>
+	    
+	      
+	        <li><a href="https://uploadrar.com/login.html" title="Login">Login</a></li>
+	        <li><a href="https://uploadrar.com/register.html" title="Sign Up">Sign Up</a></li>
+	      
+	      <li><a href="https://uploadrar.com/premium.html" title="Premium">Premium</a></li>
+	      <li><a href="https://uploadrar.com/?op=news" title="News">News</a></li>
+	      <li><a href="https://uploadrar.com/contact.html" title="Contact Us">Contact Us</a></li>
+	    
+		</ul>
+	</div><!-- end sidebarphone -->
+	
+	<header>
+		<div class="container">
+			<div class="logo">
+      	<a href="https://uploadrar.com" title="Uploadrar"><img src="https://uploadrar.com/uploadrar_style/images/logo.png" alt="Uploadrar"></a>
+    	</div><!-- end logo -->
+		
+			<button class="buttonmenu hidden-md hidden-lg wow fadeInUp" type="button"><i class="fa fa-bars"></i></button>
+			
+		  <div class="language hidden-xs hidden-sm">
+				<ul>
+					<li>
+						<a><span class="trf trf-english"></span></a>
+						<ul>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=russian">
+										<span class="trf trf-russian"></span><span class="langname">Russian</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=german">
+										<span class="trf trf-german"></span><span class="langname">German</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=french">
+										<span class="trf trf-french"></span><span class="langname">French</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=arabic">
+										<span class="trf trf-arabic"></span><span class="langname">Arabic</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=turkish">
+										<span class="trf trf-turkish"></span><span class="langname">Turkish</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=polish">
+										<span class="trf trf-polish"></span><span class="langname">Polish</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=thai">
+										<span class="trf trf-thai"></span><span class="langname">Thai</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=spanish">
+										<span class="trf trf-spanish"></span><span class="langname">Spanish</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=japan">
+										<span class="trf trf-japan"></span><span class="langname">Japan</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=hungary">
+										<span class="trf trf-hungary"></span><span class="langname">Hungary</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=indonesia">
+										<span class="trf trf-indonesia"></span><span class="langname">Indonesia</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=dutch">
+										<span class="trf trf-dutch"></span><span class="langname">Dutch</span>
+									</a>
+								</li>
+							
+								<li>
+									<a href="https://uploadrar.com/?op=change_lang&lang=hebrew">
+										<span class="trf trf-hebrew"></span><span class="langname">Hebrew</span>
+									</a>
+								</li>
+							
+						</ul>
+					</li>
+				</ul>
+			</div><!-- end language -->
+  		
+				
+		    	<div class="visitarea hidden-xs hidden-sm">
+		    		<a href="https://uploadrar.com/login.html" title="Login"><i class="fa fa-sign-in"></i>Login</a>
+		    		<a href="https://uploadrar.com/register.html" title="Sign Up"><i class="fa fa-user-plus"></i>Sign Up</a>
+		    	</div><!-- end visitarea -->
+		    
+		  
+    	<div class="mainmenu hidden-xs hidden-sm">
+    		<ul>
+       		<li><a href="https://uploadrar.com" title="Home"><i class="fa fa-home"></i>Home</a></li>
+       		<li><a href="https://uploadrar.com/?op=news" title="News"><i class="fa fa-newspaper-o"></i>News</a></li>
+       		<li><a href="https://uploadrar.com/?op=payments" title="Premium"><i class="fa fa-diamond"></i>Premium</a></li>
+       		<li><a href="https://uploadrar.com/make_money.html"><i class="fa fa-money"></i>Make Money</a></li>
+			<li><a href="https://uploadrar.com/pages/ads.html"><i class="fa fa-money-check-alt"></i>Advertise</a></li>
+			<li><a href="https://speed.af"><i class="fa fa-clock-o"></i>Speed Test</a></li>
+  			</ul>
+    	</div><!-- end mainmenu -->
+			<div class="clearfix"></div>
+			
+		</div><!-- end container -->
+	</header><!-- end header -->
+	
+	
+	
+	<div id="wrapper"><div class="container">
+	<div class="pagefile">
+
+<div class="title">Refund Policy</div>
+<div class="content">
+<h1>Return and Refund Policy</h1>
+<p>Last updated: October 10, 2020</p>
+<p>Thank you for shopping at Uploadrar.</p>
+<p>If, for any reason, You are not completely satisfied with a purchase We invite You to review our policy on refunds and returns. This Return and Refund Policy has been created with the help of the <a href="https://www.termsfeed.com/return-refund-policy-generator/" target="_blank">Return and Refund Policy Generator</a>.</p>
+<p>The following terms are applicable for any products that You purchased with Us.</p>
+<h1>Interpretation and Definitions</h1>
+<h2>Interpretation</h2>
+<p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+<h2>Definitions</h2>
+<p>For the purposes of this Return and Refund Policy:</p>
+<ul>
+<li>
+<p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to Uploadrar LLC.</p>
+</li>
+<li>
+<p><strong>Goods</strong> refer to the items offered for sale on the Service.</p>
+</li>
+<li>
+<p><strong>Orders</strong> mean a request by You to purchase Goods from Us.</p>
+</li>
+<li>
+<p><strong>Service</strong> refers to the Website.</p>
+</li>
+<li>
+<p><strong>Website</strong> refers to Uploadrar, accessible from <a href="https://uploadrar.com" rel="external nofollow noopener" target="_blank">https://uploadrar.com</a></p>
+</li>
+<li>
+<p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p>
+</li>
+</ul>
+<h1>Your Order Cancellation Rights</h1>
+<p>You are entitled to cancel Your Order within 7 days without giving any reason for doing so.</p>
+<p>The deadline for cancelling an Order is 7 days from the date on which You received the Goods or on which a third party you have appointed, who is not the carrier, takes possession of the product delivered.</p>
+<p>In order to exercise Your right of cancellation, You must inform Us of your decision by means of a clear statement. You can inform us of your decision by:</p>
+<ul>
+<li>
+<p>By email: payments@uploadrar.com</p>
+</li>
+<li>
+<p>By visiting this page on our website: <a href="https://uploadrar.com/contact.html" rel="external nofollow noopener" target="_blank">https://uploadrar.com/contact.html</a></p>
+</li>
+</ul>
+<p>We will reimburse You no later than 14 days from the day on which We receive the returned Goods. We will use the same means of payment as You used for the Order, and You will not incur any fees for such reimbursement.</p>
+<h1>Conditions for Returns</h1>
+<p>In order for the Goods to be eligible for a return, please make sure that:</p>
+<ul>
+<li>The Goods were purchased in the last 7 days</li>
+<li>The Goods are in the original packaging</li>
+</ul>
+<p>The following Goods cannot be returned:</p>
+<ul>
+<li>The supply of Goods made to Your specifications or clearly personalized.</li>
+<li>The supply of Goods which according to their nature are not suitable to be returned, deteriorate rapidly or where the date of expiry is over.</li>
+<li>The supply of Goods which are not suitable for return due to health protection or hygiene reasons and were unsealed after delivery.</li>
+<li>The supply of Goods which are, after delivery, according to their nature, inseparably mixed with other items.</li>
+</ul>
+<p>We reserve the right to refuse returns of any merchandise that does not meet the above return conditions in our sole discretion.</p>
+<h1>Returning Goods</h1>
+<p>You are responsible for the cost and risk of returning the Goods to Us. You should send the Goods at the following address:</p>
+<p>It is Digital Product</p>
+<p>We cannot be held responsible for Goods damaged or lost in return shipment. Therefore, We recommend an insured and trackable mail service. We are unable to issue a refund without actual receipt of the Goods or proof of received return delivery.</p>
+<h1>Gifts</h1>
+<p>If the Goods were marked as a gift when purchased and then shipped directly to you, You'll receive a gift credit for the value of your return. Once the returned product is received, a gift certificate will be mailed to You.</p>
+<p>If the Goods weren't marked as a gift when purchased, or the gift giver had the Order shipped to themselves to give it to You later, We will send the refund to the gift giver.</p>
+<h2>Contact Us</h2>
+<p>If you have any questions about our Returns and Refunds Policy, please contact us:</p>
+<ul>
+<li>
+<p>By email: payments@uploadrar.com</p>
+</li>
+<li>
+<p>By visiting this page on our website: <a href="https://uploadrar.com/contact.html" rel="external nofollow noopener" target="_blank">https://uploadrar.com/contact.html</a></p>
+</li>
+</ul>
+</div></div>
+	</div></div>
+	
+		<div id='news_last'>
+Last news: 
+
+</div>
+
+	
+	<div class="menufooter">
+		<div class="container">
+			<ul>
+        <li><a href="https://uploadrar.com" title="Home">Home</a></li>
+       	<li><a href="https://uploadrar.com/premium.html" title="Premium">Premium</a>  </li>
+       	<li><a href="https://uploadrar.com/faq.html" title="FAQ">FAQ</a></li>
+        <li><a href="https://uploadrar.com/tos.html" title="Terms of service">Terms of service</a></li>
+        <li><a href="https://uploadrar.com/?op=check_files" title="Link Checker">Link Checker</a></li>
+        <li><a href="https://uploadrar.com/?op=news" title="News">News</a></li>
+        <li><a href="https://uploadrar.com/contact.html" title="Support">Contact Us</a></li>
+        <li><a href="https://uploadrar.com/links.html" title="Links">Links</a></li>
+		<li><a href="http://dmca.uploadrar.com" title="DMCA">DMCA</a></li>
+		<li><a href="https://speed.af">Speedtest</a></li>
+		<li><a href="https://uploadrar.com/pages/privacy.html">Privacy</a></li>
+		<li><a href="https://uploadrar.com/pages/refund.html">Refund</a></li>
+		<li><a href="https://uploadrar.com/pages/aml.html">AML</a></li>
+		<li><a href="https://uploadrar.com/pages/kyc.html">KYC</a></li>
+      </ul>
+		</div><!-- end container -->
+	</div><!-- end menufooter -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="aboutus">
+						<span><img src="https://uploadrar.com/uploadrar_style/images/logo.png" alt="Uploadrar"></a></span>
+						<p>Uploadrar and its partners use cookies and similar technology to collect and analyse information about the users of this website. We use this information to enhance the content, advertising and other services available on the site.</p>
+					</div><!-- end aboutus -->
+				</div><!-- end col-lg-6 -->
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+					<div class="socialmedia">
+	  				<a href="https://www.facebook.com/uploadrar/" title="facebook"><i class="fa fa-facebook"></i></a>
+	  				<a href="https://twitter.com/uploadrar" title="twitter"><i class="fa fa-twitter"></i></a>
+	  				<a href="https://www.youtube.com/channel/UCeeRJFZL6QvEZXboIrSEbuA" title="youtube"><i class="fa fa-youtube"></i></a>
+	  				<a href="#" title="instagram"><i class="fa fa-instagram"></i></a>
+	  			</div><!-- end socialmedia -->
+				</div><!-- end col-lg-6 -->
+			</div><!-- end row -->
+		</div><!-- end container -->
+	</footer><!-- end footer -->
+	<div id="footer2">
+		<div class="container">
+			<div class="copyrights">
+      	All rights reserved to <a href="https://uploadrar.com" title="UploadAr">Uploadrar</a> &copy; 2019
+      </div><!-- end copyrights -->
+      <div class="mngez">
+      	<!--- Designed By ---->
+      </div><!-- end mngez -->
+			<div class="clearfix"></div>
+		</div><!-- end container -->
+	</div><!-- end footer2 -->
+  <script type="text/javascript">
+    new WOW().init();
+    $(document).ready(function(){
+      var dd = $('.vticker').easyTicker({
+        direction: 'up',
+        easing: 'easeInOutBack',
+        speed: 'slow',
+        interval: 5000,
+        height: 'auto',
+        visible: 1,
+        mousePause: 0,
+      }).data('easyTicker');
+      $( "button.closebtn" ).click(function() { $( "#lastnews" ).hide(); });
+      $('button.closebtn').click(function(){
+        $('body').toggleClass('lastnewshere');
+      });
+    });
+    // Mobail Menu
+    $(document).ready(function(){
+      $('header button.buttonmenu').on('click',function(){
+        $('#sidebarphone').toggleClass('menuisopen');
+      });
+      $('#sidebarphone button.closemenu').on('click',function(){
+        $('#sidebarphone').toggleClass('menuisopen');
+      });
+    });
+    $(window).load(function() {
+			// Animate loader off screen
+			$(".loaderpage").fadeOut("slow");;
+		});
+		jQuery(document).ready(function($) {
+    	$('.counter').counterUp({
+      	delay: 10,
+     		time: 1000
+  		});
+ 		});
+  </script>
+</body>
+</html>
+
+<div id="gdpr-cookie-notice" class="hide2">
+   <div style="float: left">
+      Uploadrar and its partners use cookies and similar technology to collect and analyse information about the users of this website.
+      <br>We use this information to enhance the content, advertising and other services available on the site.
+   </div>
+   <input type="button" style="float: right; margin-right: 50px; padding: 20px; font-size: 16px; line-height: 0" value="Agree" onclick="cookiesAgree()">
+</div>
+
+<script>
+if(!$.cookie('gdpr-cookie-consent'))
+   $('#gdpr-cookie-notice').show();
+
+function cookiesAgree()
+{
+   $.cookie('gdpr-cookie-consent', true, { expires: 365 });
+   $('#gdpr-cookie-notice').hide()
+}
+</script>
+
+<style>
+#gdpr-cookie-notice {
+   background: gray;
+   position: fixed;
+   z-index: 10000;
+   width: 100%;
+   height: 60px;
+   bottom: 0px;
+   color: white;
+   font-size: 14px;
+   padding: 15px 15px 0px 15px;
+}
+</style>
+
+
