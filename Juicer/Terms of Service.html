@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.5.1",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],this.interceptedClickListeners=[],this._interceptClickListeners(this),window.addEventListener("pageshow",e=>{this.persisted=e.persisted,this.everythingLoaded&&this._triggerLastFunctions()}),document.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(e){if(document.hidden){e._triggerListener();return}this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventHandler,{passive:!0})),window.addEventListener("touchstart",e.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",e.touchStartHandler),document.addEventListener("visibilitychange",e.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(e=>window.removeEventListener(e,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(e){"HTML"!==e.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),e.target.addEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!0),this._renameDOMAttribute(e.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(e){e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this.interceptedClicks.push(e),e.preventDefault(),e.stopPropagation(),e.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(e=>{e.target.dispatchEvent(new MouseEvent("click",{view:e.view,bubbles:!0,cancelable:!0}))})}_interceptClickListeners(e){EventTarget.prototype.addEventListenerBase=EventTarget.prototype.addEventListener,EventTarget.prototype.addEventListener=function(t,i,r){"click"!==t||e.windowLoaded||i===e.clickHandler||e.interceptedClickListeners.push({target:this,func:i,options:r}),(this||window).addEventListenerBase(t,i,r)}}_disableOtherEventListeners(e,t){this.interceptedClickListeners.forEach(i=>{i.target===e&&(t?e.removeEventListener("click",i.func,i.options):e.addEventListener("click",i.func,i.options))}),e.parentNode!==document.documentElement&&this._disableOtherEventListeners(e.parentNode,t)}_waitForPendingClicks(){return new Promise(e=>{this._isClickPending?this._pendingClickFinished=e:e()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(e,t,i){e.hasAttribute&&e.hasAttribute(t)&&(event.target.setAttribute(i,event.target.getAttribute(t)),event.target.removeAttribute(t))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let e=[];document.querySelectorAll("script[type=rocketlazyloadscript][data-rocket-src]").forEach(t=>{let i=t.getAttribute("data-rocket-src");if(i&&0!==i.indexOf("data:")){0===i.indexOf("//")&&(i=location.protocol+i);try{let r=new URL(i).origin;r!==location.origin&&e.push({src:r,crossOrigin:t.crossOrigin||"module"===t.getAttribute("data-rocket-type")})}catch(n){}}}),e=[...new Map(e.map(e=>[JSON.stringify(e),e])).values()],this._batchInjectResourceHints(e,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._pendingWebpackRequests(this),await this._triggerWindowLoad()}catch(e){console.error(e)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{e.hasAttribute("data-rocket-src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){if(await this._littleBreath(),!0===e.noModule&&"noModule"in HTMLScriptElement.prototype){e.setAttribute("data-rocket-status","skipped");return}return new Promise(t=>{let i;function r(){(i||e).setAttribute("data-rocket-status","executed"),t()}try{if(navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)i=document.createElement("script"),[...e.attributes].forEach(e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type"),"data-rocket-src"===t&&(t="src"),i.setAttribute(t,e.nodeValue))}),e.text&&(i.text=e.text),i.hasAttribute("src")?(i.addEventListener("load",r),i.addEventListener("error",function(){i.setAttribute("data-rocket-status","failed"),t()}),setTimeout(()=>{i.isConnected||t()},1)):(i.text=e.text,r()),e.parentNode.replaceChild(i,e);else{let n=e.getAttribute("data-rocket-type"),s=e.getAttribute("data-rocket-src");n?(e.type=n,e.removeAttribute("data-rocket-type")):e.removeAttribute("type"),e.addEventListener("load",r),e.addEventListener("error",function(){e.setAttribute("data-rocket-status","failed"),t()}),s?(e.removeAttribute("data-rocket-src"),e.src=s):e.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(e.text)))}}catch(a){e.setAttribute("data-rocket-status","failed"),t()}})}async _loadScriptsFromList(e){let t=e.shift();return t&&t.isConnected?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(e,t){var i=document.createDocumentFragment();e.forEach(e=>{let r=e.getAttribute&&e.getAttribute("data-rocket-src")||e.src;if(r){let n=document.createElement("link");n.href=r,n.rel=t,"preconnect"!==t&&(n.as="script"),e.getAttribute&&"module"===e.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),e.crossOrigin&&(n.crossOrigin=e.crossOrigin),e.integrity&&(n.integrity=e.integrity),i.appendChild(n),this.trash.push(n)}}),document.head.appendChild(i)}_delayEventListeners(e){let t={};function i(i,r){return t[r].eventsToRewrite.indexOf(i)>=0&&!e.everythingLoaded?"rocket-"+i:i}function r(e,r){var n;!t[n=e]&&(t[n]={originalFunctions:{add:n.addEventListener,remove:n.removeEventListener},eventsToRewrite:[]},n.addEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.add.apply(n,arguments)},n.removeEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.remove.apply(n,arguments)}),t[e].eventsToRewrite.push(r)}function n(t,i){let r=t[i];t[i]=null,Object.defineProperty(t,i,{get:()=>r||function(){},set(n){e.everythingLoaded?r=n:t["rocket"+i]=r=n}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t;function i(t){return e.everythingLoaded?t:t.split(" ").map(e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e).join(" ")}function r(r){if(r&&r.fn&&!e.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(t){return e.domReadyFired?t.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>t.bind(document)(r)),r([])};let n=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){return this[0]===window&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let t=arguments[0][e];delete arguments[0][e],arguments[0][i(e)]=t})),n.apply(this,arguments),this},e.allJQueries.push(r)}t=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>t,set(e){r(e)}})}async _pendingWebpackRequests(e){let t=document.querySelector("script[data-webpack]");async function i(){return new Promise(e=>{t.addEventListener("load",e),t.addEventListener("error",e)})}t&&(await i(),await e._requestAnimFrame(),await e._pendingWebpackRequests(e))}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}async _triggerWindowLoad(){await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(e=>e(window).trigger("rocket-jquery-load")),await this._littleBreath();let e=new Event("rocket-pageshow");e.persisted=this.persisted,window.dispatchEvent(e),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted}),this.windowLoaded=!0}_triggerLastFunctions(){document.onreadystatechange&&document.onreadystatechange(),window.onload&&window.onload(),window.onpageshow&&window.onpageshow({persisted:this.persisted})}_handleDocumentWrite(){let e=new Map;document.write=document.writeln=function(t){let i=document.currentScript;i||console.error("WPRocket unable to document.write this: "+t);let r=document.createRange(),n=i.parentElement,s=e.get(i);void 0===s&&(s=i.nextSibling,e.set(i,s));let a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(e=>setTimeout(e)):new Promise(e=>requestAnimationFrame(e))}_emptyTrash(){this.trash.forEach(e=>e.remove())}static run(){let e=new RocketLazyLoadScripts;e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">		<meta name="robots" content="noindex, follow">
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Terms of Service - Social Media Feeds for your website. - Juicer Social</title>
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Terms of Service - Social Media Feeds for your website. - Juicer Social">
+	<meta property="og:description" content="Terms of Service Effective Date: November 7, 2015 This Terms of Service document (“TOS”) is a legal agreement between you and Juicer.io, a California corporation (“Juicer”), and governs how you may use and manage your Juicer account and the Service you receive via that access. When you establish an account with us, you are confirming […]">
+	<meta property="og:url" content="https://wpengineprod.juicer.io/terms">
+	<meta property="og:site_name" content="Social Media Feeds for your website. - Juicer Social">
+	<meta property="article:publisher" content="https://www.facebook.com/juicerio">
+	<meta property="article:modified_time" content="2024-02-20T12:02:06+00:00">
+	<meta property="og:image" content="https://wpengineprod.juicer.io/wp-content/uploads/og-juicer.png">
+	<meta property="og:image:width" content="1024">
+	<meta property="og:image:height" content="512">
+	<meta property="og:image:type" content="image/png">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@juicerio">
+	<meta name="twitter:label1" content="Est. reading time">
+	<meta name="twitter:data1" content="9 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":["Article","BlogPosting"],"@id":"https://www.juicer.io/terms#article","isPartOf":{"@id":"https://www.juicer.io/terms"},"author":{"name":"juicer","@id":"https://www.juicer.io/#/schema/person/cf16d1dde1c6fbcf018484e434b84068"},"headline":"Terms of Service","datePublished":"2022-01-17T01:44:03+00:00","dateModified":"2024-02-20T12:02:06+00:00","mainEntityOfPage":{"@id":"https://www.juicer.io/terms"},"wordCount":2010,"publisher":{"@id":"https://www.juicer.io/#organization"},"image":{"@id":"https://www.juicer.io/terms#primaryimage"},"thumbnailUrl":"https://www.juicer.io/wp-content/uploads/og.png","inLanguage":"en-US"},{"@type":"WebPage","@id":"https://www.juicer.io/terms","url":"https://www.juicer.io/terms","name":"Terms of Service - Social Media Feeds for your website. - Juicer Social","isPartOf":{"@id":"https://www.juicer.io/#website"},"primaryImageOfPage":{"@id":"https://www.juicer.io/terms#primaryimage"},"image":{"@id":"https://www.juicer.io/terms#primaryimage"},"thumbnailUrl":"https://www.juicer.io/wp-content/uploads/og.png","datePublished":"2022-01-17T01:44:03+00:00","dateModified":"2024-02-20T12:02:06+00:00","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.juicer.io/terms"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.juicer.io/terms#primaryimage","url":"https://www.juicer.io/wp-content/uploads/og.png","contentUrl":"https://www.juicer.io/wp-content/uploads/og.png","width":1024,"height":512,"caption":"Juicer.io Features"},{"@type":"WebSite","@id":"https://www.juicer.io/#website","url":"https://www.juicer.io/","name":"Juicer Social","description":"Juicer is a simple way to aggregate all of your social media into a beautiful social media feed and embed it on your site.","publisher":{"@id":"https://www.juicer.io/#organization"},"alternateName":"Juicer.io","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.juicer.io/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.juicer.io/#organization","name":"Juicer.io","alternateName":"Juicer Social","url":"https://www.juicer.io/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.juicer.io/#/schema/logo/image/","url":"https://www.juicer.io/wp-content/uploads/juicer-logo-icon.png","contentUrl":"https://www.juicer.io/wp-content/uploads/juicer-logo-icon.png","width":200,"height":200,"caption":"Juicer.io"},"image":{"@id":"https://www.juicer.io/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/juicerio","https://x.com/juicerio","https://www.instagram.com/juicersocial/","https://www.linkedin.com/company/juicer","https://www.youtube.com/channel/UCYwRh_gDeROsvRMxi8bqAfQ","https://www.pinterest.com/juicerio/"]},{"@type":"Person","@id":"https://www.juicer.io/#/schema/person/cf16d1dde1c6fbcf018484e434b84068","name":"juicer","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.juicer.io/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/7768d69a1dc3e78a868ec6cdffc56648?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/7768d69a1dc3e78a868ec6cdffc56648?s=96&d=mm&r=g","caption":"juicer"},"description":"Juicer helps to aggregate all of your brands’ hashtag and social media posts into a single, beautiful social media feed on your website, allowing you to easily moderate and curate your content.","sameAs":["https://www.juicer.io","https://www.linkedin.com/company/juicer"],"url":"https://www.juicer.io/blog/author/juicer"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="dns-prefetch" href="//app.usercentrics.eu">
+
+<link rel="alternate" type="application/rss+xml" title="Social Media Feeds for your website. - Juicer Social » Feed" href="https://wpengineprod.juicer.io/feed">
+<link rel="alternate" type="application/rss+xml" title="Social Media Feeds for your website. - Juicer Social » Comments Feed" href="https://wpengineprod.juicer.io/comments/feed">
+<style id="wp-emoji-styles-inline-css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel="stylesheet" id="wp-block-library-css" href="https://wpengineprod.juicer.io/wp-includes/css/dist/block-library/style.min.css?ver=6.5.3" media="all">
+<style id="classic-theme-styles-inline-css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id="global-styles-inline-css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link data-minify="1" rel="stylesheet" id="juicer-style-css" href="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/themes/juicer/style.css?ver=1718704075" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-icons-css" href="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=1718704075" media="all">
+<link rel="stylesheet" id="elementor-frontend-css" href="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.22.1" media="all">
+<style id="elementor-frontend-inline-css">
+.elementor-kit-5{--e-global-color-primary:#F05B4A;--e-global-color-secondary:#FCB709;--e-global-color-text:#102738;--e-global-color-accent:#4AB890;--e-global-color-564569e:#4A5B68;--e-global-typography-primary-font-size:16px;--e-global-typography-primary-font-weight:400;--e-global-typography-secondary-font-weight:400;--e-global-typography-text-font-weight:400;--e-global-typography-accent-font-weight:500;color:#102738;font-family:"proxima-nova", Sans-serif;font-size:18px;}.elementor-kit-5 h1{font-size:52px;font-weight:900;line-height:1.2em;}.elementor-kit-5 h2{font-size:38px;line-height:1.3em;}.elementor-kit-5 h3{font-size:30px;}.elementor-kit-5 button,.elementor-kit-5 input[type="button"],.elementor-kit-5 input[type="submit"],.elementor-kit-5 .elementor-button{font-size:16px;text-shadow:0px 0px 10px rgba(0,0,0,0.3);background-color:var( --e-global-color-primary );border-radius:4px 4px 4px 4px;padding:15px 30px 15px 30px;}.elementor-kit-5 button:hover,.elementor-kit-5 button:focus,.elementor-kit-5 input[type="button"]:hover,.elementor-kit-5 input[type="button"]:focus,.elementor-kit-5 input[type="submit"]:hover,.elementor-kit-5 input[type="submit"]:focus,.elementor-kit-5 .elementor-button:hover,.elementor-kit-5 .elementor-button:focus{background-color:var( --e-global-color-text );}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1140px;}.e-con{--container-max-width:1140px;}.elementor-widget:not(:last-child){margin-block-end:20px;}.elementor-element{--widgets-spacing:20px 20px;}{}h1.entry-title{display:var(--page-title-display);}.elementor-kit-5 e-page-transition{background-color:#FFBC7D;}@media(max-width:1024px){.elementor-kit-5 h1{font-size:52px;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-kit-5 h1{font-size:46px;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}
+.elementor-2858 .elementor-element.elementor-element-947d66a{--spacer-size:100px;}.elementor-2858 .elementor-element.elementor-element-f48625b{--spacer-size:200px;}
+.elementor-14 .elementor-element.elementor-element-2e6b7738 > .elementor-container{min-height:80px;}.elementor-14 .elementor-element.elementor-element-2e6b7738:not(.elementor-motion-effects-element-type-background), .elementor-14 .elementor-element.elementor-element-2e6b7738 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:#FFFFFF;}.elementor-14 .elementor-element.elementor-element-2e6b7738{border-style:solid;border-width:0px 0px 0px 0px;border-color:#000000;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;padding:0% 5% 0% 5%;z-index:1000;}.elementor-14 .elementor-element.elementor-element-2e6b7738 > .elementor-background-overlay{transition:background 0.3s, border-radius 0.3s, opacity 0.3s;}.elementor-bc-flex-widget .elementor-14 .elementor-element.elementor-element-57ad8091.elementor-column .elementor-widget-wrap{align-items:center;}.elementor-14 .elementor-element.elementor-element-57ad8091.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center;}.elementor-14 .elementor-element.elementor-element-57ad8091 > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-14 .elementor-element.elementor-element-30b5bef{text-align:left;}.elementor-14 .elementor-element.elementor-element-30b5bef img{width:140px;}.elementor-bc-flex-widget .elementor-14 .elementor-element.elementor-element-254909f.elementor-column .elementor-widget-wrap{align-items:center;}.elementor-14 .elementor-element.elementor-element-254909f.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center;}.elementor-14 .elementor-element.elementor-element-254909f.elementor-column > .elementor-widget-wrap{justify-content:space-around;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-menu-toggle{margin-left:auto;background-color:rgba(255, 255, 255, 0);}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu .elementor-item{font-size:16px;font-weight:400;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:0px;padding-right:0px;padding-top:15px;padding-bottom:15px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item.elementor-item-active{color:var( --e-global-color-primary );}.elementor-14 .elementor-element.elementor-element-136a9f04{--e-nav-menu-horizontal-menu-item-margin:calc( -12px / 2 );}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main:not(.elementor-nav-menu--layout-horizontal) .elementor-nav-menu > li:not(:last-child){margin-bottom:-12px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a, .elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-menu-toggle{color:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown{background-color:#F2EFEC;border-style:solid;border-color:#000000;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a:hover,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a.elementor-item-active,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a.highlighted,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-menu-toggle:hover{color:#000000;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a:hover,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a.elementor-item-active,
+					.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a.highlighted{background-color:#F2EFEC;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a.elementor-item-active{color:#000000;background-color:#F2EFEC;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown li:not(:last-child){border-style:solid;border-color:#000000;border-bottom-width:1px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main > .elementor-nav-menu > li > .elementor-nav-menu--dropdown, .elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu__container.elementor-nav-menu--dropdown{margin-top:-5px !important;}.elementor-14 .elementor-element.elementor-element-136a9f04 div.elementor-menu-toggle{color:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-136a9f04 div.elementor-menu-toggle svg{fill:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-136a9f04 div.elementor-menu-toggle:hover{color:#ACA298;}.elementor-14 .elementor-element.elementor-element-136a9f04 div.elementor-menu-toggle:hover svg{fill:#ACA298;}.elementor-14 .elementor-element.elementor-element-136a9f04 > .elementor-widget-container{padding:0px 0px 0px 0px;}.elementor-bc-flex-widget .elementor-14 .elementor-element.elementor-element-75a21656.elementor-column .elementor-widget-wrap{align-items:center;}.elementor-14 .elementor-element.elementor-element-75a21656.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center;}.elementor-14 .elementor-element.elementor-element-75a21656 > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-menu-toggle{margin:0 auto;}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu .elementor-item{font-size:16px;font-weight:400;}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-text );fill:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:before,
+					.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main:not(.e--pointer-framed) .elementor-item:after{background-color:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed .elementor-item:before,
+					.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed .elementor-item:after{border-color:var( --e-global-color-text );}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed .elementor-item:before{border-width:1px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed.e--animation-draw .elementor-item:before{border-width:0 0 1px 1px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed.e--animation-draw .elementor-item:after{border-width:1px 1px 0 0;}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed.e--animation-corners .elementor-item:before{border-width:1px 0 0 1px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-framed.e--animation-corners .elementor-item:after{border-width:0 1px 1px 0;}.elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-underline .elementor-item:after,
+					 .elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-overline .elementor-item:before,
+					 .elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-double-line .elementor-item:before,
+					 .elementor-14 .elementor-element.elementor-element-abc1f6a .e--pointer-double-line .elementor-item:after{height:1px;}.elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu--main > .elementor-nav-menu > li > .elementor-nav-menu--dropdown, .elementor-14 .elementor-element.elementor-element-abc1f6a .elementor-nav-menu__container.elementor-nav-menu--dropdown{margin-top:0px !important;}.elementor-14 .elementor-element.elementor-element-abc1f6a div.elementor-menu-toggle{color:#F05B4A;}.elementor-14 .elementor-element.elementor-element-abc1f6a div.elementor-menu-toggle svg{fill:#F05B4A;}@media(max-width:1024px){.elementor-14 .elementor-element.elementor-element-2e6b7738{padding:0px 15px 0px 15px;}.elementor-14 .elementor-element.elementor-element-30b5bef img{width:100%;}.elementor-bc-flex-widget .elementor-14 .elementor-element.elementor-element-254909f.elementor-column .elementor-widget-wrap{align-items:center;}.elementor-14 .elementor-element.elementor-element-254909f.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main .elementor-item{padding-left:0px;padding-right:0px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown{border-width:0px 0px 1px 0px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--dropdown a{padding-top:20px;padding-bottom:20px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main > .elementor-nav-menu > li > .elementor-nav-menu--dropdown, .elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu__container.elementor-nav-menu--dropdown{margin-top:37px !important;}}@media(max-width:767px){.elementor-14 .elementor-element.elementor-element-2e6b7738{padding:0px 15px 0px 15px;}.elementor-14 .elementor-element.elementor-element-57ad8091{width:40%;}.elementor-14 .elementor-element.elementor-element-30b5bef img{width:85%;}.elementor-14 .elementor-element.elementor-element-254909f{width:60%;}.elementor-bc-flex-widget .elementor-14 .elementor-element.elementor-element-254909f.elementor-column .elementor-widget-wrap{align-items:center;}.elementor-14 .elementor-element.elementor-element-254909f.elementor-column.elementor-element[data-element_type="column"] > .elementor-widget-wrap.elementor-element-populated{align-content:center;align-items:center;}.elementor-14 .elementor-element.elementor-element-254909f > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu--main > .elementor-nav-menu > li > .elementor-nav-menu--dropdown, .elementor-14 .elementor-element.elementor-element-136a9f04 .elementor-nav-menu__container.elementor-nav-menu--dropdown{margin-top:16px !important;}.elementor-14 .elementor-element.elementor-element-75a21656{width:2%;}}@media(min-width:768px){.elementor-14 .elementor-element.elementor-element-57ad8091{width:20%;}.elementor-14 .elementor-element.elementor-element-254909f{width:52.548%;}.elementor-14 .elementor-element.elementor-element-75a21656{width:27.463%;}}@media(max-width:1024px) and (min-width:768px){.elementor-14 .elementor-element.elementor-element-57ad8091{width:26%;}.elementor-14 .elementor-element.elementor-element-254909f{width:74%;}.elementor-14 .elementor-element.elementor-element-75a21656{width:2%;}}
+.elementor-44 .elementor-element.elementor-element-945794c{border-style:solid;border-width:1px 0px 0px 0px;border-color:#E2E8EE;transition:background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;padding:70px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-945794c, .elementor-44 .elementor-element.elementor-element-945794c > .elementor-background-overlay{border-radius:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-945794c > .elementor-background-overlay{transition:background 0.3s, border-radius 0.3s, opacity 0.3s;}.elementor-44 .elementor-element.elementor-element-eb815ee > .elementor-element-populated{padding:0px 50px 0px 0px;}.elementor-44 .elementor-element.elementor-element-751647b{text-align:left;}.elementor-44 .elementor-element.elementor-element-751647b img{width:140px;}.elementor-44 .elementor-element.elementor-element-15b8ba3{color:#465C6F;}.elementor-44 .elementor-element.elementor-element-ff89313{--grid-template-columns:repeat(0, auto);--grid-column-gap:28px;--grid-row-gap:0px;}.elementor-44 .elementor-element.elementor-element-ff89313 .elementor-widget-container{text-align:left;}.elementor-44 .elementor-element.elementor-element-ff89313 .elementor-social-icon{background-color:#FFFFFF;--icon-padding:0em;}.elementor-44 .elementor-element.elementor-element-ff89313 .elementor-social-icon i{color:#000000;}.elementor-44 .elementor-element.elementor-element-ff89313 .elementor-social-icon svg{fill:#000000;}.elementor-44 .elementor-element.elementor-element-ff89313 > .elementor-widget-container{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-b7762db .elementor-heading-title{font-size:21px;}.elementor-44 .elementor-element.elementor-element-b7762db > .elementor-widget-container{padding:5px 10px 5px 10px;}.elementor-44 .elementor-element.elementor-element-204f218 .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}.elementor-44 .elementor-element.elementor-element-204f218 .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-44 .elementor-element.elementor-element-204f218 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-44 .elementor-element.elementor-element-204f218 .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-44 .elementor-element.elementor-element-204f218 .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-44 .elementor-element.elementor-element-204f218 > .elementor-widget-container{margin:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-d81d467 > .elementor-widget-container{margin:-15px 0px 50px 0px;padding:0px 0px 0px 10px;}.elementor-44 .elementor-element.elementor-element-7a064bb .elementor-heading-title{font-size:21px;}.elementor-44 .elementor-element.elementor-element-7a064bb > .elementor-widget-container{padding:5px 10px 5px 10px;}.elementor-44 .elementor-element.elementor-element-4aacc91 .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}.elementor-44 .elementor-element.elementor-element-4aacc91 .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-44 .elementor-element.elementor-element-4aacc91 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-44 .elementor-element.elementor-element-4aacc91 .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-44 .elementor-element.elementor-element-4aacc91 .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-44 .elementor-element.elementor-element-4aacc91 > .elementor-widget-container{margin:0px 0px 40px 0px;}.elementor-44 .elementor-element.elementor-element-65bf2bb .elementor-heading-title{font-size:21px;}.elementor-44 .elementor-element.elementor-element-65bf2bb > .elementor-widget-container{padding:5px 10px 5px 10px;}.elementor-44 .elementor-element.elementor-element-e23541e .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}.elementor-44 .elementor-element.elementor-element-e23541e .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-44 .elementor-element.elementor-element-e23541e .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-44 .elementor-element.elementor-element-e23541e .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-44 .elementor-element.elementor-element-e23541e .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-44 .elementor-element.elementor-element-e23541e > .elementor-widget-container{margin:0px 0px 50px 0px;}.elementor-44 .elementor-element.elementor-element-cd70b4b .elementor-heading-title{font-size:21px;}.elementor-44 .elementor-element.elementor-element-cd70b4b > .elementor-widget-container{padding:5px 10px 5px 10px;}.elementor-44 .elementor-element.elementor-element-7e73a9f .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}.elementor-44 .elementor-element.elementor-element-7e73a9f .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-44 .elementor-element.elementor-element-7e73a9f .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-44 .elementor-element.elementor-element-7e73a9f .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-44 .elementor-element.elementor-element-7e73a9f .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-44 .elementor-element.elementor-element-7e73a9f > .elementor-widget-container{margin:0px 0px 40px 0px;}.elementor-44 .elementor-element.elementor-element-23bad60 .elementor-heading-title{font-size:21px;}.elementor-44 .elementor-element.elementor-element-23bad60 > .elementor-widget-container{padding:5px 10px 5px 10px;}.elementor-44 .elementor-element.elementor-element-078daf3 .elementor-nav-menu--main .elementor-item{color:var( --e-global-color-text );fill:var( --e-global-color-text );padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}.elementor-44 .elementor-element.elementor-element-078daf3 .elementor-nav-menu--main .elementor-item:hover,
+					.elementor-44 .elementor-element.elementor-element-078daf3 .elementor-nav-menu--main .elementor-item.elementor-item-active,
+					.elementor-44 .elementor-element.elementor-element-078daf3 .elementor-nav-menu--main .elementor-item.highlighted,
+					.elementor-44 .elementor-element.elementor-element-078daf3 .elementor-nav-menu--main .elementor-item:focus{color:var( --e-global-color-primary );fill:var( --e-global-color-primary );}.elementor-44 .elementor-element.elementor-element-078daf3 > .elementor-widget-container{margin:0px 0px 50px 0px;}@media(max-width:1024px){.elementor-44 .elementor-element.elementor-element-751647b img{width:100%;}}@media(max-width:767px){.elementor-44 .elementor-element.elementor-element-945794c{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-eb815ee > .elementor-element-populated{padding:20px 20px 20px 20px;}.elementor-44 .elementor-element.elementor-element-751647b img{width:85%;}.elementor-44 .elementor-element.elementor-element-074b67c > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-b7762db > .elementor-widget-container{padding:20px 20px 0px 20px;}.elementor-44 .elementor-element.elementor-element-204f218 > .elementor-widget-container{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-dc043f9 > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-7a064bb > .elementor-widget-container{padding:20px 20px 0px 20px;}.elementor-44 .elementor-element.elementor-element-65bf2bb > .elementor-widget-container{padding:20px 20px 0px 20px;}.elementor-44 .elementor-element.elementor-element-60bf998 > .elementor-element-populated{padding:0px 0px 0px 0px;}.elementor-44 .elementor-element.elementor-element-cd70b4b > .elementor-widget-container{padding:20px 20px 0px 20px;}.elementor-44 .elementor-element.elementor-element-23bad60 > .elementor-widget-container{padding:20px 20px 0px 20px;}}@media(min-width:768px){.elementor-44 .elementor-element.elementor-element-eb815ee{width:30%;}.elementor-44 .elementor-element.elementor-element-074b67c{width:20.805%;}.elementor-44 .elementor-element.elementor-element-dc043f9{width:26.159%;}.elementor-44 .elementor-element.elementor-element-60bf998{width:23.014%;}}/* Start custom CSS for html, class: .elementor-element-d81d467 */.privacy-settings a {
+    color: #102738;
+    cursor: pointer;
+}
+.privacy-settings a:hover,
+.privacy-settings a:active {
+    color: #f05b4a;
+}/* End custom CSS */
+</style>
+<link data-minify="1" rel="stylesheet" id="swiper-css" href="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css?ver=1718704075" media="all">
+<link rel="stylesheet" id="elementor-pro-css" href="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.22.0" media="all">
+<style id="rocket-lazyload-inline-css">
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player:focus-within{outline: 2px solid currentColor;outline-offset: 5px;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:100%;width:100%;left:0;top:0;position:absolute;background:url(https://wpengineprod.juicer.io/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat center;background-color: transparent !important;cursor:pointer;border:none;}
+</style>
+<link rel="stylesheet" id="elementor-icons-shared-0-css" href="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min.css?ver=5.15.3" media="all">
+<link data-minify="1" rel="stylesheet" id="elementor-icons-fa-solid-css" href="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min.css?ver=1718704075" media="all">
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
+<link rel="https://api.w.org/" href="https://wpengineprod.juicer.io/wp-json/">
+<link rel="alternate" type="application/json" href="https://wpengineprod.juicer.io/wp-json/wp/v2/pages/2858">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://wpengineprod.juicer.io/xmlrpc.php?rsd">
+<link rel="shortlink" href="https://wpengineprod.juicer.io/?p=2858">
+<link rel="alternate" type="application/json+oembed" href="https://wpengineprod.juicer.io/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwpengineprod.juicer.io%2Fterms">
+<link rel="alternate" type="text/xml+oembed" href="https://wpengineprod.juicer.io/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwpengineprod.juicer.io%2Fterms&amp;format=xml">
+<style>/* CSS added by WP Meta and Date Remover*/.wp-block-post-author__name{display:none !important;} .wp-block-post-date{display:none !important;} .entry-meta {display:none !important;} .home .entry-meta { display: none; } .entry-footer {display:none !important;} .home .entry-footer { display: none; }</style>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+!(function(w, d){var s = d.createElement("script"), qp = "r="+ Math.random() + "&t=" + (new Date()).getTime(); s.src = "https://de-1.sfcloud.io/o0M4hufI/main.js?" + qp; s.type = "text/javascript"; s.async = true; d.getElementsByTagName("head")[0].appendChild(s);})(window, document);
+</script><meta name="generator" content="Elementor 3.22.1; features: e_optimized_assets_loading, e_optimized_css_loading, additional_custom_breakpoints, e_lazyload; settings: css_print_method-internal, google_font-enabled, font_display-auto">
+<meta name="p:domain_verify" content="170bd686e301cbdb2333a07b405e73ce">
+			<style>
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
+				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
+					background-image: none !important;
+				}
+				@media screen and (max-height: 1024px) {
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+3):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+				@media screen and (max-height: 640px) {
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload),
+					.e-con.e-parent:nth-of-type(n+2):not(.e-lazyloaded):not(.e-no-lazyload) * {
+						background-image: none !important;
+					}
+				}
+			</style>
+			<link rel="icon" href="https://wpengineprod.juicer.io/wp-content/uploads/favicon-150x150.png" sizes="32x32">
+<link rel="icon" href="https://wpengineprod.juicer.io/wp-content/uploads/favicon-300x300.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://wpengineprod.juicer.io/wp-content/uploads/favicon-300x300.png">
+<meta name="msapplication-TileImage" content="https://wpengineprod.juicer.io/wp-content/uploads/favicon-300x300.png">
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+<script>
+  window.UC_UI_DOMAINS = {
+      crossDomainConsentSharingIFrame: 'https://www.juicer.io/cross-domain-bridge.html',
+  };
+</script>
+<script id="usercentrics-cmp" src="https://app.usercentrics.eu/browser-ui/latest/loader.js" data-settings-id="vFOwF4GUC" async="" data-avoid-prefetch-services=""></script>
+<link rel="preconnect" href="//app.usercentrics.eu">
+<link rel="preconnect" href="//api.usercentrics.eu">
+<link rel="preload" href="//app.usercentrics.eu/browser-ui/latest/loader.js" as="script">
+<script type="text/javascript">
+  // create dataLayer
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  // set 'denied' as default for both ad and analytics storage, as well as ad_user_data and ad_personalization
+  gtag('consent', 'default', {
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 2000 // milliseconds to wait for update
+  });
+
+  // Enable ads data redaction by default [optional]
+  gtag('set', 'ads_data_redaction', true);
+</script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    // @third_party_content is bypassing Current.gtm_data_layer since we never want this propagated to a subsequent request
+    dataLayer.push({'embeddedTraffic': false});
+    dataLayer.push({'appEnvironment': 'production'});
+
+    // Send all the accumulated data/events in the data layer to GTM
+</script>
+
+<script type="text/javascript">
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MB322HH');
+</script>
+  <!-- Hotjar Tracking Code for https://www.juicer.io/ -->
+  <script type="text/plain" data-usercentrics="Hotjar">
+      (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:2941483,hjsv:6};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+
+      // Their documentation suggests this
+      // var userId = your_user_id || null;
+      // We assume that the null value tracks non-logged-in users.
+      var userId = null;
+      var attributes = {};
+
+
+
+      window.hj('identify', userId, attributes);
+  </script>
+  <script type="text/plain" data-usercentrics="Mixpanel">
+    (function(f,b){if(!b.__SV){var e,g,i,h;window.mixpanel=b;b._i=[];b.init=function(e,f,c){function g(a,d){var b=d.split(".");2==b.length&&(a=a[b[0]],d=b[1]);a[d]=function(){a.push([d].concat(Array.prototype.slice.call(arguments,0)))}}var a=b;"undefined"!==typeof c?a=b[c]=[]:c="mixpanel";a.people=a.people||[];a.toString=function(a){var d="mixpanel";"mixpanel"!==c&&(d+="."+c);a||(d+=" (stub)");return d};a.people.toString=function(){return a.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
+      for(h=0;h<i.length;h++)g(a,i[h]);var j="set set_once union unset remove delete".split(" ");a.get_group=function(){function b(c){d[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));a.push([e,call2])}}for(var d={},e=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<j.length;c++)b(j[c]);return d};b._i.push([e,f,c])};b.__SV=1.2;e=f.createElement("script");e.type="text/javascript";e.async=!0;e.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
+      MIXPANEL_CUSTOM_LIB_URL:"file:"===f.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";g=f.getElementsByTagName("script")[0];g.parentNode.insertBefore(e,g)}})(document,window.mixpanel||[]);
+
+    mixpanel.init("65c72900b386e460e77624abe74cb536");
+
+    var mixpanelIdentity = "";
+
+    if (mixpanelIdentity.length > 0) {
+      mixpanel.identify(mixpanelIdentity);
+      mixpanel.people.set_once( { "$ip": "172.69.194.55"});
+    }
+  </script>
+</head>
+<body class="page-template page-template-elementor_header_footer page page-id-2858 no-sidebar elementor-default elementor-template-full-width elementor-kit-5 elementor-page elementor-page-2858">
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB322HH" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+
+<script type="text/javascript">document.addEventListener("DOMContentLoaded", function() {
+  var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  xhr.open('POST', '/track');
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({ event_name: "human_detected" }));
+});</script>
+		<div data-elementor-type="header" data-elementor-id="14" class="elementor elementor-14 elementor-location-header" data-elementor-post-type="elementor_library">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-2e6b7738 elementor-section-full_width elementor-section-height-min-height elementor-section-items-stretch juicer-header elementor-section-height-default" data-id="2e6b7738" data-element_type="section" data-settings='{"background_background":"classic","sticky":"top","sticky_effects_offset":100,"sticky_on":["desktop","tablet","mobile"],"sticky_offset":0}'>
+						<div class="elementor-container elementor-column-gap-no">
+					<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-57ad8091" data-id="57ad8091" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-30b5bef elementor-widget elementor-widget-image" data-id="30b5bef" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.22.0 - 17-06-2024 */
+.elementor-widget-image{text-align:center}.elementor-widget-image a{display:inline-block}.elementor-widget-image a img[src$=".svg"]{width:48px}.elementor-widget-image img{vertical-align:middle;display:inline-block}</style>											<a href="/">
+							<img width="140" height="41" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20140%2041'%3E%3C/svg%3E" class="attachment-full size-full wp-image-27" alt="Juicer.io Logo" data-lazy-src="https://wpengineprod.juicer.io/wp-content/uploads/juicer-logo.svg"><noscript><img width="140" height="41" src="https://wpengineprod.juicer.io/wp-content/uploads/juicer-logo.svg" class="attachment-full size-full wp-image-27" alt="Juicer.io Logo"></noscript>								</a>
+													</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-254909f" data-id="254909f" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-136a9f04 elementor-nav-menu__align-center elementor-nav-menu--stretch elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="136a9f04" data-element_type="widget" data-settings='{"full_width":"stretch","submenu_icon":{"value":"&lt;i class=\"\"&gt;&lt;\/i&gt;","library":""},"_animation":"none","_animation_delay":0,"layout":"horizontal","toggle":"burger"}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+			<link rel="stylesheet" href="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/css/widget-nav-menu.min.css">			<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-none">
+				<ul id="menu-1-136a9f04" class="elementor-nav-menu">
+<li class="mega-menu menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-56">
+<a href="https://www.juicer.io/features" class="elementor-item">Features</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1741">
+<a class="elementor-sub-item">Features</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon content-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1292"><a href="/content-curation" class="elementor-sub-item">Content curation</a></li>
+		<li class="submenu-icon funnel-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1291"><a href="/social-media-aggregator" class="elementor-sub-item">Social media aggregator</a></li>
+		<li class="submenu-icon settings-checkmark-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1305"><a href="/social-media-moderation" class="elementor-sub-item">Social media moderation</a></li>
+		<li class="submenu-icon cards-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1304"><a href="/social-wall" class="elementor-sub-item">Social wall</a></li>
+		<li class="submenu-icon wordpress-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1757"><a href="/wordpress-social-feed" class="elementor-sub-item">WordPress Social Feed</a></li>
+	</ul>
+</li>
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1734">
+<a class="elementor-sub-item">Social aggregators</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon facebook-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2264"><a href="/facebook-aggregator" class="elementor-sub-item">Facebook Aggregator</a></li>
+		<li class="submenu-icon instagram-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2265"><a href="/instagram-aggregator" class="elementor-sub-item">Instagram Aggregator</a></li>
+		<li class="submenu-icon twitter-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2263"><a href="/twitter-aggregator" class="elementor-sub-item">Twitter Aggregator</a></li>
+		<li class="submenu-icon tiktok-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2496"><a href="/tiktok-aggregator" class="elementor-sub-item">TikTok Aggregator</a></li>
+		<li class="submenu-icon linkedin-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-4655"><a href="/linkedin-aggregator" class="elementor-sub-item">LinkedIn Aggregator</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-57">
+<a href="https://www.juicer.io/solutions" class="elementor-item">Solutions</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1743">
+<a class="elementor-sub-item">Solutions for everyone</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon business-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1719"><a href="/business-and-enterprises" class="elementor-sub-item">Business and Enterprises</a></li>
+		<li class="submenu-icon education-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1720"><a href="/education" class="elementor-sub-item">Education</a></li>
+		<li class="submenu-icon star-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1721"><a href="/event-marketing" class="elementor-sub-item">Event Marketing</a></li>
+		<li class="submenu-icon healthcare-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1722"><a href="/healthcare" class="elementor-sub-item">Healthcare</a></li>
+		<li class="submenu-icon nonprofits-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1723"><a href="/nonprofits" class="elementor-sub-item">Nonprofits</a></li>
+		<li class="submenu-icon globe-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1724"><a href="/political-campaigns" class="elementor-sub-item">Political Campaigns</a></li>
+		<li class="submenu-icon developers-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1725"><a href="/web-developers" class="elementor-sub-item">Web Developers</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4713"><a href="/pricing" class="elementor-item">Pricing</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1045">
+<a href="/blog" class="elementor-item">Blog</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1770">
+<a class="elementor-sub-item">Recommended blog articles</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-3414"><a href="/blog/how-to-embed-tiktok-video-feed" class="elementor-sub-item">How to Embed TikTok Video Feed on Any Website for Free (Guide)</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1761"><a href="/blog/social-media-aggregator-tool-comparison-juicer-vs-curator" class="elementor-sub-item">Social Media Aggregator Tool Comparison: Juicer vs. Curator</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1762"><a href="/blog/what-is-a-search-aggregator-and-why-should-i-use-it" class="elementor-sub-item">What is a Search Aggregator and Why Should I Use it?</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1763"><a href="/blog/how-content-aggregator-websites-can-transform-your-business-in-a-few-easy-steps" class="elementor-sub-item">How Content Aggregator Websites Can Transform Your Business in a Few Easy Steps</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1766"><a href="/blog/taggbox-alternatives-comparing-social-media-feed-widgets" class="elementor-sub-item">Taggbox vs. Juicer: Which Social Feed Widget Should You Choose? </a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1767"><a href="/blog/why-is-content-moderation-important-for-user-generated-campaigns" class="elementor-sub-item">Why is Content Moderation Important For User Generated Campaigns?</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1768"><a href="/blog/what-is-social-retail" class="elementor-sub-item">What is Social Retail and How Can Your Brand Utilize It?</a></li>
+		<li class="menu-separator menu-item menu-item-type-post_type menu-item-object-page menu-item-2884"><a href="/blog" class="elementor-sub-item">View more articles on blog</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3684">
+<a href="#" class="elementor-item elementor-item-anchor">How To</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3685">
+<a class="elementor-sub-item">How To Articles</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon tiktok-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3686"><a href="/blog/how-to-embed-tiktok-video-feed" class="elementor-sub-item">Embed TikTok Feed</a></li>
+		<li class="submenu-icon twitter-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3687"><a href="/blog/embed-twitter-feed-on-website" class="elementor-sub-item">Embed Twitter Feed</a></li>
+		<li class="submenu-icon linkedin-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3688"><a href="/blog/embed-linkedin-feed-on-website" class="elementor-sub-item">Embed LinkedIn Feed</a></li>
+		<li class="submenu-icon instagram-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3689"><a href="/blog/embed-instagram-reels-on-website" class="elementor-sub-item">Embed Instagram Reels</a></li>
+		<li class="submenu-icon facebook-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3690"><a href="/blog/embed-facebook-feed-on-website" class="elementor-sub-item">Embed Facebook Feed</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-59">
+<a href="#" class="elementor-item elementor-item-anchor">Resources</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1769">
+<a class="elementor-sub-item">Resources</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon compass-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1758"><a href="https://help.juicer.io/collections/210194-getting-started-with-juicer" class="elementor-sub-item">Getting started</a></li>
+		<li class="submenu-icon api-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1791"><a href="/social-media-api-juicer" class="elementor-sub-item">API Documentation</a></li>
+		<li class="submenu-icon cars-edit-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1759"><a href="https://help.juicer.io/collections/210197-designrelated-topics" class="elementor-sub-item">Customize your feed</a></li>
+		<li class="submenu-icon business-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-3907"><a href="/feed-example" class="elementor-sub-item">Feed Example</a></li>
+		<li class="submenu-icon chat-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1760"><a href="https://help.juicer.io/" class="elementor-sub-item">FAQs</a></li>
+		<li class="submenu-icon plane-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-4865"><a href="/contact-us" class="elementor-sub-item">Contact us</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="mobile-view menu-item menu-item-type-custom menu-item-object-custom menu-item-2472"><a href="/log-in" class="elementor-item">Login</a></li>
+<li class="mobile-view menu-item menu-item-type-custom menu-item-object-custom menu-item-2471"><a href="/sign-up" class="elementor-item">Sign up for FREE</a></li>
+</ul>			</nav>
+					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>			<span class="elementor-screen-only">Menu</span>
+		</div>
+					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-136a9f04" class="elementor-nav-menu">
+<li class="mega-menu menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-56">
+<a href="https://www.juicer.io/features" class="elementor-item" tabindex="-1">Features</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1741">
+<a class="elementor-sub-item" tabindex="-1">Features</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon content-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1292"><a href="/content-curation" class="elementor-sub-item" tabindex="-1">Content curation</a></li>
+		<li class="submenu-icon funnel-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1291"><a href="/social-media-aggregator" class="elementor-sub-item" tabindex="-1">Social media aggregator</a></li>
+		<li class="submenu-icon settings-checkmark-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1305"><a href="/social-media-moderation" class="elementor-sub-item" tabindex="-1">Social media moderation</a></li>
+		<li class="submenu-icon cards-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1304"><a href="/social-wall" class="elementor-sub-item" tabindex="-1">Social wall</a></li>
+		<li class="submenu-icon wordpress-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1757"><a href="/wordpress-social-feed" class="elementor-sub-item" tabindex="-1">WordPress Social Feed</a></li>
+	</ul>
+</li>
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1734">
+<a class="elementor-sub-item" tabindex="-1">Social aggregators</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon facebook-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2264"><a href="/facebook-aggregator" class="elementor-sub-item" tabindex="-1">Facebook Aggregator</a></li>
+		<li class="submenu-icon instagram-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2265"><a href="/instagram-aggregator" class="elementor-sub-item" tabindex="-1">Instagram Aggregator</a></li>
+		<li class="submenu-icon twitter-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2263"><a href="/twitter-aggregator" class="elementor-sub-item" tabindex="-1">Twitter Aggregator</a></li>
+		<li class="submenu-icon tiktok-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-2496"><a href="/tiktok-aggregator" class="elementor-sub-item" tabindex="-1">TikTok Aggregator</a></li>
+		<li class="submenu-icon linkedin-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-4655"><a href="/linkedin-aggregator" class="elementor-sub-item" tabindex="-1">LinkedIn Aggregator</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-57">
+<a href="https://www.juicer.io/solutions" class="elementor-item" tabindex="-1">Solutions</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1743">
+<a class="elementor-sub-item" tabindex="-1">Solutions for everyone</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon business-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1719"><a href="/business-and-enterprises" class="elementor-sub-item" tabindex="-1">Business and Enterprises</a></li>
+		<li class="submenu-icon education-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1720"><a href="/education" class="elementor-sub-item" tabindex="-1">Education</a></li>
+		<li class="submenu-icon star-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1721"><a href="/event-marketing" class="elementor-sub-item" tabindex="-1">Event Marketing</a></li>
+		<li class="submenu-icon healthcare-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1722"><a href="/healthcare" class="elementor-sub-item" tabindex="-1">Healthcare</a></li>
+		<li class="submenu-icon nonprofits-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1723"><a href="/nonprofits" class="elementor-sub-item" tabindex="-1">Nonprofits</a></li>
+		<li class="submenu-icon globe-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1724"><a href="/political-campaigns" class="elementor-sub-item" tabindex="-1">Political Campaigns</a></li>
+		<li class="submenu-icon developers-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1725"><a href="/web-developers" class="elementor-sub-item" tabindex="-1">Web Developers</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4713"><a href="/pricing" class="elementor-item" tabindex="-1">Pricing</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-1045">
+<a href="/blog" class="elementor-item" tabindex="-1">Blog</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1770">
+<a class="elementor-sub-item" tabindex="-1">Recommended blog articles</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-3414"><a href="/blog/how-to-embed-tiktok-video-feed" class="elementor-sub-item" tabindex="-1">How to Embed TikTok Video Feed on Any Website for Free (Guide)</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1761"><a href="/blog/social-media-aggregator-tool-comparison-juicer-vs-curator" class="elementor-sub-item" tabindex="-1">Social Media Aggregator Tool Comparison: Juicer vs. Curator</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1762"><a href="/blog/what-is-a-search-aggregator-and-why-should-i-use-it" class="elementor-sub-item" tabindex="-1">What is a Search Aggregator and Why Should I Use it?</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1763"><a href="/blog/how-content-aggregator-websites-can-transform-your-business-in-a-few-easy-steps" class="elementor-sub-item" tabindex="-1">How Content Aggregator Websites Can Transform Your Business in a Few Easy Steps</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1766"><a href="/blog/taggbox-alternatives-comparing-social-media-feed-widgets" class="elementor-sub-item" tabindex="-1">Taggbox vs. Juicer: Which Social Feed Widget Should You Choose? </a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1767"><a href="/blog/why-is-content-moderation-important-for-user-generated-campaigns" class="elementor-sub-item" tabindex="-1">Why is Content Moderation Important For User Generated Campaigns?</a></li>
+		<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-1768"><a href="/blog/what-is-social-retail" class="elementor-sub-item" tabindex="-1">What is Social Retail and How Can Your Brand Utilize It?</a></li>
+		<li class="menu-separator menu-item menu-item-type-post_type menu-item-object-page menu-item-2884"><a href="/blog" class="elementor-sub-item" tabindex="-1">View more articles on blog</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3684">
+<a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">How To</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3685">
+<a class="elementor-sub-item" tabindex="-1">How To Articles</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon tiktok-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3686"><a href="/blog/how-to-embed-tiktok-video-feed" class="elementor-sub-item" tabindex="-1">Embed TikTok Feed</a></li>
+		<li class="submenu-icon twitter-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3687"><a href="/blog/embed-twitter-feed-on-website" class="elementor-sub-item" tabindex="-1">Embed Twitter Feed</a></li>
+		<li class="submenu-icon linkedin-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3688"><a href="/blog/embed-linkedin-feed-on-website" class="elementor-sub-item" tabindex="-1">Embed LinkedIn Feed</a></li>
+		<li class="submenu-icon instagram-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3689"><a href="/blog/embed-instagram-reels-on-website" class="elementor-sub-item" tabindex="-1">Embed Instagram Reels</a></li>
+		<li class="submenu-icon facebook-icon menu-item menu-item-type-post_type menu-item-object-post menu-item-3690"><a href="/blog/embed-facebook-feed-on-website" class="elementor-sub-item" tabindex="-1">Embed Facebook Feed</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-59">
+<a href="#" class="elementor-item elementor-item-anchor" tabindex="-1">Resources</a>
+<ul class="sub-menu elementor-nav-menu--dropdown">
+	<li class="menu-group sub-menu__header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1769">
+<a class="elementor-sub-item" tabindex="-1">Resources</a>
+	<ul class="sub-menu elementor-nav-menu--dropdown">
+		<li class="submenu-icon compass-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1758"><a href="https://help.juicer.io/collections/210194-getting-started-with-juicer" class="elementor-sub-item" tabindex="-1">Getting started</a></li>
+		<li class="submenu-icon api-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-1791"><a href="/social-media-api-juicer" class="elementor-sub-item" tabindex="-1">API Documentation</a></li>
+		<li class="submenu-icon cars-edit-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1759"><a href="https://help.juicer.io/collections/210197-designrelated-topics" class="elementor-sub-item" tabindex="-1">Customize your feed</a></li>
+		<li class="submenu-icon business-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-3907"><a href="/feed-example" class="elementor-sub-item" tabindex="-1">Feed Example</a></li>
+		<li class="submenu-icon chat-icon menu-item menu-item-type-custom menu-item-object-custom menu-item-1760"><a href="https://help.juicer.io/" class="elementor-sub-item" tabindex="-1">FAQs</a></li>
+		<li class="submenu-icon plane-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-4865"><a href="/contact-us" class="elementor-sub-item" tabindex="-1">Contact us</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="mobile-view menu-item menu-item-type-custom menu-item-object-custom menu-item-2472"><a href="/log-in" class="elementor-item" tabindex="-1">Login</a></li>
+<li class="mobile-view menu-item menu-item-type-custom menu-item-object-custom menu-item-2471"><a href="/sign-up" class="elementor-item" tabindex="-1">Sign up for FREE</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-75a21656 elementor-hidden-tablet elementor-hidden-mobile" data-id="75a21656" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-abc1f6a elementor-nav-menu__align-end elementor-nav-menu__text-align-center elementor-hidden-tablet elementor-hidden-mobile elementor-nav-menu--dropdown-tablet elementor-nav-menu--toggle elementor-nav-menu--burger elementor-widget elementor-widget-nav-menu" data-id="abc1f6a" data-element_type="widget" data-settings='{"layout":"horizontal","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"},"toggle":"burger"}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-horizontal e--pointer-underline e--animation-fade">
+				<ul id="menu-1-abc1f6a" class="elementor-nav-menu">
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2895"><a href="/log-in" class="elementor-item">Login</a></li>
+<li class="sign-up-btn menu-item menu-item-type-custom menu-item-object-custom menu-item-2896"><a href="/sign-up" class="elementor-item">Sign up for FREE</a></li>
+</ul>			</nav>
+					<div class="elementor-menu-toggle" role="button" tabindex="0" aria-label="Menu Toggle" aria-expanded="false">
+			<i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--open eicon-menu-bar"></i><i aria-hidden="true" role="presentation" class="elementor-menu-toggle__icon--close eicon-close"></i>			<span class="elementor-screen-only">Menu</span>
+		</div>
+					<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-abc1f6a" class="elementor-nav-menu">
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2895"><a href="/log-in" class="elementor-item" tabindex="-1">Login</a></li>
+<li class="sign-up-btn menu-item menu-item-type-custom menu-item-object-custom menu-item-2896"><a href="/sign-up" class="elementor-item" tabindex="-1">Sign up for FREE</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				</div>
+				<div data-elementor-type="wp-page" data-elementor-id="2858" class="elementor elementor-2858" data-elementor-post-type="page">
+						<section class="elementor-section elementor-top-section elementor-element elementor-element-13bcf8d5 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="13bcf8d5" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-2725a1b" data-id="2725a1b" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-947d66a elementor-widget elementor-widget-spacer" data-id="947d66a" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.22.0 - 17-06-2024 */
+.elementor-column .elementor-spacer-inner{height:var(--spacer-size)}.e-con{--container-widget-width:100%}.e-con-inner>.elementor-widget-spacer,.e-con>.elementor-widget-spacer{width:var(--container-widget-width,var(--spacer-size));--align-self:var(--container-widget-align-self,initial);--flex-shrink:0}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container,.e-con>.elementor-widget-spacer>.elementor-widget-container{height:100%;width:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer{height:100%}.e-con-inner>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner,.e-con>.elementor-widget-spacer>.elementor-widget-container>.elementor-spacer>.elementor-spacer-inner{height:var(--container-widget-height,var(--spacer-size))}.e-con-inner>.elementor-widget-spacer.elementor-widget-empty,.e-con>.elementor-widget-spacer.elementor-widget-empty{position:relative;min-height:22px;min-width:22px}.e-con-inner>.elementor-widget-spacer.elementor-widget-empty .elementor-widget-empty-icon,.e-con>.elementor-widget-spacer.elementor-widget-empty .elementor-widget-empty-icon{position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;padding:0;width:22px;height:22px}</style>		<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-d3da193 elementor-widget elementor-widget-heading" data-id="d3da193" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.22.0 - 17-06-2024 */
+.elementor-heading-title{padding:0;margin:0;line-height:1}.elementor-widget-heading .elementor-heading-title[class*=elementor-size-]>a{color:inherit;font-size:inherit;line-height:inherit}.elementor-widget-heading .elementor-heading-title.elementor-size-small{font-size:15px}.elementor-widget-heading .elementor-heading-title.elementor-size-medium{font-size:19px}.elementor-widget-heading .elementor-heading-title.elementor-size-large{font-size:29px}.elementor-widget-heading .elementor-heading-title.elementor-size-xl{font-size:39px}.elementor-widget-heading .elementor-heading-title.elementor-size-xxl{font-size:59px}</style>
+<h2 class="elementor-heading-title elementor-size-default">Terms of Service</h2>		</div>
+				</div>
+				<div class="elementor-element elementor-element-4ed8d948 elementor-widget elementor-widget-text-editor" data-id="4ed8d948" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.22.0 - 17-06-2024 */
+.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>				<p></p>
+<p>Effective Date: November 7, 2015</p>
+<p></p>
+<p></p>
+<p>This Terms of Service document (“TOS”) is a legal agreement between you and Juicer.io, a California corporation (“Juicer”), and governs how you may use and manage your Juicer account and the Service you receive via that access. When you establish an account with us, you are confirming your understanding of and agreement with these Terms and the license granted herein.</p>
+<p></p>
+<p></p>
+<p><strong>1. The Juicer Service:</strong> For the purposes of this document, the term “Service” means the Internet platform accessible provided by Juicer that enables users to aggregate multiple social media account postings and hashtags into a single online feed (the “Platform”), together with all software applications, proprietary or otherwise, that comprise the Platform, and any updates, upgrades, derivatives, improvements, enhancements, or extensions of the same. The Service subject to this TOS also encompasses the Juicer Website, together with all copy, graphics, photographs, videos, documentation, and other content.</p>
+<p></p>
+<p></p>
+<p><strong>2. End User License Agreement (EULA):</strong> Juicer hereby grants you a revocable, non-exclusive, non-transferable, limited right and license to access and use the Service. The term of your License shall commence on the date that you create your account and will end if your account is terminated by either you or Juicer. Juicer reserves the right to immediately terminate your license if you use the Service in breach of the terms set forth herein.</p>
+<p></p>
+<p></p>
+<ul>
+<li>
+<strong>(a) Ownership:</strong> This TOS does not confer title, ownership, or any other rights concerning your use of the Service that are not set forth herein. Juicer retains all right, title and interest in and to the Service, including, but not limited to, all copyrights, trademarks, trade secrets, trade names, proprietary rights, patents, titles, computer codes, and all other rights whether registered or not and all applications thereof. The Service is protected by applicable laws and treaties worldwide, and may not be copied, reproduced or distributed in any manner or medium, in whole or in part, without prior written consent from Juicer. All rights not expressly granted to you herein are reserved by Juicer.</li>
+<li>
+<strong>(b) License Restrictions:</strong> Violating any of the following restrictions may result in the immediate termination of your License:
+<ul>
+<li>
+<strong>(i) General Restrictions:</strong> You agree not to: (i) commercially exploit the Service in any (ii) Specific Restrictions: You may not use the Service to display posts and hashtags: manner other than to aggregate postings from social media accounts that are owned by you or available for public use to display on your Juicer feed Websites owned by you; (ii) provide your password or otherwise grant access to your Juicer account to any third parties for any purpose whatsoever; (iii) reverse engineer, decompile, disassemble, translate, or prepare derivative works of the System, or otherwise modify the same, in whole or in part; (iv) use the Service to display material that may be subject to copyright protection without the express consent of the copyright owner; (v) remove, obscure or modify any copyright, trademark or other proprietary rights notices, marks or labels contained within the System; or (vi) otherwise access or utilize the System in any manner other than permitted by this TOS.</li>
+<li>
+<strong>(ii) Specific Restrictions:</strong> You may not use the Service to display posts and hashtags: (i) from private social media accounts that are not owned by you without the specific permission of the owner of any such account; (ii) that infringe upon the proprietary rights of third parties, including without limitation intellectual property rights, or rights of publicity or privacy; (iii) that violate any law, statute, ordinance or regulation; or (iv) that violate the terms of any service that is the source of such posts.</li>
+</ul>
+</li>
+</ul>
+<p></p>
+<p></p>
+<p><strong>3. Representations and Warranties:</strong> The Service is made available to you in reliance upon the following representations and warranties: (i) You are at least thirteen (13) years old; (ii) you will use the Service only to aggregate posts and hashtags from social media accounts that you own or are authorized to use; (iii) you will not use the Service for the purpose of violating any statute, rule, or regulation; (iv) you will not use the Service to facilitate the distribution of computer viruses, spyware, or any other malicious code; (v) you will not use the Service to display posts that infringe upon the proprietary rights of third parties, including without limitation intellectual property rights, or rights of publicity or privacy; and (vi) you will not use the Service in any manner other than as described herein.</p>
+<p></p>
+<p></p>
+<p><strong>4. Copyright:</strong> We respond to properly submitted notices of alleged copyright infringement that comply with applicable law. If you believe that your Content has been copied in a way that constitutes copyright infringement, please provide us with the following information: (i) a physical or electronic signature of the copyright owner or a person authorized to act on their behalf; (ii) identification of the copyrighted work claimed to have been infringed; (iii) identification of the material that is claimed to be infringing or to be the subject of infringing activity and that is to be removed or access to which is to be disabled, and information reasonably sufficient to permit us to locate the material; (iv) your contact information, including your address, telephone number, and an email address; (v) a statement by you that you have a good faith belief that use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law; (vi) misrepresent the source of ownership of the System unless using an enterprise plan with white-labeling enabled; and (vii) a statement that the information in the notification is accurate, and, under penalty of perjury, that you are authorized to act on behalf of the copyright owner.</p>
+<p></p>
+<p></p>
+<p>Under the U.S. Digital Millennium Copyright Act, our designated copyright agent for notice of alleged copyright infringement appearing on the Services is:</p>
+<p></p>
+<p></p>
+<p>saas.group Inc.<br>Attn: Copyright Agent<br>304 S. Jones Blvd #1205<br>Las Vegas NV 89107<br><a href="/cdn-cgi/l/email-protection#28404d44444768425d414b4d5a064147"><span class="__cf_email__" data-cfemail="fc9499909093bc9689959f998ed29593">[email protected]</span></a></p>
+<p></p>
+<p></p>
+<p>We reserve the right to remove Content alleged to be infringing without prior notice, at our sole discretion, and without liability to you, and/or to terminate your account if it is determined that you knowingly posted infringing content.</p>
+<p></p>
+<p></p>
+<p><strong>5. No Warranty:</strong> Juicer makes no representation or warranty that: (a) the Service will be free of errors, bugs, or glitches, or that any such error, bug, or glitch will be corrected; (b) servers that house the System are free of viruses or other malicious code; and (c) your use of the Service is in compliance with the Terms of Service of any third party, including, without limitation, social media services that source User feeds. THE SERVICE ARE PROVIDED ON AN “AS IS” BASIS WITHOUT ANY WARRANTY WHATSOEVER. JUICER PROVIDES NO WARRANTIES WHATSOEVER REGARDING THE ACCURACY, RELIABILITY, OR DELIVERY OF THE SERVICE, AND HEREBY DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, OR STATUTORY ARISING FROM COURSE OF DEALING, USAGE, OR TRADE, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR TITLE.</p>
+<p></p>
+<p></p>
+<p>The Service may display advertisements for products and services offered by third parties. Juicer makes no guarantees about, and assumes no responsibility for, the content of such advertisements, or the availability, delivery, or performance of any product or service offered therein.</p>
+<p></p>
+<p></p>
+<p><strong>6. No Liability:</strong> In no event shall Juicer be liable to you or any other party for any indirect, special, incidental, consequential, or punitive damages, however and wherever arising, that may result from the delivery or failure of the Service, including without limitation to losses incurred due to: (a) software glitches, server failures, power outages, or any other issue beyond Juicer’s control; (b) any delays in or failure of the Service to operate as described; (c) any access to or display of a social media feed that is not owned by a user, or otherwise authorized for such user to access or display.</p>
+<p></p>
+<p></p>
+<p><strong>7. Indemnification:</strong> We cannot control or monitor the posts you choose to display. You understand that commercial movies, TV programs, and professional photographic images are subject to copyright laws, and it may be illegal to display such material without the express permission of the copyright owner. You are solely responsible for obtaining such consent, and agree to indemnify, hold harmless, and defend Juicer, together with its officers, directors, employees, agents, subsidiaries, and affiliates (the “Indemnified Parties”), from and against any claims, actions, proceedings, and suits (collectively “Claims”) brought against Juicer by any third party that are associated with your use of the Service (including, but not limited to, copyright claims), and expressly agree to assume liability for any damages, settlements, penalties, fines, costs or expenses (including, without limitation, reasonable attorneys’ fees) that may be incurred by Juicer in connection with any Claim subject to this section.</p>
+<p></p>
+<p></p>
+<p><strong>8. Arbitration Agreement and Class Action Waiver:</strong> You agree to arbitrate all disputes and claims that arise out of or relate to your use of the Service. Therefore, you agree that, by using the Service, you are waiving the right to a trial by jury or to participate in any class action based on or involving claims brought in a purported representative capacity on behalf of the general public, other users, or other persons similarly situated. This agreement to arbitrate includes, but is not limited to, claims arising out of or relating to the Service or your use thereof, regardless of when they may arise.</p>
+<p></p>
+<p></p>
+<p><strong>9. Choice of Law; Forum:</strong> This document shall be governed in all respects by the laws of the United States and the State of California. Any claim or dispute you may have against us, whether subject to mandatory arbitration or otherwise, must be brought in Los Angeles County, California except as otherwise agreed by the parties. You agree to submit to the personal jurisdiction of the courts located within Los Angeles, California for the purpose of litigating all such claims or disputes.</p>
+<p></p>
+<p></p>
+<p>All claims filed or brought contrary to this section shall be considered improperly filed. Should you file a claim improperly, we may recover reasonable attorneys’ fees and costs, provided that we have notified you in writing of the improperly filed claim and you have failed to withdraw the claim promptly.</p>
+<p></p>
+<p></p>
+<p><strong>10. Modification and Notice of Changes:</strong> We reserve the right to change, modify, add or remove portions of these Terms of Service, without advance notice to you. We will notify you of any such changes by posting the effective date of the change at the top of this page together with a link to previous versions. Except as stated elsewhere, such amended terms will be effective immediately and without further notice. Your continued use of the Service after the posting of changes constitutes your binding acceptance of such changes.</p>
+<p></p>
+<p></p>
+<p><strong>11. Refunds:</strong> Our refund policy is in line with our commitment to customer satisfaction. If a customer writes to request a refund within 5 days after originally signing up for a Juicer paid account, they will be refunded and the account will be downgraded to our free plan. We do not offer refunds for renewal payments of monthly subscriptions. If a customer contacts Juicer within 30 days of a yearly subscription’s auto-renewal, a prorated refund of the 11 remaining months will be provided; no refunds will be provided beyond this 30-day window. Paid accounts can be canceled at any time, but refunds and partial refunds will not be issued except as noted above. Juicer reserves the right to deny refunds at our discretion.</p>
+<p></p>
+<p></p>
+<p><strong>12. Entire Agreement:</strong> These Terms of Service and any document incorporated by reference herein constitute the entire agreement between you and us and govern your use of the Service, superseding any prior agreements between us.</p>
+<p></p>
+<p></p>
+<p><strong>13. Third party services:</strong> Juicer uses YouTube API services to integrate and share YouTube videos that can be watched on the Juicer.io platform and on social media feeds powered by Juicer.io. This is a service by YouTube, LLC, 901 Cherry Ave., San Bruno, CA 94066, USA. By using Juicer you are agreeing to be bound by the YouTube Terms of Service: <a href="https://www.youtube.com/t/terms">https://www.youtube.com/t/terms</a>.</p>
+<p></p>						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-f003392 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="f003392" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-37a4e8a" data-id="37a4e8a" data-element_type="column">
+			<div class="elementor-widget-wrap">
+							</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-3d48ed7 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="3d48ed7" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-128ccf3" data-id="128ccf3" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-f48625b elementor-widget elementor-widget-spacer" data-id="f48625b" data-element_type="widget" data-widget_type="spacer.default">
+				<div class="elementor-widget-container">
+					<div class="elementor-spacer">
+			<div class="elementor-spacer-inner"></div>
+		</div>
+				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				</div>
+				<div data-elementor-type="footer" data-elementor-id="44" class="elementor elementor-44 elementor-location-footer" data-elementor-post-type="elementor_library">
+					<section class="elementor-section elementor-top-section elementor-element elementor-element-945794c elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="945794c" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-eb815ee" data-id="eb815ee" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-751647b elementor-widget elementor-widget-image" data-id="751647b" data-element_type="widget" data-widget_type="image.default">
+				<div class="elementor-widget-container">
+														<a href="/">
+							<img width="140" height="41" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20140%2041'%3E%3C/svg%3E" class="attachment-full size-full wp-image-27" alt="Juicer.io Logo" data-lazy-src="https://wpengineprod.juicer.io/wp-content/uploads/juicer-logo.svg"><noscript><img width="140" height="41" src="https://wpengineprod.juicer.io/wp-content/uploads/juicer-logo.svg" class="attachment-full size-full wp-image-27" alt="Juicer.io Logo"></noscript>								</a>
+													</div>
+				</div>
+				<div class="elementor-element elementor-element-15b8ba3 elementor-widget elementor-widget-text-editor" data-id="15b8ba3" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+							<p>Juicer helps to aggregate all of your brands’ hashtag and social media posts into a single, beautiful social media feed on your website, allowing you to easily moderate and curate your content.</p>						</div>
+				</div>
+				<div class="elementor-element elementor-element-ff89313 e-grid-align-left elementor-shape-rounded elementor-grid-0 elementor-widget elementor-widget-social-icons" data-id="ff89313" data-element_type="widget" data-widget_type="social-icons.default">
+				<div class="elementor-widget-container">
+			<style>/*! elementor - v3.22.0 - 17-06-2024 */
+.elementor-widget-social-icons.elementor-grid-0 .elementor-widget-container,.elementor-widget-social-icons.elementor-grid-mobile-0 .elementor-widget-container,.elementor-widget-social-icons.elementor-grid-tablet-0 .elementor-widget-container{line-height:1;font-size:0}.elementor-widget-social-icons:not(.elementor-grid-0):not(.elementor-grid-tablet-0):not(.elementor-grid-mobile-0) .elementor-grid{display:inline-grid}.elementor-widget-social-icons .elementor-grid{grid-column-gap:var(--grid-column-gap,5px);grid-row-gap:var(--grid-row-gap,5px);grid-template-columns:var(--grid-template-columns);justify-content:var(--justify-content,center);justify-items:var(--justify-content,center)}.elementor-icon.elementor-social-icon{font-size:var(--icon-size,25px);line-height:var(--icon-size,25px);width:calc(var(--icon-size, 25px) + 2 * var(--icon-padding, .5em));height:calc(var(--icon-size, 25px) + 2 * var(--icon-padding, .5em))}.elementor-social-icon{--e-social-icon-icon-color:#fff;display:inline-flex;background-color:#69727d;align-items:center;justify-content:center;text-align:center;cursor:pointer}.elementor-social-icon i{color:var(--e-social-icon-icon-color)}.elementor-social-icon svg{fill:var(--e-social-icon-icon-color)}.elementor-social-icon:last-child{margin:0}.elementor-social-icon:hover{opacity:.9;color:#fff}.elementor-social-icon-android{background-color:#a4c639}.elementor-social-icon-apple{background-color:#999}.elementor-social-icon-behance{background-color:#1769ff}.elementor-social-icon-bitbucket{background-color:#205081}.elementor-social-icon-codepen{background-color:#000}.elementor-social-icon-delicious{background-color:#39f}.elementor-social-icon-deviantart{background-color:#05cc47}.elementor-social-icon-digg{background-color:#005be2}.elementor-social-icon-dribbble{background-color:#ea4c89}.elementor-social-icon-elementor{background-color:#d30c5c}.elementor-social-icon-envelope{background-color:#ea4335}.elementor-social-icon-facebook,.elementor-social-icon-facebook-f{background-color:#3b5998}.elementor-social-icon-flickr{background-color:#0063dc}.elementor-social-icon-foursquare{background-color:#2d5be3}.elementor-social-icon-free-code-camp,.elementor-social-icon-freecodecamp{background-color:#006400}.elementor-social-icon-github{background-color:#333}.elementor-social-icon-gitlab{background-color:#e24329}.elementor-social-icon-globe{background-color:#69727d}.elementor-social-icon-google-plus,.elementor-social-icon-google-plus-g{background-color:#dd4b39}.elementor-social-icon-houzz{background-color:#7ac142}.elementor-social-icon-instagram{background-color:#262626}.elementor-social-icon-jsfiddle{background-color:#487aa2}.elementor-social-icon-link{background-color:#818a91}.elementor-social-icon-linkedin,.elementor-social-icon-linkedin-in{background-color:#0077b5}.elementor-social-icon-medium{background-color:#00ab6b}.elementor-social-icon-meetup{background-color:#ec1c40}.elementor-social-icon-mixcloud{background-color:#273a4b}.elementor-social-icon-odnoklassniki{background-color:#f4731c}.elementor-social-icon-pinterest{background-color:#bd081c}.elementor-social-icon-product-hunt{background-color:#da552f}.elementor-social-icon-reddit{background-color:#ff4500}.elementor-social-icon-rss{background-color:#f26522}.elementor-social-icon-shopping-cart{background-color:#4caf50}.elementor-social-icon-skype{background-color:#00aff0}.elementor-social-icon-slideshare{background-color:#0077b5}.elementor-social-icon-snapchat{background-color:#fffc00}.elementor-social-icon-soundcloud{background-color:#f80}.elementor-social-icon-spotify{background-color:#2ebd59}.elementor-social-icon-stack-overflow{background-color:#fe7a15}.elementor-social-icon-steam{background-color:#00adee}.elementor-social-icon-stumbleupon{background-color:#eb4924}.elementor-social-icon-telegram{background-color:#2ca5e0}.elementor-social-icon-threads{background-color:#000}.elementor-social-icon-thumb-tack{background-color:#1aa1d8}.elementor-social-icon-tripadvisor{background-color:#589442}.elementor-social-icon-tumblr{background-color:#35465c}.elementor-social-icon-twitch{background-color:#6441a5}.elementor-social-icon-twitter{background-color:#1da1f2}.elementor-social-icon-viber{background-color:#665cac}.elementor-social-icon-vimeo{background-color:#1ab7ea}.elementor-social-icon-vk{background-color:#45668e}.elementor-social-icon-weibo{background-color:#dd2430}.elementor-social-icon-weixin{background-color:#31a918}.elementor-social-icon-whatsapp{background-color:#25d366}.elementor-social-icon-wordpress{background-color:#21759b}.elementor-social-icon-x-twitter{background-color:#000}.elementor-social-icon-xing{background-color:#026466}.elementor-social-icon-yelp{background-color:#af0606}.elementor-social-icon-youtube{background-color:#cd201f}.elementor-social-icon-500px{background-color:#0099e5}.elementor-shape-rounded .elementor-icon.elementor-social-icon{border-radius:10%}.elementor-shape-circle .elementor-icon.elementor-social-icon{border-radius:50%}</style>		<div class="elementor-social-icons-wrapper elementor-grid">
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-9a781ee" href="https://www.facebook.com/juicerio" target="_blank">
+						<span class="elementor-screen-only"></span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 32 32" fill="none"><g clip-path="url(#clip0_5866_4051)"><path d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z" fill="#3C5A9A"></path><path d="M21.2038 4.91113H17.6594C15.556 4.91113 13.2165 5.79578 13.2165 8.84468C13.2268 9.90704 13.2165 10.9245 13.2165 12.0695H10.7832V15.9416H13.2918V27.0887H17.9015V15.868H20.944L21.2193 12.0586H17.8221C17.8221 12.0586 17.8297 10.3641 17.8221 9.87194C17.8221 8.66708 19.0758 8.73608 19.1512 8.73608C19.7478 8.73608 20.9078 8.73782 21.2055 8.73608V4.91113H21.2038Z" fill="white"></path></g><defs><clippath id="clip0_5866_4051"><rect width="32" height="32" fill="white"></rect></clippath></defs></svg>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-01c282c" href="https://www.twitter.com/juicerio" target="_blank">
+						<span class="elementor-screen-only"></span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewbox="0 0 30 30" fill="none"><rect width="30" height="30" rx="3.83085" fill="black"></rect><path d="M16.8076 13.6218L23.8808 6H22.2046L16.063 12.6179L11.1577 6H5.5L12.9178 16.0074L5.5 24H7.17621L13.6619 17.0113L18.8423 24H24.5L16.8076 13.6218ZM14.5118 16.0956L13.7602 15.0991L7.78017 7.16971H10.3547L15.1807 13.5689L15.9323 14.5655L22.2054 22.8835H19.6309L14.5118 16.0956Z" fill="white"></path></svg>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-637f35c" href="https://www.linkedin.com/company/juicer" target="_blank">
+						<span class="elementor-screen-only"></span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="31" height="32" viewbox="0 0 31 32" fill="none"><path d="M0 2.34656C0 1.08637 1.02615 0.0634766 2.29109 0.0634766H28.7089C29.9743 0.0634766 31 1.08637 31 2.34656V29.6528C31 30.9133 29.9743 31.9355 28.7089 31.9355H2.29109C1.02627 31.9355 0 30.9135 0 29.6531V2.34618V2.34656Z" fill="#006699"></path><path d="M9.4201 26.7356V12.3867H4.78124V26.7356H9.42059H9.4201ZM7.10164 10.4279C8.71897 10.4279 9.72586 9.32612 9.72586 7.94914C9.69559 6.5408 8.71897 5.46973 7.1324 5.46973C5.54474 5.46973 4.50781 6.5408 4.50781 7.94902C4.50781 9.32599 5.51434 10.4278 7.07125 10.4278H7.10128L7.10164 10.4279ZM11.9878 26.7356H16.6263V18.7234C16.6263 18.2951 16.6565 17.8657 16.7791 17.5598C17.1143 16.7026 17.8775 15.8153 19.1593 15.8153C20.8374 15.8153 21.5091 17.131 21.5091 19.0602V26.7356H26.1475V18.5084C26.1475 14.1012 23.8593 12.0503 20.8074 12.0503C18.3052 12.0503 17.2063 13.4882 16.5958 14.4675H16.6266V12.3872H11.988C12.0486 13.7333 11.9877 26.7361 11.9877 26.7361L11.9878 26.7356Z" fill="white"></path></svg>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-708283d" href="https://www.youtube.com/channel/UCYwRh_gDeROsvRMxi8bqAfQ" target="_blank">
+						<span class="elementor-screen-only"></span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="17" viewbox="0 0 24 17" fill="none"><g clip-path="url(#clip0_11534_20585)"><path d="M23.4955 2.64545C23.2227 1.60909 22.4045 0.790909 21.3682 0.504545C19.5 0 12 0 12 0C12 0 4.5 0 2.61818 0.504545C1.58182 0.777273 0.777273 1.59545 0.490909 2.64545C0 4.52727 0 8.45455 0 8.45455C0 8.45455 0 12.3818 0.504545 14.2636C0.777273 15.3 1.59545 16.1182 2.63182 16.4045C4.5 16.9091 12 16.9091 12 16.9091C12 16.9091 19.5 16.9091 21.3818 16.4045C22.4182 16.1318 23.2227 15.3136 23.5091 14.2636C24 12.3818 24 8.45455 24 8.45455C24 8.45455 24 4.52727 23.4955 2.64545Z" fill="#FF0000"></path><path d="M9.54541 12.0283L15.8181 8.45554L9.54541 4.88281V12.0283Z" fill="white"></path></g><defs><clippath id="clip0_11534_20585"><rect width="24" height="16.9091" fill="white"></rect></clippath></defs></svg>					</a>
+				</span>
+							<span class="elementor-grid-item">
+					<a class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-33686f5" href="https://www.instagram.com/juicersocial/" target="_blank">
+						<span class="elementor-screen-only"></span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewbox="0 0 32 33" fill="none"><path d="M8.11436 32.8833C6.21131 32.794 5.17752 32.4674 4.48991 32.1909C3.5788 31.825 2.92924 31.3896 2.24543 30.6854C1.56163 29.9812 1.13841 29.3113 0.785568 28.3717C0.517371 27.6626 0.200672 26.5965 0.114126 24.634C0.019021 22.5126 0 21.8761 0 16.5015C0 11.1268 0.0209231 10.4913 0.113175 8.36794C0.199721 6.40542 0.518323 5.34128 0.784617 4.63022C1.13936 3.69064 1.56258 3.02077 2.24448 2.31462C2.92733 1.61043 3.5769 1.173 4.48896 0.809136C5.17657 0.532559 6.21036 0.205962 8.11341 0.116712C10.1715 0.0196154 10.7897 0 15.9995 0C21.2113 0 21.8276 0.021577 23.8866 0.116712C25.7896 0.205962 26.8215 0.53452 27.511 0.809136C28.4221 1.173 29.0717 1.61043 29.7555 2.31462C30.4393 3.01881 30.8606 3.68966 31.2154 4.62924C31.4836 5.33834 31.8003 6.40443 31.8868 8.36696C31.981 10.4903 32 11.1259 32 16.5005C32 21.8732 31.981 22.5107 31.8868 24.634C31.8003 26.5965 31.4817 27.6626 31.2154 28.3717C30.8606 29.3113 30.4384 29.9812 29.7555 30.6854C29.0727 31.3896 28.4221 31.825 27.511 32.1909C26.8234 32.4674 25.7896 32.794 23.8866 32.8833C21.8295 32.9804 21.2113 33 15.9995 33C10.7897 33 10.1715 32.9814 8.11436 32.8833Z" fill="url(#paint0_radial_5866_4033)"></path><path d="M8.11436 32.8833C6.21131 32.794 5.17752 32.4674 4.48991 32.1909C3.5788 31.825 2.92924 31.3896 2.24543 30.6854C1.56163 29.9812 1.13841 29.3113 0.785568 28.3717C0.517371 27.6626 0.200672 26.5965 0.114126 24.634C0.019021 22.5126 0 21.8761 0 16.5015C0 11.1268 0.0209231 10.4913 0.113175 8.36794C0.199721 6.40542 0.518323 5.34128 0.784617 4.63022C1.13936 3.69064 1.56258 3.02077 2.24448 2.31462C2.92733 1.61043 3.5769 1.173 4.48896 0.809136C5.17657 0.532559 6.21036 0.205962 8.11341 0.116712C10.1715 0.0196154 10.7897 0 15.9995 0C21.2113 0 21.8276 0.021577 23.8866 0.116712C25.7896 0.205962 26.8215 0.53452 27.511 0.809136C28.4221 1.173 29.0717 1.61043 29.7555 2.31462C30.4393 3.01881 30.8606 3.68966 31.2154 4.62924C31.4836 5.33834 31.8003 6.40443 31.8868 8.36696C31.981 10.4903 32 11.1259 32 16.5005C32 21.8732 31.981 22.5107 31.8868 24.634C31.8003 26.5965 31.4817 27.6626 31.2154 28.3717C30.8606 29.3113 30.4384 29.9812 29.7555 30.6854C29.0727 31.3896 28.4221 31.825 27.511 32.1909C26.8234 32.4674 25.7896 32.794 23.8866 32.8833C21.8295 32.9804 21.2113 33 15.9995 33C10.7897 33 10.1715 32.9814 8.11436 32.8833Z" fill="url(#paint1_radial_5866_4033)"></path><path d="M12.0706 16.5702C12.0706 14.3133 13.8442 12.4833 16.0327 12.4833C18.2211 12.4833 19.9957 14.3133 19.9957 16.5702C19.9957 18.827 18.2211 20.6571 16.0327 20.6571C13.8442 20.6571 12.0706 18.827 12.0706 16.5702ZM9.92825 16.5702C9.92825 20.047 12.6612 22.8654 16.0327 22.8654C19.4041 22.8654 22.1371 20.047 22.1371 16.5702C22.1371 13.0933 19.4041 10.275 16.0327 10.275C12.6612 10.275 9.92835 13.0932 9.92835 16.5702H9.92825ZM20.9523 10.0254C20.9521 10.3164 21.0357 10.6008 21.1924 10.8428C21.349 11.0848 21.5717 11.2735 21.8324 11.3849C22.093 11.4964 22.3798 11.5256 22.6566 11.469C22.9333 11.4123 23.1876 11.2723 23.3872 11.0667C23.5868 10.861 23.7227 10.5989 23.7779 10.3136C23.833 10.0282 23.8049 9.73241 23.697 9.46354C23.5892 9.19468 23.4064 8.96484 23.1719 8.80309C22.9373 8.64134 22.6616 8.55495 22.3794 8.55483H22.3788C22.0006 8.55501 21.638 8.70999 21.3705 8.98572C21.103 9.26145 20.9526 9.63538 20.9523 10.0254ZM11.2299 26.5493C10.0708 26.4949 9.44084 26.2958 9.02218 26.1276C8.46715 25.9048 8.07113 25.6394 7.65476 25.2106C7.23839 24.7818 6.98066 24.3738 6.76553 23.8014C6.60233 23.3699 6.40927 22.72 6.35658 21.5247C6.29895 20.2325 6.28744 19.8443 6.28744 16.5704C6.28744 13.2965 6.2999 12.9094 6.35658 11.616C6.40936 10.4207 6.60385 9.77216 6.76553 9.33935C6.98161 8.76697 7.23896 8.35858 7.65476 7.9292C8.07056 7.49982 8.4662 7.23403 9.02218 7.01218C9.44065 6.84388 10.0708 6.64478 11.2299 6.59045C12.483 6.53101 12.8594 6.51914 16.0327 6.51914C19.2059 6.51914 19.5827 6.5318 20.8369 6.59064C21.9959 6.64508 22.6249 6.84564 23.0446 7.01237C23.5996 7.23422 23.9956 7.5006 24.412 7.92939C24.8284 8.35819 25.0851 8.76717 25.3012 9.33955C25.4644 9.77109 25.6575 10.4209 25.7102 11.6162C25.7678 12.9096 25.7793 13.2967 25.7793 16.5706C25.7793 19.8445 25.7678 20.2316 25.7102 21.5249C25.6574 22.7202 25.4634 23.3699 25.3012 23.8016C25.0851 24.374 24.8278 24.7824 24.412 25.2108C23.9962 25.6392 23.5996 25.905 23.0446 26.1278C22.6261 26.2961 21.9959 26.4952 20.8369 26.5495C19.5838 26.609 19.2074 26.6208 16.0327 26.6208C12.858 26.6208 12.4826 26.609 11.2299 26.5495V26.5493ZM11.1314 4.38479C9.86586 4.44423 9.00107 4.65117 8.24584 4.95423C7.46417 5.26719 6.80158 5.68706 6.13993 6.3683C5.47828 7.04955 5.07219 7.73295 4.76871 8.54002C4.47483 9.31934 4.27416 10.2107 4.21653 11.5158C4.15794 12.823 4.14453 13.2409 4.14453 16.5702C4.14453 19.8995 4.15794 20.3174 4.21653 21.6246C4.27416 22.9298 4.47483 23.821 4.76871 24.6003C5.07219 25.4064 5.47838 26.0911 6.13993 26.7721C6.80148 27.453 7.46322 27.8723 8.24584 28.1861C9.0025 28.4892 9.86586 28.6961 11.1314 28.7556C12.3996 28.815 12.8042 28.8298 16.0327 28.8298C19.2611 28.8298 19.6663 28.816 20.9339 28.7556C22.1996 28.6961 23.0638 28.4892 23.8195 28.1861C24.6012 27.8723 25.2637 27.4533 25.9254 26.7721C26.587 26.0908 26.9923 25.4064 27.2966 24.6003C27.5905 23.821 27.7921 22.9297 27.8488 21.6246C27.9064 20.3164 27.9198 19.8995 27.9198 16.5702C27.9198 13.2409 27.9064 12.823 27.8488 11.5158C27.7912 10.2106 27.5905 9.31885 27.2966 8.54002C26.9923 7.73393 26.586 7.05062 25.9254 6.3683C25.2648 5.68598 24.6012 5.26719 23.8204 4.95423C23.0638 4.65117 22.1995 4.44325 20.9349 4.38479C19.6671 4.32506 19.262 4.31055 16.0341 4.31055C12.8061 4.31055 12.4001 4.32438 11.1319 4.38479" fill="white"></path><defs><radialgradient id="paint0_radial_5866_4033" cx="0" cy="0" r="1" gradientunits="userSpaceOnUse" gradienttransform="translate(2.07101 32.2771) scale(40.6281 41.8977)"><stop offset="0.09" stop-color="#FA8F21"></stop><stop offset="0.78" stop-color="#D82D7E"></stop></radialgradient><radialgradient id="paint1_radial_5866_4033" cx="0" cy="0" r="1" gradientunits="userSpaceOnUse" gradienttransform="translate(22.1653 31.2174) scale(35.7531 36.8704)"><stop offset="0.64" stop-color="#8C3AAA" stop-opacity="0"></stop><stop offset="1" stop-color="#8C3AAA"></stop></radialgradient></defs></svg>					</a>
+				</span>
+					</div>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-074b67c footer-column" data-id="074b67c" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-b7762db elementor-widget elementor-widget-heading" data-id="b7762db" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">Pages</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-204f218 elementor-nav-menu__align-start elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-widget elementor-widget-nav-menu" data-id="204f218" data-element_type="widget" data-settings='{"layout":"vertical","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"}}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-vertical e--pointer-none">
+				<ul id="menu-1-204f218" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2866"><a href="/" class="elementor-item">Homepage</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4712"><a href="/pricing" class="elementor-item">Pricing</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2868"><a href="/log-in" class="elementor-item">Login</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2869"><a href="/sign-up" class="elementor-item">Register</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4864"><a href="/contact-us" class="elementor-item">Contact us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2858 current_page_item menu-item-2873"><a href="/terms" aria-current="page" class="elementor-item elementor-item-active">Terms of Service</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2872"><a href="/privacy" class="elementor-item">Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2874"><a href="/eu-privacy" class="elementor-item">EU Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2871"><a href="/cookie-policy" class="elementor-item">Cookie Policy</a></li>
+</ul>			</nav>
+						<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-204f218" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2866"><a href="/" class="elementor-item" tabindex="-1">Homepage</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4712"><a href="/pricing" class="elementor-item" tabindex="-1">Pricing</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2868"><a href="/log-in" class="elementor-item" tabindex="-1">Login</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2869"><a href="/sign-up" class="elementor-item" tabindex="-1">Register</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4864"><a href="/contact-us" class="elementor-item" tabindex="-1">Contact us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2858 current_page_item menu-item-2873"><a href="/terms" aria-current="page" class="elementor-item elementor-item-active" tabindex="-1">Terms of Service</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2872"><a href="/privacy" class="elementor-item" tabindex="-1">Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2874"><a href="/eu-privacy" class="elementor-item" tabindex="-1">EU Privacy Policy</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2871"><a href="/cookie-policy" class="elementor-item" tabindex="-1">Cookie Policy</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-d81d467 privacy-settings elementor-widget elementor-widget-html" data-id="d81d467" data-element_type="widget" data-widget_type="html.default">
+				<div class="elementor-widget-container">
+			<a onclick="UC_UI.showSecondLayer();">Privacy Settings</a>		</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-dc043f9 footer-column" data-id="dc043f9" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-7a064bb elementor-widget elementor-widget-heading" data-id="7a064bb" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">Features</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-4aacc91 elementor-nav-menu__align-start elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-widget elementor-widget-nav-menu" data-id="4aacc91" data-element_type="widget" data-settings='{"layout":"vertical","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"}}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-vertical e--pointer-none">
+				<ul id="menu-1-4aacc91" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2475"><a href="/social-media-aggregator" class="elementor-item">Social media aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2476"><a href="/social-media-moderation" class="elementor-item">Social media moderation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2474"><a href="/content-curation" class="elementor-item">Content curation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2477"><a href="/social-wall" class="elementor-item">Social wall</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2478"><a href="/wordpress-social-feed" class="elementor-item">WordPress Social Feed</a></li>
+</ul>			</nav>
+						<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-4aacc91" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2475"><a href="/social-media-aggregator" class="elementor-item" tabindex="-1">Social media aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2476"><a href="/social-media-moderation" class="elementor-item" tabindex="-1">Social media moderation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2474"><a href="/content-curation" class="elementor-item" tabindex="-1">Content curation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2477"><a href="/social-wall" class="elementor-item" tabindex="-1">Social wall</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2478"><a href="/wordpress-social-feed" class="elementor-item" tabindex="-1">WordPress Social Feed</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-65bf2bb elementor-widget elementor-widget-heading" data-id="65bf2bb" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">Social media aggregators</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-e23541e elementor-nav-menu__align-start elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-widget elementor-widget-nav-menu" data-id="e23541e" data-element_type="widget" data-settings='{"layout":"vertical","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"}}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-vertical e--pointer-none">
+				<ul id="menu-1-e23541e" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2261"><a href="/facebook-aggregator" class="elementor-item">Facebook Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2262"><a href="/instagram-aggregator" class="elementor-item">Instagram Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2260"><a href="/twitter-aggregator" class="elementor-item">Twitter Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2473"><a href="/tiktok-aggregator" class="elementor-item">TikTok Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4656"><a href="/linkedin-aggregator" class="elementor-item">LinkedIn Aggregator</a></li>
+</ul>			</nav>
+						<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-e23541e" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2261"><a href="/facebook-aggregator" class="elementor-item" tabindex="-1">Facebook Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2262"><a href="/instagram-aggregator" class="elementor-item" tabindex="-1">Instagram Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2260"><a href="/twitter-aggregator" class="elementor-item" tabindex="-1">Twitter Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2473"><a href="/tiktok-aggregator" class="elementor-item" tabindex="-1">TikTok Aggregator</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4656"><a href="/linkedin-aggregator" class="elementor-item" tabindex="-1">LinkedIn Aggregator</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+					</div>
+		</div>
+				<div class="elementor-column elementor-col-25 elementor-top-column elementor-element elementor-element-60bf998 footer-column" data-id="60bf998" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-cd70b4b elementor-widget elementor-widget-heading" data-id="cd70b4b" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">Solutions</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-7e73a9f elementor-nav-menu__align-start elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-widget elementor-widget-nav-menu" data-id="7e73a9f" data-element_type="widget" data-settings='{"layout":"vertical","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"}}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-vertical e--pointer-none">
+				<ul id="menu-1-7e73a9f" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2485"><a href="/business-and-enterprises" class="elementor-item">Business and Enterprises</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2479"><a href="/education" class="elementor-item">Education</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2484"><a href="/event-marketing" class="elementor-item">Event Marketing</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2480"><a href="/healthcare" class="elementor-item">Healthcare</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2483"><a href="/nonprofits" class="elementor-item">Nonprofits</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2481"><a href="/political-campaigns" class="elementor-item">Political Campaigns</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2482"><a href="/web-developers" class="elementor-item">Web Developers</a></li>
+</ul>			</nav>
+						<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-7e73a9f" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2485"><a href="/business-and-enterprises" class="elementor-item" tabindex="-1">Business and Enterprises</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2479"><a href="/education" class="elementor-item" tabindex="-1">Education</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2484"><a href="/event-marketing" class="elementor-item" tabindex="-1">Event Marketing</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2480"><a href="/healthcare" class="elementor-item" tabindex="-1">Healthcare</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2483"><a href="/nonprofits" class="elementor-item" tabindex="-1">Nonprofits</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2481"><a href="/political-campaigns" class="elementor-item" tabindex="-1">Political Campaigns</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2482"><a href="/web-developers" class="elementor-item" tabindex="-1">Web Developers</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+				<div class="elementor-element elementor-element-23bad60 elementor-widget elementor-widget-heading" data-id="23bad60" data-element_type="widget" data-widget_type="heading.default">
+				<div class="elementor-widget-container">
+			<h3 class="elementor-heading-title elementor-size-default">Resources</h3>		</div>
+				</div>
+				<div class="elementor-element elementor-element-078daf3 elementor-nav-menu__align-start elementor-nav-menu--dropdown-tablet elementor-nav-menu__text-align-aside elementor-widget elementor-widget-nav-menu" data-id="078daf3" data-element_type="widget" data-settings='{"layout":"vertical","submenu_icon":{"value":"&lt;i class=\"fas fa-caret-down\"&gt;&lt;\/i&gt;","library":"fa-solid"}}' data-widget_type="nav-menu.default">
+				<div class="elementor-widget-container">
+						<nav class="elementor-nav-menu--main elementor-nav-menu__container elementor-nav-menu--layout-vertical e--pointer-none">
+				<ul id="menu-1-078daf3" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2486"><a href="/social-media-api-juicer" class="elementor-item">API Documentation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1044"><a href="/blog" class="elementor-item">Blog</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-168"><a href="https://help.juicer.io/" class="elementor-item">FAQs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3909"><a href="/feed-example" class="elementor-item">Feed Example</a></li>
+</ul>			</nav>
+						<nav class="elementor-nav-menu--dropdown elementor-nav-menu__container" aria-hidden="true">
+				<ul id="menu-2-078daf3" class="elementor-nav-menu sm-vertical">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2486"><a href="/social-media-api-juicer" class="elementor-item" tabindex="-1">API Documentation</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1044"><a href="/blog" class="elementor-item" tabindex="-1">Blog</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-168"><a href="https://help.juicer.io/" class="elementor-item" tabindex="-1">FAQs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3909"><a href="/feed-example" class="elementor-item" tabindex="-1">Feed Example</a></li>
+</ul>			</nav>
+				</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				<section class="elementor-section elementor-top-section elementor-element elementor-element-a030cb5 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="a030cb5" data-element_type="section">
+						<div class="elementor-container elementor-column-gap-default">
+					<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-68b1a59" data-id="68b1a59" data-element_type="column">
+			<div class="elementor-widget-wrap elementor-element-populated">
+						<div class="elementor-element elementor-element-9b58300 elementor-widget elementor-widget-text-editor" data-id="9b58300" data-element_type="widget" data-widget_type="text-editor.default">
+				<div class="elementor-widget-container">
+							<p><span style="white-space: pre-wrap;">© 2024 Juicer. All Rights Reserved. <br></span></p>						</div>
+				</div>
+					</div>
+		</div>
+					</div>
+		</section>
+				</div>
+		
+			<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+				const lazyloadRunObserver = () => {
+					const lazyloadBackgrounds = document.querySelectorAll( `.e-con.e-parent:not(.e-lazyloaded)` );
+					const lazyloadBackgroundObserver = new IntersectionObserver( ( entries ) => {
+						entries.forEach( ( entry ) => {
+							if ( entry.isIntersecting ) {
+								let lazyloadBackground = entry.target;
+								if( lazyloadBackground ) {
+									lazyloadBackground.classList.add( 'e-lazyloaded' );
+								}
+								lazyloadBackgroundObserver.unobserve( entry.target );
+							}
+						});
+					}, { rootMargin: '200px 0px 200px 0px' } );
+					lazyloadBackgrounds.forEach( ( lazyloadBackground ) => {
+						lazyloadBackgroundObserver.observe( lazyloadBackground );
+					} );
+				};
+				const events = [
+					'DOMContentLoaded',
+					'elementor/lazyload/observe',
+				];
+				events.forEach( ( event ) => {
+					document.addEventListener( event, lazyloadRunObserver );
+				} );
+			</script>
+			<script id="custom-script-js-extra">
+var wpdata = {"object_id":"2858","site_url":"https:\/\/wpengineprod.juicer.io"};
+</script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/plugins/wp-meta-and-date-remover/assets/js/inspector.js?ver=1718704075" id="custom-script-js" defer></script>
+<script type="rocketlazyloadscript" id="rocket-browser-checker-js-after">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id="rocket-preload-links-js-extra">
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/wpengineprod.juicer.io","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script type="rocketlazyloadscript" id="rocket-preload-links-js-after">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://wpengineprod.juicer.io/wp-content/cache/min/1/wp-content/themes/juicer/js/scripts.js?ver=1718704075" id="juicer-scripts-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/lib/sticky/jquery.sticky.min.js?ver=3.22.0" id="e-sticky-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js?ver=1.2.1" id="smartmenus-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.22.0" id="elementor-pro-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.22.1" id="elementor-webpack-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.22.1" id="elementor-frontend-modules-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2" id="wp-polyfill-inert-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.14.0" id="regenerator-runtime-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/dist/hooks.min.js?ver=2810c76e705dd1a53b18" id="wp-hooks-js"></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="rocketlazyloadscript" id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type="rocketlazyloadscript" id="elementor-pro-frontend-js-before">
+var ElementorProFrontendConfig = {"ajaxurl":"https:\/\/wpengineprod.juicer.io\/wp-admin\/admin-ajax.php","nonce":"0c159cac43","urls":{"assets":"https:\/\/wpengineprod.juicer.io\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"https:\/\/wpengineprod.juicer.io\/wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"},"x-twitter":{"title":"X"},"threads":{"title":"Threads"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"https:\/\/wpengineprod.juicer.io\/wp-content\/plugins\/elementor-pro\/modules\/lottie\/assets\/animations\/default.json"}};
+</script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/js/frontend.min.js?ver=3.22.0" id="elementor-pro-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/lib/waypoints/waypoints.min.js?ver=4.0.2" id="elementor-waypoints-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js" defer></script>
+<script type="rocketlazyloadscript" id="elementor-frontend-js-before">
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close","a11yCarouselWrapperAriaLabel":"Carousel | Horizontal scrolling: Arrow Left & Right","a11yCarouselPrevSlideMessage":"Previous slide","a11yCarouselNextSlideMessage":"Next slide","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.22.1","is_static":false,"experimentalFeatures":{"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"additional_custom_breakpoints":true,"container":true,"container_grid":true,"e_swiper_latest":true,"e_onboarding":true,"theme_builder_v2":true,"home_screen":true,"ai-layout":true,"landing-pages":true,"nested-elements":true,"e_lazyload":true,"display-conditions":true,"form-submissions":true,"taxonomy-filter":true},"urls":{"assets":"https:\/\/wpengineprod.juicer.io\/wp-content\/plugins\/elementor\/assets\/"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description"},"post":{"id":2858,"title":"Terms%20of%20Service%20-%20Social%20Media%20Feeds%20for%20your%20website.%20-%20Juicer%20Social","excerpt":"","featuredImage":"https:\/\/wpengineprod.juicer.io\/wp-content\/uploads\/og.png"}};
+</script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor/assets/js/frontend.min.js?ver=3.22.1" id="elementor-frontend-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://wpengineprod.juicer.io/wp-content/plugins/elementor-pro/assets/js/elements-handlers.min.js?ver=3.22.0" id="pro-elements-handlers-js" defer></script>
+<!-- FRAUD0.com fraud detection BODY TAG -->
+<script type="text/plain" data-usercentrics="Fraud0" async src="https://bt.fraud0.com/api/v2/fz.js?cid=96b3cd37-f04a-49a3-b157-e975ac94f97a"></script>
+<!-- End of FRAUD0 BODY TAG -->
+<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://wpengineprod.juicer.io/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script><script>function lazyLoadThumb(e,alt){var t='<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<button class="play" aria-label="play Youtube video"></button>';t=t.replace('alt=""','alt="'+alt+'"');return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.parentNode.dataset.query.length?'':'&'+this.parentNode.dataset.query;e.setAttribute("src",t.replace("ID",this.parentNode.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.parentNode.replaceChild(e,this.parentNode)}document.addEventListener("DOMContentLoaded",function(){var e,t,p,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id,a[t].dataset.alt),a[t].appendChild(e),p=e.querySelector('.play'),p.onclick=lazyLoadYoutubeIframe});</script>
+<script>class RocketElementorAnimation{constructor(){this.deviceMode=document.createElement("span"),this.deviceMode.id="elementor-device-mode-wpr",this.deviceMode.setAttribute("class","elementor-screen-only"),document.body.appendChild(this.deviceMode)}_detectAnimations(){let t=getComputedStyle(this.deviceMode,":after").content.replace(/"/g,"");this.animationSettingKeys=this._listAnimationSettingsKeys(t),document.querySelectorAll(".elementor-invisible[data-settings]").forEach(t=>{const e=t.getBoundingClientRect();if(e.bottom>=0&&e.top<=window.innerHeight)try{this._animateElement(t)}catch(t){}})}_animateElement(t){const e=JSON.parse(t.dataset.settings),i=e._animation_delay||e.animation_delay||0,n=e[this.animationSettingKeys.find(t=>e[t])];if("none"===n)return void t.classList.remove("elementor-invisible");t.classList.remove(n),this.currentAnimation&&t.classList.remove(this.currentAnimation),this.currentAnimation=n;let s=setTimeout(()=>{t.classList.remove("elementor-invisible"),t.classList.add("animated",n),this._removeAnimationSettings(t,e)},i);window.addEventListener("rocket-startLoading",function(){clearTimeout(s)})}_listAnimationSettingsKeys(t="mobile"){const e=[""];switch(t){case"mobile":e.unshift("_mobile");case"tablet":e.unshift("_tablet");case"desktop":e.unshift("_desktop")}const i=[];return["animation","_animation"].forEach(t=>{e.forEach(e=>{i.push(t+e)})}),i}_removeAnimationSettings(t,e){this._listAnimationSettingsKeys().forEach(t=>delete e[t]),t.dataset.settings=JSON.stringify(e)}static run(){const t=new RocketElementorAnimation;requestAnimationFrame(t._detectAnimations.bind(t))}}document.addEventListener("DOMContentLoaded",RocketElementorAnimation.run);</script><script>function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+if (getCookie('logged_in')) {
+  document.querySelectorAll('nav a[href*="/sign-up"]').forEach(function (el) {
+    el.innerText = 'Go to Application';
+    el.href = '/dashboard';
+  });
+  document.querySelectorAll('a[href*="/log-in"]').forEach(function (el) {
+    el.style.display = 'none';
+  });
+}
+</script>
+</body>
+</html><!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
