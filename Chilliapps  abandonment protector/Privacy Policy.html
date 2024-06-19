@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=devide-width">
+    <title>Delete my information</title>
+    <style>
+      body{
+        background-color: #DCDCDC;
+        box-sizing: border-box;
+        font-family: Arial;
+      }
+      a {
+        text-decoration: none;
+        color: #7500FF;
+      }
+      p, h1 {
+        margin-right: 10px;
+      }
+
+      input[type=text] {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #D3D3D3;
+        border-radius: 3px;
+        font-size:14px;
+        font-family: verdana;
+      }
+
+      .container-div{
+        margin: 80px auto;
+        border-radius: 10px;
+        background-color: white;
+        box-sizing: border-box;
+        width: 45%;
+        float:center;
+        display: block;
+        position: relative;
+        /*padding-top: 10px;
+        padding-left: 20px;*/
+        padding: 50px;
+      }
+
+      .thanks {
+        border-left: solid 8px #4DB352;
+        width: 70%;
+        font-size : 20px;
+        color : #ffffff;
+        padding: 14px 30px;
+        background : #81DA85;
+        visibility: hidden;
+        display: none;
+        border-radius: 0;
+      }
+
+      .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        padding-top: 10px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .note {
+        color: #A9A9A9;
+        visibility: hidden;
+        display: none;
+      }
+
+      .submit {
+        border : solid 0px #050504;
+      	border-radius : 3px;
+      	font-size : 20px;
+      	color : #ffffff;
+      	padding: 10px 30px;
+        background : #4C4C4C;
+        cursor : pointer;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .submit:hover {
+        background : #5B5B5B;
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width: 768px) {
+        .container-div {
+          width: 95%;
+        }
+      }
+
+    </style>
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+  </head>
+  <body>
+
+    <div class="container-div">
+      <h1> Unsubscribe and delete my information from any sender using this app  </h1>
+      <p>
+        This action will remove all your information store in our servers.
+      </p>
+
+      <p>
+        We will store only your email to identify that if your email goes back to our servers,
+        your information should be removed immediately from any sender using our App.
+      </p>
+
+      <br>
+
+      <div class="thanks" id="thanksButton"> Thanks!</div>
+      <div class="innerContainer" id="container">
+
+        <input type="text" id="email" placeholder="Enter your email address...">
+
+        <br>
+
+        <div id="recaptcha" class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="6LdwJ1UUAAAAAOJPTwdebj0hRu74AhEgQ3xt1sNT"></div>
+        <p id="note" class="note"> *Please confirm that you're not a robot </p>
+        <br>
+        <button id="submit" class="submit" onClick="delete_info()" > Submit </button>
+      </div>
+      <br>
+    </div>
+
+  </body>
+
+  <script>
+//<![CDATA[
+var AUTH_TOKEN = 'mTUibRcGDBB8Kpv+N9wgy8dLjgJzPIULXC+z4ftvEJ/m1UdSAZmjRt5CfAZWLl2VGIiWZdDNgn1Dgo3m3/Nuig==';
+//]]>
+</script>
+  <script>
+    function validateEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
+    function recaptchaCallback(params){
+      console.log(params);
+    }
+
+    function delete_info() {
+      email = document.getElementById("email").value
+      if (email == '') {
+        document.getElementById("email").style.borderColor = "red";
+      } else if (!validateEmail(email)) {
+        document.getElementById("email").style.borderColor = "red";
+      }
+      else if (grecaptcha.getResponse().length == 0) {
+        document.getElementById("note").style.visibility = "visible";
+        document.getElementById("note").style.display = "inline-block";
+      }
+      else {
+        // SET THE EMAIL AS A URL HEADER
+        email = "?email=" + encodeURIComponent(email);
+
+        var xhr = new XMLHttpRequest();
+        // OPEN THE XMLHTTPREQUEST WITH THIS ATTRIBUTES
+        // SEND ALSO THE g_recaptcha_response ATTRIBUTE
+        xhr.open('POST', "/followup/submit_delete_information_request"
+          + email + "&authenticity_token=" + encodeURIComponent(AUTH_TOKEN)
+          + "&g_recaptcha_response=" + grecaptcha.getResponse());
+        // SET THE CONTENT-TYPE HEADER TO application/x-www-form-urlencoded
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // MAKING VISIBLE AND INVISIBLE THINGS
+                  document.getElementById("container").style.visibility = "hidden";
+                  document.getElementById("thanksButton").style.visibility = "visible";
+                  document.getElementById("thanksButton").style.display = "inline-block";
+            }else {
+                alert('Request failed. Please contact us at support@chilliapps.com. Returned status of ' + xhr.status);
+            }
+        };
+        // SEND THE REQUEST
+        xhr.send();
+
+      
+      }
+
+    }
+
+  </script>
+</html>
