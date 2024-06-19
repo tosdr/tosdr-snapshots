@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Privacy Policy |:| Wolvden</title>
+	<link rel="shortcut icon" href="//static.wolvden.com/images/layout/favicon.ico" type="image/x-icon">
+	<link rel="preload" href="https://static.wolvden.com/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="https://static.wolvden.com/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+	<meta name="google" content="notranslate">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=0.75, minimum-scale=0.5">
+	<!-- Testing defaulting to initial-scale=1 -->
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5"> -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://static.wolvden.com/css/chat.1712644896.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/wolvden.min.1716885900.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/wolvden-default.extra.1712644896.css">
+<link rel="stylesheet" href="https://static.wolvden.com/css/common.1712644896.css">
+	<!-- <link rel="stylesheet" href="https://static.wolvden.com/css/chat.202105171200.css"> -->
+	
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178640444-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-178640444-1');
+	</script>
+	
+
+	<script type="text/javascript">
+		const URL_STATIC = 'https://static.wolvden.com';
+
+		window.loggerConfig = {
+			"logEndpoint": 'https://www.wolvden.com/ajax/log/',
+			"enableSC": false,
+			"urlH2C": URL_STATIC + '/js/h2c.js'
+		};
+
+		var inputEvent = document.createEvent('Event');
+		inputEvent.initEvent('input', true, true);
+
+		"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,t){"use strict";if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var n=Object(e),r=1;r<arguments.length;r++){var o=arguments[r];if(null!=o)for(var c in o)Object.prototype.hasOwnProperty.call(o,c)&&(n[c]=o[c])}return n},writable:!0,configurable:!0});
+		"remove"in Element.prototype||(Element.prototype.remove=function(){this.parentNode&&this.parentNode.removeChild(this)});
+
+		var b_lsis=null;function localStorageIsSupported(){if(null!==b_lsis)return b_lsis;try{var o="__na8h4oak4g302kk__";return storage.setItem(o,o),storage.removeItem(o),b_lsis=!0}catch(o){return b_lsis=!1}}function setSetting(o,t){localStorageIsSupported()?localStorage.setItem(o,t):CK.create(o,t,365)}function getSetting(o){return localStorageIsSupported()?localStorage.getItem(o):CK.read(o)}
+		var CK={create:function(e,t,n){var r;if(n){var i=new Date;i.setTime(i.getTime()+24*n*60*60*1e3),r="; expires="+i.toGMTString()}else r="";document.cookie=e+"="+t+r+"; path=/"},read:function(e){for(var t=e+"=",n=document.cookie.split(";"),r=0;r<n.length;r++){for(var i=n[r];" "===i.charAt(0);)i=i.substring(1,i.length);if(0===i.indexOf(t))return i.substring(t.length,i.length)}return null},erase:function(e){utils.createCookie(e,"",-1)}};
+
+		var User = (function() {
+			var roles = {
+				'mod'    : false,
+				'admin'  : false
+			};
+
+			var mid = '';
+			var sid = 'am1raTZyM2x1dG92bGMybjkwNm12dWI1Yzg=';
+
+			var currencyDisplay = {};
+			var currencyUsesComma = false;
+
+			var currencies = {
+				"SC": 0,
+				"GC": 0
+			};
+
+			var siteTheme = 'default';
+
+			document.addEventListener("DOMContentLoaded", function() {
+				currencyDisplay['SC'] = document.querySelector('.user_current_sc');
+				currencyDisplay['GC'] = document.querySelector('.user_current_gc');
+				if (currencyDisplay['SC']) {
+					currencyUsesComma = currencyDisplay['SC'].textContent.indexOf(',') >= 0;
+				}
+			});
+
+			function tkIsValid(tk) {
+				if (typeof tk === 'undefined') {
+					return false;
+				}
+
+				if (tk !== 'am1raTZyM2x1dG92bGMybjkwNm12dWI1Yzg=') {
+					return false;
+				}
+
+				return true;
+			}
+
+			function commifyAmount(amount) {
+				return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			}
+
+			function updateCurrency(type, amount) {
+				var type = type.toUpperCase();
+				var oldAmount = currencies[type];
+				var newAmount = oldAmount + parseInt(amount.toString().replace(/[^0-9\-]/, ''));
+
+				currencies[type] = newAmount;
+
+				if (currencyUsesComma) {
+					newAmount = commifyAmount(newAmount);
+				}
+
+				currencyDisplay[type].textContent = newAmount;
+
+				return true;
+			}
+
+			function getCurrency(type) {
+				var type = type.toUpperCase();
+				return currencies[type];
+			}
+
+			function setCurrency(type, amount) {
+				var newAmount = parseInt(amount.toString().replace(/[^0-9\-]/, ''));
+				currencies[type] = newAmount;
+
+				if (currencyUsesComma) {
+					newAmount = commifyAmount(newAmount);
+				}
+
+				currencyDisplay[type].textContent = newAmount;
+
+				return true;
+			}
+
+			return {
+				SC: {
+					set: function(amount) { setCurrency('SC', amount); },
+					get: function() { return getCurrency('SC'); },
+					add: function(amount) { updateCurrency('SC', amount); }
+				},
+				GC: {
+					set: function(amount) { setCurrency('GC', amount); },
+					get: function() { return getCurrency('GC'); },
+					add: function(amount) { updateCurrency('GC', amount); }
+				},
+				hasRole: function(role) {
+					return roles[role];
+				},
+				getTheme: function() {
+					return siteTheme;
+				},
+				getMID: function(tk) {
+					return tkIsValid(tk) ? mid : null;
+				},
+				getSID: function(tk) {
+					return tkIsValid(tk) ? sid : null;
+				}
+			}
+		}());
+	</script>
+	<script src="https://static.wolvden.com/js/scripts.1712644896.js"></script>
+
+			<script>
+	var Achievement;
+	runOnDOMReady.push(function() {
+		Achievement = (function () {
+			var fraContainer = document.getElementById('fraAchievements');
+			var fraAchievementLink = document.getElementById('fraAchievementLink');
+			fraAchievementLink.style.display = 'none';
+
+			function applyClasses(target) {
+				target.classList.add('alert');
+				target.classList.add('alert-info');
+				target.classList.add('achievement');
+			}
+
+			function checkIfEmpty() {
+				fraAchievementLink.style.display = fraContainer.childElementCount <= 1 ? 'none' : 'block';
+			}
+
+			function display(achievements) {
+				achievements.forEach(function(html) {
+					var blockAchievement = document.createElement('div');
+					applyClasses(blockAchievement);
+					blockAchievement.innerHTML = html;
+					blockAchievement.addEventListener('click', function() {
+						this.classList.add('removed');
+						window.setTimeout(function(target) {
+							target.remove();
+							checkIfEmpty();
+						}, 750, this);
+					});
+					var firstEl = fraContainer.firstChild;
+					fraContainer.insertBefore(blockAchievement, firstEl);
+				});
+				checkIfEmpty();
+			}
+
+			return {
+				display: display
+			}
+		}());
+	});
+	</script>
+
+	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+	<script type="text/javascript">
+		window.cookieconsent_options = {"message":"This website uses cookies to ensure you get the best experience on our website","dismiss":"Got it!","learnMore":"More info","link":null,"theme":"dark-bottom"};
+	</script>
+
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+	<!-- End Cookie Consent plugin -->
+	</head>
+<body class="theme_default">
+	<script src="https://static.wolvden.com/js/mezr.min.js" type="text/javascript"></script>
+	<div id="fraCopyPlaceholder"></div>
+	<div id="fraAchievements"><div class="alert alert-info achievement no-close" style="display: none" id="fraAchievementLink"><a href="/achievements" class="alert-link blockLink">View your Achievements</a></div></div>
+
+<a class="sr-only sr-only-focusable" href="#content" style="position: absolute;">Skip to main content</a>
+<div id="header" class="container">
+	<nav class="navbar navbar-main navbar-dark navbar-expand-lg">
+		<a class="navbar-brand" href="/"><span class="sr-only">Home</span></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="main-menu">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/den/"><i class="fa fa-paw"></i>Den</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/crossroads"><i class="fa fa-globe-americas"></i>Crossroads</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/hoard"><i class="fa fa-drumstick-bite"></i>Hoard</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/chatter"><i class="fa fa-comments"></i>Chatter</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/news"><i class="fa fa-feather-alt"></i>News</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/event"><i class="fa fa-calendar-alt"></i>Event</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/grove"><i class="fa fa-gem"></i>Grove</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help"><i class="fa fa-question-circle"></i>Help</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<nav class="navbar navbar-status navbar-expand">
+		You aren't logged in!&nbsp;<a href="/">Log in <i class="fas fa-chevron-right"></i></a>	</nav>
+
+	<nav class="breadcrumb-nav" aria-label="breadcrumb">
+		<ol class="breadcrumb col-lg-9 ml-auto text-break">
+			<li class="breadcrumb-item"><a href="/">Home</a></li>
+			<li class="breadcrumb-item active">Privacy Policy</li>			<li class="ml-auto"><i class="fas fa-bookmark text-danger" id="bookmarkPage"  data-toggle-tooltip="true" data-placement="bottom" title="Bookmark this page" data-html="true" data-original-title="Bookmark this page" data-boundary="viewport"></i></li>		</ol>
+	</nav>
+
+</div>
+
+<div class="container">
+	<div class="row justify-content-end">
+
+		<div id="main" class="col-lg-9 order-lg-2">
+		<a name="content" class="sr-only sr-only-focusable">Main Content</a>
+			
+<h1>Privacy Policy</h1>
+
+
+<p>
+	<i>Last modified on 8th April, 2024</i>.
+</p>
+
+<p>
+	Wolvden is an asset of Lioden Ltd.  This privacy policy sets out how Lioden Ltd uses and protects any information that you give Lioden Ltd when you use this website.
+</p>
+
+<p>
+	Lioden Ltd is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement.
+</p>
+
+<p>
+	Lioden Ltd may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
+</p>
+
+<h3>What we collect</h3>
+<p>
+	We collect the following information upon registration and when signed into the game:
+	<ul>
+		<li>Email Address</li>
+		<li>Date of Birth</li>
+		<li>IP addresses</li>
+	</ul>
+</p>
+
+<h3>What we do with the information we gather</h3>
+<p>
+	We require this information to understand your needs and provide you with certain site functions; in particular the following:
+	<ul>
+		<li>Internal record keeping.</li>
+		<li>Communication with you regarding your account, for example: account activation, retrieving lost password, reminding you of an inactive account.</li>
+		<li>Your date of birth is used specifically to ensure you are at least sixteen (16) when joining the game to comply with our Terms of Service, and also to provide you with an in-game birthday gift on your birthday.</li>
+		<li>IP addresses are recorded to monitor account activity and to ensure users do not breach the Terms of Service and register more than the allowed one account.</li>
+	</ul>
+</p>
+
+<p>
+	The information we gather is stored for the duration of the account.
+</p>
+
+<h3>Security</h3>
+<p>We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.</p>
+
+<h3>How we use cookies</h3>
+<p>
+	A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added. Cookies allow web applications to respond to you as an individual.</p>
+
+<p>
+	We use cookies to identify when a user is returning to Wolvden so that it can keep users logged into their accounts.  Cookies can be destroyed by logging out of your account.</p>
+
+<p>
+	A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us.
+</p>
+
+<p>
+	You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the website.
+</p>
+
+<!-- <h3>Google Analytics</h3>
+<p>
+	This website uses Google Analytics to help Analyse how users use the site. The tool uses "cookies" to collect standard Internet log information and visitor behavior information in an anonymous form. The information generated by the cookie about your use of the website (including IP address) is transmitted to Google. This information is then used to evaluate visitors' us of the website and to compile statistical reports on website activity for Lioden Ltd.
+</p>
+
+<p>
+	We will never (and will not allow any third party to) use the statistical analytics tool to track or to collect any Personally Identifiable Information (PII) of visitors to our site. Google will not associate your IP address with any other data held by Google. Neither we nor Google will link, or seek to link, an IP address with the identity of a computer user. We will not associate any data gathered from this site with any Personally Identifiable Information from any source, unless you explicitly submit that information via a fill-in form on our website.
+</p>
+
+<p>
+	You can opt-out from Google Analytics cookies <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">here</a>.
+</p> -->
+
+<h3>Links to other websites</h3>
+<p>
+	Our website may contain links to other websites of interest. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.
+</p>
+
+<h3>Controlling your personal information</h3>
+<p>
+	You may choose to restrict the collection or use of your personal information in the following ways:
+	<ul>
+		<li><a href="/opt-out">you can click the button on this opt out page</a>
+		<li>if you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at <b>support@lioden.com</b></ul>
+	</ul>
+</p>
+
+<p>
+	We will not sell, distribute or lease your personal information to third parties unless we are required by law to do so.
+</p>
+
+<p>
+	You may request details of personal information which we hold about you under the Data Protection Act 1998. A small fee will be payable. If you would like a copy of the information held on you please write to <b>support@wolvden.com</b>.
+</p>
+
+<p>
+	If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible at the above email address. We will promptly correct any information found to be incorrect.
+</p>
+
+<p>
+	If you would like to read more about the GDPR, you can visit <a href="https://gdpr.eu/" target="_blank">GDPR.eu</a>.
+</p>
+
+
+
+<br class="clear"><br>
+</div>
+
+		<div id="sidebar" class="col-lg-3 order-lg-1">
+			
+						<div class="multi-column no-gutters"> <!-- container for cards above chat -->
+			
+				<div class="card d-lg-none"> <!-- hidden on lg+ -->
+					<div class="card-body">
+						<h4 class="card-title">Activity</h4>
+						<a href="/online"><b>387 members online</b></a><br>
+											</div>
+				</div>
+
+			</div>
+			<div class="no-gutters"> <!-- container for chat and cards below it -->
+
+				
+				<div class="card d-none d-lg-inline-block"> <!-- hidden on xs/sm/md, shown in lg+ -->
+					<div class="card-body">
+						<h4 class="card-title">Activity</h4>
+						<a href="/online"><b>387 members online</b></a><br>
+											</div>
+				</div>
+
+				
+				
+				<br><br>
+
+			
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="footer" class="container">
+	<div class="row justify-content-center">
+		<span class="copyright">Wolvden is property of <a href="https://www.lioden.com">Lioden Ltd</a> &copy; 2012-2024. All rights reserved.<br>Company number 09846917 registered in England &amp;&nbsp;Wales. VAT&nbsp;number&nbsp;234362915.</span>
+		<nav class="navbar navbar-expand navbar-dark flex-wrap justify-content-center">
+			<ul class="navbar-nav flex-wrap justify-content-center pt-0 pb-1">
+				<li class="nav-item">
+					<a class="nav-link" href="/terms">Terms of Service</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/code">Code of Conduct</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/privacy">Privacy Policy</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contact">Contact Us</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/modbox">Modbox</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bugbox">Bugbox</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/help">Help</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-ui.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/flatpickr.min.js"></script>
+<script src="/js/popper.min.js"></script>
+
+<script>
+function disableSubmit(form) { // Submit button clicked
+	// var buttons = form.querySelectorAll('button');
+
+	// buttons.forEach(function(button) {
+	// 	var buttonWidth = button.getBoundingClientRect().width;
+	// 	var buttonLabel = '<i class="fas fa-spinner mr-2 fa-spin"></i>';
+	// 	if (buttonWidth > 105) {
+	// 		buttonLabel += ' Loading...';
+	// 	}
+	// 	button.innerHTML = buttonLabel;
+	// 	button.style.width = buttonWidth + 'px';
+	// 	button.disabled = 1;
+	// });
+
+	// return true;
+
+	var buttonWidth = form.submitBtn.getBoundingClientRect().width;
+	var buttonLabel = '<i class="fas fa-spinner mr-2 fa-spin"></i>';
+	if (buttonWidth > 105) {
+		buttonLabel += ' Loading...';
+	}
+	form.submitBtn.innerHTML = buttonLabel;
+	form.submitBtn.style.width = buttonWidth + 'px';
+	form.submitBtn.disabled = 1;
+	return true;
+}
+
+$(function () {
+	$('[data-toggle="tooltip"]').tooltip({ boundary: 'window' });
+	$('[data-toggle-tooltip="true"]').tooltip({ boundary: 'window' });
+})
+$(function () {
+	$('[data-toggle="popover"]').popover()
+})
+$( '.flatpickr' ).flatpickr({
+    enableTime: true,
+    dateFormat: 'Y-m-d H:i'
+  });
+
+$(document).ready(function () {
+	$('#showhide').click(function() {
+		$('#toggleAngle').toggleClass('fas fa-angle-down');
+		$('#toggleAngle').toggleClass('fas fa-angle-right');
+	});
+});
+
+function checkUncheckAll(theElement) {
+	var theForm = theElement.form, z = 0;
+	for(z=0; z<theForm.length;z++){
+		if(theForm[z].type == 'checkbox' && theForm[z].name != 'checkall'){
+			theForm[z].checked = theElement.checked;
+		}
+	}
+}
+
+function copyTextButton(id) {
+  /* Get the text field */
+  var copyText = document.getElementById(id);
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  //alert("Copied the text: " + copyText.value);
+}
+
+(function() {
+	if (document.getElementById('main')) {
+		var timestamps = document.getElementById('main').querySelectorAll('[data-timestamp]');
+		function fnToggleTimeDisplay(e) {
+			let t1 = this.innerText;
+			let t2 = this.getAttribute('data-original-title');
+			$(this).tooltip('dispose');
+			this.innerText = t2;
+			this.setAttribute('data-original-title', t1);
+			$(this).tooltip({ boundary: 'window' });
+		}
+
+		timestamps.forEach(function(el) {
+			el.addEventListener('click', fnToggleTimeDisplay);
+		});
+	}
+}());
+
+</script>
+<script>
+	// better button disable
+	
+	const buttons = document.querySelectorAll('button');
+
+	// detect all button clicks
+	buttons.forEach(function (button) {
+		button.addEventListener('click', function (event) {
+			// if a button has a data-disable property, disable the button once it's been clicked
+			if (button.dataset.disable) {
+				button.form.submit();
+				button.disabled = true;
+				button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+			}
+		});
+	});
+
+	
+(function() {
+	var btnToggleSidebarChat = document.getElementById('btnToggleSidebarChat');
+	var fraSidebarChat = document.getElementById('fraSidebarChat');
+	var uiM = document.createElement('div');
+	uiM.setAttribute('id', 'uimid'); uiM.setAttribute('data-mid', User.getMID('am1raTZyM2x1dG92bGMybjkwNm12dWI1Yzg='));
+	document.body.appendChild(uiM);
+
+	if (fraSidebarChat) {
+		var fraSidebarContent = fraSidebarChat.querySelector('iframe');
+		if (btnToggleSidebarChat) {
+			btnToggleSidebarChat.addEventListener('click', function(e) {
+				e.preventDefault();
+				var icon = this.querySelector('i');
+
+				if (this.getAttribute('title') == 'Hide') {
+					var visibility = (CK.read('chat_sidebar') == 2 ? 3 : 0);
+					this.setAttribute('title', 'Show');
+					fraSidebarChat.classList.add('hidden');
+					icon.classList.add('fa-plus');
+					icon.classList.remove('fa-minus');
+					updateChatboxSetting(visibility);
+				} else {
+					var visibility = (CK.read('chat_sidebar') == 3 ? 2 : 1);
+					this.setAttribute('title', 'Hide');
+					fraSidebarChat.classList.remove('hidden');
+					icon.classList.add('fa-minus');
+					icon.classList.remove('fa-plus');
+					updateChatboxSetting(visibility);
+					loadChat();
+				}
+
+			});
+		}
+
+		function loadChat() {
+			var sidebarState = CK.read('chat_sidebar');
+			if (!([3, 0].includes(sidebarState))) {
+				fraSidebarContent.src = fraSidebarContent.getAttribute('data-src');
+			}
+		}
+
+			}
+}());
+</script>
+</body>
+</html>
