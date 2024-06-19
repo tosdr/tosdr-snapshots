@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+
+
+
+<!---Full length template (bs3) -->
+<head>
+  <script type="text/javascript">
+function loadScript(src) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.defer = false;
+    script.async = false;
+
+    document.getElementsByTagName('head').item(0).appendChild(script);
+}
+</script>
+    
+      
+      
+      <title>Privacy Policy | Powtoon</title>
+    
+    <!---META TAGS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <!-- HEAD SCRIPTS-->
+    
+
+
+
+<link rel='preconnect' href='https://static.powtoon.co/'>
+<link rel='preconnect' href='https://8b53dad5bec24da5b87b63c2a9b425e4@sentry.io/102049'>
+<link rel='preconnect' href='https://apps.powtoon.co'>
+<link rel='preconnect' href='/site_media/media/'>
+<link rel='preconnect' href='https://volatile-storage.powtoon.co/'>
+
+
+  
+
+  
+    <!-- CHEQ INVOCATION TAG -->
+    <script async src='https://ob.cheqzone.com/i/0e8f3de75aa63b426527697d5a230381.js' data-ch='cheq4ppc' class='ct_clicktrue_13121' data-jsonp="onCheqResponse">
+    </script>
+    <!-- END CHEQ INVOCATION TAG -->
+  
+
+
+<script>
+    var ALL_COOKIES_SECURE = true;
+</script>
+
+<style type="text/css">header .badge-pt{position:absolute;right:0;margin-right:9px;z-index:10;width:80px;height:16px;background-color:#424f61;font-family:Muller-Bold;font-size:10px;color:#FFF;border-radius:0 0 5px 5px;text-align:center;text-transform:uppercase;line-height:16px;letter-spacing:.11em;top:0}header .badge-pt--free{border:1px solid #e3e4ef;border-top:none;background-color:transparent;color:#424f61}header .badge-pt--enterprise{font-size:12px}header .badge-pt--edu{background-color:#48cd80}@media screen and (min-width:320px) and (max-width:667px){header .badge-pt{margin-right:0}}</style>
+
+
+
+  
+
+
+<meta property="fb:app_id" content="1646060565508705" />
+
+
+<script>
+    function getInternetExplorerVersion() {
+        var value = -1;
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            var useragent = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(useragent) != null)
+                value = parseFloat(RegExp.$1);
+        }
+        else if (navigator.appName == 'Netscape') {
+            var useragent = navigator.userAgent;
+            var re = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(useragent) != null)
+                value = parseFloat(RegExp.$1);
+        }
+        return value;
+    }
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/combine/npm/whatwg-fetch@3.0.0,npm/core-js@2.6.5/client/shim.min.js,npm/custom-event-polyfill@1.0.7"></script>
+
+<script src="/sw.js?service_worker_version="></script>
+
+
+<!-- sentry -->
+<script src="https://static.powtoon.co/vendor/bowser/2.0.0/bowser.min.js" id='bowser' ></script>
+<script src="https://static.powtoon.co/vendor/sentry/5.15.0/bundle.min.js" id='sentry'></script>
+<script>
+
+  
+    var sentry_public_dsn = 'https://fd2a8037985848cfa6b12601234fa20d@app.getsentry.com/7059';
+  
+
+  if (sentry_public_dsn) {
+    var isNotValidBrowser = false
+
+    if (bowser) {
+        var browser = bowser.getParser(window.navigator.userAgent);
+
+        isNotValidBrowser = browser.satisfies({
+            safari: "<10",
+            chrome: "<64",
+            firefox: "<58",
+            edge: "<14",
+            "internet explorer": "<11",
+            "android browser": "<4.2",
+        });
+    }
+
+    customFilterIntegration = {
+      name: 'customFilter',
+      setupOnce: function () {
+          var shouldDropEvent = this.shouldDropEvent;
+
+          Sentry.addGlobalEventProcessor(function (event) {
+              if (shouldDropEvent(event)) {
+                return null;
+              }
+
+              return event;
+          });
+      },
+      shouldDropEvent: function (event) {
+        if (isNotValidBrowser) {
+            return true;
+        }
+
+        var sendErrorMessageToHTML5Studio = true;
+        var tmpRavenObj = jQuery.extend({}, event, {breadcrumbs: null, extra: null});
+        var dataString = JSON.stringify(tmpRavenObj);
+
+        // Filter info logs from console
+        if (event.logger === 'console'){
+            var allowedLevels = ['error', 'warning'];
+
+            if (allowedLevels.indexOf(event.level) === -1) {
+                return true;
+            }
+
+            // Filters WebSocket warnings from Pusher, which are legitimate
+            if(event.level === 'warning') {
+                if (dataString.match(/.*Pusher.*WebSocketError.*(1006|4201){1}.*/) !== null
+                    || dataString.match(/.*Pusher.*WebSocketError.*WebSocketError.*WebSocketError.*/) !== null) {
+                    return true;
+                }
+            }
+        }
+
+        // filter strange error from client's extensions
+        if (dataString.match(/.*\/affs\?addonname=.*&affid=.*|.*http:\/\/offerz4u\.utop\.it\/.*|.*v=opt_[0-9]+&partner=.*channel=.*/) !== null) {
+            return true;
+        }
+
+        // filter error messages to send to HTML5 studio
+        if (dataString.match(/Facebook Pixel Error:/) !== null) {
+            sendErrorMessageToHTML5Studio = false;
+        }
+
+        if (sendErrorMessageToHTML5Studio) {
+            var powtoonSentryEventData = {
+                error: event,
+                type: 'internal-error-reported'
+            };
+            var powtoonSentryEvent = new CustomEvent('powtoon-events', {'detail': powtoonSentryEventData});
+            document.dispatchEvent(powtoonSentryEvent);
+        }
+        return false;
+      }
+    }
+  }
+
+  Sentry.onLoad(function () {
+    Sentry.init({
+        dsn: sentry_public_dsn,
+        integrations: [customFilterIntegration],
+        environment: 'prod',
+        release: '24.2.5.7.2',
+      // Check if gut
+      fetchContext: true,
+      //we currently use 5.15,0 (we need to update to current 5.19.2)
+      //Prior to version 5.17.0, allowUrls and denyUrls were called whitelistUrls and blacklistUrls respectively.
+      // however, they will be removed in version 6.0.
+      blacklistUrls: [
+        // Chrome extensions
+        /extensions\//i,
+        /^chrome:\/\//i,
+        // 3d party ignore list
+        /wistia.+external.+js/ig,
+        /appcues.+main/ig,
+        /gtm.+js/ig
+      ],
+      denyUrls: [
+        // Chrome extensions
+        /extensions\//i,
+        /^chrome:\/\//i,
+        // 3d party ignore list
+        /wistia.+external.+js/ig,
+        /appcues.+main/ig,
+        /gtm.+js/ig
+      ],
+      beforeSend(event, hint) {
+        const urlBlacklist = [/^chrome:\/\//i, /wistia.+external.+js/ig, /appcues[.]main/ig, /gtm[.]js/ig]
+        if (urlBlacklist.some(url => url.test(hint.originalException))) {
+          return null;
+        }
+        return event;
+      }
+    });
+
+    Sentry.captureBreadcrumb = Sentry.addBreadcrumb
+
+    Sentry.configureScope(function (scope) {
+      scope.setUser({
+          
+              is_authenticated: 'false'
+          
+      })
+    })
+  })
+
+
+  
+
+</script>
+
+<!-- End sentry -->
+
+
+<script type="text/javascript">
+    window.app_versions = {
+       'studio': 'release/24.2.5.4.1-pc/1ee559ebb3-1718531800',
+       'html_player': '',
+       'core_player': '',
+       'teams_admin': '',
+       'templates_gallery': '',
+       'site_version': '24.2.5.7.2',
+       'dashboard': '',
+       'cobra_version': '',
+       'character_builder_version': '',
+       'homepage_app_version': 'release/24.2.1.0/455155b-1712740390',
+       'purchase': 'release/24.2.5.3.1-pc/ebd4521334-1718517640',
+       'producer_app' : 'release/24.2.5.3.1-pc/ebd4521334-1718517640',
+    }
+</script>
+
+
+  
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+}
+
+var dataLayer = [];
+var visitorId = getCookie('visitorid');
+
+
+
+    dataLayer.push({"bi visitor id": visitorId });
+
+
+
+</script>
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-62X2');</script>
+    <!-- End Google Tag Manager -->
+
+  
+
+
+<script type="text/javascript">
+
+  function getBiTrackingSMC() {
+    // SMC = Source/Medium/Campaign
+
+    function getSMCfromKVList(kvList, prefix) {
+      var SMC_KEYS = ['source', 'medium', 'campaign'];
+
+      var smc = {};
+      for (var i = 0; i < kvList.length; i++) {
+        var kv = kvList[i].trim();
+        if (kv.substr(0, prefix.length) === prefix) {
+          var splitKV = kv.split('=');
+          var smc_key = splitKV[0].substr(prefix.length);
+          if (SMC_KEYS.indexOf(smc_key) !== -1) {
+            smc[smc_key] = splitKV[1];
+          }
+        }
+      }
+
+      return Object.keys(smc).length ? smc : null;
+    }
+
+    function getSMCfromURL(prefix) {
+      if (typeof prefix !== 'string') prefix = '';
+      var pageUrl = window.location.search.substring(1);
+      var urlParams = pageUrl.split('&');
+      return getSMCfromKVList(urlParams, prefix);
+    }
+
+    // function getSMCfromCookies(prefix) {
+    //   if (typeof prefix !== 'string') prefix = '';
+    //   var cookies = document.cookie.split(";");
+    //   return getSMCfromKVList(cookies, prefix);
+    // }
+
+    function stringifySMC(smc) {
+      if (!smc) return '';
+      return (smc.source || '') + ':' + (smc.medium || '') + ':' + (smc.campaign || '');
+    }
+
+    // Logic --> Take ITPs from URL if available.
+    // Otherwise use UTMs from URL. Otherwise leave empty.
+    var smc = getSMCfromURL("itp_");
+    if (smc === null) smc = getSMCfromURL("utm_");
+    // if (smc === null) smc = getSMCfromCookies("utm_");
+
+    return stringifySMC(smc);
+  }
+
+  function encodeObjectToUrl(data) {
+    return Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+    }).join('&')
+  }
+
+  function syncLogger(url) {
+    var client = new XMLHttpRequest();
+    client.open("GET", url, false);
+    client.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    client.setRequestHeader("Referrer-Policy", "no-referrer-when-downgrade");
+    client.send();
+  }
+
+  //Pixel tracking
+  function trackEventByPixel(category, action, opt_label, value, extra_data_obj, reporter_options_obj) {
+      
+      
+      var url="https://trek.powtoon.com/" + "event.gif";
+      var data = {};
+      reporter_options_obj = reporter_options_obj || {}
+      
+      data['i'] = visitorId;
+      if (category) data['c'] = category;
+      if (action) data['a'] = action;
+      if (opt_label) data['l'] = opt_label;
+      if (value) data['v'] = value;
+      if (extra_data_obj) {
+          if (extra_data_obj.powtoonId) {
+              data['p'] = extra_data_obj.powtoonId;
+              delete extra_data_obj.powtoonId;   // BI-team requested to avoid sending powtoonId inside extra_data
+          }
+          data['d'] = JSON.stringify(extra_data_obj);
+      }
+      if (window.powtoon_ui_session_manager) {
+          var ui_session_id = window.powtoon_ui_session_manager.getSessionId();
+          if (ui_session_id) data['s'] = ui_session_id;
+      }
+      // field for preventing cache
+      data['_pc'] = Date.now();
+
+      var urlWithQuery = url + "?" + encodeObjectToUrl(data)
+
+      if (reporter_options_obj.sendSynchronously) {
+        syncLogger(urlWithQuery)
+      } else {
+        let imgElem = new Image();
+        imgElem.referrerPolicy="no-referrer-when-downgrade";
+        imgElem.src = urlWithQuery;
+        imgElem = null
+      }
+
+      
+      
+      return true
+  }
+
+  function trackPageViewByPixel(page) {
+      
+      
+      var url="https://trek.powtoon.com/" + "page.gif";
+      var data = {};
+      
+      data['i'] = visitorId;
+
+      data['p'] = page || document.location.pathname
+
+      if (window.powtoon_ui_session_manager) {
+          var ui_session_id = window.powtoon_ui_session_manager.getSessionId();
+          if (ui_session_id) data['s'] = ui_session_id;
+      }
+
+      if (document.referrer) data['r'] = document.referrer;
+      
+      let imgElem = new Image();
+      imgElem.referrerPolicy="no-referrer-when-downgrade";
+      imgElem.src = url + "?" + encodeObjectToUrl(data);
+      imgElem = null
+      
+      
+      return true
+  }
+
+  function trackSocialEventByPixel(network, target, param) {
+      
+      
+      var url = "https://trek.powtoon.com/" + "social.gif";
+      var data = {}
+      
+      data['i'] = "visitorId";
+      if (network) data['n'] = network;
+      if (target) data['t'] = target;
+      if (param) data['p'] = param;
+      // field for preventing cache
+      data['_pc'] = Date.now();
+      
+      let imgElem = new Image();
+      imgElem.referrerPolicy="no-referrer-when-downgrade";
+      imgElem.src = url + "?" + encodeObjectToUrl(data);
+      imgElem = null
+      
+      
+      return true
+  }
+
+  function sendGA3Event(category, action, opt_label, value) {
+    if(typeof ga === "function") {
+      if (value) {
+        ga('send', 'event', category, action, opt_label, value);
+      } else if (opt_label) {
+        ga('send', 'event', category, action, opt_label);
+      } else {
+        ga('send', 'event', category, action);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function sendGA3EventWithRetries(category, action, opt_label, value, nRetries, delay) {
+    if (nRetries < 0 || delay < 0) {
+        Sentry.captureException(new Error('sendGA3EventWithRetries function was called with illegal params - nRetries=' + nRetries + ', delay=' + delay));
+    }
+
+    // Try to report event...
+    const result = sendGA3Event(category, action, opt_label, value);
+
+    if (!result) {
+      // reporting failed
+      if (nRetries > 0) {
+        setTimeout(function() {
+          sendGA3EventWithRetries(category, action, opt_label, value, nRetries-1, delay);
+        }, delay);
+      } else {
+        Sentry.captureException(new Error('GA3 function is not loaded properly (after retries)'));
+      }
+    }
+  }
+
+  function sendGA4Event(event_name, category, action, opt_label, event_id) {
+    dataLayer.push({
+      'event': 'ga4_event',
+      'event_name': event_name,
+      'category': category,
+      'action': action,
+      'label': opt_label,
+      'internal_event_id': event_id
+    });
+    return true;
+  }
+
+  function sendGA4EventWithRetries(event_name, category, action, opt_label, event_id, nRetries, delay) {
+    if (nRetries < 0 || delay < 0) {
+        Sentry.captureException(new Error('sendGA4EventWithRetries function was called with illegal params - nRetries=' + nRetries + ', delay=' + delay));
+    }
+
+    // Try to report event...
+    const result = sendGA4Event(event_name, category, action, opt_label, event_id);
+
+    if (!result) {
+      // reporting failed
+      if (nRetries > 0) {
+        setTimeout(function() {
+          sendGA4EventWithRetries(event_name, category, action, opt_label, event_id, nRetries-1, delay);
+        }, delay);
+      } else {
+        Sentry.captureException(new Error('GA4 function is not loaded properly (after retries)'));
+      }
+    }
+  }
+
+  // Google analytics
+  function trackEventByParams(category, action, opt_label, value, extra_data_obj, reporter_options_obj, ga4_event_name) {
+    // Track event by 4 params used only for google analytics
+    
+      sendGA3EventWithRetries(category, action, opt_label, value, 2, 1000);
+      trackEventByPixel(category, action, opt_label, value, extra_data_obj, reporter_options_obj);
+      if (ga4_event_name)
+        trackGA4Events(ga4_event_name, category, action, opt_label, value);
+    
+  }
+
+  function trackGA4Events(event_name, category, action, label, event_id) {
+    // Track event for GA4 new structure for google analytics
+    
+      sendGA4EventWithRetries(event_name, category, action, label, event_id, 2, 1000);
+    
+  }
+
+  // wrapper function for backward compatibility
+  function trackEventByParamsOnlyGA(category, action, opt_label, value) {
+    
+    return trackEventByParams(category, action, opt_label, value);
+    
+  }
+
+  // track pageviews
+  function trackPageView(page) {
+    
+      if (typeof ga === "undefined") {
+          Sentry.captureException(
+                  new Error('GA function is not loaded properly')
+          );
+          return;
+      }
+
+      if (page)
+          ga('send', 'pageview', page);
+      else
+          ga('send', 'pageview');
+
+      trackPageViewByPixel(page);
+    
+  }
+
+  function trackSocialEvent(network, target, param) {
+    
+    if(typeof ga === "undefined")
+      return
+
+    if (param)
+      ga('social', network, target, param)
+    else
+      ga('social', network, target)
+    trackSocialEventByPixel(network, target, param)
+    
+  }
+
+  function trackEvent(data) {
+    // this function used to track to woopra,
+    // i leave it only to prevent JS error should a reference to it be missed,
+    // from CMS for example
+  }
+
+  function trackSocial(social_network){
+    // this function used to track to woopra,
+    // i leave it only to prevent JS error should a reference to it be missed,
+    // from CMS for example
+  }
+
+
+  function trackVirtualPageView(page) {
+    
+
+    dataLayer.push({
+      'event': 'VP ' + page,
+      'virtual page': page
+    });
+
+    
+
+    trackPageView(page)
+  }
+
+</script>
+
+
+
+    <!--//HEAD SCRIPTS-->
+    
+
+    
+	<meta name="title" content="Privacy Policy - Powtoon">
+<meta name="description" content="Your privacy matters to us! Our Privacy Policy is part of the Powtoon Terms of Use, and defines what info we collect, how long we keep it, and how we use it.">
+<meta name="keywords" content="Powtoon, Studio, Slides, Presentation, Slideshow, Animation, Video, Privacy Policy">
+
+    
+
+    
+    
+
+
+
+    <!--===================================================================================
+
+        8888888b.                    88888888888
+        888   Y88b                       888
+        888    888                       888
+        888   d88P .d88b.  888  888  888 888   .d88b.   .d88b.  88888b.
+        8888888P" d88""88b 888  888  888 888  d88""88b d88""88b 888 "88b
+        888       888  888 888  888  888 888  888  888 888  888 888  888
+        888       Y88..88P Y88b 888 d88P 888  Y88..88P Y88..88P 888  888
+        888        "Y88P"   "Y8888888P"  888   "Y88P"   "Y88P"  888  888  24.2.5.7.2
+
+    =====================================================================================-->
+    
+      <!--DEFAULT CANONICAL URL LINK -->
+    <link rel="canonical" href="https://www.powtoon.com/privacy-policy/" />
+<!--//DEFAULT CANONICAL URL LINK -->
+    
+
+    
+<!--HEAD BLOCK-->
+  
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+<!--//HEAD BLOCK-->
+
+    
+    <!--DEFAULT CSS LINKS -->
+    <link rel="stylesheet" href="https://static.powtoon.co/cache/css/output.20daf397b061.css" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&display=swap' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap' rel='stylesheet' type='text/css' />
+    <link href="https://use.typekit.net/ned7udy.css" rel="stylesheet">
+    <!--//DEFAULT CSS LINKS -->
+    
+
+    
+  <style type="text/css">
+    /*** simple grid ***/
+.top-section {
+   margin-top: 90px;
+}
+
+.main {
+  width: 100%;
+}
+
+footer {
+   min-width: inherit;
+   margin-top: 0;
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** mobile devices ***/
+
+@media only screen and (min-width: 320px) {
+     section.tc-text {
+          padding: 0 15px;
+          max-width: 480px;
+          margin-top: 90px;
+      }
+      .tc-text h1 {
+          font-size: 40px;
+           margin-top: 0;
+           margin-bottom: 40px;
+      }
+
+     .tc-text header {
+          margin-bottom: 20px;
+     }
+
+.tc-text p,
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+      font-size: 16px;
+      letter-spacing: .3px;
+}
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 20px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.icon-wrap {
+    margin-bottom: 5px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** general page styles ***/
+.title-underline {
+    
+    font-size: 18px;
+    margin-top: 25px;
+}
+
+.title-underline span {
+    display: inline-block;
+    border-bottom: 1px solid #a0a7b0;
+}
+
+article a {
+    color: #3150fe;
+}
+
+article a:active,
+article a:hover {
+     color: #304ffe;
+}
+
+.tc-text {
+    font-family: muller-light;
+    max-width: 898px;
+    margin: 0 auto;
+    color: #424f61;
+}
+
+.tc-text h1,
+.tc-text h2 {
+        text-align: center;
+}
+
+.tc-text h1 {
+    color: #253740;
+    font-family: muller-regular;
+    /*margin-bottom: 85px;*/
+}
+
+.tc-text h2,
+.tc-text h3 {
+    color: #424f61;
+    margin: 0;
+    font-family: muller-bold;
+}
+
+.tc-text h2 {
+    font-size: 20px;
+}
+
+.tc-text h3 {
+   text-align: left;
+   margin-bottom: 10px;
+   font-size: 30px;
+}
+
+.tc-text header {
+    /*margin-bottom: 35px;*/
+}
+
+.tc-text article {
+    margin-bottom: 75px;
+}
+
+.tc-text p {
+    line-height: 30px;
+}
+
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+     border: none;
+     margin: 0;
+     padding: 0;
+}
+
+.tc-text ul,
+.tc-text ol {
+    list-style-position: outside;
+}
+
+.tc-text ul {
+    list-style-type: none;
+}
+
+.tc-text ul li {
+    position: relative;
+    padding-left: 18px;
+}
+
+.tc-text ul li:before {
+    content: '';
+    display: block;
+    background-color: #424f61;
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+
+.tc-text ol {
+   margin-left: 20px;
+}
+
+.tc-text ul li + li,
+.tc-text ol li + li  {
+    margin-top: 20px;
+}
+
+.tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 30px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text blockquote {
+    color: #304ffe !important;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+
+
+.tc-text p, .tc-text ul, .tc-text ol, .tc-text blockquote {
+     letter-spacing: 1px;
+     text-align: left;
+}
+
+.icon {
+		background-image: url(https://static.powtoon.co/cms-assets/home/sprite-privacy-final.png);
+		width: 1em;
+		height: 1em;
+		background-size: 12em 1em;
+		display: block;
+          margin: 0 auto;
+	}
+
+	.icon-wrap {
+		font-size: 5em;
+                /*margin-bottom: 15px;*/
+	}
+
+	.icon-1 {
+		background-position: 0 0;
+	}
+
+	.icon-2 {
+		background-position: -1em 0;
+	}
+	.icon-3 {
+		background-position: -2em 0;
+	}
+
+	.icon-4 {
+		background-position: -3em 0;
+	}
+
+	.icon-5 {
+		background-position: -4em 0;
+	}
+
+	.icon-6 {
+		background-position: -5em 0;
+	}
+
+	.icon-7 {
+		background-position: -6em 0;
+	}
+
+	.icon-8 {
+		background-position: -7em 0;
+	}
+
+	.icon-9 {
+		background-position: -8em 0;
+	}
+
+	.icon-10 {
+		background-position: -9em 0;
+	}
+
+	.icon-11 {
+		background-position: -10em 0;
+	}
+
+	.icon-12 {
+		background-position: -11em 0;
+	}
+
+	.icon-13 {
+		background-position: -12em 0;
+	}
+
+	.icon-14 {
+		background-position: -13em 0;
+	}
+
+	.icon-15 {
+		background-position: -14em 0;
+	}
+
+	.icon-16 {
+		background-position: -15em 0;
+	}
+
+	.icon-17 {
+		background-position: -16em 0;
+	}
+
+	.icon-18 {
+		background-position: -17em 0;
+	}
+
+	.icon-19 {
+		background-position: -18em 0;
+	}
+
+	.icon-20 {
+		background-position: -19em 0;
+	}
+
+	.icon-21 {
+		background-position: -20em 0;
+	}
+
+	.icon-22 {
+		background-position: -21em 0;
+	}
+
+	.icon-23 {
+		background-position: -22em 0;
+	}
+
+	.icon-24 {
+		background-position: -23em 0;
+	}
+
+	.icon-25 {
+		background-position: -24em 0;
+	}
+
+	.icon-26 {
+		background-position: -25em 0;
+	}
+
+	.icon-27 {
+		background-position: -26em 0;
+	}
+
+	.icon-28 {
+		background-position: -27em 0;
+	}
+  </style>
+  
+
+  <style type="text/css">
+    /*** tablet ***/
+
+@media only screen and (min-width: 720px) {
+     section.tc-text { 
+         max-width: 654px;
+         margin-top: 110px;
+      }
+      .tc-text h1 {
+         font-size: 50px;
+         margin-bottom: 55px;
+      }
+
+      .tc-text header {
+          margin-bottom: 30px;
+     }
+
+.tc-text p,
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+      font-size: 18px;
+}
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 25px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.icon-wrap {
+   margin-bottom: 10px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** desktop small ***/
+
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+     section.tc-text { 
+         max-width: 723px;
+         margin-top: 130px;
+      }
+     .tc-text h1 {
+         font-size: 55px;
+         margin-bottom: 65px;
+      }
+      .tc-text header {
+          margin-bottom: 20px;
+     }
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 30px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.icon-wrap {
+    margin-bottom: 15px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** desktop large ***/
+
+@media only screen and (min-width: 1366px) {
+     section.tc-text { 
+         max-width: 926px;
+      }
+     .tc-text h1 {
+        margin-bottom: 80px;
+     }
+}
+
+.header, .footer{
+display:none;
+}
+  </style>
+  
+
+    
+    <meta name="google-site-verification" content="ras4QSqedofEyVsRfIolYfOayCbVeQnE9U-IOCNLthY" />
+    <script src="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/navbar/HomepageAppNavbar.js"></script>
+    <link href="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/navbar/static/css/homepage.css" rel="stylesheet">
+     
+      <script src="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/footer/HomepageAppFooter.js"></script>
+       <link href="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/footer/static/css/homepage.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+      
+      
+    </script>
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!-- FAVICON -->
+<link rel="icon" sizes="16x16 32x32 64x64" href="https://static.powtoon.co/images/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="196x196" href="https://static.powtoon.co/images/favicon/favicon-196.png">
+<link rel="icon" type="image/png" sizes="160x160" href="https://static.powtoon.co/images/favicon/favicon-160.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://static.powtoon.co/images/favicon/favicon-96.png">
+<link rel="icon" type="image/png" sizes="64x64" href="https://static.powtoon.co/images/favicon/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static.powtoon.co/images/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static.powtoon.co/images/favicon/favicon-16.png">
+<link rel="apple-touch-icon" href="https://static.powtoon.co/images/favicon/favicon-57.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://static.powtoon.co/images/favicon/favicon-114.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://static.powtoon.co/images/favicon/favicon-72.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://static.powtoon.co/images/favicon/favicon-144.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://static.powtoon.co/images/favicon/favicon-60.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://static.powtoon.co/images/favicon/favicon-120.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://static.powtoon.co/images/favicon/favicon-76.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://static.powtoon.co/images/favicon/favicon-152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.powtoon.co/images/favicon/favicon-180.png">
+<meta name="msapplication-TileColor" content="#FFFFFF">
+<meta name="msapplication-TileImage" content="https://static.powtoon.co/images/favicon/favicon-144.png">
+<meta name="msapplication-config" content="https://static.powtoon.co/images/favicon/browserconfig.xml">
+
+
+</head>
+
+<body class="">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	/* jQuery CDN fallback */
+    (window.jQuery) || loadScript('https://static.powtoon.co/vendor/jquery/3.5.1/jquery.min.js');
+</script>
+
+  
+  <div id="fb-root"></div>
+
+
+<script>
+  window.fbAsyncInit = function() {
+    if (typeof FB === 'undefined') {
+      return
+    }
+
+    // init the FB JS SDK
+    FB.init({
+      appId      : '252546858126957',                        // App ID from the app dashboard
+      channelUrl : '//www.powtoon.com',                 // Channel file for x-domain comms
+      status     : false,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
+
+    // add event tracking for the like button
+    FB.Event.subscribe('edge.create', function(targetUrl) {
+        trackSocialEvent('facebook', 'like', targetUrl);
+    });
+
+    // Additional initialization code such as adding Event Listeners goes here
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   </script>
+
+
+
+    <div class="main" >
+
+        <!--********* header ********-->
+  
+
+  <header class="not-fixed">
+  
+    <div id="navbarRoot"></div>
+  <!--  end of nav -->
+
+    
+<!--EXTRA HEADER BLOCK-->
+   
+<!--//EXTRA HEADER BLOCK-->
+
+
+ </header>
+  
+  
+    <!-- notifications -->
+    <div class="row">
+      <div id="messages_container">
+          
+
+
+      </div>
+    </div>
+  <!-- end of notifications -->
+
+    
+	
+		
+	
+    <section class="tc-text">
+<h1 class="post-title">Privacy Policy</h1>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-1"> </div>
+</div>
+
+<h2 class="text-title">About Us</h2>
+</header>
+
+<p>Powtoon Ltd. is a company incorporated and operating in the United Kingdom. We also have Powtoon affiliates in Israel and the United States. This privacy policy governs the collection and use of your personal information by the Powtoon Group.</p>
+
+<p>If you have a question regarding our Privacy Policy, please contact us at <a href="mailto:support@powtoon.com?subject=Privacy%20Policy">privacy@powtoon.com</a> or send a written letter to: Powtoon Ltd., 28 Church Road, Stanmore HA7 4XR, United Kingdom.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-2"> </div>
+</div>
+
+<h2>What Information Do We Collect from You?</h2>
+</header>
+
+<p>We collect different types of personal information, depending on the way you use our website:</p>
+
+<ol>
+	<li>You can access our website anonymously without logging in or purchasing a subscription, in which case we will not ask you to provide us with any personal information.</li>
+	<li>When you sign up for a free subscription and become a member of our website, we will ask you to provide us with certain personal information in order to create your account and enable you to use our website. This information will include, for example, your name, email address, job description, and the reason you chose to use our website.</li>
+	<li>When you decide to purchase a subscription, we will require your payment and billing details in order to process your purchase. This is in addition to the personal information we normally require as part of the sign-up process.</li>
+</ol>
+
+<p>We also collect some inferred data which is generated when you log in to our website (either as a free or paid subscriber). This includes, for example, your IP address, the type of device you use to log in to our website, your browser type, and operating system.</p>
+
+<p>If you subscribed to our services via a social media account (for example, through your Facebook account), we may also receive some personal information from the social media provider, depending on the terms and conditions you agreed to with the provider. Please refer to the specific provider's privacy policy in order to better understand what type of personal information the provider shares with us.</p>
+
+<p>Special rules apply for student accounts. Please refer to details in the section "Privacy of Children" below.</p>
+</article>
+
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-3"> </div>
+</div>
+
+<h2>For How Long Do We Keep this Information?</h2>
+</header>
+
+<p>We keep your personal information for as long as you continue to be a subscribed user on our website, and until you indicate that you no longer wish to continue to use our website.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-4"> </div>
+</div>
+
+<h2>What Do We Use Your Information For?</h2>
+</header>
+
+<p>The information we collect will only be used in the following ways:</p>
+
+<ol>
+	<li>To process transactions: The main reason we ask for the above-mentioned personal information is in order to process the transaction conducted with you; i.e. to provide you with the purchased product or the service that you requested from us.</li>
+	<li>To improve our website: We continuously strive to improve the Powtoon website features based on the information and feedback we receive from you, including relevant solution pages, showcase pages, etc.</li>
+	<li>To send you information and updates if, upon registration with us, you explicitly approved our sending periodic emails to the email address you provided us with. These emails will contain information and updates pertaining to your subscription, and related to the services we provide you with.</li>
+</ol>
+
+<p>Even if you consented to receiving our periodic emails, you can at any time opt out of receiving these emails by either:</p>
+<span style="display: block; margin: 10px 0;">Or</span>
+
+<ol>
+	<li>Clicking the “Unsubscribe and Manage your communication &amp; personalization settings" link which appears at the bottom of every email to edit your settings.</li>
+	<li>In your account: access the Communication Settings Center and opt out of receiving any such periodic emails from us.</li>
+</ol>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-5"> </div>
+</div>
+
+<h2>Personalization</h2>
+</header>
+
+<p>We also use the personal information you provide us with - when signing up and when using our website - for the purpose of personalization. We collect your personal information and analyze it in order to better understand your preferences and needs. For example: based on your job description, we can match use cases and tutorials relevant to your field, and also refrain from sending you materials we think will not interest you.</p>
+
+<p>You do not have to agree to the use of your personal information for personalization and at any time you can opt out of such personalization via your account settings.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-6"> </div>
+</div>
+
+<h2>How Do We Protect Your Information?</h2>
+</header>
+
+<p>We implement a variety of security measures to maintain the safety of your personal information when you enter or submit any personal details to Powtoon.</p>
+
+<p>Powtoon uses secure servers and all communication between your device and Powtoon's servers is encrypted using only methods labeled secure by industry experts. All information, including but not limited to credit card details and personal information, is transmitted using Transport Layer Security (TLS 1.2 and up) technology and stored encrypted in our secure Databases.</p>
+
+<p>Payment information is transmitted directly from your web browser to the system of our PCI DSS compliant payment processing and subscription billing provider and is never stored on Powtoon's own IT systems.</p>
+
+<p>Privileged Powtoon administration staff with access to your information are required by our information Security Policies and by contract to keep confidential all information on our systems. In the event of a security breach, we will take all reasonable action to minimize any harm and all in accordance with our data breach response plan.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-7"> </div>
+</div>
+
+<h2>Do we use cookies?</h2>
+</header>
+
+<p>Yes.<br>
+Cookies are small files that our website transfers to your computer, enabling Powtoon to recognize your browser and remember certain information about your browser and your login information (for example: what type of browser you used to log in to our website, the date and time you logged in to our website, your preferred browser language, etc.).</p>
+
+<p>We also use cookies to help us remember and process the items in your shopping cart, save your preferences for future visits, and compile aggregated data about site traffic and site interactions, so that we can offer better website experiences and tools in the future.</p>
+
+<p>We store such cookies for a period of 14 days, after which such cookies are deleted.</p>
+
+<p id="aboutcookies">In addition, we contract third party service providers to assist us in gaining a better understanding of the way users visit and use our website. We do this through the use of such third party service providers' cookies, which are placed on your browser when you log in to our website. Such providers can then analyze the data included in such cookies to provide us with valuable insights, such as the average number of visitors to the website or the preferred browser language of most users.</p>
+
+<p>Visit <a href="http://www.aboutcookies.org/" rel="nofollow" title="aboutcookies.org">http://www.aboutcookies.org</a> for a guide on how to control and delete cookies on a wide range of web browsers and operating systems.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-8"> </div>
+</div>
+
+<h2>Do We Disclose Any of Your Personal Information to Outside Parties?</h2>
+</header>
+
+<div class="title-underline"><span>Third Party Providers</span></div>
+
+<p>We are assisted by trusted third parties to operate our website, to conduct our business, and to provide you with our services. Such third party providers include billing companies, website infrastructure management, and analytics service providers. As part of the provision of their services to us, we may transfer some of your personal information to them, inasmuch as such personal information is necessary for them to perform such service. For example: your credit card details will be analyzed through our billing software which is provided by a third party in order for us to provide you with an invoice when you make a purchase on our website.</p>
+
+<p>These third party providers are located in:</p>
+
+<ol>
+	<li>The European Union;</li>
+	<li>Israel – which has been granted an adequacy decision by the European Commission, meaning that its data privacy legislation is considered to provide an equivalent level of protection to personal data as provided within the European Union and thus data transfers to Israel do not require an additional transfer mechanisms;</li>
+	<li>The United States – Data processing agreements are provided to sub-contractors in the US, which include the Standard Contractual Clauses formulated by the European commission to assure that adequate safeguards are implemented to secure any data transfer.</li>
+</ol>
+
+<p>We also entered into contracts with such third party providers in order to ensure that the personal information we provide them regarding our users is kept confidential and secure.</p>
+
+<div class="title-underline"><span>Other Forms of Disclosure</span></div>
+
+<p>In certain circumstances, we may also disclose your personal information to outside parties. This could happen if:</p>
+
+<ol>
+	<li>We believe that, under the specific circumstances, releasing such personal information will be appropriate in order to comply with any European Union or Member State law applicable to us;</li>
+	<li>We want to protect our legitimate interest and in order to do so we would need to disclose your personal information, and only after we made sure that we cannot protect our interest without disclosing your personal information;</li>
+	<li>We need to protect your or another individual’s vital interests.</li>
+</ol>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-9"> </div>
+</div>
+
+<h2>Third Party Links</h2>
+</header>
+
+<p>Occasionally, and at our discretion, we may include or offer third party products or services on our website. These third party websites have separate and independent privacy policies and should be researched independently by anyone wishing to use their services. Although we are not responsible for the content and activities of such third party websites, we do seek to protect the integrity of our website, and would thus welcome your feedback regarding such websites if you have any concerns you wish to share with us.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-9"> </div>
+</div>
+
+<h2>Data Protection</h2>
+</header>
+
+<p>Powtoon operates a rigorous information security management system and protects data according to industry best practices. We have implemented, and work to constantly improve, a wide array of processes, procedures, and technical controls such as encryption, firewalls, and segregation of networks. All this is done to maintain the confidentiality, integrity, and availability of all our users' data.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-10"> </div>
+</div>
+
+<h2>Privacy of Children</h2>
+</header>
+
+<div class="title-underline"><span>Compliance</span></div>
+
+<p>We are proud that Powtoon is a tool widely used in schools by children of all ages. As such, we are committed to safeguarding each child’s personal information, in compliance with but not limited to the following laws and regulations:</p>
+
+<ul>
+	<li>The Children's Online Privacy Protection Act (COPPA)</li>
+	<li>The Family Educational Rights and Privacy Act (FERPA)</li>
+	<li>The New York State Education Law 2-d</li>
+</ul>
+
+<div class="title-underline"><span>Student accounts</span></div>
+
+<p>To protect children's privacy, their accounts are labeled internally at Powtoon as <em>student accounts</em> and are subject to all the requirements of the above laws. Specifically, with regards to personal information, our approach is to not collect or store personal information belonging to children that created a student account.</p>
+
+<p>Student accounts are created when children sign up for our service in one of the following ways:</p>
+
+<ul>
+	<li>By using their <a href="https://clever.com/" target="_blank">clever.com</a> account</li>
+	<li>By accepting an invitation from a teacher to join a Powtoon classroom group</li>
+	<li>By signing up on our dedicated <a href="https://www.powtoon.com/account/student-signup/" target="_blank">student signup page</a></li>
+	<li>By signing up on our dedicated <a href="https://www.powtoon.com/account/edu-signup/" target="_blank">education signup page</a> and choosing the student option in the signup form</li>
+	<li>By accessing Powtoon through their school's learning management system (for example: Canvas)</li>
+</ul>
+
+<div class="title-underline"><span>No commercial use of data</span></div>
+
+<p>Student account data is used exclusively to deliver Powtoon's services. No commercial use of student data is made.</p>
+
+<div class="title-underline"><span>Communications</span></div>
+
+<p>To student accounts with email addresses (Google G Suite for Education), Powtoon will send only transactional emails that provide notification for events such as the completion of a video rendering process.</p>
+
+<p>All transactional notifications from Powtoon to student account holders without email addresses take the form of on-site notifications. Powtoon refrains from sending any marketing or other non-transactional email messages to student account holders.</p>
+
+<div class="title-underline"><span>Access to content created in student accounts</span></div>
+
+<p>Videos and presentations created by student account holders and which are published for viewing on the Powtoon platform, are published in private mode by default. These videos and presentations are not added to the Powtoon site map and not made available for indexing by search engines.</p>
+
+<div class="title-underline"><span>Google G Suite accounts for education</span></div>
+
+<p>Many schools use Google G Suite for Education to issue "school use only" Google accounts to their students. These students may use their Google account to sign up for Powtoon on the <a href="http://www.powtoon.com/account/edu-signup/" target="_blank">education signup page</a>. Powtoon will protect such accounts from disclosure and will use the email address associated with such accounts only for sending transactional email messages.</p>
+
+<div class="title-underline"><span>Data breach prevention and response plan</span></div>
+
+<p>Data of children is, like all other data Powtoon controls, safeguarded according to industry standards and best practices. For more details, see Data Protection above. Furthermore, we make every reasonable effort to prevent data breaches and have a documented security incident management policy and procedure.</p>
+
+<p>As we do not collect personal information from students, the risk of personal student information being extracted from our system is very low. If you want to be informed in the event of a data breach that affects student account data, you can register your institution to our breach notification list by emailing <a href="mailto:edu-privacy@powtoon.com">edu-privacy@powtoon.com</a> with the subject line "registration to breach notification list". In this email, please include the name of your institution, your name and role, together with your contact information. In the unlikely event that such a breach will occur, we will inform all registered institutions within 72 hours of detecting the breach.</p>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-11"> </div>
+</div>
+
+<h2>Changes to This Privacy Policy</h2>
+</header>
+
+<p>This privacy policy was last modified on October 12, 2020. If we update this privacy policy in a manner which changes how we collect or use your personal information, the types of personal information we collect or use, or the purposes for such collection or use of personal information, we will ask for your renewed consent. This will be conducted in two steps:</p>
+
+<ol>
+	<li>We will send a notification to the email address you provided us with upon registration. In this notification, the new proposed changes will be explained so that you may provide us with your consent;</li>
+	<li>Following the email notification, we will ask you to provide your consent to the new changes when you next log in to our website.</li>
+</ol>
+</article>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-12"> </div>
+</div>
+
+<h2>Your Rights</h2>
+</header>
+
+<div class="title-underline"><span>Right to Lodge a Complaint</span></div>
+
+<p>If you believe that your right to data protection and privacy has been infringed by us in any way, you may contact the relevant supervisory authority in your place of residence.</p>
+
+<div class="title-underline"><span>Right to Access</span></div>
+
+<p>You may ask for a copy of your personal information held by us. If you wish to do so, please contact us at privacy@powtoon.com and we shall provide you with an electronic copy of your personal information as soon as practicable and after we are able to verify the validity of your request and your identity. We will not be able to provide you with such access if this would adversely affect the rights and freedoms of others, or where the collation and presentation of such data would involve disproportionate cost to Powtoon.</p>
+
+<p>Should you require any additional copies, we may charge you a fee which shall not exceed the cost for generating copies.</p>
+
+<p>Based on your request, we shall also provide you with the following information:</p>
+
+<ol>
+	<li>The types of personal data concerned;</li>
+	<li>The entities or individuals with whom we shared your personal information and whether they are located in countries outside of the European Union;</li>
+	<li>The duration of time we keep your personal information. If that is not possible, the criteria used to determine such a period.</li>
+</ol>
+
+<div class="title-underline"><span>Right to Be Forgotten/Erasure</span></div>
+
+<p>If you decide that you no longer wish to be a member of our website and would like us to delete all of your personal information, please contact us at privacy@powtoon.com</p>
+
+<p>We will not be able to delete your personal information if it is required:</p>
+
+<ol>
+	<li>For the fulfilment of any contractual obligations we may have to you;</li>
+	<li>For the exercise of the right to freedom of expression and information;</li>
+	<li>In order to comply with a legal obligation required from us by European Union law or the law of the Member State of the European Union in which we operate;</li>
+	<li>For reasons of public interest;</li>
+	<li>For the establishment, exercise or defense of a legal claim.</li>
+</ol>
+
+<p>Please be advised that following such deletion we will not be able to provide you with our services, and should you wish to rejoin our website you will need to complete a new registration process.</p>
+
+<div class="title-underline"><span>Right to Rectification</span></div>
+
+<p>At any time during your usage of our platform, you may review, amend, or update the information you provided us with by logging in to the platform and accessing your account and profile settings at <a href="https://www.powtoon.com/account/info/" target="_blank">https://www.powtoon.com/account/info/ </a></p>
+
+<div class="title-underline"><span>Right to Data Portability</span></div>
+
+<p>You have the right to ask us to provide a copy of your personal information to another provider, in the event that you wish to move your account to them.</p>
+
+<p>If you wish to have such a copy, please contact us at privacy@powtoon.com and we shall provide it to you in an electronic and machine readable form so that you may transmit such information to another entity.</p>
+
+<p>If it is technically feasible and should you wish, we will transfer such information directly to such another entity at your request.</p>
+
+<p>Please be advised that we will not be able to provide you with such a copy or transfer such information to such an entity if it would adversely affect the rights and freedoms of others.</p>
+</article>
+</section>
+
+
+
+
+  
+    
+  
+
+
+
+
+   
+      
+        <div id="footerRoot"></div>
+      
+    <!-- end footer block -->
+    
+      <div id="cookies-banner" class="cookies-banner">
+    <div class="cookies-banner-text">
+        <span>
+        This website uses cookies to ensure you get the best experience on our website.
+        </span>
+        <a href="/privacy-policy/#aboutcookies" class="learn-more">Learn more</a>
+    </div>
+    <a id="close-banner" class="btn-got-it">Got it</a>
+</div>
+
+
+    
+    </div><!-- end of container-->
+    
+
+<div class="hide" id="popup-container"></div>
+<div class="overlay hide track"></div>
+
+
+
+    <!--***************** Custon Javascript code *****************-->
+    
+    <script src="https://static.powtoon.co/js/social.share.js"></script>
+
+  
+    <script src="https://static.powtoon.co/js/modernizr-2.6.2.js"></script>
+  
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	/* Bootstrap-3 CDN fallback */
+	var bootstrap3_loaded = (typeof $().emulateTransitionEnd === 'function');
+	(bootstrap3_loaded) || loadScript('https://static.powtoon.co/vendor/bootstrap/3.4.1/bootstrap.min.js');
+</script>
+      <!--<script src="https://static.powtoon.co/js/jquery.placeholder.js"></script>-->
+
+  
+
+  
+
+  
+  <!--COMMON SCRIPTS-->
+  
+
+
+<!-- Common Basic Scripts Start -->
+
+
+<!-- CHEQ INVOCATION TAG (noscript) -->
+
+<noscript>
+  <iframe src='https://obs.cheqzone.com/ns/0e8f3de75aa63b426527697d5a230381.html?ch=cheq4ppc' width='0' height='0' style='display:none'></iframe>
+</noscript>
+    
+
+<!-- End CHEQ INVOCATION TAG (noscript) -->
+
+
+<script type="text/javascript">
+  (window.jQuery) || document.write('<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>');
+  (window.jQuery) || document.write('<script type="text/javascript" src="https://static.powtoon.co/vendor/jquery/3.5.1/jquery.min.js"><\/script>');
+</script>
+
+<script>
+    // Catch ajax errors with sentry.
+    $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+      Sentry.captureMessage(thrownError || jqXHR.statusText, {
+        extra: {
+            type: ajaxSettings.type,
+            url: ajaxSettings.url,
+            data: ajaxSettings.data,
+            status: jqXHR.status,
+            error: (thrownError || jqXHR.statusText),
+            response: jqXHR.responseText.substring(0, 100),
+        },
+      });
+    });
+</script>
+
+
+  <script type="text/javascript" src="https://static.powtoon.co/js/jquery.analytics-event-tracking.js" crossorigin="anonymous"></script>
+  
+
+
+  
+    <script type="text/javascript" src="https://static.powtoon.co/js/ecommerce.js?24.2.5.7.2"></script>
+    <script type="text/javascript">
+      $('#navbar_premium_pricing_lang, #navbar_upgrade_lang').click(function(){
+        if (typeof EC === 'object') {
+          // TODO move later on from common scripts
+          var id = $(this).data('category') == 'Premium' ? 'Nav-Bar-Premium' : 'Nav-Bar-Pricing';
+          EC.addPromo(id);
+          EC.setAction("promo_click");
+        }
+      })
+    </script>
+    
+
+
+
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ETEZYHQ8GQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-98Q92H2JTQ');
+</script>
+
+
+<script type="text/javascript">
+  // start Google Analytics
+  //
+  
+      // UNIVERSAL CODE
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      
+          ga(
+            'create',
+            'UA-25522774-1',
+            'auto'
+          );
+      
+
+        ga("require", "ec");
+        ga('require', 'displayfeatures');
+
+      // default pageview from common scripts
+      
+          trackPageView();
+      
+
+      function closure(f, arg) {
+        function wrapper() {
+          f(arg)
+        }
+        return wrapper
+      }
+
+      //checking if analyticsEventTracking is a function on a timeout...
+      function checkErrorNotFunc(delays){
+
+        var body = $(document.body);
+        if( typeof body.analyticsEventTracking !== 'function' ) {
+            if (delays.length) {
+              console.log('Error check: ' + delays[0] + 'ms')
+              setTimeout(closure(checkErrorNotFunc, delays.slice(1)), delays[0])
+            } else {
+              console.log('No function found.');
+            }
+        } else {
+            body.analyticsEventTracking();
+        }
+
+
+      }
+      checkErrorNotFunc([0, 200, 500, 1500, 10000]);
+
+      setTimeout(function() {
+          trackEventByParams('unbounce', '15_sec');
+      }, 15000);
+
+      
+  
+// end google analytics
+</script>
+
+
+<script type="text/javascript">
+// global flags
+var is_logged_in = false;
+var placeholder_viewed = false;
+
+// toggle function
+function setCookie(str, exp) {
+    var exp = exp || 30;
+    $.cookie(str, '1', {expires: exp, path: '/'});
+}
+
+function toggle_maintenance(maintenance, customHTML, iframeUrl) {
+    if ($('.maintenance')[0]) {
+        $('.maintenance').slideToggle();
+        return
+    }
+    var html = "";
+
+    if (customHTML) {
+        html = customHTML;
+    }
+    if (maintenance) {
+      html = '<div  style="width:1000px;margin:90px auto 0"><span><iframe src="/strip/website/" frameborder="0" border="0" width="870" height="60"></iframe></span><span style="color: #848484;background: transparent;width: 30px;margin-top: 17px;cursor: pointer;" class="close" onclick="$(\'.maintenance\').slideToggle()">X</span></div>';
+    }
+  if (iframeUrl) {
+    html = '<div  style="width:1000px;margin:90px auto 0"><span><iframe src="/notifications/' + iframeUrl + '/" frameborder="0" border="0" width="960" height="140"></iframe></span><span style="color: #848484;background: transparent;width: 30px;margin-top: 11px;cursor: pointer;" class="close" onclick="$(\'.maintenance\').slideToggle();">X</span></div>';
+  }
+  var cont = '<div style="display:none; text-align:center; margin-bottom: -70px;" class="maintenance">' + html + '</div>';
+
+  $('body').prepend(cont);
+  $('.maintenance').slideToggle();
+
+}
+
+var ie_ver = getInternetExplorerVersion();
+if (ie_ver === 11) {
+  $('body').addClass('ie');
+  $('body').addClass('ie11');
+}
+
+
+
+//popup function
+
+    function pop_container(html,track_name){
+        trackEventByParams('Show Placeholder', 'Click', track_name);
+        //this is redondent because function is async
+
+        $('#popup-container')
+                .html($(html))
+                .css('z-index', '100000000000');
+
+        $('#popup-container style').appendTo( $('head') );
+
+        var popupImg = $('#popup-container img');
+        var imgSrc = popupImg.attr('src');
+        if(imgSrc.indexOf('maintenance') !== -1)
+        {
+            popupImg.parent().addClass('maintenance_popup');
+        }
+
+        // handle the popup view
+        $('#popup-container').show();
+        $('.overlay').show();
+        $('.editor-overlay').show();
+
+
+        $('.close, .overlay, .pt-close').bind('click',function(){
+            $('#popup-container').hide();
+            $('.overlay').hide();
+            $('.editor-overlay').hide();
+        });
+    }
+
+
+    function show_placeholder(placeholder_url,template){
+        //prevent multi-calls, this flag might be set from external JS code (CMS for example)
+        if(placeholder_viewed)
+            return false;
+        var html;
+        template = template || false; //default = false
+        placeholder_url = placeholder_url || false;
+
+        if(template){
+            html = template;
+            placeholder_url = 'errors';
+        }
+
+        else if( placeholder_url.indexOf("image@") > -1){ //images should be 800 px to be centered
+            var src = placeholder_url.substring(6);
+            html ='<span class="close" style="width: 0px;height: 14px;background: transparent;position: absolute;right: 31px;top: 18px;">X</span><img src=' + placeholder_url.substring(6) + ' />';
+        }
+
+        else{
+            $.get(placeholder_url, function(data) {
+                html = data;
+                pop_container(html,placeholder_url);
+
+            });
+            return;
+        }
+
+        pop_container(html,placeholder_url);
+
+    }
+
+</script>
+
+<script type="text/javascript">
+  var setCSRFHeader = function (xhr, settings) {
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+      // Only send the token to relative URLs i.e. locally.
+      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+  };
+  $.ajaxSetup({
+    beforeSend: setCSRFHeader
+  });
+</script>
+
+  
+
+
+
+
+
+
+
+<!-- Google Code for Remarketing Tag -->
+<style>
+  iframe[name="google_conversion_frame"]{
+    position: absolute!important;
+    height:0 !important;
+  }
+</style>
+
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 993827035;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+
+  <script async defer type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+
+  <noscript>
+    <div style="display:inline;">
+      <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/993827035/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+  </noscript>
+
+ 
+
+  
+
+
+
+
+  
+
+
+
+<script type="text/javascript">
+
+  hide_default_launcher = false;
+  
+  
+</script>
+
+<script type="text/javascript">
+
+  "use strict";
+
+    function LoadDriftWidget() {
+       var t = window.driftt = window.drift = window.driftt || [];
+       if (!t.init) {
+           if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+           t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
+               t.factory = function (e) {
+                   return function () {
+                       var n = Array.prototype.slice.call(arguments);
+                       return n.unshift(e), t.push(n), t;
+                   };
+               }, t.methods.forEach(function (e) {
+               t[e] = t.factory(e);
+           }), t.load = function (t) {
+               var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+               o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+               var i = document.getElementsByTagName("script")[0];
+               i.parentNode.insertBefore(o, i);
+           };
+       }
+
+        drift.SNIPPET_VERSION = '0.3.1';
+
+     drift.load('86ibsi43s639');
+  };
+
+      
+
+    LoadDriftWidget();
+
+
+    drift.on('ready', function(api, payload) {
+        if (hide_default_launcher == true){
+            api.widget.hide();
+        }
+        
+     });
+
+     drift.on('message', function(payload) {
+         var dont_open_ids = [1221779, 1229263, 1790339, 1946259, 1246720, 1225415, 1102648, 1102680, 1102693, 1595040, 1106782159, 6028, 1106752, 1370158, 1757072, 1106640, 1596946, 16103322, 1604414, 1248091, 1971298, 1986614, 2176905, 2176802, 2097037, 1997254 , 1997347, 1997348, 1997360, 1997595, 1996144, 1469144, 2223161, 2223168, 2227389, 2246624, 2252157, 2252258, 2252267, 2258091, 2272176, 2272213, 2272222, 2272224, 2272226, 2274273, 2294525, 2294543, 2294545, 2327939]
+         if (dont_open_ids.indexOf(payload.playbookId) == -1)
+             drift.api.goToConversation({ conversationId: payload.conversationId });
+     });
+
+     if (window.matchMedia("(max-width: 1441px)").matches){
+
+        drift.on('sidebarOpen', function() {
+        setTimeout(function(){
+            var widget = document.getElementById('drift-widget');
+            widget.style.height = "92%";
+            widget.style.width = "400px";
+        }, 1);
+        });
+
+    } else {
+
+        drift.on('sidebarOpen', function() {
+        setTimeout(function(){
+            var widget = document.getElementById('drift-widget');
+            widget.style.height = "95%";
+            widget.style.width = "400px";
+        }, 1);
+        });
+
+    }
+
+
+</script>
+
+  
+
+<style type="text/css">
+    iframe#drift-widget{
+        height: 92% !important;
+        width: 400px !important;
+    }
+
+    @media only screen and (max-width:1440px){
+        iframe#drift-widget{
+        height: 95% !important;
+        width: 400px !important;
+    }
+    }
+</style>
+
+
+
+
+
+ 
+
+<!-- Common Scripts Start -->
+
+
+<script src="https://static.powtoon.co/js/jquery.gritter.min.js"></script>
+<script src="https://static.powtoon.co/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://static.powtoon.co/js/jquery.bootstrap-dropdown-hover.js"></script>
+
+
+
+<script type="text/javascript">
+
+    //twitter
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+    if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+
+function showNotification(event, data) {
+    // default show notification from server
+    var cont = $('#messages_container');
+    if (data.type == "downtime") {
+
+        editorExp = new RegExp("^\/presentoons[^#?]+\/(edit|restore)\/$");
+        editor = editorExp.test(location.pathname);
+        htmlStudioExp = new RegExp("^\/html5-studio/");
+        htmlStudio = htmlStudioExp.test(location.pathname);
+        if (editor || htmlStudio) {
+            show_placeholder(data.url);
+        }
+        // show messages only if we are on dashboard or dashboard/templates
+        return;
+    }
+    else if (cont.length > 0 && !(jQuery.isEmptyObject(data.message))) {
+        var messageBox = '<div class="alert alert-' + (data.class || 'info') + ' span12"><a class="close" data-dismiss="alert">×</a> ' + data.message + '</div>';
+        cont.append(messageBox);
+    } else {
+        $.gritter.add({
+            text: data.message,
+            sticky: true,
+            class_name: 'gritter-light'
+        });
+    }
+    if (data.completed_export_jobs) {
+        $(document).trigger('compleExportJobs', {completed_export_jobs: data.completed_export_jobs})
+    }
+}
+  /* END PUSHER NOTIFICATIONS */
+
+
+// Trigger the userconfirmed messsage if its in the query param
+$(document).ready(
+    function(){
+        if(window.location.hash === '#just_confirmed') {
+            window.location.hash = '';
+            $(document).trigger('user_confirmed');
+        }
+    }
+)
+
+window.addEventListener("message", function(event) {
+    if (event.data && event.data.indexOf && event.data.indexOf('loginComplete') === 0) {
+        var data = JSON.parse(
+            event.data.substring('loginComplete'.length, event.data.length));
+        $(document).trigger('loginComplete', [data]);
+    }
+}, false);
+
+// login with social network
+$(document).bind('loginComplete', function (event, data) {
+
+    function getParamFromUrlQuery(strQuery, param) {
+        var regex = param + '=([^&]+)',
+            match = strQuery.match(regex);
+        if (match && match.length === 2) {
+            return decodeURIComponent(match[1]);
+        }
+    }
+
+    function addUrlParam(baseUrl, paramKey, paramValue) {
+        var paramKeyValue = paramKey + '=' + paramValue;
+        if (baseUrl.indexOf('?') > -1) {
+            return baseUrl + '&' + paramKeyValue;
+        } else {
+            return baseUrl + '?' + paramKeyValue;
+        }
+    }
+
+    var url = getParamFromUrlQuery(window.location.search, 'next');
+
+    // in use for canva login via social we redirect to success url and close the window
+    if (data.successUrl && data.successUrl.indexOf("canva.com") >= 0) {
+        location.replace(data.successUrl)
+    }
+    else {
+        if (!url) {
+            if (!data.is_email_validation_required && data.signed_up) {
+                url = '/create-new/';
+            } else {
+                url = '/my-powtoons/';
+            }
+        }
+
+        if (data.signed_up) {
+            url = addUrlParam(url, 'nav', 'signup');
+        }
+
+        // We only redirect if the url starts with '/', to limit to relative
+        // urls, and avoid XSS using 'javascript:...' as the next URL.
+        //
+        //replace encoded / - %2f with a single /
+        if (url.includes('%2f')) {
+            const regex = /%2f/gi;
+            url.replace(regex, '/');
+        }
+        // Add '/' to front of Url if missing
+        if (url[0] !== '/') {
+            url = '/' + url
+        }
+        // Redirect if Url is relative
+        if (url[0] === '/' && url[1] !== '/') {
+            location.href = url
+        }
+    }
+});
+
+var maintenance =  false;
+
+
+
+</script>
+
+<script type="text/javascript">
+  function LogErrorToSentry(msg, tagsObj, extraObj) {
+    
+        var messageData = {
+            extra: extraObj || {},
+            tags: tagsObj,
+            logger: 'flash'
+        };
+
+        if (extraObj.StackTrace) {
+            messageData.fingerprint = [window.flashvars.p]
+        }
+
+        Sentry.captureMessage(msg, messageData);
+
+        //This part was added to allow users to send their flash errors logs to customer support team
+        console.log('##### Technical details for support        (Copy this part)  #####');
+        console.log(msg, messageData);
+        console.log('##### End of Technical details for support (Copy until here) #####');
+
+    
+}
+
+</script>
+
+
+<script type="text/javascript">
+
+if(typeof $.cookie == "function"){
+
+
+    if($.cookie('_LOCALE_')=="es"){
+      $.cookie('was_es','1',{path:"/"});
+    }
+
+    if($.cookie('_LOCALE_')=="us"){
+      if($.cookie('was_es') && $.cookie('was_es') == "1"){
+        $('.lang-change-to-es').show();
+      }
+    }
+}
+
+</script>
+
+<script type="text/javascript">
+  $('.navigation li [data-toggle="dropdown"]').bootstrapDropdownHover();
+</script>
+
+
+
+
+  <script data-cfasync="false" type="text/javascript" data-bablic="5b4dfd5fdd160b13f31645df" data-bablic-m="[0,'en','en',1,['es'],0,0,0,0,0,0,0,0,[],'w3.powtoon.com/home',[],['_v',2]]" src="//cdn2.bablic.com/js/bablic.3.9.js"></script>
+
+ 
+
+  
+  <!--//COMMON SCRIPTS-->
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+      var isInIFrame = (window.location != window.parent.location);
+if(isInIFrame==false){
+      $('.header').show();
+      $('.footer').show();
+}
+    </script>
+    
+
+
+    
+      <script src="https://static.powtoon.co/js/cookies-banner.js"></script>
+    
+
+    <script type="text/javascript">
+
+    /*****************jquery ready handler*****************/
+
+    $(document).ready(function(){
+      $('.social-buttons').find('a').attr('target','_blank');
+         var timeout;
+        $( "#create-link" ).hover(function() {
+         if($('#create').is(':hidden')) {
+          clearTimeout(timeout);
+            $('<div></div>').addClass('create-overlay').appendTo('#create-link');
+            $('#create').show();
+            $('#create').animate({
+                top: '45px',
+                opacity: '1',
+              },
+              {
+              duration: 'slow',
+              easing: 'easeOutBack'
+              });
+         };
+
+            }, function() {
+              timeout = setTimeout(function(){
+              $(".create-overlay" ).remove();
+              $('#create').hide();
+              $('#create').css("top","100px");
+              $('#create').css("opacity","0");
+            }, 1000);
+            });
+
+
+        $('.toggle-head').click(function(){ $(this).parent().find('.toggle-body').slideToggle() });
+        //add active class for current page
+        try {
+            var domain = 'www.powtoon.com';
+            var domain_index =  window.location.href.indexOf(domain);
+            if (location.hostname === "localhost") {
+               domain_index = domain_index + 5; //check if localhost
+            }
+            var long_app_name = window.location.href.slice(domain_index+domain.length+1); // this turns http://www.powtoon.com/whatever/whatever to whatever/whatever
+            app_name = long_app_name.split('/');
+            if (app_name == 'account'){
+                $('.profile.dropdown-toggle').closest('li').addClass('active');
+            }
+            else if (app_name[0]=='tutorials' || app_name[0]=='webinars') {
+              $('.support.dropdown-toggle').closest('li').addClass('active');
+            }
+            else if(app_name=='p'){}
+            else if(app_name[0]=='integrations'){
+              $('.explore.dropdown-toggle').closest('li').addClass('active');
+            }
+            else{
+                try{
+                  $('nav a[href*=' + app_name + ']').closest('li').addClass('active');
+                  $('#blog-link').removeClass('active');
+                }
+                catch(e){}
+            }
+        }
+        catch(err) {
+            console.log(err.message);
+        }
+
+
+        //end active class
+        
+
+        
+        
+
+    });
+    $("#fbshare").click(function(){
+    newwindow=window.open($(this).attr('href'),'','height=200,width=150');
+    return false;
+    });
+    $("#gpshare").click(function(){
+    newwindow=window.open($(this).attr('href'),'','height=400,width=500');
+    return false;
+    });
+
+
+
+    $('.mobile-menu').click(function() {
+      $('.nav-block').addClass('slide-right')
+    })
+
+    $('.close-btn').click(function() {
+      $('.nav-block').removeClass('slide-right')
+    })
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 0) {
+        $('.header').addClass('fix');
+      } else {
+        $('.header').removeClass('fix');
+      }
+
+    })
+
+    HomepageAppNavbar.renderNavbar('navbarRoot');
+    
+      HomepageAppFooter.renderFooter('footerRoot');
+    
+    </script>
+    <script type="text/javascript" src="https://static.powtoon.co/js/header-js.js?24.2.5.7.2"></script>
+
+
+
+
+
+<div tabindex="-1" class="modal fade" id="followModal">
+   <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close pt-x" data-dismiss="modal" type="button"></button>
+        <h4 class="modal-title">WELCOME TO POWTOON!</h4>
+      </div>
+      <div class="modal-body">
+        <p>"Like" us on Facebook or follow us on 
+            Twitter to get awesome Powtoon hacks, 
+            updates and hang out with everyone in 
+            the tribe too!
+            </p>
+            <div class="follow-buttons">
+            <div data-label="social_studio" id="follow_inside" class="fb-button" data-action="follow" data-category="facebook">
+<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false" data-href="https://www.facebook.com/Powtoon" style="display:inline-block;"></div>
+             us on Facebook
+            </div>
+            <div class="twitter-button">
+            <a data-label="social_after_signup" class="track" href="https://twitter.com/intent/follow?screen_name=@powtoon" data-action="follow" data-category="twitter"><img src="https://static.powtoon.co/images/website/follow-popup/twitter-follow.png?24.2.5.7.2" /></a> us on Twitter
+            </div>
+            </div>
+      </div>
+<div class="modal-footer">
+        <button class="btn btn-start-creating" data-dismiss="modal" type="button">Start Creating</button>
+      </div> 
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
