@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en" class="">
+<head>
+  <script>
+var _rollbarConfig = {"accessToken":"e6f02c3ea02843769f37758afcce81ae","captureUncaught":true,"captureUnhandledRejections":true,"payload":{"environment":"production","person":{"id":null,"username":null,"email":null}},"ignoredMessages":["\\$ is not defined","Backbone is not defined","Failed to resolve module specifier \"(application|motel)\"\\. Relative references must start with","Error resolving module specifier “(application|motel)”\\. Relative module specifiers must start with","Error resolving module specifier: (application|motel)"],"hostWhiteList":["splitwise.com","cloudfront.net"]};
+// Rollbar Snippet
+!function(r){var e={};function o(n){if(e[n])return e[n].exports;var t=e[n]={i:n,l:!1,exports:{}};return r[n].call(t.exports,t,t.exports,o),t.l=!0,t.exports}o.m=r,o.c=e,o.d=function(r,e,n){o.o(r,e)||Object.defineProperty(r,e,{enumerable:!0,get:n})},o.r=function(r){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(r,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(r,"__esModule",{value:!0})},o.t=function(r,e){if(1&e&&(r=o(r)),8&e)return r;if(4&e&&"object"==typeof r&&r&&r.__esModule)return r;var n=Object.create(null);if(o.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:r}),2&e&&"string"!=typeof r)for(var t in r)o.d(n,t,function(e){return r[e]}.bind(null,t));return n},o.n=function(r){var e=r&&r.__esModule?function(){return r.default}:function(){return r};return o.d(e,"a",e),e},o.o=function(r,e){return Object.prototype.hasOwnProperty.call(r,e)},o.p="",o(o.s=0)}([function(r,e,o){"use strict";var n=o(1),t=o(5);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdn.rollbar.com/rollbarjs/refs/tags/v2.26.2/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,e,o){"use strict";var n=o(2),t=o(3);function a(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}var l=0;function i(r,e){this.options=r,this._rollbarOldOnError=null;var o=l++;this.shimId=function(){return o},"undefined"!=typeof window&&window._rollbarShims&&(window._rollbarShims[o]={handler:e,messages:[]})}var s=o(4),d=function(r,e){return new i(r,e)},c=function(r){return new s(d,r)};function u(r){return a((function(){var e=this,o=Array.prototype.slice.call(arguments,0),n={shim:e,method:r,args:o,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)}))}i.prototype.loadFull=function(r,e,o,n,t){var l=!1,i=e.createElement("script"),s=e.getElementsByTagName("script")[0],d=s.parentNode;i.crossOrigin="",i.src=n.rollbarJsUrl,o||(i.async=!0),i.onload=i.onreadystatechange=a((function(){if(!(l||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){i.onload=i.onreadystatechange=null;try{d.removeChild(i)}catch(r){}l=!0,function(){var e;if(void 0===r._rollbarDidLoad){e=new Error("rollbar.js did not load");for(var o,n,a,l,i=0;o=r._rollbarShims[i++];)for(o=o.messages||[];n=o.shift();)for(a=n.args||[],i=0;i<a.length;++i)if("function"==typeof(l=a[i])){l(e);break}}"function"==typeof t&&t(e)}()}})),d.insertBefore(i,s)},i.prototype.wrap=function(r,e,o){try{var n;if(n="function"==typeof e?e:function(){return e||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){o&&"function"==typeof o&&o.apply(this,arguments);try{return r.apply(this,arguments)}catch(o){var e=o;throw e&&("string"==typeof e&&(e=new String(e)),e._rollbarContext=n()||{},e._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=e),e}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(e){return r}};for(var p="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad".split(","),f=0;f<p.length;++f)i.prototype[p[f]]=u(p[f]);r.exports={setupShim:function(r,e){if(r){var o=e.globalAlias||"Rollbar";if("object"==typeof r[o])return r[o];r._rollbarShims={},r._rollbarWrappedError=null;var l=new c(e);return a((function(){e.captureUncaught&&(l._rollbarOldOnError=r.onerror,n.captureUncaughtExceptions(r,l,!0),e.wrapGlobalEventHandlers&&t(r,l,!0)),e.captureUnhandledRejections&&n.captureUnhandledRejections(r,l,!0);var a=e.autoInstrument;return!1!==e.enabled&&(void 0===a||!0===a||function(r){return!("object"!=typeof r||void 0!==r.page&&!r.page)}(a))&&r.addEventListener&&(r.addEventListener("load",l.captureLoad.bind(l)),r.addEventListener("DOMContentLoaded",l.captureDomContentLoaded.bind(l))),r[o]=l,l}))()}},Rollbar:c}},function(r,e,o){"use strict";function n(r,e,o,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null);var t=e.handleUncaughtException.apply(e,n);o&&o.apply(r,n),"anonymous"===t&&(e.anonymousErrorsPending+=1)}r.exports={captureUncaughtExceptions:function(r,e,o){if(r){var t;if("function"==typeof e._rollbarOldOnError)t=e._rollbarOldOnError;else if(r.onerror){for(t=r.onerror;t._rollbarOldOnError;)t=t._rollbarOldOnError;e._rollbarOldOnError=t}e.handleAnonymousErrors();var a=function(){var o=Array.prototype.slice.call(arguments,0);n(r,e,t,o)};o&&(a._rollbarOldOnError=t),r.onerror=a}},captureUnhandledRejections:function(r,e,o){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var o,n,t;try{o=r.reason}catch(r){o=void 0}try{n=r.promise}catch(r){n="[unhandledrejection] error getting `promise` from event"}try{t=r.detail,!o&&t&&(o=t.reason,n=t.promise)}catch(r){}o||(o="[unhandledrejection] error getting `reason` from event"),e&&e.handleUnhandledRejection&&e.handleUnhandledRejection(o,n)};n.belongsToShim=o,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}}},function(r,e,o){"use strict";function n(r,e,o){if(e.hasOwnProperty&&e.hasOwnProperty("addEventListener")){for(var n=e.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(e,o,t){n.call(this,e,r.wrap(o),t)};t._rollbarOldAdd=n,t.belongsToShim=o,e.addEventListener=t;for(var a=e.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,e,o){a.call(this,r,e&&e._rollbar_wrapped||e,o)};l._rollbarOldRemove=a,l.belongsToShim=o,e.removeEventListener=l}}r.exports=function(r,e,o){if(r){var t,a,l="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(t=0;t<l.length;++t)r[a=l[t]]&&r[a].prototype&&n(e,r[a].prototype,o)}}},function(r,e,o){"use strict";function n(r,e){this.impl=r(e,this),this.options=e,function(r){for(var e=function(r){return function(){var e=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,e)}},o="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleAnonymousErrors,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureEvent,captureDomContentLoaded,captureLoad".split(","),n=0;n<o.length;n++)r[o[n]]=e(o[n])}(n.prototype)}n.prototype._swapAndProcessMessages=function(r,e){var o,n,t;for(this.impl=r(this.options);o=e.shift();)n=o.method,t=o.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],o.ts]):this[n].apply(this,t));return this},r.exports=n},function(r,e,o){"use strict";r.exports=function(r){return function(e){if(!e&&!window._rollbarInitialized){for(var o,n,t=(r=r||{}).globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;o=window._rollbarShims[i++];)n||(n=o.handler),o.handler._swapAndProcessMessages(l,o.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+// End Rollbar Snippet
+</script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-22826239-1"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+    gtag('config', 'UA-22826239-1');
+</script>
+
+
+
+  <meta charset="utf-8">
+  <meta name="referrer" content="origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="apple-itunes-app" content="app-id=458023433, app-argument=splitwise://open">
+  <meta name="description" content="Splitwise is a free tool for friends and roommates to track bills and other shared expenses, so that everyone gets paid back. On the web, iPhone, and Android!">
+  <meta name="color-scheme" content="light only">
+
+  <meta property="og:description" content="Splitwise is a free tool for friends and roommates to track bills and other shared expenses, so that everyone gets paid back. On the web, iPhone, and Android!">
+<meta property="og:title" content="Terms of Service">
+<meta property="og:image" content="https://assets.splitwise.com/assets/core/open-graph-preview-c1b55b0dc7c2b2d5bd6f40bbe34989f3eb2317843246727606cf3e96ee254609.png">
+<meta property="og:image:secure_url" content="https://assets.splitwise.com/assets/core/open-graph-preview-c1b55b0dc7c2b2d5bd6f40bbe34989f3eb2317843246727606cf3e96ee254609.png">
+<meta property="og:image:alt" content="Splitwise logo">
+<meta property="og:site_name" content="Splitwise">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.splitwise.com/terms">
+<meta property="fb:app_id" content="293864780643203">
+<meta property="og:locale" content="en">
+<meta property="og:locale:alternate" content="de">
+<meta property="og:locale:alternate" content="es">
+<meta property="og:locale:alternate" content="fr">
+<meta property="og:locale:alternate" content="id">
+<meta property="og:locale:alternate" content="it">
+<meta property="og:locale:alternate" content="ja">
+<meta property="og:locale:alternate" content="nl">
+<meta property="og:locale:alternate" content="pt-BR">
+<meta property="og:locale:alternate" content="pt-PT">
+<meta property="og:locale:alternate" content="sv">
+<meta property="og:locale:alternate" content="th">
+<meta property="og:locale:alternate" content="emoji">
+
+  <meta name="twitter:card" content="app">
+<meta name="twitter:description" content="Splitwise is a free tool for friends and roommates to track bills and other shared expenses, so that everyone gets paid back. On the web, iPhone, and Android!">
+<meta name="twitter:site" content="@splitwise">
+<meta name="twitter:app:name:iphone" content="Splitwise">
+<meta name="twitter:app:id:iphone" content="458023433">
+<meta name="twitter:app:name:googleplay" content="Splitwise">
+<meta name="twitter:app:id:googleplay" content="com.Splitwise.SplitwiseMobile">
+
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="vnn9DYPGiK0p1Ss4ilZCskiwr1JUN4rEiKJgxp0Czeq6txrPoC6SAP6KxgDavz_n2tMRiMBfdFahHN_xZBrUxA" />
+
+  <link rel="stylesheet" href="https://assets.splitwise.com/assets/motel-762482fb43c4b799eff5fe223bbabf7a4345240fb82550911a37949b5128a154.css" media="all" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700|Montserrat:400,600,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+
+  <link rel="canonical" href="https://www.splitwise.com/terms">
+
+  <title>Terms of Service :: Splitwise</title>
+
+  <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "https://assets.splitwise.com/assets/application-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.js",
+    "motel": "https://assets.splitwise.com/assets/motel-9680a85d72b6e12cc54519efa8506651b42f5a043ce30bc3c73bf48ba8af53a7.js",
+    "motel/motel": "https://assets.splitwise.com/assets/motel/motel-c75db22451adcb1f5d0420f4cad79acafbb541772a3771da2be4cca996d1fd6d.js",
+    "charts": "https://assets.splitwise.com/assets/charts-1f38e9276acc590cf23ffc67fb3514a8af03f73a7a02a68981883c97934a1d9f.js",
+    "chartkick": "https://assets.splitwise.com/assets/chartkick-338375253bd80b2f0da7e8b98ae0194bb84ea647cae7d3a2fec94a8cc15f7578.js",
+    "Chart.bundle": "https://assets.splitwise.com/assets/Chart.bundle-93c2270a882e090c5eaceec7a74e8cc7c4e02f7dde0951148b83f9a0be5c8dbb.js",
+    "@rails/ujs": "https://assets.splitwise.com/assets/@rails--ujs-57169a955c1531a628bf30afac33de3edd70cec551c6262363e9915d750c3f6d.js",
+    "@github/webauthn-json/browser-ponyfill": "https://assets.splitwise.com/assets/@github--webauthn-json--browser-ponyfill-c940892aa19f632b24b0ce6709282eceeed185222b9fda7902b0ec9bd72ce954.js"
+  }
+}</script>
+
+<script src="https://assets.splitwise.com/assets/es-module-shims.min-f6e61a1a9f41be4f7947efa52fef6f0b9b265d4a397ce46d39a09e1c1d044578.js" async="async" data-turbo-track="reload"></script>
+<script type="module">import "application"</script>
+  <script type="module">import "motel"</script>
+
+  
+</head>
+<body class="font-sans subpixel-antialiased terms" id="">
+    <div class="container mx-auto">
+  <header class="flex items-center justify-between px-8 py-5 font-mont mx-auto">
+      <a href="/" class="flex items-center w-[105px] h-[36px] sm:w-[140px] sm:h-[48px]">
+        <svg class="header-logo" xmlns="http://www.w3.org/2000/svg" width="140" height="48" viewBox="0 0 140 48">
+  <path fill="#1CC29F" d="M16.543 28.966l5.232-3.073L0 13.103v12.631c1.632-.895 3.688-1.36 6.042-1.36 5.125 0 8.37 2.214 10.5 4.592M6.935 46.595c2.181 0 3.826-.654 3.826-2.327 0-1.71-2.11-2.364-4.72-3.02-1.942-.505-4.172-1.013-6.04-1.971v3.245c1.572 2.582 4.182 4.073 6.934 4.073" />
+  <path fill="#52595F" d="M43.55 38.683v-25.58l-21.775 12.79z" />
+  <path fill="#ACE4D6" d="M43.55 13.104L21.775.314 0 13.104l21.775 12.79z" />
+  <path fill="#373B3F" d="M21.775 25.893l-5.233 3.073-5.608 3.295c-1.433-1.16-3.256-1.996-4.928-1.996-2.038 0-3.075.69-3.075 1.964 0 1.473 1.419 2.175 3.384 2.745.412.119.847.233 1.3.347 4.326 1.054 10.117 2.4 10.117 8.437 0 1.268-.262 2.53-.836 3.683H43.55v-8.759l-21.775-12.79z" />
+  <path fill="#FFF" d="M7.615 35.32a37.409 37.409 0 0 1-1.3-.346c-1.965-.57-3.384-1.272-3.384-2.745 0-1.273 1.037-1.964 3.075-1.964 1.672 0 3.495.837 4.928 1.996l5.608-3.295c-2.131-2.378-5.375-4.593-10.5-4.593-2.355 0-4.41.466-6.042 1.36V39.278c1.869.958 4.099 1.465 6.042 1.972 2.61.655 4.719 1.309 4.719 3.019 0 1.673-1.645 2.327-3.826 2.327-2.752 0-5.362-1.49-6.935-4.073v4.92h16.896c.574-1.153.836-2.416.836-3.684 0-6.037-5.791-7.383-10.117-8.437" />
+  <path class="text" fill="#373B3F" d="M54.012 35.168c-.968-.285-1.747-.656-2.334-1.112l1.032-2.318c.562.418 1.23.754 2.005 1.007a7.43 7.43 0 0 0 2.324.38c.863 0 1.5-.13 1.912-.39.413-.259.619-.604.619-1.035a.994.994 0 0 0-.365-.788 2.768 2.768 0 0 0-.938-.504 18.837 18.837 0 0 0-1.547-.418c-1-.24-1.818-.48-2.455-.722a4 4 0 0 1-1.64-1.159c-.457-.532-.684-1.241-.684-2.128 0-.773.206-1.472.618-2.1.412-.626 1.034-1.123 1.866-1.49.83-.368 1.846-.552 3.046-.552a9.95 9.95 0 0 1 2.455.304c.8.203 1.5.494 2.1.874l-.938 2.337c-1.211-.696-2.424-1.045-3.636-1.045-.85 0-1.478.14-1.884.418-.406.279-.61.646-.61 1.102 0 .456.235.795.704 1.016.468.223 1.184.441 2.146.656 1 .241 1.818.482 2.456.722.637.241 1.183.621 1.64 1.14.455.52.685 1.223.685 2.11 0 .76-.21 1.453-.63 2.08-.418.627-1.045 1.124-1.883 1.491-.838.367-1.856.551-3.055.551-1.037 0-2.04-.142-3.009-.427zm17.49-2.85c.481-.513.722-1.2.722-2.062 0-.86-.241-1.548-.722-2.061-.48-.513-1.097-.77-1.846-.77-.75 0-1.366.257-1.847.77-.48.513-.722 1.2-.722 2.061 0 .862.241 1.549.722 2.062.48.513 1.097.77 1.847.77s1.365-.257 1.846-.77zm1.218-6.67a4.681 4.681 0 0 1 1.81 1.844c.437.792.656 1.713.656 2.764 0 1.052-.219 1.973-.656 2.764a4.683 4.683 0 0 1-1.81 1.844c-.768.437-1.62.655-2.558.655-1.287 0-2.3-.411-3.037-1.235v4.77H64.2V25.144h2.794v1.178c.725-.886 1.78-1.33 3.168-1.33.937 0 1.79.219 2.558.656zm4.414 9.72V21.268h2.925v14.098h-2.925zm5.643 0V25.144H85.7v10.222h-2.924zm.15-12.123a1.552 1.552 0 0 1-.506-1.178c0-.468.169-.861.506-1.178.338-.316.775-.475 1.312-.475s.975.152 1.312.456c.338.304.506.684.506 1.14 0 .494-.168.903-.506 1.225-.337.323-.775.485-1.312.485s-.974-.158-1.312-.475zm11.997 11.628c-.288.216-.64.377-1.06.485-.418.107-.859.161-1.321.161-1.2 0-2.127-.31-2.784-.93-.656-.621-.983-1.533-.983-2.737v-4.427H87.22v-2.28h1.556v-2.26H91.7v2.26h2.511v2.28H91.7v4.39c0 .43.11.762.327.997.22.234.529.351.929.351.462 0 .856-.126 1.18-.38l.788 2.09zm17.957-9.728l-3.656 10.222h-2.812l-2.268-6.346-2.343 6.346H98.99l-3.636-10.222h2.756l2.38 6.916 2.475-6.916h2.474l2.4 6.916 2.455-6.916h2.587zm1.369 10.222V25.145h2.924v10.222h-2.924zm.15-12.122a1.552 1.552 0 0 1-.507-1.178c0-.468.17-.861.507-1.178.337-.316.775-.475 1.312-.475s.975.152 1.312.456c.337.304.506.684.506 1.14 0 .494-.169.903-.506 1.225-.337.323-.775.485-1.312.485s-.975-.158-1.312-.475zm6.429 11.96c-.8-.208-1.437-.47-1.912-.788l.974-2.128c.45.292.994.53 1.631.712a6.728 6.728 0 0 0 1.875.276c1.238 0 1.856-.31 1.856-.931 0-.29-.169-.5-.506-.627-.337-.126-.857-.234-1.556-.323-.825-.126-1.507-.272-2.044-.437a3.158 3.158 0 0 1-1.396-.874c-.393-.418-.59-1.013-.59-1.786 0-.646.184-1.219.553-1.72.368-.5.906-.889 1.612-1.168.705-.278 1.54-.418 2.502-.418.712 0 1.422.08 2.128.238.706.158 1.29.377 1.752.655l-.973 2.11a5.766 5.766 0 0 0-2.907-.76c-.625 0-1.094.088-1.406.265-.312.177-.469.406-.469.684 0 .317.17.539.507.665.337.127.875.247 1.612.361.825.14 1.5.288 2.024.447a3.03 3.03 0 0 1 1.369.864c.387.418.58 1.001.58 1.748 0 .633-.187 1.197-.561 1.691-.376.494-.922.878-1.64 1.15-.72.272-1.572.408-2.56.408a9.694 9.694 0 0 1-2.455-.313zm11.998-7.4c-.45.38-.725.9-.825 1.558h4.967c-.1-.646-.375-1.162-.824-1.548-.45-.386-1-.58-1.65-.58-.663 0-1.219.19-1.668.57zm6.842 3.287h-7.63c.138.634.462 1.134.974 1.501.513.368 1.15.551 1.913.551.525 0 .99-.08 1.396-.237a3.371 3.371 0 0 0 1.134-.75l1.556 1.71c-.95 1.101-2.336 1.652-4.162 1.652-1.136 0-2.142-.224-3.017-.674-.875-.45-1.55-1.074-2.025-1.872-.475-.798-.712-1.703-.712-2.717 0-1 .234-1.903.703-2.707a4.954 4.954 0 0 1 1.931-1.881c.818-.45 1.734-.675 2.746-.675.987 0 1.88.215 2.68.646a4.694 4.694 0 0 1 1.885 1.853c.455.804.684 1.738.684 2.802 0 .038-.019.304-.056.798z" />
+</svg>
+
+      </a>
+
+      <div id="guest" class="flex items-center text-xs sm:text-sm md:text-normal font-normal">
+        <div class="dropdown relative">
+          <a class="dropdown-reveal text-teal px-4 block cursor-pointer font-mont font-semibold" href="/login">Log in</a>
+        </div>
+        <a class="bg-teal text-white px-3 py-2 sm:px-5 sm:py-3 rounded shadow sm-cta-button" href="/signup">Sign up</a>
+      </div>
+  </header>
+</div>
+
+
+  
+<style>
+  #terms_of_service li {
+    margin: 1em 0;
+  }
+  #terms_of_service li ul {
+    margin-left: 2em;
+    list-style-type: circle;
+  }
+</style>
+
+<main class="container" id="terms_of_service">
+  <h2>Splitwise Terms of Service</h2>
+  <p style='opacity: 0.6'>Last updated: February 8th, 2024</p>
+
+  Splitwise is a shared ledger for friends, colleagues and family to keep track of expenses. Bills, IOUs, debts and payments recorded on Splitwise are informal records, and not legally binding contracts of some kind. We offer the Splitwise service "as-is" without a warranty. Splitwise® is a work-in-progress, so some features of our website and apps may not work exactly as planned. We may stop offering or restrict certain services or features at any time. Please be patient with us and we'll always do our best to support you.<br>
+  <br>
+  We will modify our Terms Of Use and <a href="/privacy">Privacy Policy</a> periodically and post the most current version on this webpage, <a href='https://www.splitwise.com/terms'>https://www.splitwise.com/terms</a>. Here are the policies:
+
+  <hr>
+
+  <h3>Terms Of Use</h3>
+
+  <ul>
+    <li><strong>Who can use Splitwise:</strong> You may use our services only if you agree to these Terms of Service and to the processing of your information as described in our <a href="/privacy">Privacy Policy</a>. You may not use Splitwise if you are barred from receiving services under the laws of the applicable jurisdiction, if we previously banned your account for violation of these terms, or if you are under the age of 13.</li>
+    <li><strong>Description:</strong> Splitwise® (the Service) is a service designed to help you track informal debts, expenses, and bills, by allowing users to enter notes about who they owe, who owes them and why. The Service keeps track of the sharing math, provides informal sharing advice, and stores this data for later use. You agree that this service is provided AS-IS and on an AS AVAILABLE basis.</li>
+    <li><strong>Informal debts:</strong> The website allows users who share a group or are friends on the service to post debts and payments as they please, using wiki-style rules with no explicit permissions. These are calculated into a determination of debts by the Service. You agree that you understand these debts are not legally binding, and represent informal information sharing among roommates, friends, or family. You agree that the Service cannot guarantee the accuracy of information entered by users.</li>
+    <li><strong>Conditions of use:</strong> You agree that you will use the Service for its intended purpose, and in compliance with all applicable laws and regulations: local, state, and national, and international, as applicable. You agree not to use the service in a fraudulent, disruptive, aggressive, manipulative, for money laundering, or any other inappropriate matter. Splitwise reserves the right, but has no obligation, to investigate your use of the service for compliance with appropriate use and terminate your access to the Service, or in order to comply with law, regulation, legal process or government request.</li>
+    <li><strong>What you represent:</strong> You agree to represent yourself honestly, that all of the information you provide is true, correct, and current, to the best of your knowledge, and that you have the necessary rights, power, authority, and age to agree to these Terms and to perform the acts required of you by the agreement.</li>
+    <li><strong>No warranty:</strong> Splitwise Inc. does not represent that the Service is error-free, complete, or can be relied upon. THE SERVICE IS PROVIDED 'AS IS' AND 'AS AVAILABLE' WITH NO WARRANTY OF ANY KIND AND YOU ARE USING THE SERVICE AT YOUR OWN RISK. SPLITWISE INC DISCLAIMS ANY WARRANTY, IMPLIED OR OTHERWISE, REGARDING THE SERVICE, INCLUDING WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT, INCLUDING FOR SPLITWISE PRO.</li>
+    <li><strong>Termination and Refusal of Service:</strong> Your access to the Service may be terminated at any time, for any reason, at Splitwise's sole discretion. This includes the right to ban any person from the service who violates the Splitwise Content Standards described below..</li>
+    <li><strong>User Posted Content:</strong> When using Splitwise’s products and services, you may have the ability to post content (e.g., payment descriptions, comments, Group/User Avatars, expense receipts). You are solely responsible for all content that you provide, post, upload or submit. We are not responsible for evaluating the accuracy, truthfulness, usefulness, legality, safety, morality or applicability of any content posted by users on Splitwise. Splitwise may, in its sole discretion, reject or remove any content that violates our content standards or for any other reason we deem the content inappropriate. Splitwise shall have no obligation to monitor content posted, uploaded or submitted by a user, but may do so at its sole discretion. Splitwise is not responsible for any failure or delay in removing any such content.</li>
+    <li>
+      <strong>Splitwise Content Standards:</strong> When sharing content on Splitwise, you may not share content that:
+      <ul>
+        <li>You do not have the right to share, or that is invasive of another person's right of privacy or right of publicity. You may not share content that includes personal information meant to harass, blackmail, or otherwise target another person.</li>
+        <li>Is false, misleading, or deceptive. For example, you cannot change your User Avatar to misrepresent yourself as another person in a harmful way.</li>
+        <li>Is obscene, harmful, abusive, or offensive. We do not allow nudity on Splitwise.</li>
+        <li>Incites violence or hatred toward an individual or group of individuals for any reason and especially if based on race or ethnic origin, religion, nationality, disability, gender, age, veteran status, or sexual orientation/gender identity. We will not tolerate content that contains credible threats or hate speech.</li>
+        <li>Is illegal, such as criminal activity, terrorism, obscenity, child pornography, human exploitation, gambling, drug use, firearms or ammunition, and piracy.</li>
+        <li>Is spammy, or promotes or engages in Pyramid schemes, network marketing, and referral marketing programs.</li>
+        <li>In Splitwise’s sole discretion causes or exposes users or Splitwise to real or potential harm or liability.</li>
+      </ul>
+    </li>
+    <li><strong>Privacy and Security:</strong> In order to provide the services to you we collect some of your Personal Information. We describe our collection and use of personal information in our <a href="/privacy">Privacy Policy</a>. Please review this policy. You must agree to the processing of your data as laid out in that policy in order to use our services.  You agree that Splitwise Inc. may disclose personal information provided to us, including content of emails, messages, and data entered into the site, if required to by law or government request such as a warrant, or as specified in the <a href="/privacy">Privacy Policy</a>. You must be 13 years or older to use this service. You are responsible for preventing unauthorized access to your account.</li>
+    <li><strong>No Liability:</strong> UNDER NO CIRCUMSTANCES WILL SPLITWISE INC BE LIABLE TO YOU FOR ANY INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL OR EXEMPLARY DAMAGES (INCLUDING EMOTIONAL DISTRESS) ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE SERVICE, WHETHER OR NOT YOU HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. UNDER NO CIRCUMSTANCES SHALL SPLITWISE INC. BE LIABLE TO YOU FOR ANY AMOUNT FOR SERVICES RENDERED PURSUANT TO THIS AGREEMENT.</li>
+    <li><strong>Paid subscriptions:</strong> Some users may have access to purchasing "Splitwise Pro," a paid monthly or annual subscription that may include several extra features such as increased cloud storage, receipt scanning, reduced advertisements, and other additional features or services. Payments for Splitwise Pro are collected via credit card via the Splitwise.com website, or may be managed through the iTunes or Google Play Store. These subscriptions will automatically renew unless canceled 24 hours before the end of the current billing period. The price at which Splitwise Pro is offered may vary due to date of subscription, country, local taxes and regulations, promotions, and Splitwise reserves the right to change the price and subscription benefits at its sole discretion. If you have issues with our Splitwise® Pro subscription or would like to request a refund, please email support@splitwise.com (we reserve the right to offer or refuse refunds at our sole discretion). Splitwise® Pro access may be suspended for overdue payments. Splitwise® reserves the right to offer or refuse Pro subscriptions for any reason at our sole discretion.</li>
+    <li><strong>Indemnification:</strong> You agree to hold Splitwise Inc., its employees, agents, and representatives, as harmless and indemnify Splitwise Inc. from any third party claim arising from or in any way related to your use of the Service, including liability or expense arising from all claims, losses, damages (actual and consequential), suits, judgments, litigation costs, and attorney fees, of every kind and nature.</li>
+    <li><strong>Modifications to the Agreement:</strong> You agree that Splitwise Inc may modify this agreement at any time, effective immediately, by posting a new agreement. You agree that even if you have not personally visited the website with the new terms of this agreement, that they may have force immediately.</li>
+    <li><strong>Severability:</strong> If any part of this agreement is held to be invalid or unenforceable, the provision shall be deemed to be superseded by a valid enforceable provision in its place that closely matches the intent of the original agreement, and all other parts of the agreement shall be enforced.</li>
+    <li><strong>Exercise:</strong> You agree that the failure of Splitwise Inc. to exercise or enforce any part of this agreement and terms does not constitute a waiver of the rights of provisions of this agreement.</li>
+    <li><strong>Jurisdiction:</strong> You agree that this entire agreement (including <a href="/privacy">Privacy Policy</a>) shall be interpreted according to the laws of the State of Massachusetts.</li>
+    <li><strong>Entire agreement:</strong> These Terms comprise the entire agreement between you and Splitwise Inc. with respect to the above subject matter.</li>
+    <li><strong>Splitwise Payment Services (“Splitwise Pay”):</strong> Some users will have access to Splitwise-branded payment and digital wallet services, including Splitwise Pay and the Splitwise Pay Wallet. For more details about these services, please see the <a href="/pay/splitwise-pay-terms">Splitwise Payment Services Terms of Service.</a></li>
+    <li>
+      <strong>External payment services</strong>: Some users, at Splitwise’s sole discretion, may have the ability  to access, link to (including deep links), or integrate with external payment services that enable you to send and receive payments outside the Splitwise website or mobile applications. These links and integrations are provided on an-is and as available basis by the underlying payment service, and you agree that Splitwise is in no way responsible or liable for transactions and service provided by a third party linked to from Splitwise's service. These services include but are not limited to the following:
+      <ul>
+        <li><strong>PayPal:</strong> Some users may have access to features that interact with PayPal. These features are built on PayPal's API, and currently include deep links to prepopulate some payment information (email address, amounts, notes fields) within the PayPal interface.  These features can also automatically record payments and their status on Splitwise's interface with information provided by PayPal to Splitwise via API and or deep link. You agree and guarantee that: (a) you will only use the PayPal payment feature with other PayPal users (b) You agree that you will only use these features if you are a US resident, using PayPal with other US residents. (c) You will only send $USD to other US residents, up to a limit of $500 USD per week. (d) Non-US users using PayPal violates Splitwise's terms of service and will result in account suspension.(e) You will not use PayPal for money-laundering, and you will report any suspicious activity or parties knowingly engaged in money-laundering to support@splitwise.com. (f) That your use complies with all local, state, and federal regulations in your jurisdiction. (g) That all usage is in compliance with the PayPal Acceptable Usage Policy. You can view the PayPal Acceptable Usage Policy on the <a href="https://www.paypal.com/us/legalhub/acceptableuse-full">PayPal website.</a></li>
+        <li><strong>Venmo:</strong> Some users, at Splitwise’s sole discretion, may have access to features that interact with Venmo (“Venmo features”). These features are built with Venmo deep links and APIs and include deep links to prepopulate some information (email, amount, description) within the Venmo interface. These features can also automatically record payments and their status with information provided by Venmo to Splitwise. You agree that (a) your use complies with all local, state, and federal regulations in your jurisdiction; (b) you are a legitimate US user of Venmo; and (c) all usage is in compliance with the PayPal Acceptable Usage Policy. (<a href="https://www.paypal.com/us/legalhub/acceptableuse-full">https://www.paypal.com/us/legalhub/acceptableuse-full</a>).</li>
+        <li><strong>Open banking payments:</strong> Some users will have access to bank-to-bank payments initiated through the Splitwise website or mobile apps and facilitated by a third party vendor such as Tink (“Pay by bank” or “open banking payments”). These payments are sent by you from within your bank website or mobile app and are sent directly to your friend’s bank account. Splitwise may use third-party open banking vendors, such as Tink (https://tink.com/), to facilitate the integration between the Splitwise website or mobile apps and the bank applications. By using open banking payments through Splitwise, you agree to abide by the terms of service of our third party open banking vendors and your bank or financial institution, and you agree that Splitwise is in no way responsible or liable for open banking transactions and services provided by a bank or financial institution linked to from Splitwise. You can view the Tink Terms and Conditions on the <a href="https://tink.com/legal/agreements/">Tink website</a>.</li>
+        <li><strong>Paytm and Other Payment Services:</strong> Some users will have access to other payment functions of other companies through links on Splitwise's website or apps (for example, Paytm). These links / API integrations will initiate a payment or request by pre-populating some information (such as email address, phone number, amount or notes) as part of payments completed on a third party payment system, similar to an email "mailto" link. You agree to abide by the terms of service of any payment service linked to by Splitwise..</li>
+      </ul>
+    <li><strong>SMS:</strong> Splitwise offers the option to our customers to receive one-time passwords and account notifications via SMS to a cell phone. SMS message frequency varies. Message and data rates may apply. To stop receiving messages, you may remove your phone number from your account settings, or contact support at support@splitwise.com for assistance. You can also text STOP to stop or HELP for help. Phone carriers are not liable for any delays or undelivered messages.</li>
+    </li>
+  </ul>
+</main>
+
+
+  <footer class="mt-20">
+  <div class="container mx-auto text-grey-light lg:flex lg:max-w-5xl px-8 text-left">
+    <div class="flex w-full justify-between text-sm leading-tight lg:justify-start lg:leading-relaxed lg:pl-0">
+      <div class="lg:pr-8">
+        <p class="font-bold text-teal mb-1">Splitwise</p>
+        <ul class="text-grey-light leading-normal">
+          <li><a href="/about">About</a></li>
+          <li><a href="/press">Press</a></li>
+          <li><a href="https://blog.splitwise.com">Blog</a></li>
+          <li><a href="/jobs">Jobs</a></li>
+          <li><a href="/calculators">Calculators</a></li>
+          <li><a href="https://dev.splitwise.com/">API</a></li>
+        </ul>
+      </div>
+      <div class="hidden lg:block border-r border-grey-lightest h-30"></div>
+      <div class="lg:px-8">
+        <p class="font-bold text-orange mb-1">Account</p>
+        <ul class="text-grey-light leading-normal">
+          <li><a href="/login">Log in</a></li>
+          <li><a href="/signup">Sign up</a></li>
+          <li><a href="/password_reset">Reset password</a></li>
+          <li><a href="/account/settings">Settings</a></li>
+          <li><a href="/subscriptions/new">Splitwise Pro</a></li>
+          <li><a href="/pay"><span class="translation_missing" title="translation missing: en.splitwise_pay">Splitwise Pay</span></a></li>
+        </ul>
+      </div>
+      <div class="hidden lg:block border-r border-grey-lightest h-30"></div>
+      <div class="lg:pl-8">
+        <p class="font-bold text-charcoal mb-1">More</p>
+        <ul class="text-grey-light leading-normal">
+          <li><a href="/contact">Contact us</a></li>
+          <li><a href="http://feedback.splitwise.com/knowledgebase">FAQ</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li class="mt-2">
+            <a href="https://twitter.com/splitwise" class="pr-1 inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" class="fill-current inline">
+                <path d="M23.536 3.116a9.826 9.826 0 0 1-2.776.761 4.872 4.872 0 0 0 2.126-2.675 9.986 9.986 0 0 1-3.073 1.163 4.834 4.834 0 0 0-8.238 4.404c-4.018-.19-7.58-2.12-9.964-5.037a4.738 4.738 0 0 0-.654 2.432c0 1.68.855 3.157 2.15 4.025a4.819 4.819 0 0 1-2.19-.606v.06a4.837 4.837 0 0 0 3.878 4.743 4.909 4.909 0 0 1-2.174.084 4.85 4.85 0 0 0 4.524 3.357 9.696 9.696 0 0 1-5.995 2.068c-.384 0-.766-.022-1.15-.065A13.751 13.751 0 0 0 7.425 20c8.896 0 13.755-7.365 13.755-13.742 0-.205 0-.413-.015-.619a9.763 9.763 0 0 0 2.417-2.504l-.046-.02z" />
+              </svg>
+            </a>
+            <a href="https://facebook.com/splitwise" class="pr-1 inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50" class="fill-current inline">
+                <path d="M40,0H10C4.486,0,0,4.486,0,10v30c0,5.514,4.486,10,10,10h30c5.514,0,10-4.486,10-10V10C50,4.486,45.514,0,40,0z M39,17h-3 c-2.145,0-3,0.504-3,2v3h6l-1,6h-5v20h-7V28h-3v-6h3v-3c0-4.677,1.581-8,7-8c2.902,0,6,1,6,1V17z"></path>
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/splitwise/" class="pl-1 inline-block">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="fill-current inline">
+                <path d="M10 0C7.283 0 6.944.013 5.877.06 4.813.11 4.087.278 3.45.525a4.897 4.897 0 0 0-1.772 1.153A4.88 4.88 0 0 0 .525 3.45C.277 4.088.109 4.812.06 5.877.01 6.944 0 7.283 0 10c0 2.717.012 3.056.06 4.123.05 1.064.217 1.79.465 2.427a4.904 4.904 0 0 0 1.153 1.772 4.89 4.89 0 0 0 1.772 1.153c.638.247 1.363.416 2.427.465 1.067.05 1.406.06 4.123.06 2.717 0 3.056-.013 4.123-.06 1.064-.05 1.79-.218 2.427-.465a4.915 4.915 0 0 0 1.772-1.153c.555-.556.899-1.113 1.153-1.772.247-.638.416-1.363.465-2.427.05-1.067.06-1.406.06-4.123 0-2.717-.013-3.056-.06-4.123-.05-1.064-.218-1.79-.465-2.427a4.908 4.908 0 0 0-1.153-1.772A4.872 4.872 0 0 0 16.55.525C15.913.278 15.187.109 14.123.06 13.056.01 12.717 0 10 0zm0 1.8c2.67 0 2.987.013 4.042.06.975.045 1.504.207 1.856.345.468.18.8.398 1.151.747.35.35.566.682.747 1.15.136.352.3.881.344 1.856.047 1.055.058 1.372.058 4.042s-.012 2.987-.061 4.042c-.051.975-.214 1.504-.351 1.855-.187.469-.4.8-.75 1.152a3.12 3.12 0 0 1-1.15.747c-.35.137-.887.3-1.862.344-1.062.047-1.374.058-4.049.058-2.676 0-2.988-.012-4.05-.061-.975-.051-1.512-.214-1.862-.351-.475-.187-.8-.4-1.15-.75a3.036 3.036 0 0 1-.75-1.15c-.137-.35-.299-.887-.35-1.862-.037-1.05-.05-1.374-.05-4.037s.013-2.988.05-4.05c.051-.975.213-1.512.35-1.862.175-.475.4-.8.75-1.15.35-.35.675-.575 1.15-.75.35-.138.875-.3 1.85-.35 1.063-.038 1.375-.05 4.05-.05L10 1.8zm0 3.065a5.135 5.135 0 1 0 0 10.27 5.135 5.135 0 0 0 0-10.27zm0 8.468a3.332 3.332 0 1 1 0-6.666 3.332 3.332 0 1 1 0 6.666zm6.538-8.67a1.2 1.2 0 0 1-2.4 0 1.2 1.2 0 0 1 2.4 0z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-center items-center my-6 lg:mt-0 lg:justify-end">
+        <a href="https://play.google.com/store/apps/details?id=com.Splitwise.SplitwiseMobile" class="block mr-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="141" height="42"><defs><linearGradient id="a" x1="60.944%" x2="26.763%" y1="4.777%" y2="71.867%"><stop offset="0%" stop-color="#439FF7" /><stop offset=".66%" stop-color="#43A0F7" /><stop offset="26.01%" stop-color="#52BCF8" /><stop offset="51.22%" stop-color="#5CCFF9" /><stop offset="76.04%" stop-color="#63DBFA" /><stop offset="100%" stop-color="#65DFFA" /></linearGradient><linearGradient id="b" x1="107.557%" x2="-130.583%" y1="49.976%" y2="49.976%"><stop offset="0%" stop-color="#FADE4B" /><stop offset="40.87%" stop-color="#F5BD42" /><stop offset="77.54%" stop-color="#F2A73B" /><stop offset="100%" stop-color="#F19E39" /></linearGradient><linearGradient id="c" x1="86.075%" x2="-49.955%" y1="31.204%" y2="137.68%"><stop offset="0%" stop-color="#EB4D4C" /><stop offset="100%" stop-color="#B22C62" /></linearGradient><linearGradient id="d" x1="-18.851%" x2="42.089%" y1="-12.377%" y2="35.229%"><stop offset="0%" stop-color="#549C75" /><stop offset="6.85%" stop-color="#54A375" /><stop offset="47.62%" stop-color="#60CA7D" /><stop offset="80.09%" stop-color="#6AE180" /><stop offset="100%" stop-color="#6DEA82" /></linearGradient></defs><g fill="none"><path fill="#000" d="M135.731 42H5.67C2.81 42 .452 39.622.452 36.737V5.263C.452 2.378 2.81 0 5.67 0h130.111C138.641 0 141 2.378 141 5.263v31.474c-.05 2.885-2.41 5.263-5.27 5.263z" /><path fill="#A5A5A5" d="M135.731.86c2.409 0 4.366 1.974 4.366 4.403v31.474c0 2.43-1.957 4.403-4.366 4.403H5.67c-2.409 0-4.365-1.974-4.365-4.403V5.263C1.305 2.833 3.26.86 5.67.86h130.061zm0-.86H5.67C2.81 0 .452 2.378.452 5.263v31.474C.452 39.622 2.81 42 5.67 42h130.111c2.86 0 5.219-2.378 5.219-5.263V5.263C140.95 2.378 138.59 0 135.73 0z" /><path fill="#FFF" stroke="#FFF" stroke-width=".5" d="M49.776 10.728c0 .86-.25 1.568-.752 2.125-.602.607-1.355.91-2.308.91-.904 0-1.656-.303-2.309-.96-.652-.608-.953-1.418-.953-2.328 0-.911.301-1.72.953-2.328.653-.607 1.405-.962 2.309-.962.451 0 .853.102 1.304.253.402.152.753.405.954.709l-.552.557c-.402-.507-1.004-.76-1.706-.76-.653 0-1.205.253-1.706.709-.502.455-.703 1.063-.703 1.822 0 .759.25 1.366.703 1.821.501.456 1.053.709 1.706.709.702 0 1.254-.253 1.756-.709.3-.303.451-.708.502-1.265h-2.258v-.759h3.01c.05.152.05.304.05.456zm4.817-2.632h-2.86v2.024h2.56v.76h-2.56v1.973h2.86v.81h-3.662V7.337h3.662v.76zm3.413 5.567h-.803V8.096h-1.756v-.759h4.315v.76h-1.756v5.566zm4.817 0V7.337h.803v6.326h-.803zm4.365 0h-.803V8.096H64.63v-.759h4.315v.76h-1.756v5.566zm9.885-.81c-.602.658-1.355.961-2.308.961-.903 0-1.656-.303-2.308-.961a3.305 3.305 0 0 1-.903-2.328c0-.91.3-1.72.903-2.328.602-.657 1.355-.961 2.308-.961.903 0 1.656.304 2.308.961.602.658.903 1.417.903 2.328 0 .911-.3 1.67-.903 2.328zm-4.014-.557a2.297 2.297 0 0 0 1.706.709 2.38 2.38 0 0 0 1.706-.709c.452-.455.703-1.062.703-1.821 0-.709-.251-1.316-.703-1.822a2.297 2.297 0 0 0-1.706-.709 2.38 2.38 0 0 0-1.706.709c-.452.455-.703 1.063-.703 1.822 0 .759.251 1.366.703 1.821zm6.021 1.367V7.337h.954l3.01 4.909h.05l-.05-1.215V7.337h.803v6.326h-.853l-3.161-5.111h-.05l.05 1.214v3.897h-.753z" /><path fill="#FFF" d="M71.353 22.822c-2.459 0-4.466 1.872-4.466 4.453 0 2.58 2.007 4.453 4.466 4.453s4.466-1.873 4.466-4.453c0-2.581-2.007-4.453-4.466-4.453zm0 7.185c-1.355 0-2.509-1.113-2.509-2.682 0-1.62 1.154-2.682 2.509-2.682s2.509 1.114 2.509 2.682c0 1.569-1.154 2.682-2.51 2.682zm-9.684-7.185c-2.46 0-4.466 1.872-4.466 4.453 0 2.58 2.007 4.453 4.466 4.453 2.458 0 4.465-1.873 4.465-4.453 0-2.581-2.007-4.453-4.465-4.453zm0 7.185c-1.355 0-2.51-1.113-2.51-2.682 0-1.62 1.155-2.682 2.51-2.682 1.354 0 2.508 1.114 2.508 2.682 0 1.569-1.154 2.682-2.508 2.682zm-11.541-5.82v1.873h4.516c-.15 1.063-.502 1.822-1.004 2.378-.652.658-1.656 1.367-3.462 1.367-2.76 0-4.918-2.227-4.918-5.06 0-2.834 2.158-5.06 4.918-5.06 1.505 0 2.559.606 3.362 1.366l1.304-1.316c-1.104-1.063-2.609-1.923-4.716-1.923-3.814 0-6.975 3.087-6.975 6.932 0 3.846 3.161 6.933 6.975 6.933 2.057 0 3.612-.658 4.817-1.923 1.254-1.265 1.605-2.985 1.605-4.453a7.2 7.2 0 0 0-.1-1.164h-6.322v.05zm47.167 1.468c-.351-1.012-1.505-2.833-3.814-2.833-2.258 0-4.164 1.821-4.164 4.453 0 2.48 1.856 4.453 4.415 4.453 2.007 0 3.212-1.265 3.713-1.974l-1.505-1.012c-.502.76-1.204 1.215-2.158 1.215-1.003 0-1.706-.456-2.157-1.367l5.92-2.48-.25-.455zm-6.021 1.518c-.05-1.72 1.304-2.58 2.308-2.58.752 0 1.405.404 1.656.961l-3.964 1.62zm-4.818 4.302h1.957V18.369h-1.957v13.106zm-3.21-7.641h-.051a3.105 3.105 0 0 0-2.308-1.012c-2.208 0-4.265 1.973-4.265 4.503 0 2.48 2.007 4.453 4.265 4.453 1.053 0 1.906-.455 2.308-1.012h.05v.607c0 1.72-.903 2.632-2.358 2.632-1.205 0-1.907-.86-2.208-1.569l-1.706.708c.502 1.164 1.756 2.632 3.914 2.632 2.258 0 4.215-1.366 4.215-4.656v-8.045h-1.857v.759zm-2.209 6.173c-1.355 0-2.458-1.113-2.458-2.682 0-1.568 1.103-2.732 2.458-2.732 1.305 0 2.359 1.164 2.359 2.732 0 1.518-1.054 2.682-2.359 2.682zm25.39-11.638h-4.666v13.106h1.957v-4.96h2.71c2.157 0 4.264-1.568 4.264-4.098s-2.157-4.048-4.265-4.048zm.05 6.325h-2.76V20.19h2.76c1.456 0 2.258 1.215 2.258 2.227 0 1.062-.853 2.277-2.258 2.277zm11.993-1.872c-1.405 0-2.86.607-3.462 2.024l1.706.708c.351-.708 1.054-.961 1.756-.961 1.004 0 2.007.607 2.057 1.67v.151c-.35-.202-1.104-.506-2.007-.506-1.856 0-3.763 1.012-3.763 2.935 0 1.771 1.505 2.885 3.211 2.885 1.305 0 2.007-.608 2.459-1.265h.05v1.012h1.857v-5.01c.05-2.378-1.656-3.643-3.864-3.643zm-.25 7.185c-.653 0-1.506-.303-1.506-1.113 0-1.012 1.104-1.417 2.057-1.417.853 0 1.255.202 1.756.455-.15 1.215-1.204 2.075-2.308 2.075zm11.038-6.932l-2.208 5.667H127l-2.308-5.667h-2.107l3.462 7.944-1.957 4.403h2.007l5.319-12.347h-2.158zm-17.512 8.4h1.957V18.369h-1.957v13.106z" /><path fill="url(#a)" d="M11.29 7.894c-.301.303-.502.81-.502 1.467v23.227c0 .658.2 1.164.502 1.467l.1.05 12.896-13.004v-.304L11.39 7.843l-.1.05z" /><path fill="url(#b)" d="M28.601 25.504l-4.315-4.352v-.304l4.315-4.352.1.05 5.069 2.936c1.455.81 1.455 2.176 0 3.036l-5.068 2.935-.1.05z" /><path fill="url(#c)" d="M28.702 25.402l-4.416-4.453L11.29 34.055c.502.506 1.254.557 2.158.05l15.254-8.703" /><path fill="url(#d)" d="M28.702 16.547L13.498 7.843c-.903-.506-1.706-.455-2.158.05L24.286 20.95l4.416-4.402z" /><g fill="#000"><path d="M28.601 25.352l-15.103 8.653c-.853.506-1.606.455-2.108 0l-.1.1.1.052c.502.455 1.255.455 2.108 0l15.204-8.704-.1-.101z" opacity=".2" /><path d="M11.29 33.904c-.301-.304-.502-.81-.502-1.468v.152c0 .658.2 1.164.502 1.467l.1-.1-.1-.051z" opacity=".12" /></g><path fill="#000" d="M33.77 22.366l-5.17 2.986.1.1 5.069-2.934c.702-.405 1.104-.961 1.104-1.518-.05.506-.452.961-1.104 1.366z" opacity=".12" /><path fill="#FFF" d="M13.498 7.995L33.77 19.634c.652.354 1.053.86 1.104 1.366 0-.557-.352-1.113-1.104-1.518L13.498 7.843c-1.455-.81-2.66-.152-2.66 1.518v.152c0-1.67 1.205-2.328 2.66-1.518z" opacity=".25" /></g></svg>
+        </a>
+        <a href="https://apps.apple.com/us/app/splitwise/id458023433" class="block ml-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="141" height="42" viewBox="0 0 141 42">
+            <path fill="#A5A5A5" d="M135.932 41.923H5.369c-2.71 0-4.917-2.25-4.917-4.95V5.323c0-2.7 2.207-4.9 4.917-4.9h130.563c2.71 0 5.018 2.2 5.018 4.9v31.65c0 2.7-2.308 4.95-5.018 4.95z" />
+            <path fill="#000" d="M139.591 36.65c0 2.2-1.806 3.95-4.014 3.95H5.014C2.806 40.6 1 38.8 1 36.65V5c0-2.2 1.806-4 4.014-4h130.563c2.208 0 4.014 1.8 4.014 4v31.65z" />
+            <path fill="#FFF" d="M31.813 20.923c-.05-3.35 2.76-4.95 2.86-5.05-1.556-2.3-4.014-2.6-4.867-2.6-2.058-.2-4.015 1.2-5.068 1.2-1.054 0-2.66-1.2-4.416-1.15-2.208.05-4.315 1.3-5.47 3.3-2.358 4.05-.602 10.05 1.656 13.35 1.155 1.6 2.46 3.4 4.165 3.35 1.706-.05 2.308-1.05 4.366-1.05 2.007 0 2.609 1.05 4.365 1.05 1.807-.05 2.96-1.6 4.065-3.25 1.304-1.85 1.806-3.65 1.856-3.75 0-.05-3.462-1.4-3.512-5.4zm-3.312-9.8c.903-1.15 1.555-2.7 1.355-4.25-1.305.05-2.96.9-3.914 2-.853 1-1.606 2.6-1.405 4.1 1.455.1 3.01-.75 3.964-1.85zM56.3 33.073H53.94l-1.304-4.05H48.12l-1.255 4.05h-2.258l4.466-13.8h2.76l4.466 13.8zm-4.065-5.75l-1.154-3.6c-.1-.35-.351-1.25-.702-2.6h-.05c-.151.6-.352 1.45-.653 2.6l-1.154 3.6h3.713zm15.505.65c0 1.7-.451 3.05-1.355 4-.803.85-1.856 1.3-3.06 1.3-1.305 0-2.259-.45-2.86-1.4h-.05v5.25h-2.209v-10.7c0-1.05-.05-2.15-.1-3.3h1.957l.1 1.6h.05c.753-1.2 1.857-1.8 3.362-1.8 1.154 0 2.158.45 2.96 1.4.804.95 1.205 2.15 1.205 3.65zm-2.258.1c0-.95-.2-1.75-.652-2.4-.502-.65-1.104-1-1.907-1-.552 0-1.054.2-1.505.55-.452.35-.753.85-.853 1.4-.05.25-.1.5-.1.65v1.65c0 .7.2 1.35.652 1.85.451.5 1.003.75 1.756.75.853 0 1.505-.3 1.957-.95.401-.6.652-1.45.652-2.5zm13.749-.1c0 1.7-.452 3.05-1.355 4-.803.85-1.857 1.3-3.06 1.3-1.305 0-2.259-.45-2.81-1.4h-.05v5.25h-2.259v-10.7c0-1.05-.05-2.15-.1-3.3h1.957l.1 1.6h.05c.753-1.2 1.857-1.8 3.362-1.8 1.154 0 2.158.45 2.96 1.4.803.95 1.205 2.15 1.205 3.65zm-2.258.1c0-.95-.2-1.75-.652-2.4-.502-.65-1.104-1-1.907-1-.552 0-1.054.2-1.506.55-.451.35-.752.85-.853 1.4-.05.25-.1.5-.1.65v1.65c0 .7.2 1.35.652 1.85s1.004.75 1.757.75c.853 0 1.505-.3 1.957-.95.401-.6.652-1.45.652-2.5zm15.103 1.15c0 1.15-.401 2.15-1.254 2.85-.903.8-2.158 1.2-3.763 1.2-1.506 0-2.71-.3-3.613-.85l.502-1.85c.953.6 2.057.9 3.211.9.853 0 1.505-.2 1.957-.55.452-.4.702-.9.702-1.5 0-.55-.2-1.05-.552-1.4-.401-.4-1.003-.75-1.906-1.05-2.409-.9-3.613-2.2-3.613-3.95 0-1.15.401-2.05 1.254-2.8.853-.7 1.957-1.1 3.412-1.1 1.255 0 2.309.2 3.162.65l-.552 1.8c-.803-.4-1.656-.65-2.66-.65-.803 0-1.405.2-1.806.55-.351.35-.552.75-.552 1.25 0 .55.2 1 .652 1.35.351.35 1.054.7 2.007 1.05 1.205.5 2.058 1.05 2.61 1.7.501.65.802 1.45.802 2.4zm7.326-4.4h-2.458v4.85c0 1.25.451 1.85 1.304 1.85.402 0 .703-.05 1.004-.1l.05 1.7c-.452.15-1.004.25-1.706.25-.853 0-1.556-.25-2.057-.8-.502-.55-.753-1.45-.753-2.7v-5h-1.455v-1.65h1.455v-1.8l2.158-.65v2.5h2.458v1.55zm11.04 3.2c0 1.55-.452 2.8-1.305 3.75-.903 1-2.158 1.5-3.663 1.5-1.455 0-2.61-.5-3.513-1.45-.853-.95-1.304-2.2-1.304-3.65 0-1.55.451-2.8 1.355-3.8.903-1 2.107-1.45 3.612-1.45 1.456 0 2.66.5 3.513 1.45.903.95 1.305 2.2 1.305 3.65zm-2.309.1c0-.9-.2-1.7-.602-2.35-.451-.8-1.154-1.2-2.007-1.2-.903 0-1.555.4-2.057 1.2-.402.65-.602 1.45-.602 2.4 0 .9.2 1.7.602 2.35.502.8 1.154 1.2 2.007 1.2.853 0 1.505-.4 2.007-1.2.452-.7.652-1.5.652-2.4zm9.534-3.05c-.2-.05-.451-.05-.702-.05-.803 0-1.405.3-1.807.9-.351.5-.552 1.15-.552 1.95v5.2h-2.208v-6.8c0-1.15-.05-2.2-.1-3.15h1.957l.1 1.9h.05c.251-.65.603-1.2 1.105-1.6.501-.35 1.003-.55 1.605-.55.2 0 .402 0 .552.05v2.15zm9.935 2.55c0 .4-.05.75-.1 1h-6.674c.05 1 .352 1.75.954 2.25.552.45 1.304.7 2.157.7 1.004 0 1.907-.15 2.71-.45l.351 1.55c-.953.4-2.057.6-3.362.6-1.555 0-2.76-.45-3.663-1.35-.903-.9-1.304-2.15-1.304-3.65s.401-2.75 1.254-3.75c.853-1.05 2.007-1.6 3.513-1.6 1.455 0 2.509.55 3.261 1.6.602.85.903 1.9.903 3.1zm-2.157-.55c0-.65-.15-1.2-.452-1.7-.401-.6-.953-.9-1.756-.9-.703 0-1.305.3-1.756.9-.352.5-.602 1.05-.653 1.7h4.617zm-73.963-16.25c0 1.2-.35 2.15-1.103 2.75-.703.55-1.656.85-2.91.85-.603 0-1.155-.05-1.606-.1v-6.65c.602-.1 1.204-.15 1.856-.15 1.204 0 2.108.25 2.71.75.752.6 1.053 1.45 1.053 2.55zm-1.154 0c0-.8-.2-1.4-.652-1.8-.401-.4-1.054-.65-1.857-.65-.35 0-.652 0-.903.05v5.05c.15 0 .402.05.753.05.853 0 1.455-.25 1.957-.7.502-.45.702-1.1.702-2zm7.276 1.05c0 .75-.2 1.35-.652 1.85s-1.054.75-1.807.75c-.702 0-1.304-.25-1.706-.7-.451-.5-.652-1.1-.652-1.8 0-.75.2-1.4.652-1.85.452-.45 1.054-.7 1.807-.7.702 0 1.304.25 1.756.7.401.4.602 1 .602 1.75zm-1.154.05c0-.45-.1-.85-.301-1.15-.25-.4-.552-.6-.953-.6-.452 0-.753.2-1.004.6-.2.3-.301.7-.301 1.2 0 .45.1.85.301 1.15.251.4.552.6 1.004.6.401 0 .752-.2.953-.6.2-.4.301-.75.301-1.2zm9.333-2.45l-1.555 4.9h-1.004l-.652-2.1c-.15-.55-.301-1.05-.402-1.6-.1.55-.25 1.05-.401 1.6l-.652 2.1h-1.004l-1.455-4.9h1.104l.552 2.3c.15.55.25 1.05.351 1.55.1-.4.2-.95.401-1.55l.703-2.35h.903l.652 2.3c.151.55.302 1.1.402 1.6h.05c.05-.5.2-1.05.351-1.6l.602-2.3 1.054.05zm5.62 4.9H70.3v-2.8c0-.85-.351-1.3-1.003-1.3-.301 0-.603.1-.803.35-.2.25-.301.5-.301.85v2.9h-1.004v-3.5c0-.45 0-.9-.05-1.4h.953l.05.75h.05c.151-.25.302-.45.553-.6.3-.2.602-.25 1.003-.25.452 0 .853.15 1.154.45.402.35.552.9.552 1.6v2.95h-.05zm3.01 0H73.31v-7.15h1.104v7.15zm6.424-2.5c0 .75-.201 1.35-.653 1.85-.451.5-1.053.75-1.806.75-.703 0-1.305-.25-1.706-.7-.452-.5-.653-1.1-.653-1.8 0-.75.201-1.4.653-1.85.451-.5 1.054-.7 1.756-.7.703 0 1.305.25 1.756.7.452.4.653 1 .653 1.75zm-1.104.05c0-.45-.1-.85-.301-1.15-.251-.4-.552-.6-.954-.6-.451 0-.752.2-1.003.6-.201.3-.301.7-.301 1.2 0 .45.1.85.3 1.15.252.4.553.6 1.004.6.402 0 .753-.2.954-.6.2-.4.3-.75.3-1.2zm6.422 2.45h-1.003l-.1-.55h-.05c-.352.45-.804.65-1.456.65-.451 0-.853-.15-1.104-.45-.25-.25-.401-.6-.401-1 0-.6.25-1.05.752-1.35.502-.3 1.205-.45 2.108-.45v-.1c0-.65-.351-.95-1.004-.95-.501 0-.903.1-1.254.35l-.2-.7c.45-.3 1.003-.4 1.705-.4 1.305 0 1.907.65 1.907 2v1.8c0 .45.05.85.1 1.15zm-1.154-1.7v-.75c-1.204 0-1.806.3-1.806 1 0 .25.05.45.2.55.151.15.302.2.553.2.25 0 .451-.1.652-.25.2-.15.351-.35.401-.6v-.15zm7.326 1.7h-.953l-.05-.8h-.05c-.302.6-.853.9-1.556.9-.602 0-1.104-.25-1.455-.7-.402-.45-.602-1.05-.602-1.8 0-.8.2-1.45.652-1.9.401-.45.903-.7 1.505-.7.653 0 1.104.2 1.405.65v-2.8h1.104v5.8c-.05.5 0 .95 0 1.35zm-1.104-2.1v-.8c0-.15 0-.25-.05-.35-.05-.25-.2-.5-.401-.65-.2-.2-.452-.25-.753-.25-.401 0-.702.15-.953.5-.251.3-.352.75-.352 1.25s.1.9.352 1.2c.25.3.552.5.953.5.351 0 .652-.15.853-.4.251-.35.351-.65.351-1zm10.437-.4c0 .75-.2 1.35-.652 1.85s-1.054.75-1.806.75c-.703 0-1.305-.25-1.706-.7-.452-.5-.653-1.1-.653-1.8 0-.75.201-1.4.653-1.85.451-.5 1.053-.7 1.806-.7.703 0 1.305.25 1.756.7.402.4.602 1 .602 1.75zm-1.154.05c0-.45-.1-.85-.3-1.15-.252-.4-.553-.6-1.004-.6-.452 0-.753.2-1.004.6-.2.3-.3.7-.3 1.2 0 .45.1.85.3 1.15.251.4.552.6 1.004.6.401 0 .752-.2 1.003-.6.2-.4.301-.75.301-1.2zm7.025 2.45h-1.104v-2.8c0-.85-.35-1.3-1.003-1.3-.301 0-.602.1-.803.35-.2.25-.301.5-.301.85v2.9h-1.104v-3.5c0-.45 0-.9-.05-1.4h.953l.05.75h.05c.151-.25.302-.45.552-.6.301-.2.603-.25 1.004-.25.452 0 .853.15 1.154.45.402.35.552.9.552 1.6v2.95h.05zm7.326-4.1h-1.204v2.35c0 .6.2.9.652.9.2 0 .351 0 .502-.05l.05.8c-.2.1-.502.1-.853.1-.451 0-.752-.15-1.003-.4-.251-.25-.352-.7-.352-1.3v-2.45h-.702v-.8h.702v-.9l1.054-.3v1.2h1.204l-.05.85zm5.77 4.1h-1.103v-2.8c0-.9-.352-1.3-1.004-1.3-.502 0-.853.25-1.054.75-.05.1-.05.25-.05.4v2.95h-1.053v-7.15h1.103v2.95c.352-.55.853-.8 1.456-.8.451 0 .802.15 1.104.45.35.35.551.9.551 1.65.05-.05.05 2.9.05 2.9zm5.972-2.7c0 .2 0 .35-.05.5h-3.262c0 .5.15.85.452 1.1.3.25.652.35 1.053.35.502 0 .904-.1 1.305-.25l.15.75c-.451.2-1.003.3-1.655.3-.753 0-1.355-.2-1.807-.65-.451-.45-.652-1.05-.652-1.8s.2-1.35.602-1.85c.402-.5 1.004-.8 1.706-.8.703 0 1.255.25 1.606.8.401.45.552.95.552 1.55zm-1.054-.3c0-.3-.05-.6-.2-.85a.987.987 0 0 0-.854-.45.987.987 0 0 0-.853.45c-.2.25-.3.5-.3.85h2.207z" />
+          </svg>
+        </a>
+      </div>
+      <p class="text-grey-light flex justify-center items-center text-sm lg:justify-end">
+        Made with :) in Providence, RI, USA
+      </p>
+    </div>
+  </div>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 680 91" class="w-full">
+  <path fill="#ACE4D6" d="M349 76.499L286 113V40z" />
+  <path fill="#0C3C32" d="M480 74.5L446 94V55z" />
+  <path fill="#1CC29F" d="M223 76.5l63 36.5V40zm182 1.999L446 102V55z" />
+  <path fill="#137863" d="M169 48v82l71-41z" />
+  <path fill="#1CC29F" d="M121 75.499L169 103V48z" />
+  <path fill="#373B3F" d="M456 101h-96V46z" />
+  <path fill="#52595F" d="M360 46v55h-96z" />
+  <path fill="#A473DB" d="M436 93h63V57z" />
+  <path fill="#D0B3EB" d="M499 57v36h63z" />
+  <path fill="#0C3C32" d="M491 93h84.18V44z" />
+  <path fill="#1CC29F" d="M575.18 93h84.179l-84.18-49z" />
+  <path fill="#FF2900" d="M601 94h48V66z" />
+  <path fill="#FF692C" d="M649 66v28h48z" />
+  <path fill="#FF815C" d="M170.385 93h76V49z" />
+  <path fill="#FF2900" d="M246.385 49v44h76z" />
+  <path fill="#373B3F" d="M166 93H70V38z" />
+  <path fill="#52595F" d="M70 38v55h-96z" />
+</svg>
+
+</footer>
+
+
+  
+</body>
+</html>
