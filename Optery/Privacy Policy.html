@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en-US">
+<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.5.1",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],this.interceptedClickListeners=[],this._interceptClickListeners(this),window.addEventListener("pageshow",e=>{this.persisted=e.persisted,this.everythingLoaded&&this._triggerLastFunctions()}),document.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(e){if(document.hidden){e._triggerListener();return}this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventHandler,{passive:!0})),window.addEventListener("touchstart",e.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",e.touchStartHandler),document.addEventListener("visibilitychange",e.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(e=>window.removeEventListener(e,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(e){"HTML"!==e.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),e.target.addEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!0),this._renameDOMAttribute(e.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(e){e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this.interceptedClicks.push(e),e.preventDefault(),e.stopPropagation(),e.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(e=>{e.target.dispatchEvent(new MouseEvent("click",{view:e.view,bubbles:!0,cancelable:!0}))})}_interceptClickListeners(e){EventTarget.prototype.addEventListenerBase=EventTarget.prototype.addEventListener,EventTarget.prototype.addEventListener=function(t,i,r){"click"!==t||e.windowLoaded||i===e.clickHandler||e.interceptedClickListeners.push({target:this,func:i,options:r}),(this||window).addEventListenerBase(t,i,r)}}_disableOtherEventListeners(e,t){this.interceptedClickListeners.forEach(i=>{i.target===e&&(t?e.removeEventListener("click",i.func,i.options):e.addEventListener("click",i.func,i.options))}),e.parentNode!==document.documentElement&&this._disableOtherEventListeners(e.parentNode,t)}_waitForPendingClicks(){return new Promise(e=>{this._isClickPending?this._pendingClickFinished=e:e()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(e,t,i){e.hasAttribute&&e.hasAttribute(t)&&(event.target.setAttribute(i,event.target.getAttribute(t)),event.target.removeAttribute(t))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let e=[];document.querySelectorAll("script[type=rocketlazyloadscript][data-rocket-src]").forEach(t=>{let i=t.getAttribute("data-rocket-src");if(i&&0!==i.indexOf("data:")){0===i.indexOf("//")&&(i=location.protocol+i);try{let r=new URL(i).origin;r!==location.origin&&e.push({src:r,crossOrigin:t.crossOrigin||"module"===t.getAttribute("data-rocket-type")})}catch(n){}}}),e=[...new Map(e.map(e=>[JSON.stringify(e),e])).values()],this._batchInjectResourceHints(e,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._pendingWebpackRequests(this),await this._triggerWindowLoad()}catch(e){console.error(e)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{e.hasAttribute("data-rocket-src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){if(await this._littleBreath(),!0===e.noModule&&"noModule"in HTMLScriptElement.prototype){e.setAttribute("data-rocket-status","skipped");return}return new Promise(t=>{let i;function r(){(i||e).setAttribute("data-rocket-status","executed"),t()}try{if(navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)i=document.createElement("script"),[...e.attributes].forEach(e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type"),"data-rocket-src"===t&&(t="src"),i.setAttribute(t,e.nodeValue))}),e.text&&(i.text=e.text),i.hasAttribute("src")?(i.addEventListener("load",r),i.addEventListener("error",function(){i.setAttribute("data-rocket-status","failed"),t()}),setTimeout(()=>{i.isConnected||t()},1)):(i.text=e.text,r()),e.parentNode.replaceChild(i,e);else{let n=e.getAttribute("data-rocket-type"),s=e.getAttribute("data-rocket-src");n?(e.type=n,e.removeAttribute("data-rocket-type")):e.removeAttribute("type"),e.addEventListener("load",r),e.addEventListener("error",function(){e.setAttribute("data-rocket-status","failed"),t()}),s?(e.removeAttribute("data-rocket-src"),e.src=s):e.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(e.text)))}}catch(a){e.setAttribute("data-rocket-status","failed"),t()}})}async _loadScriptsFromList(e){let t=e.shift();return t&&t.isConnected?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(e,t){var i=document.createDocumentFragment();e.forEach(e=>{let r=e.getAttribute&&e.getAttribute("data-rocket-src")||e.src;if(r){let n=document.createElement("link");n.href=r,n.rel=t,"preconnect"!==t&&(n.as="script"),e.getAttribute&&"module"===e.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),e.crossOrigin&&(n.crossOrigin=e.crossOrigin),e.integrity&&(n.integrity=e.integrity),i.appendChild(n),this.trash.push(n)}}),document.head.appendChild(i)}_delayEventListeners(e){let t={};function i(i,r){return t[r].eventsToRewrite.indexOf(i)>=0&&!e.everythingLoaded?"rocket-"+i:i}function r(e,r){var n;!t[n=e]&&(t[n]={originalFunctions:{add:n.addEventListener,remove:n.removeEventListener},eventsToRewrite:[]},n.addEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.add.apply(n,arguments)},n.removeEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.remove.apply(n,arguments)}),t[e].eventsToRewrite.push(r)}function n(t,i){let r=t[i];t[i]=null,Object.defineProperty(t,i,{get:()=>r||function(){},set(n){e.everythingLoaded?r=n:t["rocket"+i]=r=n}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t;function i(t){return e.everythingLoaded?t:t.split(" ").map(e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e).join(" ")}function r(r){if(r&&r.fn&&!e.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(t){return e.domReadyFired?t.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>t.bind(document)(r)),r([])};let n=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){return this[0]===window&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let t=arguments[0][e];delete arguments[0][e],arguments[0][i(e)]=t})),n.apply(this,arguments),this},e.allJQueries.push(r)}t=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>t,set(e){r(e)}})}async _pendingWebpackRequests(e){let t=document.querySelector("script[data-webpack]");async function i(){return new Promise(e=>{t.addEventListener("load",e),t.addEventListener("error",e)})}t&&(await i(),await e._requestAnimFrame(),await e._pendingWebpackRequests(e))}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}async _triggerWindowLoad(){await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(e=>e(window).trigger("rocket-jquery-load")),await this._littleBreath();let e=new Event("rocket-pageshow");e.persisted=this.persisted,window.dispatchEvent(e),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted}),this.windowLoaded=!0}_triggerLastFunctions(){document.onreadystatechange&&document.onreadystatechange(),window.onload&&window.onload(),window.onpageshow&&window.onpageshow({persisted:this.persisted})}_handleDocumentWrite(){let e=new Map;document.write=document.writeln=function(t){let i=document.currentScript;i||console.error("WPRocket unable to document.write this: "+t);let r=document.createRange(),n=i.parentElement,s=e.get(i);void 0===s&&(s=i.nextSibling,e.set(i,s));let a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(e=>setTimeout(e)):new Promise(e=>requestAnimationFrame(e))}_emptyTrash(){this.trash.forEach(e=>e.remove())}static run(){let e=new RocketLazyLoadScripts;e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<!-- This site is tracked with the HandL UTM Grabber v3 (3.0.56) - https://www.utmgrabber.com/ --> 
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.2 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Privacy Policy - Optery</title><link rel="preload" as="font" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-400.woff2" crossorigin><link rel="preload" as="font" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-600.woff2" crossorigin><link rel="preload" as="font" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-700.woff2" crossorigin><link rel="preload" as="font" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/lato/lato-700.woff2" crossorigin><link rel="preload" as="font" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-800.woff2" crossorigin><style id="wpr-usedcss">@font-face{font-family:Sora;font-style:normal;font-weight:400;font-display:swap;src:url('https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-400.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Sora;font-style:normal;font-weight:600;font-display:swap;src:url('https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-600.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Sora;font-style:normal;font-weight:700;font-display:swap;src:url('https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-700.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Lato;font-style:normal;font-weight:700;font-display:swap;src:url('https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/lato/lato-700.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}body a:where(:not(.wp-element-button)){text-decoration:none}img.emoji{display:inline!important;border:none!important;box-shadow:none!important;height:1em!important;width:1em!important;margin:0 .07em!important;vertical-align:-.1em!important;background:0 0!important;padding:0!important}:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,161;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px;--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.screen-reader-text{clip:rect(1px,1px,1px,1px);word-wrap:normal!important;border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.screen-reader-text:focus{clip:auto!important;background-color:#ddd;-webkit-clip-path:none;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}form#optery-sign-up-form input,form#optery-sign-up-form select{width:100%}form#optery-sign-up-form{background-color:#fff;padding:1em}form#optery-sign-up-form input[type=submit]{margin-top:1em}form#optery-sign-up-form span.error-msg{color:red;font-size:13px}*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Sora,sans-serif;font-feature-settings:normal;font-variation-settings:normal}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}h1,h2,h4{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}strong{font-weight:bolder}code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;font-size:1em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button;background-color:initial;background-image:none}progress{vertical-align:initial}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}figure,h1,h2,h4,hr,p{margin:0}fieldset{margin:0}fieldset,legend{padding:0}ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}audio,canvas,embed,iframe,img,object,svg{display:block;vertical-align:middle}img{max-width:100%;height:auto}[hidden]{display:none}*,::backdrop,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:#3b82f680;--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }body{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));font-family:Sora,sans-serif;--tw-text-opacity:1;color:rgb(1 28 67/var(--tw-text-opacity))}a,button{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}p+p{margin-top:1rem}.heading-md{margin-bottom:3rem;font-size:32px;font-weight:700;line-height:1.25;--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}@media (min-width:1024px){.heading-md{font-size:50px;line-height:1.28}}.heading-lg{margin-bottom:3rem;font-size:32px;line-height:1.25;font-weight:700;--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}@media (min-width:1024px){.heading-lg{margin-bottom:5rem;font-size:64px;line-height:1.25}}.button{display:flex;height:3.5rem;width:100%;cursor:pointer;align-items:center;justify-content:center;border-radius:.5rem;--tw-bg-opacity:1;background-color:rgb(6 38 85/var(--tw-bg-opacity));padding:1rem 2.5rem;text-align:center;font-size:.875rem;line-height:1.25rem;font-weight:600;--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity));--tw-shadow:-2px -2px 16px #6ef7d3d9,2px 2px 16px #2a73dfbf;--tw-shadow-colored:-2px -2px 16px var(--tw-shadow-color),2px 2px 16px var(--tw-shadow-color);transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.button,.button:hover{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.button:hover{--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000}@media (min-width:1024px){.button{display:inline-flex;width:auto}}.button-white{display:flex;height:3.5rem;width:100%;cursor:pointer;align-items:center;justify-content:center;border-radius:.5rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(6 38 85/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding:1rem 2.5rem;text-align:center;font-size:.875rem;line-height:1.25rem;font-weight:600;--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity));transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.button-white:hover{--tw-border-opacity:1;border-color:rgb(74 136 228/var(--tw-border-opacity));--tw-text-opacity:1;color:rgb(74 136 228/var(--tw-text-opacity))}.button-sm{height:2.5rem;padding:.5rem 1.25rem;font-size:.875rem;line-height:1.25rem}.section{padding-top:3rem;padding-bottom:3rem}@media (min-width:1024px){.button-white{display:inline-flex;width:auto}.section{padding-top:6rem;padding-bottom:6rem}}.screen-reader-text{display:none}body .is-layout-constrained>:where(:not(.alignleft):not(.alignright):not(.alignfull)){position:relative;z-index:1;max-width:690px}.iti__flag{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/vendor/flags.png)!important}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.iti__flag{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/vendor/flags@2x.png)!important}}.iti{display:block!important}@media (min-width:768px){.iti__country-list{width:270px!important;white-space:normal!important}}.u-cancelPreflight h1,.u-cancelPreflight h2,.u-cancelPreflight h4{font-size:revert;font-weight:revert}.container{width:100%;margin-right:auto;margin-left:auto;padding-right:24px;padding-left:24px}@media (min-width:640px){.container{max-width:640px}}.family-save{position:relative;border-radius:32px;--tw-bg-opacity:1;background-color:rgb(1 28 67/var(--tw-bg-opacity));padding-top:5rem;padding-bottom:5rem;text-align:center;--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.family-save .container{display:flex;flex-direction:column}.family-save:after{content:"";position:absolute;bottom:0;left:0;right:0;z-index:10;height:5rem;width:100%;border-bottom-right-radius:32px;border-bottom-left-radius:32px;--tw-bg-opacity:1;background-color:rgb(1 28 67/var(--tw-bg-opacity))}.slideInFromLeft{animation:.4s ease-in slideInFromLeft}.slideInFromRight{animation:.4s ease-in slideInFromRight}.slideInFromBottom{animation:.4s ease-in slideInFromBottom}@keyframes slideInFromLeft{0%{transform:translateX(-160px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes slideInFromRight{0%{transform:translateX(160px)}to{transform:translateX(0)}}@keyframes slideInFromBottom{0%{transform:translateY(80%);opacity:.6}to{transform:translateY(0);opacity:1}}.mainHeader{position:sticky;top:0;left:0;z-index:50;height:88px;width:100%;--tw-shadow:0px 0.3px 0px #aeaeb4;--tw-shadow-colored:0px 0.3px 0px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}@media (min-width:768px){.container{max-width:768px}.mainHeader{height:120px}}@media (min-width:1024px){.container{max-width:1024px}.family-save{padding-top:10rem;padding-bottom:10rem}.family-save:after{height:10rem}.mainHeader{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}}.mainHeader.bg{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.mainHeader_row{display:flex;justify-content:space-between;padding-top:1.5rem;padding-bottom:1.5rem}@media (min-width:768px){.mainHeader_row{padding-top:2.5rem;padding-bottom:2.5rem}}.mainHeader_brand{display:flex;align-items:center}@media (min-width:1024px){.mainHeader_brand{flex-shrink:0}}.mainHeader_links,.mainHeader_menu{align-items:center}.mainHeader_links{display:flex}.mainHeader_links>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem*var(--tw-space-x-reverse));margin-left:calc(1.5rem*(1 - var(--tw-space-x-reverse)))}.mainHeader_burger>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.mainHeader_burger{--tw-text-opacity:1;color:rgb(74 136 228/var(--tw-text-opacity))}.mainHeader_burger:hover{--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}.mainHeader_burgerStripe{height:.125rem;width:1.75rem;background-color:currentColor}.mainHeader_burgerStripe,.mainHeader_mobileMenu{display:block;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.mainHeader_mobileMenu{visibility:hidden;position:fixed;top:0;right:0;height:100%;width:100%;overflow:auto;opacity:0}.mainHeader_mobileMenu.open{visibility:visible;opacity:1}.mainHeader_mobileMenuBg{position:absolute;top:0;left:0;height:100%;width:100%;background-color:#1b1d1eb3}.mainMenu{display:flex;align-items:center}.mainMenu>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem*var(--tw-space-x-reverse));margin-left:calc(1rem*(1 - var(--tw-space-x-reverse)))}@media (min-width:1280px){.container{max-width:1280px}.mainMenu>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem*var(--tw-space-x-reverse));margin-left:calc(2rem*(1 - var(--tw-space-x-reverse)))}}.mainMenu li a{position:relative;display:block;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));font-size:.875rem;line-height:1.25rem;font-weight:600;--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}.mainMenu li a:hover{--tw-text-opacity:1;color:rgb(74 136 228/var(--tw-text-opacity))}.mainMenu li a:before{position:absolute;left:0;bottom:0;display:block;height:1px;width:100%;--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));opacity:0;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-duration:.3s;transition-timing-function:cubic-bezier(.4,0,.2,1);--tw-content:"";content:var(--tw-content)}.mainMenu li a:hover:before{opacity:1}.mainMenu>li.menu-item-has-children{position:relative}.mainMenu>li.menu-item-has-children>a{position:relative;padding-right:1rem}.mainMenu>li.menu-item-has-children>a:after{position:absolute;top:calc(50% - 4px);right:0;z-index:1;display:block;height:.625rem;width:.625rem;background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-black.svg);background-size:contain;background-repeat:no-repeat;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;--tw-content:"";content:var(--tw-content)}.mainMenu>li.menu-item-has-children>a:hover:after{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-blue.svg)}.mainMenu>li.menu-item-has-children.open>a:after{top:calc(50% - 6px);--tw-rotate:180deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.mainMenu>li.menu-item-has-children>ul.sub-menu{visibility:hidden;position:absolute;top:calc(100% + 8px);left:-2rem;border-radius:.5rem;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding:1rem .5rem;opacity:0;--tw-shadow:0px 4px 12px 0px #06354b0d,0px 0px 12px 0px #06354b0d,0px 2px 18px 0px #2a73df1f;--tw-shadow-colored:0px 4px 12px 0px var(--tw-shadow-color),0px 0px 12px 0px var(--tw-shadow-color),0px 2px 18px 0px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.mainMenu>li.menu-item-has-children>ul.sub-menu.open{visibility:visible;opacity:1}.mainMenu>li.menu-item-has-children>ul.sub-menu>li>a{display:block;white-space:nowrap;border-radius:.25rem;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding:.5rem 1rem;font-weight:400;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.mainMenu>li.menu-item-has-children>ul.sub-menu>li>a:hover{--tw-bg-opacity:1;background-color:rgb(244 250 255/var(--tw-bg-opacity))}.mainMenu>li.menu-item-has-children>ul.sub-menu>li>a:before{display:none}.mobileMenu{position:absolute;top:0;right:0;display:flex;height:-moz-max-content;height:max-content;min-height:100%;width:330px;max-width:100%;flex-direction:column;--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.mobileMenu_header{display:flex;align-items:center;justify-content:space-between;--tw-bg-opacity:1;background-color:rgb(248 250 251/var(--tw-bg-opacity));padding:1.5rem 2rem}.mobileMenu_menu>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.mobileMenu_menu{padding:2rem}.mobileMenu_menu li a{position:relative;font-weight:600}.mobileMenu_menu li a:hover{--tw-text-opacity:1;color:rgb(74 136 228/var(--tw-text-opacity))}.mobileMenu_menu li a:before{position:absolute;left:0;bottom:0;display:block;height:1px;width:100%;--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));opacity:0;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;--tw-content:"";content:var(--tw-content)}.mobileMenu_menu li a:hover:before{opacity:1}.mobileMenu_footer{margin-top:auto;padding:2rem}.mobileMenu_menu>li.menu-item-has-children{position:relative}.mobileMenu_menu>li.menu-item-has-children>a{position:relative;padding-right:1rem}.mobileMenu_menu>li.menu-item-has-children>a:after{position:absolute;top:calc(50% - 4px);right:0;z-index:1;display:block;height:.625rem;width:.625rem;background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-black.svg);background-size:contain;background-repeat:no-repeat;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;--tw-content:"";content:var(--tw-content)}.mobileMenu_menu>li.menu-item-has-children>a:hover:after{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-blue.svg)}.mobileMenu_menu>li.menu-item-has-children.open>a{--tw-text-opacity:1;color:rgb(74 136 228/var(--tw-text-opacity))}.mobileMenu_menu>li.menu-item-has-children.open>a:after{top:calc(50% - 6px);--tw-rotate:180deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-blue.svg)}.mobileMenu_menu>li.menu-item-has-children>ul.sub-menu{visibility:hidden;height:0;padding-left:1.25rem;opacity:0;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.mobileMenu_menu>li.menu-item-has-children>ul.sub-menu.open{visibility:visible;height:100%;opacity:1}.mobileMenu_menu>li.menu-item-has-children>ul.sub-menu>li>a{margin-top:1.5rem;display:inline-block;white-space:nowrap;font-weight:400}.mobileMenu_menu>li.menu-item-has-children>ul.sub-menu>li>a:before,.modal{display:none}.modal.is-open{display:block}.navigation{clear:both;margin-top:3rem;width:100%;overflow:hidden}.tabBody_sites-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:768px){.tabBody_sites-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tabBody_sites-grid>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}}.videoPlayer_play{position:absolute;top:calc(50% - 39px);left:calc(50% - 39px);z-index:1;height:78px;width:78px;border-radius:9999px;--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/play-white.svg);background-size:20px 20px;background-position:50%;background-repeat:no-repeat}.videoPlayer_play:hover{--tw-bg-opacity:1;background-color:rgb(6 38 85/var(--tw-bg-opacity))}.videoPlayer_iframe{z-index:10}.videoPlayer_iframe{position:absolute;top:0;left:0;height:100%;width:100%}#optery-sign-up-form>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}#optery-sign-up-form label{margin-bottom:.25rem;display:block;font-size:.75rem;line-height:1rem;font-weight:600;text-transform:uppercase;line-height:1.5;--tw-text-opacity:1;color:rgb(147 162 169/var(--tw-text-opacity))}#optery-sign-up-form input[type=email],#optery-sign-up-form input[type=password],#optery-sign-up-form input[type=text],#optery-sign-up-form select{border-radius:.25rem;--tw-bg-opacity:1;background-color:rgb(248 250 251/var(--tw-bg-opacity));padding:.625rem .75rem;font-size:.875rem;line-height:1.25rem}#optery-sign-up-form input[type=email]::-moz-placeholder,#optery-sign-up-form input[type=password]::-moz-placeholder,#optery-sign-up-form input[type=text]::-moz-placeholder,#optery-sign-up-form select::-moz-placeholder{--tw-text-opacity:1;color:rgb(147 162 169/var(--tw-text-opacity))}#optery-sign-up-form input[type=email]::placeholder,#optery-sign-up-form input[type=password]::placeholder,#optery-sign-up-form input[type=text]::placeholder,#optery-sign-up-form select::placeholder{--tw-text-opacity:1;color:rgb(147 162 169/var(--tw-text-opacity))}#optery-sign-up-form input[type=submit]{display:flex;height:3.5rem;width:100%;cursor:pointer;align-items:center;justify-content:center;border-radius:.5rem;--tw-bg-opacity:1;background-color:rgb(6 38 85/var(--tw-bg-opacity));padding:1rem 2.5rem;text-align:center;font-weight:600;--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity));--tw-shadow:-2px -2px 16px #6ef7d3d9,2px 2px 16px #2a73dfbf;--tw-shadow-colored:-2px -2px 16px var(--tw-shadow-color),2px 2px 16px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}#optery-sign-up-form input[type=submit]:hover{--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}#optery-sign-up-form input[type=submit]{height:2.5rem;padding:.5rem 1.25rem;font-size:.875rem;line-height:1.25rem}@media (min-width:1024px){.tabBody_sites-grid{grid-template-columns:repeat(4,minmax(0,1fr))}#optery-sign-up-form input[type=submit]{display:inline-flex;width:auto}#optery-sign-up-form input[type=submit]{display:flex;width:100%}}#optery-sign-up-form>div:nth-child(5){position:relative}#optery-sign-up-form>div:nth-child(5) select{-webkit-appearance:none;-moz-appearance:none;appearance:none}#optery-sign-up-form>div:nth-child(5):before{position:absolute;top:calc(50% + 8px);right:.75rem;display:block;height:.625rem;width:.625rem;background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/caret_down-blue.svg);background-size:contain;background-repeat:no-repeat;--tw-content:"";content:var(--tw-content)}.editorContent{font-size:.875rem;line-height:1.75rem}.editorContent h1{margin-bottom:3rem;font-size:32px;line-height:1.25;font-weight:700;--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}@media (min-width:1024px){.editorContent{font-size:1rem;line-height:1.75rem}.editorContent h1{margin-bottom:5rem;font-size:64px;line-height:1.25}}.editorContent h1:last-child{margin-bottom:0}.editorContent h2{margin-bottom:3rem;font-size:1.5rem;line-height:2rem;font-weight:700}.editorContent h4{margin-bottom:2rem;font-size:1.25rem;line-height:1.75rem;font-weight:700}.editorContent p{margin-bottom:1.5rem}.editorContent p+p{margin-top:0}.editorContent p>img{margin-top:3rem;margin-bottom:3rem}.editorContent p:last-child{margin-bottom:0}.editorContent>ul{margin-bottom:1.5rem}.editorContent>ul>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.editorContent>ul>li{position:relative;padding-left:2rem}.editorContent>ul>li:before{position:absolute;top:1px;left:1px;height:1.25rem;width:1.25rem;border-radius:9999px;--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity));--tw-content:"";content:var(--tw-content)}.editorContent>ul>li:after{position:absolute;top:5px;left:8px;display:block;height:9px;width:6px;--tw-rotate:45deg;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));border-bottom-width:2px;border-right-width:2px;border-style:solid;--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity));--tw-content:"";content:var(--tw-content)}.editorContent>ul>li ul>li{margin-left:1rem;list-style-type:circle}.editorContent>ul:last-child{margin-bottom:0}.editorContent figure{margin-bottom:2rem}.editorContent figure:last-child{margin-bottom:0}.editorContent>.wp-block-group{margin-left:-1.5rem;margin-right:-1.5rem;border-radius:32px;padding:3rem 1.5rem}.editorContent>.wp-block-group:nth-child(odd){position:relative}.editorContent>.wp-block-group:nth-child(odd):before{position:absolute;top:0;right:50%;z-index:-1;height:100%;width:calc(100vw - var(--scrollbar-width));--tw-translate-x:50%;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));border-radius:32px;--tw-bg-opacity:1;background-color:rgb(244 250 255/var(--tw-bg-opacity));--tw-content:"";content:var(--tw-content)}.editorContent figcaption{margin:0;padding:.5rem;font-size:.875rem;line-height:1.25rem}.articleGrid>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem*var(--tw-space-y-reverse))}.articleGrid_row{display:flex;flex-direction:column}.articleGrid_main{overflow-wrap:break-word}.articleGrid_side{position:relative;z-index:1}@media (min-width:1024px){.editorContent>.wp-block-group{margin-left:0;margin-right:0;padding:4rem 0}.editorContent figcaption{padding:.75rem}.articleGrid_main{margin-left:auto;margin-right:auto;width:690px}.articleGrid_side{margin-left:auto;margin-right:auto;width:690px}}.articleGrid_sticky{position:sticky;top:216px}.articleGrid_side-left{display:block;padding-bottom:3rem}.articleGrid_side-right{display:none;padding-left:3rem}@media (min-width:1280px){.articleGrid>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(4rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(4rem*var(--tw-space-y-reverse))}.articleGrid_row{flex-direction:row}.articleGrid_side{width:calc(50% - 345px)}.articleGrid_side-left{padding-bottom:0;padding-right:3rem}.articleGrid_side-right{display:block}}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.visible{visibility:visible}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.mb-11{margin-bottom:2.75rem}.mb-4{margin-bottom:1rem}.mt-11{margin-top:2.75rem}.mt-14{margin-top:3.5rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.w-\[120px\]{width:120px}.w-\[138px\]{width:138px}.w-full{width:100%}.min-w-\[176px\]{min-width:176px}.max-w-\[88px\]{max-width:88px}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-\[30px\]{gap:30px}.space-x-4>:not([hidden])~:not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem*var(--tw-space-x-reverse));margin-left:calc(1rem*(1 - var(--tw-space-x-reverse)))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-8>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem*var(--tw-space-y-reverse))}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-blue{--tw-border-opacity:1;border-color:rgb(74 136 228/var(--tw-border-opacity))}.bg-black{--tw-bg-opacity:1;background-color:rgb(1 28 67/var(--tw-bg-opacity))}.bg-teal{--tw-bg-opacity:1;background-color:rgb(110 247 211/var(--tw-bg-opacity))}.bg-\[url\(\'images\/sign_up_bg\.svg\'\)\]{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/theme/images/sign_up_bg.svg)}.bg-bottom{background-position:bottom}.p-\[18px\]{padding:18px}.px-4{padding-left:1rem;padding-right:1rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-12{padding-bottom:3rem}.pt-0{padding-top:0}.pt-20{padding-top:5rem}.text-center{text-align:center}.text-\[11px\]{font-size:11px}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.text-blue-dark{--tw-text-opacity:1;color:rgb(6 38 85/var(--tw-text-opacity))}.text-grey{--tw-text-opacity:1;color:rgb(153 167 189/var(--tw-text-opacity))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.swiper{margin-left:auto;margin-right:auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1}.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:flex;transition-property:transform;box-sizing:initial}.swiper-wrapper{transform:translateZ(0)}.swiper-slide{flex-shrink:0;width:100%;height:100%;position:relative;transition-property:transform}.swiper-slide-invisible-blank{visibility:hidden}.swiper-button-next,.swiper-button-prev{position:absolute;top:50%;width:calc(var(--swiper-navigation-size)/44*27);height:var(--swiper-navigation-size);margin-top:calc(0px - var(--swiper-navigation-size)/ 2);z-index:10;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--swiper-navigation-color,var(--swiper-theme-color))}.swiper-button-next.swiper-button-disabled,.swiper-button-prev.swiper-button-disabled{opacity:.35;cursor:auto;pointer-events:none}.swiper-button-next.swiper-button-hidden,.swiper-button-prev.swiper-button-hidden{opacity:0;cursor:auto;pointer-events:none}.swiper-navigation-disabled .swiper-button-next,.swiper-navigation-disabled .swiper-button-prev{display:none!important}.swiper-button-next:after,.swiper-button-prev:after{font-family:swiper-icons;font-size:var(--swiper-navigation-size);text-transform:none!important;letter-spacing:0;font-variant:normal;line-height:1}.swiper-button-prev{left:10px;right:auto}.swiper-button-prev:after{content:"prev"}.swiper-button-next{right:10px;left:auto}.swiper-button-next:after{content:"next"}.swiper-button-lock{display:none}.swiper-zoom-container>img{max-width:100%;max-height:100%;-o-object-fit:contain;object-fit:contain}.iti{position:relative;display:inline-block}.iti *{box-sizing:border-box}.iti__hide{display:none}.iti input,.iti input[type=tel],.iti input[type=text]{position:relative;z-index:0;margin-top:0!important;margin-bottom:0!important;padding-right:36px;margin-right:0}.iti__flag-container{position:absolute;top:0;bottom:0;right:0;padding:1px}.iti__selected-flag{z-index:1;position:relative;display:flex;align-items:center;height:100%;padding:0 6px 0 8px}.iti__arrow{margin-left:6px;width:0;height:0;border-left:3px solid #0000;border-right:3px solid #0000;border-top:4px solid #555}.iti__arrow--up{border-top:none;border-bottom:4px solid #555}.iti__country-list{position:absolute;z-index:2;list-style:none;padding:0;margin:0 0 0 -1px;box-shadow:1px 1px 4px #0003;background-color:#fff;border:1px solid #ccc;white-space:nowrap;max-height:200px;overflow-y:scroll;-webkit-overflow-scrolling:touch}.iti__country-list--dropup{bottom:100%;margin-bottom:-1px}@media (max-width:500px){.iti__country-list{white-space:normal}}.iti__flag-box{display:inline-block;width:20px}.iti__divider{padding-bottom:5px;margin-bottom:5px;border-bottom:1px solid #ccc}.iti__country{display:flex;align-items:center;padding:5px 10px;outline:0}.iti__dial-code{color:#999}.iti__country.iti__highlight{background-color:#0000000d}.iti__country-name,.iti__flag-box{margin-right:6px}.iti--allow-dropdown input,.iti--allow-dropdown input[type=tel],.iti--allow-dropdown input[type=text],.iti--separate-dial-code input,.iti--separate-dial-code input[type=tel],.iti--separate-dial-code input[type=text]{padding-right:6px;padding-left:52px;margin-left:0}.iti--allow-dropdown .iti__flag-container,.iti--separate-dial-code .iti__flag-container{right:auto;left:0}.iti--allow-dropdown .iti__flag-container:hover{cursor:pointer}.iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag{background-color:#0000000d}.iti--allow-dropdown input[disabled]+.iti__flag-container:hover{cursor:default}.iti--allow-dropdown input[disabled]+.iti__flag-container:hover .iti__selected-flag{background-color:initial}.iti--separate-dial-code .iti__selected-flag{background-color:#0000000d}.iti--separate-dial-code.iti--show-flags .iti__selected-dial-code{margin-left:6px}.iti--container{position:absolute;top:-1000px;left:-1000px;z-index:1060;padding:1px}.iti--container:hover{cursor:pointer}.iti-mobile .iti--container{top:30px;bottom:30px;left:30px;right:30px;position:fixed}.iti-mobile .iti__country-list{max-height:100%;width:100%}.iti-mobile .iti__country{padding:10px;line-height:1.5em}.iti__flag{width:20px}.iti__flag{height:15px;box-shadow:0 0 1px 0 #888;background-image:url(https://www.optery.com/wp-content/themes/theme-optery/img/flags.png);background-repeat:no-repeat;background-color:#dbdbdb;background-position:20px 0}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.iti__flag{background-size:5652px 15px}.iti__flag{background-image:url(https://www.optery.com/wp-content/themes/theme-optery/img/flags@2x.png)}}.hover\:bg-blue:hover{--tw-bg-opacity:1;background-color:rgb(74 136 228/var(--tw-bg-opacity))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity))}@media (min-width:768px){.md\:w-\[165px\]{width:165px}.md\:w-\[472px\]{width:472px}.md\:py-24{padding-top:6rem;padding-bottom:6rem}}@media (min-width:1024px){.lg\:-mx-4{margin-left:-1rem;margin-right:-1rem}.lg\:mb-0{margin-bottom:0}.lg\:mb-10{margin-bottom:2.5rem}.lg\:mb-11{margin-bottom:2.75rem}.lg\:mb-6{margin-bottom:1.5rem}.lg\:mt-0{margin-top:0}.lg\:flex{display:flex}.lg\:inline-flex{display:inline-flex}.lg\:grid{display:grid}.lg\:hidden{display:none}.lg\:w-1\/5{width:20%}.lg\:w-\[112px\]{width:112px}.lg\:w-auto{width:auto}.lg\:flex-nowrap{flex-wrap:nowrap}.lg\:items-end{align-items:flex-end}.lg\:space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.lg\:space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.lg\:px-4{padding-left:1rem;padding-right:1rem}.lg\:px-6{padding-left:1.5rem;padding-right:1.5rem}.lg\:pt-24{padding-top:6rem}.lg\:text-base{font-size:1rem;line-height:1.5rem}.lg\:text-xs{font-size:.75rem;line-height:1rem}}@media (min-width:1280px){.xl\:text-left{text-align:left}}.optery-search-form{margin:2em 0;padding:1em 0}.optery-search-form input.search-field{color:#000;padding:10px}.optery-search-form input.search-submit{cursor:pointer}body:not(.single-data_brokers) #content p a{text-decoration:underline;color:#4a88e4}.editorContent h2{line-height:1em!important}@font-face{font-family:Sora;font-style:normal;font-weight:800;font-display:swap;src:url('https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-800.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}:root{--swiper-theme-color:#007aff}.jp-carousel-overlay .swiper-container{list-style:none;margin-left:auto;margin-right:auto;overflow:hidden;padding:0;position:relative;z-index:1}.jp-carousel-overlay .swiper-container-vertical>.swiper-wrapper{flex-direction:column}.jp-carousel-overlay .swiper-wrapper{box-sizing:content-box;display:flex;height:100%;position:relative;transition-property:transform;width:100%;z-index:1}.jp-carousel-overlay .swiper-container-android .swiper-slide,.jp-carousel-overlay .swiper-wrapper{transform:translateZ(0)}.jp-carousel-overlay .swiper-container-multirow>.swiper-wrapper{flex-wrap:wrap}.jp-carousel-overlay .swiper-container-multirow-column>.swiper-wrapper{flex-direction:column;flex-wrap:wrap}.jp-carousel-overlay .swiper-container-free-mode>.swiper-wrapper{margin:0 auto;transition-timing-function:ease-out}.jp-carousel-overlay .swiper-container-pointer-events{touch-action:pan-y}.jp-carousel-overlay .swiper-container-pointer-events.swiper-container-vertical{touch-action:pan-x}.jp-carousel-overlay .swiper-slide{flex-shrink:0;height:100%;position:relative;transition-property:transform;width:100%}.jp-carousel-overlay .swiper-slide-invisible-blank{visibility:hidden}.jp-carousel-overlay .swiper-container-autoheight,.jp-carousel-overlay .swiper-container-autoheight .swiper-slide{height:auto}.jp-carousel-overlay .swiper-container-autoheight .swiper-wrapper{align-items:flex-start;transition-property:transform,height}.jp-carousel-overlay .swiper-container-3d{perspective:1200px}.jp-carousel-overlay .swiper-container-3d .swiper-cube-shadow,.jp-carousel-overlay .swiper-container-3d .swiper-slide,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-bottom,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-left,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-right,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-top,.jp-carousel-overlay .swiper-container-3d .swiper-wrapper{transform-style:preserve-3d}.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-bottom,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-left,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-right,.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-top{height:100%;left:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:10}.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-left{background-image:linear-gradient(270deg,rgba(0,0,0,.5),transparent)}.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-right{background-image:linear-gradient(90deg,rgba(0,0,0,.5),transparent)}.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-top{background-image:linear-gradient(0deg,rgba(0,0,0,.5),transparent)}.jp-carousel-overlay .swiper-container-3d .swiper-slide-shadow-bottom{background-image:linear-gradient(180deg,rgba(0,0,0,.5),transparent)}.jp-carousel-overlay .swiper-container-css-mode>.swiper-wrapper{overflow:auto;scrollbar-width:none;-ms-overflow-style:none}.jp-carousel-overlay .swiper-container-css-mode>.swiper-wrapper::-webkit-scrollbar{display:none}.jp-carousel-overlay .swiper-container-css-mode>.swiper-wrapper>.swiper-slide{scroll-snap-align:start start}.jp-carousel-overlay .swiper-container-horizontal.swiper-container-css-mode>.swiper-wrapper{scroll-snap-type:x mandatory}.jp-carousel-overlay .swiper-container-vertical.swiper-container-css-mode>.swiper-wrapper{scroll-snap-type:y mandatory}:root{--swiper-navigation-size:44px}.jp-carousel-overlay .swiper-button-next,.jp-carousel-overlay .swiper-button-prev{align-items:center;color:var(--swiper-navigation-color,var(--swiper-theme-color));cursor:pointer;display:flex;height:var(--swiper-navigation-size);justify-content:center;margin-top:calc(0px - var(--swiper-navigation-size)/ 2);position:absolute;top:50%;width:calc(var(--swiper-navigation-size)/44*27);z-index:10}.jp-carousel-overlay .swiper-button-next.swiper-button-disabled,.jp-carousel-overlay .swiper-button-prev.swiper-button-disabled{cursor:auto;opacity:.35;pointer-events:none}.jp-carousel-overlay .swiper-button-next:after,.jp-carousel-overlay .swiper-button-prev:after{font-family:swiper-icons;font-size:var(--swiper-navigation-size);font-variant:normal;letter-spacing:0;line-height:1;text-transform:none!important;text-transform:none}.jp-carousel-overlay .swiper-button-prev,.jp-carousel-overlay .swiper-container-rtl .swiper-button-next{left:10px;right:auto}.jp-carousel-overlay .swiper-button-prev:after,.jp-carousel-overlay .swiper-container-rtl .swiper-button-next:after{content:"prev"}.jp-carousel-overlay .swiper-button-next,.jp-carousel-overlay .swiper-container-rtl .swiper-button-prev{left:auto;right:10px}.jp-carousel-overlay .swiper-button-next:after,.jp-carousel-overlay .swiper-container-rtl .swiper-button-prev:after{content:"next"}.jp-carousel-overlay .swiper-button-next.swiper-button-white,.jp-carousel-overlay .swiper-button-prev.swiper-button-white{--swiper-navigation-color:#fff}.jp-carousel-overlay .swiper-button-next.swiper-button-black,.jp-carousel-overlay .swiper-button-prev.swiper-button-black{--swiper-navigation-color:#000}.jp-carousel-overlay .swiper-button-lock{display:none}.jp-carousel-overlay .swiper-pagination{position:absolute;text-align:center;transform:translateZ(0);transition:opacity .3s;z-index:10}.jp-carousel-overlay .swiper-pagination.swiper-pagination-hidden{opacity:0}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-bullets,.jp-carousel-overlay .swiper-pagination-custom,.jp-carousel-overlay .swiper-pagination-fraction{bottom:10px;left:0;width:100%}.jp-carousel-overlay .swiper-pagination-bullets-dynamic{font-size:0;overflow:hidden}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet{position:relative;transform:scale(.33)}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active,.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-main{transform:scale(1)}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev{transform:scale(.66)}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev-prev{transform:scale(.33)}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next{transform:scale(.66)}.jp-carousel-overlay .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next{transform:scale(.33)}.jp-carousel-overlay .swiper-pagination-bullet{background:#000;border-radius:50%;display:inline-block;height:8px;opacity:.2;width:8px}.jp-carousel-overlay button.swiper-pagination-bullet{-webkit-appearance:none;appearance:none;border:none;box-shadow:none;margin:0;padding:0}.jp-carousel-overlay .swiper-pagination-clickable .swiper-pagination-bullet{cursor:pointer}.jp-carousel-overlay .swiper-pagination-bullet-active{background:var(--swiper-pagination-color,var(--swiper-theme-color));opacity:1}.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-bullets{right:10px;top:50%;transform:translate3d(0,-50%,0)}.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet{display:block;margin:6px 0}.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic{top:50%;transform:translateY(-50%);width:8px}.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{display:inline-block;transition:transform .2s,top .2s}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet{margin:0 4px}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic{left:50%;transform:translateX(-50%);white-space:nowrap}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{transition:transform .2s,left .2s}.jp-carousel-overlay .swiper-container-horizontal.swiper-container-rtl>.swiper-pagination-bullets-dynamic .swiper-pagination-bullet{transition:transform .2s,right .2s}.jp-carousel-overlay .swiper-pagination-progressbar{background:rgba(0,0,0,.25);position:absolute}.jp-carousel-overlay .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{background:var(--swiper-pagination-color,var(--swiper-theme-color));height:100%;left:0;position:absolute;top:0;transform:scale(0);transform-origin:left top;width:100%}.jp-carousel-overlay .swiper-container-rtl .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{transform-origin:right top}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-progressbar,.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite{height:4px;left:0;top:0;width:100%}.jp-carousel-overlay .swiper-container-horizontal>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite,.jp-carousel-overlay .swiper-container-vertical>.swiper-pagination-progressbar{height:100%;left:0;top:0;width:4px}.jp-carousel-overlay .swiper-pagination-white{--swiper-pagination-color:#fff}.jp-carousel-overlay .swiper-pagination-black{--swiper-pagination-color:#000}.jp-carousel-overlay .swiper-pagination-lock{display:none}.jp-carousel-overlay .swiper-zoom-container{align-items:center;display:flex;height:100%;justify-content:center;text-align:center;width:100%}.jp-carousel-overlay .swiper-zoom-container>canvas,.jp-carousel-overlay .swiper-zoom-container>img,.jp-carousel-overlay .swiper-zoom-container>svg{max-height:100%;max-width:100%;object-fit:contain}.jp-carousel-overlay .swiper-slide-zoomed{cursor:move}.jp-carousel-overlay .swiper-container .swiper-notification{left:0;opacity:0;pointer-events:none;position:absolute;top:0;z-index:-1000}:root{--jp-carousel-primary-color:#fff;--jp-carousel-primary-subtle-color:#999;--jp-carousel-bg-color:#000;--jp-carousel-bg-faded-color:#222;--jp-carousel-border-color:#3a3a3a}.jp-carousel-overlay .swiper-button-next,.jp-carousel-overlay .swiper-button-prev,.jp-carousel-overlay .swiper-container-rtl .swiper-button-next,.jp-carousel-overlay .swiper-container-rtl .swiper-button-prev{background-image:none}.jp-carousel-overlay .swiper-zoom-container{background-position:50%;background-repeat:no-repeat;background-size:200%}.jp-carousel-overlay .swiper-slide.swiper-slide-next .swiper-zoom-container img,.jp-carousel-overlay .swiper-slide.swiper-slide-prev .swiper-zoom-container img{transition:none!important}.jp-carousel-overlay .swiper-button-next,.jp-carousel-overlay .swiper-button-prev{background-image:none;height:auto;opacity:.5;padding:20px 40px;transition:opacity .5s ease-out;width:auto}.jp-carousel-overlay .swiper-button-next:hover,.jp-carousel-overlay .swiper-button-prev:hover{opacity:1}.jp-carousel-overlay .swiper-button-next:after,.jp-carousel-overlay .swiper-button-prev:after,.jp-carousel-overlay .swiper-container-rtl .swiper-button-next:after,.jp-carousel-overlay .swiper-container-rtl .swiper-button-prev:after{content:none}.jp-carousel-overlay .swiper-button-next svg,.jp-carousel-overlay .swiper-button-prev svg{background:var(--jp-carousel-bg-color);border-radius:4px;height:30px;width:28px}.jp-carousel-overlay .swiper-button-next svg:hover,.jp-carousel-overlay .swiper-button-prev svg:hover{background:var(--jp-carousel-primary-subtle-color)}.jp-carousel-overlay{background:var(--jp-carousel-bg-color);bottom:0;direction:ltr;font-family:'Helvetica Neue',sans-serif!important;left:0;overflow-x:hidden;overflow-y:auto;position:fixed;right:0;top:0;z-index:2147483647}.jp-carousel-overlay *{box-sizing:border-box}.jp-carousel-overlay h1:before,.jp-carousel-overlay h2:before,.jp-carousel-overlay h3:before{content:none;display:none}.jp-carousel-overlay .swiper-container .swiper-button-prev{left:0;right:auto}.jp-carousel-overlay .swiper-container .swiper-button-next{left:auto;right:0}.jp-carousel-overlay .swiper-container.swiper-container-rtl .swiper-button-next,.jp-carousel-overlay .swiper-container.swiper-container-rtl .swiper-button-prev{transform:scaleX(-1)}.jp-carousel-overlay rect{fill:var(--jp-carousel-primary-color)}@media only screen and (max-width:760px){.jp-carousel-overlay .swiper-container .swiper-button-next,.jp-carousel-overlay .swiper-container .swiper-button-prev{display:none!important}}:root{--jetpack--contact-form--border:1px solid #8c8f94;--jetpack--contact-form--border-color:#8c8f94;--jetpack--contact-form--border-size:1px;--jetpack--contact-form--border-style:solid;--jetpack--contact-form--border-radius:0px;--jetpack--contact-form--input-padding:16px;--jetpack--contact-form--font-size:16px;--jetpack--contact-form--error-color:#b32d2e;--jetpack--contact-form--inverted-text-color:#fff}:where(.contact-form input[type=text],.contact-form input[type=email],.contact-form input[type=tel],.contact-form input[type=url],.contact-form textarea){border:1px solid #8c8f94;border-radius:0;box-sizing:border-box;font:inherit;padding:16px;width:100%}:where(.contact-form textarea){height:200px}#jp-relatedposts .jp-relatedposts-items{clear:left}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;float:left;margin:0 0 1em;width:33%}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:nth-child(3n+4){clear:both}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:hover .jp-relatedposts-post-title a{text-decoration:underline}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:hover{-moz-opacity:1;opacity:1}#jp-relatedposts .jp-relatedposts-items p{font-size:14px;line-height:20px;margin:0}#jp-relatedposts .jp-relatedposts-items p{margin-bottom:0}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-title a{font-size:inherit;font-weight:400;-moz-opacity:1;opacity:1;text-decoration:none}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-title a:hover{text-decoration:underline}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post img.jp-relatedposts-post-img,#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post span{display:block;max-width:90%;overflow:hidden;text-overflow:ellipsis}#jp-relatedposts .jp-relatedposts-items-visual .jp-relatedposts-post img.jp-relatedposts-post-img{height:auto;max-width:100%}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-context,#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post .jp-relatedposts-post-date{opacity:.6}@media only screen and (max-width:640px){#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post{width:50%}#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post:nth-child(3n){clear:left}}@media only screen and (max-width:320px){#jp-relatedposts .jp-relatedposts-items .jp-relatedposts-post{clear:both;margin:0 0 1em;width:100%}}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}img#wpstats{display:none}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content,auto) minmax(min-content,auto) minmax(min-content,auto);height:100%;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:rgba(0,0,0,.4)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0)!important}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0,100%);width:32em;max-width:100%;padding:0 0 1.25em;border:none;border-radius:5px;background:#fff;color:#545454;font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:0}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:.8em 1em 0;color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:auto;margin:1.25em auto 0;padding:0}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:1.5s linear infinite swal2-rotate-loading;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:box-shadow .1s;box-shadow:0 0 0 3px transparent;font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):focus{outline:0}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid #eee;color:inherit;font-size:1em;text-align:center}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:rgba(0,0,0,.2)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em}div:where(.swal2-container) button:where(.swal2-close){z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:color .1s,box-shadow .1s;border:none;border-radius:5px;background:rgba(0,0,0,0);color:#ccc;font-family:monospace;font-size:2.5em;cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:none;background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) label:where(.swal2-checkbox),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) textarea:where(.swal2-textarea){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:border-color .1s,box-shadow .1s;border:1px solid #d9d9d9;border-radius:.1875em;background:rgba(0,0,0,0);box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px transparent;color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:1px solid #b4dbed;outline:0;box-shadow:inset 0 1px 1px rgba(0,0,0,.06),0 0 0 3px rgba(100,150,200,.5)}div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:#fff}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-checkbox,div:where(.swal2-container) .swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}div:where(.swal2-container) .swal2-checkbox label,div:where(.swal2-container) .swal2-radio label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-checkbox input,div:where(.swal2-container) .swal2-radio input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;border:.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:.75s swal2-animate-success-line-tip}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:.75s swal2-animate-success-line-long}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:4.25s ease-in swal2-rotate-success-circular-line}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{animation:.3s swal2-show}.swal2-hide{animation:.15s forwards swal2-hide}.swal2-noanimation{transition:none}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.crisp-client :focus-visible{outline:transparent solid 2px!important}#crisp-loader{display:none!important}.post a{text-decoration:underline;color:#4a88e4}:where(p.has-text-color:not(.has-link-color)) a{color:inherit}ul{box-sizing:border-box}.wp-block-group{box-sizing:border-box}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-table{overflow-x:auto}.wp-block-table table{border-collapse:collapse;width:100%}.wp-block-table td,.wp-block-table th{border:1px solid;padding:.5em}.wp-block-table table[style*=border-style] td,.wp-block-table table[style*=border-style] th,.wp-block-table table[style*=border-style] tr,.wp-block-table table[style*=border-style]>*{border-style:inherit}.wp-block-table table[style*=border-width] td,.wp-block-table table[style*=border-width] th,.wp-block-table table[style*=border-width] tr,.wp-block-table table[style*=border-width]>*{border-style:inherit;border-width:inherit}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}body{--wp--preset--color--black:#000000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#ffffff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--color--blue:#4a88e4;--wp--preset--color--green:#198B62;--wp--preset--color--teal:#6ef7d3;--wp--preset--color--mint:#acfcee;--wp--preset--color--light-grey:#f4faff;--wp--preset--color--grey:#99a7bd;--wp--preset--color--dark-blue:#062655;--wp--preset--color--lavender:#F1E2FF;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,rgba(6, 147, 227, 1) 0%,rgb(155, 81, 224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,rgb(122, 220, 180) 0%,rgb(0, 208, 130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,rgba(252, 185, 0, 1) 0%,rgba(255, 105, 0, 1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,rgba(255, 105, 0, 1) 0%,rgb(207, 46, 46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,rgb(238, 238, 238) 0%,rgb(169, 184, 195) 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,rgb(74, 234, 220) 0%,rgb(151, 120, 209) 20%,rgb(207, 42, 186) 40%,rgb(238, 44, 130) 60%,rgb(251, 105, 98) 80%,rgb(254, 248, 76) 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,rgb(255, 206, 236) 0%,rgb(152, 150, 240) 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,rgb(254, 205, 165) 0%,rgb(254, 45, 45) 50%,rgb(107, 0, 62) 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,rgb(255, 203, 112) 0%,rgb(199, 81, 192) 50%,rgb(65, 88, 208) 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,rgb(255, 245, 203) 0%,rgb(182, 227, 212) 50%,rgb(51, 167, 181) 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,rgb(202, 248, 128) 0%,rgb(113, 206, 126) 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,rgb(2, 3, 129) 0%,rgb(40, 116, 252) 100%);--wp--preset--font-size--small:14px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:18px;--wp--preset--font-size--x-large:42px;--wp--preset--font-size--heading-1:64px;--wp--preset--font-size--heading-2:50px;--wp--preset--font-size--heading-3:32px;--wp--preset--font-size--normal:16px;--wp--preset--spacing--20:0.44rem;--wp--preset--spacing--30:0.67rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2.25rem;--wp--preset--spacing--70:3.38rem;--wp--preset--spacing--80:5.06rem;--wp--preset--shadow--natural:6px 6px 9px rgba(0, 0, 0, .2);--wp--preset--shadow--deep:12px 12px 50px rgba(0, 0, 0, .4);--wp--preset--shadow--sharp:6px 6px 0px rgba(0, 0, 0, .2);--wp--preset--shadow--outlined:6px 6px 0px -3px rgba(255, 255, 255, 1),6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp:6px 6px 0px rgba(0, 0, 0, 1)}body{margin:0;--wp--style--global--content-size:90%;--wp--style--global--wide-size:60rem}:where(.is-layout-flex){gap:.5em}:where(.is-layout-grid){gap:.5em}body .is-layout-constrained>:where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width:var(--wp--style--global--content-size);margin-left:auto!important;margin-right:auto!important}body{padding-top:0;padding-right:0;padding-bottom:0;padding-left:0}a:where(:not(.wp-element-button)){text-decoration:none}</style>
+	<meta name="description" content="Explore Optery&#039;s comprehensive Privacy Policy, emphasizing user data privacy, security, and control. We value transparency, offering a plain language summary of how we collect, use, and protect your data. Optery honors stringent data privacy standards like CCPA, and CPRA, ensuring secure handling of user information." />
+	<link rel="canonical" href="https://www.optery.com/privacy-policy/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Privacy Policy - Optery" />
+	<meta property="og:description" content="Explore Optery&#039;s comprehensive Privacy Policy, emphasizing user data privacy, security, and control. We value transparency, offering a plain language summary of how we collect, use, and protect your data. Optery honors stringent data privacy standards like CCPA, and CPRA, ensuring secure handling of user information." />
+	<meta property="og:url" content="https://www.optery.com/privacy-policy/" />
+	<meta property="og:site_name" content="Optery" />
+	<meta property="article:publisher" content="https://www.facebook.com/Optery/" />
+	<meta property="article:modified_time" content="2024-03-17T18:54:55+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@Optery" />
+	<meta name="twitter:label1" content="Est. reading time" />
+	<meta name="twitter:data1" content="21 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.optery.com/privacy-policy/","url":"https://www.optery.com/privacy-policy/","name":"Privacy Policy - Optery","isPartOf":{"@id":"https://www.optery.com/#website"},"datePublished":"2021-01-14T09:01:30+00:00","dateModified":"2024-03-17T18:54:55+00:00","description":"Explore Optery's comprehensive Privacy Policy, emphasizing user data privacy, security, and control. We value transparency, offering a plain language summary of how we collect, use, and protect your data. Optery honors stringent data privacy standards like CCPA, and CPRA, ensuring secure handling of user information.","breadcrumb":{"@id":"https://www.optery.com/privacy-policy/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.optery.com/privacy-policy/"]}]},{"@type":"BreadcrumbList","@id":"https://www.optery.com/privacy-policy/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.optery.com/"},{"@type":"ListItem","position":2,"name":"Privacy Policy"}]},{"@type":"WebSite","@id":"https://www.optery.com/#website","url":"https://www.optery.com/","name":"Optery","description":"Opt Out of Dozens of Data Brokers all in One Place","publisher":{"@id":"https://www.optery.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.optery.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.optery.com/#organization","name":"Optery Inc","url":"https://www.optery.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.optery.com/#/schema/logo/image/","url":"https://www.optery.com/wp-content/uploads/2022/09/optery-logo-3.svg","contentUrl":"https://www.optery.com/wp-content/uploads/2022/09/optery-logo-3.svg","width":111,"height":26,"caption":"Optery Inc"},"image":{"@id":"https://www.optery.com/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/Optery/","https://twitter.com/Optery","https://www.youtube.com/optery","https://www.reddit.com/r/optery"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
+<link rel='dns-prefetch' href='//client.crisp.chat' />
+<link rel='dns-prefetch' href='//stats.wp.com' />
+<link rel='preconnect' href='//www.google-analytics.com' />
+<link rel="alternate" type="application/rss+xml" title="Optery &raquo; Feed" href="https://www.optery.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Optery &raquo; Comments Feed" href="https://www.optery.com/comments/feed/" />
+
+	<link rel="preload" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-400.woff2" as="font"
+		  type="font/woff2" crossorigin>
+	<link rel="preload" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-600.woff2" as="font"
+		  type="font/woff2" crossorigin>
+	<link rel="preload" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/sora/sora-700.woff2" as="font"
+		  type="font/woff2" crossorigin>
+	<link rel="preload" href="https://www.optery.com/wp-content/themes/theme-optery/theme/resources/fonts/lato/lato-700.woff2" as="font"
+		  type="font/woff2" crossorigin>
+	<style></style>
+	
+<style id='wp-emoji-styles-inline-css'></style>
+<style id='wp-block-library-inline-css'></style>
+
+
+
+
+
+
+<style id='rocket-lazyload-inline-css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player:focus-within{outline: 2px solid currentColor;outline-offset: 5px;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:100%;width:100%;left:0;top:0;position:absolute;background:url(https://www.optery.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat center;background-color: transparent !important;cursor:pointer;border:none;}.wp-embed-responsive .wp-has-aspect-ratio .rll-youtube-player{position:absolute;padding-bottom:0;width:100%;height:100%;top:0;bottom:0;left:0;right:0}
+</style>
+
+<script type="rocketlazyloadscript" data-rocket-src="https://www.optery.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-src="https://www.optery.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://www.optery.com/wp-content/cache/min/1/wp-content/plugins/handl-utm-grabber-v3/js/js.cookie.js?ver=1718631402" id="js.cookie-js" defer></script>
+<script id="handl-utm-grabber-js-extra">
+var handl_utm = [];
+var handl_utm_all_params = ["utm_source","utm_medium","utm_term","utm_content","utm_campaign","first_utm_source","first_utm_medium","first_utm_term","first_utm_content","first_utm_campaign","fbclid","msclkid","gclid","handl_original_ref","handl_landing_page","handl_landing_page_base","handl_ip","handl_ref","handl_url","handl_ref_domain","handl_url_base","gaclientid","organic_source","organic_source_str","user_agent","traffic_source","first_traffic_source","handlID","li_fat_id"];
+var handl_utm_cookie_duration = ["30","1"];
+var handl_utm_append_params = ["utm_source","utm_medium","utm_term","utm_content","utm_campaign","gclid","li_fat_id"];
+var handl_utm_first_touch_params = ["utm_source","utm_medium","utm_term","utm_content","utm_campaign"];
+var handl_utm_custom_params = ["li_fat_id"];
+var handl_utm_predefined = [];
+</script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://www.optery.com/wp-content/cache/min/1/wp-content/plugins/handl-utm-grabber-v3/js/handl-utm-grabber.js?ver=1718631402" id="handl-utm-grabber-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://www.optery.com/wp-content/cache/min/1/wp-content/plugins/stop-user-enumeration/frontend/js/frontend.js?ver=1718631402" id="stop-user-enumeration-js" defer></script>
+<link rel="https://api.w.org/" href="https://www.optery.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.optery.com/wp-json/wp/v2/pages/2325" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.optery.com/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.4.3" />
+<link rel='shortlink' href='https://www.optery.com/?p=2325' />
+<link rel="alternate" type="application/json+oembed" href="https://www.optery.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.optery.com%2Fprivacy-policy%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.optery.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.optery.com%2Fprivacy-policy%2F&#038;format=xml" />
+<style></style><meta name="google-site-verification" content="vKqkICJm59H4He4PA8X8d4eEOOS7-aQx3e-rB_gjjDQ" />
+<meta name="facebook-domain-verification" content="450elwsgw0d15cy6um9ikop1lgondp" />            <!-- Google Tag Manager -->
+            <script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-PLK9W3X');</script>
+            <!-- End Google Tag Manager -->
+            	<style></style>
+		<link rel="icon" href="https://www.optery.com/wp-content/uploads/2020/01/cropped-site-icon-OptoutCommand-512x512-transback-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.optery.com/wp-content/uploads/2020/01/cropped-site-icon-OptoutCommand-512x512-transback-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.optery.com/wp-content/uploads/2020/01/cropped-site-icon-OptoutCommand-512x512-transback-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.optery.com/wp-content/uploads/2020/01/cropped-site-icon-OptoutCommand-512x512-transback-270x270.png" />
+		<style id="wp-custom-css"></style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript></head>
+
+<body class="privacy-policy page-template page-template-template-static page-template-template-static-php page page-id-2325 wp-custom-logo wp-embed-responsive">
+
+            <!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLK9W3X"
+                              height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+            
+<div id="page">
+
+	<a href="#content" class="sr-only">Skip to content</a>
+
+	
+  
+<div class="py-6"  style="background-color:#7adcb4"  >
+  <div class="container">
+    <div class="text-sm lg:text-base u-cancelPreflight">
+      <div style="color:white; font-size: 1.25em; text-align:center;"><a href="/optery-wins-2024-cybersecurity-excellence-award/" style="font-color:white;">🏆Cybersecurity Excellence Award Winner for Employee Privacy Protection and Attack Surface Management🙏</a></div>
+    </div>
+  </div>
+</div>
+
+<header class="mainHeader js-mainHeader">
+
+	<div class="container px-4 lg:px-6">
+		<div class="mainHeader_row">
+			<div class="mainHeader_brand">
+				<a href="https://www.optery.com/">
+					<img width="165" height="38" loading="eager" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/optery_logo.svg"
+							 alt="Optery logo"
+							 class="w-[120px] md:w-[165px]">
+				</a>
+			</div>
+			<nav class="mainHeader_menu hidden lg:flex">
+				<div class="menu-top-nav-container"><ul id="mainMenu" class="mainMenu js-mainMenu"><li id="menu-item-15770" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-15770"><a href="#" class="js-menuDropdown">Getting Started</a>
+<ul class="sub-menu">
+	<li id="menu-item-3469" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3469"><a href="https://www.optery.com/getting-started/">Personal</a></li>
+	<li id="menu-item-15769" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15769"><a href="https://www.optery.com/getting-started-business/">Business</a></li>
+</ul>
+</li>
+<li id="menu-item-16303" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16303"><a href="#" class="js-menuDropdown">Pricing</a>
+<ul class="sub-menu">
+	<li id="menu-item-8465" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8465"><a href="https://www.optery.com/pricing/">Personal</a></li>
+	<li id="menu-item-16304" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16304"><a href="https://www.optery.com/business-pricing/">Business</a></li>
+</ul>
+</li>
+<li id="menu-item-8554" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8554"><a href="/pricing/#data-brokers-we-cover">Sites We Cover</a></li>
+<li id="menu-item-9646" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9646"><a href="https://www.optery.com/family/">Family</a></li>
+<li id="menu-item-16340" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16340"><a href="#" class="js-menuDropdown">Business</a>
+<ul class="sub-menu">
+	<li id="menu-item-8459" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8459"><a href="https://www.optery.com/business/">Optery for Business</a></li>
+	<li id="menu-item-13700" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13700"><a href="https://www.optery.com/api/">API for Partners</a></li>
+	<li id="menu-item-18002" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18002"><a href="https://www.optery.com/use-cases/">Business Use Cases</a></li>
+	<li id="menu-item-16341" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-16341"><a href="https://www.optery.com/security-pro-personal-data-removal-guide/">Guide to Enterprise Data Removal Services</a></li>
+</ul>
+</li>
+<li id="menu-item-16344" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16344"><a href="#" class="js-menuDropdown">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-8555" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8555"><a target="_blank" rel="noopener" href="https://help.optery.com/en/">Help Desk</a></li>
+	<li id="menu-item-16345" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16345"><a href="/blog/">Blog</a></li>
+	<li id="menu-item-16346" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16346"><a href="https://www.optery.com/about-us/">About Us</a></li>
+	<li id="menu-item-16349" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16349"><a href="/opt-out-guides/">Opt Out Guides</a></li>
+	<li id="menu-item-16750" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16750"><a href="https://www.optery.com/product-updates/">Product Updates</a></li>
+	<li id="menu-item-16348" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16348"><a href="/reviews/">Customer Reviews</a></li>
+	<li id="menu-item-16347" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16347"><a href="https://www.optery.com/optery-in-the-press/">Optery in the Press</a></li>
+</ul>
+</li>
+</ul></div>			</nav>
+			<div class="mainHeader_links">
+									<a href="https://app.optery.com/login"
+						 class="hidden lg:inline-flex button-white button-sm"
+						 target="">
+						Sign In					</a>
+													<a href="https://app.optery.com/signup"
+						 class="inline-flex button button-sm whitespace-nowrap"
+						 target="">
+						Sign Up Free					</a>
+								<button id="js-mobileMenuOpen" class="mainHeader_burger block lg:hidden">
+					<span class="mainHeader_burgerStripe"></span>
+					<span class="mainHeader_burgerStripe"></span>
+					<span class="mainHeader_burgerStripe"></span>
+				</button>
+			</div>
+			<nav id="js-mobileMenuCollapse"
+					 class="mainHeader_mobileMenu">
+				<div id="js-mobileMenuBg" class="mainHeader_mobileMenuBg"></div>
+				<div class="mobileMenu">
+					<div class="mobileMenu_main">
+						<div class="mobileMenu_header">
+							<a href="https://www.optery.com/">
+								<img width="165" height="38" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/optery_logo.svg"
+										 alt="Optery logo"
+										 class="w-[120px]">
+							</a>
+							<button id="js-mobileMenuClose" class="mobileMenu_close">
+								<img width="24" height="24" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/x.svg" alt="x">
+							</button>
+						</div>
+
+						<div class="menu-top-nav-container"><ul id="mobileMenu" class="mobileMenu_menu js-mobileMenu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-15770"><a href="#" class="js-menuDropdown">Getting Started</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3469"><a href="https://www.optery.com/getting-started/">Personal</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-15769"><a href="https://www.optery.com/getting-started-business/">Business</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16303"><a href="#" class="js-menuDropdown">Pricing</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8465"><a href="https://www.optery.com/pricing/">Personal</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16304"><a href="https://www.optery.com/business-pricing/">Business</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8554"><a href="/pricing/#data-brokers-we-cover">Sites We Cover</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9646"><a href="https://www.optery.com/family/">Family</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16340"><a href="#" class="js-menuDropdown">Business</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8459"><a href="https://www.optery.com/business/">Optery for Business</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13700"><a href="https://www.optery.com/api/">API for Partners</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18002"><a href="https://www.optery.com/use-cases/">Business Use Cases</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-16341"><a href="https://www.optery.com/security-pro-personal-data-removal-guide/">Guide to Enterprise Data Removal Services</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-16344"><a href="#" class="js-menuDropdown">Resources</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8555"><a target="_blank" rel="noopener" href="https://help.optery.com/en/">Help Desk</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16345"><a href="/blog/">Blog</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16346"><a href="https://www.optery.com/about-us/">About Us</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16349"><a href="/opt-out-guides/">Opt Out Guides</a></li>
+	<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16750"><a href="https://www.optery.com/product-updates/">Product Updates</a></li>
+	<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16348"><a href="/reviews/">Customer Reviews</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-16347"><a href="https://www.optery.com/optery-in-the-press/">Optery in the Press</a></li>
+</ul>
+</li>
+</ul></div>					</div>
+					<div class="mobileMenu_footer">
+													<a href="https://app.optery.com/login"
+								 class="flex button-white button-sm"
+								 target="">
+								Sign In							</a>
+																			<a href="https://app.optery.com/signup"
+								 class="button button-sm mt-4"
+								 target="">
+								Sign Up Free							</a>
+											</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+</header>
+
+	<div id="content">
+
+	<section id="primary">
+		<main id="main">
+
+      <!--<div class="hidden lg:block bg-[url('images/curves-up.svg')] bg-contain bg-no-repeat w-[330px] h-[585px] absolute top-0 right-[calc(((100vw_-_1280px)_/_2)_-_79px)]">
+      </div>-->
+
+      
+        <section class="section">
+          <div class="container">
+
+                          <div class="articleGrid">
+  <div class="articleGrid_row">
+    <div class="articleGrid_side articleGrid_side-left"></div>
+
+    <div class="articleGrid_main">
+      <h1 class="heading-lg mb-4 lg:mb-10 text-center xl:text-left">
+        Privacy Policy      </h1>
+    </div>
+
+    <div class="articleGrid_side articleGrid_side-right"></div>
+  </div>
+
+  <div class="articleGrid_row">
+    <div class="articleGrid_side articleGrid_side-left">
+      <div class="articleGrid_sticky">
+              </div>
+    </div>
+
+    <div class="articleGrid_main">
+      <article id="post-2325" class="post-2325 page type-page status-publish hentry">
+
+        <div class="editorContent">
+          <div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<p>Effective date: 01/01/2021 &#8212; Last updated: 03/17/2024</p>
+<h4 class="wp-block-heading">Privacy Policy in Plain Language</h4>
+<p>We don’t like wading through lengthy privacy policies any more than you do, which is why we’ve highlighted the most important points of our privacy policy in plain language below.&nbsp; This section is not intended to replace the official language of our&nbsp;<a href="https://www.optery.com/terms-of-service/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">Terms of Service</a>,&nbsp;<a href="https://www.optery.com/how-we-secure-your-data/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">Statement on Data Security</a>, or Privacy Policy that follows throughout the rest of this page.&nbsp;&nbsp;</p>
+<ul>
+<li><strong>Optery does not sell or rent personal information to any third parties for any purpose. Optery is not a data broker. Optery does not have any financial relationship with any data broker that it covers. Optery is not affiliated with any data broker</strong>. </li>
+</ul>
+<ul>
+<li><strong>Optery uses collected data from users to deliver its Removal Services.&nbsp;</strong>As a registered user or paying customer, you are the only owner of your Personal Data and can request disclosure or deletion at any time.</li>
+</ul>
+<ul>
+<li><strong>If you want your personal data to be removed from our systems, you should delete your account from the Login &amp; Security section of your Account page and all of the information we hold about you will be destroyed.</strong></li>
+</ul>
+<ul>
+<li>To comply with our legal obligations, for example, under certain circumstances, we may be required to disclose your Personal Data if required to do so by law or in response to valid requests by public authorities.</li>
+</ul>
+<ul>
+<li>All user data in transit and at rest is encrypted.  Optery has completed its SOC 2, Type II security certification.</li>
+</ul>
+<ul>
+<li>Optery utilizes third party vendors such as Amazon Web Services, Amplitude, Crisp, Google, Hubspot, Meta, Stripe, and others to deliver and market our services, and manage user data. The full list of third party vendors is listed in our Privacy Policy below.</li>
+</ul>
+<ul>
+<li><strong>Optery honors the same data privacy rights required by the California Consumer Privacy Act (CCPA) and the California Privacy Rights Act (CPRA) to all users regardless of where they reside</strong>.&nbsp; Optery is not intended for users outside of the U.S. at this time, but we do have a GDPR policy and honor its requirements for E.U. residents.&nbsp;</li>
+</ul>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>1.&nbsp;Introduction</strong></h4>
+<p>Welcome to&nbsp;<strong>Optery, Inc.</strong></p>
+<p>Optery, Inc. (“us”, “we”, or “our”) operates&nbsp;<a href="https://www.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://www.optery.com</a>&nbsp;and&nbsp;<a href="https://app.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://app.optery.com</a>&nbsp;and&nbsp;<a href="https://business.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://business.optery.com</a>&nbsp;and&nbsp;<a href="https://help.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://help.optery.com</a>&nbsp;(hereinafter together or individually referred to as “<strong>Service</strong>”).</p>
+<p>Our Privacy Policy governs your visit to&nbsp;<a href="https://www.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://www.optery.com</a>&nbsp;and&nbsp;<a href="https://app.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://app.optery.com</a>&nbsp;and&nbsp;<a href="https://business.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://business.optery.com</a>&nbsp;and&nbsp;<a href="https://help.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://help.optery.com</a>, and explains how we collect, safeguard and disclose information that results from your use of our Service.</p>
+<p>We use your data to provide and improve Service. By using Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our&nbsp;<a href="https://www.optery.com/terms-of-service/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">Terms and Conditions</a>.</p>
+<p>Our Terms and Conditions (“<strong>Terms</strong>”) govern all use of our Service and together with the Privacy Policy constitutes your agreement with us (“<strong>agreement</strong>”).</p>
+<h4 class="wp-block-heading"><strong>2.&nbsp;</strong><strong><u>Definitions</u></strong></h4>
+<p><strong>SERVICE&nbsp;</strong>means the&nbsp;<a href="https://www.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://www.optery.com</a>&nbsp;and&nbsp;<a href="https://app.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://app.optery.com</a>&nbsp;and&nbsp;<a href="https://business.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://business.optery.com</a>&nbsp;and&nbsp;<a href="https://help.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://help.optery.com</a>&nbsp;website and application(s) operated by Optery, Inc.</p>
+<p><strong>PERSONAL DATA</strong>&nbsp;means data about a living individual who can be identified from those data (or from those and other information either in our possession or likely to come into our possession).</p>
+<p><strong>USAGE DATA</strong>&nbsp;is data collected automatically either generated by the use of Service or from Service infrastructure itself (for example, the duration of a page visit).</p>
+<p><strong>COOKIES</strong>&nbsp;are small files stored on your device (computer or mobile device).</p>
+<p><strong>DATA CONTROLLER</strong>&nbsp;means a natural or legal person who (either alone or jointly or in common with other persons) determines the purposes for which and the manner in which any personal data are, or are to be, processed. For the purpose of this Privacy Policy, we are a Data Controller of your data.</p>
+<p><strong>DATA PROCESSORS (OR SERVICE PROVIDERS)</strong>&nbsp;means any natural or legal person who processes the data on behalf of the Data Controller. We may use the services of various Service Providers in order to process your data more effectively.</p>
+<p><strong>DATA SUBJECT&nbsp;</strong>is any living individual who is the subject of Personal Data.</p>
+<p><strong>THE USER&nbsp;</strong>is the individual using our Service. The User corresponds to the Data Subject, who is the subject of Personal Data.</p>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>3.&nbsp;Information Collection and Use</strong></h4>
+<p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+<h4 class="wp-block-heading"><strong>4.&nbsp;Types of Data Collected</strong></h4>
+<p><strong>Personal Data</strong><br />While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you (“<strong>Personal Data</strong>”). The information identified as “optional” below is used to disambiguate you from others who may have the same or a similar name as you when we deliver our opt out services.&nbsp; Personally identifiable information may include, but is not limited to:</p>
+<p>(a) Email address(es) (required)</p>
+<p>(b) First name and last name (required), as well as middle name and other names or spellings of your name (optional)</p>
+<p>(c) Phone number(s) (optional)</p>
+<p>(d) City and State (required), as well as Address and ZIP/Postal code (optional)</p>
+<p>(e) Cookies and Usage Data</p>
+<p>(f) Birth year (required), birth month and birth day (optional)</p>
+<p>(g) Gender (optional)</p>
+<p>(h) The names of family members, roommates, or significant others with whom you’ve shared an address (optional)</p>
+<p>We may use your Personal Data to contact you with newsletters and data broker status updates. You may opt out of receiving our newsletters and data broker removal status updates by following the unsubscribe link at the bottom of each email we send or by updating the Notification Preferences section of your Account page.&nbsp; We may also send you required account updates such as billing and account activity confirmations.&nbsp; If you do not wish to receive the required account updates, you must delete your account from the Login &amp; Security section of your Account page.</p>
+<p><strong>Usage Data</strong><br />We may also collect information that your browser sends whenever you visit our Service or when you access Service by or through a mobile device (“<strong>Usage Data</strong>”).</p>
+<p>This Usage Data may include information such as your computer’s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
+<p>When you access Service with a mobile device, this Usage Data may include information such as the type of mobile device you use, your mobile device unique ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browser you use, unique device identifiers and other diagnostic data.</p>
+<p><strong>Location Data</strong><br />We may use and store information about your location if you give us permission to do so (“<strong>Location Data</strong>”). We use this data to provide features of our Service, to improve and customize our Service.</p>
+<p>You can enable or disable location services when you use our Service at any time by way of your device settings.</p>
+<p><strong>Tracking Cookies Data</strong><br />We use cookies and similar tracking technologies to track the activity on our Service and we hold certain information.</p>
+<p>Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device. Other tracking technologies are also used such as beacons, tags and scripts to collect and track information and to improve and analyze our Service.</p>
+<p>You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
+<p>Examples of Cookies we use:</p>
+<p><strong>(a) Session Cookies:&nbsp;</strong>We use Session Cookies to operate our Service.</p>
+<p><strong>(b) Preference Cookies:&nbsp;</strong>We use Preference Cookies to remember your preferences and various settings.</p>
+<p><strong>(c) Security Cookies:&nbsp;</strong>We use Security Cookies for security purposes.</p>
+<p><strong>(d) Advertising Cookies:&nbsp;</strong>Advertising Cookies are used to serve you with advertisements that may be relevant to you and your interests.</p>
+<p><strong>Other Data</strong><br />While using our Service, we may also collect the following information: sex, age, date of birth, government issued identification details, actual address, telephone number (work, mobile), information on marital status, family members, and other data.</p>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>5.&nbsp;Use of Data</strong></h4>
+<p>Optery, Inc.&nbsp;uses the collected data for various purposes:</p>
+<p>(a) to provide and maintain our Service.</p>
+<p>(b) to notify you about changes to our Service.</p>
+<p>(c) to allow you to participate in interactive features of our Service when you choose to do so.</p>
+<p>(d) to provide customer support.</p>
+<p>(e) to gather analysis or valuable information so that we can improve our Service.</p>
+<p>(f) to monitor the usage of our Service.</p>
+<p>(g) to detect, prevent and address technical issues.</p>
+<p>(h) to fulfill any other purpose for which you provide it.</p>
+<p>(i) to carry out our obligations and enforce our rights arising from any contracts entered into between you and us, including for billing and collection.</p>
+<p>(j) to provide you with notices about your account and/or subscription, including expiration and renewal notices, email-instructions, etc.</p>
+<p>(k) to provide you with news and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless you have opted not to receive such information.</p>
+<p>(l) To comply with our legal obligations, for example, under certain circumstances, we may be required to disclose your Personal Data if required to do so by law or in response to valid requests by public authorities.</p>
+<p>(m) in any other way we may describe when you provide the information.</p>
+<p>(n) for any other purpose with your consent.</p>
+<h4 class="wp-block-heading"><strong>6.&nbsp;</strong><strong><u>Retention of Data</u></strong></h4>
+<p>We will retain your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.</p>
+<p>We will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period, except when this data is used to strengthen the security or to improve the functionality of our Service, or we are legally obligated to retain this data for longer time periods.</p>
+<h4 class="wp-block-heading"><strong>7.&nbsp;</strong><strong><u>Transfer of Data</u></strong></h4>
+<p>Our paid subscription plans provide services for submitting personal information opt out, suppression and removal requests to lists of third-party data brokers and information aggregators (“<strong>Removal List(s)</strong>”) on your behalf (“<strong>Removal Service(s)</strong>”).&nbsp; If you purchase a paid subscription plan, as a condition to fulfilling your subscription plan, (i) you must provide your personally identifiable information(“<strong>PII</strong>”) such as full name, birth year and home address to Optery, Inc. and (ii) Optery, Inc. must send your PII to the data brokers and information aggregators included in the Removal Lists.&nbsp; This information is required by the data brokers and information aggregators in order to locate your record(s) and remove you from their database(s).&nbsp; We cannot control, guarantee or warranty how these third-parties will treat your PII or what they will do with it.&nbsp; By purchasing and maintaining an active paid subscription, you approve Optery, Inc. to submit your PII to data brokers and information aggregators for the purposes submitting opt out, suppression and removal requests.&nbsp; If you do not wish to submit your PII to data brokers and information aggregators for the purposes submitting opt out, suppression and removal requests, then you should not use Optery, Inc.’s Removal Services.</p>
+<p>Your information, including Personal Data, may be transferred to – and maintained on – computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ from those of your jurisdiction.</p>
+<p>If you are located outside United States and choose to provide information to us, please note that we transfer the data, including Personal Data, to United States and process it there.</p>
+<p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.</p>
+<p>Optery, Inc. will take all the steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.</p>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>8.&nbsp;Discloser of Data</strong></h4>
+<p>We may disclose personal information that we collect, or you provide:</p>
+<p><strong>(a) Disclosure for Law Enforcement.</strong><br />Under certain circumstances, we may be required to disclose your Personal Data if required to do so by law or in response to valid requests by public authorities.</p>
+<p><strong>(b) Business Transaction.</strong><br />If&nbsp;we are involved in a change of control business transaction such as a merger, acquisition or asset sale, your Personal Data may be transferred as a result of the business transaction.&nbsp; However, prior to the close of such a business transaction and prior to the transfer of any Personal Data related to such as business transaction, Optery will provide at least 30 days written notice to all users via email notification providing the option for each user to delete their Optery account in advance of the close of the business transaction thereby preventing the unwanted transfer of the user’s Personal Data as a result of the business transaction.</p>
+<p><strong>(c) Other cases. We may disclose your information also:</strong><br />(i) to contractors, service providers, and other third parties we use to support our business such as internet software and services for customer support, digital analytics, advertising, and email.</p>
+<p>(ii) to fulfill the purpose for which you provide it.</p>
+<p>(iii) for any other purpose disclosed by us when you provide the information.</p>
+<p>(iv) with your consent in any other cases.</p>
+<h4 class="wp-block-heading"><strong>9.&nbsp;Security of Data</strong></h4>
+<p>The security of your personal information is important to us and we utilize a number of technical, organizational, process and physical strategies and tactics to secure your personal information as described in our&nbsp;<a href="https://www.optery.com/how-we-secure-your-data/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">Statement on Data Security</a> (<a href="https://www.optery.com/how-we-secure-your-data/" target="_blank" rel="noreferrer noopener">https://www.optery.com/how-we-secure-your-data/</a>).&nbsp; Optery has completed its SOC 2, Type II security audit (<a href="https://finance.yahoo.com/news/personal-data-removal-startup-optery-130000942.html" target="_blank" rel="noreferrer noopener">https://finance.yahoo.com/news/personal-data-removal-startup-optery-130000942.html</a>). However, remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+<h4 class="wp-block-heading"><strong>10.&nbsp;</strong><strong><u>Your Data Protection Rights Under General Data Protection Regulation (GDPR)</u></strong></h4>
+<p>If you are a resident of the European Union (EU) and European Economic Area (EEA), you have certain data protection rights, covered by GDPR. – See more at&nbsp;<a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://eur-lex.europa.eu/eli/reg/2016/679/oj</a>.</p>
+<p>We enable you to correct, amend, delete, or limit the use of your Personal Data.</p>
+<p>If you wish to be informed what Personal Data we hold about you, please view the pages in your account (e.g. Manage Profile, Reports) or email us at&nbsp;<a href="mailto:support@optery.com?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">support@optery.com</a>.&nbsp; If you want it to be removed from our systems, you should delete your account from the Login &amp; Security section of your Account page.</p>
+<p>In certain circumstances, you have the following data protection rights:</p>
+<p>(a) the right to access, update or to delete the information we have on you.</p>
+<p>(b) the right of rectification. You have the right to have your information rectified if that information is inaccurate or incomplete.</p>
+<p>(c) the right to object. You have the right to object to our processing of your Personal Data.</p>
+<p>(d) the right of restriction. You have the right to request that we restrict the processing of your personal information.</p>
+<p>(e) the right to data portability. You have the right to be provided with a copy of your Personal Data in a structured, machine-readable and commonly used format.</p>
+<p>(f) the right to withdraw consent. You also have the right to withdraw your consent at any time where we rely on your consent to process your personal information.</p>
+<p>Please note that we may ask you to verify your identity before responding to such requests. Please note, we may not able to provide Service without some necessary data.</p>
+<p>You have the right to complain to a Data Protection Authority about our collection and use of your Personal Data. For more information, please contact your local data protection authority in the European Economic Area (EEA).</p>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>11.&nbsp;</strong><strong><u>Your Data Protection Rights under the California Privacy Protection Act (CalOPPA)</u></strong></h4>
+<p>CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy. The law’s reach stretches well beyond California to require a person or company in the United States (and conceivably the world) that operates websites collecting personally identifiable information from California consumers to post a conspicuous privacy policy on its website stating exactly the information being collected and those individuals with whom it is being shared, and to comply with this policy. – See more at:&nbsp;<a href="https://consumercal.org/about-cfc/cfc-education-foundation/california-online-privacy-protection-act-caloppa-3/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://consumercal.org/about-cfc/cfc-education-foundation/california-online-privacy-protection-act-caloppa-3/</a>.</p>
+<p>According to CalOPPA we agree to the following:</p>
+<p>(a) users can visit our site anonymously.</p>
+<p>(b) our Privacy Policy link includes the word “Privacy”, and can easily be found on the home page of our website.</p>
+<p>(c) users will be notified of any privacy policy changes on our Privacy Policy Page.</p>
+<p>(d) all users are able to change their personal information by updating the personal information fields of your Manage Profile page in your account.</p>
+<p>Our Policy on “Do Not Track” Signals:</p>
+<p>We do not respond to Do Not Track signals. &nbsp;Third-party technology providers we utilize for our Service may also not respond to Do Not Track signals.&nbsp; Do Not Track is a preference setting some web browsers support to inform websites that you do not want to be tracked.</p>
+<p>You can enable or disable Do Not Track by visiting the Preferences or Settings page of your web browser.</p>
+<h4 class="wp-block-heading"><strong>12.&nbsp;<u>Your Data Protection Rights as a resident of any State in the United States, including California under the California Consumer Privacy Act (CCPA) and the California Privacy Rights Act (CPRA)</u></strong></h4>
+<p>If you are a resident of any State in the United States, including California, you are entitled to learn what data we collect about you, ask to delete your data and not to sell (share) it. To exercise your data protection rights, you can make certain requests and ask us:</p>
+<p><strong>(a) What personal information we have about you</strong>. If you make this request, we will return to you:</p>
+<p>&nbsp; &nbsp; &nbsp; (i) The categories of personal information we have collected about you.</p>
+<p>&nbsp; &nbsp; &nbsp; (ii) The categories of sources from which we collect your personal information.</p>
+<p>&nbsp; &nbsp; &nbsp; (iii) The business or commercial purpose for collecting or selling your personal information.</p>
+<p>&nbsp; &nbsp; &nbsp; (iv) The categories of third parties with whom we share personal information.</p>
+<p>&nbsp; &nbsp; &nbsp; (v) The specific pieces of personal information we have collected about you.</p>
+<p>&nbsp; &nbsp; &nbsp; (vi) A list of categories of personal information that we have disclosed for a business purpose, along with the category of any other company we shared it with.</p>
+<p>Please note, you are entitled to ask us to provide you with this information up to two times in a rolling twelve-month period. When you make this request, the information provided may be limited to the personal information we collected about you in the previous 12&nbsp;months.</p>
+<p><strong>(b) To delete your personal information</strong>.&nbsp;If you want your personal information to be removed from our systems, you should delete your account from the Login &amp; Security section of your Account page and all of the information we hold about you will be destroyed immediately.&nbsp;If you make this request, we will delete the personal information we hold about you as of the date of your request from our records and direct any service providers to do the same. In some cases, deletion may be accomplished through de-identification of your information. If you choose to delete your personal information, you may not be able to use certain functions that require your personal information to operate. To delete your personal information, you should delete your account from the Login &amp; Security section of your Account page. If you do not have an active Account with us and are not subscribed to our email newsletter, we do not maintain any personal information about you.</p>
+<p>An exception to the immediate deletion and de-identification of user data is by our payment processor service provider Stripe.&nbsp; Stripe’s standard practice is to retain the customer’s purchase transaction data to be able to facilitate refund requests and process dispute claims that may arise after a paying customer has already deleted their Optery account.&nbsp; In practice, this ensures customer’s refund and dispute claims are processed quickly and efficiently.&nbsp; If customers wish to contact Stripe for data deletion requests directly, they can do so here:&nbsp;<a href="https://stripe.com/privacy?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://stripe.com/privacy</a></p>
+<p><strong>&nbsp;(c)&nbsp;</strong><strong>To stop selling your personal information</strong>. We don’t sell or rent your personal information to any third parties for any purpose. You are the only owner of your Personal Data and can request disclosure or deletion at any time.</p>
+<p>Please note, if you ask us to delete your data, it will impact your experience with us as several functions of our Service will not function without your personal information, and you may not be able to participate in certain programs or membership services which require the usage of your personal information to function. But in no circumstances, we will discriminate against you for exercising your rights.</p>
+<p>To exercise your data protection rights described above, please send your request(s) by one of the following means:</p>
+<p>If you have an account active for our Service, you can delete your account from the Login &amp; Security section of your Account page.</p>
+<p>By email:&nbsp;<a href="mailto:support@optery.com?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">support@optery.com</a>.</p>
+<p>By submitting a request from this page on our website:&nbsp;<a href="https://help.optery.com/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB" target="_blank" rel="noreferrer noopener">https://help.optery.com/</a>.</p>
+<p>If you are a resident of California, your data protection rights, described above, are covered by the CCPA and/or the CPRA. To find out more, visit the official California Legislative Information website.</p>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>13.&nbsp;<span style="text-decoration: underline;">Third-party Vendors and Service Providers</span></strong></h4>
+<p>Optery uses third-party vendors and service providers to facilitate our Service (“<strong>Service Providers</strong>”). You acknowledge and agree that Optery may use and provide your PII to the following Service Providers to monitor, analyze, support, service, secure, market, improve, and/or provide our Service.  Any such third-party vendors and service providers will only be given access to your PII and personal data as is reasonably necessary to monitor, analyze, support, service, secure, market, monetize, improve, and/or provide our Service.</p>
+<figure class="wp-block-table">
+<table>
+<tbody>
+<tr>
+<td><strong>Entity Name</strong></td>
+<td><strong>Purpose</strong></td>
+<td><strong>Location</strong></td>
+<td><strong>More Information</strong></td>
+</tr>
+<tr>
+<td>Amazon Web Services</td>
+<td>Cloud Hosting</td>
+<td>USA</td>
+<td><a href="https://aws.amazon.com" target="_blank" rel="noreferrer noopener">https://aws.amazon.com</a></td>
+</tr>
+<tr>
+<td>Amplitude</td>
+<td>Product Analytics</td>
+<td>USA</td>
+<td><a href="https://amplitude.com/amplitude-security-and-privacy" target="_blank" rel="noreferrer noopener">https://amplitude.com/amplitude-security-and-privacy</a></td>
+</tr>
+<tr>
+<td>Crisp</td>
+<td>Customer Support</td>
+<td>USA</td>
+<td><a href="https://help.crisp.chat/en/article/how-is-security-managed-on-crisp-services-1p8p1lm/" target="_blank" rel="noreferrer noopener">help.crisp.chat/en/article/how-is-security-managed-on-crisp-services-1p8p1lm/</a></td>
+</tr>
+<tr>
+<td>Customer.io</td>
+<td>Email Marketing, Notifications</td>
+<td>USA</td>
+<td><a href="https://customer.io/legal/security/" target="_blank" rel="noreferrer noopener">https://customer.io/legal/security/</a></td>
+</tr>
+<tr>
+<td>Google Ads</td>
+<td>Marketing</td>
+<td>USA</td>
+<td><a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer noopener">https://policies.google.com/privacy</a></td>
+</tr>
+<tr>
+<td>Google Marketing Platform</td>
+<td>Analytics, Marketing, Tag Management</td>
+<td>USA</td>
+<td><a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer noopener">https://policies.google.com/privacy</a></td>
+</tr>
+<tr>
+<td>Google Workspace</td>
+<td>Internal Communications, Customer Support</td>
+<td>USA</td>
+<td><a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer noopener">https://policies.google.com/privacy</a></td>
+</tr>
+<tr>
+<td>Hubspot</td>
+<td>Customer Relationship Management</td>
+<td>USA</td>
+<td><a href="https://legal.hubspot.com/privacy-policy" target="_blank" rel="noreferrer noopener">https://legal.hubspot.com/privacy-policy</a></td>
+</tr>
+<tr>
+<td>Linkedin</td>
+<td>Marketing</td>
+<td>USA</td>
+<td><a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noreferrer noopener">https://www.linkedin.com/legal/privacy-policy</a></td>
+</tr>
+<tr>
+<td>Mailgun</td>
+<td>Customer Analytics</td>
+<td>USA</td>
+<td><a href="https://www.mailgun.com/legal/privacy-policy/" target="_blank" rel="noreferrer noopener">https://www.mailgun.com/legal/privacy-policy/</a></td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>Marketing</td>
+<td>USA</td>
+<td><a href="https://www.facebook.com/help/109378269482053/" target="_blank" rel="noreferrer noopener">facebook.com/help/109378269482053/</a></td>
+</tr>
+<tr>
+<td>Profitwell</td>
+<td>Revenue Management</td>
+<td>USA</td>
+<td><a href="https://www.profitwell.com/security" target="_blank" rel="noreferrer noopener">profitwell.com/security</a></td>
+</tr>
+<tr>
+<td>Reddit</td>
+<td>Marketing</td>
+<td>USA</td>
+<td><a href="https://www.reddit.com/policies/privacy-policy" target="_blank" rel="noreferrer noopener">https://www.reddit.com/policies/privacy-policy</a></td>
+</tr>
+<tr>
+<td>Slack</td>
+<td>Internal Communications, Customer Support</td>
+<td>USA</td>
+<td><a href="https://slack.com/trust/privacy/privacy-policy" target="_blank" rel="noreferrer noopener">https://slack.com/trust/privacy/privacy-policy</a></td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td>Payment Processing</td>
+<td>USA</td>
+<td><a href="https://stripe.com/us/privacy" target="_blank" rel="noreferrer noopener">https://stripe.com/us/privacy</a></td>
+</tr>
+</tbody>
+</table><figcaption class="wp-element-caption">Optery Third-Party Vendors That May Process Your PII</figcaption></figure>
+</div>
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<h4 class="wp-block-heading"><strong>14.&nbsp;<u>Links to Other Sites</u></strong></h4>
+<p>Our Service may contain links to, or content from, other sites that are not operated by us. These links or content are not an indication that we endorse or are affiliated with any other third-party.&nbsp; If you click a third-party link, you will be directed to that third party’s site. We strongly advise you to review the Privacy Policy and Terms and Conditions of every site you visit.</p>
+<p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third-party sites or services we link to or display content from.</p>
+<h4 class="wp-block-heading"><strong>15.&nbsp;<u>Children’s Privacy</u></strong></h4>
+<p>Our Services are not intended for use by children under the age of 18 (“<strong>Child</strong>” or “<strong>Children</strong>”).</p>
+<p>If you are not at least eighteen (18) years old, you are prohibited from both the access and usage of Service.</p>
+<p>We do not knowingly collect personally identifiable information from Children under 18. If you become aware that a Child has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from Children, we take steps to remove that information and that user from our servers.</p>
+<h4 class="wp-block-heading"><strong>16.&nbsp;<u>Changes to This Privacy Policy</u></strong></h4>
+<p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+<p>We will let you know via email or a prominent notice on our Service, prior to the change becoming effective and update “effective date” at the top of this Privacy Policy.</p>
+<p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+<h4 class="wp-block-heading"><strong>17.&nbsp;<u>Contact Us</u></strong></h4>
+<p>If you have any questions about this Privacy Policy, please contact us:</p>
+<p>By email:&nbsp;<a href="mailto:support@optery.com?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">support@optery.com</a>.</p>
+<p>By submitting an inquiry from this page on our website:&nbsp;<a href="https://www.optery.com/contact-us/?utm_source=google-ads&amp;utm_medium=smart_LG_2021.10.05&amp;utm_term=remove&amp;utm_content=deleted&amp;utm_campaign=smart_LG_2021.10.05&amp;gclid=Cj0KCQiA1ZGcBhCoARIsAGQ0kkomTufOL15XcQHT8KigwiPusRklCgGgOFiTUakwxHfKg2Y5AKcZkSoaAo4CEALw_wcB">https://www.optery.com/contact-us/</a>.</p>
+</div>
+        </div>
+
+      </article>
+    </div>
+
+    <div class="articleGrid_side articleGrid_side-right"></div>
+  </div>
+
+</div>
+                      </div>
+        </section>
+
+        
+<section class="section pt-0">
+  <div class="container">
+    
+    <div class="lg:grid grid-cols-3 gap-[30px] space-y-4 lg:space-y-0">
+                      </div>
+
+  </div>
+</section>
+      
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+	
+<section class="bg-black text-white text-center">
+  <div class="container py-20 md:py-24 bg-[url('images/sign_up_bg.svg')] bg-bottom border-b border-blue">
+
+          <h2 class="heading-md text-white">
+        <p><strong>Ready to <span style="color: #6ef7d3;">safeguard</span> your personal data?</strong></p>
+      </h2>
+    
+          <div>
+        Join the movement of people strengthening their privacy      </div>
+    
+          <a href="https://app.optery.com/signup"
+         target=""
+         class="inline-block p-[18px] w-full md:w-[472px] bg-teal hover:bg-blue text-blue-dark hover:text-white text-center font-semibold rounded-2xl mt-14 transition">
+        Sign Up Free      </a>
+    
+  </div>
+</section>
+
+	
+<footer id="footer" class="pt-20 lg:pt-24 pb-12 bg-black text-white">
+  <div class="container">
+
+    <div class="lg:flex justify-between text-xs lg:-mx-4 space-y-8 lg:space-y-0">
+
+      <div class="lg:w-1/5 lg:px-4">
+        <div class="mb-4 lg:mb-11">
+          <a href="https://www.optery.com/">
+            <img width="139" height="32" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/optery_logo-white.svg"
+                 alt="Optery logo"
+                 class="w-[138px] lg:w-[112px]">
+          </a>
+        </div>
+        <div>
+          <p>Optery helps you remove your personal information from data brokers.</p>
+<p>&nbsp;</p>
+<div>HQ: <span style="color:#6ef7d3;">San Francisco Bay Area</span><br>
+Incorporation: <span style="color:#6ef7d3;">C Corporation, Delaware, USA</span></div>
+<script type="rocketlazyloadscript">
+  setTimeout(function(){
+  var links = document.querySelectorAll("a[href*='app.optery.com']");
+  links.forEach(function(link) {
+      var targetUrl = link.getAttribute('href');
+      var merged = Object.assign({}, handl_utm, getSearchParams(targetUrl));
+      if (Object.keys(merged).length !== 0) {
+        var src = targetUrl.split("?")[0];
+        var queryString = new URLSearchParams(merged).toString();
+        var finalTarget = src + "?" + queryString;
+        link.setAttribute('href', finalTarget);
+      }
+  })}, 500);
+</script>        </div>
+      </div>
+
+      <div class="lg:px-4">
+        <p class="text-sm lg:text-xs uppercase font-bold mb-4 lg:mb-6">
+          Product        </p>
+                  <div class="text-grey space-y-4 lg:space-y-5">
+                          <div>
+                <a href="https://app.optery.com/signup" target=""
+                   class="hover:text-white">
+                  Sign up                </a>
+              </div>
+                          <div>
+                <a href="https://app.optery.com/login" target=""
+                   class="hover:text-white">
+                  Sign in                </a>
+              </div>
+                          <div>
+                <a href="/pricing/" target=""
+                   class="hover:text-white">
+                  Personal Pricing                </a>
+              </div>
+                          <div>
+                <a href="/business-pricing/" target=""
+                   class="hover:text-white">
+                  Business Pricing                </a>
+              </div>
+                          <div>
+                <a href="/pricing/#data-brokers-we-cover/" target=""
+                   class="hover:text-white">
+                  Sites We Cover                </a>
+              </div>
+                          <div>
+                <a href="/family/" target=""
+                   class="hover:text-white">
+                  Optery for Family                </a>
+              </div>
+                          <div>
+                <a href="/business/" target=""
+                   class="hover:text-white">
+                  Optery for Business                </a>
+              </div>
+                          <div>
+                <a href="/api/" target=""
+                   class="hover:text-white">
+                  API for Partners                </a>
+              </div>
+                      </div>
+              </div>
+
+      <div class="lg:px-4">
+        <p class="text-sm lg:text-xs uppercase font-bold mb-4 lg:mb-6">
+          Support        </p>
+                  <div class="text-grey space-y-4 lg:space-y-5">
+                          <div>
+                <a href="https://help.optery.com" target="_blank"
+                   class="hover:text-white">
+                  Help Desk / FAQ                </a>
+              </div>
+                          <div>
+                <a href="https://status.optery.com/en/" target="_blank"
+                   class="hover:text-white">
+                  Application Availability Status                </a>
+              </div>
+                          <div>
+                <a href="/contact-us/" target=""
+                   class="hover:text-white">
+                  Contact Us                </a>
+              </div>
+                          <div>
+                <a href="/optery-promo-codes/" target=""
+                   class="hover:text-white">
+                  Promo Codes                </a>
+              </div>
+                      </div>
+              </div>
+
+      <div class="lg:px-4">
+        <p class="text-sm lg:text-xs uppercase font-bold mb-4 lg:mb-6">
+          Learn        </p>
+                  <div class="text-grey space-y-4 lg:space-y-5">
+                                              <div>
+                    <a href="/getting-started/" target=""
+                       class="hover:text-white">
+                      Getting Started                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/getting-started-business/" target=""
+                       class="hover:text-white">
+                      Getting Started (Business)                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/opt-out-guides" target=""
+                       class="hover:text-white">
+                      Opt Out Guides                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/blog/" target=""
+                       class="hover:text-white">
+                      Blog                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/intro-to-data-brokers-and-opting-out/" target=""
+                       class="hover:text-white">
+                      Intro to Data Brokers                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/deleteme-review/" target=""
+                       class="hover:text-white">
+                      Optery vs. DeleteMe                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/incogni-review/" target=""
+                       class="hover:text-white">
+                      Optery vs. Incogni                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="/onerep-review/" target=""
+                       class="hover:text-white">
+                      Optery vs. Onerep                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="https://www.optery.com/reviews/" target=""
+                       class="hover:text-white">
+                      Customer Reviews                    </a>
+                  </div>
+	                                                          <div>
+                    <a href="https://www.optery.com/sitemap/" target=""
+                       class="hover:text-white">
+                      Sitemap                    </a>
+                  </div>
+	                                  </div>
+              </div>
+
+      <div class="lg:px-4">
+        <p class="text-sm lg:text-xs uppercase font-bold mb-4 lg:mb-6">
+          Company        </p>
+                  <div class="text-grey space-y-4 lg:space-y-5">
+                          <div>
+                <a href="/about-us/" target=""
+                   class="hover:text-white">
+                  About Us                </a>
+              </div>
+                          <div>
+                <a href="/optery-in-the-press/" target=""
+                   class="hover:text-white">
+                  Optery in the Press                </a>
+              </div>
+                          <div>
+                <a href="https://app.dover.io/Optery/careers/41840615-ceb2-4629-93a5-42d49fa8987d" target="_blank"
+                   class="hover:text-white">
+                  Careers                </a>
+              </div>
+                          <div>
+                <a href="/how-we-secure-your-data/" target=""
+                   class="hover:text-white">
+                  How We Secure Your Data                </a>
+              </div>
+                          <div>
+                <a href="/privacy-policy/" target=""
+                   class="hover:text-white">
+                  Privacy Policy                </a>
+              </div>
+                          <div>
+                <a href="/terms-of-service/" target=""
+                   class="hover:text-white">
+                  Terms of Service                </a>
+              </div>
+                      </div>
+              </div>
+
+    </div>
+
+    <div class="flex items-center flex-wrap lg:flex-nowrap lg:items-end justify-between mt-11 lg:mt-0 text-[11px]">
+
+      <div class="min-w-[176px] w-full lg:w-auto mb-11 lg:mb-0">
+
+        <div class="text-xs uppercase mb-4">
+                      SOC 2 TYPE 2 Compliant                  </div>
+
+        <div class="max-w-[88px]">
+                      <img width="88" height="88" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/soc.png" alt="SOC logo">
+                  </div>
+
+      </div>
+
+      <div class="text-grey">
+        © 2024 Optery
+      </div>
+
+      <div class="flex space-x-4">
+                  <a href="https://twitter.com/Optery" target="_blank">
+            <img width="32" height="33" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/x-twitter.svg" alt="Twitter">
+          </a>
+                          <a href="https://www.youtube.com/optery" target="_blank">
+            <img width="32" height="33" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/youtube.svg" alt="YouTube">
+          </a>
+                          <a href="https://www.facebook.com/Optery/" target="_blank">
+            <img width="32" height="33" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/facebook.svg" alt="Facebook">
+          </a>
+                          <a href="https://www.linkedin.com/company/optery/" target="_blank">
+            <img width="32" height="33" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/linkedin.svg" alt="LinkedIn">
+          </a>
+                          <a href="https://www.reddit.com/r/Optery/" target="_blank">
+            <img width="32" height="32" loading="lazy" src="https://www.optery.com/wp-content/themes/theme-optery/theme/images/reddit.svg" alt="Reddit">
+          </a>
+              </div>
+
+    </div>
+    <div class="optery-search-form">
+      <form role="search" method="get" class="search-form" action="https://www.optery.com/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Search" />
+			</form>    </div>
+  </div><!--container-->
+</footer>
+
+</div><!-- #page -->
+
+
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+	if (typeof MsCrmMkt !== 'undefined'){
+	    MsCrmMkt.MsCrmFormLoader.on("afterFormLoad", function(event) {
+			jQuery(event.formPlaceholder).find('input').each(function(id, field){
+			    var thiss = jQuery(field)			
+			    
+			    
+			    if ( typeof(thiss.attr('title')) != 'undefined' ){
+			        if (thiss.attr('title') != ''){
+			            //console.log('1',field,thiss.attr('title'))
+			            var param = thiss.attr('title').toLowerCase().replace(/\s+/g,'_')
+			            var cookie_value = ''
+					    if (param != '' && Cookies.get(param) && Cookies.get(param) != ''){
+					        cookie_value = Cookies.get(param)
+					    }
+                        
+                        if (cookie_value == ''){
+	                        var param = thiss.attr('placeholder').toLowerCase().replace(/\s+/g,'_')
+						    if (param != '' && Cookies.get(param) && Cookies.get(param) != ''){
+						        cookie_value = Cookies.get(param)
+						    }
+                        }
+                        
+                    	thiss.val(cookie_value)
+			        }else{
+			            //console.log('2',field,thiss.attr('title'))
+			        }
+				}else{
+			        //console.log('3',field,thiss.attr('title'))
+				}
+			})
+	//		handl_utm_all_params.forEach(function(param) {
+	//		    jQuery('input[title='+param+']').val(Cookies.get(param));
+	//		})
+		})
+	}
+	
+	});</script><!--<script type="rocketlazyloadscript">
+setTimeout(function() {
+    // Note the change here. Doesn't rely on astra css selector:
+    // var target = document.querySelector('.ast-custom-button-link')
+    var target = document.querySelector( 'a[href^="https://app.optery.com/signup"]' );
+    var target_url = jQuery( target ).attr( 'href' );
+    var merged = jQuery.extend( {}, handl_utm, getSearchParams( target_url ) );
+    var src = target_url.includes('?') ? target_url.split('?')[0] : target_url;
+        if (!jQuery.isEmptyObject( merged ) ){
+            var final_target = src + '?' + jQuery.param( merged );
+        }
+    jQuery( target ).attr( 'href', final_target );
+}, 500);
+</script>-->
+
+<!-- From Additional CSS -->
+<style></style><style id='wp-block-paragraph-inline-css'></style>
+<style id='wp-block-heading-inline-css'></style>
+<style id='wp-block-list-inline-css'></style>
+<style id='wp-block-group-inline-css'></style>
+<style id='wp-block-group-theme-inline-css'></style>
+<style id='wp-block-table-inline-css'></style>
+<style id='wp-block-table-theme-inline-css'></style>
+<style id='global-styles-inline-css'></style>
+<script type="rocketlazyloadscript" data-rocket-src="//cdn.jsdelivr.net/npm/sweetalert2@11?ver=6.4.3" id="optery-sweetalert-js" defer></script>
+<script id="optery-front-script-js-extra">
+var api = {"signup":"https:\/\/api.optery.com\/api\/landingpage\/signup","requestaccess":"https:\/\/api.optery.com\/api\/landingpage\/api\/request-access"};
+</script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://www.optery.com/wp-content/cache/min/1/wp-content/plugins/optery-functionality-plugin/assets/front/js/script.js?ver=1718631402" id="optery-front-script-js" defer></script>
+<script type="rocketlazyloadscript" id="crisp-js-before">
+window.$crisp=[];
+    if (!window.CRISP_RUNTIME_CONFIG) {
+      window.CRISP_RUNTIME_CONFIG = {}
+    }
+
+    if (!window.CRISP_RUNTIME_CONFIG.locale) {
+      window.CRISP_RUNTIME_CONFIG.locale = 'en-us'
+    }
+
+    CRISP_WEBSITE_ID = 'ac4f49ab-752b-4fd2-9c55-ae1e5fca7f9a';
+</script>
+<script type="rocketlazyloadscript" data-minify="1"  async data-rocket-src="https://www.optery.com/wp-content/cache/min/1/l.js?ver=1718631402" id="crisp-js"></script>
+<script type="rocketlazyloadscript" id="rocket-browser-checker-js-after">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id="rocket-preload-links-js-extra">
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/www.optery.com","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script type="rocketlazyloadscript" id="rocket-preload-links-js-after">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-rocket-src="https://www.optery.com/wp-content/themes/theme-optery/theme/js/script.min.js?v=0.1.66" id="theme-optery-script-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-src="https://www.optery.com/wp-content/cache/min/1/wp-content/plugins/meks-easy-social-share/assets/js/main.js?ver=1718631402" id="meks_ess-main-js" defer></script>
+<script src="https://stats.wp.com/e-202425.js" id="jetpack-stats-js" data-wp-strategy="defer" defer></script>
+<script id="jetpack-stats-js-after">
+_stq = window._stq || [];
+_stq.push([ "view", JSON.parse("{\"v\":\"ext\",\"blog\":\"201272241\",\"post\":\"2325\",\"tz\":\"-7\",\"srv\":\"www.optery.com\",\"j\":\"1:13.1.3\"}") ]);
+_stq.push([ "clickTrackerInit", "201272241", "2325" ]);
+</script>
+<script>window.lazyLoadOptions={elements_selector:"iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.optery.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script><script>function lazyLoadThumb(e,alt){var t='<img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360">',a='<button class="play" aria-label="play Youtube video"></button>';t=t.replace('alt=""','alt="'+alt+'"');return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.parentNode.dataset.query.length?'':'&'+this.parentNode.dataset.query;e.setAttribute("src",t.replace("ID",this.parentNode.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.parentNode.replaceChild(e,this.parentNode)}document.addEventListener("DOMContentLoaded",function(){var e,t,p,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id,a[t].dataset.alt),a[t].appendChild(e),p=e.querySelector('.play'),p.onclick=lazyLoadYoutubeIframe});</script>
+</body>
+</html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
