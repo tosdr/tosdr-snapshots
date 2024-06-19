@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://trashmail.com">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="trashmail, trash-mail, trash, mail, jetable, e-mail, pourriel, transfert, anti-spam, temporaire, e-mail">
+<meta name="description" content="Créez des redirections e-mails pour vous protéger contre du spam et des newsletters.">
+<meta name="language" content="fr">
+<meta http-equiv="Content-Language" content="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-itunes-app" content="app-id=1537396822">
+<link rel="apple-touch-icon" href="https://trashmail.com/images/trashmail-152x152.png" />
+<title>TrashMail - Adresses jetable</title>
+<link href="https://trashmail.com/css/all-home.css" rel="stylesheet" type="text/css" />
+<link rel="alternate" hreflang="x-default" href="https://trashmail.com/" />
+<link rel="alternate" hreflang="de" href="https://trashmail.com/?lang=de" />
+<link rel="alternate" hreflang="fr" href="https://trashmail.com/?lang=fr" />
+<script src="https://trashmail.com/js/dist/all-home.js"></script><script>Raven.config('https://630abd942d0d4261b9141191e6443536@sentry.io/264999').install();</script><!--[if lt IE 9]><script src="https://trashmail.com/js/libs/html5shiv_3.7.2.min.js"></script><script src="https://trashmail.com/js/libs/respond_1.4.2.min.js"></script><![endif]-->
+</head>
+<body ng-app="trashmail">
+<script>
+        "use strict";
+
+        // Enable when system color scheme is dark
+        DarkReader.auto({
+            brightness: 100,
+            contrast: 90,
+            sepia: 10
+        });
+
+        var app		= angular.module('trashmail', [
+            'ngAnimate',
+            'mgcrea.ngStrap',
+            'mgcrea.ngStrap.helpers.dimensions',
+            'mgcrea.ngStrap.tooltip',
+            'mgcrea.ngStrap.helpers.parseOptions',
+            'mgcrea.ngStrap.select'
+        ]);
+
+        app.controller('Menu', function($scope, $http, $sce, $alert) {
+            var trustValueList = function(list) {
+                for (var i = 0; i < list.length; i++) {
+                    list[i].name = $sce.trustAsHtml("" + list[i].name);
+                }
+            };
+
+            $scope.menuList			= [{"name":"Page d'accueil","url":"\/?cmd=&lang=fr","current":false,"cmd":""},{"name":"Installer l'add-on pour Mozilla Firefox","url":"\/?cmd=addon_firefox&lang=fr","current":false,"cmd":"addon_firefox"},{"name":"Fonctions","url":"\/?cmd=features&lang=fr","current":false,"cmd":"features"},{"name":"TrashMail Plus","url":"\/?cmd=register&lang=fr","current":false,"cmd":"register"},{"name":"API","url":"\/?cmd=api&lang=fr","current":false,"cmd":"api"},{"name":"Pour entreprises","url":"\/?cmd=business&lang=fr","current":false,"cmd":"business"},{"name":"Forum","url":"\/?cmd=forum&lang=fr","current":false,"cmd":"forum"},{"name":"Presse","url":"\/?cmd=press&lang=fr","current":false,"cmd":"press"},{"name":"Protection des donn\u00e9es","url":"\/?cmd=privacy&lang=fr","current":false,"cmd":"privacy"},{"name":"CGU","url":"\/?cmd=tos&lang=fr","current":true,"cmd":"tos"},{"name":"Contact & Mentions l\u00e9gales","url":"\/?cmd=legal&lang=fr","current":false,"cmd":"legal"}];
+            trustValueList($scope.menuList);
+        });
+
+        // Filter out add-on menu item for the mobile version, as TrashMail add-ons can't be installed on the
+        // mobile phone.
+        app.filter('filterCmdMobile', function ()
+        {
+            return function(itemList) {
+                var resultList = [];
+                for (var i in itemList) {
+                    var item = itemList[i];
+
+                    if (item.cmd.indexOf('addon_') !== 0) {
+                        resultList.push(item);
+                    }
+                }
+                return resultList;
+            }
+        });
+    </script>
+
+<div class="tm-visible-if-not-hd-display-block tm-hide-if-hd-display tm-phone">
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#tm-navbar-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="/?lang=fr">
+<span class="tm-light">
+<img class="trashmail-mobile-logo" alt="TrashMail.com" height="20" src="https://trashmail.com/images/mobile/tm_logo_mobile@2x.png">
+<sup>&reg;</sup>
+&nbsp;TrashMail.com
+</span>
+<span class="tm-dark">
+<img class="trashmail-mobile-logo" alt="TrashMail.com" height="20" src="https://trashmail.com/images/mobile/tm_logo_mobile-dark@2x.png">
+<sup>&reg;</sup>
+&nbsp;TrashMail.com
+</span>
+</a>
+</div>
+
+<div class="collapse navbar-collapse" id="tm-navbar-collapse" ng-controller="Menu">
+<ul class="nav navbar-nav">
+<li ng-repeat="item in menuList | filterCmdMobile" class="{{item.current ? 'active' : ''}}">
+<a href="{{item.url}}">{{item.name}}</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div>
+<div class="tm-phone-content">
+<h3>
+Conditions générales d'utilisation (CGU)
+</h3>
+<div class="row">
+<div class="col-sm-12">
+<h3>1. ACCEPTATION DE CONDITIONS</h3>
+<p>
+Cette page informe sur les conditions générales d'utilisation. En utilisant
+TrashMail.com vous acceptez les conditions générales d'utilisation (CGU) de
+cette page.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>2. PAS DE GARANTIE</h3>
+<p>
+TrashMail.com ne donne aucune garantie que ce service fonctionne sans erreurs.
+TrashMail.com ne prend aucune responsabilité sur les conséquences en cas de
+perte de données ou de courriels, ou en cas de panne ou attaques par des
+hackeurs.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>3. VOTRE RESPONSABILITÉ</h3>
+<p>
+Vous acceptez à ne faire aucune activité illégal sur ce service.
+En cas d'abus (activités illegales, spam, insultes, fraudes, abus
+d'utilisation de resources) votre compte peut être fermé sans préavis.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>4. PROTECTION DES DONNÉES</h3>
+<p>
+TrashMail.com est soumis aux lois allemandes et n'est pas un service anonyme.
+</p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<h3>5. SUPPORT</h3>
+<p>
+Les clients de TrashMail Plus peuvent envoyer des questions de supports
+à l'adresse courriel suivant: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="65161015150a171125111704160d08040c094b060a08">[email&#160;protected]</a>
+En alternative des questions peuvent être posé sur le forum:
+https://trashmail.com/forum/
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="tm-hidden-if-not-hd-display">
+<div id="tm-view">
+<div id="tm-header-background">
+<div class="tm-header-wrapper">
+<div id="tm-header">
+<a href="https://trashmail.com/?lang=fr" alt="Startseite">
+<img class="tm-light" src="https://trashmail.com/images/layout/logo_reg_eur@2x.png" width="290" height="82" />
+<img class="tm-dark" src="https://trashmail.com/images/layout/logo_reg_eur_dark@2x.png" width="290" height="82" />
+</a>
+<div id="tm-header-text">
+<a href="?cmd=privacy&lang=fr">Protection des données</a> | <a href="?cmd=tos&lang=fr">CGU</a> | <a href="?cmd=legal&lang=fr">Contact &amp; Mentions légales</a>
+<form id="tm-login-form" action="?cmd=manager&login=1&lang=fr" method="post">
+<input type="text" name="fe-login-user" placeholder="Nom d'utilisateur" required>
+<input type="password" name="fe-login-pass" placeholder="Mot de passe" required>
+<input type="submit" name="create_submit" value="Connexion">
+</form>
+</div>
+</div>
+<div id="tm-navbar">
+<div id="tm-navleft"></div>
+<div id="tm-navright"></div>
+<div id="tm-navmiddle">
+<ul class="tm-navtext">
+<li id="tm-nav-home"><a href="?lang=fr"><span>PAGE D'ACCUEIL</span></a></li>
+<li id="tm-nav-addon"><a href="?lang=fr&cmd=addon_firefox"><span>INSTALLER L'ADD-ON POUR FIREFOX</span></a></li>
+<li id="tm-nav-demo"><a href="?cmd=tour&lang=fr"><span>VIDÉO DÉMO</span></a></li>
+<li id="tm-nav-features"><a href="?cmd=features&lang=fr"><span>FONCTIONS</span></a></li>
+<li id="tm-nav-forum"><a href="?cmd=forum&lang=fr"><span>FORUM</span></a></li>
+<li id="tm-nav-api"><a href="?cmd=api&lang=de"><span>API</span></a></li>
+<li id="tm-nav-business"><a href="?cmd=business&lang=fr"><span>POUR ENTREPRISES</span></a></li>
+<li id="tm-nav-press"><a href="?cmd=press&lang=fr"><span>PRESSE</span></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="tm-main">
+<div id="tm-bodyleft-blank-text">
+<br/>
+<b><font face="Verdana, Arial, Helvetica, sans-serif" size="+2">
+Conditions générales d'utilisation (CGU)</font></b><br><br/>
+<pre>
+1. ACCEPTATION DE CONDITIONS
+Cette page informe sur les conditions générales d'utilisation. En utilisant
+TrashMail.com vous acceptez les conditions générales d'utilisation (CGU) de
+cette page.
+
+
+2. PAS DE GARANTIE
+TrashMail.com ne donne aucune garantie que ce service fonctionne sans erreurs.
+TrashMail.com ne prend aucune responsabilité sur les conséquences en cas de
+perte de données ou de e-mails, ou en cas de panne ou attaques par des
+hackeurs.
+
+
+3. VOTRE RESPONSABILITÉ
+Vous acceptez à ne faire aucune activité illégal sur ce service.
+En cas d'abus (activités illegales, spam, insultes, fraudes, abus
+d'utilisation de resources) votre compte peut être fermé sans préavis.
+
+
+4. PROTECTION DES DONNÉES
+TrashMail.com est soumis aux lois allemandes et n'est pas un service anonyme.
+
+
+5. SUPPORT
+Les clients de TrashMail Plus peuvent envoyer des questions de supports
+à l'adresse e-mail suivant: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d5d3d6d6c9d4d2e6d2d4c7d5cecbc7cfca88c5c9cb">[email&#160;protected]</a>
+En alternative des questions peuvent être posé sur le forum:
+https://trashmail.com/forum/
+</pre>
+</div>
+<div id="tm-bodyleft-blank-1"></div>
+<div id="tm-bodyright-blank-1"></div>
+<div id="tm-bodymiddle-blank-1"></div>
+<div id="tm-bodyleft-blank-2" style="height: 300px;"></div>
+<div id="tm-bodyright-blank-2" style="height: 300px;"></div>
+<div id="tm-bodymiddle-blank-2" style="height: 300px;"></div>
+<div id="tm-bodyleft-blank-3"></div>
+<div id="tm-bodyright-blank-3"></div>
+<div id="tm-bodymiddle-blank-3"></div>
+<div id="tm-compatibility">
+<div class="tm-cl-title">PRIX</div><br/>
+- gratuit avec des fonctions restreint<br/>
+- tous les fonctions avec Plus pour seulement 18,49 EUR par an
+</div>
+<div id="tm-disposable-stats">
+<div class="tm-cl-title">TRASHMAIL - ADRESSES JETABLES</div><br/>
+Protégez-vous contre le spam.<br>Suivez-nous sur Twitter: <a href="https://twitter.com/MailTrashmail" target="_blank">@MailTrashmail</a>
+</div>
+<div id="tm-note">
+</div>
+<div id="tm-button">
+<a href="https://trashmail.com/?cmd=register&lang=fr">MEMBRE-PLUS</a>
+</div>
+<div class="tm-copyright">
+&copy; 2002-2024 <a href="http://aionda.com">Aionda GmbH</a>
+</div>
+</div>
+</div>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
