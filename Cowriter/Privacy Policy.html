@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Co:Writer Universal</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1, minimum-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/cowriter/favicon-cowriter.ico"/>
+    <style is="custom-style">
+    paper-button.colorful {
+        margin: auto;
+        padding: 0;
+        color: #4184F3;
+        font-family: sans-serif;
+        font-size: 24px;
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    #tos.phone {
+        font-size: 50%;
+    }
+    #tos ol {
+        list-style-type: none;
+    }
+
+    #tos ol.first-level {
+        list-style-position: inside;
+        padding-left: 0;
+    }
+    #tos ol.first-level>li:before {
+        content: counter(lvl1, decimal) ".";
+    }
+    #tos ol.first-level>li {
+        margin-top: 10px;
+        counter-increment: lvl1;
+    }
+
+    #tos ol.second-level {
+        list-style-position: outside;
+        padding-left: 0;
+    }
+    #tos ol.second-level>li:before {
+        content: "(" counter(lvl2, lower-alpha) ") ";
+    }
+    #tos ol.second-level>li {
+        margin-top: 2px;
+        counter-increment: lvl2;
+    }
+
+    #tos ol.third-level {
+        list-style-position: outside;
+        padding-left: 0;
+    }
+    #tos ol.third-level>li:before {
+        content: counter(lvl1, decimal)"."counter(lvl3, decimal) " ";
+        min-width: 36px;
+        display: inline-block;
+    }
+    #tos ol.third-level>li {
+        margin-top: 2px;
+        counter-increment: lvl3;
+    }
+
+    #tos ol.first-level>li>span:first-child {
+        margin-left: 10px;
+    }
+    #tos ol.first-level>li>p:nth-child(2) {
+        margin-top: 2px;
+    }
+    #tos p, #tos li, #tos h4 {
+        font-size: 12px;
+        text-align: justify;
+    }
+
+    #tos h4 {
+        text-align: center;
+        text-decoration: underline;
+    }
+
+    #tos a {
+        text-decoration: none;
+    }
+
+    #tos {
+        counter-reset: h1counter h2counter h3counter;
+        font: normal 14px 'Roboto', Helvetica, Arial, sans-serif !important;
+    }
+
+    #tos h1 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        counter-reset: h2counter h3counter;
+    }
+
+    #tos h1:before {
+        content: counter(h1counter) ".\0000a0\0000a0";
+        counter-increment: h1counter;
+    }
+
+    #tos h1.dji-no-count:before {
+        content: none;
+        counter-increment: none;
+    }
+
+    #tos a {
+        color: #4184F3;
+        text-decoration: none;
+    }
+
+    #tos h2 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        counter-reset: h3counter;
+    }
+
+    #tos h2:before {
+        content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
+        counter-increment: h2counter;
+    }
+
+    #tos h2.dji-no-count:before {
+        content: none;
+        counter-increment: none;
+    }
+
+    #tos h3 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    #tos h3:before {
+        content: counter(h3counter, lower-alpha) ".\0000a0\0000a0";
+        counter-increment: h3counter;
+    }
+
+    #tos h4 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: left;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    
+    #tos .dji-bold {
+        font-weight: bold;
+    }
+    
+    #tos .dji-uppercase {
+	    text-transform: uppercase;
+    }
+
+    #tos ol.dji-number-sublist {
+        counter-reset: olsublist;
+    }
+
+    #tos ol.dji-number-sublist li {
+        text-indent: -27px;
+        margin-left: 0;
+    }
+
+    #tos ol.dji-number-sublist li:before {
+        font-weight: bold;
+        content: counter(h1counter) "." counter(olsublist) ".\0000a0\0000a0";
+        counter-increment: olsublist;
+    }
+
+    #tos ul, #tos ol {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 40px;
+    }
+
+    #tos ul {
+        list-style: disc;
+    }
+
+    #tos p, #tos li {
+        font-size: 12px;
+        text-align: justify;
+    }
+
+    #privacyPolicy {
+        counter-reset: h1counter;
+        font: normal 14px 'Roboto', Helvetica, Arial, sans-serif !important;
+    }
+
+    #privacyPolicy h1 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    #privacyPolicy h1:before {
+        content: counter(h1counter) ".\0000a0\0000a0";
+        counter-increment: h1counter;
+    }
+
+    #privacyPolicy h1.dji-no-count:before {
+        content: none;
+        counter-increment: none;
+    }
+
+    #privacyPolicy a {
+        color: #4184F3;
+        font-size: 16px;
+        text-decoration: none;
+        margin-bottom: 10px;
+    }
+
+    #privacyPolicy h2 {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    #privacyPolicy .dji-bold {
+        font-weight: bold;
+    }
+
+    #privacyPolicy ul.dji-bullet-list {
+        list-style-type: disc;
+    }
+
+    #privacyPolicy ul.dji-dash-list {
+    }
+
+    #privacyPolicy table {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    #privacyPolicy table th,
+    #privacyPolicy table td {
+        border: solid 1px #000000;
+        padding: 3px 5px;
+        width: 33.33%
+    }
+
+    #privacyPolicy table th {
+        vertical-align: middle;
+        text-align: left;
+        font-weight: bold;;
+    }
+
+    #privacyPolicy table td {
+        vertical-align: top;
+        text-align: left;
+    }
+
+    #privacyPolicy ul, #privacyPolicy ol {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 40px;
+    }
+
+    #privacyPolicy ul {
+        list-style: disc;
+    }
+
+    #privacyPolicy p, #privacyPolicy li {
+        font-size: 14px;
+        text-align: justify;
+    }
+</style>
+    <style is="custom-style">
+    .appLogo {
+        position: relative;
+        width: 275px;
+        height: 82px;
+        margin: 0 auto 10px auto;
+        cursor: pointer;
+    }
+
+    .appLogo.cowriter {
+        background: url("/images/cowriter/CoWriter-Logo-Icon.svg") no-repeat center;
+        background-size: 275px 81px;
+    }
+
+    .appLogo.sru {
+        background: url("/images/sru/logo.svg") no-repeat center;
+        background-size: 275px 62px;
+    }
+
+    .appLogo.par {
+        background: url("/images/upar/upar-logo.svg") no-repeat center;
+        background-size: 277px 100px;
+    }
+
+    .appLogo.paw:before {
+        background-color: rgba(0, 0, 200, 0.4);
+        width: 62px;
+        height: 62px;
+        display: inline-block;
+        content: "";
+    }
+
+    .appLogo.paw:after {
+        width: 240px;
+        margin-left: 10px;
+        display: inline-block;
+        content: "PAW";
+        font-size: 24px;
+    }
+
+    .appLogo.ttq {
+        background: url("/images/ttq/ttq-logo.svg") no-repeat center;
+        background-size: 275px 57px;
+    }
+
+    .appLogo.readtopia {
+        background: url("/images/readtopia/rt-logo.svg") no-repeat center;
+        background-size: 275px 41px;
+    }
+
+    .appLogo.wbu {
+        background: url("/images/wbu/logo.svg") no-repeat center;
+        background-size: 237px 48px;
+    }
+
+    .appLogo.ed,
+    .appLogo.educator-dashboard {
+        background: url("/images/educator-dashboard/educator-dashboard-logo.svg") no-repeat center;
+        background-size: 312px 62px;
+    }
+
+    .appLogo.wrip {
+        background: url("/images/wrip/wrip-logo.svg") no-repeat center;
+        background-size: 275px 62px;
+    }
+</style>
+</head>
+<body style="margin: 50px;" unresolved>
+
+<div class="appLogo cowriter"></div>
+<div id="privacyPolicy">
+
+<h1 class="dji-no-count">Our Privacy Policy adheres to the following Privacy Principles:</h1>
+	<ol>
+		<li>We treat your privacy like we would want ours treated. If you asked us if we would personally use a tool ourselves, as well as with our own children (or students), if it adhered to the following privacy policy... the answer would be &ldquo;yes.&ldquo;</li>
+		<li>We are committed to making our privacy practices transparent. We want you to know exactly what information we collect, why, and how it is used.  If any questions arise, get in touch, we are happy to go into more detail.</li>
+		<li>Students’ data should be used solely for educational purposes (not for advertising, selling to, or financially profiting from such data).</li>
+		<li>We take the security of your data seriously. We have administrative, technological, and physical safeguards as well as procedures to secure your data and privacy.</li>
+	</ol>
+
+<h1 class="dji-no-count">Privacy Policy</h1>
+<h1 class="dji-no-count">Effective Date: September 28, 2023</h1>
+<p>Co:Writer Universal’s products and services are provided by Don Johnston Incorporated (together, &ldquo;DJI,&rdquo;
+    &ldquo;we,&rdquo; &ldquo;our,&rdquo; and &ldquo;us&rdquo;).
+    The following privacy policy describes what we collect on our servers and why, what we may do with that information,
+    and how that information is handled.</p>
+<p>Information provided is subject to our Terms of Service. Any capitalized terms used but not defined within this
+    Privacy Policy have the meaning given to them in our Terms of Service.</p>
+
+<h1>What We Collect, Why We Collect It, and If it is Required</h1>
+<h2>All Users</h2>
+<p>The data below is collected when Co:Writer Universal’s tool is used. Data is transmitted securely through Secure Socket Layer (SSL) and is encrypted while at rest on our servers. See particular user for other data that may be collected and how it can be used.</p>
+<table>
+    <thead>
+        <tr>
+            <th>We Collect</th>
+            <th>Why we collect it</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Option settings</td>
+            <td>Allows option settings to sync across devices. Settings include:
+                <ul>
+                    <li>Number of Guesses</li>
+                    <li>Font</li>
+                    <li>Font Size</li>
+                    <li>Text Color</li>
+                    <li>Background Color</li>
+                    <li>Text to Speech Voice</li>
+                    <li>Speak: Letters, Words, Sentences</li>
+                    <li>Volume</li>
+                    <li>Rate</li>
+                    <li>Pitch</li>
+                    <li>Number of Guesses</li>
+                    <li>Main Dictionary</li>
+                    <li>Personal Dictionary</li>
+                    <li>Momentary Dictionary</li>
+                    <li>Flexible Spelling</li>
+                    <li>Prediction Language</li>
+                    <li>Topic Dictionaries</li>
+                    <li>Word Bank</li>
+                    <li>Text Window</li>
+                    <li>Numbers</li>
+                    <li>Arrangement of Guesses</li>
+                    <li>Spacing and Order</li>
+                </ul>
+            </td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Text saved in Word Processor</td>
+            <td>Allows writings to be saved, and they can then sync across all devices.</td>
+            <td>No - if a user uses the extension, no writings are saved. If a user elects to use the Word
+                Processor within the Chrome App or iOS App, the writings will be collected.</td>
+        </tr>
+    </tbody>
+</table>
+<h2>Google Analytics</h2>
+<p>Google Analytics is a web analytics tool that helps website owners understand how visitors engage with their website. 
+Google Analytics customers can view a variety of reports about how visitors interact with their website so they can improve it. 
+Google Analytics collects information anonymously. It reports website trends without identifying individual visitors.</p>
+<p>For more information on the privacy practices of Google, please visit the Google Privacy & Terms web page:
+    <a href="https://policies.google.com/privacy" target="_blank" style="font-size: 14px;">https://policies.google.com/privacy</a></p>
+<h2>Student Account</h2>
+<p>A Student Account can only be set up through an Educator Account. <span class="dji-bold">Co:Writer Universal does not require use of personally identifiable student information.
+        Personally identifiable data for student accounts is solely used for educational purposes by the student
+        and the student’s educational institution. The only data collected is that which is valuable for educational purposes.</span></p>
+<p>Student information is controlled by Educators and the educational institution. Data can be printed, viewed
+    and removed by Students’ Educators. Upon request from the educational institution, all Student Account data will be deleted or corrected as quickly as possible - not to exceed 30 days. In the event that a Student is removed from or graduates from an educational institution,
+    the Student can choose to obtain a Personal Account, in which case their data will be maintained under their
+    own Personal Account.</p>
+<table>
+    <thead>
+    <tr>
+        <th>We Collect</th>
+        <th>Why we collect it</th>
+        <th>Required</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name </td>
+        <td>Allows educators an easy way to identify their students so they can manage student accounts and view
+            data associated with their students.</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Username</td>
+        <td>Login purposes</td>
+        <td>No - If not, email is required.</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>Login purposes and to reset a student’s password in the event that they forget it.</td>
+        <td>No - If not, Username is required.</td>
+    </tr>
+    <tr>
+        <td>Password - only if account is created with a Username or non-third party integrated service such as
+            &ldquo;Google Sign-In&rdquo;.</td>
+        <td>Login purposes</td>
+        <td>No - If a third party integrated service such as &ldquo;Google Sign-In&rdquo; is used, no passwords are stored.
+            If a service such as Google Sign-in is not used, a password is required.</td>
+    </tr>
+    <tr>
+        <td>Unique identifier provided by a third party integrated service, such as, but not limited to,
+            &ldquo;Google Sign-In&rdquo;.</td>
+        <td>Allows students to sign in with Google Sign-in, Yahoo login, Microsoft account, Office 365
+            account, and other providers.</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Individual &ldquo;Academic Words&rdquo; written (i.e. analyze, assess, research).</td>
+        <td>Reported to educators of student for educational purposes only.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes all of these words and restricts future collection.</td>
+    </tr>
+    <tr>
+        <td>Individual &ldquo;Important Words&rdquo; written (i.e. belief, comparison, responsible).</td>
+        <td>Reported to educators of student for educational purposes only.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes all of these words and restricts future collection.</td>
+    </tr>
+    <tr>
+        <td>&ldquo;Transition&rdquo; words and phrases (i.e. Admittedly, Furthermore, at first, more importantly).</td>
+        <td>Reported to educators of student for educational purposes only.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes all of these words/phrases and restricts future collection.</td>
+    </tr>
+    <tr>
+        <td>When student account was first set up</td>
+        <td>Reported to educators of students for proof of the tool’s use. This is often required when the tool is to be used as a
+            testing accommodation.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes the account creation date.</td>
+    </tr>
+    <tr>
+        <td>Approximate Number of words written with Co:Writer</td>
+        <td>Reported to educators of students for usage data.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes all quantities of words written and restricts
+            future collection.</td>
+    </tr>
+    <tr>
+        <td>Approximate Time spent Writing</td>
+        <td>Reported to educators of students for usage data.</td>
+        <td>No - Administrators can turn on &ldquo;Privacy Mode&rdquo; which deletes all time spent writing and restricts future collection.</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Educator Account</h2>
+<table>
+    <thead>
+    <tr>
+        <th>We Collect</th>
+        <th>Why we collect it</th>
+        <th>Required</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>Allows Administrators an easy way to identify their educators so they can manage educator accounts.</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>For login purposes and to reset your password in the event that it is forgotten.</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Password - only if account is created with an email from a non-third party integrated service such as
+            &ldquo;Google Sign-In&rdquo;.</td>
+        <td>Login purposes</td>
+        <td>No - If a third party integrated service such as &ldquo;Google Sign-in&rdquo; is used, no passwords are stored.
+            If a service such as Google Sign-in is not used, a password is required.</td>
+    </tr>
+    <tr>
+        <td>Unique identifier provided by a third party integrated service, such as, but not limited to, &ldquo;Google Sign-in&rdquo;.</td>
+        <td>Allows educators to sign in with Google Sign-in, Yahoo login, Microsoft account, Office 365
+            account, and other providers.</td>
+        <td>No </td>
+    </tr>
+    </tbody>
+</table>
+<h2>Personal Account</h2>
+<table>
+    <thead>
+    <tr>
+        <th>We Collect</th>
+        <th>Why we collect it</th>
+        <th>Required</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name </td>
+        <td>For communication purposes regarding your account.</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>Email is used for login purposes, and to reset your password in the event that it is forgotten.
+            Email is used to communicate with you about your account (for example, if a payment didn’t go through
+            or to confirm a canceled subscription).</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Password - only if account is created with an email from a non-third party integrated service such as &ldquo;Google Sign-In&rdquo;.</td>
+        <td>Login purposes</td>
+        <td>No - If a third party integrated service such as &ldquo;Google Sign-in&rdquo; is used, no</td>
+    </tr>
+    <tr>
+        <td>Unique identifier provided by a third party integrated service, such as, but not limited to, &ldquo;Google Sign-in&rdquo;.</td>
+        <td>Allows you to sign in with Google Sign-in, Yahoo login, Microsoft account, Office 365 account, and other providers.</td>
+        <td>No</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Parent Account</h2>
+<table>
+    <thead>
+    <tr>
+        <th>We Collect</th>
+        <th>Why we collect it</th>
+        <th>Required</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>For communication purposes regarding your account.</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td>For Login purposes, and to reset your password in the event that it is forgotten.</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>
+            Password - only if account is created with an email from a non-third party integrated service such
+            as &ldquo;Google Sign-In&rdquo;.</td>
+        <td>Login purposes</td>
+        <td>No - If a third party integrated service such as &ldquo;Google Sign-in&rdquo; is used, no passwords are stored.
+            If a service such as Google Sign-in is not used, a password is required.</td>
+    </tr>
+    <tr>
+        <td>Unique identifier provided by a third party integrated service, such as, but not limited to,
+            &ldquo;Google Sign-in&rdquo; (Only if account is created by third party integrated service).</td>
+        <td>Allows parents to sign in with Google Sign-in, Yahoo login, Microsoft account, Office 365 account,
+            and other providers.</td>
+        <td>No</td>
+    </tr>
+    </tbody>
+</table>
+<h2>Child Account</h2>
+<p>A Child Account can only be set up through a Parent account. <span class="dji-bold">Personally identifiable information is not collected on a Child Account.</span> Upon request from a Parent, all Child Account data will be deleted as quickly as possible - not to eceed 30 days.</p>
+<table>
+    <thead>
+    <tr>
+        <th>We Collect</th>
+        <th>Why we collect it</th>
+        <th>Required</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Username</td>
+        <td>Login Purposes</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Password</td>
+        <td>Login Purposes</td>
+        <td>Yes</td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>What we do with your information</h1>
+<p><span class="dji-bold">Don Johnston Incorporated does not sell, share, rent or otherwise disclose your information
+        collected by Co:Writer Universal. We do not use student information collected through our services for behavioral targeting or advertising or any commercial purpose. </span>Information is only disclosed when:</p>
+<ul class="dji-bullet-list">
+    <li>We have your explicit consent to share the information.</li>
+    <li>It is required to comply with the law including compliance with warrants or court orders.</li>
+    <li>It is required to protect the rights, property or personal safety of Don Johnston Incorporated and
+        users of Co:Writer Universal</li>
+</ul>
+<p><span class="dji-bold">We do not monitor or view any Personally Identifiable information or content
+        stored in Co:Writer Universal.</span>Below lists the limited circumstances where your information may
+    be accessed by our employees.</p>
+<ul class="dji-bullet-list">
+    <li>We need to do so in order to respond to your explicit request for support.</li>
+    <li>Where necessary to protect the rights, property or personal safety of Don Johnston Incorporated and
+        Co:Writer Universal’s users (including protection against potential spam, malware or other security concerns).</li>
+    <li>We believe our Terms of Service has been violated and confirmation is required.</li>
+</ul>
+<p><span class="dji-bold">Aggregate, non-identifiable information is solely used to enhance Co:Writer Universal and,
+            in the case of anOrganizational Account, support implementation.</span></p>
+<p><span class="dji-bold">We do not, under any circumstance, advertise to Student Users or Child Users.</span> For Educator Users, Parent Users, and Personal Users, we practice permission marketing: you will only receive information from us when you give explicit consent in advance to receive the marketing information.</p>
+
+<h1>Data Storage, Transfer, and Removal</h1>
+    <p>Data is stored on servers located in the United States. If you live outside of the United States and have
+        laws governing data collection and use that differ from U.S. law, then you acknowledge and agree that you
+        are transferring your Personal Information outside of those regions to the United States and that, by
+        providing your Personal Information to Co:Writer Universal, you consent to that transfer.</p>
+    <p>Some data is also stored locally on your computing device and synchronizes to our servers when an online connection
+        is present. Data that syncs include Option Settings, Text saved in Word Processor; and if a user
+        is a Student User: Academic, Transition, and Important words written, number of words written using word prediction or speech to text, and approximate time spent writing.</p>
+    <p>All data stored on our servers is encrypted. All transmission of information is encrypted and protected using
+        Secure Sockets Layer (SSL). Passwords are stored using a hash function. We also use physical, managerial, and technical safeguards to secure your data.</p>
+    <p>In the event that your Personal Information may be compromised, we will attempt to notify you electronically
+        so that you can take appropriate protective steps.</p>
+    <p>If an account is terminated by an Educator,
+        a Student may transfer their data by acquiring a Personal Account or by acquiring an activation code from
+        another Educator.</p>
+
+<h1>Payment (Credit Card) Information</h1>
+<p>In the event that a credit card purchase is made through Co:Writer Universal, we do not store any credit card
+    information nor is any credit card information sent to our servers.  These payment processes are all transmitted securely through Secure Socket Layer (SSL) directly to our payment processor Stripe.  Stripe has been audited by a PCI-certified auditor, and is certified to PCI Service Provider Level 1. This is the most stringent level of certification available. See Stripe’s
+    Privacy Policy for more information.</p>
+
+<h1>Cookies</h1>
+<p>We use Cookies only to enhance performance. Cookies are used to allow offline access and to sync your data.</p>
+<h1>Changes to the Privacy Policy</h1>
+<p>We reserve the right to modify this Policy at any time, but you will be notified on Co:Writer Universal’s login page
+    or by some other means such as email. We will not change how we use any Personal Information in any material
+    way without providing notice of the change via email to you (in the case of a Child User, to the Parent or
+    Guardian; and in the case of a Student User, to the Educator User), and obtaining consent to any new uses. If you do not agree with the new policies, you may reject them, but you will need to terminate your account and/or stop using Co:Writer Universal. Your continued use constitutes your acceptance of the new Privacy Policy.</p>
+
+
+</div>
+
+</body>
+</html>
