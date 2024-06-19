@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB" lang="en-GB" class="no-js" dir="ltr" prefix="og: http://ogp.me/ns#"><head>
+
+        <link rel="shortcut icon" href="/ilp/data/client_design/plink/ila/19.3.3/favicon.ico" type="image/x-icon" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="/ilp/resources/design/css/fonts.css" />
+                <link rel="stylesheet" href="/ilp/data/client_design/plink/ila/19.3.3/design/css/app.css" />
+            <link rel="stylesheet" href="/ilp/resources/design/css/foundation-datepicker.css" />
+        <script type="text/javascript" src="/microservices/polyfills/01_shim.min.js"></script>
+        <script type="text/javascript" src="/ilp/jamescore/jquery/dist/jquery.d70fbf2f6aed2c76801d35fd793bf70a9cc060eb.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/what-input/dist/what-input.36d0baa0aa85e42fb8a7a0c332ebc6e07244eb6b.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/zone.js/dist/zone.f208a7bb5e41f477960197938af1234612222341.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/foundation-sites/dist/js/foundation.fdf9ba184cf52eaf979213678c5a7f7c7a423ee9.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/motion-ui/dist/motion-ui.846b12eda743fea9bdb8b7da041551d0e7df0a9c.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/flipclock/compiled/flipclock.a9eda46e62b34c2d79416e87c6d55f27bb30a882.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/jquery.cookie/jquery.cookie.31e1bcc4cf805a2c2fee21f48ded1e598f64a2a8.min.js"></script>
+<script type="text/javascript" src="/ilp/jamescore/foundation-datepicker/js/foundation-datepicker.d39512495bd4ce2e045f2db829e636e908a67602.min.js"></script>
+
+        <script type="text/javascript" src="/ilp/resources/javascript/foundation_override.js"></script>
+        <script type="text/javascript" src="/ilp/resources/javascript/learning_portal.js"></script>
+        <script type="text/javascript" src="/ilp/resources/javascript/jquery_regex.js"></script>
+        <script type="text/javascript" src="/ilp/resources/javascript/jresize/jquery.resize.js"></script>
+
+        <script>
+            var breadcrumbsArray = [];
+            var userLoggedIn = "false";
+            if (userLoggedIn === 'true') {
+                var isPGIntegration = "false";
+                if (isPGIntegration === 'true') {
+                    $(window).on('load', function () {
+                        $.ready.then(function() {
+                            var pgServerUrl = "";
+                            var pgUsername = "f3e6a89c6eb0d8cce66905678cd17af836d1acd260666366102b48374b21a351";
+                            var script = document.createElement('script');
+                            script.type = "text/javascript";
+                            script.src = pgServerUrl;
+                            script.setAttribute("data-user", pgUsername);
+                            document.head.appendChild(script);
+                        });
+                    });
+                }
+            } else {
+                for(var key in  sessionStorage){
+                    if (key.indexOf("course.password.checked.") === 0) {
+                        sessionStorage.removeItem(key);
+                    }
+                }
+            }
+
+            var currentMenuId = -1;
+            var black_list = ['scroll', 'mouseenter', 'mouseleave', 'mousemove', 'mouseover', 'mouseout', 'mousewheel', 'pointermove', 'keypress', 'keyup'];
+            __zone_symbol__BLACK_LISTED_EVENTS = black_list;
+        </script>
+        <title>Department for Education plink  - Login
+        </title>
+        <meta name="description" content="Login page for Department for Education plink . The plink portal provides learners with a simple and intuitive user interface. It is directly linked with the Department for Education classic plink, which is a powerful and highly adaptable LMS." />
+            <script>
+                function bodyloadJS() {
+                }
+            </script>
+
+    <script>
+        /**
+         * Global definitions
+         */
+        var contextPath = '/ilp';
+        var rtl = false;
+        var solrUrl = "/ilp/solr/catalogindex/query";
+        var postalCodeVerification = false;
+
+        var mediaPlayer = {
+            name: 'videojs',
+            license: ''
+        };
+
+        var publicLearningPortalUrl = 'https://www.plink.sa.edu.au/ilp/';
+        var publicLearningPortalPath = '/ilp';
+        // currently used only for European Commission
+        var showMediaEventStatus = false;
+        var showSkillAttainmentDate = false;
+        var showDueDate = true;
+        var dueDateInterval = 10;
+        var isRemoveOrderedCourseButtonDisabled = true;
+        var showDuedateAndIdentificationByManager = true;
+        var isEnrollmentDueDateMandatory = false;
+        var isEnrollmentIdentificationMandatory = false;
+        /**
+         * James implementation
+         */
+        var dataUrlPrefix = "..";
+        var uploadBaseUrl = "..";
+        var dataUrlDownloadPostfix = "?provideAsDownload=true";
+
+        var openAttachment = function (relativeDataPath) {
+            window.location.href = dataUrlPrefix + relativeDataPath + dataUrlDownloadPostfix;
+        };
+
+        var embedJavascriptResources = function (dependencies, callback) {
+            return james.embedJavascriptResources('/ilp/jamescore/', dependencies, callback);
+        };
+
+        /**
+         * Creates a cookie to notify the Java-execution that a user-data has changed.
+         */
+        var notifyAboutUserUpdate = function(expireConnection) {
+            var courseUpdateCookieName = "ILA_USER_PROFILE_UPDATE";
+            var expiryInMinutes = "300";
+            var contextPath = "/ilp";
+            //"2017-04-25T11:44:01.426Z"
+            var isoDateString = new Date().toISOString();
+            //to comply with cookie-value-restrictions we replace colon and period with underscore
+            //"2017-04-25T11_44_01.426Z"
+            var cookieValue = isoDateString.replace(/[:]/g, '_');
+            if (expireConnection !== undefined) {
+                cookieValue = cookieValue + "|" + expireConnection;
+            }
+            createCookie(courseUpdateCookieName, cookieValue, expiryInMinutes, contextPath);
+        };
+
+        /**
+         * Invalidates the course room cookie in order to clear the course room session cache.
+         */
+        var invalidateCourseRoomCache = function() {
+            var courseUpdateCookieName = "de.imc.ila.cache.COURSE_UPDATE";
+            var expiryInMinutes = "300";
+            var contextPath = "/ilp";
+            var cookieValue = readCookie(courseUpdateCookieName);
+            if (cookieValue === undefined) {
+                cookieValue = 0;
+            } else if (cookieValue !== "-1") {
+                cookieValue = parseInt(cookieValue, 10) + 1;
+            }
+            createCookie(courseUpdateCookieName, cookieValue, expiryInMinutes, contextPath);
+        };
+
+        /**
+         * Method to validate the user
+         * Should perform login steps and redirect the user back.
+         */
+        var validateUserAndRedirect = function() {
+            var locationObject = window.location;
+            var relativePathWithQueryParams = locationObject.pathname + locationObject.search;
+            var currentPathEncoded = encodeURIComponent(relativePathWithQueryParams);
+            var currentFragmentIdEncoded = encodeURIComponent(locationObject.hash);
+            var targetPath = '/pages/403-error.jsf';
+            return openPageByPath(targetPath, '?incoming=' + currentPathEncoded + '&incomingFragmentId=' + currentFragmentIdEncoded, '');
+        };
+
+        var reloadCourseRoom = function () {
+            invalidateCourseRoomCache();
+            location.reload();
+        };
+
+        /**
+         * Reloads the page with polling mode enabled.
+         * @param forced indicates if a reload should be forced, even if polling is already enabled.
+         */
+        //<![CDATA[
+        var reloadWithPollingModeEnabled = function (forced) {
+            //A force reload is required for igs-polling
+            var url = window.location.href;
+
+            if (url.indexOf('pollingMode') === -1){
+                var suffix = 'pollingMode=on#';
+                var op = '?';
+                if (url.indexOf('?') !== -1 && (url.indexOf('?') < url.indexOf('#'))) {
+                    op = '&amp;';
+                }
+                //insert pollingMode before angular-fragment-identifier (#)
+                url = url.replace('#', op + suffix);
+                openPageWithoutOpener(url, '_self');
+            } else if (forced) {
+                //forced reload
+                window.location.reload();
+            }
+        };
+        //]]>
+
+        /**
+         * Open a page with provided targetPath, query and hash.
+         * The target path must contain a leading slash.
+         * @tabOption: can be boolean or object or undefined
+         *   -- tabOption as boolean: true/false
+         *   -- tabOption as object : with one of the following possible configurations
+         *  {
+         *      type: 'same-page',
+         *      settings: {}
+         *  }
+         *  {
+         *      type: 'new-window'
+         *  }
+         *  {
+         *      type: 'popup',
+         *      settings: {}
+         *  }
+         */
+        var openPageByPath = function (targetPath, query, hash, tabOption, propsAsString) {
+            var targetUrl = "";
+            if (contextPath !== "") {
+                targetUrl = targetUrl + contextPath;
+            }
+            targetUrl = targetUrl + targetPath + query + hash;
+
+            var configurationType = typeof tabOption;
+            switch (configurationType) {
+                case 'boolean':
+                    if(tabOption) {
+                        openPageWithoutOpener(targetUrl);
+                    } else {
+                        openPageWithoutOpener(targetUrl, '_self');
+                    }
+                    break;
+                case 'object':
+                    switch (tabOption.type) {
+                        case 'new-window':
+                            openWindowWithCallback(targetUrl, tabOption, '');
+                            break;
+                        case 'popup':
+                            console.log('Should open URL in a popup with settings');
+                            if(propsAsString === undefined) {
+                                console.log('No windows width and height parameters defined for popup.');
+                                propsAsString = 'width=1000,height=800';
+                            }
+                            openWindowWithCallback(targetUrl, tabOption, propsAsString);
+                            break;
+                        case 'dry-run':
+                            return publicLearningPortalUrl.replace(/\/$/, "") + targetPath + query + hash;
+                            break;
+                        case 'same-page':
+                        default:
+                            openPageWithoutOpener(targetUrl, '_self');
+                            break;
+                    }
+                    break;
+                case 'undefined':
+                default:
+                    openPageWithoutOpener(targetUrl, '_self');
+                    break;
+            }
+            //we must stop form submitting
+            return false;
+        };
+
+        /**
+         * Adds the parent course id if present
+         */
+        function appendParentCourseIdsIfPresent(parentCourseId, parentCourseSetId, query) {
+            if (parentCourseId) {
+                query = concatUrl(query, "parentCourseId=" + parentCourseId);
+            }
+            if (parentCourseSetId) {
+                query = concatUrl(query, "parentCourseSetId=" + parentCourseSetId);
+            }
+            return query;
+        }
+
+        var openCourseComponent = function (courseId, mediaId, parentCourseId, openDirectly, runningLanguage, tabOption) {
+            var targetPath = '/pages/coursecontent.jsf';
+            var query = "?courseId=" + courseId + "&mediaId=" + mediaId + "&pollingMode=on";
+            var hasRunningLanguage = typeof(runningLanguage) !== 'undefined' && typeof(runningLanguage) === 'string';
+            query += hasRunningLanguage ? '&runningLanguage=' + runningLanguage : '';
+            query = appendParentCourseIdsIfPresent(parentCourseId, null, query);
+            if (openDirectly) {
+                query += "&openDirectly=" + openDirectly;
+            }
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        var openCourseForum = function (courseId, discussionId, parentCourseId) {
+            var targetPath = '/pages/discussion.jsf';
+            var query = "?courseId=" + courseId + "&discussionId=" + discussionId;
+            query = appendParentCourseIdsIfPresent(parentCourseId, null, query);
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openCourseLibraryComponent = function (courseId, mediaId, parentCourseId, runningLanguage) {
+            var targetPath = '/pages/librarycontent.jsf';
+            var query = "?courseId=" + courseId + "&mediaId=" + mediaId;
+            var hasRunningLanguage = typeof(runningLanguage) !== 'undefined' && typeof(runningLanguage) === 'string';
+            query += hasRunningLanguage ? '&runningLanguage=' + runningLanguage : '';
+            query = appendParentCourseIdsIfPresent(parentCourseId, null, query);
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openCatalogueMedia = function (catalogId, mediaId) {
+            var extraParams = {'catalogId': catalogId};
+            openCatalogueMediaForParams(mediaId, extraParams);
+        };
+
+        var openCatalogueMediaForParams = function (mediaId, extraParameters) {
+            var targetPath = '/pages/mediacontent.jsf';
+            var query = "?mediaId=" + mediaId;
+            if (extraParameters) {
+                // actually extra parameters must already containt the catalog id for a catalog element
+                angular.forEach(extraParameters, function(value, key) {
+                    query = concatUrl(query, key + "=" + value);
+                });
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        /**
+         * Easy concatenation of url. Adds the query parameter limiter automatically.
+         * @param url - the already existing url
+         * @param newParam - the param to be added
+         */
+        function concatUrl(url, newParam) {
+            var lastCharacter = url[url.length - 1];
+            if (lastCharacter && lastCharacter !== "&" && lastCharacter !== "?") {
+                url = url + "&";
+            } else if (!lastCharacter) {
+                url = url + "?";
+            }
+            return url + newParam;
+        }
+
+        var openCatalogue = function (catalogId, catalogueQuery, employeeId, tabOption, customMenuId) {
+            var targetPath = '/pages/catalogsearch.jsf';
+            var query = "?";
+            if (catalogId !== undefined && catalogId > 0) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (employeeId !== undefined && employeeId > 0 && employeeId !== "@self") {
+                query = concatUrl(query, "employeeId=" + employeeId);
+            }
+            if (catalogueQuery !== undefined) {
+                query = concatUrl(query, catalogueQuery);
+            }
+            if (customMenuId !== undefined) {
+                query = concatUrl(query, "menuId=" + customMenuId);
+            }
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        var openCatalogueWithConfig = function (catalogId, config) {
+            var targetPath = '/pages/catalogsearch.jsf';
+            var query = '?';
+            if (catalogId !== undefined && catalogId > 0) {
+                query = query + "catalogId=" + catalogId;
+            }
+            if (config !== undefined) {
+                if(config.skillId !== undefined) {
+                    if(query.length > 1) {
+                        query += '&';
+                    }
+                    query += 'fq={!tag=skillIds} skillIds:(*/'+config.skillId+'/)';
+                }
+                if(config.sidebarExpanded !== undefined) {
+                    if(query.length > 1) {
+                        query += '&';
+                    }
+                    query += 'sidebarExpanded=' + config.sidebarExpanded;
+                }
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        function createQueryForCourseroom(courseId, parentCourseId, parentCourseSetId, programmeId, runningLanguage) {
+            var query = "?courseId=" + courseId + "&pollingMode=on";
+            if (parentCourseId) {
+                query += "&parentCourseId=" + parentCourseId;
+            }
+            if (runningLanguage && DISPLAY_LANGUAGES) {
+                query += "&runningLanguage=" + runningLanguage;
+            }
+            if (parentCourseSetId) {
+                query += "&parentCourseSetId=" + parentCourseSetId;
+            }
+            if(programmeId && programmeId > 0) {
+                query += "&programmeId=" + programmeId;
+            }
+            return query;
+        }
+
+        var openCourseRoom = function (courseId, parentCourseId, runningLanguage, tabOption) {
+            var targetPath = '/pages/course.jsf';
+            var query = createQueryForCourseroom(courseId, parentCourseId, null, 0, runningLanguage);
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+        // This is implemented since its too risky to change openCourseRoom before release TODO
+        var openCourseRoomForSubCourse = function (courseId, parentCourseId, parentCourseSetId, programmeId, runningLanguage, tabOption) {
+            var targetPath = '/pages/course.jsf';
+            var query = createQueryForCourseroom(courseId, parentCourseId, parentCourseSetId, programmeId, runningLanguage);
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        var openAccountActivation = function () {
+            var targetPath = '/pages/user-profile-activation.jsf';
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var openLoginSuccess = function () {
+          var targetPath = '/pages/login-success.jsf';
+          return openPageByPath(targetPath, '', '');
+        };
+
+        var openLogin = function () {
+            var targetPath = '/pages/login.jsf';
+            var query = '?finishSignUp=true';
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openEditUserSyllabusPage = function (courseId, userId, newTab) {
+            return openUserSyllabusPage(courseId, userId, newTab, false);
+        };
+        var openViewUserSyllabusPage = function (courseId, userId, newTab) {
+            return openUserSyllabusPage(courseId, userId, newTab, true);
+        };
+        var openUserSyllabusPage = function (courseId, userId, newTab, view) {
+            var targetPath = '/pages/usersyllabus.jsf';
+            var query = "?courseId=" + courseId + "&userId=" + userId + (view ? "&view=true" : "");
+            return openPageByPath(targetPath, query, '', newTab);
+        };
+
+        var openAttendanceTrackingPage = function (courseId, participantId, tabOption) {
+            var targetPath = '/pages/attendance-tracking.jsf';
+            var query = "?courseId=" + courseId;
+            if(participantId && participantId > 0) {
+                query += "&participantId=" + participantId;
+            }
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        function appendXSRFToken() {
+            return "&XSRFToken=" + '';
+        }
+
+        var openMyCourses = function (category, personId, customMenuId, tabOption) {
+            var targetPath = '/pages/personalarea.jsf';
+            var migratedPersonId = personId !== undefined ? personId : '@self'; //fallback if not specified
+            var hash = "#!/users/" + migratedPersonId + "/contents" + (category? "/" + category + "?type=COURSE" : "");
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            return openPageByPath(targetPath, query, hash, tabOption);
+        };
+
+        var openMentoredOjt = function (customMenuId) {
+            var targetPath = "/pages/mentored-ojt.jsf";
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            return openPageByPath(targetPath, query, "");
+        };
+
+        var openOjtPrintPage = function (trainingId) {
+            var targetPath = "/pages/print-ojt.jsf";
+            var query = "?ojtId=" + trainingId;
+            return openPageByPath(targetPath, query, "", true);
+        }
+
+        var openCertificationPrintPage = function (userId, profileId, certificationId, frameId) {
+            var targetPath = "/pages/print-certification.jsf";
+            var query = "?userId=" + userId + "&profileId=" + profileId + "&certificationId=" + certificationId;
+            if(frameId !== undefined){
+                query += "&frameId=" + frameId;
+            }
+            const tabOption = {type: "new-window"}
+            return openPageByPath(targetPath, query, "", tabOption);
+        }
+
+        var openOjtDetails = function (trainingId, customMenuId) {
+            var targetPath = "/pages/ojt-training-overview.jsf";
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            var hash = "#!/trainings/" + trainingId + "/tasks";
+            return openPageByPath(targetPath, query, hash);
+        }
+
+        var openMyProgrammes = function (category, personId, customMenuId) {
+            var targetPath = '/pages/personalarea.jsf';
+            var migratedPersonId = personId !== undefined ? personId : '@self'; //fallback if not specified
+            var hash = "#!/users/" + migratedPersonId + "/contents" + (category? "/" + category + "?type=PROGRAM" : "");
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            return openPageByPath(targetPath, query, hash);
+        };
+
+        var openMyLearnings = function (category, personId, queryParams) {
+            var targetPath = "/pages/personalarea.jsf";
+            var computedPersonId = personId !== undefined ? personId : '@self';
+            var hash = "#!/users/" + computedPersonId + "/contents";
+            if (category) {
+                hash += "/" + category;
+            }
+            // Append the queryParams for optional parameters only if they exist
+            if (queryParams && Object.keys(queryParams).length) {
+                hash += '?';
+                angular.forEach(queryParams, function(value, key) {
+                    if (value) {
+                        // If the value contains comma it means it has multiple options to be set
+                        if (value.indexOf(",") !== -1) {
+                            var valuesToSet = value.split(",");
+                            // If there are valid parts/values add them with same key
+                            if (valuesToSet.length > 0) {
+                                angular.forEach(valuesToSet, function(part) {
+                                    hash = concatUrl(hash, key + "=" + part.trim());
+                                });
+                            }
+                        } else {
+                            hash = concatUrl(hash, key + "=" + value);
+                        }
+                    }
+                });
+            }
+            return openPageByPath(targetPath, '', hash);
+        };
+
+        var openManageTrainings = function () {
+            var targetPath = "/pages/contentdesign.jsf";
+            var hash = "#!/manage";
+            return openPageByPath(targetPath, '', hash);
+        };
+
+        var openMyCompetencies = function (category, personId, customMenuId) {
+            var targetPath = "/pages/competencies.jsf";
+            var migratedPersonId = personId !== undefined ? personId : '@self'; //fallback if not specified
+            var hash = "#!/users/" + migratedPersonId + "/competencies/" + category;
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            return openPageByPath(targetPath, query, hash);
+        };
+
+        var openMyStaff = function () {
+            var targetPath = "/pages/my-staff.jsf";
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var openManageStaffEnrollment = function (componentIds, componentType, catalogId, templateId, programmeId, parentCourseId, parentCourseSetId) {
+            var targetPath = "/pages/manage-staff-enrollment.jsf";
+            var query =  '?componentIds=' + componentIds + '&componentType=' + componentType;
+            var menuId = getQueryParamValueFromUrl(window.location.search, 'menuId');
+            if (menuId) {
+                query = concatUrl(query, "menuId=" + menuId);
+            }
+            if (catalogId) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (programmeId && programmeId > 0) {
+                query = concatUrl(query, "programmeId=" + programmeId);
+            }
+            if (templateId && templateId > 0) {
+                query = concatUrl(query, "templateId=" + templateId);
+            }
+            if (parentCourseId && parentCourseId > 0) {
+                query = concatUrl(query, "parentCourseId=" + parentCourseId);
+            }
+            if (parentCourseSetId && parentCourseSetId > 0) {
+                query = concatUrl(query, "parentCourseSetId=" + parentCourseSetId);
+            }
+            return openPageByPath(targetPath, query, '');
+        }
+
+        // used from mystaff page when we need to open the new multi enrollment page built with React
+        var openMultiEnrollment = function (userIds, customMenuId, tabOption) {
+            var targetPath = "/pages/multienrollment.jsf";
+            var query = '?employeeIds=' + userIds.join(",") + (customMenuId ? '&menuId=' + customMenuId : '');
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        //used from mystaff page
+        var openLearningPlanAssignment = function (employeeIds, customMenuId) {
+            var targetPath = "/pages/learningplan.jsf";
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+            query += employeeIds ? '&employeeIds=' + employeeIds.join(',') : '';
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openMyStaffNavigation = function() {
+            var targetPath = "pages/my-staff.jsf";
+            if (targetPath.indexOf("http") == 0) {
+                window.location.href = targetPath;
+                return false;
+            }
+            return openPageByPath("/" + targetPath, '', '');
+        };
+
+        var openManageEnrollmentPage = function (courseId, personId, action, tabOption) {
+            var targetPath = "/pages/manage-enrollment.jsf";
+            var query = '?action=' + action + '&courseId=' + courseId + '&employeeId=' + personId;
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        function getParamOrDefaultValue(paramValue, defaultValue) {
+            return paramValue ? paramValue : defaultValue;
+        }
+
+        var openEnrollmentFormPage = function (componentId, participantId, supervisorId, registrationProcessType,
+                                               componentType, catalogId, templateId, parentCourseId, parentCourseSetId,
+                                               programmeId, actionType, originalActionTypeId, dueDate, identificationId) {
+            var targetPath = "/pages/enrollment-form.jsf";
+            var query = '?componentId=' + componentId + '&componentType=' + componentType;
+            var menuId = getQueryParamValueFromUrl(window.location.search, 'menuId');
+            if (menuId) {
+                query = concatUrl(query, "menuId=" + menuId);
+            }
+            if (participantId) {
+                query = concatUrl(query, "participantId=" + participantId);
+            }
+            if (supervisorId) {
+                query = concatUrl(query, "supervisorId=" + supervisorId);
+            }
+            if (registrationProcessType) {
+                query = concatUrl(query, "registrationProcessType=" + registrationProcessType);
+            }
+            if (catalogId) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (templateId) {
+                query = concatUrl(query, "templateId=" + templateId);
+            }
+            if (parentCourseId) {
+                query = concatUrl(query, "parentCourseId=" + parentCourseId);
+            }
+            if (parentCourseSetId) {
+                query = concatUrl(query, "parentCourseSetId=" + parentCourseSetId);
+            }
+            if (programmeId) {
+                query = concatUrl(query, "programmeId=" + programmeId);
+            }
+            if (actionType) {
+                query = concatUrl(query, "actionType=" + actionType);
+            }
+            if (originalActionTypeId) {
+                query = concatUrl(query, "originalActionTypeId=" + originalActionTypeId);
+            }
+            if (dueDate) {
+                query = concatUrl(query, "dueDate=" + dueDate);
+            }
+            if (identificationId) {
+                query = concatUrl(query, "identificationId=" + identificationId);
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        /**
+         * opens the checkout page to handle the enrolment request
+         * method arguments (in order): courseId, catalogId, programmeId, templateId, participantId, parentCourseId, parentCourseSetId, employeeId, voucherCode
+         */
+        var openCheckout = function (courseId, catalogId, programmeId, templateId, participantId, parentCourseId,
+                                     parentCourseSetId, employeeId, voucherCode, dueDateStr, identificationId,
+                                     approval, bookingState, menuId) {
+            var targetPath = '/pages/checkout.jsf';
+            var query = concatUrl("?courseId=" + courseId, "participantId=" + participantId);
+            if (catalogId) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (programmeId) {
+                query = concatUrl(query, "programmeId=" + programmeId);
+            }
+            if (templateId) {
+                query = concatUrl(query, "templateId=" + templateId);
+            }
+            if (employeeId) {
+                query = concatUrl(query, "employeeId=" + employeeId);
+            }
+            if (voucherCode) {
+                query = concatUrl(query, "voucherCode=" + voucherCode);
+            }
+            if (dueDateStr) {
+                query = concatUrl(query, "dueDate=" + dueDateStr);
+            }
+            if (identificationId) {
+                query = concatUrl(query, "identificationId=" + identificationId);
+            }
+            if (approval) {
+                query = concatUrl(query, "approval=" + approval);
+            }
+            if (bookingState) {
+                query = concatUrl(query, "bookingState=" + bookingState);
+            }
+            if (menuId) {
+                query = concatUrl(query, "menuId=" + menuId);
+            }
+            query += appendXSRFToken();
+            query = appendParentCourseIdsIfPresent(parentCourseId, parentCourseSetId, query);
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var open403ErrorPage = function () {
+            var targetPath = '/pages/403-error.jsf?incoming=%2Filp%2Fpages%2Flogin.jsf';
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var open404ErrorPage = function () {
+            var targetPath = '/pages/404-error.jsf';
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var openSystemErrorPage = function () {
+            var targetPath = '/pages/system-error.jsf';
+            return openPageByPath(targetPath, '', '');
+        };
+
+		var openUserProfile = function (participantId, tabOption, customMenuId, asSupervisor) {
+            var targetPath;
+            var query;
+                targetPath = '/pages/user-profile-view.jsf';
+                query = "?userId=" + participantId;
+                query += customMenuId ? "&menuId=" + customMenuId : '';
+                query += asSupervisor ? "&asSupervisor=" + asSupervisor : '';
+
+                return openPageByPath(targetPath, query, '', tabOption);
+
+        };
+
+        /**
+         *  Open the profile of a course participant via the userprofile-functionality.
+         */
+        var openCourseParticipantProfile = function (courseId, participantId) {
+            if (userData.loggedIn) {
+                var targetPath;
+                targetPath=  '/pages/user-profile-view.jsf';
+                var query = "?userId=" + participantId + "&courseId=" + courseId ;
+                return openPageByPath(targetPath, query,'');
+            } else {
+                openUserProfile(participantId);
+            }
+        };
+
+		 var openBookShelfMedia = function (mediaId) {
+             var targetPath = '/pages/bookshelfmedia.jsf';
+             var query = "?mediaId=" + mediaId;
+             return openPageByPath(targetPath, query, '');
+        };
+
+        var openMyExperiences = function (category) {
+            var targetPath = '/pages/myexperiences.jsf';
+            var hash = "#!/";
+            switch (category) {
+                case "experiences":
+                    hash += "experiences";
+                    break;
+                case "badges":
+                    hash += "badges";
+                    break;
+            }
+            return openPageByPath(targetPath, '', hash);
+        };
+
+        var logout = function () {
+            var targetPath = '/pages/logout.jsf';
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var openCompetenciesPage = function (employeeId, tabSelector, tabOption, customMenuId) {
+        	var employeeSelector = (employeeId ? employeeId : '@self');
+        	var targetPath = '/pages/competencies.jsf';
+            var hash = '#!/users/' + employeeSelector + '/competencies/' + tabSelector;
+            var query = customMenuId ? "?menuId=" + customMenuId : '';
+        	return openPageByPath(targetPath, query, hash, tabOption);
+        };
+
+        function addQueryParameter(address, queryParamKey, newQueryParamValue) {
+            var regExp = new RegExp("(" + queryParamKey + "=)([^&?#]*)");
+            if (regExp.test(address)) {
+                //locale is already present in current location query -> needs to be replaced
+                address = address.replace(regExp, "$1" + newQueryParamValue);
+            } else if (address === "") {
+                //no query defined in location -> new query with queryparam (locale)
+                address = '?' + queryParamKey + "=" + newQueryParamValue;
+            } else {
+                //query defined in location -> add queryparam (locale)
+                address += '&' + queryParamKey + "=" + newQueryParamValue;
+            }
+            return address;
+        }
+
+        function addQueryParameterToCurrentUrl(queryParamKey, newQueryParamValue) {
+            var queryString = addQueryParameter(location.search, queryParamKey, newQueryParamValue);
+            var origin = location.origin;
+            if (!origin) {
+                //location.origin is not supported in IE10 -> if not defined create from other location properties
+                origin = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+            }
+            return origin + location.pathname + queryString + location.hash;
+        }
+
+        /**
+         * Update page target on language navi entry with hash-tag params.
+		 * @param currentElement navigation entry to be updated
+         */
+		function updateLanguageEntry(currentElement) {
+            var language = getQueryParamValueFromUrl(currentElement.href, "locale");
+            currentElement.href = addQueryParameterToCurrentUrl("locale", language);
+        }
+
+        /**
+         * Update language-section in footer and language drop down by adding/replacing the locale query parameter.
+		 * '#NL_LANGAUGE_MENU_DROPDOWN .navi-language-entry'
+         */
+        var updateLangSelection = function () {
+                $('#lang-selection .language-change-footer-entry').each(function(index, object){
+                    //footer item
+                    updateLanguageEntry(object);
+                });
+                $('.navi-language-entry').each(function (index, object) {
+                    //header item
+                    updateLanguageEntry(object);
+                });
+        };
+        if (typeof jQuery !== 'undefined') {
+            $(document).ready(function () {
+                window.onhashchange = function () {
+                    updateLangSelection();
+                };
+                updateLangSelection();
+            });
+        }
+
+
+        /**
+         * Closes all the foundation reveal dialogs, when the page is changed
+         */
+        if (typeof jQuery !== 'undefined') {
+            $(window).bind('hashchange', function () {
+                var allReveals = $('[data-reveal].reveal.open:not(.stay-open-on-hash-change)'); //get all the modals that are open
+                var numberRevealsFound = allReveals.length;
+                for (var i = 0; i < numberRevealsFound; i++) {
+                    var idReveal = allReveals[i].id;
+                    $('#' + idReveal).hide(); //if we do not hide it directly we'll have some strange side effects
+                    $('#' + idReveal).foundation('close');
+                }
+            });
+        }
+
+        /**
+         * Indicates the environment specific global date pattern in the user language.
+         */
+        var globalDatePattern = "MMM d, yyyy";
+
+        /**
+         * Indicates the environment specific global time pattern in the user language.
+         */
+        var globalTimePattern = "HH:mm";
+        /**
+         * Indicates the environment specific global date time pattern in the user language.
+         */
+        var globalDateTimePattern = "d MMM yyyy HH:mm";
+        /**
+         * Indicates the environment specific global short date time pattern in the user language.
+         */
+        var shortDatePattern = "MMM d, yyyy";
+
+        //MomentJs compatible patterns
+        var momentDatePatterns = {
+            //unfortunately we have to change the pattern in order to support momentjs
+            short: shortDatePattern.toUpperCase()
+        };
+
+        /**
+         * Sets the decimal number format symbols for $locale
+         * @param locale $locale service
+         */
+        var setDecimalFormatProperties = function(locale) {
+            locale.NUMBER_FORMATS.DECIMAL_SEP = ".";
+            locale.NUMBER_FORMATS.GROUP_SEP = ",";
+        };
+
+        /**
+         * This variable defines whether the bundle keys or the corresponding bundle values are shown.
+         */
+        var showBundleKey = false;
+        /**
+         * This variable defines the current app language
+         */
+        var appLanguage = "en-GB";
+
+        var appPersonNameOrder = 0;
+
+        /**
+         * Indication if password autocomplete option is enabled or not.
+         * @type {string} 'on' if enabled, 'off' otherwise.
+         */
+        var passwordAutocomplete = "off";
+
+        /**
+         * Restapi Location
+         * @type {string} e.g. "learningportal/restapi/"
+         */
+        var restapiLocation = "/ilp/restapi";
+        /**
+         * Anonymous RestAPI Location
+         * @returns the path to the rest api
+         */
+        var anonymousRestapiLocation = "/ilp/commonrestapi";
+
+        /**
+         * registration Restapi Location
+         * @type {string} e.g. "learningportal/registrationapi/"
+         */
+        var registrationRestapiLocation = "/ilp/registrationapi";
+
+        /**
+         * Gamification api Location
+         * @type {string} e.g. "learningportal/rest/"
+         */
+        var gamificationapiLocation = "/ilp/rest";
+
+        /**
+         * OnClick- / ButtonFunction for downloading the course certificate.
+         */
+        var downloadCourseCertificate = function (courseId, userId) {
+            var address;
+            if (userId && userId !== '@self') {
+                address = restapiLocation + '/lms/users/' + userId + '/courses/' + courseId + '/certificate';
+            } else {
+                address = restapiLocation + '/lms/courses/' + courseId + '/certificate';
+            }
+            downloadFile(address);
+        };
+
+        /**
+         * Function for downloading the media certificate.
+         */
+        var downloadMediaCertificate = function (mediaId, courseId) {
+            if (courseId && mediaId) {
+                var address = restapiLocation + '/lms/certificate/download/courses/' + courseId + '/media/' + mediaId;
+                downloadFile(address);
+            } else {
+                console.log('Invalid parameters for downloadMediaCertificate');
+            }
+        };
+
+        /**
+         * Function for downloading the programme certificate.
+         */
+        var downloadProgrammeCertificate = function (programmeId, userId) {
+            var address;
+            if (userId && userId !== '@self') {
+                address = restapiLocation + '/lms/users/' + userId + '/courses/' + programmeId + '/certificate';
+            } else {
+                address = restapiLocation + '/lms/courses/' + programmeId + '/certificate';
+            }
+            downloadFile(address);
+        };
+
+        /**
+         * Function for downloading the programme level certificate.
+         */
+        var downloadProgrammeLevelCertificate = function (programmeId, levelId, userId) {
+            var address;
+            if (userId && userId !== '@self') {
+                address = restapiLocation + '/lms/users/' + userId + '/programmes/' + programmeId + '/folder/' + levelId + '/certificate';
+            } else {
+                address = restapiLocation + '/lms/programmes/' + programmeId + '/folder/' + levelId + '/certificate';
+            }
+            downloadFile(address);
+        };
+
+        /**
+         * Content server
+         * @type {string} e.g. "../data"
+         */
+        var contentServer = "/ils";
+
+        /**
+         * Client Design path
+         */
+        var clientDesignPath = "/ilp/data/client_design/plink/ila/19.3.3/design";
+
+        /**
+         * Client Templates path
+         */
+        var clientTemplatesPath = "/ilp/data/client_design/plink/ila/19.3.3/templates";
+
+        /**
+         * Internal content server
+         * @type {string} e.g. "../data"
+         */
+        var internalContentServer = "http://ils:8080/ils";
+
+        /**
+         * Internal content server context path
+         * @type {string} e.g. "../data"
+         */
+        var internalContentServerContextPath = "/ils";
+
+        /**
+         * Internal content server
+         * @type {string} e.g. "../data"
+         */
+        var internalContentServerUrlWithPort = "http://ils:8080/ils";
+
+        /**
+         * Current user ID
+         * @type {integer} e.g. 103127
+         */
+        var currentUserId = 0;
+
+        /**
+         * Timezone offset as a string
+         * @type {string} e.g. "+0100"
+         */
+        var currentUserPreferredTimeZoneOffset = "";
+
+        /**
+         * Timezone identifier as a string
+         * @type {string} e.g. "CET" or "Australia/Melbourne"
+         */
+        var currentUserPreferredTimeZoneIdentifier = "";
+
+        /**
+        * Indicates if remove pending enrolment is active or not
+        */
+        var removePendingEnrolment = true;
+
+		/**
+		*Indicates if the logged user can prebook staff members
+         * @deprecated see staffPrebookingSetting
+		*/
+		var isAllowedStaffPrebooking = false;
+
+        /**
+         *Returns one of the values 'DO_NOT_ENABLE', 'ALWAYS' or 'CONSIDER_SETTING_IN_COURSE_TEMPLATE'
+         */
+        var staffPrebookingSetting = "DO_NOT_ENABLE";
+
+        /**
+        * Variable that holds the system config value, for enrolment by supervisor
+        */
+        var enrolmentBySupervisor = true;
+        /**
+         * Timezone identifier as a string
+         * @type {string} e.g. "CET" or "Australia/Melbourne"
+         */
+        var getMomentTimeZoneIdentifier = function() {
+            if (currentUserPreferredTimeZoneIdentifier === "" && moment !== undefined && moment.tz !== undefined) {
+                //this is required for an anonymous user: According to DD, we should use moment in order to resolve the TZ.
+                //in order to avoid multiple calls to moment (performance), let's store the value so that the next time, the first if condition will stop
+                currentUserPreferredTimeZoneIdentifier = moment.tz.guess();
+            }
+            return currentUserPreferredTimeZoneIdentifier;
+        };
+
+        /**
+         * Definition of the navigation settings
+         */
+        var navigation = {
+            header: {
+                sticky: true,
+                floated: false
+            }
+        };
+
+        var debug = false;
+        var courseTileSettings = {
+            labels: [{
+                type: 'DUE_DATE'
+            }]
+        };
+
+        var sortedMetadataElements = [{"type":"ATTRIBUTE","identifier":"price","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"registration-identifier","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"maintype","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"status","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"course-content-learning-form","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"programme-content","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"location","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"free-places","id":0,"name":null,"iconPath":null,"description":null},{"type":"ATTRIBUTE","identifier":"prerequisites-status","id":0,"name":null,"iconPath":null,"description":null}];
+
+        var metadataPositionDisplay = "";
+        if ("BELOW_PROGRESS" !== "") {
+            metadataPositionDisplay = "BELOW_PROGRESS";
+        }
+        /**
+        * LANGUAGES GLOBAL VARIABLE
+        * */
+        var DISPLAY_LANGUAGE_FLAG = false;
+        var DISPLAY_LANGUAGE_STYLE_ON_TILES = "LANGUAGE NAME";
+        var DISPLAY_LANGUAGE_ON_TILES = "USE FOR CONTENT ONLY".split(',');
+        var DISPLAY_LANGUAGES = false;
+
+        var userData = {
+  "loggedIn" : false,
+  "userId" : -1,
+  "preferredLang" : "",
+  "firstName" : "",
+  "lastName" : "",
+  "loginName" : "",
+  "title" : "",
+  "isSupervisor" : false,
+  "isRegistrationDelegate" : false,
+  "loginSource" : ""
+};
+        /**
+         * Indication whether force login is enabled or not.
+         */
+        var forceLoginEnabled = false;
+
+        var useComponentACLInCatalog = false;
+
+        var learningFormSettings = {
+            enabled: false,
+            formId: 0,
+            bundleName: ""
+        };
+
+        var activeClientConfig = {
+            clientId: 1,
+            clientPattern: "decd",
+            clientPatternType: "HOSTNAME",
+            defaultCourseImage: "/data/client_design/plink/global/images/course_description_image_default.png",
+            defaultCourseTemplateImage: "/data/client_design/plink/global/images/course_template_description_image_default.png",
+            defaultProgrammeImage: "/data/client_design/plink/global/images/programme_description_image_default.png",
+            eSignatureEnabled: true
+        };
+
+        if (false) {
+            (function (window, clientConfig) {
+                if (clientConfig.clientPatternType === "PARAMETER") {
+                    var url = addQueryParameterToCurrentUrl("client", clientConfig.clientPattern);
+                    window.history.replaceState(null, null, url);
+                }
+            })(window, activeClientConfig);
+        }
+
+        var activeAuthConfiguration = {
+            facebook: {
+                enabled: false,
+                appId: "",
+                version: "v2.11",
+                data: {
+                    scope: "public_profile,email",
+                    auth_type: ""
+                }
+            },
+            saml: {
+                enabled: true
+            },
+            windows: {
+                enabled: false
+            },
+            basic: {
+                enabled: true
+            },
+            custom: {
+                enabled: false
+            },
+            selfRegistration: {
+                enabled: true
+            },
+            passwordRequest: {
+                enabled: true
+            },
+            stayLoggedIn: {
+                enabled: true
+            },
+            openIdConnect: {
+                enabled: false
+            },
+            autocomplete : "off"
+        };
+
+        var customTemplateMap = {};
+        var templatePostfix = "?r=e828affa7d";
+        var getCustomTemplatePath = function(originalTemplatePath) {
+            var result = originalTemplatePath;
+            var customEntry = customTemplateMap[originalTemplatePath];
+            if (customEntry) {
+                result = customEntry;
+            }
+            return result + templatePostfix;
+        };
+
+        var openClassification = function (dashboardId, parentId, classificationId) {
+            var targetPath = '/pages/classification-search.jsf';
+            var query = "?";
+            if (dashboardId !== undefined && dashboardId > 0) {
+                query = concatUrl(query, "dashboardId=" + dashboardId);
+            }
+            if (parentId !== undefined && parentId > 0) {
+                query = concatUrl(query, "parentId=" + parentId);
+            }
+            if (classificationId !== undefined && classificationId > 0) {
+                query = concatUrl(query, "classificationId=" + classificationId);
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openDashboard = function (dashboardId) {
+            var targetPath = '/pages/internal-dashboard.jsf';
+            var query;
+            if (dashboardId !== undefined && dashboardId > 0) {
+                query = "#/?dashboardId=" + dashboardId;
+            } else {
+                query = "";
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        var openDashboardWithPrefilteredItems = function (dashboardId, filterId, filterValue) {
+            var targetPath = '/pages/internal-dashboard.jsf';
+            var query;
+            if (dashboardId !== undefined && dashboardId > 0 && filterId !== undefined && filterValue !== undefined) {
+                query = "#/?dashboardId=" + dashboardId + "&filterId=" + filterId + "&filterValue=" + filterValue;
+            } else {
+                query = "";
+            }
+            return openPageByPath(targetPath, query, '');
+        };
+
+        /**
+         * Method that is called when multi staff enrollment should be started
+         * Param 1: componentType (course|programme)
+         * Param 2: componentId
+         * Other params used for access assurance(optional): catalogId, templateId, programmeId, parentCourseId, parentCourseSetId
+         * tabOption: how to open the page (new tab, popup, etc)
+         */
+        var openMultiStaffEnrolment = function (componentType, componentIds, catalogId, templateId, programmeId, parentCourseId, parentCourseSetId, tabOption) {
+            var targetPath = '/pages/batch-enrollment.jsf';
+            var query = concatUrl("", "componentIds=" + componentIds);
+            query = concatUrl(query, "componentType=" + componentType);
+            if (catalogId !== undefined && catalogId > 0) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (templateId !== undefined && templateId > 0) {
+                query = concatUrl(query, "templateId=" + templateId);
+            }
+            if (programmeId !== undefined && programmeId > 0) {
+                query = concatUrl(query, "programmeId=" + programmeId);
+            }
+            if (parentCourseId !== undefined && parentCourseId > 0) {
+                query = concatUrl(query, "parentCourseId=" + parentCourseId);
+            }
+            if (parentCourseSetId !== undefined && parentCourseSetId > 0) {
+                query = concatUrl(query, "parentCourseSetId=" + parentCourseSetId);
+            }
+
+            return openPageByPath(targetPath, query, '', tabOption);
+        };
+
+        /**
+         * Method that is called when an staff enrolment should be done
+         * Param 1: the object type
+         * Param 2: the object id
+         * Param 3: the context id, e.g. catalogue id (optional)
+         */
+        var openCourseStaffEnrolment = function (courseId, catalogId, templateId, programmeId, parentCourseId, parentCourseSetId) {
+            var targetPath = '/pages/mystaffs.jsf';
+            var query="";
+            if (courseId !== undefined && courseId > 0) {
+                query = concatUrl(query, "courseId=" + courseId);
+            }
+            if (templateId !== undefined && templateId > 0) {
+                query = concatUrl(query, "templateId=" + templateId);
+            }
+            if (catalogId !== undefined && catalogId > 0) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (programmeId !== undefined && programmeId > 0) {
+                query = concatUrl(query, "programmeId=" + programmeId);
+            }
+            if (parentCourseId !== undefined && parentCourseId > 0) {
+                query = concatUrl(query, "parentCourseId=" + parentCourseId);
+            }
+            if (parentCourseSetId !== undefined && parentCourseSetId > 0) {
+                query = concatUrl(query, "parentCourseSetId=" + parentCourseSetId);
+            }
+
+            return openPageByPath(targetPath, query, '');
+        };
+
+        function addParamToPathParams(paths, pathIdentifier, pathValue) {
+            paths.push(pathIdentifier);
+            paths.push(pathValue);
+        }
+
+        var openDescriptionPage = function (componentType, componentId, personId, selectedTab, pathParams, queryParams, tabOption) {
+            var targetPath = '/pages/description.jsf';
+            var jsfParams = [];
+            if (currentMenuId && currentMenuId > 0) {
+                jsfParams.push("menuId=" + currentMenuId);
+            }
+            if (queryParams && queryParams['operation']) {
+                if (queryParams['operation'] !== 'cancel') {
+                    jsfParams.push("operation=" + queryParams['operation']);
+                    jsfParams.push("XSRFToken=" + '');
+                } else {
+                    console.error("Unsupported course operation: " + operation);
+                    return;
+                }
+            }
+            if (queryParams && queryParams['jsfParams'] && queryParams['jsfParams']['courseId']) {
+                jsfParams.push("courseId=" + queryParams['jsfParams']['courseId']);
+                delete queryParams['jsfParams'];
+            }
+            if (jsfParams.length) {
+                targetPath += "?" + jsfParams.join("&");
+            }
+            var hashPath = '#/';
+            var pathSegments = [];
+            var componentTypePathIdentifierMap = {
+               'COURSE': 'courses',
+               'COURSE_TEMPLATE': 'coursetemplates',
+               'PROGRAMME': 'programmes',
+               'PROGRAMME_TEMPLATE': 'programmetemplates',
+               'MEDIA': 'media'
+            };
+            // COURSE_TEMPLATE Does not exist but is necesary to diferentiate courses from course templates
+
+            if (personId && personId > 0) {
+                addParamToPathParams(pathSegments, 'users', personId);
+            } else {
+                addParamToPathParams(pathSegments, 'users', '@self');
+            }
+
+            if (pathParams) {
+                if (pathParams.catalogId) {
+                    addParamToPathParams(pathSegments, 'catalogues', pathParams.catalogId);
+                }
+                if (pathParams.programmeId) {
+                    addParamToPathParams(pathSegments, componentTypePathIdentifierMap['PROGRAMME'], pathParams.programmeId);
+                }
+                if (pathParams.courseTemplateId) {
+                    addParamToPathParams(pathSegments, componentTypePathIdentifierMap['COURSE_TEMPLATE'], pathParams.courseTemplateId);
+                }
+                if (pathParams.programmeTemplateId) {
+                    addParamToPathParams(pathSegments, componentTypePathIdentifierMap['PROGRAMME_TEMPLATE'], pathParams.programmeTemplateId);
+                }
+            }
+            //Add the componentTypepathIdentifier and componentId (this will be last)
+            addParamToPathParams(pathSegments, componentTypePathIdentifierMap[componentType], componentId);
+            //Add the section/path to append after the path params
+            if (selectedTab) {
+                pathSegments.push(selectedTab);
+            }
+            //Join every path segment with '/' to include also the section
+            hashPath += pathSegments.join('/');
+            //Append the queryParams for optional parameters only if they exist
+            if (queryParams && Object.keys(queryParams).length) {
+                hashPath += '?';
+                angular.forEach(queryParams, function(value, key) {
+                    if (value) {
+                        hashPath = concatUrl(hashPath, key + "=" + value);
+                    }
+                });
+            }
+            return openPageByPath(targetPath, '', hashPath, tabOption);
+        };
+
+        var openBadgePage = function (badgeId) {
+            var targetPath = '/pages/badge-description.jsf';
+            var jsfParams = [];
+            if (badgeId && badgeId > 0) {
+                jsfParams.push("badgeId=" + badgeId);
+            }
+            if (jsfParams.length) {
+                targetPath += "?" + jsfParams.join("&");
+            }
+            return openPageByPath(targetPath, '', '');
+        };
+
+        var openUtfpPage = function (mediaId, employeeId, courseId, tabOption) {
+            var targetPath = '/pages/utfp.jsf';
+            var jsfParams = [];
+            if (mediaId && mediaId > 0) {
+                jsfParams.push("mediaId=" + mediaId);
+            }
+            if (employeeId && employeeId > 0) {
+                jsfParams.push("employeeId=" + employeeId);
+            }
+            if (courseId && courseId > 0) {
+                jsfParams.push("courseId=" + courseId);
+            }
+            if (jsfParams.length) {
+                targetPath += "?" + jsfParams.join("&");
+            }
+            return openPageByPath(targetPath, '', '', tabOption);
+        }
+
+        /**
+         * Method that is called to open the suitable scorm player page
+         * @param data - an object tha contain the following fields
+         * {
+         *  isPreviewMode - true it will be opened in preview mode
+         *  wbtId - the WBT Id => number
+         *  scoId: the SCORM item id => number
+         *  openTarget - the opening mode: same-page, new-window or popup
+         *  catalogId: (optional) the catalog id => number
+         *  mediaId: (optional) the media id => number
+         *  courseId: (optional) the course id => number
+         *  plainSco: (optional) determine the integration content type for real time session data => boolean, when true => RestContentType.ITEM_SCORM
+         *              when false => RestContentType.WBT_SCORM
+         *  mediaLanguage: (optional) the media language => string
+         *  mediaAspectPadding: (optional) the percentage padding-bottom value to the IFrame => number
+         *  backhash: (optional) the position in the source page, so can return to the same position when click on back link => string
+         *  isOpenedFromSyllabus: (optional) true when open from syllabus otherwise false
+         *  popupOption: (optional) the information used for new pop-up window (i.e. width=640, height=480)
+         * }
+         *
+         */
+        var openScormPlayer = function (data) {
+            var targetPage;
+            var query = '?';
+            query += "wbtId=" + data.wbtId;
+            query += "&scoId=" + data.scoId;
+            query += data.plainSco !== undefined ?  "&plainSco=" + data.plainSco : '';
+            query += data.mediaLanguage !== undefined ?  "&mediaLanguage=" + data.mediaLanguage : '';
+            query += data.mediaAspectPadding !== undefined ?  "&mediaAspectPadding=" + data.mediaAspectPadding : '';
+            if (typeof backhash === 'undefined') {
+                data.backhash = '';
+            }
+            if (data.isPreviewMode) {
+                targetPage = 'preview-wbt-scorm-player.jsf';
+                query += data.mediaId !== undefined ?  "&mediaId=" + data.mediaId: '';
+            } else {
+                if (data.catalogId === undefined || data.catalogId === null || data.catalogId <= 0) {
+                    if (data.courseId === undefined || data.courseId === null || data.courseId <= 0) {
+                        targetPage = 'bookshelf-wbt-scorm-player.jsf';
+                        query += data.mediaId !== undefined ? "&mediaId=" + data.mediaId: '';
+                    } else {
+                        targetPage = 'wbt-scorm-player.jsf';
+                        query += "&courseId=" + data.courseId;
+                        query += data.isOpenedFromSyllabus !== undefined ? "&isOpenedFromSyllabus=" + data.isOpenedFromSyllabus : '';
+                    }
+                } else {
+                    targetPage = 'media-wbt-scorm-player.jsf';
+                    query += "&catalogId=" + data.catalogId;
+                    query += data.mediaId !== undefined ? "&mediaId=" + data.mediaId : '';
+                }
+            }
+            return openScormPopup(targetPage + query + data.backhash, data.popupOption, data.openTarget);
+        };
+
+
+        /**
+         *
+         * Method that is called to open the suitable au player page
+         * @param wbtId - the WBT Id => number
+         * @param auId: the AICC item id => number
+         * @param openMode - the opening mode: same-page, new-window or popup
+         * @param catalogId: (optional) the catalog id => number
+         * @param mediaId: (optional) the media id => number
+         * @param courseId: (optional) the course id => number
+         * @param plainAu: (optional) determine the integration content type for real time session data => boolean, when true => RestContentType.ITEM_AICC
+         *              when false => RestContentType.WBT_AICC
+         */
+        var openAiccPlayer = function (courseId, catalogId, mediaId, wbtId, auId, plainAu, openMode) {
+            var query = "?";
+            var targetPath = '/pages/media-wbt-aicc-player.jsf';
+
+            if (courseId !== undefined && courseId > 0) {
+                targetPath = '/pages/wbt-au-open.jsf';
+                query = concatUrl(query, "courseId=" + courseId);
+            }
+            if (mediaId !== undefined && mediaId > 0) {
+                query = concatUrl(query, "mediaId=" + mediaId);
+            }
+            if (catalogId !== undefined && catalogId > 0) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (wbtId !== undefined && wbtId > 0) {
+                query = concatUrl(query, "wbtId=" + wbtId);
+            }
+            if (auId !== undefined && auId > 0) {
+                query = concatUrl(query, "auId=" + auId);
+            }
+            if (plainAu !== undefined) {
+                query = concatUrl(query, "plainAu=" + plainAu);
+            }
+            if (openMode !== undefined) {
+                query = concatUrl(query, "openMode=" + openMode);
+            }
+
+            return openPageByPath(targetPath, query, '');
+        };
+
+        /**
+         *
+         * Method that is called to open the suitable xapi player page
+         * @param courseId: (optional) the course id => number
+         * @param catalogId: (optional) the catalog id => number
+         * @param mediaId: (optional) the media id => number
+         * @param openMode - the opening mode: same-page, new-window or popup
+         * @param isXapiPlayer: (optional) opens the player => boolean
+         */
+        var openXapiPlayer = function (courseId, catalogId, mediaId, openMode, isXapiPlayer) {
+            var query = "?";
+            var targetPath = '/pages/media-wbt-xapi-player.jsf';
+
+            if (courseId !== undefined && courseId > 0) {
+                targetPath = '/pages/wbt-xapi-open.jsf';
+                query = concatUrl(query, "courseId=" + courseId);
+            }
+            if (mediaId !== undefined && mediaId > 0) {
+                query = concatUrl(query, "mediaId=" + mediaId);
+            }
+            if (catalogId !== undefined && catalogId > 0) {
+                query = concatUrl(query, "catalogId=" + catalogId);
+            }
+            if (openMode !== undefined) {
+                query = concatUrl(query, "openMode=" + openMode);
+            }
+            if (isXapiPlayer !== undefined) {
+                query = concatUrl(query, "isXapiPlayer=" + isXapiPlayer);
+            }
+
+            return openPageByPath(targetPath, query, '');
+        };
+
+        /**
+         *
+         * Method that is called to open a specific learning path folder
+         * @param learningPathId: (optional) the programme id => number
+         * @param folderId: (optional) the folder id => number
+         */
+        var openLearningPathFolder = function (learningPathId, folderId) {
+            var query = "";
+            var targetPath = '/pages/description.jsf';
+            if(learningPathId) {
+                targetPath += '#/users/@self/programmes/' + learningPathId + '/curriculum';
+            }
+            if(folderId) {
+                query = "?";
+                query = concatUrl(query, "folderId=" + folderId);
+            }
+            return openPageByPath(targetPath, query, '');
+        }
+
+    </script>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/ilp/resources/design/css/autocomplete.mod.4.0.0.css" />
+
+    <script type="text/javascript" src="/ilp/jamescore/james.54160cf3e8ee8eadb6da1dcc6cfc89f4573b03a4.min.js"></script>
+        <script type="text/javascript" src="/ilp/resources/javascript/navi.js"></script>
+        <script type="text/javascript">
+            var appInsights = window.appInsights || function (a) {
+                function b(a) {
+                    c[a] = function () {
+                        var b = arguments;
+                        c.queue.push(function () {
+                            c[a].apply(c, b)
+                        })
+                    }
+                }
+
+                var c = {config: a}, d = document, e = window;
+                setTimeout(function () {
+                    var b = d.createElement("script");
+                    b.src = a.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js", d.getElementsByTagName("script")[0].parentNode.appendChild(b)
+                });
+                try {
+                    c.cookie = d.cookie
+                } catch (a) {
+                }
+                c.queue = [];
+                for (var f = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; f.length;) b("track" + f.pop());
+                if (b("setAuthenticatedUserContext"), b("clearAuthenticatedUserContext"), b("startTrackEvent"), b("stopTrackEvent"), b("startTrackPage"), b("stopTrackPage"), b("flush"), !a.disableExceptionTracking) {
+                    f = "onerror", b("_" + f);
+                    var g = e[f];
+                    e[f] = function (a, b, d, e, h) {
+                        var i = g && g(a, b, d, e, h);
+                        return !0 !== i && c["_" + f](a, b, d, e, h), i
+                    }
+                }
+                return c
+            }({
+                instrumentationKey: "f4553aa1-0dcf-4b0f-866a-285c15cbedc3"
+            });
+            window.appInsights = appInsights, appInsights.queue && 0 === appInsights.queue.length && appInsights.trackPageView();
+        </script><script type="text/javascript" src="/ilp/javax.faces.resource/jsf.js.jsf?ln=javax.faces"></script></head><body onload="bodyloadJS();">
+<script>
+
+var utils = {
+    notifications: {
+        addPendingMessage: function() {
+            console.error("Notification Plugin is not initialized yet.")
+        }
+    }
+};
+
+</script>
+
+    <div id="notifications" tabindex="-1"></div>
+
+
+    <script>
+        var notificationAppConfig = {
+            appPath: "/ilp/notification/",
+            globalNotificationDuration: ""
+        };
+    </script>
+
+    <script src="/ilp/notification/js/notificationRegistration.js"></script>
+
+    <script>embedJavascriptResources([ 
+{ 'identifier':'angular' },
+{ 'identifier':'imc-templating-module' },
+{ 'identifier':'angular-translate' },
+{ 'identifier':'translateIMCCustomLoaderService' },
+{ 'identifier':'angular-translate-imc-loader' },
+{ 'identifier':'angular-translate-imc-decorator' },
+{ 'identifier':'angular-ui-notification' },
+{ 'path': notificationAppConfig.appPath + 'js_vendor_min/app.e828affa7d.min.js'} ], function() {
+      angular.bootstrap(document.getElementById('notification'), ['notification']);
+
+});</script>
+
+    <div id="notification">
+        <div data-ng-controller="notificationListeningController"></div>
+    </div>
+        <h1 class="outline">Department for Education plink </h1>
+
+        <noscript>
+            <div class="no-javascript-supported">
+                JavaScript is not enabled in your current browser. Please enable JavaScript to use the full range of functionality in this application.
+            </div>
+        </noscript>
+            <div id="content-frame" class="entire-section">
+                    <div class="contain-to-grid navigation-section" id="top-navi">
+                        <div class="imc-topbar  imc-topbar--sticky">
+                            <imc-navigation data-personal="false" data-ilp-external="/ilp" data-has-idm="true" data-language="en-GB" data-current-menu-id="" data-rest-url="/ilp/commonrestapi" data-content-url="/ils" data-client-id="1" data-shopify-enabled="false" data-shopify-require-for-free="false" data-shopify-shops="null" data-design-client-id="1" data-log-level="INFO" data-bundle-view="false" data-context-path="/ilp"></imc-navigation>
+                        </div>
+                        <!-- if sticky -> this height-wrap-container takes the same height as .imc-topbar -->
+                        <div class="topbar-height-wrap"></div>
+                    </div>
+                    <script id="imc-navigation-script" src="/microservices/navigation/index.js?v=19.3.3+e828affa7d"></script>
+                <main class="content-section" id="content-section">
+                    <div class="full-size-section ">
+
+        <!-- HEADER BEGIN -->
+        <section class="subnavigation-section">
+            <div class="grid-container">
+                <h1 class="header-title">Login</h1>
+            </div>
+        </section>
+        <!-- HEADER END -->
+
+        <!-- REGISTRATION-SECTION BEGIN -->
+        <section class="container login-page margin-top-36" id="login-section">
+
+            <div class="grid-container">
+                <div class="grid-x">
+                    <div class="cell small-24">
+                        <div class="grid-x">
+                            <div class="cell small-24"><span class="placeholder-login-section"><h4 class="main-title-header">Department for Education staff login</h4><p>Department for Education employees should click the link below to access plink using LearnLink/Department for Education Intranet credentials, whether you are a first time plink user or a returning user.</p></span><form id="saml-login-form" name="saml-login-form" method="post" action="/ilp/pages/login.jsf" class="display-inline" enctype="application/x-www-form-urlencoded"><a href="#" onclick="return myfaces.oam.submitForm('saml-login-form','saml-login-form:samlLoginButton',null,[['client','']]);" id="saml-login-form:samlLoginButton" class="button-element medium-button margin-right-20 margin-bottom-20" aria-role="button">
+                                        Department for Education Staff - click here
+                                        </a><input type="hidden" name="saml-login-form_SUBMIT" value="1" /><input type="hidden" name="javax.faces.ViewState" value="r+qxPOxpqiBbnNMQJjyoUoIxx27lGY2G1KE1Xkk4f65+c6C3FgRHA9l9pMSTMy3SVWsGpXgp6lpRz0C+9ydBpXoqVC9Duj0fKB6kiJeLzm25xYn1Rj/a9aNqReVUl6sAZFQeKe3Kv3VSuIiLh+8DsJluuqR/rPlPGpcg3cp3Eu1VSFYo8ydZkLSuuKMLUoS0SBDyiXaRwbLSmnBMgxG26Kk9hN1fs5IdJoaUlkNAlEVJa+FvTp2yi8uzwuXbKCixrpcC99d2I49tLJnc6NYren1+6e1+haDIDwixuyGRP5/CCd3U/m+UoNlP7YP0aZS/hcBBayZ8LJhnZbeH5Ggs1ezicsgjPw3SO+SoZ4caNq+9+oxvQ4REwS9BCcuzsirPcTloM7D2+HE9rhSeMoVLWeULKvA00Yk5uzAHNfzCT8+4mfY8ef2NFLu6vt/4xKo/SFxJXfqPAAQwhRUQ9MAD/muP/Q/iHeU587NA6u2n8O28xbPf8SC6p0koPjCWXct66YNYBapY6gxpMWs+OgnQkvRIxWLBJRsoqbHT/oakL4GJ96umiIVvYxVf++jbGjWoLstHQx2uesEPOLs1Uo6+Jtuz1CwxVa5o2EodeFbZBVBk9KiVdKtaEyBKIgqBNhisiBD0fhYoMzn+NyJsH/Pc69tGBG0BY1VWz//cG00FyAG/Bmylp4f3AIUGmmlAf7t0iqALRa+b+nNT0FPojYjZYG5b5Qpn9+FISNz1fFjGJaJ7a604jAsisEjAIh8rP3jw2MTgqgRoKuW0j7Z5wSDiUm6PgCOS92b5QA2c4l0qlADpGePa6/pktgfypV3OYgOmy8QwfUnuN/r1sB8ef3hLmZV7LeWtoKDddEyXLtsHYOhY/9OGR4q1X+NGIS4BHw/VB4e6GOkou6ZoPJnYK5nJRB2eZ940wkNf402E8sbHT8BD3H5FBeAmrrjAa7bJixcHeJCY+0d8nl2tUMdqszVEac4evKZsw1nVqkR8V5DH670k3cOIJvYEx98256DabefzCNIsUSB4pERDuIQdg/utdltjLCQF/tEtSk1RnzxUJw9YvN6f3lJWcHgAcPoPNnyEHEAKyhlkCxGyZKhZA9Rsrg==" autocomplete="off" /></form>
+                            </div>
+                        </div>
+
+                            <div class="grid-x grid-margin-x small-up-1 medium-up-2">
+                                <div class="cell padding-bottom-0">
+                                    <div class="margin-top-16 margin-bottom-27 horizontal-line">
+                                        <span class="login-page__separator-text">or</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- show the server error if there is no validation error only --><form id="loginform" name="loginform" method="post" action="/ilp/pages/login.jsf" enctype="application/x-www-form-urlencoded">
+                            <fieldset class="no-fieldset-border"><span class="placeholder-login-section"><h4 class="main-title-header">Non Department for Education staff login</h4><p>Department for Child Protection (DCP) staff, volunteers, and all other non Department for Education users can login below using their manual plink login details, or press the &quot;Forgot your password?&quot; link to request a new password. Your plink username is the email address you signed up with.</p></span>
+                                <div class="grid-x grid-margin-x small-up-1 medium-up-2">
+                                    <div class="cell padding-bottom-0"><label for="loginform:login">plink username (email address)</label><input id="loginform:login" name="loginform:login" type="text" value="" onblur="jsf.ajax.request(this,event,{render:'loginform:message_login loginform:login ','javax.faces.behavior.event':'blur'})" class=" disable-auto-height" title="Your user name" autocomplete="off" />
+                                    </div>
+                                    <div class="cell padding-bottom-0">
+                                        <div class="formValidationMessage"><span id="loginform:message_login"></span>
+                                        </div>
+                                    </div>
+                                    <div class="cell padding-bottom-0"><label class="margin-top-21" for="loginform:password">plink password</label><input type="password" id="loginform:password" name="loginform:password" onchange="checkPasswordLength(this);" class=" disable-auto-height" title="Your Password" autocomplete="off" />
+
+                                    </div>
+                                    <div class="cell padding-bottom-0">
+                                        <div class="formValidationMessage">
+                                            <label id="message_password" for="loginform:password" style="display: none;" class="login-page__password-error error-input-text inline-validation-error-text icon-exclamation-circle">
+                                                Please enter your password
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+        <div class="margin-top-20 input-field-wrapper login-page"><input type="checkbox" name="loginform:j_id_2f" value="true" class="stay-logged-in-checkbox margin-left-0" id="stay-logged-in-checkbox" />
+            <label for="stay-logged-in-checkbox" class="stay-logged-in-text">Stay logged in
+            </label>
+            <a href="#" class="stay-logged-in-text login-page__link" styleClass="copy-text-1" data-open="securityModal">(Security information)</a>
+        </div>
+    <div class="reveal imc-action-reveal" id="securityModal" data-reveal=" ">
+        <h3 class="decorative-subheadline imc-action-reveal__headline">Securely login into Department for Education plink  
+        </h3>
+        <p class="imc-action-reveal__running-text imc-action-reveal__spacer--running-text">If you login Department for Education plink  on a private device (e.g. your own PC or tablet), we recommend that you select the option "Keep me logged in". This enables you to remain logged in for 30.0 hours without being asked to login again, if you have not interacted with the platform for a period of time. If you are using a public device, which is also used by other individuals, we recommend that you do not select this option, as information is stored in the browsers cookies, which could result in misuse.
+        </p>
+        <div class="reveal-button-area imc-action-reveal__buttons-area imc-action-reveal__spacer--buttons-area">
+            <button id="security-reveal-close-btn" class="button-element medium-button reveal-button" data-close="securityModal" title="OK">OK</button>
+        </div>
+        <button class="close-button" data-close="securityModal" aria-label="Cancel">×</button>
+    </div><input id="loginform:loginButton" name="loginform:loginButton" type="submit" value="Login" class="button-element medium-button margin-top-30" /><a href="/ilp/pages/password-request.jsf" class="copy-text-1 login-page__link login-page__link__password-link" title="Open a form to order a new password">
+                                    Forgot your password?
+                                </a><a href="/ilp/pages/user-profile-signup.jsf" id="loginform:signUp" name="loginform:signUp" class="copy-text-1 login-page__link login-page__link__signup-link" title="Open the registration page">You can register here.</a>
+                                    <div class="mheight-42 copy-text-1"><span class="login-info-text"> </span>
+                                    </div>
+                            <!-- setting from control to disabled will prevent send it value to the server--><input type="hidden" id="loginform:hidden_original_url" name="loginform:hidden_original_url" value="" /><input type="hidden" name="loginform_SUBMIT" value="1" /><input type="hidden" name="javax.faces.ViewState" value="r+qxPOxpqiBbnNMQJjyoUoIxx27lGY2G1KE1Xkk4f65+c6C3FgRHA9l9pMSTMy3SVWsGpXgp6lpRz0C+9ydBpXoqVC9Duj0fKB6kiJeLzm25xYn1Rj/a9aNqReVUl6sAZFQeKe3Kv3VSuIiLh+8DsJluuqR/rPlPGpcg3cp3Eu1VSFYo8ydZkLSuuKMLUoS0SBDyiXaRwbLSmnBMgxG26Kk9hN1fs5IdJoaUlkNAlEVJa+FvTp2yi8uzwuXbKCixrpcC99d2I49tLJnc6NYren1+6e1+haDIDwixuyGRP5/CCd3U/m+UoNlP7YP0aZS/hcBBayZ8LJhnZbeH5Ggs1ezicsgjPw3SO+SoZ4caNq+9+oxvQ4REwS9BCcuzsirPcTloM7D2+HE9rhSeMoVLWeULKvA00Yk5uzAHNfzCT8+4mfY8ef2NFLu6vt/4xKo/SFxJXfqPAAQwhRUQ9MAD/muP/Q/iHeU587NA6u2n8O28xbPf8SC6p0koPjCWXct66YNYBapY6gxpMWs+OgnQkvRIxWLBJRsoqbHT/oakL4GJ96umiIVvYxVf++jbGjWoLstHQx2uesEPOLs1Uo6+Jtuz1CwxVa5o2EodeFbZBVBk9KiVdKtaEyBKIgqBNhisiBD0fhYoMzn+NyJsH/Pc69tGBG0BY1VWz//cG00FyAG/Bmylp4f3AIUGmmlAf7t0iqALRa+b+nNT0FPojYjZYG5b5Qpn9+FISNz1fFjGJaJ7a604jAsisEjAIh8rP3jw2MTgqgRoKuW0j7Z5wSDiUm6PgCOS92b5QA2c4l0qlADpGePa6/pktgfypV3OYgOmy8QwfUnuN/r1sB8ef3hLmZV7LeWtoKDddEyXLtsHYOhY/9OGR4q1X+NGIS4BHw/VB4e6GOkou6ZoPJnYK5nJRB2eZ940wkNf402E8sbHT8BD3H5FBeAmrrjAa7bJixcHeJCY+0d8nl2tUMdqszVEac4evKZsw1nVqkR8V5DH670k3cOIJvYEx98256DabefzCNIsUSB4pERDuIQdg/utdltjLCQF/tEtSk1RnzxUJw9YvN6f3lJWcHgAcPoPNnyEHEAKyhlkCxGyZKhZA9Rsrg==" autocomplete="off" /></form><span class="copy-text-1"> </span>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            $(document).ready(function () {
+                // keeping # fragment in case only OIDC is enabled
+                var onlyOidcAvailable = document.getElementById("openid-auth-login-form:only_oidc_available");
+                const url = new URL(window.location.href);
+                const hasOIDCError = url.searchParams.get("bundleKey") === "loginErrorOpenIdConnectAuthenticationFailed";
+                if (onlyOidcAvailable != null && !hasOIDCError) {
+                    // only open id connect is enabled, I need to decide if I should go save the fragment or redirect to OIDC login page
+                    if (onlyOidcAvailable.value === "true") {
+                        var originalUrlFragment = document.getElementById("openid-auth-login-form:original_url_fragment_id");
+                        var fragmentInAddressBar = window.location.hash;
+                        if (fragmentInAddressBar && (originalUrlFragment == null || (originalUrlFragment.value !== fragmentInAddressBar))) {
+                            // there is a fragment in address bar and it's different than the one saved in user session
+                            validateUserAndRedirect();
+                        } else {
+                            // navigating to OIDC login page
+                            window.location.href = "/idm/oidc/login?lms_clientId=1";
+                        }
+                    }
+                }
+                // idm is active
+                const originalUrl = document.getElementById("loginform:hidden_original_url");
+                if (originalUrl != null) {
+                    originalUrl.setAttribute("disabled", "disabled");
+                    if (originalUrl.value === null || originalUrl.value.length === 0) {
+                        // it's needed to make another redirection to get the left fragment in browser address bar
+                        if (window.location.hash) {
+                            validateUserAndRedirect();
+                        }
+                    }
+                }
+                var userNameInput = document.getElementById("loginform:login");
+                if (userNameInput) {
+                    userNameInput.focus();
+                }
+            });
+
+            function checkPasswordLength(pwEl) {
+                var validationEl = document.getElementById('message_password');
+                var passwordValid = pwEl.value && pwEl.value.length > 0;
+                var targetDisplayState = passwordValid ? 'display: none' : 'display: block';
+                validationEl.setAttribute('style', targetDisplayState);
+            }
+        </script>
+                    </div>
+                </main>
+
+    <!-- FOOTER BEGIN -->
+    <div class="footer-section hide-for-print">
+        <div class="">
+            <imc-footer data-personal="false" data-language="en-GB" data-client-id="1" data-design-client-id="1" data-rest-url="/ilp/commonrestapi" data-content-url="/ils" data-log-level="INFO"></imc-footer>
+        </div>
+    </div>
+    <!-- FOOTER END -->
+            </div>
+            <script src="/ilp/resources/javascript/custom_scripts.js"></script>
+            
+            <script>
+                $(document).foundation();
+                $(function () {
+                    if (!Foundation.MediaQuery.atLeast("large")) {
+                        $(".is-dropdown-submenu-parent").removeClass("is-dropdown-submenu-parent");
+                    }
+                });
+            </script>
+		<!-- START HTML INJECTION -->
+<!-- 
+DECD HTML Injections
+Last edited: 15 Jan 2021
+Last editd by: Richard
+version: 6.3
+NOTE: The injections below require there be no /ILP/ URL context as this is how it was configured in v13
+Make sure Root URLS are used so can be copied between PROD and TEST
+-->
+<style>
+/*  ITEM 8 - START change DESK-30483 Speaker panel */
+.course-persons-wrapper img,
+#section-coursecontent-detail .output-speakers ul li>div:first-of-type img
+{
+	max-width: 100%
+}
+/*  END change DESK-30483 */
+
+/* ITEM 9 - START change DESK-28968 Forums - post window keeps expanding */
+	.reply{
+		max-width: 45vw;
+	}
+/* END change DESK-28968 */
+
+/* ITEM 10 - Remove SSO login button, seperator, and create account links from the sign in area on dashboardId=2672303 and dashboardId=2900003 */
+#dashboard section#dashboard-login-panel-160 .login-panel__external-buttons,
+#dashboard section#dashboard-login-panel-160 .login-panel__separator span.login-panel__separator__separator-text,
+#dashboard section#dashboard-login-panel-160 .login-panel__signup-link
+{
+display:none;
+}
+</style>
+<script>
+
+// What is this for? Not referenced anywhere else, is it resetting something (an array?)
+dataLayer = [];
+
+// Get the URL and Path for below functions
+var url = window.location.href;
+var path = window.location.pathname;
+
+
+// Item 2
+// Add a text link before the form
+// /pages/signup.jsf
+if ( url.indexOf('signup.jsf') >= 0) {   
+    var adjustSignupPage = function (){
+        if ($("#signupbutton").length){
+        $('<br/><div class="copy-text-1"><strong><a href="/ilp/pages/external-dashboard.jsf?dashboardId=2900003" target="_self">What account type should I select?</a></strong></div>').insertBefore($("#signUpForm"));
+        } else {
+        setTimeout(adjustSignupPage, 100);
+        }   
+    }
+    adjustSignupPage();
+}
+
+// Item 3A
+// Add text and links before the reset form for STAGE.
+// /pages/password-request.jsf
+else if(url == 'https://staging.plink.sa.edu.au/ilp/pages/password-request.jsf')
+{
+	$('<p>Department for Education Staff &ndash; do not need to request a manual plink password here, and should <a href="https://portal-test.edpass.sa.edu.au/home/edpass-hub-test_plinktestportal_1/0oauoakwny84cQXSJ3l6/alnuobqj3Nn9iYRfw3l6">login using LearnLink/Department for Education Intranet credentials.</a><br/></p><p>Department for Child Protection (DCP) staff &ndash; your plink user name is your DCP email address as it appears in the CHRIS payroll system, please enter it below to request a new password. If you are a DCP staff member and require assistance, please visit the <a href="/pages/external-dashboard.jsf?dashboardId=2672303">DCP login page</a> for support.<br/></p><p>Volunteers, Catholic and Independent school staff users, governing council members, and any other user who has created a non-Department staff plink account &ndash; your user name is the email address you used to create a plink account, please enter it below to request a new password. <u>If you have not created a plink account, you will not receive a password in this process</u>. You can find out <a href="/pages/external-dashboard.jsf?dashboardId=2900003">how to create a non-Department staff plink account here.</a></p>').insertBefore($(document.getElementById("resetform")))
+} 
+
+// Item 3B
+// Add text and links before the reset form for PROD.
+// /pages/password-request.jsf
+else if(url == 'https://plink.sa.edu.au/ilp/pages/password-request.jsf')
+{
+	$('<p>Department for Education Staff &ndash; do not need to request a manual plink password here, and should <a href="https://portal.edpass.sa.edu.au/home/edpass-portal_plinktestportal_1/0oa13a5zzykYdKTju3l7/aln13a7cuglSF339k3l7">login using LearnLink/Department for Education Intranet credentials.</a><br/></p><p>Department for Child Protection (DCP) staff &ndash; your plink user name is your DCP email address as it appears in the CHRIS payroll system, please enter it below to request a new password. If you are a DCP staff member and require assistance, please visit the <a href="/pages/external-dashboard.jsf?dashboardId=2672303">DCP login page</a> for support.<br/></p><p>Volunteers, Catholic and Independent school staff users, governing council members, and any other user who has created a non-Department staff plink account &ndash; your user name is the email address you used to create a plink account, please enter it below to request a new password. <u>If you have not created a plink account, you will not receive a password in this process</u>. You can find out <a href="/pages/external-dashboard.jsf?dashboardId=2900003">how to create a non-Department staff plink account here.</a></p>').insertBefore($(document.getElementById("resetform")))
+} 
+
+// Item 4A
+// Add text and links before the login form for STAGE.
+// /pages/login.jsf
+else if(url.indexOf('login.jsf') >= 0){	
+
+	/*jQuery(document).ready(function(){		
+		$(document.getElementById("loginform:loginButton")).val("Login");
+		//$( ".main-title-header:first" ).html( "Department for Education staff login" );
+	})
+	$('<h4 class="main-title-header">Department for Education staff login</h4><input id="loginform:SSOButton" name="loginform:SSOButton" type="submit" value="Department for Education Staff - click here" class="button-element medium-button" onclick="window.location.href=&#39;https://portal-test.edpass.sa.edu.au/home/edpass-hub-test_plinktestportal_1/0oauoakwny84cQXSJ3l6/alnuobqj3Nn9iYRfw3l6&#39;"><br/><p>Department for Education employees should click the above link to access plink using LearnLink/Department for Education Intranet credentials, whether you are a first time plink user or a returning user.</p><h4 class="main-title-header">Non Department for Education staff login</h4><p>Department for Child Protection (DCP) staff, volunteers, and all other non Department for Education users can login below using their manual plink login details, or press the "Forgot your password?" link to request a new password. Your plink username is the email address you signed up with.</p>').insertBefore($(document.getElementById("loginform"))); */
+	var adjustLoginPage = function () {
+		var loginform = $("#loginform");
+		if (loginform.is(":visible")){
+			$("#loginform a[href*='signup.jsf']").remove();
+			$("#loginform a[href*='password-request.jsf']").remove();
+			$("#saml-login-form").remove();
+			$(".horizontal-line").closest(".grid-x").remove();
+			$(".placeholder-login-section h4:contains(Non Department for Education staff login)").remove();
+			//$("#login-section h2:contains(Login)").html('Non Department for Education staff login1');
+			$("#loginform").before("<h2 class=\"margin-top-21 margin-bottom-32\">Non Department for Education staff login</h2><p style=\"padding-right:10px\">All non Department for Education staff users (volunteers, CESA, AISSA, and OSHC staff, and all other users) can login below using your manual plink login details</p></p><p>Your username is the email address you signed up to plink with. If you have forgotten your password, select the 'Forgot my password' button to request a new password")
+			$('#loginform input[value="Login"]').after("<input id=\"passwordButton\" name=\"passwordButton\" type=\"button\" value=\"Forgot my password\" class=\"button-element medium-button\" onclick=\"window.open('/ilp/pages/password-request.jsf','_self')\"><p/><p>If you need to sign-up for a non Department for Education account, please select the button below.</p><input id=\"signUpButton\" name=\"signUpButton\" type=\"button\" value=\"Sign Up\" class=\"button-element medium-button\" onclick=\"window.open('https://www.plink.sa.edu.au/ilp/pages/external-dashboard.jsf?menuId=1104&locale=en-GB&client=DECD#/?dashboardId=2900003','_blank')\">");
+			$("#loginform").parent().before("<div class=\"cell small-24 member-login\" style=\"cursor:default;\"><h2 class=\"margin-top-21 margin-bottom-32\">Department for Education staff login</h2><p>Department for Education staff and contractors (anyone with EdPass access) can login using the button below. <br><a href='https://www.education.sa.gov.au/edpass-single-sign-on' target='_blank'>How to access EdPass</a></p><input id=\"samlButton\" name=\"samlButton\" type=\"button\" value=\"Department Staff Login (EdPass)\" class=\"button-element medium-button\" onclick=\"window.open('https://www.plink.sa.edu.au/idm/saml/login?lms_clientId=1','_self')\" style=\"margin-top:16px;background-color:#399;color:#fff\"></div>");
+			$("p:contains(LearnLink)").closest(".grid-x").remove();
+			$(".placeholder-login-section p:contains((DCP))").remove();
+			$(".header-title").closest(".grid-container").remove();
+			$("section.subnavigation-section").after("<img class=\"login_header\" src=\"https://plink.sa.edu.au/ils/data/portal/downloadcenter/plink_header_login_20710096.jpg\">")
+			
+			if ($(window).width() > 550){
+					//$("#loginform li").css("width","75%");
+					//$(".login-page .row .small-24").toggleClass("small-24 small-12");
+					$("#login-section .cell").css("width","50%");
+					$("#loginform").closest("div").css("padding-left","30px");
+					$(".login-page .member-login").css({'border-right':'1px solid #399', 'padding-right': '30px'});
+					$(".login-page .member-login").css({'border-bottom':'none'});
+					$("#login-section .cell").last().css("padding-left","20px");
+					$(".placeholder-login-section").css("width","100%");
+					$("img.login_header").show();
+					
+					
+			}
+			if ($(window).width() <= 550){
+					//$("#loginform li").css("width","100%");
+					//$(".login-page .row .small-12").toggleClass("small-12 small-24");
+					$("#login-section .cell").css("width","100%");
+					$("#loginform").closest("div").css("padding-left","0px");
+					$(".login-page .member-login").css({'border-bottom':'1px solid #399','border-right':'none','padding-bottom':'20px', 'padding-right': '0px'});
+					$("#login-section .cell").last().css("padding-left","0px");
+					$("input[id='loginform:login']").css("width","95%");
+					$("input[id='loginform:password']").css("width","95%");
+					$("img.login_header").hide();
+			}
+			$(window).on('resize', function(){
+				if ($(window).width() > 550){
+					//$("#loginform li").css("width","75%");
+					//$(".login-page .row .small-24").toggleClass("small-24 small-12");
+					$("#login-section .cell").css("width","50%");
+					$("#loginform").closest("div").css("padding-left","30px");
+					$(".login-page .member-login").css({'border-right':'1px solid #399', 'padding-right': '30px'});
+					$(".login-page .member-login").css({'border-bottom':'none'});
+					$("#login-section .cell").last().css("padding-left","20px");
+					$("img.login_header").show();
+					
+					
+				}
+				if ($(window).width() <= 550){
+					//$("#loginform li").css("width","100%");
+					//$(".login-page .row .small-12").toggleClass("small-12 small-24");
+					$("#login-section .cell").css("width","100%");
+					$("#loginform").closest("div").css("padding-left","0px");
+					$(".login-page .member-login").css({'border-bottom':'1px solid #399','border-right':'none','padding-bottom':'20px', 'padding-right': '0px'});
+					$("#login-section .cell").last().css("padding-left","0px");
+					$("input[id='loginform:login']").css("width","95%");
+					$("input[id='loginform:password']").css("width","95%");
+					$("img.login_header").hide();
+				}
+			});
+			
+		}else{
+			setTimeout(adjustLoginPage, 100);
+		}
+	}
+	adjustLoginPage();
+	
+	/*var manageFooter = function () {
+		var footer = $("footer");
+		if (footer.is(":visible")){
+			$("footer ul.uk-navbar-nav").css("background-color","#399");	
+		}else{
+			setTimeout(manageFooter, 100);
+		}
+	}
+	manageFooter();*/
+}
+
+// Item 4B
+// Add text and links before the login form for PROD.
+// /pages/login.jsf
+// else if(url == 'https://plink.sa.edu.au/ilp/pages/login.jsf')
+// {	
+// 	jQuery(document).ready(function(){		
+// 		$(document.getElementById("loginform:loginButton")).val("Login");
+// 		//$( ".main-title-header:first" ).html( "Department for Education staff login" );
+// 	})
+// 	$('<h4 class="main-title-header">Department for Education staff login</h4><input id="loginform:SSOButton" name="loginform:SSOButton" type="submit" value="Department for Education Staff - click here" class="button-element medium-button" onclick="window.location.href=&#39;https://portal.edpass.sa.edu.au/home/edpass-portal_plinktestportal_1/0oa13a5zzykYdKTju3l7/aln13a7cuglSF339k3l7&#39;"><br/><p>Department for Education employees should click the above link to access plink using LearnLink/Department for Education Intranet credentials, whether you are a first time plink user or a returning user.</p><h4 class="main-title-header">Non Department for Education staff login</h4><p>Department for Child Protection (DCP) staff, volunteers, and all other non Department for Education users can login below using their manual plink login details, or press the "Forgot your password?" link to request a new password. Your plink username is the email address you signed up with.</p>').insertBefore($(document.getElementById("loginform"))); 
+// }
+
+// Item 5
+// Add weeks terms text to various places. description.jsf, coursedescription.jsf, programmes.jsf, catalogsearch.jsf
+// valid up to end 2022 needs extra years past 2022.
+
+var arr=[
+	["2019-01-28 - 2019-02-03","Term 1 / Week 1"],
+	["2019-02-04 - 2019-02-10","Term 1 / Week 2"],
+	["2019-02-11 - 2019-02-17","Term 1 / Week 3"],
+	["2019-02-18 - 2019-02-24","Term 1 / Week 4"],
+	["2019-02-25 - 2019-03-03","Term 1 / Week 5"],
+	["2019-03-04 - 2019-03-10","Term 1 / Week 6"],
+	["2019-03-11 - 2019-03-17","Term 1 / Week 7"],
+	["2019-03-18 - 2019-03-24","Term 1 / Week 8"],
+	["2019-03-25 - 2019-03-31","Term 1 / Week 9"],
+	["2019-04-01 - 2019-04-07","Term 1 / Week 10"],
+	["2019-04-08 - 2019-04-14","Term 1 / Week 11"],
+	["2019-04-15 - 2019-04-28","School Holidays"],
+	["2019-04-29 - 2019-05-05","Term 2 / Week 1"],
+	["2019-05-06 - 2019-05-12","Term 2 / Week 2"],
+	["2019-05-13 - 2019-05-19","Term 2 / Week 3"],
+	["2019-05-20 - 2019-05-26","Term 2 / Week 4"],
+	["2019-05-27 - 2019-06-02","Term 2 / Week 5"],
+	["2019-06-03 - 2019-06-09","Term 2 / Week 6"],
+	["2019-06-10 - 2019-06-16","Term 2 / Week 7"],
+	["2019-06-17 - 2019-06-23","Term 2 / Week 8"],
+	["2019-06-24 - 2019-06-30","Term 2 / Week 9"],
+	["2019-07-01 - 2019-07-07","Term 2 / Week 10"],
+	["2019-07-08 - 2019-07-21","School Holidays"],
+	["2019-07-22 - 2019-07-28","Term 3 / Week 1"],
+	["2019-07-29 - 2019-08-04","Term 3 / Week 2"],
+	["2019-08-05 - 2019-08-11","Term 3 / Week 3"],
+	["2019-08-12 - 2019-08-18","Term 3 / Week 4"],
+	["2019-08-19 - 2019-08-25","Term 3 / Week 5"],
+	["2019-08-26 - 2019-09-01","Term 3 / Week 6"],
+	["2019-09-02 - 2019-09-08","Term 3 / Week 7"],
+	["2019-09-09 - 2019-09-15","Term 3 / Week 8"],
+	["2019-09-16 - 2019-09-22","Term 3 / Week 9"],
+	["2019-09-23 - 2019-09-29","Term 3 / Week 10"],
+	["2019-09-30 - 2019-10-13","School Holidays"],
+	["2019-10-14 - 2019-10-20","Term 4 / Week 1"],
+	["2019-10-21 - 2019-10-27","Term 4 / Week 2"],
+	["2019-10-28 - 2019-11-03","Term 4 / Week 3"],
+	["2019-11-04 - 2019-11-10","Term 4 / Week 4"],
+	["2019-11-11 - 2019-11-17","Term 4 / Week 5"],
+	["2019-11-18 - 2019-11-24","Term 4 / Week 6"],
+	["2019-11-25 - 2019-12-01","Term 4 / Week 7"],
+	["2019-12-02 - 2019-12-08","Term 4 / Week 8"],
+	["2019-12-09 - 2019-12-15","Term 4 / Week 9"],
+	["2019-12-16 - 2020-01-27","School Holidays"],
+	["2020-01-27 - 2020-02-02","Term 1 / Week 1"],
+	["2020-02-03 - 2020-02-09","Term 1 / Week 2"],
+	["2020-02-10 - 2020-02-16","Term 1 / Week 3"],
+	["2020-02-17 - 2020-02-23","Term 1 / Week 4"],
+	["2020-02-24 - 2020-03-01","Term 1 / Week 5"],
+	["2020-03-02 - 2020-03-08","Term 1 / Week 6"],
+	["2020-03-09 - 2020-03-15","Term 1 / Week 7"],
+	["2020-03-16 - 2020-03-22","Term 1 / Week 8"],
+	["2020-03-23 - 2020-03-29","Term 1 / Week 9"],
+	["2020-03-30 - 2020-04-05","Term 1 / Week 10"],
+	["2020-04-06 - 2020-04-12","Term 1 / Week 11"],
+	["2020-04-13 - 2020-04-19","School holidays"],
+	["2020-04-20 - 2020-04-26","School holidays"],
+	["2020-04-27 - 2020-05-03","Term 2 / Week 1"],
+	["2020-05-04 - 2020-05-10","Term 2 / Week 2"],
+	["2020-05-11 - 2020-05-17","Term 2 / Week 3"],
+	["2020-05-18 - 2020-05-24","Term 2 / Week 4"],
+	["2020-05-25 - 2020-05-31","Term 2 / Week 5"],
+	["2020-06-01 - 2020-06-07","Term 2 / Week 6"],
+	["2020-06-08 - 2020-06-14","Term 2 / Week 7"],
+	["2020-06-15 - 2020-06-21","Term 2 / Week 8"],
+	["2020-06-22 - 2020-06-28","Term 2 / Week 9"],
+	["2020-06-29 - 2020-07-05","Term 2 / Week 10"],
+	["2020-07-06 - 2020-07-12","School holidays"],
+	["2020-07-13 - 2020-07-19","School holidays"],
+	["2020-07-20 - 2020-07-26","Term 3 / Week 1"],
+	["2020-07-27 - 2020-08-02","Term 3 / Week 2"],
+	["2020-08-03 - 2020-08-09","Term 3 / Week 3"],
+	["2020-08-10 - 2020-08-16","Term 3 / Week 4"],
+	["2020-08-17 - 2020-08-23","Term 3 / Week 5"],
+	["2020-08-24 - 2020-08-30","Term 3 / Week 6"],
+	["2020-08-31 - 2020-09-06","Term 3 / Week 7"],
+	["2020-09-07 - 2020-09-13","Term 3 / Week 8"],
+	["2020-09-14 - 2020-09-20","Term 3 / Week 9"],
+	["2020-09-21 - 2020-09-27","Term 3 / Week 10"],
+	["2020-09-28 - 2020-10-04","School holidays"],
+	["2020-10-05 - 2020-10-11","School holidays"],
+	["2020-10-12 - 2020-10-18","Term 4 / Week 1"],
+	["2020-10-19 - 2020-10-25","Term 4 / Week 2"],
+	["2020-10-26 - 2020-11-01","Term 4 / Week 3"],
+	["2020-11-02 - 2020-11-08","Term 4 / Week 4"],
+	["2020-11-09 - 2020-11-15","Term 4 / Week 5"],
+	["2020-11-16 - 2020-11-22","Term 4 / Week 6"],
+	["2020-11-23 - 2020-11-29","Term 4 / Week 7"],
+	["2020-11-30 - 2020-12-06","Term 4 / Week 8"],
+	["2020-12-07 - 2020-12-13","Term 4 / Week 9"],
+	["2020-12-14 - 2020-12-20","School holidays"],
+	["2020-12-21 - 2020-12-27","School holidays"],
+	["2020-12-28 - 2021-01-03","School holidays"],
+	["2021-01-04 - 2021-01-10","School holidays"],
+	["2021-01-11 - 2021-01-17","School holidays"],
+	["2021-01-18 - 2021-01-24","School holidays"],
+	["2021-01-25 - 2021-01-31","Term 1 / Week 1"],
+	["2021-02-01 - 2021-02-07","Term 1 / Week 2"],
+	["2021-02-08 - 2021-02-14","Term 1 / Week 3"],
+	["2021-02-15 - 2021-02-21","Term 1 / Week 4"],
+	["2021-02-22 - 2021-02-28","Term 1 / Week 5"],
+	["2021-03-01 - 2021-03-07","Term 1 / Week 6"],
+	["2021-03-08 - 2021-03-14","Term 1 / Week 7"],
+	["2021-03-15 - 2021-03-21","Term 1 / Week 8"],
+	["2021-03-22 - 2021-03-28","Term 1 / Week 9"],
+	["2021-03-29 - 2021-04-04","Term 1 / Week 10"],
+	["2021-04-05 - 2021-04-11","Term 1 / Week 11"],
+	["2021-04-12 - 2021-04-18","School holidays"],
+	["2021-04-19 - 2021-04-25","School holidays"],
+	["2021-04-26 - 2021-05-02","Term 2 / Week 1"],
+	["2021-05-03 - 2021-05-09","Term 2 / Week 2"],
+	["2021-05-10 - 2021-05-16","Term 2 / Week 3"],
+	["2021-05-17 - 2021-05-23","Term 2 / Week 4"],
+	["2021-05-24 - 2021-05-30","Term 2 / Week 5"],
+	["2021-05-31 - 2021-06-06","Term 2 / Week 6"],
+	["2021-06-07 - 2021-06-13","Term 2 / Week 7"],
+	["2021-06-14 - 2021-06-20","Term 2 / Week 8"],
+	["2021-06-21 - 2021-06-27","Term 2 / Week 9"],
+	["2021-06-28 - 2021-07-04","Term 2 / Week 10"],
+	["2021-07-05 - 2021-07-11","School holidays"],
+	["2021-07-12 - 2021-07-18","School holidays"],
+	["2021-07-19 - 2021-07-25","Term 3 / Week 1"],
+	["2021-07-26 - 2021-08-01","Term 3 / Week 2"],
+	["2021-08-02 - 2021-08-08","Term 3 / Week 3"],
+	["2021-08-09 - 2021-08-15","Term 3 / Week 4"],
+	["2021-08-16 - 2021-08-22","Term 3 / Week 5"],
+	["2021-08-23 - 2021-08-29","Term 3 / Week 6"],
+	["2021-08-30 - 2021-09-05","Term 3 / Week 7"],
+	["2021-09-06 - 2021-09-12","Term 3 / Week 8"],
+	["2021-09-13 - 2021-09-19","Term 3 / Week 9"],
+	["2021-09-20 - 2021-09-26","Term 3 / Week 10"],
+	["2021-09-27 - 2021-10-03","School holidays"],
+	["2021-10-04 - 2021-10-10","School holidays"],
+	["2021-10-11 - 2021-10-17","Term 4 / Week 1"],
+	["2021-10-18 - 2021-10-24","Term 4 / Week 2"],
+	["2021-10-25 - 2021-10-31","Term 4 / Week 3"],
+	["2021-11-01 - 2021-11-07","Term 4 / Week 4"],
+	["2021-11-08 - 2021-11-14","Term 4 / Week 5"],
+	["2021-11-15 - 2021-11-21","Term 4 / Week 6"],
+	["2021-11-22 - 2021-11-28","Term 4 / Week 7"],
+	["2021-11-29 - 2021-12-05","Term 4 / Week 8"],
+	["2021-12-06 - 2021-12-12","Term 4 / Week 9"],
+	["2021-12-13 - 2021-12-19","School holidays"],
+	["2021-12-20 - 2021-12-26","School holidays"],
+	["2021-12-27 - 2022-01-02","School holidays"],
+	["2022-01-03 - 2022-01-09","School holidays"],
+	["2022-01-10 - 2022-01-16","School holidays"],
+	["2022-01-17 - 2022-01-23","School holidays"],
+	["2022-01-24 - 2022-01-30","School holidays"],
+	["2022-01-31 - 2022-02-04","Term 1 / Week 1"],
+	["2022-02-07 - 2022-02-11","Term 1 / Week 2"],
+	["2022-02-14 - 2022-02-18","Term 1 / Week 3"],
+	["2022-02-21 - 2022-02-25","Term 1 / Week 4"],
+	["2022-02-28 - 2022-03-04","Term 1 / Week 5"],
+	["2022-03-07 - 2022-03-11","Term 1 / Week 6"],
+	["2022-03-14 - 2022-03-18","Term 1 / Week 7"],
+	["2022-03-21 - 2022-03-25","Term 1 / Week 8"],
+	["2022-03-28 - 2022-04-01","Term 1 / Week 9"],
+	["2022-04-04 - 2022-04-08","Term 1 / Week 10"],
+	["2022-04-11 - 2022-04-15","Term 1 / Week 11"],
+	["2022-04-18 - 2022-04-22","School holidays"],
+	["2022-04-25 - 2022-04-29","School holidays"],
+	["2022-05-02 - 2022-05-06","Term 2 / Week 1"],
+	["2022-05-09 - 2022-05-13","Term 2 / Week 2"],
+	["2022-05-16 - 2022-05-20","Term 2 / Week 3"],
+	["2022-05-23 - 2022-05-27","Term 2 / Week 4"],
+	["2022-05-30 - 2022-06-03","Term 2 / Week 5"],
+	["2022-06-06 - 2022-06-10","Term 2 / Week 6"],
+	["2022-06-13 - 2022-06-17","Term 2 / Week 7"],
+	["2022-06-20 - 2022-06-24","Term 2 / Week 8"],
+	["2022-06-27 - 2022-07-01","Term 2 / Week 9"],
+	["2022-07-04 - 2022-07-08","Term 2 / Week 10"],
+	["2022-07-11 - 2022-07-15","School holidays"],
+	["2022-07-18 - 2022-07-22","School holidays"],
+	["2022-07-25 - 2022-07-29","Term 3 / Week 1"],
+	["2022-08-01 - 2022-08-05","Term 3 / Week 2"],
+	["2022-08-08 - 2022-08-12","Term 3 / Week 3"],
+	["2022-08-15 - 2022-08-19","Term 3 / Week 4"],
+	["2022-08-22 - 2022-08-26","Term 3 / Week 5"],
+	["2022-08-29 - 2022-09-02","Term 3 / Week 6"],
+	["2022-09-05 - 2022-09-09","Term 3 / Week 7"],
+	["2022-09-12 - 2022-09-16","Term 3 / Week 8"],
+	["2022-09-19 - 2022-09-23","Term 3 / Week 9"],
+	["2022-09-26 - 2022-09-30","Term 3 / Week 10"],
+	["2022-10-03 - 2022-10-07","School holidays"],
+	["2022-10-10 - 2022-10-14","School holidays"],
+	["2022-10-17 - 2022-10-21","Term 4 / Week 1"],
+	["2022-10-24 - 2022-10-28","Term 4 / Week 2"],
+	["2022-10-31 - 2022-11-04","Term 4 / Week 3"],
+	["2022-11-07 - 2022-11-11","Term 4 / Week 4"],
+	["2022-11-14 - 2022-11-18","Term 4 / Week 5"],
+	["2022-11-21 - 2022-11-25","Term 4 / Week 6"],
+	["2022-11-28 - 2022-12-02","Term 4 / Week 7"],
+	["2022-12-05 - 2022-12-09","Term 4 / Week 8"],
+	["2022-12-12 - 2022-12-16","Term 4 / Week 9"],
+	["2022-12-19 - 2022-12-23","School holidays"],
+	["2022-12-26 - 2022-12-30","School holidays"],
+	["2023-01-02 - 2023-01-06","School holidays"],
+	["2023-01-09 - 2023-01-13","School holidays"],
+	["2023-01-16 - 2023-01-20","School holidays"],
+	["2023-01-23 - 2023-01-27","School holidays"],
+	// New dictionary for weeks/terms as supplied by Mike Z in ticket MS-16049 //
+	["2023-01-30 - 2023-02-05","Term 1 / Week 1"],
+	["2023-02-06 - 2023-02-12","Term 1 / Week 2"],
+	["2023-02-13 - 2023-02-19","Term 1 / Week 3"],
+	["2023-02-20 - 2023-02-26","Term 1 / Week 4"],
+	["2023-02-27 - 2023-03-05","Term 1 / Week 5"],
+	["2023-03-06 - 2023-03-12","Term 1 / Week 6"],
+	["2023-03-13 - 2023-03-19","Term 1 / Week 7"],
+	["2023-03-20 - 2023-03-26","Term 1 / Week 8"],
+	["2023-03-27 - 2023-04-02","Term 1 / Week 9"],
+	["2023-04-03 - 2023-04-09","Term 1 / Week 10"],
+	["2023-04-10 - 2023-04-16","Term 1 / Week 11"],
+	["2023-04-17 - 2023-04-23","School holidays"],
+	["2023-04-24 - 2023-04-30","School holidays"],
+	["2023-05-01 - 2023-05-07","Term 2 / Week 1"],
+	["2023-05-08 - 2023-05-14","Term 2 / Week 2"],
+	["2023-05-15 - 2023-05-21","Term 2 / Week 3"],
+	["2023-05-22 - 2023-05-28","Term 2 / Week 4"],
+	["2023-05-29 - 2023-06-04","Term 2 / Week 5"],
+	["2023-06-05 - 2023-06-11","Term 2 / Week 6"],
+	["2023-06-12 - 2023-06-18","Term 2 / Week 7"],
+	["2023-06-19 - 2023-06-25","Term 2 / Week 8"],
+	["2023-06-26 - 2023-07-02","Term 2 / Week 9"],
+	["2023-07-03 - 2023-07-09","Term 2 / Week 10"],
+	["2023-07-10 - 2023-07-16","School holidays"],
+	["2023-07-17 - 2023-07-23","School holidays"],
+	["2023-07-24 - 2023-07-30","Term 3 / Week 1"],
+	["2023-07-31 - 2023-08-06","Term 3 / Week 2"],
+	["2023-08-07 - 2023-08-13","Term 3 / Week 3"],
+	["2023-08-14 - 2023-08-20","Term 3 / Week 4"],
+	["2023-08-21 - 2023-08-27","Term 3 / Week 5"],
+	["2023-08-28 - 2023-09-03","Term 3 / Week 6"],
+	["2023-09-04 - 2023-09-10","Term 3 / Week 7"],
+	["2023-09-11 - 2023-09-17","Term 3 / Week 8"],
+	["2023-09-18 - 2023-09-24","Term 3 / Week 9"],
+	["2023-09-25 - 2023-10-01","Term 3 / Week 10"],
+	["2023-10-02 - 2023-10-08","School holidays"],
+	["2023-10-09 - 2023-10-15","School holidays"],
+	["2023-10-16 - 2023-10-22","Term 4 / Week 1"],
+	["2023-10-23 - 2023-10-29","Term 4 / Week 2"],
+	["2023-10-30 - 2023-11-05","Term 4 / Week 3"],
+	["2023-11-06 - 2023-11-12","Term 4 / Week 4"],
+	["2023-11-13 - 2023-11-19","Term 4 / Week 5"],
+	["2023-11-20 - 2023-11-26","Term 4 / Week 6"],
+	["2023-11-27 - 2023-12-03","Term 4 / Week 7"],
+	["2023-12-04 - 2023-12-10","Term 4 / Week 8"],
+	["2023-12-11 - 2023-12-17","Term 4 / Week 9"],
+	["2023-12-18 - 2023-12-24","School holidays"],
+	["2023-12-25 - 2023-12-31","School holidays"],
+	["2024-01-01 - 2024-01-07","School holidays"],
+	["2024-01-08 - 2024-01-14","School holidays"],
+	["2024-01-15 - 2024-01-21","School holidays"],
+	["2024-01-22 - 2024-01-28","School holidays"],
+	["2024-01-29 - 2024-02-04","Term 1 / Week 1"],
+	["2024-02-05 - 2024-02-11","Term 1 / Week 2"],
+	["2024-02-12 - 2024-02-18","Term 1 / Week 3"],
+	["2024-02-19 - 2024-02-25","Term 1 / Week 4"],
+	["2024-02-26 - 2024-03-03","Term 1 / Week 5"],
+	["2024-03-04 - 2024-03-10","Term 1 / Week 6"],
+	["2024-03-11 - 2024-03-17","Term 1 / Week 7"],
+	["2024-03-18 - 2024-03-24","Term 1 / Week 8"],
+	["2024-03-25 - 2024-03-31","Term 1 / Week 9"],
+	["2024-04-01 - 2024-04-07","Term 1 / Week 10"],
+	["2024-04-08 - 2024-04-14","Term 1 / Week 11"],
+	["2024-04-15 - 2024-04-21","School holidays"],
+	["2024-04-22 - 2024-04-28","School holidays"],
+	["2024-04-29 - 2024-05-05","Term 2 / Week 1"],
+	["2024-05-06 - 2024-05-12","Term 2 / Week 2"],
+	["2024-05-13 - 2024-05-19","Term 2 / Week 3"],
+	["2024-05-20 - 2024-05-26","Term 2 / Week 4"],
+	["2024-05-27 - 2024-06-02","Term 2 / Week 5"],
+	["2024-06-03 - 2024-06-09","Term 2 / Week 6"],
+	["2024-06-10 - 2024-06-16","Term 2 / Week 7"],
+	["2024-06-17 - 2024-06-23","Term 2 / Week 8"],
+	["2024-06-24 - 2024-06-30","Term 2 / Week 9"],
+	["2024-07-01 - 2024-07-07","Term 2 / Week 10"],
+	["2024-07-08 - 2024-07-14","School holidays"],
+	["2024-07-15 - 2024-07-21","School holidays"],
+	["2024-07-22 - 2024-07-28","Term 3 / Week 1"],
+	["2024-07-29 - 2024-08-04","Term 3 / Week 2"],
+	["2024-08-05 - 2024-08-11","Term 3 / Week 3"],
+	["2024-08-12 - 2024-08-18","Term 3 / Week 4"],
+	["2024-08-19 - 2024-08-25","Term 3 / Week 5"],
+	["2024-08-26 - 2024-09-01","Term 3 / Week 6"],
+	["2024-09-02 - 2024-09-08","Term 3 / Week 7"],
+	["2024-09-09 - 2024-09-15","Term 3 / Week 8"],
+	["2024-09-16 - 2024-09-22","Term 3 / Week 9"],
+	["2024-09-23 - 2024-09-29","Term 3 / Week 10"],
+	["2024-09-30 - 2024-10-06","School holidays"],
+	["2024-10-07 - 2024-10-13","School holidays"],
+	["2024-10-14 - 2024-10-20","Term 4 / Week 1"],
+	["2024-10-21 - 2024-10-27","Term 4 / Week 2"],
+	["2024-10-28 - 2024-11-03","Term 4 / Week 3"],
+	["2024-11-04 - 2024-11-10","Term 4 / Week 4"],
+	["2024-11-11 - 2024-11-17","Term 4 / Week 5"],
+	["2024-11-18 - 2024-11-24","Term 4 / Week 6"],
+	["2024-11-25 - 2024-12-01","Term 4 / Week 7"],
+	["2024-12-02 - 2024-12-08","Term 4 / Week 8"],
+	["2024-12-09 - 2024-12-15","Term 4 / Week 9"],
+	["2024-12-16 - 2024-12-22","School holidays"],
+	["2024-12-23 - 2024-12-29","School holidays"],
+	["2024-12-30 - 2025-01-05","School holidays"],
+	["2025-01-06 - 2025-01-12","School holidays"],
+	["2025-01-13 - 2025-01-19","School holidays"],
+	["2025-01-20 - 2025-01-26","School holidays"],
+	["2025-01-27 - 2025-02-02","Term 1 / Week 1"],
+	["2025-02-03 - 2025-02-09","Term 1 / Week 2"],
+	["2025-02-10 - 2025-02-16","Term 1 / Week 3"],
+	["2025-02-17 - 2025-02-23","Term 1 / Week 4"],
+	["2025-02-24 - 2025-03-02","Term 1 / Week 5"],
+	["2025-03-03 - 2025-03-09","Term 1 / Week 6"],
+	["2025-03-10 - 2025-03-16","Term 1 / Week 7"],
+	["2025-03-17 - 2025-03-23","Term 1 / Week 8"],
+	["2025-03-24 - 2025-03-30","Term 1 / Week 9"],
+	["2025-03-31 - 2025-04-06","Term 1 / Week 10"],
+	["2025-04-07 - 2025-04-13","Term 1 / Week 11"],
+	["2025-04-14 - 2025-04-20","School holidays"],
+	["2025-04-21 - 2025-04-27","School holidays"],
+	["2025-04-28 - 2025-05-04","Term 2 / Week 1"],
+	["2025-05-05 - 2025-05-11","Term 2 / Week 2"],
+	["2025-05-12 - 2025-05-18","Term 2 / Week 3"],
+	["2025-05-19 - 2025-05-25","Term 2 / Week 4"],
+	["2025-05-26 - 2025-06-01","Term 2 / Week 5"],
+	["2025-06-02 - 2025-06-08","Term 2 / Week 6"],
+	["2025-06-09 - 2025-06-15","Term 2 / Week 7"],
+	["2025-06-16 - 2025-06-22","Term 2 / Week 8"],
+	["2025-06-23 - 2025-06-29","Term 2 / Week 9"],
+	["2025-06-30 - 2025-07-06","Term 2 / Week 10"],
+	["2025-07-07 - 2025-07-13","School holidays"],
+	["2025-07-14 - 2025-07-20","School holidays"],
+	["2025-07-21 - 2025-07-27","Term 3 / Week 1"],
+	["2025-07-28 - 2025-08-03","Term 3 / Week 2"],
+	["2025-08-04 - 2025-08-10","Term 3 / Week 3"],
+	["2025-08-11 - 2025-08-17","Term 3 / Week 4"],
+	["2025-08-18 - 2025-08-24","Term 3 / Week 5"],
+	["2025-08-25 - 2025-08-31","Term 3 / Week 6"],
+	["2025-09-01 - 2025-09-07","Term 3 / Week 7"],
+	["2025-09-08 - 2025-09-14","Term 3 / Week 8"],
+	["2025-09-15 - 2025-09-21","Term 3 / Week 9"],
+	["2025-09-22 - 2025-09-28","Term 3 / Week 10"],
+	["2025-09-29 - 2025-10-05","School holidays"],
+	["2025-10-06 - 2025-10-12","School holidays"],
+	["2025-10-13 - 2025-10-19","Term 4 / Week 1"],
+	["2025-10-20 - 2025-10-26","Term 4 / Week 2"],
+	["2025-10-27 - 2025-11-02","Term 4 / Week 3"],
+	["2025-11-03 - 2025-11-09","Term 4 / Week 4"],
+	["2025-11-10 - 2025-11-16","Term 4 / Week 5"],
+	["2025-11-17 - 2025-11-23","Term 4 / Week 6"],
+	["2025-11-24 - 2025-11-30","Term 4 / Week 7"],
+	["2025-12-01 - 2025-12-07","Term 4 / Week 8"],
+	["2025-12-08 - 2025-12-14","Term 4 / Week 9"],
+	["2025-12-15 - 2025-12-21","School holidays"],
+	["2025-12-22 - 2025-12-28","School holidays"],
+	["2025-12-29 - 2026-01-04","School holidays"],
+	["2026-01-05 - 2026-01-11","School holidays"],
+	["2026-01-12 - 2026-01-18","School holidays"],
+	["2026-01-19 - 2026-01-25","School holidays"]
+
+];
+
+if ( url.indexOf('description.jsf') >= 0) {   
+    var addTerms = function (){
+        if ($('div.course-general-info:contains("Session end")').length || $('.key-panel:contains("End date")').length){				 
+            //console.log('inside function');
+			var term = "";
+			var start = "";
+
+			if($('div.course-general-info:contains("Session end")').length > 0 || $('.key-panel:contains("End date")').length > 0){
+				start = $('.key-panel:contains("End date") div:eq(3)').text() || $('div.course-general-info:contains("Session end")').text();
+                startDiv = $('.key-panel:contains("End date") div:eq(3)') || $('div.course-general-info:contains("Session end")');
+				var startdate = new Date(start);  
+				 
+				var t = new Date(startdate.getFullYear(), startdate.getMonth(), startdate.getDate(), startdate.getHours(), startdate.getMinutes(), startdate.getSeconds(), startdate.getMilliseconds());
+				for(var i = 0; i < arr.length; i++) {	 
+				  var i_start =  new Date((arr[i][0]).split(" - ")[0].split("-")[0],(arr[i][0]).split(" - ")[0].split("-")[1]-1,(arr[i][0]).split(" - ")[0].split("-")[2],0,0,0,0);
+                   // console.log('i_start==='i_start);
+				  //var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],0,0,0,0);
+				  var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],23,59,59,0);
+				  //alert(i_start+" --- " + t + " --- " + i_end);
+				  if( i_start <= t && t <= i_end){ 
+					term = arr[i][1];
+					startDiv.append('<br><div class="course-attribute"><div class="headling" style="font-weight:bold;">School Calendar</div><div class="subline">'+term+'</div></div><br><br>');
+				  }
+				}		
+			}
+        } else {
+        setTimeout(addTerms, 100);
+        }   
+    }
+    addTerms();
+}
+
+if ( (url.indexOf('coursedescription.jsf') >= 0 && window.location.search.indexOf('templateId') == -1) || url.indexOf('programmes.jsf') >= 0) { 
+	var addTermsToCourseDescItem = function (cnt){ 
+		
+		if ($('.imc-list-details').length){
+			var j= "";
+			var z = $('.imc-list-info__subline').length;
+			var term = "";
+			var x = "";
+			for (j = 0; j < z; j++) {
+			  x = ".imc-list-info__subline:eq("+j+")";
+			  var startdate = new Date ($((x)).text().split(" to ")[0]); 
+			   
+			  for(var i = 0; i < arr.length; i++) {	 				  
+				  var i_start =  new Date((arr[i][0]).split(" - ")[0].split("-")[0],(arr[i][0]).split(" - ")[0].split("-")[1]-1,(arr[i][0]).split(" - ")[0].split("-")[2],0,0,0,0);
+				  //var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],0,0,0,0);
+				  var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],23,59,59,0);
+				  term = arr[i][1];
+				  var text = $(x).text();
+				  if( i_start <= startdate && startdate <= i_end && text.indexOf(term) < 0){ 					 
+					$(x).append(" - "+term);
+				  }
+			  }	 
+			}
+			setTimeout(addTermsToCourseDescItem, 500);			
+        } else {		
+			setTimeout(addTermsToCourseDescItem, 100);
+        }   
+    }
+    addTermsToCourseDescItem();
+}
+ 
+if ( window.location.href.indexOf('catalogsearch.jsf') >= 0) {   
+    var addTermsToCatItem = function (){
+        if ($('span.imc-list-metadata__main__item__text__inner').length){
+			
+			var j= "";
+			var z = $('.imc-list-info__subline').length;
+			var term = "";
+			var x = "";
+			for (j = 0; j < z; j++) {
+			  x = ".imc-list-info__subline:eq("+j+")";
+			  var startdate = new Date ($((x)).text().split(" to ")[0]); 
+			   
+			  for(var i = 0; i < arr.length; i++) {	 				  
+				  var i_start =  new Date((arr[i][0]).split(" - ")[0].split("-")[0],(arr[i][0]).split(" - ")[0].split("-")[1]-1,(arr[i][0]).split(" - ")[0].split("-")[2],0,0,0,0);
+				  //var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],0,0,0,0);
+				  var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],23,59,59,0);
+				  term = arr[i][1];
+				  var text = $(x).text();
+				  if( i_start <= startdate && startdate <= i_end && text.indexOf(term) < 0){ 					 
+					$(x).append(" - "+term);
+				  }
+			  }	 
+			}
+			setTimeout(addTermsToCatItem, 500);			
+        } else {
+        setTimeout(addTermsToCatItem, 100);
+        }   
+    }
+    addTermsToCatItem();
+}
+
+if ( window.location.href.indexOf('description.jsf') >= 0) {   
+    var addTermsToCatItemInTemplate = function (){
+        if ($('.imc-list-item').length){
+			var j= "";
+			var z = $('.imc-list-info__subline').length;
+			var term = "";
+			var x = "";
+			for (j = 0; j < z; j++) {
+			  x = ".imc-list-info__subline:eq("+j+")";
+			  var startdate = new Date ($((x)).text().split(" to ")[0]); 
+			   
+			  for(var i = 0; i < arr.length; i++) {	 				  
+				  var i_start =  new Date((arr[i][0]).split(" - ")[0].split("-")[0],(arr[i][0]).split(" - ")[0].split("-")[1]-1,(arr[i][0]).split(" - ")[0].split("-")[2],0,0,0,0);
+				  //var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],0,0,0,0);
+				  var i_end   =  new Date((arr[i][0]).split(" - ")[1].split("-")[0],(arr[i][0]).split(" - ")[1].split("-")[1]-1,(arr[i][0]).split(" - ")[1].split("-")[2],23,59,59,0);
+				  term = arr[i][1];
+				  var text = $(x).text();
+				  if( i_start <= startdate && startdate <= i_end && text.indexOf(term) < 0){ 					 
+					$(x).append(" - "+term);
+				  }
+			  }	 
+			}
+			setTimeout(addTermsToCatItemInTemplate, 500);			
+        } else {
+        setTimeout(addTermsToCatItemInTemplate, 100);
+        }   
+    }
+    addTermsToCatItemInTemplate();
+}
+
+
+// Item 1
+// This was to update the link that is attached to the main logo in the header. Standard behaviour was to link to Dashboard 7 in V13 regardless of the client. The injection was to stop this happening.
+// In v14 the link now seems to be href="/"
+// For v14 the injection now points to a link ID imc-navigation-logo-link to apply the change
+$("#imc-navigation-logo-link").attr('href', '#');
+
+</script>
+
+<!-- ITEM 6 
+START DESK-14415 13/04/18 I.Felinski Hide self sign up text and link on DCP User Login Dashbaord dashboardId=2672303
+Moved to CSS Item 10
+-->
+
+<!-- ITEM 7 -->
+<!-- START TS-6805 06/06/18 Add Google Analytics Tracking Code -->
+<!-- Fix to TS-6805 09/07/18 corrected old Analytics execution code: confluence page ID: 8749062 | DESK-12346 -->
+
+<!--
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-111363259-1', 'auto');
+      ga('send', 'pageview');  
+</script> -->
+<!-- Google tag (gtag.js) migration of UA to gtag MS-20743-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJPVJNF1HY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+gtag('config', 'G-RJPVJNF1HY');
+
+</script>
+<!-- End to TS-6805 09/07/18 corrected old Analytics execution code: confluence page ID: 8749062 | DESK-12346 -->
+<!-- END TS-6805 Add Google Analytics Tracking Code -->
+
+<!-- END HTML INJECTION -->
+
+	<script type="text/javascript">
+        (function() {
+            function reloadFonts() {
+                var link = document.createElement("link");
+                link.href = "/ilp/resources/design/css/fonts.css?dmy=" + Math.random();
+                link.type = "text/css";
+                link.rel = "stylesheet";
+                document.getElementsByTagName("head")[0].appendChild(link);
+            }
+
+            var isAppleDevice = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i);
+            if (isAppleDevice) {
+                reloadFonts();
+            }
+        })();
+    </script></body>
+</html>
