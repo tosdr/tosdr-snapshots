@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html><!-- Made from scratch with no templates or themes by obamasu -->
+    <head>
+    
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="google-signin-client_id" content="558748424212-mlbbhuv381f1qksbr7s5qdm2m05ojrko.apps.googleusercontent.com">
+		<meta name="format-detection" content="telephone=no">
+        <title>PrankHotline - The Automatic Prank Calling app</title>
+        
+                <link href="https://prankhotline.com/frontend/styles/madebyobamasu.css?madebyobamasu=88744" rel="stylesheet">
+        
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		<meta name="msapplication-tap-highlight" content="no" />
+        
+		<meta property=og:type content=website>
+		<meta property=og:description content="Funniest prank call site! Send anonymous pre-recorded prank calls to friends and record the reaction live!">
+		<meta property=og:image content=https://prankhotline.com//frontend/styles/images/pranks/2-phones-call-each-other.png>
+		<meta property=og:title content="PrankHotline - Prank Call Friends with Pre-recorded Pranks">
+		<meta property=og:image:width content=391>
+		<meta property=og:image:height content=220>
+		<meta name=twitter:card content=summary>
+		<meta name=twitter:site content=@prankhotline>
+		<meta name=twitter:description content="Funniest prank call site! Send anonymous pre-recorded prank calls to friends and record the reaction live!">
+		<meta name=twitter:image content=https://prankhotline.com//frontend/styles/images/pranks/2-phones-call-each-other.png>
+		<meta name=twitter:title content="PrankHotline - Prank Call Friends with Pre-recorded Pranks">
+    </head>
+    <body>
+		<script src="https://apis.google.com/js/client:platform.js?onload=startApp"></script>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWS3SLNZ6K"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-SWS3SLNZ6K');
+        </script>
+
+
+        <!--Session tracker code-->
+<!--        <script>-->
+<!--            const tracker_url_ = 'https://analytics.prankhotline.com';-->
+<!--        </script>-->
+<!--        <script async src="https://analytics.prankhotline.com/session.php?action=get_tracker_js_script"></script>-->
+        <script>
+            (function(){
+
+
+                let was_page_just_loaded = true;
+                let js_ticks_since_last_ping = 0;
+                let session_ping_interval = 30;
+                let connection_errors = 0;
+                const max_connection_errors = 3;
+
+                const ping_session = function(){
+                    console.log('ping');
+
+                    const url__ = 'https://analytics.prankhotline.com' + '/session.php?action=track_session&js_ticks_since_last_ping=' + js_ticks_since_last_ping + '&was_page_just_loaded=' + (was_page_just_loaded ? 'true' : 'false') + '&connection_errors=' + connection_errors;
+
+                    fetch(url__)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text(); // or response.json() for JSON data
+                        })
+                        .then(data => {
+                            // Handle the data here
+                            console.log(data);
+
+
+                            //TODO: Check if success is false, if false, count as connection error.
+
+                            was_page_just_loaded = false;
+                            js_ticks_since_last_ping = 0;
+
+                        })
+                        .catch(error => {
+
+                            // Handle errors here
+                            console.error('There has been a problem with your fetch operation:', error.message);
+
+                            //Prevent request spam if connection failed
+                            if(connection_errors>=max_connection_errors){
+                                clearInterval(ping_session_timer);
+                            }
+                            connection_errors++;
+
+                        });
+
+
+                }
+
+                var ping_session_timer = setInterval(function () {
+
+                    //Count time js interpreter has been active
+                    js_ticks_since_last_ping += session_ping_interval;
+                    ping_session();
+
+
+                }, session_ping_interval * 1000);
+
+            })();
+        </script>
+        <!--Session tracker code END-->
+
+        
+                
+      
+        
+        
+        
+		<script type="text/javascript">
+			
+			
+						
+			var pkg_id = 2;
+            var load_charts = false; //Temporary!!!
+            var is_staff = false; 			var pkg_price = 13.89;
+			var profile = {"loggedIn":false};
+			var public_path = 'https://prankhotline.com/';
+			var storage_server = 'http://cdn.prankhotline.com/';
+            var storage_server_secure = 'https://cdnsecure.prankhotline.com/';
+			var ads_disabled = true;
+			var live_call_location = 'http://sip%s.prankhotline.com/livecalls/';
+            var is_app = false;
+			var on_page_load_js = '';
+			var set_aff = false;
+			function on_page_load(js_) {
+				on_page_load_js += js_;
+			}
+			 
+			 
+			
+			
+			
+			
+		</script>
+
+
+                
+        <audio class="audio" id="player-main-audio" src="https://cdn.prankhotline.com/sounds/reactions/276.mp3" type="audio/mpeg" preload='none'>
+		</audio>
+        
+		<div class="popup-overlay close-popup">
+			<div class="box-popup">
+				<!--LOGIN FORM -->
+				<div class="popup-form popup-form-login form">
+					<div class="step step-email-login step-1 selected">
+						<div class="label">
+							<header>
+								<h1>Login</h1>
+							</header>
+						</div>
+
+                        
+
+                        <div class="label margin-auto">
+														<!--<div class="g-signin2" style="display: none;" data-onsuccess="onSignInGoogle" data-width="300" data-height="50" data-longtitle="true"></div>-->
+														<div id="my-signin2"></div>
+							<!--<div class="g-signin2" data-onsuccess="onSignInGoogle">Sign in with Google</div>-->
+							<!--<button class="btn btn-login login-google"></button>-->
+						</div>
+
+						<div class="label">
+							<button class="btn btn-login login-fb">Sign in with facebook</button>
+						</div>
+						<div class="label">
+							<button class="btn btn-login login-email onclick" data-onclick="change_step('email-login', 2);$('.tsignup-email').css('width','100%');">Continue with email</button>
+						</div>
+                        <div class="label">
+                            <div class="font12"><i>By using this website and/or sending a prank call, you agree to our <a href="https://prankhotline.com/tos">Terms of Service</a></i></div>    
+                        </div>
+                        
+					</div>
+					<div class="step step-email-login step-2">
+						<div class="label">
+							<header>
+								<h1>Enter your email</h1>
+							</header>
+							<div class="label">
+								<div class="msg info">
+									All we need is an email address to save or load your profile and settings!
+								</div>
+							</div>
+							<div class="label">
+								<input type="email" class="text-default-border icon-email tsignup-email pull-left" placeholder="Enter your email address"/>
+								<div class="clear"></div>
+							</div>
+							<div class="label">
+								<button class="btn btn-close-popup blogin-email-submit">Continue</button>
+							</div>
+							<header>
+								OR
+							</header>
+							<div class="label">
+								<button class="btn btn-close-popup onclick" data-onclick="change_step('email-login', 1);">Back to other login methods</button>
+							</div>
+						</div>
+					</div>
+					<div class="step step-email-login step-3">
+						<div class="label">
+							<header>
+								<h1>Verify your email</h1>
+							</header>
+							<div class="label">
+								<div class="msg loading">
+									One last thing! We have sent a confirmation code to your email, please enter it below!
+								</div>
+							</div>
+							<div class="label">
+								<input type="text" class="text-default-border icon-email tsignup-email-code pull-left" placeholder="Enter confirmation code"/>
+								<div class="clear"></div>
+							</div>
+							<div class="label">
+								<button class="btn btn-close-popup blogin-code-submit">Continue</button>
+							</div>
+							<header>
+								OR
+							</header>
+							<div class="label">
+								<button class="btn btn-close-popup onclick" data-onclick="change_step('email-login', 1);">Back to other login methods</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--LOGIN FORM END-->
+				
+				<div class="popup-form popup-form-alert form">
+					<div class="label">
+						<header>
+							<h1 class="popup-alert-title">Notice</h1>
+						</header>
+					</div>
+					<div class="label margin-auto">
+						 <div class="response r-popup">
+							<!--popup alert message-->
+						 </div>
+					</div>
+                    
+                    <div class="hide alert-buy-btn-popup">
+                        <button class="btn btn-submit btn-color-gold nav-page" data-page="tokens">Buy or Earn Tokens</button>
+                    </div>
+					<div class="label">
+						<button class="btn btn-close-popup alert-close-popup">Ok</button>
+					</div>
+                    
+                    
+				</div>
+				
+				<!--send prank popup-->
+				<div class="popup-form popup-form-sending-prank form">
+					<div class="sending-prank-top" style="background-image: url('https://prankhotline.com//frontend/styles/images/pranks/2-phones-call-each-other-small.png')">
+						<div class="recording"><div class="recording-red-dot"></div>Recording</div>
+					</div>
+					<div class="sending-prank-middle label">
+						<div class="section-call-status">
+							<header>
+								<h1 class="font20">Prank in progress..</h1>
+								<h2 class="font18"><span id="call-status" class="font16">Dialing..</span></h2>
+							</header>
+						</div>
+						<audio class="audio" id="player-livecall-in" src="" type="audio/wav" preload='none'>
+						</audio>
+						<audio class="audio" id="player-livecall-out"  src="" type="audio/wav" preload='none'>
+						</audio>
+					</div>
+                    
+                    <div class="dsender-banner">
+                        <a href="https://dicksender.com">
+                            <img src="https://prankhotline.com//frontend/styles/images/ds-banner-branded.png"/>
+                        </a>
+                    </div>
+                    
+				</div>
+				<!--Send prank popup END-->
+				<!--save reaction popup-->
+				<div class="popup-form popup-form-save-reaction form">
+					<div class="label">
+						<div class="msg info">
+							Your reaction is now public for other users to hear! You can give the reaction a title to make it stick out from others (optional).
+						</div>
+					</div>
+					<div class="label">
+						<input type="text" class="text-default text-icon icon-label width100 ttitle" placeholder="Reaction title (optional)">
+					</div>
+					<div class="label">
+						<button class="btn btn-submit pull-right btn-save-reaction">Save</button>
+						<div class="clear"></div>
+					</div>
+                    
+                    <div class="dsender-banner">
+                        <a href="https://dicksender.com">
+                            <img src="https://prankhotline.com//frontend/styles/images/ds-banner-branded.png"/>
+                        </a>
+                    </div>                     
+
+				</div>
+				<!--Save reaction popup END-->
+
+
+
+                <!--Submit tik tok START-->
+
+                <div class="popup-form popup-form-tiktok-submitter form">
+                    <div class="label">
+                        <div class="msg info">
+                            Paste the tik tok video here to redeem your tokens!
+                        </div>
+                    </div>
+                    <div class="label">
+                        <input type="text" class="text-default text-icon icon-label width100 ttitle" placeholder="Enter Tik Tok Video URL">
+                    </div>
+                    <div class="label">
+                        <b>IMPORTANT VIDEO RULES</b><br/>
+
+
+                        <div class="table by-one">
+                            <dl>
+                                <dd>You must post from your main Tik Tok account (no alt accounts)</dd>
+                                <dd>Your Tik Tok account must have atleast 100 followers</dd>
+                                <dd>Do not record the reactions or voices of others without their consent.</dd>
+                            </dl>
+
+                        </div>
+
+                    </div>
+                    <div class="label">
+                        <button class="btn btn-submit pull-right btn-submit-tiktok">Submit</button>
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+
+
+                <!--Submit tik tok END-->
+                
+                				
+				<!--Earn with IG popup -->
+				<div class="popup-form popup-form-ig form">
+					<div class="step step-earn-ig step-1 selected">
+						<div class="label">
+							<header>
+								<h1 class="popup-alert-title">Earn with IG</h1>
+							</header>
+						</div>
+						<div class="label margin-auto">
+							 <div class="msg info">
+								Login to your instagram account and we will only post to your feed one time, in return you will earn 5 FREE tokens.
+							 </div>
+						</div>
+						<div class="label">
+							<button class="btn btn-submit onclick" data-onclick="change_step('earn-ig', 2);$('.tiguser, .tigpass').val('');">Login with IG</button>
+						</div>
+						<!--<header>
+							<h1 class="font20">
+								Don't want to login? 
+							</h1>
+						</header>
+						<div class="label">
+							<button class="btn btn-submit">Continue without logging in</button>
+						</div>-->
+					</div>
+					<!--<div class="step step-earn-ig step-2">
+						<div class="label margin-auto">
+							 <div class="msg info">
+								We do not store your login information, we only pass it to instagram and use the access token to make a one time post.
+							 </div>
+						</div>
+						<div class="label">
+							<input type="text" class="text-default text-icon tiguser" value="" placeholder="Enter instagram username"/>
+						</div>
+						<div class="label">
+							<input type="password" class="text-default text-icon tigpass" value="" placeholder="Enter instagram password"/>
+						</div>
+						<div class="label">
+							<button class="btn btn-submit btn-login-ig">Login and post</button>
+						</div>
+					</div>-->
+				</div>
+				<!--Earn with IG popup END-->
+				
+			</div>
+		</div>
+        
+        <!--page transition loading screen-->
+        <div class="page-transition">
+            <div class="group response ptrans">
+                
+            </div>
+        </div>
+        <!--page transition loading screen END-->
+        
+        
+		<div class="wrap">
+            
+            
+			
+			
+<div class="main">
+    
+<section class="head">
+    <nav class="nav-top">
+        <div class="wrap-logo mobile-width100">
+            <div class="logo mobile-pull-none mobile-margin-auto"></div>
+        </div>
+        <div class="site-map table by-five mobile-by-two mobile-width100">
+            <ul class="menu menu-closed ">
+                <li class="nav-item nav-page nav-pickprank " data-page="pickprank">Make Prank Call</li>
+<!--                <li class="nav-item nav-page nav-reactions --><!--" data-page="reactions">Funny Reactions</li>-->
+                <li class="nav-item nav-page nav-tokens " data-page="tokens">Get Tokens</li>
+<!--                <li class="nav-item nav-page nav-tokens mobile-hide --><!--" data-page="tokens">Get Tokens</li>-->
+                <li class="nav-item nav-page nav-blocknumber mobile-hide " data-page="blocknumber">Block Number</li>
+                <li class="nav-item nav-page nav-profile mobile-hide " data-page="profile">My Account</li>
+                <li class="free-calls mobile-hide hide">
+                                            <div class="left">5</div><div class="right">FREE<br/>CALLS</div>
+                                    </li>
+            </ul>
+            <ul class="menu menu-opened mobile ">
+<!--                <li class="nav-item nav-page nav-tokens --><!--" data-page="tokens">Get Tokens</li>-->
+                <li class="nav-item nav-page nav-blocknumber " data-page="blocknumber">Block Number</li>
+                <li class="nav-item nav-page nav-profile " data-page="profile">Account</li>
+            </ul>
+        </div>
+        
+        <div class="clear"></div>
+    </nav>
+    <nav class="nav-bottom mobile">
+         <div class="sub-site-map trending table by-three mobile-by-one">
+            <ul>
+                <li class="nav-section padding-none selected mobile-hide">
+                    <div class="table by-two">
+                        <ul>
+                            <li class="nav-item"><div class="callssent textalign-right"><b>10.3m</b> prank calls sent</div><div class="textalign-right">App coming soon!</div></li>
+                            <li class="padding-none getapps">
+                                <div class="table by-two">
+                                    <ul>
+                                        <li class="">
+                                            <div class="getapp icon icon-android" >
+                                                <svg viewBox="0 0 25 30" xmlns="http://www.w3.org/2000/svg"><path d="M1.82 9.703c-1.01 0-1.82.83-1.82 1.848v7.751c0 1.026.818 1.848 1.82 1.848 1.01 0 1.82-.83 1.82-1.848v-7.751c0-1.018-.818-1.848-1.82-1.848zm14.697-6.961l1.275-2.361c.064-.122.024-.277-.096-.35-.12-.065-.281-.024-.345.106l-1.283 2.386c-1.082-.488-2.293-.765-3.576-.765-1.275 0-2.486.269-3.56.757l-1.283-2.377c-.064-.122-.225-.171-.345-.106-.12.065-.168.228-.104.35l1.275 2.361c-2.502 1.311-4.193 3.802-4.193 6.668h16.421c0-2.866-1.684-5.357-4.185-6.668zm-7.761 3.647c-.377 0-.69-.309-.69-.7 0-.383.305-.7.69-.7.377 0 .69.318.69.7 0 .383-.305.7-.69.7zm7.481 0c-.377 0-.69-.309-.69-.7 0-.383.305-.7.69-.7.377 0 .69.318.69.7 0 .383-.313.7-.69.7zm-11.891 3.664v12.017c0 1.091.866 1.978 1.948 1.978h1.323v4.103c0 1.018.818 1.848 1.82 1.848 1.01 0 1.82-.83 1.82-1.856v-4.103h2.462v4.103c0 1.018.818 1.848 1.82 1.848 1.01 0 1.82-.83 1.82-1.848v-4.103h1.331c1.074 0 1.948-.879 1.948-1.978v-12.017l-16.292.008zm20.654 1.498c0-1.026-.818-1.848-1.82-1.848-1.01 0-1.82.83-1.82 1.848v7.751c0 1.026.818 1.848 1.82 1.848 1.01 0 1.82-.83 1.82-1.848v-7.751z" fill="#fff"></path></svg>
+                                            </div>
+                                        </li>
+                                        <li class="textalign-center">
+                                            <div class="getapp icon icon-apple">
+                                                <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg"><path d="M20.045 15.595c-.034-3.705 3.051-5.507 3.193-5.591-1.747-2.532-4.455-2.878-5.407-2.906-2.274-.238-4.481 1.353-5.639 1.353-1.182 0-2.966-1.33-4.889-1.291-2.474.038-4.789 1.462-6.059 3.674-2.62 4.509-.666 11.136 1.844 14.781 1.256 1.786 2.723 3.778 4.644 3.708 1.879-.076 2.581-1.191 4.848-1.191 2.247 0 2.906 1.191 4.864 1.145 2.017-.03 3.286-1.792 4.498-3.594 1.451-2.044 2.034-4.061 2.057-4.165-.046-.015-3.915-1.483-3.955-5.923zm-3.7-10.895c1.011-1.256 1.702-2.966 1.51-4.7-1.463.064-3.292 1.006-4.345 2.235-.932 1.083-1.764 2.858-1.549 4.527 1.643.122 3.33-.824 4.385-2.061z" fill="#fff"></path></svg>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </li>
+
+                
+                <li class="nav-section mobile-hide border-none ">
+                    <input type="text" class="text-search" value="" placeholder="search"/>
+                </li>
+                
+                
+                <li class="nav-section border-none ">
+                    <div class="table by-three">
+                        <ul>
+                            <li class="mobile-hide">
+                                
+                            </li>
+                                                        <li></li>
+                            <li></li>
+                            <!--<li class="nav-page nav-item mobile-font14 mobile-textalign-center " data-page="">
+                                Popular
+                            </li>
+                            <li class="nav-page nav-item mobile-font14 mobile-textalign-center " data-page="">
+                                New
+                            </li>-->
+                                                        <li class="nav-menu mobile">
+                                <button class="btn btn-menu ">
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </li>
+                
+                
+                
+                
+                <li class="nav-section border-none mobile-hide ">
+                    <!--<input type="text" class="text-search" value="" placeholder="search"/>-->
+                </li>
+                
+                <li class="nav-section border-none ">
+                    <div class="table by-three">
+                        <ul>
+                            <li class="mobile-hide">
+                                
+                            </li>
+                            <li class="nav-page nav-item mobile-font14 mobile-textalign-center selected" data-page="tos/settings/">
+                                My Settings
+                            </li>
+                            <li class="nav-page nav-item mobile-font14 mobile-textalign-center " data-page="tos/">
+                                My Reactions
+                            </li>
+                            <li class="nav-menu mobile">
+                                <button class="btn btn-menu ">
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </li>
+                
+                <li class="nav-section border-none mobile-hide ">
+                    <!--<input type="text" class="text-search" value="" placeholder="search"/>-->
+                </li>
+                
+                <li class="nav-section border-none ">
+                    <div class="table by-three">
+                        <ul>
+                            <li class="mobile-hide">
+                                
+                            </li>
+                            <li class="nav-page nav-item mobile-font14 mobile-textalign-center selected" data-page="tos/buy/">
+                                Buy Tokens
+                            </li>
+                            <li class="nav-page nav-item mobile-font14 mobile-textalign-center " data-page="tos/earn">
+                                Earn Tokens
+                            </li>
+                            <li class="nav-menu mobile">
+                                <button class="btn btn-menu  ?>">
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </li>
+
+                <li class="nav-section border-none ">
+                    <div class="table by-three">
+                        <ul>
+                            <li class="mobile-hide">
+
+                            </li>
+                             <li></li>
+                            <li></li>
+                            <li class="nav-menu mobile">
+                                <button class="btn btn-menu selected">
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </div>
+                </li>
+                
+                <li class="nav-section border-none ">
+                    <div class="table by-three">
+                        <ul>
+                            <li class="mobile">
+                                
+                            </li>
+                            <li class="mobile">
+                                
+                            </li>
+                            <li class="nav-menu mobile">
+                                <button class="btn btn-menu">
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                    <div class="strip"><div class="fill"></div></div>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </li>
+
+                
+                <div class="clear"></div>
+            </ul>
+        </div>
+        
+    </nav>
+    
+</section>
+<div class="hide social-share-top ">
+    <div class="social-like-item">
+        <!-- Your like button code
+        data-layout="button_count" for count
+        -->
+        <div class="fb-like" 
+          data-href="https://www.facebook.com/PrankHotline/" 
+          data-layout="button" 
+          data-action="like" 
+          data-show-faces="false">
+        </div>    
+    </div>
+    <div class="social-like-item">
+        <span>Like us on facebook for 2 free tokens!</span>
+    </div>
+    
+</div>
+
+
+
+<style>
+    /*.btn-new-nav {*/
+
+    /*    width: 100%;*/
+    /*    padding: 20px 0;*/
+    /*    color: #fff;*/
+    /*    font-size: 22px;*/
+    /*    background-color: #579e18;*/
+    /*    -webkit-border-radius: 3px;*/
+    /*    -moz-border-radius: 3px;*/
+    /*    border-radius: 3px;*/
+
+    /*}*/
+
+    .sub-header-wrap { display: none; }
+    .sub-header-wrap.selected { display: block; }
+
+    .sub-nav-buttons-wrap { border-radius: 5px; overflow: hidden; margin-top: 50px !important; width: 90%; max-width: 500px; }
+
+    .sub-nav-btn {background: #181919; color: #fff; cursor: pointer; box-sizing: border-box; padding: 10px 20px; font-size: 22px; text-align: center; width: 50%; float: left;-moz-transition: width .2s, height .2s, background-color .2s, -moz-transform .2s;-webkit-transition: width .2s, height .2s, background-color .2s, -webkit-transform .2s;-o-transition: width .2s, height .2s, background-color .2s, -o-transform .2s;transition: width .2s, height .2s, background-color .2s, transform .2s;}
+    .sub-nav-btn.selected, .sub-nav-btn:hover, .sub-nav-btn:active { background-color: #2e353c; }
+
+    /*.head { min-height: 80px; }*/
+
+    .new-nav-item { /*height: 80px;*/ float: left; margin-right: 10px; }
+
+    .new-nav-menu { margin-right: 20px; padding: 20px 0; }
+    .new-nav-button { padding: 10px 20px;cursor: pointer;font-size: 14px;font-weight: bold;color: #fff;text-align: center;-moz-transition: width .5s, height .5s, background-color .5s, -moz-transform .5s;-webkit-transition: width .5s, height .5s, background-color .5s, -webkit-transform .5s;-o-transition: width .5s, height .5s, background-color .5s, -o-transform .5s;transition: width .5s, height .5s, background-color .5s, transform .5s; /* padding: 0 10px; */border-bottom: 4px solid transparent; }
+    .new-nav-button:hover, .new-nav-button:active, .new-nav-button.selected {  -webkit-transform: scale(1.1); transform: scale(1.1); color: #7bdc23 !important; /*border-bottom: 4px solid #7bdc23;*/ }
+</style>
+
+
+<!--<section class="head">
+        <div class="wrap-logo mobile-width100">
+            <div class="logo mobile-pull-none mobile-margin-auto"></div>
+        </div>
+
+        <div class="new-nav-menu mobile-width100" style="float: right;">
+            <div class="new-nav-item nav-profile-wrap">
+                <div class="new-nav-button nav-page nav-profile " data-page="profile">My Profile</div>
+            </div>
+
+            <div class="new-nav-item btn-tokens-wrap">
+                <button class="btn btn-submit btn-color-gold nav-page" data-page="tokens">Buy or Earn Tokens</button>
+            </div>
+
+            <div class="new-nav-item">
+                <div class="free-calls mobile-hide">
+                    
+                            <div class="left"><div class="icon-diamond"></div></div><div class="right">Diamond<br/>Member</div>
+
+
+
+                                                    <div class="left"></div><div class="right">Premium<br/>Tokens</div>
+                                                    <div class="left"></div><div class="right">FREE<br/>Tokens</div>
+                                                    <div class="left">0</div><div class="right">Tokens</div>
+                                                <div class="left"></div><div class="right">FREE<br/>CALLS</div>
+                                    </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </section>-->
+
+
+<div class="sub-header-wrap width100 ">
+    <div class="sub-nav-buttons-wrap width90 margin-auto ">
+        <div class="sub-nav-btn nav-page mobile-font12 " data-page="pickprank">
+            Make a Prank Call
+        </div>
+        <div class="sub-nav-btn nav-page mobile-font12 " data-page="reactions">
+            Listen to Reactions
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+    <section class="tos">
+        <div class="form artical">
+            <div class="label">                
+                <header>
+                    <h1>TERMS OF SERVICE AND LICENSE AGREEMENT</h1>
+                </header>
+                <div class="content">
+                    These terms and conditions are for use of www.prankhotline.com and its services (the "Website") and Mobile Application and its services (the "Application"). The Services are owned and operated by PrankHotLine ("Prankhotline," or "us," or "we" or “our”).
+                    <br/>By using our Application and accessing our website, YOU (“user” or”you” or “your”) are agrees to be bound by these terms and conditions (the "Terms").             
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        1. DISCLAIMER
+                    </h2>
+                </header>
+                <div class="content">
+                    Our Website and Application allow users to initiate prerecorded prank telephone calls to their friends and families. Our Services are provided for entertainment purposes only. Some of the Services are free and some of services are chargeable. You can access chargeable services by making Purchases. We do not guarantee refunds for any purchases.
+                    <br/>You are responsible for the calls you initiate through the website or application and you also ensure that the calls comply with the federal and state laws applicable in the states in which you and the call recipient are located. 
+                    <br/>You are strictly prohibited from using the website or application for defraud, cause harm, wrongly obtain anything of value, send indecent or obscene content, or to annoy, abuse, threaten, harass, or make repeated telephone calls to another person.
+                    <br/>You are strictly prohibited from using website or application to call emergency lines, health care facilities, government agencies, employees or officials, law enforcement, schools, numbers assigned to radio common carrier services, or any service for which the called party is charged for the call, unless the call is made with the prior express consent of the called party. You are prohibited from using website or application to call any recipient that is prohibited by law or regulation. 
+                    <br/>You represent and warrant that the recipient of any call you initiate through the website or application is not located in any the following states: California, Connecticut, Florida, Illinois, Maryland, Massachusetts, Michigan, Montana, Nevada, New Hampshire, Pennsylvania, Vermont, and Washington.            
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        2. REGISTRATION
+                    </h2>
+                </header>
+                <div class="content">
+                    You must register and create an account. In order to create an account, you must complete the registration process by providing us with your complete and accurate information as prompted by the registration form. You agree to notify us immediately of any unauthorized use of your account or any other breach of security. 
+                </div>
+            </div>
+            <div class="label">      
+                <header>
+                    <h2>
+                        3. Payment
+                    </h2>
+                </header>
+                <div class="content">
+                    If you make any purchases through the Application or the website, you agree to pay all applicable fees for those purchases. Unless otherwise stated, all fees are stated in U.S. Dollars.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        4. Age Restriction
+                    </h2>
+                </header>
+                <div class="content">
+                    You represent and warrant that you are 18 years of age or older. You may not use the website or application to place calls to any person who is under 18 years of age.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        5. MODIFICATIONS TO TERMS OF SERVICE AND OTHER POLICIES
+                    </h2>
+                </header>
+                <div class="content">
+                    We reserve the right to change or modify any of the terms and conditions. Updated version of these Terms will be located on the Application and on the Website. 
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        6. OWNERSHIP AND RIGHTS
+                    </h2>
+                </header>
+                <div class="content">
+                    We reserve all right, title, and interest in and to the Website and the Applications' content, including any copyright, patent, or trademark or other intellectual property right, or federal or state right, pertaining thereto.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        7. PLATFORM
+                    </h2> 
+                </header>
+                <div class="content">
+                    <b>Platform providers</b>
+                    <br/>We provide our apps on following platforms:
+                    <br/><b>(A) Apple Platform</b>
+                    <br/>If you download one of our apps through iTunes, you agree that these terms incorporate an end user license agreement between you and Prankhotline.
+                    <br/>Prankhotline grant you a non-transferable license to use the app on any Apple product including iPhone, iPod that you own or control.  You must comply with the Usage Rules in the <a href="http://www.apple.com/legal/internet-services/itunes/appstore/jm/terms.html">App Store Terms.</a>
+                    <br/>
+                    <br/>You agree that:
+                    <div class="table by-one">
+                        <ul>
+                            <li>
+                                Prankhotline is solely responsible for the app and its contents; and   
+                            </li>
+                            <li>
+                                Apple is not required to provide maintenance or support services for the app.
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <br/>
+                    <br/>If the app fails to comply (if any), you may notify Apple and Apple will refund the app purchase price to you.  To the maximum extent permitted by law, Apple has no other warranty obligation with respect to the app.  Any other claims, losses, liabilities, damages, costs or expenses attributable to a warranty failure (if any) is the responsibility of Prankhotline.
+                    <br/>
+                    <br/>Prankhotline is responsible for (not Apple):
+                    <div class="table by-one">
+                        <ul>
+                            <li>
+                                addressing any claims by you or any third party relating to the app or your possession or use of the app, including (but not limited to): (i) product liability claims; (ii) failure of the app to conform to any applicable legal or regulatory requirement; and (iii) claims under consumer protection or similar legislation; and
+                            </li>
+                            <li>
+                                investigating, defending, settling and discharging any third party claim that the app or your possession or use of the app infringes that third party’s intellectual property rights.
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <br/>You acknowledge and agree that Apple and its subsidiaries are third party beneficiaries of this end user license agreement and that, your acceptance of these terms (and this end user license agreement), gives Apple the right to enforce the end user license agreement against you as a third party beneficiary of the agreement.
+                    <br/><b>(B) Android Platform</b>
+                    <br/>Apps accessible via Android devices include software from The Android Open Source Project (the “License”); you may not use this file except in compliance with the License.  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an “AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        8. Trademarks and Website Links and Feeds
+                    </h2>
+                </header>
+                <div class="content">
+                    All third party trademarks, company names mentioned in our website are the property of their respective owners, who may not be affiliated with, connected to, or sponsored by us. Without express written permission from us, you may not:
+                    
+                    <div class="table by-one">
+                        <ul>
+                            <li>create links to any page of this website;</li>
+                            <li>use any name, logo or other trademark of Prankhotline as part of any link;</li>
+                            <li>frame or use framing techniques to enclose any trademark, logo or other proprietary information (including images, text, page layout or form) presented on our website;</li>
+                            <li>use any meta tags or any other hidden text using Prankhotline’s name or trademarks.</li>
+                            <li>Our website may contain links to other sites over which we have no control and that are independent of Prankhotline even though they may contain Prankhotline logos or icons. The inclusion of any link does not imply our endorsement of the site or the site’s contents or owner, and we are not responsible for the content or the use of the sites or the actions of the owners of the sites.</li>
+                            <li>Our website may display feeds from Prankhotline’s social media accounts, such as Facebook and Twitter accounts, as well as feeds from other parties, which contain information that we did not generate. The persons contributing the information into the feeds displayed on our website are solely responsible for the information. We have the right to monitor, review and edit or delete the information, but are not required to, and we are not responsible for the information.</li>
+                        </ul>
+                    </div> 
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        9. Your Responsibility to Protect Against Viruses
+                    </h2>
+                </header>
+                <div class="content">
+                    We have no intention of distributing any electronic materials designed to deliberately cause errors in or disrupt use of any computer system. It is your responsibility to take precautions to ensure that whatever you do on our website is free of viruses and other destructive items. We have no liability for any virus or other malware introduced to your computer system through access from our website.                
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        10. Your Account
+                    </h2>
+                </header>
+                <div class="content">
+                    If you open an account with us, you are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer system, and you agree to accept responsibility for all activities that occur under your account or password. 
+                    <br/>We reserve the right to refuse service, terminate accounts, remove or edit account information in our sole discretion.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        11. Communications Decency Act. 
+                    </h2>
+                </header>
+                <div class="content">
+                   As provided in 47 U.S.C. § 230(c)(1), Prankhotline is only a distributer, and not the publisher or speaker, of any User Content. As such, Prankhotline cannot be held liable for making available any User Content which may be false or inaccurate. Any information or opinions contained in the User Content made available through the services are those of their respective authors alone. Prankhotline does not guarantee the accuracy, completeness, or truthfulness of any User Content.  Under no circumstances will Prankhotline be responsible for any loss or damage resulting from any person's reliance on any User Content.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        12. DMCA NOTICE
+                    </h2>
+                </header>
+                <div class="content">
+                    Anyone who believes that their work has been reproduced on the Services in a way that constitutes copyright infringement may notify Prankhotline's designated copyright agent in accordance with Title 17, United States Code, Section 512(c)(2). 
+                    <br/>Notifications of claimed infringement should be forwarded to Prankhotline's designated agent as follows:
+                    <br/><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c5f797c7c637e784c7c7e6d626764637860656269226f6361">[email&#160;protected]</a>
+                    <br/>After receiving a valid DMCA notification of claimed infringement, we will process and investigate the claim and will take appropriate actions under the DMCA, including expeditiously removing or disabling access to any material claimed to be infringing or claimed to be the subject of infringing activity. We will take reasonable steps promptly to notify the user who submitted the material that we have removed or disabled access to such material.
+                    <br/>Counter-Notification. If you posted or submitted material to Prankhotline which Prankhotline removed or disabled access to pursuant to a DMCA notification of claimed infringement, and you believe your material is not infringing and the material was removed or disabled as a result of a mistake or misidentification, you may send a counter-notification.
+                </div>
+            </div>
+            
+            <div class="label">      
+                <header>
+                    <h2>
+                        13. English Language
+                    </h2>
+                </header>
+                <div class="content">
+                    You agree that there is no requirement to translate all or any portion of our website or the information provided through our website into any other language than the ones in which it appears. You further agree that all contractual and transactional communications between you and us shall be in the English language, and that there is no requirement to translate any communication into any other language.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        14. No Warranty
+                    </h2>
+                </header>
+                <div class="content">
+                    We attempt to be accurate with regard to information posted on our website. However, we do not warrant that descriptions or other content on this site is accurate, complete, reliable, current, or error-free. All information published on this website is provided “AS IS” WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY OF NON-INFRINGEMENT OR IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. All items of technical information that may be made available on or through this website are used at your own risk, and you agree to indemnify and hold us harmless from and against any loss, cost, or liability, including but not limited to reasonable legal fees, that we may incur as a result of your use of such designs or other technical information. Information on this website may be inaccurate or incomplete and may be changed or updated without notice. We make no warranty that any changes or other technical information are appropriate for use in any particular jurisdiction. We may make changes in the services or relationships described on this website at any time without notice. We make no warranty that our website will operate without interruption or error. No statements provided orally or by email shall create or modify any warranty or disclaimer of warranty.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        15. Limitation of Liability
+                    </h2>
+                </header>
+                <div class="content">
+                    IN NO EVENT WILL PRANKHOTLINE OR ITS AGENTS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES, OR DAMAGES FOR LOSS OF PROFITS, REVENUE, DATA OR USE, INCURRED BY YOU OR ANY OTHER PERSON, WHETHER IN AN ACTION IN CONTRACT OR TORT, ARISING FROM ACCESS TO, OR USE OF, OR INABILITY TO ACCESS OR USE, THIS WEBSITE OR ANY LINKED WEBSITE OR INFORMATION, OR FROM UNAVAILABILITY OR LACK OF RECEIPT OF ANY SERVICE TAKEN THROUGH THIS WEBSITE OR OUR APPLICATION. CERTAIN JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE DISCLAIMERS, EXCLUSIONS, OR LIMITATIONS MAY NOT APPLY TO YOU, AND YOU MIGHT HAVE ADDITIONAL RIGHTS.
+                    <br/>If you are dissatisfied with this website, its contents, these Terms of Use you agree that is your sole and exclusive remedy is to discontinue using this website.                
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        16. Indemnity
+                    </h2>
+                </header>
+                <div class="content">
+                    You agree to indemnify and hold PRANKHOTLINE and its affiliates (and their officers, agents, partners and employees) against any and all loss, liability, claim or demand (including reasonable attorneys’ fees arising out of, or in connection with your use of and access to our website or making any post or contributions not in accordance with these terms.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        17. Governing Law and Jurisdiction
+    
+                    </h2>
+                </header>
+                <div class="content">
+                    This website is controlled by PRANKHOTLINE from NAMPA-IDAHO, U.S.A. All matters relating to access to, or use of, this website are governed by applicable laws of IDAHO and U.S.A., without regard to conflicts of law provisions. Any legal action or proceeding relating to access to, or use of, this website or the information it contains is subject to the exclusive jurisdiction of the courts in IDAHO, U.S.A. You and PRANKHOTLINE agree to submit to the jurisdiction of, and agree that venue is proper in, these courts in any legal action or proceeding.                
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        18. Enforcement                    
+                    </h2>
+                </header>
+                <div class="content">
+                    Any unauthorized use of our website terminates your permission to access and use our website and may subject you to prosecution. If any provision in these Terms of Use is found invalid or unenforceable for any reason, that provision shall be considered severable from the other provisions and shall not affect the validity or enforceability of the remaining provisions. To the extent permitted by law, you agree that any claim arising out of or related to these Terms of Use or your use of our website must be filed with a court of competent jurisdiction within one month after it arose or is permanently barred.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        19. TERMS AND TERMINATION
+                    </h2>
+                </header>
+                <div class="content">
+                    You may terminate these Terms at any time by closing your account, discontinuing your use of the Services, uninstalling the Application, and providing Prankhotline with a notice of termination.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        20. PRIVACY
+    
+                    </h2>
+                </header>
+                <div class="content">
+                    By providing any personal or non-personal information to Prankhotline through the Website or application, or by using the Services, you automatically grant, and warrant and represent that you have the right to grant, Prankhotline a perpetual, irrevocable, royalty-free, worldwide, non-exclusive, assignable, sub licensable, transferable license to collect, store, use, reproduce, disclose, transfer, and disseminate your collected personal and non-personal information in order to provide the services contemplated under these Terms, to manage your account, to send you communications, or for any other lawful purpose in our sole discretion.
+                    <br/>Prankhotline, and any third-parties to which Prankhotline provided your contact information, may contact you via any method of communication you submitted through the website or application, including, but not limited to, email, cell phone, or text message. By providing us your contact information, you agree to receive communications from us or other third-parties who obtained your contact information from us.
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        21. EXPORT OF DATA
+                    </h2>
+                </header>
+                <div class="content">
+                    You agree to comply with all local rules regarding online conduct and acceptable content. Specifically, you agree to comply with all applicable laws regarding the transmission of technical data exported from the United States or the country in which you reside and to comply with any other local laws affecting the transmission or posting of content or affecting the privacy of persons.
+                    
+                </div>
+            </div>
+
+
+            <div class="label">
+                <header>
+                    <h2>
+                        22. GDPR
+                    </h2>
+                </header>
+                <div class="content">
+                    Any GDPR requests or requests to delete your information can be made to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f88b8d8888978a8cb8888a99969390978c9491969dd69b9795">[email&#160;protected]</a>
+                </div>
+            </div>
+
+            <div class="label">      
+                <header>
+                    <h2>
+                        23. CONTACT US
+                    </h2>
+                </header>
+                <div class="content">
+                    You can contact us on <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="96e5e3e6e6f9e4e2d6e6e4f7f8fdfef9e2fafff8f3b8f5f9fb">[email&#160;protected]</a>
+                </div>
+            </div>
+
+        </div>
+    
+    
+    
+   
+    </section>
+</div>
+<footer class="footer">
+    <div class="footer-top table by-three hide">
+        <ul>
+            <li>
+                <a href="https://prankhotline.com/blocknumber">Block My Number</a>
+            </li>
+            <li>
+                <a href="">FAQ</a>
+            </li>
+            <li>
+                <a href="">Contact Us</a>
+            </li> 
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="footer-middle table by-one">
+        <ul>
+            <li>
+                <div class="logo"></div>
+            </li>
+            <li>
+                <div class="download-app-store">
+                    <div class="icon icon-play-store"></div>
+                    <div class="icon icon-app-store"></div>
+                </div>
+            </li>
+<!--            <li>-->
+<!--                -->
+<!--                <div class="social">-->
+<!--                    <div class="icon icon-facebook"></div>-->
+<!--                    <div class="icon icon-twitter"></div>-->
+<!--                    <div class="clear"></div>-->
+<!--                </div>-->
+<!--            </li>-->
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="footer-bottom table by-three">
+        <ul> 
+            <li>
+                <a href="https://prankhotline.com/tos">Terms Of Service</a>
+            </li>
+            <li>
+                <a href="">Legal</a>
+            </li>
+            <li>
+                <a href="https://prankhotline.com/tos">Privacy Policy</a>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="footer-rights">
+        &copy; PrankHotline.com<br/>All Rights Reserved @ayo.comments
+    </div>
+
+    <div class="clear"></div>
+</footer> 
+            
+        </div>
+        
+        <!-- Fixed buy button -->
+                
+         
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="https://prankhotline.com/frontend/scripts/jquery.js"></script>
+		<script type="text/javascript" src="https://prankhotline.com/frontend/scripts/ads.js"></script>
+
+        
+                
+        <script type="text/javascript" src="https://prankhotline.com/frontend/scripts/madebyobamasu.js?madebyobamasu=88744"></script>
+		
+        
+
+
+
+        
+    </body>
+</html>
