@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+
+
+
+<!---Full length template (bs3) -->
+<head>
+  <script type="text/javascript">
+function loadScript(src) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.defer = false;
+    script.async = false;
+
+    document.getElementsByTagName('head').item(0).appendChild(script);
+}
+</script>
+    
+      
+      
+      <title>Terms &amp; Conditions | Powtoon</title>
+    
+    <!---META TAGS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <!-- HEAD SCRIPTS-->
+    
+
+
+
+<link rel='preconnect' href='https://static.powtoon.co/'>
+<link rel='preconnect' href='https://8b53dad5bec24da5b87b63c2a9b425e4@sentry.io/102049'>
+<link rel='preconnect' href='https://apps.powtoon.co'>
+<link rel='preconnect' href='/site_media/media/'>
+<link rel='preconnect' href='https://volatile-storage.powtoon.co/'>
+
+
+  
+
+  
+    <!-- CHEQ INVOCATION TAG -->
+    <script async src='https://ob.cheqzone.com/i/0e8f3de75aa63b426527697d5a230381.js' data-ch='cheq4ppc' class='ct_clicktrue_13121' data-jsonp="onCheqResponse">
+    </script>
+    <!-- END CHEQ INVOCATION TAG -->
+  
+
+
+<script>
+    var ALL_COOKIES_SECURE = true;
+</script>
+
+<style type="text/css">header .badge-pt{position:absolute;right:0;margin-right:9px;z-index:10;width:80px;height:16px;background-color:#424f61;font-family:Muller-Bold;font-size:10px;color:#FFF;border-radius:0 0 5px 5px;text-align:center;text-transform:uppercase;line-height:16px;letter-spacing:.11em;top:0}header .badge-pt--free{border:1px solid #e3e4ef;border-top:none;background-color:transparent;color:#424f61}header .badge-pt--enterprise{font-size:12px}header .badge-pt--edu{background-color:#48cd80}@media screen and (min-width:320px) and (max-width:667px){header .badge-pt{margin-right:0}}</style>
+
+
+
+  
+
+
+<meta property="fb:app_id" content="1646060565508705" />
+
+
+<script>
+    function getInternetExplorerVersion() {
+        var value = -1;
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            var useragent = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(useragent) != null)
+                value = parseFloat(RegExp.$1);
+        }
+        else if (navigator.appName == 'Netscape') {
+            var useragent = navigator.userAgent;
+            var re = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(useragent) != null)
+                value = parseFloat(RegExp.$1);
+        }
+        return value;
+    }
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/combine/npm/whatwg-fetch@3.0.0,npm/core-js@2.6.5/client/shim.min.js,npm/custom-event-polyfill@1.0.7"></script>
+
+<script src="/sw.js?service_worker_version="></script>
+
+
+<!-- sentry -->
+<script src="https://static.powtoon.co/vendor/bowser/2.0.0/bowser.min.js" id='bowser' ></script>
+<script src="https://static.powtoon.co/vendor/sentry/5.15.0/bundle.min.js" id='sentry'></script>
+<script>
+
+  
+    var sentry_public_dsn = 'https://fd2a8037985848cfa6b12601234fa20d@app.getsentry.com/7059';
+  
+
+  if (sentry_public_dsn) {
+    var isNotValidBrowser = false
+
+    if (bowser) {
+        var browser = bowser.getParser(window.navigator.userAgent);
+
+        isNotValidBrowser = browser.satisfies({
+            safari: "<10",
+            chrome: "<64",
+            firefox: "<58",
+            edge: "<14",
+            "internet explorer": "<11",
+            "android browser": "<4.2",
+        });
+    }
+
+    customFilterIntegration = {
+      name: 'customFilter',
+      setupOnce: function () {
+          var shouldDropEvent = this.shouldDropEvent;
+
+          Sentry.addGlobalEventProcessor(function (event) {
+              if (shouldDropEvent(event)) {
+                return null;
+              }
+
+              return event;
+          });
+      },
+      shouldDropEvent: function (event) {
+        if (isNotValidBrowser) {
+            return true;
+        }
+
+        var sendErrorMessageToHTML5Studio = true;
+        var tmpRavenObj = jQuery.extend({}, event, {breadcrumbs: null, extra: null});
+        var dataString = JSON.stringify(tmpRavenObj);
+
+        // Filter info logs from console
+        if (event.logger === 'console'){
+            var allowedLevels = ['error', 'warning'];
+
+            if (allowedLevels.indexOf(event.level) === -1) {
+                return true;
+            }
+
+            // Filters WebSocket warnings from Pusher, which are legitimate
+            if(event.level === 'warning') {
+                if (dataString.match(/.*Pusher.*WebSocketError.*(1006|4201){1}.*/) !== null
+                    || dataString.match(/.*Pusher.*WebSocketError.*WebSocketError.*WebSocketError.*/) !== null) {
+                    return true;
+                }
+            }
+        }
+
+        // filter strange error from client's extensions
+        if (dataString.match(/.*\/affs\?addonname=.*&affid=.*|.*http:\/\/offerz4u\.utop\.it\/.*|.*v=opt_[0-9]+&partner=.*channel=.*/) !== null) {
+            return true;
+        }
+
+        // filter error messages to send to HTML5 studio
+        if (dataString.match(/Facebook Pixel Error:/) !== null) {
+            sendErrorMessageToHTML5Studio = false;
+        }
+
+        if (sendErrorMessageToHTML5Studio) {
+            var powtoonSentryEventData = {
+                error: event,
+                type: 'internal-error-reported'
+            };
+            var powtoonSentryEvent = new CustomEvent('powtoon-events', {'detail': powtoonSentryEventData});
+            document.dispatchEvent(powtoonSentryEvent);
+        }
+        return false;
+      }
+    }
+  }
+
+  Sentry.onLoad(function () {
+    Sentry.init({
+        dsn: sentry_public_dsn,
+        integrations: [customFilterIntegration],
+        environment: 'prod',
+        release: '24.2.5.7.2',
+      // Check if gut
+      fetchContext: true,
+      //we currently use 5.15,0 (we need to update to current 5.19.2)
+      //Prior to version 5.17.0, allowUrls and denyUrls were called whitelistUrls and blacklistUrls respectively.
+      // however, they will be removed in version 6.0.
+      blacklistUrls: [
+        // Chrome extensions
+        /extensions\//i,
+        /^chrome:\/\//i,
+        // 3d party ignore list
+        /wistia.+external.+js/ig,
+        /appcues.+main/ig,
+        /gtm.+js/ig
+      ],
+      denyUrls: [
+        // Chrome extensions
+        /extensions\//i,
+        /^chrome:\/\//i,
+        // 3d party ignore list
+        /wistia.+external.+js/ig,
+        /appcues.+main/ig,
+        /gtm.+js/ig
+      ],
+      beforeSend(event, hint) {
+        const urlBlacklist = [/^chrome:\/\//i, /wistia.+external.+js/ig, /appcues[.]main/ig, /gtm[.]js/ig]
+        if (urlBlacklist.some(url => url.test(hint.originalException))) {
+          return null;
+        }
+        return event;
+      }
+    });
+
+    Sentry.captureBreadcrumb = Sentry.addBreadcrumb
+
+    Sentry.configureScope(function (scope) {
+      scope.setUser({
+          
+              is_authenticated: 'false'
+          
+      })
+    })
+  })
+
+
+  
+
+</script>
+
+<!-- End sentry -->
+
+
+<script type="text/javascript">
+    window.app_versions = {
+       'studio': 'release/24.2.5.4.1-pc/1ee559ebb3-1718531800',
+       'html_player': '',
+       'core_player': '',
+       'teams_admin': '',
+       'templates_gallery': '',
+       'site_version': '24.2.5.7.2',
+       'dashboard': '',
+       'cobra_version': '',
+       'character_builder_version': '',
+       'homepage_app_version': 'release/24.2.1.0/455155b-1712740390',
+       'purchase': 'release/24.2.5.3.1-pc/ebd4521334-1718517640',
+       'producer_app' : 'release/24.2.5.3.1-pc/ebd4521334-1718517640',
+    }
+</script>
+
+
+  
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+}
+
+var dataLayer = [];
+var visitorId = getCookie('visitorid');
+
+
+
+    dataLayer.push({"bi visitor id": visitorId });
+
+
+
+</script>
+  
+
+  
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-62X2');</script>
+    <!-- End Google Tag Manager -->
+
+  
+
+
+<script type="text/javascript">
+
+  function getBiTrackingSMC() {
+    // SMC = Source/Medium/Campaign
+
+    function getSMCfromKVList(kvList, prefix) {
+      var SMC_KEYS = ['source', 'medium', 'campaign'];
+
+      var smc = {};
+      for (var i = 0; i < kvList.length; i++) {
+        var kv = kvList[i].trim();
+        if (kv.substr(0, prefix.length) === prefix) {
+          var splitKV = kv.split('=');
+          var smc_key = splitKV[0].substr(prefix.length);
+          if (SMC_KEYS.indexOf(smc_key) !== -1) {
+            smc[smc_key] = splitKV[1];
+          }
+        }
+      }
+
+      return Object.keys(smc).length ? smc : null;
+    }
+
+    function getSMCfromURL(prefix) {
+      if (typeof prefix !== 'string') prefix = '';
+      var pageUrl = window.location.search.substring(1);
+      var urlParams = pageUrl.split('&');
+      return getSMCfromKVList(urlParams, prefix);
+    }
+
+    // function getSMCfromCookies(prefix) {
+    //   if (typeof prefix !== 'string') prefix = '';
+    //   var cookies = document.cookie.split(";");
+    //   return getSMCfromKVList(cookies, prefix);
+    // }
+
+    function stringifySMC(smc) {
+      if (!smc) return '';
+      return (smc.source || '') + ':' + (smc.medium || '') + ':' + (smc.campaign || '');
+    }
+
+    // Logic --> Take ITPs from URL if available.
+    // Otherwise use UTMs from URL. Otherwise leave empty.
+    var smc = getSMCfromURL("itp_");
+    if (smc === null) smc = getSMCfromURL("utm_");
+    // if (smc === null) smc = getSMCfromCookies("utm_");
+
+    return stringifySMC(smc);
+  }
+
+  function encodeObjectToUrl(data) {
+    return Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
+    }).join('&')
+  }
+
+  function syncLogger(url) {
+    var client = new XMLHttpRequest();
+    client.open("GET", url, false);
+    client.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    client.setRequestHeader("Referrer-Policy", "no-referrer-when-downgrade");
+    client.send();
+  }
+
+  //Pixel tracking
+  function trackEventByPixel(category, action, opt_label, value, extra_data_obj, reporter_options_obj) {
+      
+      
+      var url="https://trek.powtoon.com/" + "event.gif";
+      var data = {};
+      reporter_options_obj = reporter_options_obj || {}
+      
+      data['i'] = visitorId;
+      if (category) data['c'] = category;
+      if (action) data['a'] = action;
+      if (opt_label) data['l'] = opt_label;
+      if (value) data['v'] = value;
+      if (extra_data_obj) {
+          if (extra_data_obj.powtoonId) {
+              data['p'] = extra_data_obj.powtoonId;
+              delete extra_data_obj.powtoonId;   // BI-team requested to avoid sending powtoonId inside extra_data
+          }
+          data['d'] = JSON.stringify(extra_data_obj);
+      }
+      if (window.powtoon_ui_session_manager) {
+          var ui_session_id = window.powtoon_ui_session_manager.getSessionId();
+          if (ui_session_id) data['s'] = ui_session_id;
+      }
+      // field for preventing cache
+      data['_pc'] = Date.now();
+
+      var urlWithQuery = url + "?" + encodeObjectToUrl(data)
+
+      if (reporter_options_obj.sendSynchronously) {
+        syncLogger(urlWithQuery)
+      } else {
+        let imgElem = new Image();
+        imgElem.referrerPolicy="no-referrer-when-downgrade";
+        imgElem.src = urlWithQuery;
+        imgElem = null
+      }
+
+      
+      
+      return true
+  }
+
+  function trackPageViewByPixel(page) {
+      
+      
+      var url="https://trek.powtoon.com/" + "page.gif";
+      var data = {};
+      
+      data['i'] = visitorId;
+
+      data['p'] = page || document.location.pathname
+
+      if (window.powtoon_ui_session_manager) {
+          var ui_session_id = window.powtoon_ui_session_manager.getSessionId();
+          if (ui_session_id) data['s'] = ui_session_id;
+      }
+
+      if (document.referrer) data['r'] = document.referrer;
+      
+      let imgElem = new Image();
+      imgElem.referrerPolicy="no-referrer-when-downgrade";
+      imgElem.src = url + "?" + encodeObjectToUrl(data);
+      imgElem = null
+      
+      
+      return true
+  }
+
+  function trackSocialEventByPixel(network, target, param) {
+      
+      
+      var url = "https://trek.powtoon.com/" + "social.gif";
+      var data = {}
+      
+      data['i'] = "visitorId";
+      if (network) data['n'] = network;
+      if (target) data['t'] = target;
+      if (param) data['p'] = param;
+      // field for preventing cache
+      data['_pc'] = Date.now();
+      
+      let imgElem = new Image();
+      imgElem.referrerPolicy="no-referrer-when-downgrade";
+      imgElem.src = url + "?" + encodeObjectToUrl(data);
+      imgElem = null
+      
+      
+      return true
+  }
+
+  function sendGA3Event(category, action, opt_label, value) {
+    if(typeof ga === "function") {
+      if (value) {
+        ga('send', 'event', category, action, opt_label, value);
+      } else if (opt_label) {
+        ga('send', 'event', category, action, opt_label);
+      } else {
+        ga('send', 'event', category, action);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function sendGA3EventWithRetries(category, action, opt_label, value, nRetries, delay) {
+    if (nRetries < 0 || delay < 0) {
+        Sentry.captureException(new Error('sendGA3EventWithRetries function was called with illegal params - nRetries=' + nRetries + ', delay=' + delay));
+    }
+
+    // Try to report event...
+    const result = sendGA3Event(category, action, opt_label, value);
+
+    if (!result) {
+      // reporting failed
+      if (nRetries > 0) {
+        setTimeout(function() {
+          sendGA3EventWithRetries(category, action, opt_label, value, nRetries-1, delay);
+        }, delay);
+      } else {
+        Sentry.captureException(new Error('GA3 function is not loaded properly (after retries)'));
+      }
+    }
+  }
+
+  function sendGA4Event(event_name, category, action, opt_label, event_id) {
+    dataLayer.push({
+      'event': 'ga4_event',
+      'event_name': event_name,
+      'category': category,
+      'action': action,
+      'label': opt_label,
+      'internal_event_id': event_id
+    });
+    return true;
+  }
+
+  function sendGA4EventWithRetries(event_name, category, action, opt_label, event_id, nRetries, delay) {
+    if (nRetries < 0 || delay < 0) {
+        Sentry.captureException(new Error('sendGA4EventWithRetries function was called with illegal params - nRetries=' + nRetries + ', delay=' + delay));
+    }
+
+    // Try to report event...
+    const result = sendGA4Event(event_name, category, action, opt_label, event_id);
+
+    if (!result) {
+      // reporting failed
+      if (nRetries > 0) {
+        setTimeout(function() {
+          sendGA4EventWithRetries(event_name, category, action, opt_label, event_id, nRetries-1, delay);
+        }, delay);
+      } else {
+        Sentry.captureException(new Error('GA4 function is not loaded properly (after retries)'));
+      }
+    }
+  }
+
+  // Google analytics
+  function trackEventByParams(category, action, opt_label, value, extra_data_obj, reporter_options_obj, ga4_event_name) {
+    // Track event by 4 params used only for google analytics
+    
+      sendGA3EventWithRetries(category, action, opt_label, value, 2, 1000);
+      trackEventByPixel(category, action, opt_label, value, extra_data_obj, reporter_options_obj);
+      if (ga4_event_name)
+        trackGA4Events(ga4_event_name, category, action, opt_label, value);
+    
+  }
+
+  function trackGA4Events(event_name, category, action, label, event_id) {
+    // Track event for GA4 new structure for google analytics
+    
+      sendGA4EventWithRetries(event_name, category, action, label, event_id, 2, 1000);
+    
+  }
+
+  // wrapper function for backward compatibility
+  function trackEventByParamsOnlyGA(category, action, opt_label, value) {
+    
+    return trackEventByParams(category, action, opt_label, value);
+    
+  }
+
+  // track pageviews
+  function trackPageView(page) {
+    
+      if (typeof ga === "undefined") {
+          Sentry.captureException(
+                  new Error('GA function is not loaded properly')
+          );
+          return;
+      }
+
+      if (page)
+          ga('send', 'pageview', page);
+      else
+          ga('send', 'pageview');
+
+      trackPageViewByPixel(page);
+    
+  }
+
+  function trackSocialEvent(network, target, param) {
+    
+    if(typeof ga === "undefined")
+      return
+
+    if (param)
+      ga('social', network, target, param)
+    else
+      ga('social', network, target)
+    trackSocialEventByPixel(network, target, param)
+    
+  }
+
+  function trackEvent(data) {
+    // this function used to track to woopra,
+    // i leave it only to prevent JS error should a reference to it be missed,
+    // from CMS for example
+  }
+
+  function trackSocial(social_network){
+    // this function used to track to woopra,
+    // i leave it only to prevent JS error should a reference to it be missed,
+    // from CMS for example
+  }
+
+
+  function trackVirtualPageView(page) {
+    
+
+    dataLayer.push({
+      'event': 'VP ' + page,
+      'virtual page': page
+    });
+
+    
+
+    trackPageView(page)
+  }
+
+</script>
+
+
+
+    <!--//HEAD SCRIPTS-->
+    
+
+    
+	<meta name="title" content="Terms and Conditions - Powtoon">
+<meta name="description" content="Powtoon's full Terms and Conditions, including Privacy, Terms of Service, Limitations of Liability, Security, and more.">
+<meta name="keywords" content="Powtoon Terms and Conditions, Presentation Terms and Conditions, Powtoon Terms of Service">
+
+    
+
+    
+    
+
+
+
+    <!--===================================================================================
+
+        8888888b.                    88888888888
+        888   Y88b                       888
+        888    888                       888
+        888   d88P .d88b.  888  888  888 888   .d88b.   .d88b.  88888b.
+        8888888P" d88""88b 888  888  888 888  d88""88b d88""88b 888 "88b
+        888       888  888 888  888  888 888  888  888 888  888 888  888
+        888       Y88..88P Y88b 888 d88P 888  Y88..88P Y88..88P 888  888
+        888        "Y88P"   "Y8888888P"  888   "Y88P"   "Y88P"  888  888  24.2.5.7.2
+
+    =====================================================================================-->
+    
+      <!--DEFAULT CANONICAL URL LINK -->
+    <link rel="canonical" href="https://www.powtoon.com/terms-and-conditions/" />
+<!--//DEFAULT CANONICAL URL LINK -->
+    
+
+    
+<!--HEAD BLOCK-->
+  
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+<!--//HEAD BLOCK-->
+
+    
+    <!--DEFAULT CSS LINKS -->
+    <link rel="stylesheet" href="https://static.powtoon.co/cache/css/output.20daf397b061.css" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&display=swap' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap' rel='stylesheet' type='text/css' />
+    <link href="https://use.typekit.net/ned7udy.css" rel="stylesheet">
+    <!--//DEFAULT CSS LINKS -->
+    
+
+    
+  <style type="text/css">
+    /*** simple grid ***/
+.top-section {
+   margin-top: 90px;
+}
+
+.main {
+  width: 100%;
+}
+
+footer {
+   min-width: inherit;
+   margin-top: 0;
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** mobile devices ***/
+
+@media only screen and (min-width: 320px) {
+     section.tc-text {
+          padding: 0 10px;
+          max-width: 480px;
+          margin-top: 90px;
+      }
+      .tc-text h1 {
+          font-size: 40px;
+           margin-top: 0;
+           margin-bottom: 40px;
+      }
+
+     .tc-text header {
+          margin-bottom: 20px;
+     }
+
+.tc-text p,
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+      font-size: 16px;
+      letter-spacing: .3px;
+}
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 20px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.icon-wrap {
+    margin-bottom: 5px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** general page styles ***/
+.tc-text {
+    font-family: muller-light;
+    max-width: 898px;
+    margin: 0 auto;
+    color: #424f61;
+}
+
+.tc-text h1,
+.tc-text h2 {
+        text-align: center;
+}
+
+.tc-text h1 {
+    color: #253740;
+    font-family: muller-regular;
+    /*margin-bottom: 85px;*/
+}
+
+.tc-text h2,
+.tc-text h3 {
+    color: #424f61;
+    margin: 0;
+    font-family: muller-light;
+}
+
+.tc-text h2 {
+    font-family: inherit;
+    font-size: 40px;
+}
+
+.tc-text h3 {
+   text-align: left;
+   margin-bottom: 10px;
+   font-size: 30px;
+}
+
+.tc-text header {
+    /*margin-bottom: 35px;*/
+}
+
+.tc-text article {
+    margin-bottom: 75px;
+}
+
+.tc-text p {
+    line-height: 30px;
+}
+
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+     border: none;
+     margin: 0 0 0 40px;
+     padding: 0;
+}
+
+.tc-text ul,
+.tc-text ol {
+    list-style-position: inside;
+}
+
+.tc-text ul {
+    list-style-type: none;
+}
+
+.tc-text ul li {
+    position: relative;
+    padding-left: 18px;
+}
+
+.tc-text ul li:before {
+    content: '';
+    display: block;
+    background-color: #424f61;
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 8px;
+}
+
+.tc-text ul li + li,
+.tc-text ol li + li  {
+    margin-top: 7px;
+}
+
+.tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 30px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text article:last-child p {
+    textt-align: center;
+    margin-top: 14px;
+}
+
+.tc-text blockquote {
+    color: #42a5f5 !important;
+    line-height: 29px;
+    text-transform: uppercase;
+}
+
+.icon {
+		background-image: url(https://static.powtoon.co/cms-assets/t%26c/sprite.png);
+		width: 1em;
+		height: 1em;
+		background-size: 28em 1em;
+		display: block;
+          margin: 0 auto;
+	}
+
+	.icon-wrap {
+		font-size: 4em;
+                /*margin-bottom: 15px;*/
+	}
+
+	.icon-1 {
+		background-position: 0 0;
+	}
+
+	.icon-2 {
+		background-position: -1em 0;
+	}
+	.icon-3 {
+		background-position: -2em 0;
+	}
+
+	.icon-4 {
+		background-position: -3em 0;
+	}
+
+	.icon-5 {
+		background-position: -4em 0;
+	}
+
+	.icon-6 {
+		background-position: -5em 0;
+	}
+
+	.icon-7 {
+		background-position: -6em 0;
+	}
+
+	.icon-8 {
+		background-position: -7em 0;
+	}
+
+	.icon-9 {
+		background-position: -8em 0;
+	}
+
+	.icon-10 {
+		background-position: -9em 0;
+	}
+
+	.icon-11 {
+		background-position: -10em 0;
+	}
+
+	.icon-12 {
+		background-position: -11em 0;
+	}
+
+	.icon-13 {
+		background-position: -12em 0;
+	}
+
+	.icon-14 {
+		background-position: -13em 0;
+	}
+
+	.icon-15 {
+		background-position: -14em 0;
+	}
+
+	.icon-16 {
+		background-position: -15em 0;
+	}
+
+	.icon-17 {
+		background-position: -16em 0;
+	}
+
+	.icon-18 {
+		background-position: -17em 0;
+	}
+
+	.icon-19 {
+		background-position: -18em 0;
+	}
+
+	.icon-20 {
+		background-position: -19em 0;
+	}
+
+	.icon-21 {
+		background-position: -20em 0;
+	}
+
+	.icon-22 {
+		background-position: -21em 0;
+	}
+
+	.icon-23 {
+		background-position: -22em 0;
+	}
+
+	.icon-24 {
+		background-position: -23em 0;
+	}
+
+	.icon-25 {
+		background-position: -24em 0;
+	}
+
+	.icon-26 {
+		background-position: -25em 0;
+	}
+
+	.icon-27 {
+		background-position: -26em 0;
+	}
+
+	.icon-28 {
+		background-position: -27em 0;
+	}
+  </style>
+  
+
+  <style type="text/css">
+    /*** tablet ***/
+
+@media only screen and (min-width: 720px) {
+     section.tc-text { 
+         max-width: 654px;
+         margin-top: 110px;
+      }
+      .tc-text h1 {
+         font-size: 50px;
+         margin-bottom: 55px;
+      }
+
+      .tc-text header {
+          margin-bottom: 30px;
+     }
+
+.tc-text p,
+.tc-text ul,
+.tc-text ol,
+.tc-text blockquote {
+      font-size: 18px;
+}
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 25px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.icon-wrap {
+   margin-bottom: 10px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** desktop small ***/
+
+@media only screen and (min-width: 1024px) and (max-width: 1366px) {
+     section.tc-text { 
+         max-width: 723px;
+         margin-top: 130px;
+      }
+     .tc-text h1 {
+         font-size: 55px;
+         margin-bottom: 65px;
+      }
+      .tc-text header {
+          margin-bottom: 20px;
+     }
+     
+     .tc-text ul ul,
+.tc-text ol ul {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tc-text p + p,
+.tc-text p + h3 {
+    margin-top: 30px;
+}
+
+.tc-text p + ul,
+.tc-text p + ol {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.icon-wrap {
+    margin-bottom: 15px;
+}
+
+}
+  </style>
+  
+
+  <style type="text/css">
+    /*** desktop large ***/
+
+@media only screen and (min-width: 1366px) {
+     section.tc-text { 
+         max-width: 926px;
+      }
+     .tc-text h1 {
+        margin-bottom: 80px;
+     }
+}
+
+.header, .footer{
+display:none;
+}
+  </style>
+  
+
+  <style type="text/css">
+    .revised{
+margin:-70px 0 30px;
+display:block;
+text-align:center;
+}
+.tc-text ol li ol{
+margin-top:20px;
+}
+h4{
+display:inline;
+}
+ol{
+margin-left:0 !important;
+}
+ol ol {
+margin-left:25px !important;
+}
+
+@media only screen and (max-width: 1365px) {
+.revised{
+margin-top:-60px;
+}
+}
+@media only screen and (max-width: 1023px) {
+.revised{
+margin-top:-50px;
+}
+}
+@media only screen and (max-width: 720px) {
+.revised{
+margin-top:-20px;
+}
+article{
+max-width:95%;
+margin:auto;
+overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+ol ol, ol ul, ul ul {
+    margin-left: 15px !important;
+}
+}
+  </style>
+  
+
+    
+    <meta name="google-site-verification" content="ras4QSqedofEyVsRfIolYfOayCbVeQnE9U-IOCNLthY" />
+    <script src="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/navbar/HomepageAppNavbar.js"></script>
+    <link href="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/navbar/static/css/homepage.css" rel="stylesheet">
+     
+      <script src="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/footer/HomepageAppFooter.js"></script>
+       <link href="https://apps.powtoon.co/homepage-app/release/24.2.1.0/455155b-1712740390/footer/static/css/homepage.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+      
+      
+    </script>
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <!-- FAVICON -->
+<link rel="icon" sizes="16x16 32x32 64x64" href="https://static.powtoon.co/images/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="196x196" href="https://static.powtoon.co/images/favicon/favicon-196.png">
+<link rel="icon" type="image/png" sizes="160x160" href="https://static.powtoon.co/images/favicon/favicon-160.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://static.powtoon.co/images/favicon/favicon-96.png">
+<link rel="icon" type="image/png" sizes="64x64" href="https://static.powtoon.co/images/favicon/favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static.powtoon.co/images/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static.powtoon.co/images/favicon/favicon-16.png">
+<link rel="apple-touch-icon" href="https://static.powtoon.co/images/favicon/favicon-57.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://static.powtoon.co/images/favicon/favicon-114.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://static.powtoon.co/images/favicon/favicon-72.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://static.powtoon.co/images/favicon/favicon-144.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://static.powtoon.co/images/favicon/favicon-60.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://static.powtoon.co/images/favicon/favicon-120.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://static.powtoon.co/images/favicon/favicon-76.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://static.powtoon.co/images/favicon/favicon-152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.powtoon.co/images/favicon/favicon-180.png">
+<meta name="msapplication-TileColor" content="#FFFFFF">
+<meta name="msapplication-TileImage" content="https://static.powtoon.co/images/favicon/favicon-144.png">
+<meta name="msapplication-config" content="https://static.powtoon.co/images/favicon/browserconfig.xml">
+
+
+</head>
+
+<body class="">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	/* jQuery CDN fallback */
+    (window.jQuery) || loadScript('https://static.powtoon.co/vendor/jquery/3.5.1/jquery.min.js');
+</script>
+
+  
+  <div id="fb-root"></div>
+
+
+<script>
+  window.fbAsyncInit = function() {
+    if (typeof FB === 'undefined') {
+      return
+    }
+
+    // init the FB JS SDK
+    FB.init({
+      appId      : '252546858126957',                        // App ID from the app dashboard
+      channelUrl : '//www.powtoon.com',                 // Channel file for x-domain comms
+      status     : false,                                 // Check Facebook Login status
+      xfbml      : true                                  // Look for social plugins on the page
+    });
+
+    // add event tracking for the like button
+    FB.Event.subscribe('edge.create', function(targetUrl) {
+        trackSocialEvent('facebook', 'like', targetUrl);
+    });
+
+    // Additional initialization code such as adding Event Listeners goes here
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   </script>
+
+
+
+    <div class="main" >
+
+        <!--********* header ********-->
+  
+
+  <header class="not-fixed">
+  
+    <div id="navbarRoot"></div>
+  <!--  end of nav -->
+
+    
+<!--EXTRA HEADER BLOCK-->
+   
+<!--//EXTRA HEADER BLOCK-->
+
+
+ </header>
+  
+  
+    <!-- notifications -->
+    <div class="row">
+      <div id="messages_container">
+          
+
+
+      </div>
+    </div>
+  <!-- end of notifications -->
+
+    
+	
+		
+	
+    <section class="tc-text">
+<h1 class="post-title">Terms &amp; Conditions of Use</h1>
+<span class="revised">Last Revised: August 23, 2020</span>
+
+<article>
+<header>
+<div class="icon-wrap">
+<div class="icon icon-1"> </div>
+</div>
+</header>
+
+<p>Welcome to <a href="https://www.powtoon.com">www.powtoon.com</a>, (the <b>"Site"</b>). The Site is operated by Powtoon Limited, a company incorporated under the laws of United Kingdom and situated in 28 Church Road, London, HA7 4XR (herein referred to as either: <b>"Powtoon"</b> or <b>"we"</b> in accordance with these Terms and Conditions of Use (herein referred to as <b>"Terms"</b>.</p>
+
+<ol>
+	<li>
+	<h4>Acceptance of the Terms</h4>
+
+	<p>These Terms govern your use of any services made available through the Site or Powtoon’s software ( <b>"Software"</b>), whether by us, our affiliates and/or any third party on our behalf (together with the Site and the Software, the <b>"Services"</b>). By using the Services or any part thereto, you acknowledge that you have read and understood these Terms, including the Privacy Policy, and you agree to be bound by them and to comply with all applicable laws and regulations regarding your access and use of the Services.</p>
+
+	<p>By using the services you warrant and represent that you are of sufficient age under the law of the jurisdiction in which you reside to enter into a binding legal agreement.</p>
+
+	<p>If you do not agree to these terms and/or the privacy and security policy or other policies, guidelines, or instructions posted on the Site, do not use the Services.</p>
+
+	<p>Your use of the Services is subject to any license agreement or user agreement that accompanies or is included with the Services, the download process, and documents that accompany the Services.</p>
+
+	<p>If there is a conflict or inconsistency between these Terms and the rules, license agreement, user agreement or other terms and conditions for a specific use of the Services, or for specific content download or use, the latter shall have precedence with respect to your access and use of that area of the Services.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Prohibited Activities</h4>
+
+	<p>In connection with your use of the Services, except as permitted under the “Presentations” section below, we expressly forbid you to:</p>
+
+	<ol>
+		<li>Republish material made available in connection with the Services in any physical or electronic media documents, including (but not limited to) republication on another website;</li>
+		<li>Sell, rent, or sub-license material made available in connection with the Services;</li>
+		<li>Display any material made available in connection with the Services in public;</li>
+		<li>Reproduce, duplicate, copy, or otherwise exploit material made available in connection with the Services for a commercial purpose;</li>
+		<li>Edit or otherwise modify any material made available in connection with the Services;</li>
+		<li>Redistribute material made available in connection with the Services- except for Presentations or other content specifically and expressly made available for redistribution, and then only within your organization;</li>
+		<li>Republish or reproduce any part of the material made available in connection with the Services through the use of iFrames or screen-scrapers, unless explicitly permitted;</li>
+		<li>Use any part of the Services in any way that causes, or may cause, damage, or impairment of the availability or accessibility of Powtoon and the Services, or in any way which is unlawful, illegal, fraudulent, or harmful or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity;</li>
+		<li>Use the material made available in connection with the Services to copy, store, host, transmit, send, use, publish, or distribute any material which consists of (or is linked to) any spyware, computer virus, Trojan horse, worm, keystroke logger, rootkit, or other malicious computer software;</li>
+		<li>Conduct any systematic or automated data collection activities on or in relation to the material made available in connection with the Services without Powtoon’s express written consent. This includes:
+		<ul>
+			<li>Scraping;</li>
+			<li>Data Mining;</li>
+			<li>Data Extraction;</li>
+			<li>Data Harvesting;</li>
+			<li>“Framing”- iFrames;</li>
+			<li>Article Spinning.</li>
+		</ul>
+		</li>
+		<li>Use the material made available in connection with the Services, or any part of it, to transmit or send unsolicited commercial communications;</li>
+		<li>Use the material made available in connection with the Services for any purposes related to marketing without the express written consent of Powtoon.</li>
+		<li>Use the Services to distribute or make available for download media files (images, audio or video) or any other types of files, for purposes other than distributing content created by using the Services.</li>
+	</ol>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Your Account on Powtoon</h4>
+
+	<ol>
+		<li><b>Registration</b>
+
+		<p>In order to receive access to our Services, and become a user (<b>"User"</b>) you must create your account on Powtoon (the <b>"Account"</b>). To open an Account on Powtoon, You must provide us with your email address and select a password (the <b>"Registration"</b>). You may sign up via social media network (such as google, microsoft etc.), in which case Powtoon will receive your email address from such network for the Registration process. By opening an Account, you agree to provide Powtoon with accurate, complete, and up-to-date information. Upon Registration, you will be required to choose your Account Type and Account Plan.</p>
+
+		<p>If you are a Powtoon for Education User, you may be required to select a user name instead of providing your email address.You may not select a user name that impersonates someone else, intended to disguise the User's identity, is or may be illegal, protected by trademark or other proprietary rights, vulgar or offensive, or may cause confusion. Powtoon reserves the right to reject any user name in its sole discretion at any time.</p>
+
+		<p><b>You hereby confirm and approve the collection of the personal details required in order to set up your User Account.</b></p>
+		</li>
+		<li><b>Password Security</b>
+		<p>You hereby acknowledge and agree: (i) not to share your password, account information, or access to Powtoon Content; (ii) that you are responsible for maintaining the confidentiality of password(s) and account information and for all activities that occur under your password(s) or Account(s) or as a result of your access to the Powtoon Platform; and (iii) to immediately notify Powtoon of any unauthorized use of your Account or any other breach of security. Powtoon will not be liable for any loss and/or damage you may incur as a result of someone else using your password and Account with or without your permission.</p>
+		</li>
+		<li><b>Individual License</b>
+		<p><u>Individual License Terms:</u> for each license purchased by a User, only the named user, each an “Authorized User” (any reference to a User herein shall be considered as an Authorized User)may log in per license to the Powtoon Platform using the same account at any given time(i.e., use of a generic email account such as marketing@powtoon.com is not allowed).Multiple users utilizing a User Accountand password assigned to a Powtoon license to login to the Services is a direct violation of these Terms, which will result in immediate termination of your right to access the Services and the immediate purge of your data. Powtoon will not be liable for any loss and/or damage you incur as a result of such immediate termination of your right to access to the Powtoon Service, and the immediate deletion of your data.</p>
+		</li>
+	</ol>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Account Types</h4>
+
+	<ol>
+		<li>In order to use Our Services, you will be required to choose an account type and Account Plan. Powtoon currently has four Account types: (i) Free User; (ii) Premium; (iii) Powtoon for Business; and (iv) Powtoon for Education (hereinafter <b>"Free User"</b>, <b>"Premium"</b>, <b>"Powtoon for Business"</b>, <b>"Powtoon for Education"</b> respectively and collectively as the <b>"Account Types"</b>).</li>
+		<li>Except for the Free User Account (i.e. a subset of our product, which we offer to You for free), each respective Account Type contains various plans. Each plan determines the features that will become available to you upon registration, to better suit your personal needs (the <b>“Plan"</b>). You may find the following pricing / plan pages, which describe in detail each Plan within each respective Account Type, as set forth in the respective links herein below:
+		<ul>
+			<li>Premium Account Pricing Page;</li>
+			<li>Powtoon for Business Account plan Page;</li>
+			<li>Education Account Pricing Page.</li>
+		</ul>
+
+		<p>(the <b>"Pricing Pages"</b>).</p>
+
+		<p>The Plan types, names, and listed prices and any other detail in the Pricing Pages may change from time to time. When you purchase a Plan, you agree to purchase the plan as detailed at the time of purchase. Unless You have purchased the Powtoon for Business (i.e. Plans available via the Powtoon for Business Account), You acknowledge and agree that Powtoon may, without prior notice, limit, or decrease the maximum storage capacity for each user account.</p>
+
+		<p>(all Users subscribing to Plans under any of the Account Types other than "Free Users" shall be referred to as <b>"Paying Users"</b>, collectively)</p>
+		</li>
+		<li><b>Free User</b>
+		<p>The Free User Account is offered to you for free, on an AS-IS basis, and contains a minimum set of features in order to give you a taste of our Services. To get more features and experience the full potential of our Services, try one of our many Plans, as listed in the Pricing Pages hereinabove.</p>
+
+		<p>(Users subscribing as Free Users, as set forth in this Section 5.1, shall be referred to as <b>"Free Users"</b>)</p>
+		</li>
+		<li><b>Premium </b>
+		<p>The Premium Account grants you exclusive for-pay features, which vary from Plan to Plan, in accordance with your specific needs and proficiency. Our Premium Account aims to benefit a wide range of Users: from Users who simply wish to enjoy a certain number of features for business use, to expert professionals (such as designers and animators) who require more features to use our Platform for professional use.</p>
+
+		<p>All premium plans and licenses (that have a monetary value, including Powtoon Premium and Powtoon for Business plans) are defined as 'business usage software' and are regarded as exclusively being used for business purposes.</p>
+
+		<p><strong>Please be advised that as a Premium user, the content you create is licensed to the specific email address you subscribed with, not to the company you work for. </strong></p>
+		<strong> </strong>
+
+		<p><b>If you wish to purchase a license more suitable for corporate needs – please refer to our Powtoon for Business plan hereunder:</b></p>
+		</li>
+		<li><b>Powtoon for Business</b>
+		<p>Powtoon for Business was built from the ground level up to meet the security and privacy requirements of large-scale corporations and is ISO 27001 certified. If you are using Powtoon in a corporate domain, we strongly advise upgrading your Account to one of our Powtoon for Business Plans. Be advised that as a Powtoon for Business user, the content you create is owned by your company. For assistance in migrating to Powtoon for Business, <a href="/enterprise/" rel="noopener" target="_blank">click here</a>. For details on the security features of the Powtoon for Business Plans, <a href="https://static.powtoon.co/cms-assets/lp/enterprise/Enterprise_Generic_Security_FAQ.pdf" rel="noopener" target="_blank">click here</a>.</p>
+		</li>
+		<li><b>Powtoon for Education</b>
+		<p>The Education Account is made specifically for classroom usage in mind and may benefit both individual students, teachers, and even an entire classroom. For more details, <a href="/edu-home/" rel="noopener" target="_blank">click here</a>.</p>
+
+		<p>Please note that students under the age of 18 may use Powtoon, in accordance with these Terms with parental permission and teacher supervision.</p>
+		</li>
+	</ol>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Fees and Payment Terms</h4>
+
+	<p>In consideration of the Services provided by Powtoon, Paying Users shall pay Powtoon the fees on a monthly/yearly basis, under such terms as stated in the Pricing Pages with respect to the applicable Plan (the <b>"Subscription Fees"</b>).</p>
+
+	<p>Following the first payment of the Subscription Fees which shall be paid immediately upon subscribing to your elected Plan (the <b>"First Payment"</b>), the Subscription Fees shall be paid automatically by the Paying User, as consideration for your capability to make use of our Services, until Your subscription is terminated, as stipulated in Section 6 hereunder in our Term and Termination policy (<b>"Subscription Period"</b>).</p>
+
+	<p>Notwithstanding the foregoing, Powtoon for Business Users will be required to actively pay the Subscription Fees on a monthly/yearly basis, as applicable (i.e. such payment will not be collected automatically). Failure to pay the Subscription Fees, for any reason, including, without limitation, the invalidity of payment method, may result in the Termination of the Account, as stipulated in Section 6 hereunder in our Term and Termination policy.</p>
+
+	<p>Powtoon reserves the right to change any of its fees, including without limitation the Subscription Cost, as stated in such applicable Pricing Page, from time to time, by posting the changes at the applicable location on the Site fourteen (14) days in advance, but with no advance notice required for temporary promotions or any changes that result in the reduction of such fees.</p>
+
+	<ol>
+		<li><b>Payment Method.</b>
+
+		<p>Powtoon may accept payments made by credit card, wire transfer, debit cards, or other online payment services (such as “PayPal”) all as shall be detailed during the payment process on the Site. Paying Users may also pay via a bank transfer as shall be agreed with Powtoon. All payments made by the User must be made in cleared funds, meaning without any deduction or set-off, even if some portion of the amount paid by User is required by any bank, or governmental, fiscal, or other authority. If the User is required to make any such deduction, the User must pay such additional amounts as are necessary to ensure Powtoon receipt of the full amount charged.</p>
+		</li>
+		<li><b>Third-Party Payment Processors </b>
+		<p>Charges made in connection with the Services may be facilitated through PayPal, Stripe Check-Out, or other third-party payment processing services (<b>Payment Processors"</b>). By agreeing to these Terms or continuing to use the Services, User agrees to be bound by the Payment Processors’ terms of use, as they may be modified by them from time to time. As a condition of Powtoon enabling payment processing services through the Payment Processors, the User agrees to provide such Payment Processors accurate and complete information as necessary. Powtoon may replace its Payment Processors without notifying the User. Powtoon will not be responsible or liable for any claims, damages and/or liabilities in connection with any acts or omissions of such Payment Processor, as stipulated in this Section 6.2 herein.</p>
+		</li>
+		<li><b>Fraud Protection</b>
+		<p>To protect against potential fraud, Powtoon/or any third party on Powtoon’s behalf (including, Recurly, which provides Powtoon with subscription billing services) may take steps to verify the validity of the credit card information you provide to us. The verification process may include debiting an amount between $0.01 and $0.99 from your credit card account and then immediately crediting the same amount back to your credit card, as well as asking you to verify the amount debited in order to confirm that you are in possession of your credit card. Powtoon will only use this process to screen for fraud and will not otherwise debit your credit card account except as part of a transaction conducted through your account for the Service. By providing Powtoon with your credit card information, you authorize Powtoon to debit and credit your credit card account for an amount less than one dollar for such verification purposes.</p>
+		</li>
+	</ol>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Term and Termination</h4>
+
+	<ol>
+		<li><b>Free Account</b>
+
+		<p>The Services provided in consideration for subscribing as a Free User shall commence and be made available for access by the User on the date Registration is made through the Site and shall continue unless earlier suspended, disabled, or deleted in accordance with these Terms.</p>
+		</li>
+		<li><b>Termination of Paying Users’ Accounts</b>
+		<p>The Services provided in consideration for subscribing as a Paying User shall commence and be made available for access by the Paying User subject to the payment of its Subscription Fees, and shall continue for as long as the Paying User duly pays its Subscription Fees, unless earlier Terminated (either by the Paying User or Powtoon), suspended, disabled or deleted in accordance with these Terms.</p>
+
+		<p>You may choose to Terminate Your respective Account, at any time, in accordance with these Terms, by logging into your account on the Site or if you have purchased one of the Plans under Powtoon for Business, simply by duly discontinuing your next outstanding Subscription Fee. The service will remain available until the date of the next scheduled Subscription Fee, at which point the Termination will come into effect.</p>
+
+		<p>Upon termination of the Paying User’s account, the following will occur (<b>"Termination"</b>):</p>
+
+		<ol>
+			<li>To the extent no Subscription Fees will be paid by a Paying User, the User shall only have access to the minimum set of features retained for Free Users, and for all intents and purposes shall be reclassified as a Free User;</li>
+			<li>Any and all features associated with the Paying User’s account shall be revoked and the User’s ability to use such features will become disabled or restricted, as applicable. In the case that the User decides to re-subscribe as a Paying User, all such features shall become available again, mutatis mutandis, and its user account will be reclassified as a Paying User account;</li>
+			<li>The User Content (as defined below) shall be retained in our systems for a period of 14 days, in accordance with and subject to our Privacy Policy (the <b>"Retention Period"</b>), following which Powtoon shall have the right to delete any and all User Content in excess of the permitted storage under the Free User license terms.</li>
+			<li>A User may request to delete his User Account, under which such User Account shall be deleted within 30 days following Powtoon’s receipt of such request.;</li>
+			<li>THE USER ACKNOWLEDGES AND AGREES THAT ANY USER CONTENT, INCLUDING WITHOUT LIMITATION ANY OTHER DATA THAT WILL REMAIN IN OUR SYSTEMS PAST THE END OF THE RETENTION PERIOD WILL BE PERMANENTLY DELETED.</li>
+		</ol>
+		</li>
+		<li><b>Breach of Terms</b>
+		<p>THE COMPANY RESERVES THE RIGHT, TO DELETE, DISABLE, TERMINATE AND/OR SUSPEND YOUR FREE/PAYING USER ACCOUNT INCLUDING ALL THE SUBSCRIPTION CONTENT, AT ANY POINT, AT THE COMPANY’S SOLE DISCRETION AND WITHOUT PRIOR NOTICE, IF THE COMPANY REASONABLY BELIEVES THAT:</p>
+
+		<ol>
+			<li>You violate these Terms;</li>
+			<li>You violate any applicable law;</li>
+			<li>there has been unauthorized use of your access credentials;</li>
+			<li>You fail to pay the Subscription Cost, or any other fees or charges, associated with the use of the Services.</li>
+			<li>You have infringed upon the intellectual property rights of others.</li>
+			<li>There has been a breach by you of any of your representations, warranties, or obligations under these Terms.</li>
+		</ol>
+		Upon the deletion of your User account, the following will occur:
+
+		<ul>
+			<li>Your User Account shall be canceled and closed, and your User ID and password shall be deactivated;</li>
+			<li>You will surrender and relinquish all claims to any coupons, gifts or credits which you may be entitled to;</li>
+			<li>All Payment Period Content shall be duly deleted from our systems, within 30 days following our notice of deletion, and shall cease to be available to you;</li>
+		</ul>
+
+		<p>PLEASE NOTE THAT THE TERMINATION OR DELETION OF YOUR USER ACCOUNT SHALL NOT RELIEVE YOU OF ANY OBLIGATIONS (INCLUDING, PAYMENT OBLIGATIONS) THAT MAY HAVE ARISEN PRIOR TO SUCH TERMINATION.</p>
+
+		<p> </p>
+		</li>
+	</ol>
+	</li>
+	<li>
+	<h4>Cancellation and Refund Policy</h4>
+
+	<p>You are entitled to cancel your subscription and request a refund within 14 days of activating your subscription, in accordance with and subject to the statutory protection for consumers under the UK Consumer Contracts Regulations 2014 (the “Regulations”). Refunds will be processed to users within thirty (30) days of initiating the refund process unless otherwise notified to the user. Refunds will however not be provided to users who have used our AI features in the product more than five times within the first 14 days of purchasing a subscription. Once the 14-day period has elapsed, no refunds will be issued for any reason related to the usage of AI features within the product. If you have any questions or concerns regarding our refund policy, please contact our customer support team for further assistance.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>User Content</h4>
+
+	<p>THE BELOW DOES NOT APPLY WITH RESPECT TO PAYING USERS.</p>
+
+	<p>In these Terms, <b>"User Content"</b> means material (including without limitation text, images, audio material, video material, and audio-visual material) that you (or third parties acting on your behalf) submit to the Site, stored or generated on or by using the Services, for the creation of Presentations (as defined below). By submitting User Content to the Services you grant to Powtoon a worldwide, perpetual, irrevocable, non-exclusive, royalty-free license to use, reproduce, adapt, publish, translate and distribute such User Content used in the Presentation.</p>
+
+	<p>You may not submit any User Content to the Services that is, or has ever been, the subject of any threatened or actual legal proceedings or that may infringe any third party rights or any applicable law.</p>
+
+	<p>You may not upload, post or otherwise use in any way in connection with the Services any text, video or audio recording, images or other material protected by copyright, trademark, or any other proprietary right without the express permission of the owner of such copyright, trademark or other proprietary rights. The burden of determining that any material is not protected by any such right is on you. You shall be solely liable for any damage resulting from any infringement of copyrights, trademarks, proprietary rights, or any other harm resulting from your violation of this prohibition.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Presentations</h4>
+
+	<p>You acknowledge that you are responsible for the content of any visual and/or audio presentations or portions thereof (<b>"Presentations"</b>) that you import to, create, store on, or access through the Services. Your responsibility for the content and appearance of each Presentation includes, but is not limited to, its legality, reliability, appropriateness, and originality.</p>
+
+	<p>If you are a Free User or a Paying User and your account was terminated, your Presentations will be available for any third party to view at a publicly available URL, in accordance with these Terms. You acknowledge that third parties may view and have access to your Presentations and that Powtoon has no control over third parties’ use of your Presentations. Presentations made by Free Users may be indexed by search engines.</p>
+
+	<p>If you elect to become a <b>Paying User</b>, your Presentations will, by default, not be made public or indexed on search engines (to the extent that Your Paying Account will not be terminated for any reason). You may however also allow your Presentations to be made available publicly.</p>
+
+	<p>As a Powtoon for Business user, your Presentations will, by default, not be made public or indexed on search engines, including after your account has expired/terminated. You may however allow your Presentations to be made available publicly.</p>
+
+	<p>You shall have the right to download any Presentations as PDF documents, PPTX presentation or mp4 video files you create through the Services.You represent and warrant that any use of your Presentations does not violate the privacy rights, publicity rights, trademark rights, copyrights, contract rights, or any other rights of any person and is in accordance to any applicable laws.</p>
+
+	<p>You acknowledge and agree that unless expressly stated otherwise in your purchased Plan terms or in these Terms, your license permits you to only make Personal and business use of the Presentations you create under our Services. For the avoidance of doubt, You may not resell ANY of the Presentation, their copies, or any part thereof.</p>
+
+	<p>Notwithstanding the paragraph above, if you have purchased the Agency Plan under the Premium Account, you will be entitled to third party ressel rights, meaning you will be allowed to get paid for your Powtoon creation services by a third party. Purchases of the plans under Powtoon for Business, will be entitled to such resell right, as long as it is stated as such explicitly in an MSA or an SOW.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Intellectual Property Ownership</h4>
+
+	<p>The Services (including without limitation, the design, functionality, and documentation related thereto) and all content included on or in connection with the Services, including Third Party Materials (as defined below) , all text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations and software and all trademarks, service marks, brand and trade names and logos appearing on the Site or Software or otherwise (<b>"Powtoon's Content"</b>), are and shall remain at all times the sole and exclusive property of Powtoon or its third party content suppliers, and is protected by international copyright laws. It is hereby clarified, that the User cannot use any Content, not as part of the output of the Services. The User agrees that other than with respect to the limited rights of use as provided under these Terms, such User shall not have or be deemed as having any rights of any nature in Powtoon's Content.</p>
+
+	<p>You hereby undertake that You will not, nor you allow any third party on your behalf, to modify in any manner or remove or otherwise infringe any such proprietary intellectual property and/or copy, edit, reverse engineer, decompile, re-license, sell or reproduce any part of the Powtoon's Content or otherwise use Powtoon's Content in any way that is not their intended use (for example, the Powtoon's Content can be used only as part of the video and cannot be duplicated or copied and otherwise used in any other way, physically or electronically).</p>
+
+	<p>Your use of the Services does not give you any authority to act as an agent, legal representative, or employee of Powtoon, or of any third party with whom Powtoon has a relationship, and you agree not to represent that you are otherwise.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Third-Party</h4>
+
+	<ol>
+		<li><b>Third-Party Material</b>
+
+		<p>Users may be able to access, review, display or use third-party services, resources, content, or information (collectively, the <b>"Third Party Materials"</b>) via the Services or any of its features.</p>
+
+		<p>Unless you are a Premium User or a Powtoon for Education User, You hereby acknowledges and agrees that it is permitted to display the Third Party Materials only and only for personal or business use. No other type of display is permitted. Unless User has permission from the creator or supplier, User agrees not to download, cache, reproduce, modify, edit, alter, or enhance any of the Third-Party Material.</p>
+
+		<p>The User acknowledges sole responsibility for and assumes any and all risks arising from its access to, use of, or reliance upon any such Third Party Materials. Powtoon disclaims any liability that User may incur arising from its access to, use of, or reliance upon such Third Party Materials through the Services. User acknowledges and agrees that Powtoon: (i) is not responsible for the availability, accuracy, integrity, quality or lawfulness of such Third Party Materials or the products or services on or available from such Third Party Materials; (ii) has no liability to User or any third party for any damage, harm, or loss suffered as a result of its access to or use of such Third Party Materials. User's ability to access or link to Third-Party Materials or any third party services does not imply any endorsement or warranty by Powtoon of Third Party Materials or any such third party services.</p>
+		</li>
+		<li><b>Third Party Premium Media</b>
+		<p>Media files provided by media hubs such as “Storyblock” and “Getty Images” including videos and images, may be made available to you as part of the features offered by your respective Plan, to be used by you through the Services (<b>"Premium Media"</b>). Your use of the Premium Media shall be subject to the applicable terms of use of each owner.</p>
+
+		<p>With respect to the use of “Storyblock” and “Getty Images”, please find the applicable terms of use in the linkes below:<br>
+		<a href="https://www.gettyimages.com/company/terms">https://www.gettyimages.com/company/terms</a><br>
+		<a href="https://www.storyblocks.com/terms-of-service">https://www.storyblocks.com/terms-of-service</a></p>
+
+		<p>Upon purchasing a Plan which unlocks Premium Media features, the User will be granted an individual, non-exclusive, non-transferable, worldwide, revocable right, during the Subscription Period, to use Premium Media, or any part thereof, only for the purpose of incorporating Premium Media into Presentations created by the User subject to the respective Plan’s specific terms and Conditions.</p>
+
+		<p>THE COMPANY DISCLAIMS ALL EXPRESS, IMPLIED AND STATUTORY WARRANTIES AND CONDITIONS WITH REGARD TO THIRD PARTY MATERIALS AND PREMIUM MEDIA, INCLUDING, BUT NOT LIMITED TO, ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS.</p>
+		</li>
+		<li><b>Export to Third Party Platforms</b>
+		<p>Some Plans may enable you to export certain User Content made by you to various Social media platforms (such as Youtube, Facebook, Wistia, etc.). (the <b>"Third Party Platforms"</b>). The option to export such content is implemented in accordance with each respective platform’s Data API Client Application and subjected to such Third Party Platforms’s respective terms of use and Privacy Policy.</p>
+
+		<p>The User is advised that in order to upload User Content to a specific platform, the User may be required to create a separate account on such platform (as applicable). The User hereby acknowledges and agrees that Powtoon will not be responsible for any claim, damages, or liability that may occur due to its use of the Third Party Platforms.</p>
+		</li>
+		<li><b>Third Party Copyright Policy </b>
+		<p>Powtoon is not responsible for breach of copyright laws should a user choose to screencast their Presentation for the purpose of using copyrighted videos or content. Powtoon takes no responsibility, nor can be held liable, for any breach carried out by a User with third party software. It is each customer’s responsibility to uphold and respect their countries’ copyright laws.</p>
+		</li>
+	</ol>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Limitations of Liability</h4>
+
+	<p>Your use of the Services is at your risk. The Company does not warrant or represent that any content associated with or used in connection with the Services is factual or error-free, or that the use of Powtoon Content or any Third Party Material will not infringe rights of third parties.</p>
+
+	<p>The Company does not warrant that the functional aspects of the Services will be available without interruption, error-free, or that the Services or the servers that make it available are free of viruses or other harmful components. The Company reserves the right to correct, at any time, and without prior notice, any errors in the Services. If your use of the Services, results in the need for servicing or replacing property, material, equipment or data, or results in injury to persons or damage to property, Powtoon is not responsible for those costs.</p>
+
+	<p>Without limiting the foregoing, you acknowledge and agree that everything associated with the Services, are provided “AS IS” and “as available” without warranty of any kind, express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+
+	<p>POWTOON MAKES NO WARRANTIES ABOUT THE ACCURACY, RELIABILITY, COMPLETENESS, OR TIMELINESS OF THE MATERIAL CONTAINED ON THE SITE, THE SOFTWARE, AND ON POWTOON’S CONTENT, OR RESULTS TO BE OBTAINED FROM USING POWTOON’S SERVICES. EXCEPT AS OTHERWISE SPECIFICALLY SET FORTH HEREIN, POWTOON DOES NOT MAKE ANY REPRESENTATION ABOUT THE QUALITY OF ANY PRODUCT, SERVICES, INFORMATION, OR OTHER MATERIAL PURCHASED OR OBTAINED BY YOU THROUGH USE OF THE SERVICES.</p>
+
+	<p>TO THE FULLEST EXTENT PERMITTED UNDER THE APPLICABLE LAW, IN NO EVENT SHALL THE COMPANY, ITS SUBSIDIARIES, OR AFFILIATED ENTITIES OR THEIR RESPECTIVE OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR OTHER REPRESENTATIVES BE LIABLE FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES INCLUDING BUT NOT LIMITED TO LOSS OF DATA, USE, OR PROFITS (WHETHER INVOLVING ALLEGATIONS OF BREACH OF CONTRACT, WARRANTY, NEGLIGENCE OR OTHERWISE) AND IRRESPECTIVE OF WHETHER IT HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, RESULTING FROM YOUR ACCESS TO, USE OF, OR INABILITY TO USE, THE SERVICES AND CONTENT.</p>
+
+	<p>Without prejudice to the generality of the foregoing, Powtoon does not warrant that:</p>
+
+	<ul>
+		<li>The Services or any part therein will be constantly available, or available at all</li>
+		<li>That transmission of data to or from the Services will occur at any minimum speed</li>
+		<li>The information made available through the Services is complete, true, or accurate.</li>
+	</ul>
+
+	<p> </p>
+
+	<p>Powtoon is and shall be entitled, at any time and for any reason, to modify, adjust, or discontinue any aspect or feature of the Services and to restrict access to certain areas of the Services for purposes of performing maintenance activities, troubleshooting, bug fixes and patches, installing version updates and/or upgrades and any other activity which requires such restriction or modification to the Services, at Powtoon’s discretion.</p>
+
+	<p>Except as required by law or otherwise provided below, to the extent that access to the Services are provided to you free-of-charge, Powtoon shall not be liable to you for any loss whatsoever.</p>
+
+	<p>If you are a Paying User, liability for direct damages shall be limited to the Subscription Fees paid to Powtoon, but in no event more than US$500.</p>
+
+	<p>These limitations of liability apply even if Powtoon has been expressly advised of the potential loss. Nothing on the Services, or in these Terms, constitutes or is meant to constitute, advice of any kind. If you require advice in relation to any legal, financial, or other matter you should consult the appropriate professional.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Exceptions</h4>
+
+	<p>Nothing in these Terms will exclude or limit any warranty implied by law that it would be unlawful to exclude or limit. Nothing in in these Terms disclaimer will exclude or limit the liability of Powtoon in respect of any: Death or personal injury caused by the negligence of Powtoon or its agents, employees, or shareholders/owners; fraud or fraudulent misrepresentation on the part of Powtoon, or matter as to which it would be illegal or unlawful under applicable law for Powtoon to exclude, limit, or to attempt or purport to exclude or limit its liability.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Limited Liability Entity</h4>
+
+	<p>You accept that, as a limited liability entity, Powtoon has an interest in limiting the personal liability of its officers and employees. You agree that you will not bring any claim personally against Powtoon’s officers or employees in respect of any losses you suffer in connection with the Services.</p>
+
+	<p>Without prejudice to the foregoing paragraph, you agree that the limitations of warranties and liability set out in the Services disclaimer will protect Powtoon’s officers, employees, agents, subsidiaries, successors, assigns and sub-contractors as well as Powtoon.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Indemnity</h4>
+
+	<p>You hereby undertake to indemnify Powtoon and to keep Powtoon harmless against any losses, damages, costs, liabilities, and expenses (including without limitation legal expenses, and any amounts paid by Powtoon to a third party in settlement of a claim or dispute on the advice of Powtoon’s legal advisers) incurred or suffered by Powtoon arising out of any breach by you of any provision of these Terms, or arising out of any claim that you have breached any provision of these terms and conditions.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Additional Actions by Powtoon</h4>
+
+	<p>Without prejudice to Powtoon’s other rights under these Terms, if you breach these Terms in any way, Powtoon may take such action as Powtoon deems appropriate to deal with the breach, including suspending your access to the Services, prohibiting you from accessing the Services, blocking computers using your IP address from accessing the Services, contacting your internet service provider to request that they block your access to the Services, and/or bringing court proceedings against you.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Variation</h4>
+
+	<p>The Company may revise these Terms from time to time, with or without prior notice. Revised terms and conditions will apply to the use of the Services from the date of the publication of the revised Terms on the Site. Please check this page regularly to ensure you are familiar with the current version.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Assignment</h4>
+
+	<p>The Company may transfer or sub-contract Powtoon’s rights and/or obligations under these Terms without notifying you or obtaining your consent. You may not transfer, sub-contract, or otherwise deal with your rights and/or obligations under these Terms.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Severability</h4>
+
+	<p>If a provision of these terms and conditions is determined by any court, or other competent authority, to be unlawful and/or unenforceable, the other provisions will continue in effect. If any unlawful and/or unenforceable provision would be lawful or enforceable if part of it were deleted, that part will be deemed to be deleted, and the rest of the provision will continue in effect.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Entire Agreement</h4>
+
+	<p>These Terms, together with Powtoon’s Privacy Policy constitute the entire agreement between you and Powtoon in relation to your use of the Services and supersede all previous agreements in respect of your use of the Services.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Law and Jurisdiction</h4>
+
+	<p>These terms and conditions will be governed by and construed in accordance with the laws of the United Kingdom, and any disputes relating to these terms and conditions will be subject to the exclusive jurisdiction of the courts of the United Kingdom.</p>
+
+	<p> </p>
+	</li>
+	<li>
+	<h4>Contact Information</h4>
+
+	<p>Powtoon Limited, 28 Church Road, London HA7 4XR, UK<br>
+	Tel: +44 20 7193 6920<br>
+	Fax: +44 700 5963430<br>
+	CEO: Ilya Spitalnik<br>
+	UK Company registration: 07820729<br>
+	VAT num.: GB 202 866 029<br>
+	Email: support@powtoon.com</p>
+	</li>
+</ol>
+</article>
+</section>
+
+
+
+
+  
+    
+  
+
+
+
+
+   
+      
+        <div id="footerRoot"></div>
+      
+    <!-- end footer block -->
+    
+      <div id="cookies-banner" class="cookies-banner">
+    <div class="cookies-banner-text">
+        <span>
+        This website uses cookies to ensure you get the best experience on our website.
+        </span>
+        <a href="/privacy-policy/#aboutcookies" class="learn-more">Learn more</a>
+    </div>
+    <a id="close-banner" class="btn-got-it">Got it</a>
+</div>
+
+
+    
+    </div><!-- end of container-->
+    
+
+<div class="hide" id="popup-container"></div>
+<div class="overlay hide track"></div>
+
+
+
+    <!--***************** Custon Javascript code *****************-->
+    
+    <script src="https://static.powtoon.co/js/social.share.js"></script>
+
+  
+    <script src="https://static.powtoon.co/js/modernizr-2.6.2.js"></script>
+  
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	/* Bootstrap-3 CDN fallback */
+	var bootstrap3_loaded = (typeof $().emulateTransitionEnd === 'function');
+	(bootstrap3_loaded) || loadScript('https://static.powtoon.co/vendor/bootstrap/3.4.1/bootstrap.min.js');
+</script>
+      <!--<script src="https://static.powtoon.co/js/jquery.placeholder.js"></script>-->
+
+  
+
+  
+
+  
+  <!--COMMON SCRIPTS-->
+  
+
+
+<!-- Common Basic Scripts Start -->
+
+
+<!-- CHEQ INVOCATION TAG (noscript) -->
+
+<noscript>
+  <iframe src='https://obs.cheqzone.com/ns/0e8f3de75aa63b426527697d5a230381.html?ch=cheq4ppc' width='0' height='0' style='display:none'></iframe>
+</noscript>
+    
+
+<!-- End CHEQ INVOCATION TAG (noscript) -->
+
+
+<script type="text/javascript">
+  (window.jQuery) || document.write('<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"><\/script>');
+  (window.jQuery) || document.write('<script type="text/javascript" src="https://static.powtoon.co/vendor/jquery/3.5.1/jquery.min.js"><\/script>');
+</script>
+
+<script>
+    // Catch ajax errors with sentry.
+    $(document).ajaxError(function (event, jqXHR, ajaxSettings, thrownError) {
+      Sentry.captureMessage(thrownError || jqXHR.statusText, {
+        extra: {
+            type: ajaxSettings.type,
+            url: ajaxSettings.url,
+            data: ajaxSettings.data,
+            status: jqXHR.status,
+            error: (thrownError || jqXHR.statusText),
+            response: jqXHR.responseText.substring(0, 100),
+        },
+      });
+    });
+</script>
+
+
+  <script type="text/javascript" src="https://static.powtoon.co/js/jquery.analytics-event-tracking.js" crossorigin="anonymous"></script>
+  
+
+
+  
+    <script type="text/javascript" src="https://static.powtoon.co/js/ecommerce.js?24.2.5.7.2"></script>
+    <script type="text/javascript">
+      $('#navbar_premium_pricing_lang, #navbar_upgrade_lang').click(function(){
+        if (typeof EC === 'object') {
+          // TODO move later on from common scripts
+          var id = $(this).data('category') == 'Premium' ? 'Nav-Bar-Premium' : 'Nav-Bar-Pricing';
+          EC.addPromo(id);
+          EC.setAction("promo_click");
+        }
+      })
+    </script>
+    
+
+
+
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ETEZYHQ8GQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-98Q92H2JTQ');
+</script>
+
+
+<script type="text/javascript">
+  // start Google Analytics
+  //
+  
+      // UNIVERSAL CODE
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      
+          ga(
+            'create',
+            'UA-25522774-1',
+            'auto'
+          );
+      
+
+        ga("require", "ec");
+        ga('require', 'displayfeatures');
+
+      // default pageview from common scripts
+      
+          trackPageView();
+      
+
+      function closure(f, arg) {
+        function wrapper() {
+          f(arg)
+        }
+        return wrapper
+      }
+
+      //checking if analyticsEventTracking is a function on a timeout...
+      function checkErrorNotFunc(delays){
+
+        var body = $(document.body);
+        if( typeof body.analyticsEventTracking !== 'function' ) {
+            if (delays.length) {
+              console.log('Error check: ' + delays[0] + 'ms')
+              setTimeout(closure(checkErrorNotFunc, delays.slice(1)), delays[0])
+            } else {
+              console.log('No function found.');
+            }
+        } else {
+            body.analyticsEventTracking();
+        }
+
+
+      }
+      checkErrorNotFunc([0, 200, 500, 1500, 10000]);
+
+      setTimeout(function() {
+          trackEventByParams('unbounce', '15_sec');
+      }, 15000);
+
+      
+  
+// end google analytics
+</script>
+
+
+<script type="text/javascript">
+// global flags
+var is_logged_in = false;
+var placeholder_viewed = false;
+
+// toggle function
+function setCookie(str, exp) {
+    var exp = exp || 30;
+    $.cookie(str, '1', {expires: exp, path: '/'});
+}
+
+function toggle_maintenance(maintenance, customHTML, iframeUrl) {
+    if ($('.maintenance')[0]) {
+        $('.maintenance').slideToggle();
+        return
+    }
+    var html = "";
+
+    if (customHTML) {
+        html = customHTML;
+    }
+    if (maintenance) {
+      html = '<div  style="width:1000px;margin:90px auto 0"><span><iframe src="/strip/website/" frameborder="0" border="0" width="870" height="60"></iframe></span><span style="color: #848484;background: transparent;width: 30px;margin-top: 17px;cursor: pointer;" class="close" onclick="$(\'.maintenance\').slideToggle()">X</span></div>';
+    }
+  if (iframeUrl) {
+    html = '<div  style="width:1000px;margin:90px auto 0"><span><iframe src="/notifications/' + iframeUrl + '/" frameborder="0" border="0" width="960" height="140"></iframe></span><span style="color: #848484;background: transparent;width: 30px;margin-top: 11px;cursor: pointer;" class="close" onclick="$(\'.maintenance\').slideToggle();">X</span></div>';
+  }
+  var cont = '<div style="display:none; text-align:center; margin-bottom: -70px;" class="maintenance">' + html + '</div>';
+
+  $('body').prepend(cont);
+  $('.maintenance').slideToggle();
+
+}
+
+var ie_ver = getInternetExplorerVersion();
+if (ie_ver === 11) {
+  $('body').addClass('ie');
+  $('body').addClass('ie11');
+}
+
+
+
+//popup function
+
+    function pop_container(html,track_name){
+        trackEventByParams('Show Placeholder', 'Click', track_name);
+        //this is redondent because function is async
+
+        $('#popup-container')
+                .html($(html))
+                .css('z-index', '100000000000');
+
+        $('#popup-container style').appendTo( $('head') );
+
+        var popupImg = $('#popup-container img');
+        var imgSrc = popupImg.attr('src');
+        if(imgSrc.indexOf('maintenance') !== -1)
+        {
+            popupImg.parent().addClass('maintenance_popup');
+        }
+
+        // handle the popup view
+        $('#popup-container').show();
+        $('.overlay').show();
+        $('.editor-overlay').show();
+
+
+        $('.close, .overlay, .pt-close').bind('click',function(){
+            $('#popup-container').hide();
+            $('.overlay').hide();
+            $('.editor-overlay').hide();
+        });
+    }
+
+
+    function show_placeholder(placeholder_url,template){
+        //prevent multi-calls, this flag might be set from external JS code (CMS for example)
+        if(placeholder_viewed)
+            return false;
+        var html;
+        template = template || false; //default = false
+        placeholder_url = placeholder_url || false;
+
+        if(template){
+            html = template;
+            placeholder_url = 'errors';
+        }
+
+        else if( placeholder_url.indexOf("image@") > -1){ //images should be 800 px to be centered
+            var src = placeholder_url.substring(6);
+            html ='<span class="close" style="width: 0px;height: 14px;background: transparent;position: absolute;right: 31px;top: 18px;">X</span><img src=' + placeholder_url.substring(6) + ' />';
+        }
+
+        else{
+            $.get(placeholder_url, function(data) {
+                html = data;
+                pop_container(html,placeholder_url);
+
+            });
+            return;
+        }
+
+        pop_container(html,placeholder_url);
+
+    }
+
+</script>
+
+<script type="text/javascript">
+  var setCSRFHeader = function (xhr, settings) {
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+      // Only send the token to relative URLs i.e. locally.
+      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+  };
+  $.ajaxSetup({
+    beforeSend: setCSRFHeader
+  });
+</script>
+
+  
+
+
+
+
+
+
+
+<!-- Google Code for Remarketing Tag -->
+<style>
+  iframe[name="google_conversion_frame"]{
+    position: absolute!important;
+    height:0 !important;
+  }
+</style>
+
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 993827035;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+
+  <script async defer type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+
+  <noscript>
+    <div style="display:inline;">
+      <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/993827035/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+  </noscript>
+
+ 
+
+  
+
+
+
+
+  
+
+
+
+<script type="text/javascript">
+
+  hide_default_launcher = false;
+  
+  
+</script>
+
+<script type="text/javascript">
+
+  "use strict";
+
+    function LoadDriftWidget() {
+       var t = window.driftt = window.drift = window.driftt || [];
+       if (!t.init) {
+           if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+           t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
+               t.factory = function (e) {
+                   return function () {
+                       var n = Array.prototype.slice.call(arguments);
+                       return n.unshift(e), t.push(n), t;
+                   };
+               }, t.methods.forEach(function (e) {
+               t[e] = t.factory(e);
+           }), t.load = function (t) {
+               var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+               o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+               var i = document.getElementsByTagName("script")[0];
+               i.parentNode.insertBefore(o, i);
+           };
+       }
+
+        drift.SNIPPET_VERSION = '0.3.1';
+
+     drift.load('86ibsi43s639');
+  };
+
+      
+
+    LoadDriftWidget();
+
+
+    drift.on('ready', function(api, payload) {
+        if (hide_default_launcher == true){
+            api.widget.hide();
+        }
+        
+     });
+
+     drift.on('message', function(payload) {
+         var dont_open_ids = [1221779, 1229263, 1790339, 1946259, 1246720, 1225415, 1102648, 1102680, 1102693, 1595040, 1106782159, 6028, 1106752, 1370158, 1757072, 1106640, 1596946, 16103322, 1604414, 1248091, 1971298, 1986614, 2176905, 2176802, 2097037, 1997254 , 1997347, 1997348, 1997360, 1997595, 1996144, 1469144, 2223161, 2223168, 2227389, 2246624, 2252157, 2252258, 2252267, 2258091, 2272176, 2272213, 2272222, 2272224, 2272226, 2274273, 2294525, 2294543, 2294545, 2327939]
+         if (dont_open_ids.indexOf(payload.playbookId) == -1)
+             drift.api.goToConversation({ conversationId: payload.conversationId });
+     });
+
+     if (window.matchMedia("(max-width: 1441px)").matches){
+
+        drift.on('sidebarOpen', function() {
+        setTimeout(function(){
+            var widget = document.getElementById('drift-widget');
+            widget.style.height = "92%";
+            widget.style.width = "400px";
+        }, 1);
+        });
+
+    } else {
+
+        drift.on('sidebarOpen', function() {
+        setTimeout(function(){
+            var widget = document.getElementById('drift-widget');
+            widget.style.height = "95%";
+            widget.style.width = "400px";
+        }, 1);
+        });
+
+    }
+
+
+</script>
+
+  
+
+<style type="text/css">
+    iframe#drift-widget{
+        height: 92% !important;
+        width: 400px !important;
+    }
+
+    @media only screen and (max-width:1440px){
+        iframe#drift-widget{
+        height: 95% !important;
+        width: 400px !important;
+    }
+    }
+</style>
+
+
+
+
+
+ 
+
+<!-- Common Scripts Start -->
+
+
+<script src="https://static.powtoon.co/js/jquery.gritter.min.js"></script>
+<script src="https://static.powtoon.co/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://static.powtoon.co/js/jquery.bootstrap-dropdown-hover.js"></script>
+
+
+
+<script type="text/javascript">
+
+    //twitter
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+    if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+
+
+function showNotification(event, data) {
+    // default show notification from server
+    var cont = $('#messages_container');
+    if (data.type == "downtime") {
+
+        editorExp = new RegExp("^\/presentoons[^#?]+\/(edit|restore)\/$");
+        editor = editorExp.test(location.pathname);
+        htmlStudioExp = new RegExp("^\/html5-studio/");
+        htmlStudio = htmlStudioExp.test(location.pathname);
+        if (editor || htmlStudio) {
+            show_placeholder(data.url);
+        }
+        // show messages only if we are on dashboard or dashboard/templates
+        return;
+    }
+    else if (cont.length > 0 && !(jQuery.isEmptyObject(data.message))) {
+        var messageBox = '<div class="alert alert-' + (data.class || 'info') + ' span12"><a class="close" data-dismiss="alert">×</a> ' + data.message + '</div>';
+        cont.append(messageBox);
+    } else {
+        $.gritter.add({
+            text: data.message,
+            sticky: true,
+            class_name: 'gritter-light'
+        });
+    }
+    if (data.completed_export_jobs) {
+        $(document).trigger('compleExportJobs', {completed_export_jobs: data.completed_export_jobs})
+    }
+}
+  /* END PUSHER NOTIFICATIONS */
+
+
+// Trigger the userconfirmed messsage if its in the query param
+$(document).ready(
+    function(){
+        if(window.location.hash === '#just_confirmed') {
+            window.location.hash = '';
+            $(document).trigger('user_confirmed');
+        }
+    }
+)
+
+window.addEventListener("message", function(event) {
+    if (event.data && event.data.indexOf && event.data.indexOf('loginComplete') === 0) {
+        var data = JSON.parse(
+            event.data.substring('loginComplete'.length, event.data.length));
+        $(document).trigger('loginComplete', [data]);
+    }
+}, false);
+
+// login with social network
+$(document).bind('loginComplete', function (event, data) {
+
+    function getParamFromUrlQuery(strQuery, param) {
+        var regex = param + '=([^&]+)',
+            match = strQuery.match(regex);
+        if (match && match.length === 2) {
+            return decodeURIComponent(match[1]);
+        }
+    }
+
+    function addUrlParam(baseUrl, paramKey, paramValue) {
+        var paramKeyValue = paramKey + '=' + paramValue;
+        if (baseUrl.indexOf('?') > -1) {
+            return baseUrl + '&' + paramKeyValue;
+        } else {
+            return baseUrl + '?' + paramKeyValue;
+        }
+    }
+
+    var url = getParamFromUrlQuery(window.location.search, 'next');
+
+    // in use for canva login via social we redirect to success url and close the window
+    if (data.successUrl && data.successUrl.indexOf("canva.com") >= 0) {
+        location.replace(data.successUrl)
+    }
+    else {
+        if (!url) {
+            if (!data.is_email_validation_required && data.signed_up) {
+                url = '/create-new/';
+            } else {
+                url = '/my-powtoons/';
+            }
+        }
+
+        if (data.signed_up) {
+            url = addUrlParam(url, 'nav', 'signup');
+        }
+
+        // We only redirect if the url starts with '/', to limit to relative
+        // urls, and avoid XSS using 'javascript:...' as the next URL.
+        //
+        //replace encoded / - %2f with a single /
+        if (url.includes('%2f')) {
+            const regex = /%2f/gi;
+            url.replace(regex, '/');
+        }
+        // Add '/' to front of Url if missing
+        if (url[0] !== '/') {
+            url = '/' + url
+        }
+        // Redirect if Url is relative
+        if (url[0] === '/' && url[1] !== '/') {
+            location.href = url
+        }
+    }
+});
+
+var maintenance =  false;
+
+
+
+</script>
+
+<script type="text/javascript">
+  function LogErrorToSentry(msg, tagsObj, extraObj) {
+    
+        var messageData = {
+            extra: extraObj || {},
+            tags: tagsObj,
+            logger: 'flash'
+        };
+
+        if (extraObj.StackTrace) {
+            messageData.fingerprint = [window.flashvars.p]
+        }
+
+        Sentry.captureMessage(msg, messageData);
+
+        //This part was added to allow users to send their flash errors logs to customer support team
+        console.log('##### Technical details for support        (Copy this part)  #####');
+        console.log(msg, messageData);
+        console.log('##### End of Technical details for support (Copy until here) #####');
+
+    
+}
+
+</script>
+
+
+<script type="text/javascript">
+
+if(typeof $.cookie == "function"){
+
+
+    if($.cookie('_LOCALE_')=="es"){
+      $.cookie('was_es','1',{path:"/"});
+    }
+
+    if($.cookie('_LOCALE_')=="us"){
+      if($.cookie('was_es') && $.cookie('was_es') == "1"){
+        $('.lang-change-to-es').show();
+      }
+    }
+}
+
+</script>
+
+<script type="text/javascript">
+  $('.navigation li [data-toggle="dropdown"]').bootstrapDropdownHover();
+</script>
+
+
+
+
+  <script data-cfasync="false" type="text/javascript" data-bablic="5b4dfd5fdd160b13f31645df" data-bablic-m="[0,'en','en',1,['es'],0,0,0,0,0,0,0,0,[],'w3.powtoon.com/home',[],['_v',2]]" src="//cdn2.bablic.com/js/bablic.3.9.js"></script>
+
+ 
+
+  
+  <!--//COMMON SCRIPTS-->
+  
+
+  
+
+  
+
+
+  
+    <script type="text/javascript">
+      var isInIFrame = (window.location != window.parent.location);
+if(isInIFrame==false){
+      $('.header').show();
+      $('.footer').show();
+}
+    </script>
+    
+
+
+    
+      <script src="https://static.powtoon.co/js/cookies-banner.js"></script>
+    
+
+    <script type="text/javascript">
+
+    /*****************jquery ready handler*****************/
+
+    $(document).ready(function(){
+      $('.social-buttons').find('a').attr('target','_blank');
+         var timeout;
+        $( "#create-link" ).hover(function() {
+         if($('#create').is(':hidden')) {
+          clearTimeout(timeout);
+            $('<div></div>').addClass('create-overlay').appendTo('#create-link');
+            $('#create').show();
+            $('#create').animate({
+                top: '45px',
+                opacity: '1',
+              },
+              {
+              duration: 'slow',
+              easing: 'easeOutBack'
+              });
+         };
+
+            }, function() {
+              timeout = setTimeout(function(){
+              $(".create-overlay" ).remove();
+              $('#create').hide();
+              $('#create').css("top","100px");
+              $('#create').css("opacity","0");
+            }, 1000);
+            });
+
+
+        $('.toggle-head').click(function(){ $(this).parent().find('.toggle-body').slideToggle() });
+        //add active class for current page
+        try {
+            var domain = 'www.powtoon.com';
+            var domain_index =  window.location.href.indexOf(domain);
+            if (location.hostname === "localhost") {
+               domain_index = domain_index + 5; //check if localhost
+            }
+            var long_app_name = window.location.href.slice(domain_index+domain.length+1); // this turns http://www.powtoon.com/whatever/whatever to whatever/whatever
+            app_name = long_app_name.split('/');
+            if (app_name == 'account'){
+                $('.profile.dropdown-toggle').closest('li').addClass('active');
+            }
+            else if (app_name[0]=='tutorials' || app_name[0]=='webinars') {
+              $('.support.dropdown-toggle').closest('li').addClass('active');
+            }
+            else if(app_name=='p'){}
+            else if(app_name[0]=='integrations'){
+              $('.explore.dropdown-toggle').closest('li').addClass('active');
+            }
+            else{
+                try{
+                  $('nav a[href*=' + app_name + ']').closest('li').addClass('active');
+                  $('#blog-link').removeClass('active');
+                }
+                catch(e){}
+            }
+        }
+        catch(err) {
+            console.log(err.message);
+        }
+
+
+        //end active class
+        
+
+        
+        
+
+    });
+    $("#fbshare").click(function(){
+    newwindow=window.open($(this).attr('href'),'','height=200,width=150');
+    return false;
+    });
+    $("#gpshare").click(function(){
+    newwindow=window.open($(this).attr('href'),'','height=400,width=500');
+    return false;
+    });
+
+
+
+    $('.mobile-menu').click(function() {
+      $('.nav-block').addClass('slide-right')
+    })
+
+    $('.close-btn').click(function() {
+      $('.nav-block').removeClass('slide-right')
+    })
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 0) {
+        $('.header').addClass('fix');
+      } else {
+        $('.header').removeClass('fix');
+      }
+
+    })
+
+    HomepageAppNavbar.renderNavbar('navbarRoot');
+    
+      HomepageAppFooter.renderFooter('footerRoot');
+    
+    </script>
+    <script type="text/javascript" src="https://static.powtoon.co/js/header-js.js?24.2.5.7.2"></script>
+
+
+
+
+
+<div tabindex="-1" class="modal fade" id="followModal">
+   <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close pt-x" data-dismiss="modal" type="button"></button>
+        <h4 class="modal-title">WELCOME TO POWTOON!</h4>
+      </div>
+      <div class="modal-body">
+        <p>"Like" us on Facebook or follow us on 
+            Twitter to get awesome Powtoon hacks, 
+            updates and hang out with everyone in 
+            the tribe too!
+            </p>
+            <div class="follow-buttons">
+            <div data-label="social_studio" id="follow_inside" class="fb-button" data-action="follow" data-category="facebook">
+<div class="fb-like" data-layout="button" data-action="like" data-show-faces="false" data-share="false" data-href="https://www.facebook.com/Powtoon" style="display:inline-block;"></div>
+             us on Facebook
+            </div>
+            <div class="twitter-button">
+            <a data-label="social_after_signup" class="track" href="https://twitter.com/intent/follow?screen_name=@powtoon" data-action="follow" data-category="twitter"><img src="https://static.powtoon.co/images/website/follow-popup/twitter-follow.png?24.2.5.7.2" /></a> us on Twitter
+            </div>
+            </div>
+      </div>
+<div class="modal-footer">
+        <button class="btn btn-start-creating" data-dismiss="modal" type="button">Start Creating</button>
+      </div> 
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
