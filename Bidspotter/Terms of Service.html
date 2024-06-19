@@ -6,7 +6,7 @@
 
 <head>
     <!-- LegacyLayout - so you know which layout is being used, since there seem to be two -->
-    <!-- 3.0.0.252 -->
+    <!-- 3.1.0.90 -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
@@ -45,7 +45,7 @@
 
 
     <!-- Data Layer -->
-    <script src="/scripts/abhelper.js?v=638493878610239962"></script>
+    <script src="/scripts/abhelper.js?v=638543567622249035"></script>
 <!-- google data layer --->
 <script> window.dataLayer = window.dataLayer || []; 
 window.dataLayer.push({
@@ -92,7 +92,7 @@ window.dataLayer.push({
 
     <!-- end data layer  -->
 
-    <script src="/en-us/script-resources.js?v=638493878610239962"></script>
+    <script src="/en-us/script-resources.js?v=638543567622249035"></script>
 
 
         
@@ -215,6 +215,68 @@ window.dataLayer.push({
 });
     </script>
     <!-- End of Clerk.io E-commerce Personalisation tool - www.clerk.io -->
+
+
+    
+
+
+    <!-- openreplay config options -->
+    <script>
+    // https://docs.openreplay.com/en/sdk/constructor/#initialization-options
+    var initOpts = {
+        projectKey: "tFQp6ClztqQXNNTHa6dO",
+        ingestPoint: "https://openreplay.auctiontechnologygroup.com/ingest",
+        capturePerformance: false,
+        defaultInputMode: 0,
+        disableStringDict: true,
+        domSanitizer: function (node) {
+            const isPassword = node.getAttribute('password') === 'password';
+
+            if (isPassword) {
+                return 1; // obscured
+            }
+
+            return 0; // plain
+        },
+        network: {
+            failuresOnly: false,
+            sessionTokenHeader: false,
+            ignoreHeaders: false,
+            capturePayload: true,
+            sanitizer: function (data) {
+                return data;
+            },
+            captureInIframes: false
+        }
+    };
+
+    var startOpts = {
+     userID: "",
+     metadata: {
+         name: "",
+         email: "",
+         ip: "10.10.52.121",
+         userAgent: "node-fetch",
+         buildNumer: "3.1.0.90-EC2"
+         }
+     };
+
+    // boilerplate script tag
+    (function (A, s, a, y, e, r) {
+        r = window.OpenReplay = [e, r, y, [s - 1, e]];
+        s = document.createElement('script'); s.src = A; s.async = !a;
+        document.getElementsByTagName('head')[0].appendChild(s);
+        r.start = function (v) { r.push([0]) };
+        r.stop = function (v) { r.push([1]) };
+        r.setUserID = function (id) { r.push([2, id]) };
+        r.setUserAnonymousID = function (id) { r.push([3, id]) };
+        r.setMetadata = function (k, v) { r.push([4, k, v]) };
+        r.event = function (k, p, i) { r.push([5, k, p, i]) };
+        r.issue = function (k, p) { r.push([6, k, p]) };
+        r.isActive = function () { return false };
+        r.getSessionToken = function () { };
+    })("//static.openreplay.com/11.0.1/openreplay.js", 1, 0, initOpts, startOpts);
+    </script>
 
 
     
