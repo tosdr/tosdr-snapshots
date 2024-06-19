@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"> <title>About routing.openstreetmap.de</title> <link rel="stylesheet" href="splendor.css"> </head><body>
+<h1>OSRM routing server using OpenStreetMap data</h1>
+<p>This server provides route instructions for a few select modes
+of transportation.  It uses free and open data from the
+collaborative <a href="https://openstreetmap.org">OpenStreetMap</a> project
+with the routing engine <a href="http://project-osrm.org/">OSRM</a>. The servers
+are sponsored by <a href="https://www.fossgis.de/">FOSSGIS</a>.</p>
+<h2>Contact</h2>
+<p>Map related questions are best asked at one of the places
+mentioned on <a href="https://www.openstreetmap.org/help">openstreetmap.org/help</a></p>
+<p>For questions about the routing engine software, OSRM, there is the
+mailinglist <a href="https://lists.openstreetmap.org/listinfo/osrm-talk">osrm-talk</a></p>
+<p>You can contact the system administrators at
+<a href="mailto:fossgis-routing-server@openstreetmap.de">fossgis-routing-server@openstreetmap.de</a></p>
+<h2>Privacy</h2>
+<p>Your request for a route is sent to our server (because the route is
+calculated on the server and only displayed in your browser) and is saved
+in the server log file. Please see
+<a href="https://www.fossgis.de/datenschutzerklärung">Datenschutzerklärung</a>
+for more information on privacy.</p>
+<h2>Usage policy</h2>
+<p>The full usage policy can be found
+<a href="https://www.fossgis.de/arbeitsgruppen/osm-server/nutzungsbedingungen/">on the fossgis website</a>
+in German. Here a short excerpt:</p>
+<ul>
+<li>Display the required attribution and display a link to
+<a href="https://www.openstreetmap.org/fixthemap">"fix the map"</a>.</li>
+<li>Use a valid user agent and, if applicable, a correct referrer.</li>
+<li>One request per second max.</li>
+<li>No scraping, no heavy usage.</li>
+</ul>
+<h2>General setup</h2>
+<p>There are three servers, one is continuously preparing the routing graph
+and fetching the most recent OpenStreetMap data, while the two others are
+serving routes from the precalculated graphs.</p>
+<p>The three servers have 6 cores and 256GB ram each.</p>
+<h2>Used software</h2>
+<p>Most software running on the servers is available as open source.
+Debian 10 is used as operating system.</p>
+<h3><a href="https://github.com/fossgis-routing-server/osrm-backend">OSRM backend</a></h3>
+<p>Currently running v5.27.1</p>
+<ul>
+<li>hints are disabled, because they can crash the server</li>
+</ul>
+<h3><a href="https://github.com/fossgis-routing-server/osrm-frontend">OSRM frontend</a></h3>
+<ul>
+<li>The frontend was hacked to include a profile switch (car, bike and foot)</li>
+<li>Includes the configuration of background layers and routing engine URLs</li>
+</ul>
+<h3><a href="https://github.com/fossgis-routing-server/cbf-routing-profiles">routing profiles</a></h3>
+<p>The routing profiles used for these servers. They differ
+from the profiles included with the OSRM-backend sources,
+especially the bike and foot profiles.</p>
+<ul>
+<li>car: worldwide</li>
+<li>bike: worldwide</li>
+<li>foot: worldwide</li>
+</ul>
+<h3><a href="http://map.project-osrm.org/timestamps/">Overview of routing data updates</a></h3>
+<p>The routing data are updated roughly every two days. There may be delays in the internal processing and creation of the routing diagram.</p></body></html>
