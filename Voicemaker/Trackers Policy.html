@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="csrf-token" content><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://cdnjs.cloudflare.com"><title>Cookie Policy - Voicemaker</title><meta name="Description" content><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"><link rel="icon" href="/favicon.ico" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#2e90fa"><link rel="manifest" href="/site.webmanifest"><meta name="msapplication-TileColor" content="#d1e9ff"><meta name="theme-color" content="#d1e9ff"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" media="print" onload="this.media=&quot;all&quot;"><link rel="stylesheet" href="/css/core-1.css?vs=50"><link rel="stylesheet" href="/css/required.css?vs=50" media="print" onload="this.media=&quot;all&quot;"><link rel="stylesheet" href="/css/core-2.css?vs53"><script type="text/javascript">const loadFont = (url) => {
+            // the 'fetch' equivalent has caching issues
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let css = xhr.responseText;
+                    css = css.replace(/}/g, 'font-display: swap; }');
+
+                    const head = document.getElementsByTagName('head')[0];
+                    const style = document.createElement('style');
+                    style.appendChild(document.createTextNode(css));
+                    head.appendChild(style);
+                }
+            };
+            xhr.send();
+        }
+
+        loadFont('https://fonts.googleapis.com/css?family=Roboto:regular,300,400,500,600,700&amp;display=swap');</script><script>document.addEventListener('DOMContentLoaded', () => {
+          setTimeout(initGTM, 500);
+        });
+        document.addEventListener('scroll', initGTMOnEvent);
+        document.addEventListener('mousemove', initGTMOnEvent);
+        document.addEventListener('touchstart', initGTMOnEvent);
+
+        function initGTMOnEvent(event) {
+          initGTM();
+          event.currentTarget.removeEventListener(event.type, initGTMOnEvent);
+        }
+
+        function initGTM() {
+          if (window.gtmDidInit) {
+            return false;
+          }
+
+          window.gtmDidInit = true; // Prevent multiple initializations
+
+          const script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.async = true;
+          script.onload = () => {
+            dataLayer.push({ event: 'gtm.js', 'gtm.start': new Date().getTime(), 'gtm.uniqueEventId': 0 });
+          };
+          script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-W8GKC5M';
+
+          document.head.appendChild(script);
+        }</script></head><body><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8GKC5M" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript><script src="/js/ost/jquery.min.js"></script><nav class="navbar navbar-expand-lg shadow-custom"><input type="hidden" class="user-dark-mode"><div class="container pr-3 pl-3"><a href="/" class="navbar-brand"><img src="/img/logo.svg" alt="Voicemaker Logo"> </a><button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <input type="hidden" id="limit"><div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ml-auto flex-center align-items-center flex-center-md-0"><li class="nav-item"><a class="nav-link" href="/">Home</a></li><li class="nav-item"><a class="nav-link" href="/voice-samples">AI Voices</a></li><li class="nav-item"><a class="nav-link" href="/pricing">Pricing</a></li><li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li><div class="login"><button class="btn text-dark mr-3 ml-2" href="#" data-toggle="modal" data-target="#loginModal">Log in</button></div><div class="login"><button class="btn mr-3" href="#" data-toggle="modal" data-target="#registerModal" id="register">Register</button></div></ul></div></div></nav><script>const darkModeCheckbox = document.getElementById('darkmode-onoffswitch');
+        
+            function updateDarkMode(darkMode) {
+                let data = { darkMode }
+                return $.ajax({
+                    headers: {
+                        'CSRF-Token': token // <-- is the csrf token as a header
+                    },
+                    type: "PUT",
+                    url: `/user/preferences`,
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    processData: false,
+                    dataType: 'json',
+                    cache: true,
+                    timeout: 0,
+                })
+            }
+        
+            const ready = async () => {
+                const userId = $('#nav-user-id').val()
+                if (!userId && userId !== '') {
+                    const darkModeValue = localStorage.getItem('darkMode')
+                    /**if (darkModeValue === 'true') {
+                        setDarkMode()
+                    } else {
+                        setLightMode()
+                    }**/
+                }
+            }
+        
+            document.addEventListener("DOMContentLoaded", ready);
+        
+            const setLightMode = async () => {
+                $('.navbar-brand').children('img').prop('src', '/img/logo.svg')
+                $('.footer-logo').children('img').prop('src', '/img/logo_footer.svg')
+                document.body.classList.remove('dark');
+                localStorage.setItem('darkMode', false)
+        
+        
+                const headTag = document.getElementsByTagName('head')[0];
+                const styleTag = document.createElement("style");
+                styleTag.innerHTML = `
+                :root {
+                    color-scheme: normal;
+                }`;
+                headTag.appendChild(styleTag);
+            }
+        
+            const setDarkMode = async () => {
+                $('.navbar-brand').children('img').prop('src', '/img/logo_white.svg')
+                $('.footer-logo').children('img').prop('src', '/img/logo_white.svg')
+                document.body.classList.add('dark')
+                localStorage.setItem('darkMode', true)
+        
+                const headTag = document.getElementsByTagName('head')[0];
+                const styleTag = document.createElement("style");
+                styleTag.innerHTML = `
+                :root {
+                    color-scheme: dark;
+                }`;
+                headTag.appendChild(styleTag);
+            }
+        
+            $(document).on('click', '#navbarNav .dropdown-menu', function (e) {
+                e.stopPropagation()
+            })
+        
+            if (darkModeCheckbox) {
+                darkModeCheckbox.addEventListener('change', async function (e) {
+                    e.stopPropagation()
+                    if (document.body.classList.contains('dark')) {
+                        setLightMode()
+                        await updateDarkMode(false)
+                    } else {
+                        setDarkMode()
+                        await updateDarkMode(true)
+                    }
+                })
+            }</script><script src="/js/core-1.js?vs=51"></script><div class="modal auth-modal modal-main" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><div class="modal-body"><div class="card-body auth-form"><h1 class="mb-4 text-left">Login</h1><div class="social-auth"><a href="/auth/google" class="btn btn-b" type="button"><img src="/images/google-logo.png"> Login with Google</a> <a href="/auth/facebook" class="btn btn-b" type="button"><i class="fab fa-facebook"></i> Login with Facebook</a> <a href="/auth/linkedin" class="btn btn-b" type="button"><i class="fab fa-linkedin"></i> Login with Linkedin</a></div><form class="form" role="form" id="formLogin"><hr class="hr-text mt-2" data-content="Or"><div class="loginErrors"></div><div class="form-group"><input type="email" class="form-control" id="loginEmail" required autocomplete="username" placeholder="Email"></div><div class="form-group"><input type="password" class="form-control" id="loginPassword" required autocomplete="current-password" placeholder="Password"></div><div class="form-row d-flex justify-content-between"><div class="form-group"><div class="form-check ml-2"><input class="form-check-input" type="checkbox" id="basic_checkbox_1" checked><label class="form-check-label" for="basic_checkbox_1">Remember me</label></div></div></div><button aria-label="Login" type="submit" class="btn btn-auth login-modal-btn btn-block mt-2 mb-2" id="btnLogin">Login</button></form><div class="auth-form-p mt-2 text-center"><div class="form-group mt-4"><a href="#" data-toggle="modal" data-target="#forgotModal">Forgot password?</a></div><hr><p>Don't have an account? <a class="text-primary" href="#" data-toggle="modal" data-target="#registerModal">Register</a></p></div></div></div></div></div></div><div class="modal auth-modal modal-main" id="twoFactorModal" tabindex="-1" role="dialog" aria-labelledby="twoFactorModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><div class="modal-body"><div class="card-body two-factor-form"><h1 class="mb-4 text-left">Two Factor Authentication</h1><p class="text-left two-factor-text"></p><form class="form" role="form" id="twoFactorLogin"><div class="loginErrors"></div><div class="form-group"><input type="text" maxlength="6" class="form-control" id="loginCode" autofocus required placeholder="Enter the code"></div><button type="button" onclick="resendOTPCode()" class="btn btn-link p-0 m-0 resend-otp-code">Resend code?</button> <button type="button" onclick="resendOTPCode()" class="btn btn-link p-0 m-0 try-another-2fa">Try another way?</button> <button type="submit" disabled class="btn btn-auth login-modal-btn btn-block mt-2 mb-2" id="btnTwoFactor">Proceed</button></form></div></div></div></div></div><div class="modal modal-main" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="forgotModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-md" role="document"><div class="modal-content"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><div class="modal-body"><div class="card-body auth-form"><h1 class="mb-4">Forgot password?</h1><form class="form" role="form" id="formForgot"><div class="forgotErrors"></div><div class="form-group"><input type="email" class="form-control" id="forgotEmail" required autocomplete="email" placeholder="Email"></div><button aria-label="Password Reset" type="submit" class="btn btn-auth login-modal-btn btn-block mt-2 mb-2" id="btnForgot">Password Reset</button></form><div class="auth-form-p mt-4 text-center"><p><a class="text-primary" href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa fa-long-arrow-alt-left" aria-hidden="true"></i> Back</a></p></div></div></div></div></div></div><div class="modal modal-main auth-modal signup-modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><div class="modal-body register"><div class="row no-gutters"><div class="col-md-4 p-0 bg-image remove-bg"><img src="/img/signup-check.svg" height="100%" class="img-fluid" alt></div><div class="col-md-8 col-md"><div class="auth-form"><h1 class="mb-4 text-left">Sign up</h1><div class="social-auth"><a href="/auth/google" class="btn btn-b" type="button"><img src="/images/google-logo.png"> Login with Google</a> <a href="/auth/facebook" class="btn btn-b" type="button"><i class="fab fa-facebook"></i> Login with Facebook</a> <a href="/auth/linkedin" class="btn btn-b" type="button"><i class="fab fa-linkedin"></i> Login with Linkedin</a></div><div class="hr-text mt-2" data-content="Or"></div><form class="form" role="form" id="formSignup"><div class="signupErrors"></div><div class="row"><div class="col-sm-6"><div class="form-group"><input type="text" name="firstname" class="form-control" id="registerFirstName" required autocomplete="fname" placeholder="First Name"></div></div><div class="col-sm-6"><div class="form-group"><input type="text" name="lastname" class="form-control" id="registerLastName" required autocomplete="lname" placeholder="Last Name"></div></div></div><div class="form-group"><input type="email" class="form-control" id="registerEmail" required autocomplete="email" placeholder="Email"></div><div class="form-group"><input type="password" class="form-control" id="registerPassword" required autocomplete="current-password" placeholder="Password"></div><button type="submit" class="btn btn-auth signup-modal-btn btn-block" id="btnSignup">Register</button></form><div class="auth-form-p mt-4 text-center"><p>Already have an account? <a class="text-primary" href="#" data-toggle="modal" data-target="#loginModal">Login</a></p></div></div></div></div></div></div></div></div><script>document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(initrecaptcha, 500);
+            });
+            function initrecaptcha() {
+                if (window.recaptchaDidInit) {
+                  return false;
+                }
+
+                window.recaptchaDidInit = true; // Prevent multiple initializations
+
+                var recaptchaScript = document.createElement('script');
+                recaptchaScript.src = 'https://www.recaptcha.net/recaptcha/api.js?render=6LdyG7YZAAAAAP_Qdm5J9FrhPpTZgkasrl4QyO3D';
+                recaptchaScript.defer = true;
+                document.body.appendChild(recaptchaScript);
+            }</script><script>document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(initrecaptcha, 500);
+            });
+            function initrecaptcha() {
+                if (window.recaptchaDidInit) {
+                  return false;
+                }
+
+                window.recaptchaDidInit = true; // Prevent multiple initializations
+
+                var recaptchaScript = document.createElement('script');
+                recaptchaScript.src = 'https://www.recaptcha.net/recaptcha/api.js?render=6LdyG7YZAAAAAP_Qdm5J9FrhPpTZgkasrl4QyO3D';
+                recaptchaScript.defer = true;
+                document.body.appendChild(recaptchaScript);
+            }</script><section id="section"><div class="container"><div class="row no-gutters justify-content-md-center"><div class="col-md-10 col-12"><div id="outer-wrapper" class="infomatic"><div id="internal-title"><div class="sort"><h1>Cookie Policy</h1><p class="text-muted">Last Updated: January 20, 2023</p></div></div><div class="row"><div class="col-md-12"><h4>INFORMATION ABOUT VOICEMAKER’S USE OF COOKIES</h4><p>Our website use cookies to differentiate you from other users on our website. This helps us to give you a satisfactory browsing experience on our website and improve it. You have the option to set your cookie preferences upon your initial visit to our site according to your preferences.</p><p>A cookie is a small text file containing letters and numbers that is saved on your browser or computer's hard drive if you accept. These files contain information that is transferred to your computer's storage.</p><p>We use the following cookies:</p><ul><li><b>Required cookies.</b> These are cookies that are required for the operation of our website. They include, for example, cookies that enable you to log into secure areas of our website and access your subscriptions, if any.</li><li><b>Analytical cookies.</b> They allow us to recognise and count the number of visitors and to see how visitors move around our website when they are using it. This helps us to improve the way our website works, for example, by ensuring that users are finding what they are looking for easily.</li><li><b>Functionality cookies.</b> These are used to recognise you when you return to our website. This enables us to personalise our content for you, greet you by name and remember your preferences (for example, your choice of language or region).</li><li><b>Marketing cookies.</b> These cookies record your visit to our website, the pages you have visited and the links you have followed. We will use this information to make our website and the advertising displayed on it more relevant to your interests. We may also share this information with third parties for this purpose.</li></ul><br><h4>YOUR CHOICES</h4><p>You have options for controlling how Voicemaker uses cookies. You can change your cookie preferences at any time by visiting our homepage and clicking on the "Cookie Policy" button in the bottom left corner.</p><p>You will then be presented with checkbox options and have the ability to accept all the listed cookie categories or select only the cookies necessary for the Voicemaker site to function.</p><br><h4>BROWSER CONTROLS</h4><p>You can manage cookies in most browsers by adjusting their settings to reflect your preferences. Most browsers also let you review and delete cookies, including those from Voicemaker. To learn more about managing cookies through your browser, check the documentation provided by your browser's manufacturer.</p><p>Voicemaker refers to Yedap Technologies LLC. and its wholly-owned subsidiary Voice Maker Technologies Private Limited. If you need additional information, please contact us using the contact details provided in our <a href="https://voicemaker.in/privacy">Privacy Policy</a>.</p></div></div></div></div></div></div></section><footer class="footer section_con"><div class="container"><div class="footer-con"><div class="row"><div class="col-md-6 col-sm-12"><a class="logo mb-4 footer-logo" href="#"><img src="/img/logo_footer.svg" alt></a></div><div class="col-md-6"><div class="row"><div class="col-md-4 col-6 links"><ul><li><a href="https://developer.voicemaker.in/" target="_blank">Developer API</a></li><li><a href="/changelog">Changelog <span data-toggle="tooltip" data-original-title="April 26, 2024"><span class="badge badge-success mr-1">v1.6</span></span></a></li><li><a rel="noreferrer" href="https://status.voicemaker.in" target="_blank">System Status</a></li></ul></div><div class="col-md-4 col-6 links"><ul><li><a href="/contact">Contact Us</a></li><li><a href="/faq">FAQ</a></li><li><a href="https://help.voicemaker.in" target="_blank">Help Center</a></li><li><a href="https://help.voicemaker.in/how-to-use-voicemaker/" target="_blank">How to Use?</a></li></ul></div><div class="col-md-4 col-6 links"><ul><li><a href="/privacy">Privacy Policy</a></li><li><a href="/terms">Terms of Service</a></li><li><a href="/cookie-policy">Cookie Policy</a></li><li><a href="/gdpr-policy">GDPR Policy</a></li><li><a href="/security">Security Policy</a></li></ul></div></div></div></div><div class="row"><div class="col-md-12"><div class="copyright-area mb-2"><div class="d-flex flex-sm-row flex-column"><div class="mr-auto">© Copyright 2023 Voicemaker Technologies Pvt. Ltd., All rights reserved.</div><div><span class="mr-1"><a target="_blank" rel="noreferrer" href="https://www.facebook.com/voicemaker.in"><span class="our-icon fab fa-facebook-f"></span></a> <a target="_blank" rel="noreferrer" href="https://twitter.com/voicemaker_in"><span class="our-icon fab fa-twitter ml-2"></span></a> <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/company/voicemakerin"><span class="our-icon fab fa-linkedin-in ml-2"></span></a> <a target="_blank" rel="noreferrer" href="https://instagram.com/voicemaker.in"><span class="our-icon fab fa-instagram ml-2"></span></a></span></div></div></div></div></div></div></div></footer><div class="sticky-audio-player"><audio src="/voices/intro.mp3" id="stickyAudioplayer" class="audioplayer" preload="auto" controls></audio></div><div><div class="live-update-multivoice d-flex justify-content-between"><div class="d-flex"><span class="loading-spinner"></span> <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg> <span>Saving changes</span></div><i class="fas fa-times close"></i></div></div><div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="deleteModalLabel">Delete</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><div class="card-body">Are you sure you want to delete? <span class="text-danger">- this action can't be undone -</span></div></div><div class="modal-footer"><button type="button" class="btn btn-cancel" data-dismiss="modal">Close</button> <button aria-label="Delete" type="button" onclick="deleteFunction(this)" class="btn btn-danger delete-btn">Delete</button></div></div></div></div><script>let deleteObject
+        
+            const resetDeleteModal = () => {
+                $('.delete-btn').prop('disabled', false)
+                $('#deleteModal').modal('hide')
+                $('#deleteModalLabel').html('Delete')
+                $('#deleteModal .card-body').html('Are you sure you want to delete?')
+            }
+        
+            const deleteFunction = (input) => {
+                $(input).prop('disabled', true)
+                if(deleteObject?.func) deleteObject.func()
+            }</script><script src="/js/required.js?vs=50"></script><script src="/js/core-2.js?vs=52"></script><style>body {
+                background: linear-gradient(180deg, #f7f7f7 6.77%, #fdfdfd 100%);
+            }</style></body></html>
