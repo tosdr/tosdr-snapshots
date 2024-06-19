@@ -1,0 +1,1192 @@
+
+<!DOCTYPE html>
+<html lang="
+              en
+            ">
+  <head>
+    <title>
+      
+      
+      
+        Dyson - Return
+      
+      
+      
+      
+    </title>
+    <link rel="shortcut icon" type="image/png" href="/assets/images/dyson/dyson-fav.ico"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-select/1.7.3-1/css/bootstrap-select.min.css" >
+    <link rel="stylesheet" href="/assets/stylesheets/dyson/dyson.webform.price_support.css"/>
+
+    <script src="/assets/lib/3-6-1-jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.4/js/bootstrap.min.js" ></script>
+    <script src="/webjars/knockout/3.3.0/knockout.js" ></script>
+    <script src="/assets/lib/knockout.mapping-latest.js"></script>
+    <script src="/webjars/jquery-ui-src/1.11.4/ui/widget.js" ></script>
+    <script src="/webjars/jquery-file-upload/9.10.1/js/jquery.iframe-transport.js" ></script>
+    <script src="/webjars/jquery-file-upload/9.10.1/js/jquery.fileupload.js" ></script>
+    <script src="/webjars/jquery-mask-plugin/1.14.12/dist/jquery.mask.min.js" ></script>
+    <script src="/assets/javascripts/util/ko.mask-input.js"></script>
+    <script src="/webjars/bootstrap-select/1.7.3-1/js/bootstrap-select.min.js" ></script>
+    <script src="/assets/javascripts/util/ko.select-picker.js"></script>
+    <script src="/assets/javascripts/common.assist.js"></script>
+
+    <script type='text/javascript' src='/assets/javascripts/dyson/dyson.webform.price_support.js'></script>
+    <script type='text/javascript' src='/assets/lib/iframeResizer.contentWindow.min.js'></script>
+
+    <script>
+            var Glob = {
+              inquiryType: 'return',
+              country: '',
+              isFrench: false,
+              tkn: 'IIclR6yV4dMeKw7'
+            }
+    </script>
+    <style>
+            .container {
+              width: 90% !important;
+            }
+    </style>
+  </head>
+  <body>
+    <a href="#maincontent" role="navigation" hidden>Skip to main content</a>
+    <main class="mb-20" role="main" id="maincontent" data-bind="visible: vm.page() == 'main'">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="futura mb-20" data-bind="visible: vm.inquiryType() == 'return'">Start a return</h2>
+          <h1 class="futura" data-bind="visible: vm.inquiryType() == 'price_match'">Submit your price match request</h1>
+          <h1 class="futura" data-bind="visible: vm.inquiryType() == 'order_inquiry'">Order Inquiry</h1>
+          <h1 class="futura" data-bind="visible: vm.inquiryType() == 'order_status'">Order Status</h1>
+          <h1 class="futura" data-bind="visible: vm.inquiryType() == 'order_address_change'">
+            Change your delivery address</h1>
+          
+            <h2 class="futura" data-bind="visible: vm.inquiryType() == 'return'">Money-back guarantee</h2>
+          
+          
+            <h2 class="futura h1-to-h3" data-bind="visible: vm.inquiryType() != 'return' && vm.inquiryType() != 'order_inquiry' && vm.inquiryType() != 'order_status' && vm.inquiryType() != 'order_address_change'">
+              Our support team will reply by email within 7 business days.</h2>
+          
+          <h2 class="futura h1-to-h3" data-bind="visible: vm.inquiryType() == 'order_inquiry'">
+            Please select what your inquiry is about:
+          </h2>
+          <div class="row futura mt-30" data-bind="if: vm.inquiryType() == 'order_inquiry'">
+            <div class="col-md-3 col-sm-3 col-xs-12">
+              <label class="radio-inline" for="action_status">
+                <input type="radio" data-bind="checked: vm.orderInquiryType" autocomplete="off" id="action_status" name="action" value="status">
+                <p>Status of My Order</p>
+              </label>
+            </div>
+            <div class="col-md-4 col-sm-5 col-xs-12">
+              <label class="radio-inline" for="action_change">
+                <input type="radio" data-bind="checked: vm.orderInquiryType" autocomplete="off" id="action_change" name="action" value="change_address">
+                <p>Change My Order's Delivery Address</p>
+              </label>
+            </div>
+            
+            
+            
+            
+            
+            
+          </div>
+          <div class="futura row" data-bind="visible: vm.inquiryType() == 'order_inquiry' || vm.inquiryType() == 'order_status' || vm.inquiryType() == 'order_address_change'">
+            <div class="col-sm-7 col-xs-12">
+
+              <p data-bind="visible: (vm.inquiryType() == 'order_inquiry' && vm.orderInquiryType() == 'status') || vm.inquiryType() == 'order_status'" >
+                Please allow up to 24 hours to reply with the status of your order.
+              </p>
+              <p class="mt-20" data-bind="visible: (vm.inquiryType() == 'order_inquiry' && vm.orderInquiryType() == 'change_address') || vm.inquiryType() == 'order_address_change'" >
+                If your package isn't already out for delivery, we may be able to change the destination to a nearby The UPS Store location. We are unable to guarantee every request due to dependency on UPS. If we are successful, a photo ID will be required to claim your package. To get started, enter your zip code and select from the available locations.
+              </p>
+            </div>
+          </div>
+          <span data-bind="visible: vm.inquiryType() == 'price_match'">
+            Full price match promise Terms and Conditions can be found at the bottom of this page.</span>
+          <div data-bind="visible: vm.inquiryType() != 'return' && vm.inquiryType() != 'order_inquiry' && vm.inquiryType() != 'order_status' && vm.inquiryType() != 'order_address_change' ">
+            <hr class="mt-40">
+          </div>
+        </div>
+        
+
+        <div class="col-md-8" data-bind="visible: vm.inquiryType() == 'return'">
+        
+          <p>
+            If you'd like to return a Dyson machine* for a full refund, you need to return the machine within 30 days from the delivery date. For purchases made at a Dyson Demo Store or Dyson Service Center, a return must be made within 30 days from the purchase date. Dyson Direct will pay for return shipping.
+          </p>
+          <p>
+            <i>
+              *This policy excludes wearable devices such as Dyson Zone. Dyson Zone has a 14 day refund policy from the
+              shipped delivery date. If purchased in a Dyson Demo Store or Service Center location, a return must be
+              made within 14 days from the purchase date. Dyson Direct will pay for return shipping.
+            </i>
+          </p>
+          <p>
+            Refurbished machines and machines identified as final sale are considered final sale and are not eligible for returns, only warranty service. If your machine arrived damaged or you have received the wrong product, please contact us.
+          </p>
+          <h2 class="futura">
+          Return Form
+          </h2>
+
+          <div class="steps mt-20">
+            To return products purchased from Dyson Direct, please complete the following steps:
+            <p></p><p></p>
+            <ol>
+              <li>
+                Submit the form below. Our team will respond with return authorization information within 48 hours.
+              </li>
+              <li>
+                Package the item(s) to be returned in the original Dyson packaging.
+              </li>
+            </ol>
+
+            <div class="ml-30 mt-20">
+              Please note:
+              <ul>
+                <li>
+                  Unauthorized or COD returns will not be accepted.
+                </li>
+                <li>
+                  Please allow 4-8 weeks for return processing.
+                </li>
+                <li>
+                  Products returned to Dyson will receive a full refund.
+                </li>
+              </ul>
+              <p></p>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+
+      <form class="row" id="file-upload-form" action="/webform/submit"
+      enctype="multipart/form-data" method="post">
+
+        <input type="hidden" name="inquiryType" value="return">
+        <input type="hidden" id="country" name="country" value="">
+        <input type="hidden" id="language" name="language" value="us">
+        <input type="hidden" name="tkn" data-bind="value: vm.tkn">
+        
+        
+          <input type="hidden" name="source" value="iframe">
+        
+          <!-- ko if: vm.isGeneralInquiry -->
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="full_name">Your name</label>
+            <input type="text" class="form-control input_box" id="full_name" autocomplete="off" data-bind="value: vm.general.fullName"
+            name="fullName">
+          </div>
+        </div>
+        <div class="col-xs-12" data-bind="if: vm.isGeneralInquiry()">
+          <div class="form-group">
+            <label for="reply_email">Your email address (we need this in order to reply)</label>
+            <input type="text" class="form-control input_box" id="reply_email" autocomplete="off" data-bind="value: vm.general.email" name="email" >
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="form-group">
+            Is this about &nbsp; &nbsp; &nbsp;
+            <label for="ownership" class="radio-inline">
+              <input type="radio" value="Owns Product" id="ownership" autocomplete="off" data-bind="checked: vm.general.ownership" name="ownership">
+              a product you own, or
+            </label>
+            <label for="plan_owner" class="radio-inline">
+              <input type="radio" value="Plans to Purchase" id="plan_owner" autocomplete="off" data-bind="checked: vm.general.ownership" name="ownership">
+              plan to buy
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="product_name">The Dyson product name</label>
+            <input type="text" class="form-control input_box" id="product_name" autocomplete="off" data-bind="value: vm.general.productName" name="productName" >
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="question">Describe your question</label>
+            <textarea class="form-control input_box" id="question" rows="3" autocomplete="off" data-bind="value: vm.general.question" name="question" ></textarea>
+          </div>
+        </div>
+          <!-- /ko -->
+
+          <!-- ko if: vm.inquiryType() == 'price_match' -->
+        
+          <div class="col-xs-12 mt-20">
+          <div class="form-group">
+            <p>Are you inquiring about a price match on a</p>
+            <label for="priceMatchProduct" class="price radio">
+              <input type="radio" id="priceMatchProduct" value="product" data-bind="checked: vm.priceMatch.inquiringPriceMatchType" autocomplete="off" name="inquiringPriceMatchType">
+              Dyson product you saw advertised elsewhere?
+            </label>
+
+            
+            <label for="priceMatchPromotion" class="price radio">
+              <input type="radio" id="priceMatchPromotion" value="promotion" data-bind="checked: vm.priceMatch.inquiringPriceMatchType" autocomplete="off" name="inquiringPriceMatchType">
+              Tools and accessories promotion?
+            </label>
+          </div>
+        </div>
+        <div data-bind="visible: vm.priceMatch.inquiringPriceMatchType">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="order_number_one">Your Dyson order number</label>
+              <input type="text" class="form-control input_box" id="order_number_one" autocomplete="off" data-bind="value: vm.priceMatch.orderNumber" name="orderNumber">
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12"  data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'product' || vm.priceMatch.inquiringPriceMatchType() == 'priceGuaranteed'">
+            <label>Which Dyson Model</label>
+            <select class="form-control input_box" autocomplete="off"
+            data-bind="options: vm.modelWithPrices(), optionsText: 'model', optionsValue: 'model', value: vm.priceMatch.model, optionsCaption: ''">
+            </select>
+            <br/>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'product' || vm.priceMatch.inquiringPriceMatchType() == 'priceGuaranteed'">
+            <div class="form-group">
+              <label for="price_url">
+                Please paste website URL for proof of lower advertised price (1000 characters max)</label>
+              <input type="text" class="form-control input_box" id="price_url" autocomplete="off" data-bind="value: vm.priceMatch.websiteUrlForProofOfPrice" name="websiteUrlForProofOfPrice" >
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'product' || vm.priceMatch.inquiringPriceMatchType() == 'priceGuaranteed'">
+            <div class="form-group">
+              <label for="adv_price">Advertised Price</label>
+              <input type="text" class="form-control input_box" id="adv_price" autocomplete="off" data-bind="value: vm.priceMatch.advertisedPrice" name="advertisedPrice">
+              <span style="color: red;" data-bind="visible: !vm.isPriceValid()">Please enter price in correct format $XXX.XX</span>
+              <span style="color: red;" data-bind="visible: !vm.priceMatch.model() && vm.priceMatch.advertisedPrice() && vm.isPriceValid()">Please select model</span>
+            </div>
+          </div>
+          <div class="col-xs-8" data-bind="visible: (vm.priceMatch.inquiringPriceMatchType() == 'product' || vm.priceMatch.inquiringPriceMatchType() == 'priceGuaranteed') && vm.priceMatch.isDenied">
+            <div class="form-group">
+              <div style="color: blue;" data-bind="text: vm.priceMatch.blueText()"></div>
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion' || !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+            <div class="form-group">
+              <label for="first_name">First name</label>
+              <input type="text" class="form-control input_box" id="first_name" autocomplete="off" data-bind="value: vm.priceMatch.firstName" name="firstName">
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion' || !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+            <div class="form-group">
+              <label for="last_name">Last name</label>
+              <input type="text" class="form-control input_box" id="last_name" autocomplete="off" data-bind="value: vm.priceMatch.lastName" name="lastName">
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion' || (vm.inquiryType() == 'price_match' && !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit()))">
+            <div class="form-group">
+              <label for="email_addr">Email address</label>
+              <input type="text" class="form-control input_box" id="email_addr" autocomplete="off" data-bind="value: vm.priceMatch.email" name="email">
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion'">
+            <div class="form-group">
+              <label for="promotion">Please describe the promotion</label>
+              <input type="text" class="form-control input_box" id="promotion" autocomplete="off" data-bind="value: vm.priceMatch.promotion" name="promotion" >
+            </div>
+          </div>
+          <div class="col-xs-12" data-bind="visible: !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+            <div class="form-group">
+              <label for="details">Include any further details you think we should know (400 characters max)</label>
+              <textarea class="form-control input_box" id="details" rows="3" autocomplete="off" data-bind="value: vm.priceMatch.details" name="details" ></textarea>
+            </div>
+          </div>
+        </div>
+        
+          <!-- /ko -->
+
+        <!-- ko if: vm.inquiryType() == 'return' -->
+        
+          <div class="col-xs-12 col-md-6 col-lg-6">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="order_number">
+                  <span data-bind="html: vm.i18n('orderNumber')"></span>
+                </label>
+                <input type="text" class="form-control input_box" autocomplete="off" id="order_number" data-bind="masked: vm.return.orderNumber, mask: '9999999999'" name="orderNumber" >
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="first_name_r">
+                  <span data-bind="html: vm.i18n('firstName')"></span>
+                </label>
+                <input type="text" class="form-control input_box" id="first_name_r" data-bind="value: vm.return.firstName" autocomplete="off" name="firstName">
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="last_name_r">
+                  <span data-bind="html: vm.i18n('lastName')"></span>
+                </label>
+                <input type="text" class="form-control input_box" id="last_name_r" data-bind="value: vm.return.lastName" autocomplete="off" name="lastName">
+              </div>
+            </div>
+            <input type="hidden" data-bind="value: vm.return.firstLastName" name="firstLastName">
+            <input type="hidden" data-bind="value: vm.return.isAirWrap" name="isAirWrap">
+            <input type="hidden" data-bind="value: vm.return.isCorrale" name="isCorrale">
+            <input type="hidden" data-bind="value: vm.return.machine()" name="machines">
+            <input type="hidden" data-bind="value: vm.return.part()" name="parts">
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="email_addr">
+                  <span data-bind="html: vm.i18n('emailReturn')"></span>
+                </label>
+                <input type="text" class="form-control input_box" id="email_addr" data-bind="value: vm.return.email" autocomplete="email" name="email">
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="zip_code">
+                  Zip Code
+                  <input type="text" class="form-control input_box" id="zip_code" data-bind="masked: vm.return.zipCode, mask: '99999-9999'"  autocomplete="off" name="zipCode">
+                </label>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for=""><span data-bind="text: vm.i18n('whatAreYouReturning')"></span></label>
+                <select class="form-control input_box" data-bind="value: vm.return.returnType" name="returnType">
+                  <option selected></option>
+                  <option value="Machine & Part/Accessory">Machine & Part/Accessory</option>
+                  <option value="Machine">Machine Only</option>
+                  <option value="Part/Accessory">Part/Accessory Only</option>
+                </select>
+              </div>
+            </div>
+            <div data-bind="foreach: vm.return.machines(), visible: vm.return.returnType() == 'Machine' || vm.return.returnType() == 'Machine & Part/Accessory'">
+              <div class="machine-row" style="clear:both;">
+                <div class="col-xs-12 col-md-5 col-sm-5 serial-number">
+                  <div class="form-group">
+                    <label for="serialNumber">
+                      <span data-bind="text: $root.vm.i18n('machineSerialNumber')"></span>
+                    </label>
+                    <input type="text" class="form-control input_box" id="serialNumber" rows="3" data-bind="value: $data.serialNumber, attr: {name: 'serialNumberR'}" autocomplete="off"  >
+                    <div data-bind="visible: $index() == 0" class="descr">
+                      <a href="https://www.dyson.com/serial-number-help.html" target="_blank" data-bind="html: $root.vm.i18n('clickHere')">
+                      </a>
+                      <span data-bind="html: $root.vm.i18n('forHelp')"></span><br/>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                  <div class="form-group">
+                    <label for=""><span data-bind="text: $root.vm.i18n('packageCondition')"></span></label>
+                    <select class="form-control input_box" data-bind="value: $data.packageType, attr: {name: 'packageTypeR'}" >
+                      <option selected></option>
+                      <option value="Opened">Opened</option>
+                      <option value="Unopened">Unopened</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-xs-12 col-md-4 reason-for-return" >
+                  <div class="form-group">
+                    <label for="returnReason"><span data-bind="text: $root.vm.i18n('reasonForReturning')"></span></label><p></p>
+                    <select multiple class="custom-select input_box selectpicker form-control" id="returnReason" data-bind="selectPicker: $data.reason, selectPickerOptions: {optionsArray: $data.reasons().length > 0 ? $data.reasons : $root.vm.genericReasons}, optionsValue: 'reason', optionsText: 'reason'" data-show-subtext="true" name="reasonsR">
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 text-purple mt-35" data-bind="text: $data.errorText, visible: $data.errorText().length > 0"></div>
+            </div>
+            <div class="col-xs-12" style="margin-top: -15px; margin-bottom: 15px;" data-bind="visible: vm.return.returnType() == 'Machine' || vm.return.returnType() == 'Machine & Part/Accessory'">
+              <button type="button" class="button-solid" data-bind="click: vm.addMachineRow">
+                <span data-bind="text: vm.i18n('addAnotherMachine')"></span>
+              </button>
+            </div>
+            <div class="col-xs-12 mt-20" data-bind="visible: vm.return.returnType() == 'Machine'">
+              <div class="form-group">
+                <div>
+                  <span data-bind="html: vm.i18n('didYouReceive')">
+                  </span>
+                </div>
+                <p></p>
+                <label class="radio-inline" for="free_part_yes">
+                  <input type="radio" id="free_part_yes" autocomplete="off" value="yes" data-bind="checked: vm.return.freePart" name="freePart">
+                  <span data-bind="text: vm.i18n('yes')"></span>
+                </label>
+                <label class="radio-inline" for="free_part_no">
+                  <input type="radio" id="free_part_no" value="no" autocomplete="off" data-bind="checked: vm.return.freePart" name="freePart">
+                  <span data-bind="text: vm.i18n('no')"></span>
+                </label>
+              </div>
+
+            </div>
+            <div class="col-xs-12" data-bind="visible: vm.return.returnType() == 'Part/Accessory' || vm.return.returnType() == 'Machine & Part/Accessory' || vm.return.freePart() == 'yes'">
+              <span data-bind="text: vm.i18n('pleaseReturnAccessories')"></span>
+              <p></p>
+            </div>
+            <p></p>
+            <div data-bind="foreach: vm.return.parts(), visible: vm.return.returnType() == 'Part/Accessory' || vm.return.returnType() == 'Machine & Part/Accessory' || vm.return.freePart() == 'yes'">
+              <div class="part-row" style="clear:both;">
+                <div class="col-sm-5 col-md-5 col-xs-12">
+                  <div class="form-group">
+                    <label for="sku"><span data-bind="text: $root.vm.i18n('partAccessorySku')"></span></label>
+                    <input type="text" class="form-control input_box" id="sku" data-bind="value: $data.sku" autocomplete="off" name="skuR">
+                    <div data-bind="visible: $index() == 0" class="descr col-xs-12" style="margin-bottom: 15px;">
+                      <span data-bind="text: $root.vm.i18n('enterForPartAccessory')"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-xs-12">
+                  <div class="form-group">
+                    <label for=""><span data-bind="text: $root.vm.i18n('packageCondition')"></span></label>
+                    <select class="form-control input_box" data-bind="value: $data.packageType" name="packageTypeR">
+                      <option selected></option>
+                      <option value="Opened">Opened</option>
+                      <option value="Unopened">Unopened</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xs-12 reason-for-return">
+                  <div class="form-group">
+                    <label for="partReturnReason"><span data-bind="text: $root.vm.i18n('reasonForReturning')"></span></label><p></p>
+                    <select multiple class="custom-select input_box selectpicker form-control" id="partReturnReason" data-bind="selectPicker: $data.reason, selectPickerOptions: {optionsArray: $root.vm.partReasons}, optionsValue: 'reason', optionsText: 'reason'" data-show-subtext="true" name="reasonsR"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12" style="margin-top: -15px;" data-bind="visible: vm.return.returnType() == 'Part/Accessory' || vm.return.returnType() == 'Machine & Part/Accessory' || vm.return.freePart() == 'yes'">
+              <button type="button" class="button-solid" data-bind="click: vm.addPartRow">
+                <span data-bind="text: vm.i18n('addAnotherAccessory')"></span>
+              </button>
+            </div>
+            <div class="col-xs-12 mt-20">
+              <div class="form-group">
+                <label for="reason"><span data-bind="text: vm.i18n('commentsOnReason')"></span></label><p></p>
+                <textarea class="form-control input_box" id="reason" autocomplete="off" rows="3" data-bind="value: vm.return.machinePartAdditionalReason" name="machinePartAdditionalReason"></textarea>
+              </div>
+            </div>
+
+            <div data-bind="visible: vm.isOpenedCorrale() || vm.isOpenedAirwrap()">
+              
+              <div class="col-xs-12" >
+                <div class="form-group">
+                  <div>
+                    <span>Have you personally tried using the Dyson Corrale™?</span>
+                  </div>
+                  <p></p>
+                  <label class="radio-inline" for="usingDysonCorrale_yes">
+                    <input type="radio" id="usingDysonCorrale_yes" autocomplete="off" value="Yes" data-bind="checked: vm.return.reasonParam.usingDysonCorrale" name="usingDysonCorrale">
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-inline" for="usingDysonCorrale_no">
+                    <input type="radio" id="usingDysonCorrale_no" autocomplete="off" value="No" data-bind="checked: vm.return.reasonParam.usingDysonCorrale" name="usingDysonCorrale">
+                    <span>No</span>
+                  </label>
+                </div>
+              </div>
+              
+              
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.usingDysonCorrale() == 'Yes'">
+                <div class="form-group">
+                  <label for="statements">
+                    <span>Please select all the statements that apply to your experience with the Dyson Corrale:</span>
+                  </label>
+                  <p></p>
+                  <select name="statements" id="statements" data-bind="selectPicker: vm.return.reasonParam.statements, selectPickerOptions: {optionsArray: vm.statementsListCorrale},
+                                    optionsValue: 'value', optionsText: 'statement'" data-none-selected-text="Select the Statement(s)" class="selectpicker" multiple></select>
+                </div>
+              </div>
+              
+              
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.usingDysonCorrale() == 'Yes'">
+                <div class="form-group">
+                  <div>
+                    <span data-bind="html: vm.i18n('temperature')"></span>
+                  </div>
+                  <p></p>
+                  <label class="radio-inline" for="temperature">
+                    <input type="radio" id="temperature" autocomplete="off" value="Mainly 165 C / 330 F" data-bind="checked: vm.return.reasonParam.temperature" name="temperature">
+                    <span data-bind="html: vm.i18n('temp1')"></span>
+                  </label>
+                  <p></p>
+                  <label class="radio-inline" for="temperature_2">
+                    <input type="radio" id="temperature_2" autocomplete="off" value="Mainly 185 C / 365 F" data-bind="checked: vm.return.reasonParam.temperature" name="temperature">
+                    <span data-bind="html: vm.i18n('temp2')"></span>
+                  </label>
+                  <p></p>
+                  <label class="radio-inline" for="temperature_3">
+                    <input type="radio" value="Mainly 210 C / 410 F" id="temperature_3" autocomplete="off" data-bind="checked: vm.return.reasonParam.temperature" name="temperature">
+                    <span data-bind="html: vm.i18n('temp3')"></span>
+                  </label>
+                  <p></p>
+                  <label class="radio-inline" for="temperature_na">
+                    <input type="radio" value="Not sure / NA" autocomplete="off" id="temperature_na" data-bind="checked: vm.return.reasonParam.temperature" name="temperature">
+                    <span data-bind="html: vm.i18n('noTemp')"></span>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label for="changes">
+                    <span data-bind="html: vm.i18n('change')"></span>
+                  </label>
+                  <input type="text" class="form-control input_box" id="changes" autocomplete="off" data-bind="value: vm.return.reasonParam.changes" name="changes" >
+                </div>
+              </div>
+              
+              
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div>
+                    <span data-bind="html: vm.i18n('willing')"></span>
+                  </div>
+                  <p></p>
+                  <label class="radio-inline" for="willingToBeContacted_yes">
+                    <input type="radio" id="willingToBeContacted_yes" autocomplete="off" value="Yes" data-bind="checked: vm.return.reasonParam.willingToBeContacted" name="willingToBeContacted">
+                    <span data-bind="html: vm.i18n('yes')"></span>
+                  </label>
+                  <label class="radio-inline" for="willingToBeContacted_no">
+                    <input type="radio" value="No" id="willingToBeContacted_no" autocomplete="off" data-bind="checked: vm.return.reasonParam.willingToBeContacted" name="willingToBeContacted">
+                    <span data-bind="html: vm.i18n('no')"></span>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.willingToBeContacted() == 'Yes'">
+                <div class="form-group">
+                  <label >
+                    <span data-bind="html: vm.i18n('contact')"></span>
+                  </label>
+                  <p></p>
+                  <label class="radio-inline">
+                    <input type="radio" value="phone" data-bind="checked: vm.return.reasonParam.contactType" name="contactType">
+                    <span data-bind="html: vm.i18n('phone')"></span>
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="email" data-bind="checked: vm.return.reasonParam.contactType" name="contactType">
+                    <span data-bind="html: vm.i18n('email')"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.contactType() == 'phone'">
+                <div class="form-group">
+                  <label for="phone_reasonParam">
+                    <span data-bind="html: vm.i18n('phoneNumber')"></span>
+                  </label>
+                  <input type="text" class="form-control input_box" id="phone_reasonParam" data-bind="masked: vm.return.reasonParam.phone, mask: '999-999-9999'" maxlength="12" name="reasonParamPhone" />
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.contactType() == 'email'">
+                <div class="form-group">
+                  <label for="email_reasonParam">
+                    <span data-bind="html: vm.i18n('email')"></span>
+                  </label>
+                  <input type="text" class="form-control input_box" id="email_reasonParam" data-bind="value: vm.return.reasonParam.email" name="reasonParamEmail" placeholder="Required">
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.statements() == 1">
+                <div class="form-group">
+                  <label >
+                    <span>How long did it take you to complete a style? </span>
+                  </label>
+                  <input type="text" class="form-control input_box" data-bind="value: vm.return.reasonParam.howLongComplete" name="howLongComplete" >
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers2()">
+                <div class="form-group">
+                  <label for="experiencePoorGlide">
+                <span>
+                  If you did experience a poor glide, please select the statement(s) that best describes your experience:</span>
+                  </label>
+                  <p></p>
+                  <select name="experiencePoorGlide" id="experiencePoorGlide" data-bind="selectPicker: vm.return.reasonParam.experienceSnagging, selectPickerOptions: {optionsArray: vm.experiencePoorGlideListCorrale},
+                                    optionsValue: 'experiencePoorGlide', optionsText: 'experiencePoorGlide'" data-none-selected-text="Select the Statement(s)" class="selectpicker" multiple></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.statements() == 2">
+                <div class="form-group">
+                  <label for="experienceSnagging">
+                    <span>If you did experience snagging, please select the answer that best describes your experience:</span>
+                  </label>
+                  <p></p>
+                  <select id="experienceSnagging" name="experienceSnagging" data-bind="value: vm.return.reasonParam.experienceSnagging, options: vm.experienceSnaggingListCorrale(), optionsText: 'experienceSnagging',
+                                    optionsValue: 'experienceSnagging', optionsCaption: 'Select the statement(s)'"></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.statements() == 2 || vm.return.reasonParam.statements() == 4 || vm.return.reasonParam.statements() == 5">
+                <div class="form-group">
+                  <label for="experienceSnaggingOrCatching">
+                <span>
+                  If you did experience snagging or catching, please select the statements that best describe your experience:</span>
+                  </label>
+                  <p></p>
+                  <select name="experienceSnaggingOrCatching" id="experienceSnaggingOrCatching" data-bind="value: vm.return.reasonParam.experienceSnaggingOrCatching, options: vm.experienceSnaggingOrCatchingListCorrale(), optionsText: 'experienceSnaggingOrCatching',
+                                    optionsValue: 'experienceSnaggingOrCatching', optionsCaption: 'Select the statement(s)'"></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.reasonParam.statements() == 6">
+                <div class="form-group">
+                  <label >
+                <span>
+                  If you experienced hair breaking while styling with the Dyson Corral™, please select the statement(s) that best describes your experience:</span>
+                  </label>
+                  <p></p>
+                  <select name="experienceHairBreaking" data-bind="selectPicker: vm.return.reasonParam.experienceHairBreaking, selectPickerOptions: {optionsArray: vm.experienceHairBreakingListCorrale},
+                                    optionsValue: 'experienceHairBreaking', optionsText: 'experienceHairBreaking'" data-none-selected-text="Select the Statement(s)" class="selectpicker" multiple></select>
+
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers1()">
+                <div class="form-group">
+                  <label for="hairTypeCorrale">
+                    <span>What is your hair type? </span>
+                  </label>
+                  <p></p>
+                  <select name="hairTypeCorrale" id="hairTypeCorrale" autocomplete="off" data-bind="value: vm.return.reasonParam.hairType, options: vm.hairTypeListCorrale(), optionsText: 'hairType',
+                                    optionsValue: 'hairType', optionsCaption: 'Hair Type'"></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers1()">
+                <div class="form-group">
+                  <div >
+                    <span>What is your hair texture (Individual hair strand thickness)?</span>
+                  </div>
+                  <p></p>
+                  <label class="radio-inline" for="hairStrandThickness_fine">
+                    <input type="radio" autocomplete="off" id="hairStrandThickness_fine" value="Fine" name="hairStrandThickness">
+                    <span>Fine</span>
+                  </label>
+                  <label class="radio-inline" for="hairStrandThickness_medium">
+                    <input type="radio" autocomplete="off" id="hairStrandThickness_medium" value="Medium" name="hairStrandThickness">
+                    <span>Medium</span>
+                  </label>
+                  <label class="radio-inline" for="hairStrandThickness_coarse">
+                    <input type="radio" autocomplete="off" id="hairStrandThickness_coarse" value="Coarse" name="hairStrandThickness">
+                    <span>Coarse</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers1()">
+                <div class="form-group">
+                  <label for="hairCondition">
+                    <span>How would you describe the condition of your hair. Select all that apply.</span>
+                  </label>
+                  <p></p>
+                  <select name="hairCondition" id="hairCondition" data-bind="selectPicker: vm.return.reasonParam.hairCondition, selectPickerOptions: {optionsArray: vm.hairConditionListCorrale},
+                                    optionsValue: 'hairCondition', optionsText: 'hairCondition'" data-none-selected-text="Select the Statement(s)" class="selectpicker" multiple></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers1()">
+                <div class="form-group">
+                  <label for="typeOfHaircut">
+                    <span>How would you describe the type of haircut you have:</span>
+                  </label>
+                  <p></p>
+                  <select id="typeOfHaircut" autocomplete="off" name="typeOfHaircut" data-bind="value: vm.return.reasonParam.typeOfHaircut, options: vm.typeOfHaircutListCorrale(), optionsText: 'typeOfHaircut',
+                                    optionsValue: 'typeOfHaircut', optionsCaption: 'Type of haircut you have'"></select>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.corraleAnswers1()">
+                <div class="form-group">
+                  <label for="stylingBehavior">
+                    <span>Please select all that apply to your styling behavior with Dyson Corrale™ </span>
+                  </label>
+                  <p></p>
+                  <select id="stylingBehavior" name="stylingBehavior" data-bind="selectPicker: vm.return.reasonParam.stylingBehavior, selectPickerOptions: {optionsArray: vm.stylingBehaviorListCorrale},
+                                    optionsValue: 'stylingBehavior', optionsText: 'stylingBehavior'" data-none-selected-text="Select the Statement(s)" class="selectpicker" multiple></select>
+                </div>
+              </div>
+            </div>
+
+            <div data-bind="visible: false && vm.isOpenedAirwrap()">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label for="hairType">
+                    <span data-bind="html: vm.i18n('hairType')"></span>
+                  </label> &nbsp;&nbsp;&nbsp;
+                  <div>
+                    <select id="hairType" name="hairType" autocomplete="off" data-bind="value: vm.return.airwrapParam.hairType, options: vm.hairTypeList(), optionsText: 'hairType',
+                                    optionsValue: 'hairType', optionsCaption: 'Hair Type'"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12" data-bind="visible: vm.return.airwrapParam.hairType() == 'Other' || vm.return.airwrapParam.hairType() == 'Autre'">
+                <div class="form-group">
+                  <label for="hairTypeOther">  </label> &nbsp;&nbsp;&nbsp;
+                  <input type="text" id="hairTypeOther" autocomplete="off" class="form-control input_box" data-bind="value: vm.return.airwrapParam.otherHairType" name="otherHairType">
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label for="styleType">
+                    <span data-bind="html: vm.i18n('styleType')"></span>
+                  </label> &nbsp;&nbsp;&nbsp;
+
+                  <div>
+                    <select name="styleType" id="styleType" data-bind="value: vm.return.airwrapParam.styleType, options: vm.styleTypeList(), optionsText: 'styleType',
+                                    optionsValue: 'styleType', optionsCaption: 'Style Type'"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12" >
+                <div class="form-group">
+                  <label>
+                    <span data-bind="html: vm.i18n('attachments')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment1">
+                    <input type="checkbox" id="attachment1" value='1.2" barrels' autocomplete="off" data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment1')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment2">
+                    <input type="checkbox" id="attachment2" value='1.6" barrels' autocomplete="off"  data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment2')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment3">
+                    <input type="checkbox" id="attachment3" value="Firm Smoothing Brush" autocomplete="off" data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment3')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment4">
+                    <input type="checkbox" id="attachment4" value="Soft Smoothing Brush" autocomplete="off" data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment4')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment5">
+                    <input type="checkbox" id="attachment5" value="Round Volumizing Brush" autocomplete="off" data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment5')"></span>
+                  </label>
+                  <p></p>
+                  <label class="check-box" for="attachment6">
+                    <input type="checkbox" id="attachment6" value="Pre-styling Dryer" autocomplete="off" data-bind="checked: vm.return.airwrapParam.attachments" name="attachments">
+                    <span data-bind="html: vm.i18n('attachment6')"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-10">
+              <div class="form-group">
+                <div>
+                  <span data-bind="html: vm.i18n('receiveTextMessage')"></span>
+                </div>
+                <label class="radio-inline" for="isConfirmed_yes">
+                  <input type="radio" id="isConfirmed_yes" value="Yes" data-bind="checked: vm.return.isConfirmed" autocomplete="off" name="isConfirmed">
+                  <span data-bind="html: vm.i18n('yes')"></span>
+                </label>
+                <label class="radio-inline" for="isConfirmed_no">
+                  <input type="radio" id="isConfirmed_no" value="No" data-bind="checked: vm.return.isConfirmed" autocomplete="off" name="isConfirmed">
+                  <span data-bind="html: vm.i18n('no')"></span>
+                </label>
+              </div>
+              <div class="form-group row" data-bind="visible: vm.return.isConfirmed() == 'Yes'">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="phone_o">
+                    <span data-bind="html: vm.i18n('phoneNumber')"></span>
+                  </label>
+                  <input type="text" class="form-control input_box max-w" id="phone_o" autocomplete="tel" data-bind="masked: vm.return.phone, mask: '999-999-9999'" maxlength="12" name="phone" />
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="customerId" value="">
+            <input type="hidden" name="returnOrderNumber" value="">
+            <input type="hidden" name="paymentType" value="">
+          </div>
+        </div>
+          <div class="col-xs-12 col-md-6 col-lg-6">
+          <div class="row airwrap-video-mt">
+            <div class="col-xs-12 col-md-12" data-bind="visible: vm.inquiryType() == 'return' && vm.isShowAirwrap()">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="col-xs-12">
+                    <h3 class="futura" data-bind="html: vm.i18n('stylingAirwrap')"></h3><br>
+                  </div>
+                  <div class="col-xs-12">
+                    <iframe class="thumbnail" width="100%" height="350" allowfullscreen="allowfullscreen" src="https://www.youtube.com/embed/ZHA-pcN4M9Y"></iframe>
+                  </div>
+                  <div class="col-xs-12 futura">
+                    <span data-bind="html: vm.i18n('clickAirwrap')"></span>
+                    <span>
+                  <a href="https://www.dyson.com/support/hair-care/hair-stylers/airwrap" target="_blank" data-bind="html: vm.i18n('hereAirwrap')" style="color: #333; text-decoration: underline;">
+                  </a>
+                </span>
+                    <span data-bind="html: vm.i18n('moreTutorialsAirwrap')"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- /ko -->
+
+
+          <!-- ko if: vm.inquiryType() == 'order_inquiry' || vm.inquiryType() == 'order_status' || vm.inquiryType() == 'order_address_change' -->
+        <div data-bind="if: vm.orderInquiryType() == 'status' || vm.inquiryType() == 'order_status'">
+          <input type="hidden" name="orderInquiryType" data-bind="value: 'status'">
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="order_number_o">Order Number</label>
+                <input type="text" class="form-control input_box max-w" id="order_number_o" autocomplete="off" data-bind="value: vm.orderStatus.orderNumber" name="orderNumber" maxlength="10">
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="email_addr_o">Your Email Address</label>
+                <input type="text" class="form-control input_box max-w" id="email_addr_o" autocomplete="email" data-bind="value: vm.orderStatus.email" name="email">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="phone_o_1">Cell Phone Number</label>
+                <input type="text" class="form-control input_box max-w" id="phone_o_1" autocomplete="off" data-bind="masked: vm.orderStatus.phone, mask: '999-999-9999'" maxlength="12" name="phone" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="full_name_o">Your Name</label>
+                <input type="text" class="form-control input_box max-w" id="full_name_o" autocomplete="off" data-bind="value: vm.orderStatus.firstLastName" name="firstLastName">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="street_address_o">Please provide the address you requested the order to be shipped to</label>
+                <textarea class="form-control input_box max-w" id="street_address_o" rows="2" autocomplete="off" data-bind="value: vm.orderStatus.address" name="address"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="row form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 ">
+                <label for="city_o">City:</label>
+                <input type="text" class="form-control input_box max-w" id="city_o" autocomplete="off"  data-bind="value: vm.orderStatus.city" name="city">
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                <br class="visible-mobile">
+                <label for="state_o">State:</label>
+                <input type="text" class="form-control input_box max-w" id="state_o" autocomplete="off" data-bind="value: vm.orderStatus.state" name="state">
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <br class="visible-mobile">
+                <label for="zip_code_o">Zip:</label>
+                <input type="text" class="form-control input_box max-w" id="zip_code_o" autocomplete="off" maxlength="5" data-bind="value: vm.orderStatus.zipCode" name="zipCode">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="additional_info_o">(optional) Additional Information</label>
+                <textarea class="form-control input_box max-w" id="additional_info_o" rows="2" autocomplete="off" data-bind="value: vm.orderStatus.additionalInfo" name="additionalInfo"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-bind="if: vm.orderInquiryType() == 'change_address' || vm.inquiryType() == 'order_address_change'">
+          <input type="hidden" name="upsId" data-bind="value: vm.selectedUpsLocation.id">
+          <input type="hidden" name="upsAddress" data-bind="value: vm.orderChangeAddress.upsAddress">
+          <input type="hidden" name="orderInquiryType" data-bind="value: 'change_address'">
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="upsTrackingNumber">Your UPS Tracking Number</label>
+                <input type="text" class="form-control input_box max-w" id="upsTrackingNumber" name="upsTrackingNumber" autocomplete="off"
+                data-bind="value: vm.orderChangeAddress.upsTrackingNumber" maxlength="18">
+              </div>
+              <div class="col-md-2 col-sm-3 col-xs-6">
+                <label for="zip_code_o_ch">Delivery Zip Code</label>
+                <input type="text" class="form-control input_box max-w" autocomplete="off" id="zip_code_o_ch" maxlength="5" data-bind="masked: vm.orderChangeAddress.zipCode, mask: '99999', valueUpdate: 'keyup keypress'" name="zipCode">
+                <img id="ups-store-busy-loader" class="submit_busy_loader" src="/assets/images/common/landing/ajax-loader.gif" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div data-bind="if: vm.orderInquiryUpsStores().length == 0">
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12 text-danger text-center">
+                  <span data-bind="text: vm.upsStoreNotFoundError"></span>
+                </div>
+              </div>
+              <div data-bind="foreach: vm.orderInquiryUpsStores">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                  <div class="row futura">
+                    <div class="col-xs-3">
+                      <div data-bind="if: $index() == 0">
+                        <img src="/assets/images/dyson/web_form/ups_shield_1.png"/>
+                      </div>
+                      <div data-bind="if: $index() == 1">
+                        <img src="/assets/images/dyson/web_form/ups_shield_2.png"/>
+                      </div>
+                      <div data-bind="if: $index() == 2">
+                        <img src="/assets/images/dyson/web_form/ups_shield_3.png"/>
+                      </div>
+
+                      <h5><span data-bind="text: $data.Distance?.Value"></span><span> mi</span></h5>
+                    </div>
+                    <div class="col-xs-8">
+                      <h5>UPS Customer Center</h5>
+                      <h5 data-bind="text: $data?.AddressKeyFormat?.ConsigneeName"></h5>
+                      <h5>
+                        <span data-bind="text: $data?.AddressKeyFormat?.AddressLine"></span>,
+                        <span data-bind="text: $data?.AddressKeyFormat?.PoliticalDivision2"></span>,
+                        <span data-bind="text: $data?.AddressKeyFormat?.PoliticalDivision1"></span>,
+                        <span data-bind="text: $data?.AddressKeyFormat?.PostcodePrimaryLow"></span>-
+                        <span data-bind="text: $data?.AddressKeyFormat?.PostcodeExtendedLow"></span>
+                      </h5>
+                      <h5><span>Tel: </span><span data-bind="text: $data?.PhoneNumber"></span></h5>
+                      <h5><span>Closes at </span><span>6:00 PM</span></h5>
+                      <img src="/assets/images/dyson/web_form/map_marker.png"/>
+                      <span>Featured</span>&nbsp;&nbsp;
+                      <a class="text-black-underline" href="" target="_blank" >
+                        Direction</a>
+                      <br>
+                      <br>
+                      <label class="radio-inline">
+                        <input type="radio" data-bind="checked: $root.vm.selectedUpsLocation.id, value: $data.LocationID" name="upsLocation">
+                        <p>Select This Location</p>
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="full_name_o">Your Name</label>
+                <input type="text" class="form-control input_box max-w" id="full_name_o" autocomplete="name" data-bind="value: vm.orderChangeAddress.firstLastName" name="firstLastName">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="order_number_o">Order Number</label>
+                <input type="text" class="form-control input_box max-w" id="order_number_o" autocomplete="off" data-bind="value: vm.orderChangeAddress.orderNumber" name="orderNumber" maxlength="10">
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="email_addr_o">Your Email Address</label>
+                <input type="text" class="form-control input_box max-w" autocomplete="email" id="email_addr_o" data-bind="value: vm.orderChangeAddress.email" name="email">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="phone_o">Cell Phone Number</label>
+                <input type="text" class="form-control input_box max-w" id="phone_o" autocomplete="tel" data-bind="masked: vm.orderChangeAddress.phone, mask: '999-999-9999'"  maxlength="12" name="phone" />
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="additional_info_o">(optional) Additional Information</label>
+                <textarea class="form-control input_box max-w" autocomplete="off" id="additional_info_o" rows="2" data-bind="value: vm.orderChangeAddress.additionalInfo" name="additionalInfo"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- /ko -->
+        
+          <div class="col-xs-12" data-bind="visible: (vm.inquiryType() == 'price_match' && (vm.priceMatch.inquiringPriceMatchType() == 'product' || vm.priceMatch.inquiringPriceMatchType() == 'priceGuaranteed'))  || (vm.inquiryType() != 'return' && vm.inquiryType() != 'order_inquiry' && vm.inquiryType() != 'order_status' && vm.inquiryType() != 'order_address_change' && vm.inquiryType() != 'price_match')">
+            <p data-bind="visible:  !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+              Please include a picture showing proof of the advertised lower price.</p>
+            <label for="attachImg" class="btn btn-file btn-attach-image futura " data-bind="visible: !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+              Attach image<input type="file" id="attachImg" name="attachedFile" autocomplete="off"/>
+            </label>
+            <span id="file-name"></span>
+            <div id="progress">
+              <div class="bar" style="width: 0%;"></div>
+            </div>
+          </div>
+        
+
+        <div class="clearfix"></div>
+        <div data-bind="if: (vm.inquiryType() == 'price_match' && vm.priceMatch.inquiringPriceMatchType) || ((vm.inquiryType() == 'order_inquiry' && vm.orderInquiryType() != '') || vm.inquiryType() == 'order_status' || vm.inquiryType() == 'order_address_change' || vm.inquiryType() == 'return' || vm.isGeneralInquiry()) ">
+          <div class="col-md-8" data-bind="visible: vm.inquiryType() == 'order_inquiry' || vm.inquiryType() == 'order_status' || vm.inquiryType() == 'order_address_change'">
+            <p class="mt-20 mb-20">
+            By submitting this form you confirm that you agree to receive email or SMS communications from Dyson. We will only contact you in relation to your Order Inquiry. For further information on how Dyson handles your data, please see our Privacy Policy.
+            </p>
+          </div>
+          <div class="col-md-8" data-bind="visible: vm.inquiryType() != 'order_inquiry' && vm.inquiryType() != 'order_status' && vm.inquiryType() != 'order_address_change'">
+            <div class="mt-20 mb-20"  data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion' || !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+            <span data-bind="html: vm.i18n('terms')"></span>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          
+            <div class="col-md-3 col-sm-4 col-xs-6" data-bind="visible: vm.priceMatch.inquiringPriceMatchType() == 'promotion' || !(vm.priceMatch.isDenied() && !vm.priceMatch.allowSubmit())">
+              <button class="btn submit-btn futura" type="submit" data-bind="enable: vm.enableSubmitButton"><span data-bind="html: vm.i18n('submit')"></span></button>
+            </div>
+          
+          <img id="submit-webform-busy-loader" class="submit_busy_loader" src="/assets/images/common/landing/ajax-loader.gif" alt="">
+          <div class="col-md-9 col-sm-8 col-xs-12 text-danger" >
+            <p class="visible-mobile"></p>
+            <span data-bind="text: vm.errorText"></span>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-8 promise" data-bind="visible: vm.inquiryType() == 'price_match' && vm.priceMatch.inquiringPriceMatchType">
+            <h4 class="futura">Price Match Promise</h4>
+            Be confident that you’re getting the best price on Dyson.com. If within 30 days of purchase you should find
+            the same model currently advertised at a lower price by an authorized US Dyson retailer or by Dyson on a
+            third party marketplace site, we'll refund you the difference if the below details are satisfied. Visit
+            <a href="http://dyson.com/pricematch">dyson.com/pricematch</a>, the chatbox on Dyson.com, or contact our
+            Customer Service team at 1-866-693-9766 to get started. Here are the details you need to know:
+            <br>
+            <br>
+            <ul>
+                <li>Machine must be the exact same model number as it appears on Dyson.com and in stock. You can
+                    identify the machine serial number on the box or on the product itself. To locate the serial number
+                    on your product, please visit <a href="http://dyson.com/serial-number-help">http://dyson.com/serial-number-help</a>
+                    for location details by specific machine.
+                </li>
+                <li>Proof of advertised price by an authorized dealer is required (Valid copy of flyer or website URL required. Advertised price must be the listed price; membership/loyalty, promo code entries or like discounts are not eligible for price matching).
+                </li>
+                <li>Authorized new product dealers are limited to Amazon.com 1st Party, Home Shopping Network (HSN), Best Buy, Costco, Home Depot, Lowes, QVC, Sam's Club, Crate & Barrel and Target. Authorized refurbished machine dealers are limited to Nordstrom Rack, Woot and Zulily. Excludes third party marketplace sellers other than Dyson.
+                </li>
+                <li>Machine must be new and in original packaging. It cannot be used, damaged, returned, open box, "close out", "clearance" or a demonstrator machine.
+                </li>
+                <li>Machine price must not be lower due to an advertising error or misprint.</li>
+                <li>Hair care machine and accessories, which include, but are not limited to, the Dyson Supersonic&#8482;,
+                    Dyson Airwrap&#8482;, Dyson Corrale&#8482;, and Dyson Airstrait&#8482; are not eligible for price matching.
+                </li>
+                <li>Lower price will not be honored if the result of a violation of a Dyson unilateral advertising or pricing policy or if doing so would result in a violation of a Dyson policy.
+                </li>
+            </ul>
+            <br>
+            <br>
+            <div data-bind="visible: false">
+            <h4 class="futura">Best Price Guarantee</h4>
+            Be confident that you’re getting the best price no matter when you shop this season. Beginning at 12:00 am
+            CST on October 18, 2022, if you purchase a machine from Dyson.com identified with "Best Price Guaranteed"
+            and then find it at a lower price on Dyson.com or at an authorized US Dyson retailer listed below on or
+            before December 31, 2022 at 11:59 pm CST, we’ll refund you the difference if the below stipulations are met.
+            Visit <a href="http://dyson.com/pricematch">dyson.com/pricematch</a>, the chatbox on Dyson.com, or contact
+            our Customer Service team at <a href="tel:1-866-693-9766">1-866-693-9766</a> to get started. Here are the
+            details you need to know:
+            <br>
+            <br>
+            <ul>
+                <li>Machine must be the exact same model number as it appears on Dyson.com and in stock. You can
+                    identify the machine serial number on the box or on the product itself. To locate the serial number
+                    on your product, please visit <a href="http://dyson.com/serial-number-help">http://dyson.com/serial-number-help</a>
+                    for location details by specific machine.
+                </li>
+                <li>Proof of advertised price by an authorized dealer is required (Valid copy of flyer or website URL
+                    required. Advertised price must be the listed price; membership/loyalty, promo code entries or like
+                    discounts are not eligible for price matching).
+                </li>
+                <li>Authorized new product dealers are limited to Best Buy, Costco, Bed Bath & Beyond, Home Depot,
+                    Lowes, QVC, Sam's Club, and Target.
+                </li>
+                <li>Machine must be new and in original packaging. It cannot be used, damaged, returned, open box,
+                    "close out", "clearance" or a demonstrator machine.
+                </li>
+                <li>Machine price must not be lower due to an advertising error or misprint.</li>
+                <li>Hair care machine and accessories, which include, but are not limited to, the Dyson Supersonic&#8482;,
+                    Dyson Airwrap&#8482;, and Dyson Corrale&#8482;, are not eligible for price matching.
+                </li>
+                <li>Lower price will not be honored if the result of a violation of a Dyson unilateral advertising or
+                    pricing policy or if doing so would result in a violation of a Dyson policy.
+                </li>
+            </ul>
+            <br>
+            Dyson reserves the right to rescind this offer at any time and/or modify these terms and conditions as
+            needed.
+            
+            </div>
+          </div>
+      </form>
+    </main>
+
+    <div class="container" data-bind="visible: vm.page() == 'thank_you_order_status'">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="text-center">Thank you!</h2>
+          <h4 class="text-center mt-20 mb-20">
+
+            <p>Your information has been submitted.</p>
+            <p>You will receive an email reply within 24 hours. </p>
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" data-bind="visible: vm.page() == 'thank_you'">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="text-center">Thank you!</h2>
+          <p></p>
+          <h4 class="text-center">
+             <p>Your information has been submitted.</p>
+            <p>You will receive an email reply within 7 business days.</p>
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <div id="thank_you_return" class="container" data-bind="visible: vm.page() == 'thank_you_return'">
+      <div class="row">
+        <div class="col-xs-12 mb-20 text-center">
+          <h2 class="mb-20" data-bind="text: vm.i18n('titleThankYouReturn')"></h2>
+          <h4 data-bind="html: vm.i18n('textThankYouReturn')" class="mb-20"></h4>
+        </div>
+        <div class="col-xs-12 mb-20 text-center" data-bind="click: vm.resetForm">
+          <button class="btn submit-btn futura">
+            <span>Submit another return</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
