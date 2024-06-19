@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="p47EMgWwP6Hbo8Cp8vlI3XJS0CNppCmqrNqFxEaZ">
+
+    <title>IoT Privacy Infrastructure</title>
+
+    <!-- Scripts -->
+    <script src="https://www.iotprivacy.io/js/app.js" defer></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="https://www.iotprivacy.io/css/app.css" rel="stylesheet">
+    <link href="https://www.iotprivacy.io/css/iotpi.css" rel="stylesheet">
+
+    
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//analytics.iotprivacy.io/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <!-- End Matomo Code -->
+
+</head>
+<body>
+
+    
+    <style>
+
+.js-cookie-consent{
+  top: 0px;
+  padding: 2px;
+  text-align: center;
+  width: 100%;
+  z-index: 9999;
+  background-color: #000;
+  border: solid none;
+}
+
+</style>
+
+<div class="js-cookie-consent cookie-consent">
+
+    <span class="cookie-consent__message">
+        
+        <p class="lead" style="color:white !important;">
+          We use cookies to improve your user experience and combat abuse.
+          <a class="ml-2 btn btn-outline-secondary border-rounded-full btn-sm" href="/privacy-policy">Learn more</a>
+          <button class="ml-2 js-cookie-consent-agree cookie-consent__agree btn btn-outline-secondary border-rounded-full btn-sm">
+              
+              I Agree
+          </button>
+        </p>
+    </span>
+
+
+
+</div>
+
+    <script>
+
+        window.laravelCookieConsent = (function () {
+
+            const COOKIE_VALUE = 1;
+            const COOKIE_DOMAIN = 'www.iotprivacy.io';
+
+            function consentWithCookies() {
+                setCookie('iotpi_cookie_consent', COOKIE_VALUE, 365);
+                hideCookieDialog();
+            }
+
+            function cookieExists(name) {
+                return (document.cookie.split('; ').indexOf(name + '=' + COOKIE_VALUE) !== -1);
+            }
+
+            function hideCookieDialog() {
+                const dialogs = document.getElementsByClassName('js-cookie-consent');
+
+                for (let i = 0; i < dialogs.length; ++i) {
+                    dialogs[i].style.display = 'none';
+                }
+            }
+
+            function setCookie(name, value, expirationInDays) {
+                const date = new Date();
+                date.setTime(date.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + value
+                    + ';expires=' + date.toUTCString()
+                    + ';domain=' + COOKIE_DOMAIN
+                    + ';path=/';
+            }
+
+            if (cookieExists('iotpi_cookie_consent')) {
+                hideCookieDialog();
+            }
+
+            const buttons = document.getElementsByClassName('js-cookie-consent-agree');
+
+            for (let i = 0; i < buttons.length; ++i) {
+                buttons[i].addEventListener('click', consentWithCookies);
+            }
+
+            return {
+                consentWithCookies: consentWithCookies,
+                hideCookieDialog: hideCookieDialog
+            };
+        })();
+    </script>
+
+
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+            <div class="container pt-3 pb-3">
+                <a class="navbar-brand ml-auto" href="https://www.iotprivacy.io">
+
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="position: relative; z-index: 10000;">
+
+                    <ul class="navbar-nav ml-auto">
+                      <li class="nav-item">
+                          <a class="nav-link" href="https://www.iotprivacy.io/publishing-iot">Publishing IoT Resources</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="https://www.iotprivacy.io/discovering-iot">Discovering IoT Resources</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="https://www.iotprivacy.io/faq">FAQ</a>
+                      </li>
+                      <li class="nav-item">
+                        <div class="dropdown">
+                          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">About</a>
+                          <ul class="dropdown-menu">
+                            <li><a class="nav-link nav-link-dark" href="https://www.iotprivacy.io/about">About the IoT Privacy Infrastructure</a></li>
+                            <li><a class="nav-link nav-link-dark" href="https://www.iotprivacy.io/about-logo">About our Logo</a></li>
+                            <hr />
+                            <u><li class="nav-link nav-link-dark dropdown-header nav-link-header">LEGAL DOCUMENTS</li></u>
+                            <li><a class="nav-link nav-link-dark" href="/privacy-policy">Privacy Policy</a></li>
+                            <li><a class="nav-link nav-link-dark" href="/terms-of-use">Terms of Use (IoT Portal)</a></li>
+                            <li><a class="nav-link nav-link-dark" href="/end-user-license-agreement">End User License Agreement (IoTA app)</a></li>
+
+                            <!--  -->
+
+                          </ul>
+                        </div>
+                      </li>
+
+                        <!-- Authentication Links -->
+                                                    <li class="nav-item">
+                                <a class="nav-link" href="https://www.iotprivacy.io/login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                                                    <a class="nav-link" href="https://www.iotprivacy.io/register">Register</a>
+                                                            </li>
+                                            </ul>
+                </div>
+            </div>
+        </nav>
+        <main class="py-4">
+            <div id="navbar-logo-outer">
+              <div id="navbar-logo-inner">
+                <a href="/"><img id="navbar-logo" src="https://www.iotprivacy.io/img/logo_nav-bar.png" /></a>
+              </div>
+            </div>
+
+                                    <div class="container">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="card shadow p-4">
+          <h2 class="text-center">&nbsp;<br>Privacy Policy<br>&nbsp;</h2>
+
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Effective Date: Nov 24, 2020
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6">Carnegie Mellon University (&ldquo;CMU,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is committed to privacy and data protection. This Privacy Policy applies to all personal data CMU collects from you, through the CMU
+            </span>
+            <span class="c6 c14">Internet of Things (IoT) Privacy Infrastructure Project, including the Internet of Things Assistant (&ldquo;IoTA&rdquo;) mobile app (&ldquo;IoTA Mobile App&rdquo;), and the IoT Privacy Infrastructure (&ldquo;IoT PI&rdquo;)
+            </span>
+            <span class="c6">,
+            </span>
+            <span class="c6 c14">&nbsp;which includes Internet of Things registries of IoT Resources (&ldquo;IoT Resource Registries&rdquo; or &ldquo;IRRs&rdquo;) (collectively the &ldquo;Services&rdquo;),
+            </span>
+            <span class="c1">&nbsp;as well as how we use and protect your personal data.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">This Privacy Policy does not apply to the IoT Resource Listings (defined below) that IRR contributors input into the Services and that IRR administrators publicize through their IRRs, or to IoT Resource Templates (defined below) that template contributors input into the Services (both referred to as &ldquo;Your Content&rdquo; below). You act as the Controller of Your Content. &nbsp;As used in this Privacy Policy, &ldquo;Controller&rdquo; shall have the definition given to it under the EU General Data Protection Regulation (Regulation (EU) 2016/679) (&ldquo;GDPR&rdquo;).
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">This Privacy Policy does not apply to: any third-party applications or software that integrate with the Services, the IoT Resources (defined below), or any other third-party products, services or businesses (collectively, &ldquo;Third Party Services&rdquo;). Third Party Services are governed by their own privacy policies. We recommend you review the privacy policy governing any Third Party Services before using them.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Any questions or concerns regarding CMU&rsquo;s privacy and data protection practices can be directed to GDPR-info@andrew.cmu.edu.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c14">If you have not done so already, please also review the IoT PI Terms of Use
+            </span>
+            <span class="c24 c6">
+              <a class="c22" href="https://www.iotprivacy.io/terms-of-use" target="_blank">https://www.iotprivacy.io/terms-of-use
+              </a>
+            </span>
+            <span class="c6 c14">&nbsp;and the IoTA Mobile Application End-User License Agreement
+            </span>
+            <span class="c24 c6">
+              <a class="c22" href="https://www.iotprivacy.io/end-user-license-agreement" target="_blank">https://www.iotprivacy.io/end-user-license-agreement
+              </a>
+            </span>
+            <span class="c1">&nbsp;as applicable to the Services you are using.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">OVERVIEW
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c14">The Internet of Things Privacy Infrastructure Project is a system developed at the School of Computer Science at Carnegie Mellon University, under the coordination of Prof. Norman Sadeh. Its purpose is to provide a tool to publicize the presence of IoT devices, IoT services, IoT apps (collectively referred to as &ldquo;IoT Resources&rdquo;) in a given area, such as a university campus, a building,
+            </span>
+            <span class="c6">a shopping
+            </span>
+            <span class="c1">mall, a room, a stadium, a city block, an entire neighborhood, or a larger geographical area. The Internet of Things Privacy Infrastructure Project has two components:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The IoTA Mobile App, which helps users discover IoT Resources deployed in their vicinity by identifying and querying IoT Resource Registries that pertain to the user&rsquo;s current location. The IoTA informs the user about the data collection and use practices associated with the IoT Resources it discovers. The IoTA also enables users to discover and configure privacy settings that may be offered by IoT Resources (i.e. data deletion, opting in or out of some data collection or sharing practices, or data access requests).
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c14">2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The IoT PI, which enables people and organizations to inform the public about the presence of IoT Resources deployed in different areas. Individuals and organizations can request the creation of IRRs through the
+            </span>
+            <span class="c6">IoT PI.
+            </span>
+            <span class="c1">&nbsp;Individuals and organizations can use the IoT PI to create descriptions of IoT Resources (&ldquo;IoT Resource Listings&rdquo;) and request their publication in IRRs, enabling mobile users to discover them using their IoTA Mobile App. The IoT PI also enables users to create partial descriptions of IoT Resources that others could use as a starting point to create IoT Resource Listings (&ldquo;IoT Resource Templates&rdquo;). These IoT Resource Templates can be shared with, re-used and edited by others to publicize the presence of identical or similar IoT Resources. &nbsp;The IoT PI involves the collection of research data under the direction of Prof. Norman Sadeh (the Principal Investigator) in accordance with a research protocol approved by CMU&rsquo;s Institutional Review Board.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">The research project related to the IoT PI is funded by the U.S. Department of Defense (DoD) under the Defense Advanced Research Projects Agency&rsquo;s Brandeis Privacy Initiative (Grant FA8750-15-2-0277) and by the U.S. National Science Foundation under its Secure and Trustworthy Computing program (Grant SBE-1513957).
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">PERSONAL DATA WE COLLECT
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">CMU collects data to provide the Services you request, addressing security issues and potential abuse, ease your navigation of Services supported by our IoTA Mobile App and our IoT PI, communicate with you, improve your experience using the Services and also collect data for research conducted under our project &ndash; the latter follows research protocols approved by the Institutional Review Board. Some of this data is provided by you directly, such as when you register for the Services. Some of the information is collected through your interactions with the Services. We collect such data using technologies like cookies and other tracking technologies, error reports, and usage data collected when you interact with CMU Services running on your device.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">The data we collect depends on the Services and features thereof that you use, and includes the following:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Data Collected through the IoTA Mobile App:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Profile Data:
+            </span>
+            <span class="c1">Your Email ID, username and password: to create an account that will enable you to use the IoTA Mobile App and that will enable us to communicate with you.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Location Data:
+            </span>
+            <span class="c1">&nbsp;Your Location Data is used to show you relevant IoT Resource Registries and IoT Resources, namely to identify IoT Resource Registries that might be publicizing the presence of IoT Resources near your location, identify nearby IoT Resources, identify the data collection and use practices of these IoT Resources, and to notify you of this information via the IoTA Mobile App. Location data is not accessed or stored anywhere in our databases. The IoTA Mobile App keeps track of the IoT Resources you have been near and the most recent date and time you were near each IoT Resource (&ldquo;Proximity Data&rdquo;, a subcategory of Location Data). Proximity Data enables us to provide you with personalized notifications of nearby IoT Resources and avoid sending you repetitive notifications, depending on your notification settings. Proximity Data is only stored on your mobile device; is encrypted; and is deleted (1) when you change your notification settings (selecting between &ldquo;always&rdquo;, &ldquo;the first time&rdquo; and &ldquo;never&rdquo;) or (2) when you uninstall the IoTA mobile app from your device. Proximity Data could be used to infer your location.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Motion &amp; Fitness Activity Data
+            </span>
+            <span class="c1">: This data is used to minimize battery consumption on your mobile device and is only accessed when you grant &ldquo;Location (always)&rdquo; and &ldquo;Notification&rdquo; permissions to the IoTA Mobile App on your mobile device. This data is collected by your mobile device and only accessed by the IoTA Mobile App to determine when to refresh the data it displays and when to check whether there are new IoT Resources near you that you should be notified about. This data is not stored by the IoTA Mobile App or anywhere in our databases.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Technical Data:
+            </span>
+            <span class="c1">&nbsp;Metadata that is used for the research purpose of understanding how you interact with our Mobile App. This data will be analyzed to learn about the usability of the IoTA Mobile App. This will include time spent using the app, navigation of different menu options, types of IoT Resources and data practices you look at, and crash reports.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Unique identifiers Used to Keep Track of User-Specific Privacy Decisions:
+            </span>
+            <span class="c1">&nbsp;These identifiers are used to keep track of your privacy decisions about options made available by IoT Resources, whether directly or via third party privacy options management functionality - when such options are available. The unique identifiers are used by the IoT Resources themselves or by third party privacy options management functionality to communicate your decisions to our IoT PI. They are also used by our IoT PI to communicate your decisions back to your IoTA Mobile App. Examples of privacy decisions include opting in, opting out, requesting deletion of your data, and more.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Your Privacy Decisions:
+            </span>
+            <span class="c1">Privacy decisions that you make using the IoTA Mobile App such as opting in or out of some data collection and use practices, requesting that your data be deleted or exercising other privacy choices made available by individual IoT Resources published in the IoT Privacy Infrastructure. These decisions are directly communicated by you to the IoT Resource or to third party privacy options management functionality responsible for implementing them. Please bear in mind that actual implementation of privacy decisions you make about any options made available by IoT Resources is not the responsibility of the IoT PI. Instead these decisions are implemented by the IoT Resources themselves, possibly via third party privacy options management functionality. Such implementation is the responsibility of the IoT Resource owner, who is the Controller of any data collected by the IoT Resource. Our IoT PI collects your privacy decisions, in part for research purposes and in part to be able to show these decisions to you via your IoTA Mobile App. As part of our research, we use your privacy decisions to support the development of models of your privacy preferences using machine learning. Your privacy decisions are uniquely identified and linked to your email ID.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Data Collected through the IoT PI &nbsp;
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Profile Data:
+            </span>
+            <span class="c1">Email, username and password of IoT PI users (namely IRR contributors, IRR owners/administrators, IoT Resource Template contributors) to enable them to create an account and use the IoT PI. This data is also used to communicate with IoT PI users and mitigate abuse.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Identity Data:
+            </span>
+            <span class="c6">First and last name, country (or countries) within which the area covered by an IRR falls for users who request an IRR, and organization for users who interact with the IoT PI on behalf of an organization (e.g., employee or member of an organization).
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Location Data:
+            </span>
+            <span class="c1">Browser location of IRR contributors and administrators/owners is accessed to center maps on pages for IoT Resource creation and IRR configuration.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">IoT Resource Listings:
+            </span>
+            <span class="c1">Information you contribute regarding IoT Resources. This information may include resource names, locations, descriptions, links to privacy policies and privacy settings, and other information. Resource listings only include personal information to the extent you enter such information as part of the resource listing.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">IoT Resource Templates
+            </span>
+            <span class="c1">: Information you contribute regarding IoT Resource Templates. This information may include IoT Resource Template names, IoT Resource Template descriptions, links to privacy policies and privacy settings, and other information. IoT Resource Templates only include personal information to the extent you enter such information as part of the IoT Resource Template.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Unique identifiers Used to Keep Track of User-Specific Privacy Decisions:
+            </span>
+            <span class="c6">&nbsp;These identifiers are used to keep track of your privacy decisions about options made available by IoT Resources, whether directly or via third- party privacy options management functionality - when such options are available. The unique identifiers are used by the IoT Resources themselves or by third party privacy options management functionality to communicate your decisions to our IoT PI. They are also used by our IoT PI to communicate your decisions back to your IoTA Mobile App. Examples of privacy decisions include opting in, opting out, requesting deletion of your data, and more.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Technical Data:
+            </span>
+            <span class="c1">&nbsp;Metadata that is used for the research purpose of understanding how you interact with the IoT PI. For instance, we may look at the number of times you click on &ldquo;more information&rdquo; icons, the amount of time you spend in creating an IoT Resource listing or an IoT Resource Template, and other actions indicative of how you interact with the IoT PI.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Information stored by session cookies
+            </span>
+            <span class="c1">. We use session cookies that allow you to be recognized within the IoT PI without requiring you re-authenticate from page to page. These session cookies expire once you log out or after 2 hours of inactivity.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">HOW WE USE PERSONAL DATA
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We will only use your personal data when the law allows us to. Most commonly, we will use your personal data for the following lawful purposes:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_11-0 start">
+            <li class="c0 c10">
+              <span class="c6 c14">Where we need such information to perform the contract (i.e. Terms of Use or End-User License Agreement) we are about to enter into or have entered into with you (&ldquo;
+              </span>
+              <span class="c8 c14">performance of a contract
+              </span>
+              <span class="c1">&rdquo;).
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c6 c14">Where we receive your consent (&ldquo;
+              </span>
+              <span class="c8 c14">consent
+              </span>
+              <span class="c1">&rdquo;).
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c6 c14">Where it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests (&ldquo;
+              </span>
+              <span class="c8 c14">legitimate interest
+              </span>
+              <span class="c1">&rdquo;).
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c6 c14">Where we need to comply with a legal or regulatory obligation (&ldquo;
+              </span>
+              <span class="c8 c14">legal obligation
+              </span>
+              <span class="c1">&rdquo;).
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Please note that we may process your personal data without your knowledge or consent, in compliance with the above rules, where this is required or permitted by law.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We have set out below, in a table format, a description of all the ways we plan to use your personal data, and which of the legal bases we rely on to do so. We have also identified what our legitimate interests are where appropriate.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <a id="t.8e45b42e35fafd0bb759ea8657749d5be2a04370">
+          </a>
+          <a id="t.0">
+          </a>
+          <table class="table table-bordered">
+            <tbody>
+              <tr class="c44">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="h4">Purpose/Activity
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="h4">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="h4">Type of data
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="h4">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="h4">Lawful basis for processing
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="h4">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c57">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c48">
+                    <span class="c1">To manage our relationship with you, which will include:
+                    </span>
+                  </p>
+                  <ul class="c12 lst-kix_list_14-0 start">
+                    <li class="c10 c52">
+                      <span class="c1">Notifying you about changes to our Terms of Use, to our End-User License Agreement or to our Privacy Policy
+                      </span>
+                    </li>
+                    <li class="c10 c29">
+                      <span class="c1">Providing Services
+                      </span>
+                    </li>
+                  </ul>
+                  <p class="c2 c4">
+                    <span class="c1">
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Identity (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(b) Profile (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c32">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">To maintain your user account information and authenticate you.
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Identity (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(b) Profile (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c49">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To center the IoT PI &rsquo;s map tool.
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">The IoT PI has a map tool for you to define the area of coverage of Registries and of IoT Resource Listings. To the extent your browser settings allow for it, we use your geographical location as obtained by your browser to center the map. Otherwise, the IoT PI &rsquo;s map tool will not be re-centered to adjust for your location. This location data from your browser is accessed by a third-party map provider to retrieve map tiles, but not transmitted to or stored in the IoT PI.
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Location (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c5">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To show you and notify you about relevant Registries and IoT Resources, namely (1) to identify &nbsp;IoT Resources near your location and to identify the data collection and use practices of these IoT Resources, and (2) to notify you of nearby IoT Resources when you select &ldquo;Always&rdquo; and &ldquo;The First Time&rdquo; in your notification frequency settings.
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Location (IoTA Mobile App)
+                    </span>
+                  </p>
+                  <p class="c2 c4">
+                    <span class="c1">
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c7">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To minimize battery consumption on your mobile device when it comes to using your location to notify you about nearby resources. This is only used if you grant &ldquo;Location (always)&rdquo; and &ldquo;Notification&rdquo; permissions to the IoTA Mobile App. This data is only accessed to refresh readings of your location used to notify you about nearby resources. This information is not stored by the IoTA Mobile App.
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">(a) Your Motion &amp; Fitness Activity data on your device (IoTA Mobile App).
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c5">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To allow for the publication of IoT resource listings
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">&nbsp;IoT Resource Listings (IoT PI)
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c35">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c6">To analyze the contents of the IoT Resource listings you create
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c6">(a) IoT Resource Listings (IoT PI)
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Necessary for our legitimate interests (to improve our service, to provide accurate information, and to prevent fraud)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c6">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c35">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">To allow for the publication of IoT Resource Templates you create
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) IoT Resource Templates (IoT PI)
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c35">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c6">To analyze the contents of the IoT Resource Templates you create
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c6">(a) IoT Resource Templates (IoT PI)
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Necessary for our legitimate interests (to improve our service, to provide accurate information, and to prevent fraud)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c6">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c35">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">To keep track of your specific privacy decisions as communicated by you either directly to individual IoT Resources or to third party privacy options management functionality responsible for capturing and implementing your personal privacy decisions for individual IoT Resources
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c1">&nbsp;(a) Your Privacy Decisions (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;(b) Unique identifiers Used to Keep Track of User-Specific Privacy Decisions (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Performance of an applicable contract
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c38">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c26">
+                    <span class="c6 c14">To conduct scientific research, including the ability to contact users and ask them to participate in studies (e.g. conducting surveys).
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Identity (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(b) Profile (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(c) IoT Resource Listings (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(d) IoT Resource Templates (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">(e) Technical data (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">(f) Your privacy decisions (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c11">
+                    <span class="c1">(g) Location (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26 c4">
+                    <span class="c1">
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Necessary for our legitimate interests (to conduct scientific research under Grant FA8750-15-2-0277 and Grant SBE-1513957 as mentioned above)
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c55">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To administer and protect our Services (including troubleshooting, data analysis, testing, system maintenance, support, reporting and hosting of data, preventing fraud and abuse)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c6">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Identity (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(b) Profile (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(c) IoT Resource Listings (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">(d) IoT Resource Templates (IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">(e) Technical data (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">(f) Your privacy decisions (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c26">
+                    <span class="c1">(g) Location (IoT PI and IoTA Mobile App)
+                    </span>
+                  </p>
+                  <p class="c2 c4">
+                    <span class="c20 c6">
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Necessary for our legitimate interests (for running our Services, provision of administration and IT services, network security, and to prevent fraud and abuse,
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c1">&nbsp;
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c28">
+                <td class="c33" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">To use data analytics to improve our Services, our marketing, user relationships and experiences
+                    </span>
+                  </p>
+                </td>
+                <td class="c3" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">(a) Technical data (IoTA Mobile App and IoT PI)
+                    </span>
+                  </p>
+                  <p class="c2">
+                    <span class="c6">&nbsp;
+                    </span>
+                  </p>
+                </td>
+                <td class="c17" colspan="1" rowspan="1">
+                  <p class="c2">
+                    <span class="c1">Necessary for our legitimate interests to keep our Services updated and relevant, and to promote adoption and use of our Services)
+                    </span>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">HOW WE SHARE PERSONAL DATA
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">It is the practice of CMU to protect users&rsquo; information. Access to our users&rsquo; information is restricted to only those employees or agents, contractors or subcontractors of CMU who have valid reasons to access this information to perform any Service you have requested or authorized, or for any other purpose described in this Privacy Policy. The information you provide will not be sold or rented to third parties.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We may provide your personal data to:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_7-0 start">
+            <li class="c0 c10">
+              <span class="c1">Outsourced service providers who perform functions on our behalf, located inside or outside of the EU territory (in such case, we will use appropriate legal framework to operate data transfers). For example, your personal information may be stored on cloud hosting services such as Amazon Web Services.
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">our authorized agents and representatives, located inside or outside of your country of residence (in such case, we will use appropriate legal framework to operate data transfers), who provide services on our behalf, such as training service providers;
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">anyone expressly authorized by you to receive your personal data;
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">anyone to whom we are required by law to disclose personal data, upon valid and enforceable request thereof.
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">the Federal government offices that oversee the protection of human subjects in research will also have access to research records to ensure protection of research subjects. The research sponsor (DoD and NSF) representatives are authorized to review research records.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c11">
+            <span class="c1">In order for the IoTA Mobile App and the IoT Privacy Infrastructure to function, we rely on the following third party service providers:
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_17-0 start">
+            <li class="c10 c30">
+              <span class="c1">Amazon Cloud - Amazon Web Services (AWS)
+              </span>
+            </li>
+            <li class="c30 c10">
+              <span class="c1">Mapbox - Third party map tile provider for the IoT web portal
+              </span>
+            </li>
+            <li class="c30 c10">
+              <span class="c1">Google Maps - Map provider for the IoTA Mobile App
+              </span>
+            </li>
+            <li class="c30 c10">
+              <span class="c1">Google Firebase Dynamic Links - Third party library that provides a way for the user to scan a QR code to open the IoTA Mobile App to a specific IoT Resource page and to first download the IoTA Mobile App on the user&rsquo;s phone if it is not yet installed on it.
+              </span>
+            </li>
+            <li class="c30 c10">
+              <span class="c1">Third party libraries (e.g., Laravel PHP framework, Bootstrap front-end framework, NPM package manager, Vue.js JavaScript framework, Flutter framework)
+              </span>
+            </li>
+            <li class="c30 c10">
+              <span class="c1">Third party email providers (Google G Suite, Amazon Simple Email Services)
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We will access, disclose and preserve personal data, when we have a good faith belief that doing so is necessary to:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_8-0 start">
+            <li class="c0 c10">
+              <span class="c1">comply with applicable law or respond to valid legal processes, including from law enforcement or other government agencies, upon valid and enforceable request thereof; or
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">operate and maintain the security of the Services, including to prevent or stop an attack on our computer systems or networks.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Please note that some of the Services may direct you to services of third parties whose privacy practices differ from CMU&rsquo;s. If you provide personal data to any of those services, your data is governed by their privacy statements or policies. Carnegie Mellon University is not responsible for the privacy practices of these Third Party Services. Please review the privacy policies for these Third Party Services to understand how they process your information.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">HOW YOU MAY SHARE PERSONAL DATA
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6">Certain features of the Services may allow you to share information with others. Do not share your personal data or the personal data of others through the sharing features.
+            </span>
+            <span class="h4">You are the Controller of personal information you share through the sharing features of the Services.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">HANDLING OF PERSONAL DATA
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c8 c25 c18 c14">Security of Personal Data
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">CMU is committed to protecting the security of your personal data. Depending on the circumstances, we may hold your information in hard copy and/or electronic form. For each medium, we use technologies and procedures to protect personal data. We review our strategies and update as necessary to meet our needs, changes in technology, and regulatory requirements.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">These measures include, but are not limited to, technical and organizational security policies and procedures, security controls and employee training.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We may suspend your use of all or part of the Services without notice if we suspect or detect any breach of security, any abuse, or any illegal or questionable activity. If you believe that information you provided to us is no longer secure, please notify us immediately using the contact information provided below.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">If we become aware of a breach that affects the security of your personal data, we will provide you with notice as required by applicable law. To the extent permitted by applicable law, CMU will provide any such notice that CMU must provide to you at your account&rsquo;s email address. By using the Services, you agree to accept notice electronically.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c8 c25 c18 c14">Storage and Transfer of Personal Data
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Personal data collected by CMU may be stored and processed in your region, in the United States or in any other country where CMU, its affiliates or contractors maintain facilities, including outside the European Union. We take steps to ensure that the data we collect under this Privacy Policy is processed pursuant to the terms thereof and the requirements of applicable law wherever the data is located.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">CMU also collaborates with third parties such as cloud hosting services and suppliers located around the world to serve the needs of our business, workforce, and users. In some cases, we may need to disclose or transfer your personal data within CMU or to third parties in areas outside of your home country. When we do so, we take steps to ensure that personal data is processed, secured, and transferred according to applicable law.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">If you would like to know more about our data transfer practices, please contact our Information Security Office at GDPR-info@andrew.cmu.edu.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c8 c25 c18 c14">Retention of Personal Data
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We only keep personal data in our records for as long as necessary for the purpose for which such data is processed. The retention period depends on the context in which we process data:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Location Data:
+            </span>
+            <span class="c1">Your browser location (if allowed) is only retained for the time necessary to center our map tool. Our third party map tile provider, Mapbox, may collect your browser location information when providing the required map tiles. They delete this location information after 24 hours. More details can be found in their privacy policy. Your IoTA Mobile App location data is only retained for the time necessary to identify and notify you of IRRs and IoT Resources around you. For research purposes and to prevent fraud and abuse, we do however keep logs of the times when your IoTA Mobile App accesses IRRs near you. Given the radius within which each IRR can be discovered, this information is indicative of your location. Different IRRs can have different discovery radiuses.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c11 c13">
+            <span class="font-weight-bold">Profile Data:
+            </span>
+            <span class="c1">Email ID, username and password associated with your IoT PI and IoTA accounts will be retained as long as your account is active on our infrastructure. If you choose to withdraw your consent from participating in our research (refer to the following section), this account information will be permanently deleted from our databases and your account will no longer be usable as a result.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Technical Data:
+            </span>
+            <span class="c1">Metadata collected as a result of your interactions with the IoT PI will be retained for a minimum of three years after the conclusion of the research project in accordance with US Federal regulations (45 CFR 46).
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Unique identifiers Used to Keep Track of User-Specific Privacy Decisions:
+            </span>
+            <span class="c1">These identifiers are retained for as long as your account is active on our infrastructure
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Your Privacy Decisions:
+            </span>
+            <span class="c1">Privacy decisions that you make using the IoT PI will be retained for a minimum of three years after the conclusion of the research project in accordance with US Federal regulations (45 CFR 46). If you withdraw consent from our research (refer to the following section) within this period, your privacy decisions will be retained in a de-identified format.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">The IoT Resource Listings and IoT Resource
+            </span>
+            <span class="c6">&nbsp;
+            </span>
+            <span class="font-weight-bold">Templates
+            </span>
+            <span class="c1">you create will be retained for a minimum of three years after the conclusion of the research project in accordance with US Federal regulations (45 CFR 46). If you withdraw your consent prior to the conclusion of the research project, you also have the option of transferring ownership of any of the IoT Resource Listings or IoT Resource Templates you created to another user, subject to that user&#39;s agreement. Once such transfer has taken place the new owner becomes the Controller of the Content included in the corresponding IoT Resource Listing or IoT Resource Template
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c13">
+            <span class="font-weight-bold">Identity Data:
+            </span>
+            <span class="c1">Name, country or countries, and organization of users who request the creation of an IoT Resource Registry (IRR) will be retained as long as the users maintain an account with the IoT Privacy Infrastructure.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">YOUR RIGHTS REGARDING YOUR PERSONAL DATA
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">CMU respects your right to access and control your personal data. You have choices about the data we collect. When you are asked to provide personal data that is not necessary for the purposes of providing you with the Services, you may decline. However, if you choose not to provide data that is necessary to provide the Services, you may not have access to certain features of the Services.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6">We aim to keep all personal data that we hold, as Controller, accurate, complete and up-to-date. While we will use our best efforts to do so, we encourage you to tell us if you change your contact details. If you believe that the information we hold about you is incorrect, incomplete or out-of-date, please contact
+            </span>
+            <span class="c24 c6">
+              <a class="c22" href="mailto:GDPR-info@andrew.cmu.edu">GDPR-info@andrew.cmu.edu
+              </a>
+            </span>
+            <span class="c1">. Please bear also in mind that you are Controller of Your Content (e.g., IoT Resource Listings, IoT Resource Templates, IoT Resource Registries) and are responsible for the accuracy and completeness of that Content.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="font-weight-bold">Access to personal data:
+            </span>
+            <span class="c1">&nbsp;In some jurisdictions, you have the right to request access to your personal data. In these cases, we will comply, subject to any relevant legal requirements and exemptions, including identity verification procedures. Before providing data to you, we will ask for proof of identity and sufficient information about your interaction with us so that we can locate any relevant data. We may also charge you a fee for providing you with a copy of your data (except where this is not permissible under local law).
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="font-weight-bold">Correction and deletion:
+            </span>
+            <span class="c1">In some jurisdictions, you have the right to correct or amend your personal data if it is inaccurate or requires updating. You may also have the right to request deletion of your personal data. Please note that such a request could be refused because your personal data is required to provide you with the Services you requested
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="font-weight-bold">Portability:
+            </span>
+            <span class="c1">&nbsp;If you are a resident of the European Union, you may have the right to ask for a copy of your personal data and/or ask for it to be ported to another provider of your choice. Please note that such a request could be limited to only the personal data you provided us with or that we hold at that given time and subject to any relevant legal requirements and exemptions, including identity verification procedures.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">COOKIES &amp; OTHER TECHNOLOGIES
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0" id="h.gjdgxs">
+            <span class="c1">This Cookies Policy explains how we use Cookies to collect information about the way you use the Services, and how you can control them.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">How We Use Cookies
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We use Cookies to track how you use the Services by compiling usage statistics.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">While this information on its own may not constitute your &ldquo;personal data&rdquo;, we may combine the information we collect via Cookies with personal data that we have collected from you to learn more about how you use the Services to improve them.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Types of Cookies
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We use session Cookies that expire once you log out or following a period of inactivity. To make it easier for you to understand why we need them, the Cookies we use on the Services can be grouped into the following categories:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_1-0 start">
+            <li class="c0 c10">
+              <span class="c1">Strictly Necessary: These Cookies are necessary for the Services to work properly. They include any essential authentication and authorization Cookies for the Services.
+              </span>
+            </li>
+            <li class="c0 c10" id="h.30j0zll">
+              <span class="c1">Functionality: These Cookies enable technical performance and allow us to &ldquo;remember&rdquo; the choices you make while browsing the Services, including any preferences you set. They also include sign-in and authentication Cookies and IDs that enable you to return without additional sign-in.
+              </span>
+            </li>
+            <li class="c0 c10">
+              <span class="c1">Performance/Analytical: These Cookies allow us to collect certain information about how you navigate the Services. They help us understand which areas you use and what we can do to improve them.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c13">
+            <span class="c1">.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Here is a representative list of the Cookies we use.
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <a id="t.50c7447d86fba6f94e834de1eb4f415fb6e5df81">
+          </a>
+          <a id="t.1">
+          </a>
+          <table class="table table-bordered">
+            <tbody>
+              <tr class="c31">
+                <td class="c36" colspan="1" rowspan="1">
+                  <p class="c0">
+                    <span class="h4">Provider
+                    </span>
+                  </p>
+                </td>
+                <td class="c42 c43" colspan="1" rowspan="1">
+                  <p class="c0">
+                    <span class="h4">Cookie Name
+                    </span>
+                  </p>
+                </td>
+                <td class="c21 c42" colspan="1" rowspan="1">
+                  <p class="c0">
+                    <span class="h4">Category
+                    </span>
+                  </p>
+                </td>
+                <td class="c21 c42" colspan="1" rowspan="1">
+                  <p class="c37">
+                    <span class="h4">Duration
+                    </span>
+                  </p>
+                </td>
+                <td class="c41" colspan="1" rowspan="1">
+                  <p class="c0">
+                    <span class="h4">Purpose
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c31">
+                <td class="c46" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">CMU
+                    </span>
+                  </p>
+                </td>
+                <td class="c15" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">iot_privacy_infrastructure_session
+                      <br>
+                      <br>
+                    </span>
+                  </p>
+                </td>
+                <td class="c21" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">Strictly Necessary/Functionality/ Performance/Analytical
+                    </span>
+                  </p>
+                </td>
+                <td class="c21" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">2 hours after inactivity or when user logs out
+                    </span>
+                  </p>
+                </td>
+                <td class="c47" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">These cookies are used to recognize users once they have been authenticated. They are also used to track user activities on the IoT PI. This information is used to understand how people interact with the IoT PI and to help improve our Services.
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c31">
+                <td class="c19" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">CMU
+                    </span>
+                  </p>
+                </td>
+                <td class="c15 c27" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">XSRF-TOKEN
+                    </span>
+                  </p>
+                </td>
+                <td class="c21 c27" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">Strictly Necessary
+                    </span>
+                  </p>
+                </td>
+                <td class="c21 c27" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">2 hours after inactivity or when user logs out
+                    </span>
+                  </p>
+                </td>
+                <td class="c47 c27" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">This cookie is used to protect against cross-site request forgery (CSRF) attacks.
+                    </span>
+                  </p>
+                </td>
+              </tr>
+              <tr class="c31">
+                <td class="c46" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">CMU
+                    </span>
+                  </p>
+                </td>
+                <td class="c15" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">iotpi_cookie_consent
+                    </span>
+                  </p>
+                </td>
+                <td class="c21" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">Strictly Necessary
+                    </span>
+                  </p>
+                </td>
+                <td class="c21" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">a year
+                    </span>
+                  </p>
+                </td>
+                <td class="c47" colspan="1" rowspan="1">
+                  <p class="c23">
+                    <span class="c1">This cookie is used to record a user&rsquo;s consent to our use of cookies
+                    </span>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">How to Control and Delete Cookies
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0" id="h.1fob9te">
+            <span class="c1">Cookies can be controlled, blocked or restricted through your web browser settings. Information on how to do this can be found within the Help section of your browser. All Cookies are browser specific. Therefore, if you use multiple browsers or devices to access websites, you will need to manage your cookie preferences across these environments.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">If you are using a mobile device to access the Services, you will need to refer to your instruction manual or other help/settings resource to find out how you can control Cookies on your device.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Please note: If you restrict, disable or block any or all Cookies from your web browser or mobile or other device, the Services may not operate properly, and you may not have access to the Services. CMU shall not be liable for any impossibility to use the Services or degraded functioning thereof, where such are caused by your settings and choices regarding Cookies.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c11">
+            <span class="c6 c14">To learn more about Cookies, visit
+            </span>
+            <span class="c6 c24">
+              <a class="c22" href="https://www.allaboutCookies.org" target="_blank">https://www.allaboutCookies.org
+              </a>
+            </span>
+            <span class="c6 c14">.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Do Not Track
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c6 c25 c18 c14">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Some web browsers (including Safari, Internet Explorer, Firefox and Chrome) incorporate a &ldquo;Do Not Track&rdquo; (&ldquo;DNT&rdquo;) or similar feature that signals to websites that a user does not want to have his or her online activity and behavior tracked. If a website that responds to a particular DNT signal receives the DNT signal, the browser can block that website from collecting certain information about the browser&rsquo;s user. Not all browsers offer a DNT option and DNT signals are not yet uniform. For this reason, many website operators, including CMU, do not respond to DNT signals.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">CHILDREN&rsquo;S PRIVACY
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">IF YOU ARE UNDER THE AGE OF 18, DO NOT USE THE SERVICES.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">The Services are intended to be used by individuals who are at least 18 years old. Consistent with the requirements of the U.S. Children&rsquo;s Online Privacy Protection Act, if we learn that we received any information directly from a child under age 13 without his or her parent&rsquo;s verified consent, we will use that information only to inform the child (or his or her parent or legal guardian) that he or she cannot use the Services.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c14 c18">California Minors:
+            </span>
+            <span class="c6 c14">&nbsp; If you are a California resident who is under age 18 and you are unable to remove publicly-available Content that you have submitted to us, you may request removal by contacting us at:
+            </span>
+            <span class="c6">iso-ir@andrew.cmu.edu.
+            </span>
+            <span class="c1">&nbsp;When requesting removal, you must be specific about the information you want removed and provide us with specific information, such as the URL for each page where the information was entered, so that we can find it. We are not required to remove any Content or information that: (1) federal or state law requires us or a third party to maintain; (2) was not posted by you; (3) is anonymized so that you cannot be identified; (4) you don&rsquo;t follow our instructions for removing or requesting removal; or (5) you received compensation or other consideration for providing the Content or information. Removal of your Content or information from the Services does not ensure complete or comprehensive removal of that content or information from our systems or the systems of our service providers. We are not required to delete the Content or information posted by you; our obligations under California law are satisfied so long as we anonymize the content or information or render it invisible to other users and the public.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c16">
+            <span class="h4">THE GENERAL DATA PROTECTION REGULATION (&ldquo;GDPR&rdquo;)
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c16">
+            <span class="c6">If you are a resident of the European Union you
+            </span>
+            <span class="c1">&nbsp;may be entitled to other rights under the GDPR. These rights are summarized below. We may require you to verify your identity before we respond to your requests to exercise your rights. If you are entitled to these rights, you may exercise these rights with respect to your personal data that we collect and store:
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_9-0 start">
+            <li class="c0 c10 c16">
+              <span class="c1">the right to withdraw your consent to data processing at any time (please note that this might prevent you from using certain aspects of the Services);
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right of access your personal data;
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to request a copy of your personal data;
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to correct any inaccuracies in your personal data;
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to erase your personal data;
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to data portability, meaning to request a transfer of your personal data from us to any other person or entity as chosen by you;
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to request restriction of the processing of your personal data; and
+              </span>
+            </li>
+            <li class="c0 c10 c16">
+              <span class="c1">the right to object to processing of your personal data.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4 c13 c16">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0 c16">
+            <span class="c6 c14">You may exercise these rights free of charge. These rights will be exercisable subject to limitations as provided for by the GDPR. Any requests to exercise the above listed rights may be made to:
+            </span>
+            <span class="c6">GDPR-info@andrew.cmu.edu.
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6">If you are a resident of the European Union
+            </span>
+            <span class="c6 c14">, you may have the right to
+            </span>
+            <span class="c6">&nbsp;lodge a complaint with a Data Protection Authority about how we process your personal data at the following website: https://edpb.europa.eu/about-edpb/board/members_en.
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c6 c18 c14 c25">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c25 c18 c14">Processing EU Personal Data
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">In the event that your personal data is subject to the GDPR, we will only use your personal data for the original purpose for which we collected it, unless we reasonably consider that we need to use it for another purpose and that purpose is compatible with the original purpose. If we need to use your EU personal data for an unrelated purpose, we will notify you and we will explain the legal basis which allows us to do so. We require third parties to only use your EU personal data for the specific purpose for which it was given to us and to protect the privacy of your personal data. If your personal data is no longer necessary for the legal or business purposes for which it is processed, we will generally destroy or anonymize that data.
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c6 c25 c18 c14">
+            </span>
+          </p>
+          <p class="c0 c16">
+            <span class="c6 c25 c18 c14">International Transfers of Personal Data
+            </span>
+          </p>
+          <p class="c0 c4 c16">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">Whenever we transfer your personal data out of the EU, we ensure a similar degree of protection is afforded to it by ensuring at least one of the following safeguards is implemented:
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_10-0 start">
+            <li class="c0 c10">
+              <span class="c1">European Commission Standard Contractual Clauses: We may use specific contracts approved by the European Commission which give personal data the same protection it has in the EU.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <ul class="c12 lst-kix_list_10-0">
+            <li class="c0 c10">
+              <span class="c1">Privacy Shield. Where we use providers based in the US, we may transfer data to them if they are part of the Privacy Shield which requires them to provide similar protection to personal data shared between the Europe and the US.
+              </span>
+            </li>
+          </ul>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c6 c14">For additional information on the mechanisms used to protect your personal data, please
+            </span>
+            <span class="c6">contact
+            </span>
+            <span class="c6 c14">us at
+            </span>
+            <span class="c6">GDPR-info@andrew.cmu.edu.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">CHANGES TO THIS PRIVACY POLICY
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We may update this Privacy Policy based upon evolving Laws, regulations and industry standards, or as we may make changes to our Services. We will post changes to our Privacy Policy on this page and encourage you to review our Privacy Policy when you use the Services to stay informed. If we make changes that materially alter your privacy rights, CMU will provide additional notice, such as via email or through the Services. If you disagree with the changes to this Privacy Policy, you should discontinue your use of the Services. You may also request access and control of your personal data as outlined in the Your Rights Regarding Personal Data section of this Privacy Policy.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="h4">QUESTIONS OR COMPLAINTS HANDLING
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">We understand that you may have questions or concerns about this Privacy Policy or our privacy practices or may wish to file a complaint. In such case, please contact us in one of the following ways:
+            </span>
+          </p>
+          <p class="c0 c4 c13">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c11">
+            <span class="c1">Email:
+            </span>
+            <span class="c24 c6 c50">
+              <a class="c22" href="mailto:GDPR-info@andrew.cmu.edu">GDPR-info@andrew.cmu.edu
+              </a>
+            </span>
+          </p>
+          <p class="c11">
+            <span class="c1">Mail:
+            </span>
+          </p>
+          <p class="c11">
+            <span class="c1">Carnegie Mellon University
+              <br>Attention: Data Protection Officer
+              <br>5000 Forbes Avenue
+              <br>Pittsburgh, PA 15213
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="c1">
+            </span>
+          </p>
+          <p class="c0">
+            <span class="c1">If you are not satisfied with our answer or how CMU manages your personal data, you may also have the right to make a complaint to a data protection regulator. If you are a resident of the European Union, a list of National Data Protection Authorities can be found here: http://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm.
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+          <p class="c0 c4">
+            <span class="h4">
+            </span>
+          </p>
+
+
+
+
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+</div>
+
+
+        </main>
+        <div class="w-100 bg-color-light pt-5">
+          <!-- some additional space before copyright -->
+        </div>
+        <div class="w-100 bg-color-light pt-5">
+          <p id="copyright" class="small shadow w-75 text-center text-muted mx-auto pt-3 pb-3 pr-2 pl-2" style="max-width: 715px">
+            © Copyright 2015-2024 Personalized Privacy Assistant Project, Carnegie Mellon University - All Rights Reserved - US Patent 11,768,949, US Patent 10,956,586 and additional USPTO and EPO patents pending
+          </p>
+        </div>
+    </div>
+
+    </body>
+</html>
