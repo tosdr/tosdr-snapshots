@@ -1,0 +1,1235 @@
+<!doctype html>
+<html lang="en-US">
+  <head><meta charset="utf-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.5.1",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],this.interceptedClickListeners=[],this._interceptClickListeners(this),window.addEventListener("pageshow",e=>{this.persisted=e.persisted,this.everythingLoaded&&this._triggerLastFunctions()}),document.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(e){if(document.hidden){e._triggerListener();return}this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventHandler,{passive:!0})),window.addEventListener("touchstart",e.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",e.touchStartHandler),document.addEventListener("visibilitychange",e.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(e=>window.removeEventListener(e,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(e){"HTML"!==e.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),e.target.addEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!0),this._renameDOMAttribute(e.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(e){e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this.interceptedClicks.push(e),e.preventDefault(),e.stopPropagation(),e.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(e=>{e.target.dispatchEvent(new MouseEvent("click",{view:e.view,bubbles:!0,cancelable:!0}))})}_interceptClickListeners(e){EventTarget.prototype.addEventListenerBase=EventTarget.prototype.addEventListener,EventTarget.prototype.addEventListener=function(t,i,r){"click"!==t||e.windowLoaded||i===e.clickHandler||e.interceptedClickListeners.push({target:this,func:i,options:r}),(this||window).addEventListenerBase(t,i,r)}}_disableOtherEventListeners(e,t){this.interceptedClickListeners.forEach(i=>{i.target===e&&(t?e.removeEventListener("click",i.func,i.options):e.addEventListener("click",i.func,i.options))}),e.parentNode!==document.documentElement&&this._disableOtherEventListeners(e.parentNode,t)}_waitForPendingClicks(){return new Promise(e=>{this._isClickPending?this._pendingClickFinished=e:e()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(e,t,i){e.hasAttribute&&e.hasAttribute(t)&&(event.target.setAttribute(i,event.target.getAttribute(t)),event.target.removeAttribute(t))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let e=[];document.querySelectorAll("script[type=rocketlazyloadscript][data-rocket-src]").forEach(t=>{let i=t.getAttribute("data-rocket-src");if(i&&0!==i.indexOf("data:")){0===i.indexOf("//")&&(i=location.protocol+i);try{let r=new URL(i).origin;r!==location.origin&&e.push({src:r,crossOrigin:t.crossOrigin||"module"===t.getAttribute("data-rocket-type")})}catch(n){}}}),e=[...new Map(e.map(e=>[JSON.stringify(e),e])).values()],this._batchInjectResourceHints(e,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._pendingWebpackRequests(this),await this._triggerWindowLoad()}catch(e){console.error(e)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{e.hasAttribute("data-rocket-src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){if(await this._littleBreath(),!0===e.noModule&&"noModule"in HTMLScriptElement.prototype){e.setAttribute("data-rocket-status","skipped");return}return new Promise(t=>{let i;function r(){(i||e).setAttribute("data-rocket-status","executed"),t()}try{if(navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)i=document.createElement("script"),[...e.attributes].forEach(e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type"),"data-rocket-src"===t&&(t="src"),i.setAttribute(t,e.nodeValue))}),e.text&&(i.text=e.text),i.hasAttribute("src")?(i.addEventListener("load",r),i.addEventListener("error",function(){i.setAttribute("data-rocket-status","failed"),t()}),setTimeout(()=>{i.isConnected||t()},1)):(i.text=e.text,r()),e.parentNode.replaceChild(i,e);else{let n=e.getAttribute("data-rocket-type"),s=e.getAttribute("data-rocket-src");n?(e.type=n,e.removeAttribute("data-rocket-type")):e.removeAttribute("type"),e.addEventListener("load",r),e.addEventListener("error",function(){e.setAttribute("data-rocket-status","failed"),t()}),s?(e.removeAttribute("data-rocket-src"),e.src=s):e.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(e.text)))}}catch(a){e.setAttribute("data-rocket-status","failed"),t()}})}async _loadScriptsFromList(e){let t=e.shift();return t&&t.isConnected?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(e,t){var i=document.createDocumentFragment();e.forEach(e=>{let r=e.getAttribute&&e.getAttribute("data-rocket-src")||e.src;if(r){let n=document.createElement("link");n.href=r,n.rel=t,"preconnect"!==t&&(n.as="script"),e.getAttribute&&"module"===e.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),e.crossOrigin&&(n.crossOrigin=e.crossOrigin),e.integrity&&(n.integrity=e.integrity),i.appendChild(n),this.trash.push(n)}}),document.head.appendChild(i)}_delayEventListeners(e){let t={};function i(i,r){return t[r].eventsToRewrite.indexOf(i)>=0&&!e.everythingLoaded?"rocket-"+i:i}function r(e,r){var n;!t[n=e]&&(t[n]={originalFunctions:{add:n.addEventListener,remove:n.removeEventListener},eventsToRewrite:[]},n.addEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.add.apply(n,arguments)},n.removeEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.remove.apply(n,arguments)}),t[e].eventsToRewrite.push(r)}function n(t,i){let r=t[i];t[i]=null,Object.defineProperty(t,i,{get:()=>r||function(){},set(n){e.everythingLoaded?r=n:t["rocket"+i]=r=n}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t;function i(t){return e.everythingLoaded?t:t.split(" ").map(e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e).join(" ")}function r(r){if(r&&r.fn&&!e.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(t){return e.domReadyFired?t.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>t.bind(document)(r)),r([])};let n=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){return this[0]===window&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let t=arguments[0][e];delete arguments[0][e],arguments[0][i(e)]=t})),n.apply(this,arguments),this},e.allJQueries.push(r)}t=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>t,set(e){r(e)}})}async _pendingWebpackRequests(e){let t=document.querySelector("script[data-webpack]");async function i(){return new Promise(e=>{t.addEventListener("load",e),t.addEventListener("error",e)})}t&&(await i(),await e._requestAnimFrame(),await e._pendingWebpackRequests(e))}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}async _triggerWindowLoad(){await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(e=>e(window).trigger("rocket-jquery-load")),await this._littleBreath();let e=new Event("rocket-pageshow");e.persisted=this.persisted,window.dispatchEvent(e),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted}),this.windowLoaded=!0}_triggerLastFunctions(){document.onreadystatechange&&document.onreadystatechange(),window.onload&&window.onload(),window.onpageshow&&window.onpageshow({persisted:this.persisted})}_handleDocumentWrite(){let e=new Map;document.write=document.writeln=function(t){let i=document.currentScript;i||console.error("WPRocket unable to document.write this: "+t);let r=document.createRange(),n=i.parentElement,s=e.get(i);void 0===s&&(s=i.nextSibling,e.set(i,s));let a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(e=>setTimeout(e)):new Promise(e=>requestAnimationFrame(e))}_emptyTrash(){this.trash.forEach(e=>e.remove())}static run(){let e=new RocketLazyLoadScripts;e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+  
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script type="rocketlazyloadscript" data-rocket-src="https://apis.google.com/js/api.js"></script>
+  <link rel="shortcut icon" href="https://freespeech.org/wp-content/themes/free-speech-tv/resources/favicon.ico">
+  <link rel="apple-touch-icon" href="https://freespeech.org/wp-content/themes/free-speech-tv/resources/apple-touch-icon.png">
+    <link rel='stylesheet' id='new-css'  href='https://freespeech.org/wp-content/themes/free-speech-tv/cssnew/main.css' type='text/css' media='all' />
+    <!-- <script type="rocketlazyloadscript" data-rocket-src="https://www.paypal.com/sdk/js?client-id=AU-PxxEBtrHwnzHeWHLDY50t3H7E8tULUYYw9c89SoIgQ6t1f6VVu40AXYdfIIcipDl8pQ3twxSIGm1e&components=buttons,funding-eligibility&commit=false&vault=true"></script> -->
+  <!-- <script type="rocketlazyloadscript" data-rocket-src="https://www.paypal.com/sdk/js?client-id=AaMdj2MezSw38_quSm5qo4Ych50IZ8ZMCGCgd0zJIoD6w36cf0EfALr7OROJr-XPvCjNJgskAb4fBT4H&components=buttons,funding-eligibility&commit=false&vault=true"></script> -->
+      <style>
+        #wpadminbar #wp-admin-bar-p404_free_top_button .ab-icon:before {
+            content: "\f103";
+            color:red;
+            top: 2px;
+        }
+    </style>
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v20.6 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Privacy - Free Speech TV</title>
+	<link rel="canonical" href="https://freespeech.org/privacy/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Privacy - Free Speech TV" />
+	<meta property="og:description" content="Privacy Policy | Cookie Policy Privacy Policy Free Speech TV (“FSTV” “we” or “us” or “our”), understands your concerns about privacy and how your information is used and safeguarded, and we want to provide you with more information on these topics. This Privacy Policy (the “Privacy Policy”) describes the practices, policies and procedures related to &hellip; Continued" />
+	<meta property="og:url" content="https://freespeech.org/privacy/" />
+	<meta property="og:site_name" content="Free Speech TV" />
+	<meta property="article:publisher" content="https://www.facebook.com/freespeechtv/" />
+	<meta property="article:modified_time" content="2024-02-22T00:53:01+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@freespeechtv" />
+	<meta name="twitter:label1" content="Est. reading time" />
+	<meta name="twitter:data1" content="16 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://freespeech.org/privacy/","url":"https://freespeech.org/privacy/","name":"Privacy - Free Speech TV","isPartOf":{"@id":"https://freespeech.org/#website"},"datePublished":"2017-07-14T23:03:56+00:00","dateModified":"2024-02-22T00:53:01+00:00","breadcrumb":{"@id":"https://freespeech.org/privacy/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://freespeech.org/privacy/"]}]},{"@type":"BreadcrumbList","@id":"https://freespeech.org/privacy/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://freespeech.org/"},{"@type":"ListItem","position":2,"name":"Privacy"}]},{"@type":"WebSite","@id":"https://freespeech.org/#website","url":"https://freespeech.org/","name":"Free Speech TV","description":"Progressive News &amp; Views","publisher":{"@id":"https://freespeech.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://freespeech.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://freespeech.org/#organization","name":"Free Speech TV","url":"https://freespeech.org/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://freespeech.org/#/schema/logo/image/","url":"https://freespeech.org/wp-content/uploads/2024/03/FSTV_LOGO_GRAY_WITH_URL_500x500.png","contentUrl":"https://freespeech.org/wp-content/uploads/2024/03/FSTV_LOGO_GRAY_WITH_URL_500x500.png","width":1974,"height":1701,"caption":"Free Speech TV"},"image":{"@id":"https://freespeech.org/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/freespeechtv/","https://twitter.com/freespeechtv","https://www.instagram.com/freespeechtv/","https://www.youtube.com/user/freespeechtv"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel='stylesheet' id='bradmax-player-css' href='https://freespeech.org/wp-content/plugins/bradmax-player/assets/css/style.css?ver=6.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-sponsors-css' href='https://freespeech.org/wp-content/plugins/wp-sponsors/assets/dist/css/public.css?ver=3.5.0' type='text/css' media='all' />
+<link rel='stylesheet' id='popup-maker-site-css' href='//freespeech.org/wp-content/uploads/fbb84443940fc9bac725953f3e202cb9.css?generated=1718596984&#038;ver=1.18.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sage/main.css-css' href='https://freespeech.org/wp-content/themes/free-speech-tv/dist/styles/main_3cf0f46f.css' type='text/css' media='all' />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-content/plugins/bradmax-player/assets/js/default_player.js?ver=2.14.287" id="bradmax-player-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-content/plugins/wp-sponsors/assets/dist/js/public.js?ver=3.5.0" id="wp-sponsors-js"></script>
+<link rel="https://api.w.org/" href="https://freespeech.org/wp-json/" /><link rel="alternate" type="application/json" href="https://freespeech.org/wp-json/wp/v2/pages/42753" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://freespeech.org/xmlrpc.php?rsd" />
+<link rel='shortlink' href='https://freespeech.org/p/42753' />
+<link rel="alternate" type="application/json+oembed" href="https://freespeech.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffreespeech.org%2Fprivacy%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://freespeech.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ffreespeech.org%2Fprivacy%2F&#038;format=xml" />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//nexus.ensighten.com/choozle/18417/Bootstrap.js"></script>
+<script type="rocketlazyloadscript" data-rocket-src="//rum-static.pingdom.net/pa-5ac009fe4c40770007000576.js" async></script>
+<!-- Google Tag Manager -->
+<script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M2WQWDJ');</script>
+<!-- End Google Tag Manager --><meta name='twitter:image' content='https://freespeech.org/wp-content/themes/free-speech-tv/dist/images/fallback_bbf0f30c.jpg'/>
+<meta property='og:image' content='https://freespeech.org/wp-content/themes/free-speech-tv/dist/images/fallback_bbf0f30c.jpg'/>
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css" id="wp-custom-css">
+			.vjs-resize-manager {
+  display: none;
+}
+.nf-field input[type=button].ninja-forms-field.nf-element {
+  font-size: 17px;
+  padding: 8px 20px;
+  background-color: transparent;
+  color: #fff;
+  background-color: #1e65b0;
+  border: 1px solid #fff;
+  border-radius: 20px;
+}
+.Podcast .story-caption p.hover-description {
+    min-height: 60px;
+}
+.contribute-form-wrapper .gifts {
+    display: block!important;
+}
+#nf-form-3-cont .list-checkbox-wrap .nf-field-element li label, #nf-form-3-cont .list-radio-wrap .nf-field-element li label {
+  margin: 0px !important;
+  float: left !important;
+}
+.page-content-wrapper #nf-field-16-container li:before {
+  font-size: 0px !important;
+  color: #fff;
+}
+.gift[sku="sku_paypalDonation"], .gift[sku="sku_donation"],
+.gift[sku="sku_test_paypalDonation"],
+.gift[sku="sku_test_donation"]{
+	display: none !important;
+}
+
+.page-content-wrapper #nf-field-16-container li:after {
+  clear: both;
+}
+.column .show .show-content p.description {
+  overflow: visible !important;
+  display: block !important;
+}
+
+.gform_wrapper ul ul {
+    padding-left: 0;
+}
+
+.gform_fields li:before {
+     display: none;
+}
+
+.gform_fields li.gfield{
+	margin: 15px 0;
+}
+
+.ginput_complex label{
+	  padding: 5px 5px 5px 5px;
+    margin: 10px 5px 10px 10px;
+}
+
+.ginput_complex span{
+display: block;
+padding-bottom: 10px;
+padding-right: 15px !important;
+}
+
+.gform_wrapper label
+{
+	display:inline !important;
+}
+
+.ginput_container_phone input
+{
+	margin-left: 25px;
+}
+
+.gfield_label
+{
+	font-weight: bold;
+}
+
+.gform_button{
+padding: 8px 20px;
+background-color: transparent;
+color: #fff;
+background-color: #1e65b0;
+border: 1px solid #fff;
+border-radius: 20px;
+margin-left: 20px;
+}
+
+#field_7_8 label
+{
+	  float: left;
+    margin-left: 0px;
+    margin-top: 15px;
+}
+.ginput_container_phone input  {   padding-left: 10px;
+    margin-left: 15px;
+}
+.ginput_complex span input  {
+margin: 5px 20px 5px 5px !important;    
+
+}
+    
+.ginput_container_checkbox ul  {
+    
+display: flex;
+    margin-left: -10px;
+    flex-wrap: wrap;
+}
+
+.ginput_container_checkbox ul li  {
+    
+text-indent: 0;
+    display: flex;
+    
+align-items: baseline;
+    
+padding-right: 10px;
+    flex-shrink: 0;
+}
+
+.ginput_container_checkbox li label  {
+    
+margin: 5px 0 !important;
+}
+
+.widget_sponsors_widget ul.horizontal li.sponsors-item {
+    width: 190px!important;
+}
+
+.widget_sponsors_widget ul.horizontal li.sponsors-item a img {
+    max-height: 100%!important;
+    padding-bottom: 0!important;
+}
+.hidden {
+	display: none;
+}
+
+
+
+.page.page-id-7 .contribute-form-wrapper .gifts ul.gift-list li .gift-options__select li:hover {
+	color: #2271c6!important;align-content}
+
+.contribute-form-wrapper .gifts ul.gift-list li .gift-option__select--open li:not([selected="selected"]) {
+    display: block;
+}
+.story-banner.Podcast .story-block .story-caption {
+    height: auto!important;margin: 0px auto;
+    text-align: center;
+}
+.Podcast .story-block {
+    margin-bottom: 30px;
+    border: 1px solid #f1f3f4;
+}
+.Podcast .story-block audio {
+   width: 90%;
+    margin: 0px auto;
+    text-align: center;
+}
+ @media (max-width: 768px) {
+	 .Podcast .story-block {
+		 flex: 0 0 99.5%;
+	 }	 
+	.page-id-176058 .col-12.col-xl-4.thumbnail {
+    padding-top: 24px;
+}
+.page-id-176058	 .col-md-7.p-0.d-flex.align-items-center {
+
+    padding: 24px!important;
+}.page-id-176058 .live-page .live-video .row.col-md-12 {
+    padding: 0px;
+    padding-bottom: 12px;
+}
+	.page-id-176058 .row.m-0 {
+    margin-right: -15px!important;
+    margin-left: -15px!important;
+}.page-id-176058 .col-12.col-xl-4.thumbnail .col-md-5 {
+    padding-right: 0px;
+}
+		.page-id-176058 .live-page .live-video {
+    width: 100%;
+    padding: 20px;
+}
+}
+.story-banner.Podcast .story-block .story-caption {
+    height: auto!important;
+}
+
+.live-page .live-video{
+	width:100%
+}
+button.vjs-icon-share.theo-social-button.vjs-control.vjs-button {
+    display: none!important;
+}
+.show.minutes-180 {
+    height: 760px;
+}
+.column .show.minutes-30 {
+    height: 150px;
+}
+@media only screen and (max-width: 767px) {
+.live-page h4.mt-0.uppercase.newtp {
+    padding: 20px 0px;
+}
+.live-page .card {
+    padding-bottom: 20px!important;
+}
+.live-page .card img{
+  padding-bottom: 20px;
+padding-top:20px;
+}
+
+}
+
+div#nav-tabContent .col-md-4 .card img{
+width:100%
+}		</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+<script type="rocketlazyloadscript">
+jQuery(function() {                       //run when the DOM is ready
+jQuery(".gift-options__select").click(function() {  //use a class, since your ID gets mangled
+ if (!jQuery(this).hasClass("gift-option__select--open")) {
+jQuery(this).addClass("gift-option__select--open");      //add the class to the clicked element
+ }else{
+jQuery(this).removeClass("gift-option__select--open");
+    }
+
+});
+});
+</script>
+
+</head>
+  
+  <link rel='stylesheet' id='jquery-ui-css'  href='https://freespeech.org/wp-content/themes/free-speech-tv/app/lib/acf/assets/inc/datepicker/jquery-ui.min.css?ver=5.5.3' type='text/css' media='all' />
+
+  <body data-rsssl=1 class="page-template-default page page-id-42753 privacy" >
+        <header class="utility">
+  <div class="container">
+    <nav class="nav-utility">
+      <a class="menu-item search search-overlay-trigger"><i class="fi-magnifying-glass"></i> Search</a>
+<!--    <a href="/donate-2" class="menu-item contribute"><i class="fi-heart"></i> Donate</a> --->
+		
+		<div class="dropdown2">
+  <a href="/donate-all" class="menu-item contribute dropbtn"><i class="fi-heart"></i> Donate</a>
+  <div class="dropdown-content2">
+    <a href="/double-the-donation">Double The Donation</a>
+    <a href="/frontline-funders">Frontline Funders</a>
+    <a href="/other-ways-to-give">Other Ways To Give</a>
+  </div>
+</div>
+		
+    </nav>
+    <span class="mobile-nav">
+      <a class="search-icon search-overlay-trigger"><i class="fi-magnifying-glass"></i></a>
+    </span>
+  </div>
+</header>
+<header class="banner">
+  <div class="container">
+    <div class="brand-wrappers pl-3">
+      <a class="brands" href="https://freespeech.org/">
+   <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%200'%3E%3C/svg%3E" width="100" class="img-fluid" alt="" style="margin-top:-20px" data-lazy-src="https://freespeech.org/wp-content/uploads/2024/03/FSTVLogo.png"><noscript><img src="https://freespeech.org/wp-content/uploads/2024/03/FSTVLogo.png" width="100" class="img-fluid" alt="" style="margin-top:-20px"></noscript>
+      </a>
+    </div>
+    <nav class="nav-primary 2">
+<!---         --->
+	  <a class="menu-item store"href="https://freespeech.org/store/">Store</a>
+      <a class="menu-item community"href="https://freespeech.org/meetup-group/">Community</a>
+      <a class="menu-item shows" href="https://freespeech.org/shows/">Shows</a>
+      <a class="menu-item shows" href="https://freespeech.org/documentaries/">Documentaries</a>
+		<a class="menu-item about"  href="https://freespeech.org/about-us/">About</a>
+ <!--- <a class="menu-item shows" href="https://freespeech.org/special-programming/">Special Programming</a>      ---> 
+<!--- <a class="menu-item shows" href="https://freespeech.org/shows/fstv-speaks/">FSTV Speaks</a>            --->
+<!---  <a class="menu-item shows" href="https://freespeech.org/schedule/">Schedule</a>       --->
+      <div class="button-container" style="border-bottom: none;">
+        <a href="https://freespeech.org/watch-live/" class="button button-inverse">Watch Live</a>
+      </div>
+    </nav>
+    <div class="mobile-nav main-menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</header>
+
+<div class="search-overlay">
+  <button class="search-close"><i class="fi-x"></i></button>
+  <div class="search-wrapper"
+     data-blue-spinner="https://freespeech.org/wp-content/themes/free-speech-tv/dist/https://freespeech.org/wp-content/themes/free-speech-tv/dist/images/spinner-blue_15601d1f.svg"
+     data-white-spinner="https://freespeech.org/wp-content/themes/free-speech-tv/dist/https://freespeech.org/wp-content/themes/free-speech-tv/dist/images/spinner-white_fe177fe3.svg">
+    <form id="overlay" class="search-form" action="https://freespeech.org/" method="get">
+        <button class="search-bar-icon" type="submit"><i class="fi-magnifying-glass"></i></button>
+        <input id="search-term" class="input"
+               type="search" name="s" spellcheck="false" autocomplete="off" value=""
+                       placeholder="Search"
+        >
+    </form>
+</div>
+</div>
+
+<div class="newsletter-overlay">
+  <button class="newsletter-close"><i class="fi-x"></i></button>
+  <div class="newsletter-wrapper">
+	
+	<iframe src="https://embeds.beehiiv.com/235900c8-004a-42f9-8a57-29a55d21902d" data-test-id="beehiiv-embed" width="100%" height="320" frameborder="0" scrolling="no" style="border-radius: 4px; border: 2px solid #e5e7eb; margin: 0; background-color: transparent;"></iframe>
+	
+<!-- 
+   -->
+</div>
+</div>    <div class="menu">
+  <nav class="mobile-nav-primary">
+    
+    <a class="mobile-menu-item topics">Topics</a>
+    <a class="mobile-menu-item shows" href="/shows/">Shows</a>
+  </nav>
+  <nav class="nav-blocks">
+          <a href="https://freespeech.org/privacy/" class="nav-link">
+        <div class="nav-image-container">
+          <img src="" alt="story-image">
+        </div>
+        <div class="nav-text">
+                    <p class="nav-title"></p>
+        </div>
+      </a>
+          <a href="https://freespeech.org/privacy/" class="nav-link">
+        <div class="nav-image-container">
+          <img src="" alt="story-image">
+        </div>
+        <div class="nav-text">
+                    <p class="nav-title"></p>
+        </div>
+      </a>
+      </nav>
+  
+  <ul class="nav-list topics-list">
+          <li>
+        <a href="https://freespeech.org/topic/documentaries/" class="extended-menu-item primary-item">
+          <span class="circle documentaries"></span>
+          Documentaries
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/economy/" class="extended-menu-item primary-item">
+          <span class="circle economy"></span>
+          Economy
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/education/" class="extended-menu-item primary-item">
+          <span class="circle education"></span>
+          Education
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/environment/" class="extended-menu-item primary-item">
+          <span class="circle environment"></span>
+          Environment
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/fstv-speaks/" class="extended-menu-item primary-item">
+          <span class="circle fstv-speaks"></span>
+          FSTV Speaks
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/health/" class="extended-menu-item primary-item">
+          <span class="circle health"></span>
+          Health
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/human-rights-and-equality/" class="extended-menu-item primary-item">
+          <span class="circle human-rights-and-equality"></span>
+          Human Rights and Equality
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/immigration/" class="extended-menu-item primary-item">
+          <span class="circle immigration"></span>
+          Immigration
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/labor/" class="extended-menu-item primary-item">
+          <span class="circle labor"></span>
+          Labor
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/lgbtq-rights/" class="extended-menu-item primary-item">
+          <span class="circle lgbtq-rights"></span>
+          LGBTQ+ Rights
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/politics/" class="extended-menu-item primary-item">
+          <span class="circle politics"></span>
+          Politics
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/racial-justice/" class="extended-menu-item primary-item">
+          <span class="circle racial-justice"></span>
+          Racial Justice &amp; Equity
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/religion/" class="extended-menu-item primary-item">
+          <span class="circle religion"></span>
+          religion
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/topic/war-and-peace/" class="extended-menu-item primary-item">
+          <span class="circle war-and-peace"></span>
+          War and Peace
+        </a>
+      </li>
+      </ul>
+  <ul class="nav-list shows-list">
+          <li>
+        <a href="https://freespeech.org/shows/the-thom-hartmann-program/"
+           class="extended-menu-item  primary-item ">
+           The Thom Hartmann Program
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/the-stephanie-miller-show/"
+           class="extended-menu-item  primary-item ">
+           The Stephanie Miller Show
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/democracy-now/"
+           class="extended-menu-item  primary-item ">
+           Democracy Now!
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/?post_type=show&amp;p=78"
+           class="extended-menu-item  primary-item ">
+           The Bill Press Show
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/rising-up-with-sonali/"
+           class="extended-menu-item  primary-item ">
+           Rising Up With Sonali
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/the-david-pakman-show/"
+           class="extended-menu-item  primary-item ">
+           The David Pakman Show
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/gay-usa/"
+           class="extended-menu-item ">
+           Gay USA
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/?post_type=show&amp;p=135226"
+           class="extended-menu-item ">
+           The Laura Flanders Show
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/?post_type=show&amp;p=135258"
+           class="extended-menu-item ">
+           Act Out!
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/?post_type=show&amp;p=135480"
+           class="extended-menu-item ">
+           Economic Update with Richard D. Wolff
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/shows/zero-hour-rj-eskow/"
+           class="extended-menu-item ">
+           The Zero Hour with RJ Eskow
+        </a>
+      </li>
+          <li>
+        <a href="https://freespeech.org/?post_type=show&amp;p=135511"
+           class="extended-menu-item ">
+           The Empire Files with Abby Martin
+        </a>
+      </li>
+        <li><a href="https://freespeech.org/shows/" class="button button-primary view-shows">View All Shows</a></li>
+  </ul>
+  <div class="mobile-button-container">
+    <a href="https://freespeech.org/watch-live/" class="button button-inverse">Watch Live</a>
+  </div>
+</div>
+    <div class="wrap container" role="document">
+      <div class="content">
+        <main class="main">
+             
+    <div class="row d-block" style="background:#0c1027">
+ <header class="solid-hero pl-3">
+  <div class="solid-hero-text-content">
+          <h2>Privacy</h2>
+            </div>
+</header>
+</div>
+    <div class="spacer short"></div>
+
+    <div class="page-content-wrapper">
+      <p style="text-align: center;"><strong><a href="#privacy">Privacy Policy</a> | <a href="#cookies">Cookie Policy</a></strong></p>
+<p><a name="privacy"></a></p>
+<h2 style="text-align: left;">Privacy Policy</h2>
+<p>Free Speech TV (“FSTV” “we” or “us” or “our”), understands your concerns about privacy and how your information is used and safeguarded, and we want to provide you with more information on these topics. This Privacy Policy (the “Privacy Policy”) describes the practices, policies and procedures related to the website located <a href="https://freespeech.org">https://freespeech.org</a> (and any other websites that this Privacy Policy is linked to) including the types of personal information we collect, how we may use that information, and with whom we share it (the “Websites”). Please note that this Privacy Policy applies only to our online information-gathering and dissemination practices, and does not apply to any of our practices conducted offline. By visiting the Websites, you are accepting the practices and policies described below, and you are further indicating that you agree to be bound by the terms of this Privacy Policy. If you do not agree to the terms of this Privacy Policy, please do not visit or use the Websites. We may update this Privacy Policy from time to time, so please check this Privacy Policy periodically for<br />
+changes.</p>
+<p style="text-align: left;">SUMMARY<br />
+The notifications provided by this Privacy Policy include:</p>
+<p style="text-align: left;">●   What personally identifiable and non-personal information we collect through the Websites<br />
+●   How we use the information we collect<br />
+●   With whom the information may be shared<br />
+●   How we process and protect your data<br />
+●   Information related to third-party websites<br />
+●   The laws that apply to those accessing the Websites<br />
+●   How you can learn about changes to the Privacy Policy</p>
+<h3>Information we collect</h3>
+<p><span style="font-size: 18pt;"><strong>Personal Information You Provide and How It Is Used</strong> </span></p>
+<p>You may freely visit our Websites anonymously and without being required to provide us with any personal information. However, certain requests do require that you provide us with some personally identifying information as more particularly described below. Do not send confidential information to us directly through this Websites, or by email to any of the contact email addresses listed on this Websites. We only collect personal information directly from you when you provide it to us.</p>
+<p>Examples of instances in which we may collect personal information – and the types – include (but are not limited to):</p>
+<p>Personal contact details such as name, address, telephone number and email for use in a variety of instances, such as when you sign up for our email newsletters, apply for a job, or contact us via any of the links on the Websites.</p>
+<p>●   If you opt to make a donation.</p>
+<p>If you choose to make a donation to Free Speech TV, we request the following information in order to process your payment:</p>
+<p>●   Cardholder Name<br />
+●   Credit Card number, expiration date and CVC code<br />
+●   Billing address, including ZIP code<br />
+●   Bank Account Number<br />
+●   Email address<br />
+●   Phone number (optional)</p>
+<p>Please note, none of your personal financial data, including credit card numbers and other identifying information, is housed on Free Speech TV’s servers, nor is it retained or re-sold for commercial use. Records are maintained through third-party point-of-sale systems (Stripe and Salesforce) to enable recurring donations when authorized by you, the user, and to contact you should an issue arise with payment. Recurring donations can be cancelled by contacting one of our donation specialists at 877.378.8669 or sending an email to <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e1a1b081b12110e131b100a3e180c1b1b0d0e1b1b1d1650110c19">[email&#160;protected]</a>.</p>
+<p><span style="font-size: 18pt;"><strong>Non-Personal Information We Collect by Automated Means And How We Use It</strong></span></p>
+<p>We may use automated means to collect various types of non-personal information (data in a form that does not support direct association with any specific person or individual). Much of this information is collected through the use of third-party tracking services, which includes Google Analytics. The information collected may include usage information, such as the numbers and frequency of users to the Websites, pages visited, web browsing histories, online activities and searches, social networking activities and similar data. When gathered, this data, if used, is used in the aggregate, and not in a manner that is intended to identify you personally. This type of aggregate information may be shared with third parties at any time. In addition to the third-party tracking services mentioned above, we also collect this information through various<br />
+other means, including &#8220;cookies” and IP addresses, as further explained below.</p>
+<p><em>Cookies</em><br />
+A cookie is a piece of information that a web server may place on your computer when you visit a website. We use “cookies” to collect information about you and your activity across our site. A cookie is a small piece of data that our website stores on your computer, and accesses each time you visit, so we can understand how you use our site. This helps us serve you content based on preferences you have specified. Please refer to our Cookie Policy for more information.</p>
+<p>&nbsp;</p>
+<p><a name="cookies"></a></p>
+<h2>Cookie Policy</h2>
+<p>We use cookies to help improve your experience of <a href="https://freespeech.org">https://freespeech.org</a>. This cookie policy is part of Free Speech TV’s privacy policy, and covers the use of cookies between your device and our site. We also provide basic information on third-party services we may use, who may also use cookies as part of their service, though they are not covered by our policy.<br />
+If you don’t wish to accept cookies from us, you should instruct your browser to refuse cookies from <a href="https://freespeech.org">https://freespeech.org</a>, with the understanding that we may be unable toprovide you with some of your desired content and services.</p>
+<p><span style="font-size: 18pt;"><strong>What is a cookie?</strong></span></p>
+<p>A cookie is a small piece of data that a website stores on your device when you visit, typically containing information about the website itself, a unique identifier that allows the site to recognize your web browser when you return, additional data that serves the purpose of the cookie, and the lifespan of the cookie itself. Cookies are used to enable certain features (e.g. logging in), to track site usage (e.g. analytics), to store your usersettings (e.g. timezone, notification preferences), and to personalize your content (e.g. advertising, language).</p>
+<p>Cookies set by the website you are visiting are normally referred to as “first-party cookies”, and typically only track your activity on that particular site. Cookies set by other sites and companies (i.e. third parties) are called “third-party cookies”, and can be used to track you on other websites that use the same third-party service.</p>
+<p><span style="font-size: 18pt;"><strong>Types of cookies and how we use them</strong></span></p>
+<p><strong>Essential cookies</strong></p>
+<p>Essential cookies are crucial to your experience of a website, enabling core features like donation payment processing. We use essential cookies to enable certain functions on our website.</p>
+<p><strong>Performance cookies</strong></p>
+<p>Performance cookies are used in the tracking of how you use a website during your visit, without collecting personal information about you. Typically, this information is anonymous and aggregated with information tracked across all site users, to help companies understand visitor usage patterns, identify and diagnose problems or errors their users may encounter, and make better strategic decisions in improving their audience’s overall website experience. These cookies may be set by the website you’re visiting (first-party) or by third-party services. We use performance cookies on our site.</p>
+<p><strong>Functionality cookies</strong></p>
+<p>Functionality cookies are used in collecting information about your device and any settings you may configure on the website you’re visiting (like language and timezone settings). With this information, websites can provide you with customized, enhanced or optimized content and services. These cookies may be set by the website you’re visiting<br />
+(first-party) or by third-party service. We use functionality cookies for selected features on our site.</p>
+<p><span style="font-size: 18pt;"><strong>Third-party cookies on our site</strong></span></p>
+<p>We may employ third-party companies and individuals on our websites — for example, analytics providers and content partners. We grant these third parties access to selected information to perform specific tasks on our behalf. They may also set third- party cookies in order to deliver the services they are providing. Third-party cookies can be used to track you on other websites that use the same third-party service. As we have no control over third-party cookies, they are not covered by Free Speech TV’s cookie policy.</p>
+<p><strong>Our third-party privacy promise</strong></p>
+<p>We review the privacy policies of all our third-party providers before enlisting their services to ensure their practices align with ours. We will never knowingly include third- party services that compromise or violate the privacy of our users. How you can control or opt out of cookies If you do not wish to accept cookies from us, you can instruct your browser to refuse cookies from our website. Most browsers are configured to accept cookies by default, but you can update these settings to either refuse cookies altogether, or to notify you when a website is trying to set or update a cookie.</p>
+<p>If you browse websites from multiple devices, you may need to update your settings on each individual device.</p>
+<p>Although some cookies can be blocked with little impact on your experience of a website, blocking all cookies may mean you are unable to access certain features and content across the sites you visit.</p>
+<p><em>Web Beacons</em></p>
+<p>Certain pages on the Websites may contain “web beacons” (also known as Internet tags, pixel tags and clear GIFs). These web beacons allow third parties to obtain information such as the IP address of the computer that downloaded the page on which the beacon appears, the URL of the page on which the beacon appears, the time the page containing the beacon was viewed, the type of browser used to view the page, and the information in cookies set by the third party. Web beacons also may be used to track whether you have opened an HTML email. When the email is opened, a part of the code that makes up the HTML page calls a web server to load the web beacon that then generates a record showing that the email has been viewed. Web beacons may also recognize when the email was opened, how many times it was forwarded and<br />
+which URLs (links within the email) were clicked.</p>
+<p><em>IP Addresses</em></p>
+<p>When you visit and interact with the Websites, FSTV and third parties with whom we have contracted to provide services for us, may collect Internet Protocol addresses (each an “IP Address”), as well as browser type, Internet service provider (ISP),<br />
+referring/exit pages, platform type, date/time stamp, and page navigation. An IP Address is a unique identifier number that certain electronic devices use to identify and to communicate with each other on the Internet; your Internet Service Provider automatically assigns an IP Address to the computer that you are using. We gather this information to track web site visitor movement in the aggregate, and to gather broad demographic information for aggregate use. Our goal in gathering this information is to learn how our customers and the public are using our Websites. We may use this information to enhance our Websites or for other lawful purposes.</p>
+<p><em>Do Not Track Notice</em></p>
+<p>Some web browsers incorporate a “Do Not Track” feature that signals to websites that you visit that you do not want to have your online activity tracked. How browsers communicate and respond to the Do Not Track signal is not yet uniform. For this<br />
+reason, like many web websites, the Websites do not currently respond to or alter its practices when it receives a Do Not Track signal. Please note that third parties may collect personal information about your online activities over time and across different websites when you visit our Websites or other online websites and services. To find out more about “Do Not Track,” you may wish to visit <a href="http://www.allaboutdnt.com">http://www.allaboutdnt.com</a>.</p>
+<p><em>How We Collect Information</em></p>
+<p>We collect information by fair and lawful means, with your knowledge and consent. We also let you know why we’re collecting it and how it will be used. You are free to refuse our request for this information, with the understanding that we may be unable to provide you with some of your desired services without it.</p>
+<p><em>How We May Share/Use Your Information</em></p>
+<p>We may disclose all of the information (described herein) that we collect, as stated in this Privacy Policy including in accordance with the terms set forth in this section. We may use a combination of identifying and non-identifying information to understand who our visitors are, how they use our services, and how we may improve their experience of our Websites in future. We do not disclose the specifics of this information publicly, but may share aggregated and anonymized versions of this information, for example, in website and customer usage trend reports.</p>
+<p>We may use your personal details to contact you with updates about our Websites and services, along with promotional content that we believe may be of interest to you. If you wish to opt out of receiving promotional content, you can follow the “unsubscribe” instructions provided alongside any email correspondence from us.</p>
+<p>Please note that FSTV works with a variety of third-party partners in order to allow us to make the Websites available to you, to host and store the information we collect from you, to collect and process donations, and to provide certain functionality and features. Except as stated in this Privacy Policy, we do not reveal personally identifiable information about you to third parties for their independent use unless: (1) you expressly authorize FSTV to do so, (2) it is necessary to allow FSTV and its service providers or agents to provide services on FSTV’s behalf, (3) it is to provide products or services to you, (4) it is disclosed to entities that perform marketing, advertising or data aggregation services for FSTV (including direct marketing via postal mail), (5) it is necessary in connection with a sale of all or substantially all of the assets of FSTV or the merger of FSTV into another entity or any consolidation, share exchange, combination, reorganization, or like transaction in which FSTV is not the survivor, (6) FSTV is required or permitted to do so for any or all of the following reasons: (i) to comply with a subpoena, legal process, government request or any other legal obligation, (ii) to prevent, investigate, detect, or prosecute criminal offenses or attacks on the technical integrity of the Websites or our network, and/or (iii) to protect the rights, privacy, property, business, or safety of FSTV, its partners and employees or the visitors to the Websites.</p>
+<p><strong>Data Processing and Storage</strong></p>
+<p>The personal information we collect is stored and processed in United States, or where we or our partners, affiliates and third-party providers maintain facilities. We only transfer data within jurisdictions subject to data protection laws that reflect our commitment to protecting the privacy of our users.</p>
+<p>We only retain personal information for as long as necessary to provide a service, or to improve our services in future. While we retain this data, we will protect it within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use or modification. That said, we advise that no method of electronic transmission or storage is 100% secure, and cannot guarantee absolute data security.</p>
+<p>If you request your personal information be deleted, or where your personal information becomes no longer relevant to our operations, we will erase it from our system within a reasonable timeframe.</p>
+<p><span style="font-size: 18pt;"><strong>Third-Party Access to Information</strong></span></p>
+<p>We use third-party services for:</p>
+<p>●   Analytics tracking<br />
+●   Email marketing<br />
+●   Merchandising<br />
+●   Payment processing</p>
+<p>These services may access our data solely for the purpose of performing specific tasks on our behalf. We do not share any personally identifying information with them without your explicit consent. We do not give them permission to disclose or use any of our data for any other purpose.</p>
+<p>We may, from time to time, allow limited access to our data by external consultants and agencies for the purpose of analysis and service improvement. This access is only permitted for as long as necessary to perform a specific function. We only work with external agencies whose privacy policies align with ours.</p>
+<p>We will refuse government and law enforcement requests for data if we believe a request is too broad or unrelated to its stated purpose. However, we may cooperate if we believe the requested information is necessary and appropriate to comply with legal process, to protect our own rights and property, to protect the safety of the public and any person, to prevent a crime, or to prevent what we reasonably believe to be illegal, legally actionable, or unethical activity.</p>
+<p>We do not otherwise share or supply personal information to third parties. We do not sell or rent your personal information to marketers or third parties.</p>
+<p><strong>Children’s Privacy</strong></p>
+<p>We do not knowingly collect, use, or disclose personally identifiable information about visitors younger than 13 years of age. If you are under the age of 13, you are expressly prohibited from accessing/viewing the Websites. If you are the parent or guardian of a child under 13 years of age and believe that they have disclosed personally identifiable information to us, please contact us at 303.442.8445 so that we may delete your child’s information.</p>
+<p><strong>Third Party Websites; Advertisements</strong></p>
+<p>We may also provide links to a variety of third-party social media sites and/or websites – such as YouTube, Instagram, X, Facebook and others &#8211; as a service to you, and in order to provide you additional information and/or content related to the work that we do, or additional venues in which you can learn about and discuss the activities of FSTV. We may also allow third parties to place advertisements on the Websites. Please note that we have no affiliation with any of these other parties and/or websites, and cannot control and are not responsible for the information collection, use, and disclosure practices of such third parties; we encourage you to review and understand their privacy practices and policies, if any, before using providing any personally identifying information to them or initiating any financial transactions.</p>
+<p><strong>Changes to this Privacy Policy</strong></p>
+<p>We reserve the right to revise this Privacy Policy at any time by updating this posting. Please check back regularly and to see if there have been any changes to this policy, which you can determine by reviewing the Effective Date listed below. By continuing to use the Websites after those changes become effective, you agree to be bound by the<br />
+revised Privacy Policy.</p>
+<p>HOW TO CONTACT US</p>
+<p>If you have any questions or comments about this Privacy Policy, or if you would like us to update or correct information you have provided to us, please contact us by email at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6b2b3a0b3bab9a6bbb3b8a296b0a4b3b3a5a6b3b3b5bef8b9a4b1">[email&#160;protected]</a>. You also may write to us at:</p>
+<p>&nbsp;</p>
+<p>Free Speech TV<br />
+PO Box 44099<br />
+Denver, CO 80201</p>
+<p>&nbsp;</p>
+<p>SPECIAL NOTICE TO COLORADO RESIDENTS</p>
+<p>This special notice applies only to information collected about individuals residing in Colorado (“you,” “your”). It provides information required under the Colorado Privacy Act of 2021 (the “CPA”).</p>
+<p>As required by the CPA, we provide detailed information below regarding the rights available to Colorado residents.</p>
+<p>Your Rights to Your Personal Information</p>
+<p>1. <strong>Right of access.</strong> Consumers have “the right to confirm whether a controller is processing personal data concern<br />
+the consumer and to access the consumer’s personal data.”<br />
+2. <strong>Right to correction.</strong> Consumers have “the right to correct inaccuracies in the consumer’s personal data, taking<br />
+into account the nature of the personal data and the purposes of the processing of the consumer’s personal data.”<br />
+3. <strong>Right to delete.</strong> Consumers have “the right to delete personal data concerning the consumer.”<br />
+4. <strong>Right to data portability.</strong> Consumers have “the right to obtain a personal data in a portable and, to the extent<br />
+technically feasible, readily usable format that allows the consumer to transmit the data to another entity without<br />
+hindrance.”<br />
+5. <strong>Right to opt out.</strong> Consumers have “the right to opt out of the processing of personal data concerning the consumer<br />
+for purposes of:</p>
+<p>o targeted advertising;<br />
+o the sale of personal data, or<br />
+o profiling in furtherance of decisions that produce legal or similarly significant effects concerning a consumer.”</p>
+<p><span style="text-decoration: underline;">Exercising your rights</span></p>
+<p>You may exercise the rights specified above by submitting a consumer request to:</p>
+<p>Email:<br />
+<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd99988b9891928d90989389bd9b8f98988e8d98989e95d3928f9a">[email&#160;protected]</a></p>
+<p>Mail:<br />
+Free Speech TV<br />
+PO Box 44099<br />
+Denver, CO 80201</p>
+<p>We will need to verify your identity prior to effectuating your request. To verify your identity, you will need to provide us with the following information with your request:</p>
+<p>● Name;<br />
+● Phone number;<br />
+● Email address.</p>
+<p>Please note that we may be unable to process your request if you do not provide us with the above information.</p>
+<p>You may also designate an authorized agent to exercise your rights on your behalf. You may designate an agent via any of the ways used to submit requests on your behalf. We will request the agent to verify that he or she has the authority to submit requests on your behalf. We will do so by asking the agent to submit the following information:</p>
+<p>● Valid power of attorney;<br />
+● The requester&#8217;s valid government-issued ID;<br />
+● The authorized agent&#8217;s valid government ID.</p>
+<p>Please note that we may not be able to process your request if your designated agent and/or you do not provide us with the above information.</p>
+<p>We will respond to most requests within 45 days of receipt, depending upon where you reside. However, some requests may take longer. We will notify you in writing if we need more time to respond. We have the ability to deny your request(s) if certain exceptions in the law apply. If we do deny your request, we will provide you with the reasons for such denial. Normally, we do not charge a fee to process or respond to requests. However, for residents of certain states, we may charge a fee if the request is excessive, repetitive or manifestly unfounded.</p>
+<p>&nbsp;</p>
+<p><strong>PRIVACY POLICY EFFECTIVE DATE</strong></p>
+<p>This Privacy Policy is effective as of March 1, 2024.</p>
+<p><a href="https://freespeech.org/previous-policies/"><em>Click here</em></a><em> to view the previous versions of our privacy policy.</em></p>
+<p>&nbsp;</p>
+
+    </div>
+
+    <div class="spacer short"></div>
+
+    <section class="signup-wrapper">
+	
+	
+	<iframe src="https://embeds.beehiiv.com/235900c8-004a-42f9-8a57-29a55d21902d" data-test-id="beehiiv-embed" width="100%" height="320" frameborder="0" scrolling="no" style="border-radius: 4px; border: 2px solid #e5e7eb; margin: 0; background-color: transparent;"></iframe>
+	
+	
+<!--  <h2>Sign up for Our Newsletter</h2>
+  <p>Get updates about the policies and topics that matter the most to you. Progressive news directly to your email.</p>
+  <div class="newsletter-wrapper pre-footer-form">
+    
+    
+  </div> -->
+	
+	
+	
+</section>
+
+          </main>
+              </div>
+    </div>
+        <div class="col-sm-12 proudPartners-section pb-3 partners" style=" padding-top: 48px;">
+
+      <div class="text-center">
+        <h4 class="m-0">Proud Partners</h4>
+      </div>
+
+      <ul class="proudPartners-wrapper">
+        <li class="proudPartners-image-container">
+        <a href="https://www.mnn.org/" target="_blank" rel="nofollow">
+          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid"  data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/pt1.jpg"/><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/pt1.jpg" alt="" class="img-fluid"  loading="lazy"/></noscript>
+        </a>
+        </li>
+        <li class="proudPartners-image-container">
+        <a href="https://bioneers.org" target="_blank" rel="nofollow">
+          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/pt2.jpg" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/pt2.jpg" alt="" class="img-fluid" loading="lazy" /></noscript>
+         </a> 
+        </li>
+        <li class="proudPartners-image-container">
+        <a href="https://www.netrootsnation.org/" target="_blank" rel="nofollow">
+          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/pt3.jpg" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/pt3.jpg" alt="" class="img-fluid" loading="lazy" /></noscript>
+          </a>
+        </li>
+<!--         <li class="proudPartners-image-container">
+        <a href="https://www.voqal.org/" target="_blank" rel="nofollow">
+          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/pt4.jpg" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/pt4.jpg" alt="" class="img-fluid" loading="lazy" /></noscript>
+          </a>
+        </li> -->
+       
+      </ul>
+    </div>
+  </div>
+<footer class="container pt-3 pb-0">
+    <div class="row m-0">
+      <div class="col-md-2 mb-4 mb-md-0 text-center">
+        <img width="100px" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/uploads/2024/03/logo-ftv-2.svg" /><noscript><img width="100px" src="/wp-content/uploads/2024/03/logo-ftv-2.svg" alt="" class="img-fluid" /></noscript>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-menu-list">
+          <h3>Topics</h3>
+          <ul class="footer-menu-items">
+            <li>
+              <a href="https://freespeech.org/topic/politics/">Politics</a>
+            </li>
+            <li>
+              <a href="https://freespeech.org/topic/environment/">Environment</a>
+            </li>
+            <li>
+              <a href="https://freespeech.org/topic/immigration/">Immigration</a>
+            </li>
+            <li>
+              <a href="https://freespeech.org/topic/economy/">Economy</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-menu-list">
+          <h3>Quick Links</h3>
+          <ul class="footer-menu-items">
+            <li><a href="https://freespeech.org/how-to-watch/">How to Watch</a></li>
+             <li><a href="https://freespeech.org/schedule/">Schedule</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-menu-list">
+          <h3>Help</h3>
+          <ul class="footer-menu-items">
+           <!--  https://freespeech.org/donate-all/ -->
+            <li><a href="/donate-2">Donate</a></li>
+            <li><a href="https://freespeech.org/faq/">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-menu-list">
+          <h3>Company</h3>
+          <ul class="footer-menu-items">
+            <li><a href="https://freespeech.org/about-us/">About Us</a></li>
+             <li><a href="https://freespeech.org/contact-us/">Contact Us</a></li>
+             <li><a href="https://freespeech.org/work-with-us/">Work With Us</a></li>
+<!--			<li><a href="https://freespeech.org/?page_id=193182">2024 Media Kit</a></li> !-->
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-2">
+        <div class="footer-menu-list">
+          <h3>Social Media</h3>
+          <ul class="footer-menu-social-items">
+            <a href="https://www.instagram.com/freespeechtv/">
+              <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/insta.png" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/insta.png" alt="" class="img-fluid" /></noscript>
+            </a>
+            <a href="https://www.youtube.com/user/freespeechtv">
+              <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/youtube.png" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/youtube.png" alt="" class="img-fluid" /></noscript>
+            </a>
+            <a href="https://www.facebook.com/freespeechtv">
+              <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/facebook.png" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/facebook.png" alt="" class="img-fluid" /></noscript>
+            </a>
+            <a href="https://twitter.com/freespeechtv">
+              <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="" class="img-fluid" data-lazy-src="/wp-content/themes/free-speech-tv/resources/assets/images/twitter.png" /><noscript><img src="/wp-content/themes/free-speech-tv/resources/assets/images/twitter.png" alt="" class="img-fluid" /></noscript>
+            </a>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom-links mt-5">
+      <ul class="footer-list-links">
+        <li><span>Ⓒ Free Speech TV</span></li>
+
+    <li> <a href="https://freespeech.org/terms/" class="menu-item">Terms</a></li>
+    <li> <a href="https://freespeech.org/privacy/" class="menu-item">Privacy</a></li>
+    <!-- <li> <a href="https://freespeech.org/?page_id=42755" class="menu-item">Credits</a></li> -->
+    <li> <a href="https://freespeech.org/contact-us/" class="menu-item">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <button id="popup_pledge_drive"></button><style>
+/*.banner .container .brand-wrapper {
+    height: 75%;
+}*/
+    .banner .container .brand-wrapper{
+        bottom: 35%;
+        width: 140px;
+    }
+    .banner .container .brand-wrapper .brand{
+        height: 122%;
+        
+    }
+    
+    @media (min-width:768px){
+        .banner .container .brand-wrapper .brand{
+               background-size: cover
+    }
+    }
+    @media (max-width: 480px){
+        .newsletter-wrapper.pre-footer-form div.gform_wrapper form .gform_fields{
+            flex-direction: row
+        }
+        
+       span.thumbnail-icon{
+            top: 20px
+        }
+
+    }
+      @media (max-width: 767px){
+      .brand-wrappers{
+      width: 80px
+      }
+      }
+    .front-page h3 {
+    font-size: 1.6rem;
+}
+.home #gform_10 form {
+    padding-top: 0px!important;
+}
+.home label.gfield_label {
+    display: none!important;
+}
+.home ul#gform_fields_10 {
+    padding: 0px;
+    margin: 0px;
+    position:relative;
+}
+.home .gform_body {
+    display: inline-block;
+    width: 55%;
+}
+.home .gform_footer.top_label {
+    display: inline-block;
+}
+.home input#gform_submit_button_10 {
+    border-radius: 0px!important;font-size: 13px;position:relative;    
+    padding: 15px!important;margin: 0px!important;
+}
+input#input_10_3 {
+    width: 100%;
+}
+.home .gform_wrapper form {
+    padding: 0px!important;
+    margin: 0px;
+}
+img#gform_ajax_spinner_10 {
+     position:absolute;
+     width:30px;
+}
+.home .gfield_description.validation_message {
+    position: absolute;
+    color: red;
+    top: 33px;
+    font-size: 12px;
+    left: 0px;
+    padding: 0px;
+    margin-left: 0px;
+}
+.home .validation_error {
+    font-size: 12px;
+    padding-bottom: 10px;
+    color: red;
+}
+.home .story-banner .story-block .story-thumb {
+    height: 15rem;
+}
+    
+.gform_wrapper label {
+    display: none !important;
+}
+    .ginput_complex span{
+        padding: 0!important
+    }
+    .gform_fields li.gfield{
+        margin: 0
+    }
+    .democracy-on-the-brink{
+        background: #00ffff
+    }
+    .education{
+        background: #d2691e;
+    }
+
+    @media (min-width: 768px){
+.utility a.menu-item {
+    padding: 8px 8px;
+}
+}
+@media  only screen and (max-height: 480px) and (orientation: landscape){
+.home .gform_wrapper form {
+    padding: 0px!important;
+    margin: 0px;
+}
+.home input#input_10_3 {
+    width: 100%;
+}
+.home input#gform_submit_button_10 {
+    border-radius: 0px!important;
+    font-size: 13px;
+    margin: 0px !important;
+    padding: 15px!important;
+}
+}
+ </style>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script type="rocketlazyloadscript">
+      $('.nav-tabs .nav-item').eq(0).addClass('active')
+    $('#nav-tab .nav-link').click(function (e) {
+      e.preventDefault()
+      $('#nav-tab .nav-link').removeClass('active');
+      $(this).addClass('active');
+      var tagid = $(this).attr('href');
+      console.log(tagid);
+      $('.tab-pane').removeClass('show active');
+      $(tagid).addClass('show active');
+    });
+
+    $(".feature-show-slider").slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: false,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+              dots: false,
+              
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+              dots: false,
+          },
+        },
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ],
+    });
+
+    $(".programming-show-slider").slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true,
+              dots: false,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+                dots: false,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+                dots: false,
+          },
+        },
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ],
+    });
+      
+      
+       $("#video").slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: false,
+           dots: false,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+               infinite: false,
+           dots: false,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+               infinite: false,
+           dots: false,
+          },
+        },
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ],
+    });
+   
+  </script>	<script type="rocketlazyloadscript" data-rocket-src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M2WQWDJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- [SearchWP] Debug Information
+
+SearchWP performed a search: No
+Searches performed: 0
+-->
+		<div id="pum-192579" class="pum pum-overlay pum-theme-155109 pum-theme-lightbox popmake-overlay auto_open click_open" data-popmake="{&quot;id&quot;:192579,&quot;slug&quot;:&quot;new-donation-popup-9-8-23&quot;,&quot;theme_id&quot;:155109,&quot;cookies&quot;:[{&quot;event&quot;:&quot;on_popup_open&quot;,&quot;settings&quot;:{&quot;name&quot;:&quot;pum-192579&quot;,&quot;key&quot;:&quot;&quot;,&quot;session&quot;:null,&quot;path&quot;:true,&quot;time&quot;:&quot;2 hours&quot;}}],&quot;triggers&quot;:[{&quot;type&quot;:&quot;auto_open&quot;,&quot;settings&quot;:{&quot;cookie_name&quot;:[&quot;pum-192579&quot;],&quot;delay&quot;:&quot;5000&quot;}},{&quot;type&quot;:&quot;click_open&quot;,&quot;settings&quot;:{&quot;extra_selectors&quot;:&quot;&quot;,&quot;cookie_name&quot;:null}}],&quot;mobile_disabled&quot;:null,&quot;tablet_disabled&quot;:null,&quot;meta&quot;:{&quot;display&quot;:{&quot;stackable&quot;:false,&quot;overlay_disabled&quot;:false,&quot;scrollable_content&quot;:false,&quot;disable_reposition&quot;:false,&quot;size&quot;:&quot;medium&quot;,&quot;responsive_min_width&quot;:&quot;0%&quot;,&quot;responsive_min_width_unit&quot;:false,&quot;responsive_max_width&quot;:&quot;100%&quot;,&quot;responsive_max_width_unit&quot;:false,&quot;custom_width&quot;:&quot;640px&quot;,&quot;custom_width_unit&quot;:false,&quot;custom_height&quot;:&quot;380px&quot;,&quot;custom_height_unit&quot;:false,&quot;custom_height_auto&quot;:false,&quot;location&quot;:&quot;center top&quot;,&quot;position_from_trigger&quot;:false,&quot;position_top&quot;:&quot;100&quot;,&quot;position_left&quot;:&quot;0&quot;,&quot;position_bottom&quot;:&quot;0&quot;,&quot;position_right&quot;:&quot;0&quot;,&quot;position_fixed&quot;:false,&quot;animation_type&quot;:&quot;fade&quot;,&quot;animation_speed&quot;:&quot;350&quot;,&quot;animation_origin&quot;:&quot;center top&quot;,&quot;overlay_zindex&quot;:false,&quot;zindex&quot;:&quot;1999999999&quot;},&quot;close&quot;:{&quot;text&quot;:&quot;&quot;,&quot;button_delay&quot;:&quot;0&quot;,&quot;overlay_click&quot;:false,&quot;esc_press&quot;:false,&quot;f4_press&quot;:false},&quot;click_open&quot;:[]}}" role="dialog" aria-modal="false"
+								   	aria-labelledby="pum_popup_title_192579">
+
+	<div id="popmake-192579" class="pum-container popmake theme-155109 pum-responsive pum-responsive-medium responsive size-medium">
+
+				
+
+							<div id="pum_popup_title_192579" class="pum-title popmake-title">
+				Don&#039;t miss out!			</div>
+		
+
+		
+
+				<div class="pum-content popmake-content" tabindex="0">
+			<p style="text-align: center;"><span style="font-family: helvetica, arial, sans-serif; font-size: 18pt;">Everything in the FSTV store is FREE with donation. </span></p>
+<p style="text-align: center;"><strong><span style="font-family: helvetica, arial, sans-serif; font-size: 18pt;">Special ends June 18. </span></strong></p>
+<p style="text-align: center;"><a href="https://freespeech.org/store/"><span style="font-family: helvetica, arial, sans-serif; font-size: 18pt;">Pick your free gift now</span></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+		</div>
+
+
+				
+
+							<button type="button" class="pum-close popmake-close" aria-label="Close">
+			×			</button>
+		
+	</div>
+
+</div>
+<script type="rocketlazyloadscript" defer data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-content/plugins/akismet/_inc/akismet-frontend.js?ver=1711268701" id="akismet-frontend-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js"></script>
+<script type="text/javascript" id="popup-maker-site-js-extra">
+/* <![CDATA[ */
+var pum_vars = {"version":"1.18.2","pm_dir_url":"https:\/\/freespeech.org\/wp-content\/plugins\/popup-maker\/","ajaxurl":"https:\/\/freespeech.org\/wp-admin\/admin-ajax.php","restapi":"https:\/\/freespeech.org\/wp-json\/pum\/v1","rest_nonce":null,"default_theme":"155109","debug_mode":"1","disable_tracking":"","home_url":"\/","message_position":"top","core_sub_forms_enabled":"1","popups":[],"cookie_domain":"","analytics_route":"5f09ba2ff23cdfa82ea7c3d461497f5b","analytics_api":"https:\/\/freespeech.org\/wp-json\/1041c52c84032cf537fd535a64af1725\/v1","page":"-1"};
+var pum_debug_vars = {"debug_mode_enabled":"Popup Maker: Debug Mode Enabled","debug_started_at":"Debug started at:","debug_more_info":"For more information on how to use this information visit https:\/\/docs.wppopupmaker.com\/?utm_medium=js-debug-info&utm_campaign=contextual-help&utm_source=browser-console&utm_content=more-info","global_info":"Global Information","localized_vars":"Localized variables","popups_initializing":"Popups Initializing","popups_initialized":"Popups Initialized","single_popup_label":"Popup: #","theme_id":"Theme ID: ","label_method_call":"Method Call:","label_method_args":"Method Arguments:","label_popup_settings":"Settings","label_triggers":"Triggers","label_cookies":"Cookies","label_delay":"Delay:","label_conditions":"Conditions","label_cookie":"Cookie:","label_settings":"Settings:","label_selector":"Selector:","label_mobile_disabled":"Mobile Disabled:","label_tablet_disabled":"Tablet Disabled:","label_event":"Event: %s","triggers":{"click_open":"Click Open","auto_open":"Time Delay \/ Auto Open","form_submission":"Form Submission"},"cookies":{"on_popup_close":"On Popup Close","on_popup_open":"On Popup Open","form_submission":"Form Submission","pum_sub_form_success":"Subscription Form: Successful","pum_sub_form_already_subscribed":"Subscription Form: Already Subscribed","manual":"Manual","ninja_form_success":"Ninja Form Success (deprecated. Use Form Submission instead.)","gforms_form_success":"Gravity Form Success (deprecated. Use Form Submission instead.)"}};
+var pum_sub_vars = {"ajaxurl":"https:\/\/freespeech.org\/wp-admin\/admin-ajax.php","message_position":"top"};
+var pum_popups = {"pum-192579":{"triggers":[{"type":"auto_open","settings":{"cookie_name":["pum-192579"],"delay":"5000"}}],"cookies":[{"event":"on_popup_open","settings":{"name":"pum-192579","key":"","session":null,"path":true,"time":"2 hours"}}],"disable_on_mobile":false,"disable_on_tablet":false,"explain":null,"type_section":null,"theme_id":"155109","size":"medium","responsive_min_width":"0%","responsive_max_width":"100%","custom_width":"640px","custom_height_auto":false,"custom_height":"380px","scrollable_content":false,"animation_type":"fade","animation_speed":"350","animation_origin":"center top","open_sound":"none","custom_sound":"","location":"center top","position_top":"100","position_bottom":"0","position_left":"0","position_right":"0","position_from_trigger":false,"position_fixed":false,"overlay_disabled":false,"stackable":false,"disable_reposition":false,"zindex":"1999999999","close_button_delay":"0","fi_promotion":null,"close_on_form_submission":false,"close_on_form_submission_delay":"0","close_on_overlay_click":false,"close_on_esc_press":false,"close_on_f4_press":false,"disable_form_reopen":false,"disable_accessibility":false,"theme_slug":"lightbox","id":192579,"slug":"new-donation-popup-9-8-23"}};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//freespeech.org/wp-content/uploads/5b48532f5e36142986b9a0abd161a462.js?defer&amp;generated=1718596985&amp;ver=1.18.2" id="popup-maker-site-js"></script>
+<script type="text/javascript" id="popmake-popup-analytics-js-js-extra">
+/* <![CDATA[ */
+var popmake_pa_nonce = "026be5069f";
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-content/plugins/popup-maker-popup-analytics/assets/js/scripts.min.js?defer&amp;ver=1.1.11" id="popmake-popup-analytics-js-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
+/* <![CDATA[ */
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/freespeech.org","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-preload-links-js-after">
+/* <![CDATA[ */
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.13.2" id="jquery-ui-datepicker-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="jquery-ui-datepicker-js-after">
+/* <![CDATA[ */
+jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
+/* ]]> */
+</script>
+<script type="text/javascript" id="sage/main.js-js-extra">
+/* <![CDATA[ */
+var ajax = {"ajax_url":"https:\/\/freespeech.org\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://freespeech.org/wp-content/themes/free-speech-tv/dist/scripts/main_3cf0f46f.js" id="sage/main.js-js"></script>
+<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://freespeech.org/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script>  </body>
+  <script type="rocketlazyloadscript">jQuery('a.menu-item.democracy').html('Just Solutions');
+jQuery('.story-block').click(function(j) {
+var detail = jQuery(this).find('audio');
+if(!jQuery(detail).hasClass('playaudio')) {
+detail.addClass('playaudio');
+ detail.trigger("play");
+}else{
+ detail.removeClass('playaudio'); 
+ detail.trigger("pause");
+}
+
+});
+
+</script>
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
