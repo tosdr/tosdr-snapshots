@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<base href="https://prodroid.org/privacy.html" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Политика конфиденциальности | ProDroid.Org</title>
+<link href="/templates/prodroid/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<link href="https://prodroid.org/component/search/?Itemid=147&amp;format=opensearch" rel="search" title="MOD_SEARCH_SEARCHBUTTON_TEXT ProDroid.Org" type="application/opensearchdescription+xml" />
+<link href="/templates/prodroid/css/main.min.css" rel="stylesheet" />
+<link href="/templates/prodroid/css/custom.css" rel="stylesheet" />
+<script src="/media/jui/js/jquery.min.js?088898cee8b65796f72e7f32ccbbad20" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<script src="/media/k2/assets/js/k2.frontend.js?v=2.9.0&amp;sitepath=/" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<script src="/templates/prodroid/js/libs.min.js" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<script src="/templates/prodroid/js/custom.js" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<script type="a364aadbfbaefaf53ea2911c-text/javascript">
+(function($){$.fn.tooltip=function(){}})(jQuery);(function($){$.fn.popover=function(){}})(jQuery);jQuery(document).ready(function(){
+        var xhr;
+        
+        jQuery(document).mouseup(function (e){
+		var element =jQuery('.header_search_app');
+		if (!element.is(e.target)
+		    && element.has(e.target).length === 0) {
+			element.hide(); 
+		}
+	});
+
+        jQuery(document).on('keyup','#search_field', function (event) {
+            event.preventDefault();
+
+            searchWrap = jQuery('.header_search_app');
+            q = jQuery(this).val();
+            if (q.length < 3) {
+                searchWrap.hide();
+                return false;
+            }
+
+            // Формируем параметры запроса
+            var request = {
+                'option': 'com_ajax',
+                'module': 'sphinx_search',
+                'format': 'json',
+                'q': q
+            };
+
+            if (xhr != null) {
+                xhr.abort();
+                xhr = null;
+            }
+
+            // Посылаем AJAX запрос
+            xhr = jQuery.ajax({
+                type: 'POST',
+                data: request,
+            })
+                .done(function (response) {
+                    if (response.data.html) {
+                        searchWrap.html(response.data.html).show();
+                    }
+                })
+                .fail(function () {
+                    searchWrap.hide();
+                });
+        });
+});
+	</script>
+<link rel="icon" href="https://prodroid.org/favicon.ico" type="image/x-icon">
+
+
+<meta name="theme-color" content="#000">
+
+<meta name="msapplication-navbutton-color" content="#000">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="#000">
+
+<meta name="yandex-verification" content="010f2c92d8eda1db" />
+
+<script type="a364aadbfbaefaf53ea2911c-text/javascript">window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<meta name="google-adsense-account" content="ca-pub-8661010915854236">
+</head>
+<body>
+<div class="wrapper">
+<header>
+<div class="header_top">
+<div class="container">
+<div class="row">
+<div class="hidden-xs hidden-sm col-md-12">
+<nav class="main_mnu">
+<ul><li><a href="/">Главная</a></li>
+<li><a href="/games.html">Игры</a></li>
+<li><a href="/apps.html">Приложения</a></li>
+<li><a href="/blog.html">Блог</a></li>
+<li><a href="/feedback.html">Контакты</a></li>
+<li id="private_office_title_mnu_mobile">
+<span>Личный кабинет</span>
+</li>
+<li class="check_in_btn_mnu" id="check_in_btn_mnu">
+<a href="#check_in_popup" class="check_in_btn open_check_in_popup">Регистрация</a>
+</li>
+<li class="sign_in_btn_mnu" id="sign_in_btn_mnu">
+<a href="#sign_in_popup" class="sign_in_btn open_sign_in_popup">Войти</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div class="header_bottom">
+<div class="container">
+<div class="row">
+<div class="col-xs-3 col-sm-3 hidden-md hidden-lg">
+<a href="#mobile-menu" class="mobile_mnu"></a>
+</div>
+<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+<a href="/" class="header_logo">
+<img src="/templates/prodroid/img/logo3.png" alt="Alt" class="logo">
+
+<img src="/templates/prodroid/img/logo3_m.png" alt="Alt" class="header_logo_mobile">
+</a>
+</div>
+<div class="col-xs-3 col-sm-3 hidden-md hidden-lg">
+<a href="#" class="search_mob"></a>
+</div>
+<div class="col-md-4 col-lg-5 col-sm-12 col-xs-12 wrapper_header_search">
+<div class="header_search">
+<div class="input_search_width_border">
+<form action="/privacy.html" method="post" class="form-inline">
+<div class="input_search_width">
+<div class="input_search_setter">
+<input type="search" class="search_style" autocomplete="off" id="search_field" name="searchword" placeholder="Поиск...">
+<input type="submit" class="search_btn" name="submit" value>
+</div>
+</div>
+<input type="hidden" name="task" value="search" />
+<input type="hidden" name="option" value="com_search" />
+<input type="hidden" name="Itemid" value="147" />
+</form>
+</div>
+<div class="header_search_app">
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<div class="bread_crumbs">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ul itemscope itemtype="https://schema.org/BreadcrumbList" class>
+<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="https://prodroid.org/"><span itemprop="name">Главная</span></a></li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a itemprop="item" href="/privacy.html"><span itemprop="name">Политика конфиденциальности</span></a></li> </ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="system-message-container" class="container">
+</div>
+
+
+
+
+<div class="text_block">
+<div class="wrapp__android_app_top">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div class="android_app_title_h">
+<h3>Политика конфиденциальности</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<p><strong>1. Основные положение Политики конфиденциальности</strong></p>
+<p>Администрация сайта prodroid.org с уважением относится к правам посетителей. Мы безоговорочно признаем важность конфиденциальности личной информации посетителей нашего сайта. Данная страница содержит сведения о том, какую информацию мы получаем и собираем, когда Вы пользуетесь сайтом. Мы надеемся, что эти сведения помогут Вам принимать осознанные решения в отношении предоставляемой нам личной информации.</p>
+<p>Настоящая Политика конфиденциальности распространяется только на сайт prodroid.org и на информацию, собираемую этим сайтом и через его посредство. Она не распространяется ни на какие другие сайты и не применима к веб-сайтам третьих лиц, с которых могут делаться ссылки на сайт.</p>
+<p><strong>2. Цели сбора персональных данных</strong></p>
+<p>При посещении подавляющего количества разделов и страниц сайта prodroid.org нашим посетителям нет нужды оставлять какую-либо информацию о себе. Сбор персональной информации минимален и необходим для того, чтобы обеспечить нужный уровень сервиса, идентифицировать вас как пользователя и в дальнейшем поддерживать информационный контакт с вами. В большинстве случаев сведения, которые пользователям требуется сообщить о себе, ограничиваются лишь адресом электронной почты и именем, а так же другими данными, которые Вы указываете при регистрации на сайте.</p>
+<p><strong>3. Об использовании cookies («кукис»)</strong></p>
+<p>Нами применяется технология сбора «кукис». Cookies представляют собой небольшой фрагмент данных, размещаемых на жестком диске компьютера пользователя и содержащий информацию о нем как о пользователе. Когда пользователь посещает сайт, на его компьютер записывается файл cookies (если пользователь разрешает прием таких файлов). При закрытии браузера данные cookies деактивируются. Каждый посетитель ресурса вправе отклонить возможности записи кукис на диске своего компьютера с помощью соответствующей настройки броузера.</p>
+<p>Сбор cookies осуществляется в следующих целях:</p>
+<ul>
+<li>запоминая ваш пароль и логин (имя пользователя) облегчается пользование сайтом, так как вводить пароль и имя при каждом новом посещении не требуется</li>
+<li>cookies сохраняются (записываются на диск) для мониторинга процесса посещения пользователями сайта, в целях улучшения работы сайта, повышения качества информационного наполнения</li>
+<li>cookies позволяют предоставлять посетителям максимально персонализированные сервисы</li>
+<li>Сбор данных Cookies осуществляется в обобщенном виде и никогда не соотносится с персональными данными пользователей.</li>
+</ul>
+<p><strong>4. Отслеживание IP адресов посетителей</strong></p>
+<p>IP-адреса пользователей сайта используются в целях внутреннего администрирования, анализа перемещений пользователей по сайту, определения географического региона пользователя. На сайте также имеется возможность сбора сведений об используемом компьютерном оборудовании и программном обеспечении пользователей, а, именно, IP-адресе пользователя, имени домена, сведений об используемой операционной системе, типе обозревателя, количестве предыдущих посещений и веб-ресурсе, с которого пользователь осуществил переход на наш сайт.</p>
+<p>Данная информация используется для подготовки статистических данных, характеризующих работу наших информационных партнеров в Интернет. Отметим, что IP адрес в общем случае никогда не связывается с персональными данными пользователя. Пользователь всегда вправе потребовать исключить свои персональные данные и прекратить их обработку.</p>
+<p><strong>5. Использование информации</strong></p>
+<p>Мы используем персонифицированную информацию конкретного посетителя сайта исключительно для обеспечения ему качественного оказания услуг и их корректного учета. Мы не раскрываем персонифицированных данных одних посетителей сайта prodroid.org другим посетителям сайта prodroid.org.</p>
+<p>Мы никогда не публикуем персонифицированную информацию в открытом доступе и не передаем ее третьим лицам Исключением являются лишь ситуации, когда предоставление такой информации уполномоченным государственным органам предписано действующим законодательством РФ.</p>
+<p>Мы также используем анонимные данные для внутреннего анализа, целью которого является развитие продуктов и услуг нашего сайта.</p>
+<p><strong>6. Ссылки</strong></p>
+<p>Сайт prodroid.org может содержать ссылки на другие сайты, не имеющие отношения к нашему сайту и принадлежащие третьим лицам. Мы не несем ответственности за точность, полноту и достоверность сведений, размещенных на сайтах третьих лиц, и не берем на себя никаких обязательств по сохранению конфиденциальности информации, оставленной вами на таких сайтах.</p>
+<p><strong>7. Ограничение ответственности</strong></p>
+<p>Мы делаем все возможное для соблюдения настоящей политики конфиденциальности, однако, мы не можем гарантировать сохранность информации в случае воздействия факторов находящихся вне нашего влияния, результатом действия которых станет раскрытие информации.</p>
+<p>Сайт prodroid.org и вся размещенная на нем информация представлены по принципу "As Is" (как есть) без каких-либо гарантий. Мы не несем ответственности за неблагоприятные последствия, а также за любые убытки, причиненные вследствие ограничения доступа к сайту prodroid.org или вследствие посещения сайта и использования размещенной на нем информации.</p>
+<p>Материалы опубликованные на сайте prodroid.org получены из общедоступных источников сети Интернет, имеют только информационно — справочный характер, не являются руководством к действию. </p>
+<p>Администрация сайта не несет ответственности за возможно нанесенный посетителям ущерб, в т.ч финансовый, из — за сведений опубликованных на сайте, а так же в следствии использования файлов скаченных с сайта. Посещая сайт вы автоматически соглашаетесь с условиями опубликованными выше.</p>
+<p>Настоящая политика конфиденциальности полностью или в части может быть изменена Администрацией Сайта в любое время без какого-либо специального уведомления. Новая редакция политики конфиденциальности вступает в силу с момента ее опубликования на Сайте. Действующая редакция политика конфиденциальности всегда находится на странице по адресу: <a title="Политика конфиденциальности" href="/privacy.html">https://prodroid.org/privacy.html</a></p> </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<footer>
+<div class="footer_top">
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-sm-12">
+<a href="https://prodroid.org" class="footer_logo">
+<img src="/templates/prodroid/img/footer_logo.png" alt="Alt">
+</a>
+</div>
+<div class="col-md-8 col-sm-12">
+<nav class="footer_mnu">
+<ul><li><a href="/about.html">О проекте</a></li>
+<li class=" active"><a href="/privacy.html">Политика конфиденциальности</a></li>
+<li><a href="/copyright.html">Правообладателям и DMCA</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+<div class="footer_bottom">
+<div class="container">
+<div class="row">
+<div class="col-md-6 col-sm-6">
+<div class="copyfight">
+2013-2023 © <a href="https://prodroid.org">ProDroid</a> – Apps for Android.<br/>
+</div>
+</div>
+<div class="col-md-6 col-sm-6">
+<div class="footer_bottom_right">
+<div class="social_link">
+</div>
+<div class="liveinternet">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="hidden"></div>
+
+<!--[if lt IE 9]>
+<!--<script src="/templates/prodroid/libs/html5shiv/es5-shim.min.js"></script>
+<script src="/templates/prodroid/libs/html5shiv/html5shiv.min.js"></script>
+<script src="/templates/prodroid/libs/html5shiv/html5shiv-printshiv.min.js"></script>
+<script src="/templates/prodroid/libs/respond/respond.min.js"></script>-->
+<!--[endif]-->
+
+<script src="/templates/prodroid/js/common.min.js" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+ <script type="a364aadbfbaefaf53ea2911c-text/javascript"> (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date(); for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }} k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(53178481, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/53178481" style="position:absolute; left:-9999px;" alt="" /></div></noscript> 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-137823314-1" type="a364aadbfbaefaf53ea2911c-text/javascript"></script>
+<script type="a364aadbfbaefaf53ea2911c-text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-137823314-1');
+</script>
+
+<script type="a364aadbfbaefaf53ea2911c-text/javascript">
+window.yaContextCb.push(()=>{
+	Ya.Context.AdvManager.render({
+		"blockId": "R-A-3041986-3",
+		"type": "fullscreen",
+		"platform": "touch"
+	})
+})
+</script>
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="a364aadbfbaefaf53ea2911c-|49" defer></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'89616f3f58a6944b',t:'MTcxODc3ODI1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
