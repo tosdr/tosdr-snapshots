@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8" /><meta name="application-name" content="Skiff"><meta property="og:title" content="End-to-end encrypted, private workspace" data-rh="true"><meta property="og:description" content="Private email, calendar, notes, and drive" data-rh="true"><meta property="og:image" content="https://cdn.sanity.io/images/sdd9dua4/production/5fc84cb5a766ab08e71358ddfaf315c1558e520a-1200x628.png" data-rh="true"><meta name="apple-itunes-app" content="app-id=1599795319"><title>Skiff</title><script>/**
+     * String.prototype.replaceAll() polyfill
+     * https://gomakethings.com/how-to-replace-a-section-of-a-string-with-another-one-with-vanilla-js/
+     * @author Chris Ferdinandi
+     * @license MIT
+     */
+    if (!String.prototype.replaceAll) {
+      String.prototype.replaceAll = function(str, newStr){
+
+        // If a regex pattern
+        if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+          return this.replace(str, newStr);
+        }
+
+        // If a string
+        return this.replace(new RegExp(str, 'g'), newStr);
+
+      };
+    }
+    // BEGIN polyfill_flatMap
+    if (!Array.prototype.flatMap) {
+      Object.defineProperty(Array.prototype, 'flatMap', {
+        value: function (callback, thisArg) {
+          const self = thisArg || this;
+          if (self === null) {
+            throw new TypeError('Array.prototype.flatMap ' + 'called on null or undefined');
+          }
+          if (typeof callback !== 'function') {
+            throw new TypeError(callback + ' is not a function');
+          }
+
+          let list = [];
+
+          // 1. Let O be ? ToObject(this value).
+          const o = Object(self);
+
+          // 2. Let len be ? ToLength(? Get(O, "length")).
+          const len = o.length >>> 0;
+
+          for (let k = 0; k < len; ++k) {
+            if (k in o) {
+              const part_list = callback.call(self, o[k], k, o);
+              list = list.concat(part_list);
+            }
+          }
+
+          return list;
+        }
+      });
+    }
+
+    /**
+
+    Array.flat() polyfill
+
+    Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat#reduce_concat_isArray_recursivity
+    */
+    if (!Array.prototype.flat) {
+      Array.prototype.flat = function (depth) {
+        'use strict';
+
+        // If no depth is specified, default to 1
+        if (depth === undefined) {
+          depth = 1;
+        }
+
+        // Recursively reduce sub-arrays to the specified depth
+        const flatten = function (arr, depth) {
+          // If depth is 0, return the array as-is
+          if (depth < 1) {
+            return arr.slice();
+          }
+
+          // Otherwise, concatenate into the parent array
+          return arr.reduce(function (acc, val) {
+            return acc.concat(Array.isArray(val) ? flatten(val, depth - 1) : val);
+          }, []);
+        };
+
+        return flatten(this, depth);
+      };
+    }
+    /**
+    Object.entriesFrom() polyfill
+    @author Chris Ferdinandi
+    @license MIT
+    */
+    if (!Object.fromEntries) {
+      Object.fromEntries = function (
+        entries
+      ){
+        if (!entries || !entries[Symbol.iterator]) {
+          throw new Error('Object.fromEntries() requires a single iterable argument');
+        }
+        const obj = {};
+        for (const [key, value] of entries) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          obj[key] = value;
+        }
+        return obj;
+      };
+    }</script><link rel="icon" type="image/x-icon" href="/assets/pages/favicon.ico"><link rel="icon" type="image/png" sizes="16x16" href="/assets/pages/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/pages/favicon-32x32.png"><link rel="icon" type="image/png" sizes="48x48" href="/assets/pages/favicon-48x48.png"><link rel="manifest" href="/assets/pages/manifest.webmanifest"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#fff"><meta name="application-name" content="react-client"><link rel="apple-touch-icon" sizes="57x57" href="/assets/pages/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/assets/pages/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/assets/pages/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/assets/pages/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/assets/pages/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/assets/pages/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/assets/pages/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/assets/pages/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="167x167" href="/assets/pages/apple-touch-icon-167x167.png"><link rel="apple-touch-icon" sizes="180x180" href="/assets/pages/apple-touch-icon-180x180.png"><link rel="apple-touch-icon" sizes="1024x1024" href="/assets/pages/apple-touch-icon-1024x1024.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="react-client"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-640x1136.png"><link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-1136x640.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-750x1334.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-1334x750.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1125x2436.png"><link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2436x1125.png"><link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1170x2532.png"><link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2532x1170.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-828x1792.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-1792x828.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1242x2688.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2688x1242.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1242x2208.png"><link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2208x1242.png"><link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1284x2778.png"><link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2778x1284.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1536x2048.png"><link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2048x1536.png"><link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1620x2160.png"><link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2160x1620.png"><link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1668x2388.png"><link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2388x1668.png"><link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-1668x2224.png"><link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2224x1668.png"><link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/assets/pages/apple-touch-startup-image-2048x2732.png"><link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="/assets/pages/apple-touch-startup-image-2732x2048.png"><meta name="msapplication-TileColor" content="#fff"><meta name="msapplication-TileImage" content="/assets/pages/mstile-144x144.png"><meta name="msapplication-config" content="/assets/pages/browserconfig.xml"><link rel="yandex-tableau-widget" href="/assets/pages/yandex-browser-manifest.json"><script defer="defer" src="/editor3-5252.1ad9869bbf03d97c7dec.js"></script><script defer="defer" src="/editor3-main.b171a939d2eb08cf94e1.js"></script></head><body><div id="root"></div></body></html>
