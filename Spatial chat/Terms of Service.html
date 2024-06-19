@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <title>SpatialChat</title>
+
+    <meta
+      name="title"
+      content="SpatialChat | Collaborative online workspace"
+    />
+    <meta
+      name="description"
+      content="Virtual space platform to help remote teams collaborate."
+    />
+    <!--  Essential META Tags -->
+    <meta
+      property="og:title"
+      content="SpatialChat"
+    />
+    <meta
+      property="og:description"
+      content="Virtual space platform to help remote teams collaborate."
+    />
+    <meta
+      property="og:image"
+      content="https://app.spatial.chat/thumbnail.png"
+    />
+    <meta
+      property="og:url"
+      content="https://app.spatial.chat"
+    />
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+
+    <!--  Non-Essential, But Recommended -->
+    <meta
+      property="og:site_name"
+      content="app.spatial.chat"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Virtual space platform to help remote teams collaborate."
+    />
+
+    <!-- Other META Tags -->
+    <meta
+      name="insight-app-sec-validation"
+      content="aed3116d-10c8-452b-ac4e-63b6b21737da"
+    />
+
+    <script>
+      if (window.RTCPeerConnection) {
+        window.nativeSRD = window.RTCPeerConnection.prototype.setRemoteDescription
+      }
+    </script>
+
+    <style>
+      html {
+        background-color: white;
+      }
+      .sc-global-preloader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        color: #3c52e0;
+        animation: sc-global-preloader-animation 200ms 300ms forwards;
+        opacity: 0;
+      }
+      @keyframes sc-global-preloader-animation {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      #ie-warn {
+        color: white;
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 50px;
+        font-size: 30px;
+      }
+      #ie-warn a {
+        color: #18c77e;
+      }
+    </style>
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@700&family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png?v=10"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png?v=10"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png?v=10"
+    />
+    <link
+      rel="manifest"
+      href="/site.webmanifest?v=10"
+    />
+    <link
+      rel="shortcut icon"
+      href="/favicon.ico?v=10"
+    />
+    <meta
+      name="msapplication-TileColor"
+      content="#6747eb"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="/mstile-144x144.png?v=10"
+    />
+    <script type="module" crossorigin src="/assets/index-49cf76ca.js"></script>
+    <link rel="stylesheet" href="/assets/index-687cb76d.css">
+  </head>
+
+  <body>
+    <noscript>
+      <strong>
+        We're sorry but SpatialChat doesn't work properly without JavaScript enabled. Please enable
+        it to continue.
+      </strong>
+    </noscript>
+
+    <div
+      id="ie-warn"
+      style="display: none"
+    >
+      Sorry, this browser doesn't support SpatialChat.
+      <br />
+      Please use the latest version of
+      <a
+        target="_blank"
+        href="https://www.google.com/chrome/"
+      >
+        Google Chrome
+      </a>
+      .
+    </div>
+
+    <div id="app">
+      <div class="sc-global-preloader">
+        <sc-loader></sc-loader>
+      </div>
+    </div>
+
+    <template
+      id="x-sc-loader"
+      style="display: none"
+    >
+      <style>
+        .loader {
+          display: inline-flex;
+        }
+        .point {
+          width: 12px;
+          height: 12px;
+          margin: 2px;
+          background-color: currentColor;
+          border-radius: 100%;
+          animation: x-sc-loader-animation 1.4s infinite ease-in-out;
+          animation-fill-mode: both;
+        }
+        .point:first-child {
+          animation-delay: -0.32s;
+        }
+        .point:nth-child(2) {
+          animation-delay: -0.16s;
+        }
+        @keyframes x-sc-loader-animation {
+          0%,
+          80%,
+          100% {
+            transform: scale(0);
+          }
+          40% {
+            transform: scale(1);
+          }
+        }
+      </style>
+      <div class="loader">
+        <div class="point"></div>
+        <div class="point"></div>
+        <div class="point"></div>
+      </div>
+    </template>
+
+    <script>
+      ;(function () {
+        if (!'registerElement' in document) {
+          return
+        }
+        class Loader extends HTMLElement {
+          constructor() {
+            super()
+            let shadowRoot = this.attachShadow({ mode: 'open' })
+            let tmpl = document.querySelector('#x-sc-loader')
+            shadowRoot.appendChild(tmpl.content.cloneNode(true))
+          }
+        }
+        customElements.define('sc-loader', Loader)
+      })()
+    </script>
+
+    <script>
+      if (/msie|trident|edge/i.test(navigator.userAgent)) {
+        var ieWarn = document.getElementById('ie-warn')
+        var app = document.getElementById('app')
+        if (app) document.body.removeChild(app)
+        if (ieWarn) ieWarn.style.display = 'block'
+      }
+    </script>
+
+    
+  </body>
+</html>
