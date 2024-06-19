@@ -1,0 +1,2848 @@
+<!doctype html>
+<html lang="en" class="no-js">
+    
+        <head>
+            
+<script src="https://cmp.osano.com/16CV35U5YZl1zH1f/c2a2f954-46e5-4c19-8f20-bd66c0713837/osano.js"></script>
+<style>
+    .osano-cm-widget {
+        display: none;
+    }
+</style>
+
+<meta charset="utf-8">
+
+<script>
+    (function () {
+        customerId = '';
+        orderCount = parseInt('' || 0);
+
+        // Save customer ID in case of log out...
+        if (customerId.length && orderCount) {
+            localStorage.setItem('cirkul::lastKnownCustomerId', customerId);
+        }
+
+        // Check separately from above, in case they've logged out but it's been saved
+        if (localStorage.getItem('cirkul::lastKnownCustomerId')) {
+            window.existingCustomer = true;
+        } else {
+            window.existingCustomer = false;
+        }
+
+        console.warn('[experimentation] audience variable - existingCustomer', window.existingCustomer);
+    })();
+</script>
+<!-- Init Optimizely and custom experiment loader -->
+<script src="https://cdn.optimizely.com/js/24708110218.js"></script>
+<script>
+    const loadedOptimizelyExperiments = {}; // Keep track of loaded experiments, prevent loading same experiments multiple times and warn if attempted.
+
+    window.cirkulServices = window.cirkulServices || {};
+    window.cirkulServices.experimentation = {
+        manuallyTriggerPage: manuallyTriggerPage,
+        fireOptimizelyEvent: fireOptimizelyEvent,
+        loadOptimizelyUnauthedExperiment: loadOptimizelyUnauthedExperiment,
+        loadOptimizelyAuthedExperiment: loadOptimizelyAuthedExperiment,
+        getHashedUserGroupNumber: getHashedUserGroupNumber,
+        getEvenSplitVariantId: getEvenSplitVariantId,
+        hideItems: hideItems,
+        showItems: showItems,
+        moveItem: moveItem,
+        addClass: addClass,
+        removeClass: removeClass,
+        changeStyle: changeStyle,
+        rescrollIfHash: rescrollIfHash,
+        runWhenItemIsVisible: runWhenItemIsVisible,
+        getUrlParameterByName: getUrlParameterByName,
+    };
+
+    function manuallyTriggerPage(pageName) {
+        window['optimizely'] = window['optimizely'] || [];
+        window['optimizely'].push({
+            type: 'page',
+            pageName: pageName,
+        });
+    }
+
+    // NOTE: Must manually register any events in Optimizely prior to firing!
+    function fireOptimizelyEvent(eventName, eventParams) {
+        window['optimizely'] = window['optimizely'] || [];
+        window['optimizely'].push({
+            type: 'event',
+            eventName: eventName,
+            tags: eventParams,
+        });
+    }
+
+    // options.experimentId = Optimizely Experiment ID
+    // options.devVariationId = DEV ONLY. Force a specific variation ID (and allow Experiment ID to not match a live experiment).
+    // options.variationImplementers = Callback functions that will be run for each variation, keyed by their variation IDs.
+    // options.fallback = Callback for when experiment is not found / not published or variation is not found (ie. JS that needs to be run only for the control version)
+    function loadOptimizelyUnauthedExperiment(options) {
+        const experiments = window['optimizely'] && window['optimizely'].get ? window['optimizely'].get('state').getExperimentStates() : {};
+        const targetExperiment = options.devVariationId ? { id: options.experimentId } : experiments[options.experimentId];
+
+        if (options.devVariationId) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variant %s - FORCE LOAD (DEV ONLY)', options.experimentId, options.devVariationId);
+        } else if (!targetExperiment) {
+            console.warn('[experimentation] WARNING: Experiment %s - NOT FOUND', options.experimentId);
+            if (options.fallback) options.fallback();
+            return;
+        } else if (!targetExperiment.isActive) {
+            console.warn('[experimentation] WARNING: Experiment %s - NOT ACTIVE', options.experimentId);
+            if (options.fallback) options.fallback();
+            return;
+        }
+
+        const assignedVariationId = options.devVariationId || targetExperiment.variation.id;
+
+        if (loadedOptimizelyExperiments[targetExperiment.id]) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALREADY LOADED', options.experimentId, assignedVariationId);
+            if (options.allowReload) {
+                console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALLOWING RELOAD', options.experimentId, assignedVariationId);
+                options.variationImplementers[assignedVariationId]();
+            }
+        } else if (options.variationImplementers && options.variationImplementers[assignedVariationId]) {
+            // Call the provided implementer function, and make note of loaded variation.
+            options.variationImplementers[assignedVariationId]();
+            loadedOptimizelyExperiments[targetExperiment.id] = assignedVariationId;
+
+            console.log('[experimentation] Experiment %s - Variation %s - LOADED', options.experimentId, assignedVariationId);
+        } else {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - NO IMPLEMENTER PROVIDED', options.experimentId, assignedVariationId);
+            if (options.fallback) options.fallback();
+        }
+    }
+
+    // NOTE: Manually bucketing here means we can't make use of Optimizely features such as Stats Accelerator, etc...
+    // options.experimentId = Optimizely Experiment ID
+    // options.variationId = manually selected Variation ID. TODO: Implement bucketing algorithm here instead. Hash combination of customer ID / experiment ID and bucket based on that?
+    // options.pageName = the Optimizely "API Page Name" to manually trigger the experiment
+    // options.variationImplementers = Callback functions that will be run for each variation, keyed by their variation IDs.
+    // options.devVariationId = DEV ONLY. Force a specific variation ID (and allow Variation ID to not match what it otherwise would).
+    function loadOptimizelyAuthedExperiment(options) {
+        if (options.devVariationId) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variant %s - FORCE LOAD (DEV ONLY)', options.experimentId, options.devVariationId);
+        }
+
+        const assignedVariationId = options.devVariationId || options.variationId;
+
+        if (loadedOptimizelyExperiments[options.experimentId]) {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - ALREADY LOADED', options.experimentId, assignedVariationId);
+        } else if (options.variationImplementers && options.variationImplementers[assignedVariationId]) {
+            if (!options.devVariationId) {
+                // Manually Bucket the Visitor
+                window['optimizely'].push({
+                    type: 'bucketVisitor',
+                    experimentId: options.experimentId.toString(),
+                    variationId: assignedVariationId.toString(),
+                });
+
+                // Manually Trigger the Experiment in Optimizely
+                window['optimizely'].push({
+                    type: 'page',
+                    pageName: options.pageName,
+                });
+            }
+
+            const activeVariationId = options.devVariationId || getActiveOptimizelyVariant(options.experimentId);
+
+            if (activeVariationId) {
+                options.variationImplementers[assignedVariationId](); // Call the variant implementer
+                loadedOptimizelyExperiments[options.experimentId] = activeVariationId; // Make note of loaded variation.
+                console.log('[experimentation] Experiment %s - Variation %s - LOADED', options.experimentId, activeVariationId);
+            } else {
+                console.warn('[experimentation] WARNING: Experiment %s - NOT ACTIVE', options.experimentId);
+            }
+        } else {
+            console.warn('[experimentation] WARNING: Experiment %s - Variation %s - NO IMPLEMENTER PROVIDED', options.experimentId, assignedVariationId);
+        }
+    }
+
+    // Returns a number from 0 - 99 based on a hash of the experiment ID and customer ID, for use in placing a customer in a group...
+    function getHashedUserGroupNumber(experimentId, customerId) {
+        const str = (experimentId + customerId).toString();
+
+        let hash = 0;
+        for (let i = 0, len = str.length; i < len; i++) {
+            let chr = str.charCodeAt(i);
+            hash = (hash << 5) - hash + chr;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return Math.abs(hash) % 100;
+    }
+
+    // Return a variantId for evenly split experiment
+    function getEvenSplitVariantId(variantImplementers, hashedUserGroupNumber) {
+        const variantCount = Object.keys(variantImplementers).length;
+        const variantGroupSize = 100 / variantCount;
+
+        for (let i = 1; i <= variantCount; i++) {
+            if (hashedUserGroupNumber % 100 <= i * variantGroupSize) {
+                return Object.keys(variantImplementers)[i - 1];
+            }
+        }
+    }
+
+    function getActiveOptimizelyVariant(experimentId) {
+        const experiments = window['optimizely'] && window['optimizely'].get ? window['optimizely'].get('state').getExperimentStates() : {};
+        if (experiments[experimentId] && experiments[experimentId].isActive) {
+            return experiments[experimentId].variation.id; // returns the active variantId
+        } else {
+            return 0;
+        }
+    }
+
+    function hideItems(querySelector) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+
+        for (const el of querySelectorAllResult) {
+            el.classList.add('hide');
+        }
+    }
+
+    function showItems(querySelector) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+
+        for (const el of querySelectorAllResult) {
+            el.classList.remove('hide');
+        }
+    }
+
+    function moveItem(oldParentSelector, newParentSelector) {
+        var oldParent = document.querySelector(oldParentSelector);
+        var newParent = document.querySelector(newParentSelector);
+
+        // console.log('old and new', newParent, oldParent);
+        console.log('oldParen', oldParent);
+        console.log('oldParent.childNodes', oldParent.childNodes);
+
+        // NOTE... for loop seems not to work here, presumably because appendChild is changing the object...
+        while (oldParent.childNodes.length > 0) {
+            console.log('moving');
+            newParent.appendChild(oldParent.childNodes[0]);
+        }
+    }
+
+    function addClass(querySelector, className) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.classList.add(className);
+        }
+    }
+
+    function removeClass(querySelector, className) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.classList.remove(className);
+        }
+    }
+
+    function changeStyle(querySelector, styleName, styleValue) {
+        const querySelectorAllResult = document.querySelectorAll(querySelector);
+        for (const el of querySelectorAllResult) {
+            el.style[styleName] = styleValue;
+        }
+    }
+
+    // Used when position of an anchor changes in a test, to ensure user is scrolled to correct new position.
+    // Does nothing if hash does not exactly match the provided one (so as not to affect users not in the test)
+    function rescrollIfHash(movedAnchorHash) {
+        const currentHash = window.location.hash;
+        const finalMovedAnchorHash = ('#' + movedAnchorHash).replace('##', '#'); // support movedAnchorHash beginning with # or not, by always adding one and then condensing duplicates down to a single.
+
+        if (currentHash === finalMovedAnchorHash) {
+            window.location.hash = '#';
+            window.location.hash = currentHash;
+        }
+    }
+
+    function runWhenItemIsVisible(querySelector, func) {
+        // console.log('TJN - runWhenItemIsVisible', querySelector);
+
+        window.expTimeouts = window.expTimeouts || {};
+        if (!window.expTimeouts[querySelector]) {
+            window.expTimeouts[querySelector] = 0;
+        }
+
+        setTimeout(() => {
+            if (document.querySelectorAll(querySelector).length) {
+                func();
+            } else {
+                window.expTimeouts[querySelector] += 100;
+
+                if (window.expTimeouts[querySelector] < 10000) {
+                    runWhenItemIsVisible(querySelector, func);
+                } else {
+                    // console.log('TJN - Done checking for', querySelector);
+                }
+            }
+        }, 100);
+    }
+
+    // Courtesy of https://stackoverflow.com/a/901144
+    function getUrlParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+</script>
+
+
+<!-- Init data layer (must be before GTM and anti-flicker snippet) -->
+<script>
+    dataLayer = [{
+      'customerId': null,
+      'customerEmail': null,
+      'customerPhone': null,
+      'sha1Email': null,
+      'sha256Email': null,
+      'sha256Phone': null
+    }];
+</script>
+
+
+
+
+<!-- anti-flicker snippet (must be before GTM) -->
+<style>
+    .async-hide {
+        opacity: 0 !important;
+    }
+</style>
+<script>
+    (function (a, s, y, n, c, h, i, d, e) {
+        s.className += ' ' + y;
+        h.start = 1 * new Date();
+        h.end = i = function () {
+            s.className = s.className.replace(RegExp(' ?' + y), '');
+        };
+        (a[n] = a[n] || []).hide = h;
+        setTimeout(function () {
+            i();
+            h.end = null;
+        }, c);
+        h.timeout = c;
+    })(window, document.documentElement, 'async-hide', 'dataLayer', 4000, { 'GTM-KT7B2TZ': true });
+</script>
+
+<!-- Google Tag Manager (must be before everything) -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KT7B2TZ');
+</script>
+<!-- End Google Tag Manager -->
+
+<!-- Set up gtag function -->
+<script>
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+</script>
+<!-- End Set up gtag function -->
+
+<!-- Set up klaviyo object -->
+<script>
+    !(function () {
+        if (!window.klaviyo) {
+            window._klOnsite = window._klOnsite || [];
+            try {
+                window.klaviyo = new Proxy(
+                    {},
+                    {
+                        get: function (n, i) {
+                            return 'push' === i
+                                ? function () {
+                                      var n;
+                                      (n = window._klOnsite).push.apply(n, arguments);
+                                  }
+                                : function () {
+                                      for (var n = arguments.length, o = new Array(n), w = 0; w < n; w++) o[w] = arguments[w];
+                                      var t = 'function' == typeof o[o.length - 1] ? o.pop() : void 0,
+                                          e = new Promise(function (n) {
+                                              window._klOnsite.push(
+                                                  [i].concat(o, [
+                                                      function (i) {
+                                                          t && t(i), n(i);
+                                                      },
+                                                  ])
+                                              );
+                                          });
+                                      return e;
+                                  };
+                        },
+                    }
+                );
+            } catch (n) {
+                (window.klaviyo = window.klaviyo || []),
+                    (window.klaviyo.push = function () {
+                        var n;
+                        (n = window._klOnsite).push.apply(n, arguments);
+                    });
+            }
+        }
+    })();
+</script>
+<!-- End set up klaviyo object -->
+
+<!-- LiveConnectTag for advertisers -->
+<script async src="//b-code.liadm.com/a-03g2.min.js"></script>
+<!-- LiveConnectTag for advertisers -->
+
+<!-- Set the viewport width to device width for mobile -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Effective date: March 27, 2024 At Cirkul, we take your privacy seriously. Please read this Privacy Policy to learn how we treat your personal data. By using or accessing our Services in any manner, you acknowledge that you accept the practices and policies outlined below, and you hereby consent that we will collect, us">
+
+
+
+
+
+
+
+    <title>Privacy Policy</title>
+
+
+
+    <link rel="icon" type="image/png" href="//drinkcirkul.com/cdn/shop/files/General--Favicon_Image_16x16.png?v=1613600445">
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/ls-core.css?v=33851013710108243491556874087">
+    
+
+    <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/jquery-ui.min.css?v=143165884827486638561566750534">
+
+    
+    
+        <link rel="stylesheet" type="text/css" href="//drinkcirkul.com/cdn/shop/t/4/assets/app.min.css?v=15179202298114329351708731042">
+    
+
+
+<!-- START: Open Graph / Twitter Card tags -->
+<meta property="og:title" content="Cirkul | Finally, Water Is Your Favorite Beverage.">
+<meta property="og:url" content="https://drinkcirkul.com">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Transform your water with the turn of a dial. Take control of your beverage to drink more water. The only bottle that is custom, convenient, and clean. | Cirkul">
+
+    <meta property="og:image" content="https://drinkcirkul.com/cdn/shop/files/Presentation_Bottle1200x630_3_2x_1697d886-8281-4bd5-a53e-64496b646013.png?v=1642707954">
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cirkul | Finally, Water Is Your Favorite Beverage.">
+<meta name="twitter:description" content="Transform your water with the turn of a dial. Take control of your beverage to drink more water. The only bottle that is custom, convenient, and clean. | Cirkul">
+<meta name="twitter:url" content="https://drinkcirkul.com">
+
+    <meta name="twitter:image" content="https://drinkcirkul.com/cdn/shop/files/Meta_Tags--Home_Page_-_Twitter_Card_-_Image.jpeg?v=1613600445">
+
+<!-- END: Open Graph / Twitter Card tags -->
+
+<script>
+    window.zakekeUrl = '/tools/customizer';
+</script>
+
+<meta name="facebook-domain-verification" content="9vghwrqsaex6rwm893fr23e63l8ywo">
+<meta name="google-site-verification" content="49xGXVMjC049mK9XCNCDGK_C_DOLgL0WVisnFCrCbD0">
+
+<!-- START: Amplitude -->
+<script>
+    !(function (e, t) {
+        var n = e.amplitude || { _q: [], _iq: {} },
+            r = t.createElement('script');
+        (r.type = 'text/javascript'),
+            (r.integrity = 'sha384-u0hlTAJ1tNefeBKwiBNwB4CkHZ1ck4ajx/pKmwWtc+IufKJiCQZ+WjJIi+7C6Ntm'),
+            (r.crossOrigin = 'anonymous'),
+            (r.async = !0),
+            (r.src = 'https://cdn.amplitude.com/libs/amplitude-8.1.0-min.gz.js'),
+            (r.onload = function () {
+                e.amplitude.runQueuedFunctions || console.log('[Amplitude] Error: could not load SDK');
+            });
+        var i = t.getElementsByTagName('script')[0];
+        function s(e, t) {
+            e.prototype[t] = function () {
+                return this._q.push([t].concat(Array.prototype.slice.call(arguments, 0))), this;
+            };
+        }
+        i.parentNode.insertBefore(r, i);
+        for (
+            var o = function () {
+                    return (this._q = []), this;
+                },
+                a = ['add', 'append', 'clearAll', 'prepend', 'set', 'setOnce', 'unset', 'preInsert', 'postInsert', 'remove'],
+                c = 0;
+            c < a.length;
+            c++
+        )
+            s(o, a[c]);
+        n.Identify = o;
+        for (
+            var u = function () {
+                    return (this._q = []), this;
+                },
+                l = ['setProductId', 'setQuantity', 'setPrice', 'setRevenueType', 'setEventProperties'],
+                p = 0;
+            p < l.length;
+            p++
+        )
+            s(u, l[p]);
+        n.Revenue = u;
+        var d = [
+            'init',
+            'logEvent',
+            'logRevenue',
+            'setUserId',
+            'setUserProperties',
+            'setOptOut',
+            'setVersionName',
+            'setDomain',
+            'setDeviceId',
+            'enableTracking',
+            'setGlobalUserProperties',
+            'identify',
+            'clearUserProperties',
+            'setGroup',
+            'logRevenueV2',
+            'regenerateDeviceId',
+            'groupIdentify',
+            'onInit',
+            'logEventWithTimestamp',
+            'logEventWithGroups',
+            'setSessionId',
+            'resetSessionId',
+        ];
+        function f(e) {
+            function t(t) {
+                e[t] = function () {
+                    e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
+                };
+            }
+            for (var n = 0; n < d.length; n++) t(d[n]);
+        }
+        f(n),
+            (n.getInstance = function (e) {
+                return (e = (e && 0 !== e.length ? e : '$default_instance').toLowerCase()), Object.prototype.hasOwnProperty.call(n._iq, e) || ((n._iq[e] = { _q: [] }), f(n._iq[e])), n._iq[e];
+            }),
+            (e.amplitude = n);
+    })(window, document);
+
+    amplitude.getInstance().init('ffe5da71e5c3f7c3193fbbb42af9781d', null, { includeReferrer: true, includeUtm: true, includeGclid: true, includeFbclid: true });
+    amplitude.getInstance().logEvent('Viewed Page', {
+        url: window.location.pathname,
+        domain: window.location.host,
+        params: window.location.search.substring(1),
+        hash: window.location.hash,
+    });
+
+    window.addEventListener('error', function (e) {
+        try {
+            if (e.message === 'Script error.' || e.message === 'Script error') {
+                console.log('Ignored Script error', e);
+                return; // Don't log 3rd-party script errors. Nothing we can do about them right now.
+            }
+            if (e.message === 'ResizeObserver loop limit exceeded') {
+                return; // Ignore per https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
+            }
+
+            window.logErrorToAmplitude(e);
+        } catch (e) {
+            console.log('Error in Error Handling', e);
+        }
+    });
+
+    window.amplitudeErrorsLogged = 0;
+    window.logErrorToAmplitude = function (e) {
+        window.amplitudeErrorsLogged++;
+
+        if (window.amplitudeErrorsLogged < 10) {
+            try {
+                console.log('window.amplitudeErrorsLogged', window.amplitudeErrorsLogged);
+                amplitude.getInstance().logEvent('Error Encountered', {
+                    message: e.message,
+                    fileName: e.filename,
+                    lineNumber: e.lineno,
+                    url: window.location.pathname,
+                    domain: window.location.host,
+                    handled: true,
+                });
+            } catch (e) {
+                console.log('Error in Error Handling', e);
+            }
+        }
+    };
+
+    // // TJN: For forcing error logs for debugging
+    // const scriptError = document.querySelector('*');
+    // scriptError.addEventListener('click', function() {
+    //     const badCode = 'const s;';
+    //     eval(badCode);
+    // });
+</script>
+<!-- END: Amplitude -->
+
+<!-- Hide injected RC login -->
+<style>
+    #rc_login {
+        display: none !important;
+    }
+    [class*='kl-teaser-'] {
+        z-index: 4 !important;
+    }
+</style>
+
+<!--MNTN Tracking Pixel-->
+<!-- INSTALL ON ALL PAGES OF SITE-->
+<script type="text/javascript">
+	(function(){"use strict";var e=null,b="4.0.0",
+	n="34777",
+	additional="term=value",
+	t,r,i;try{t=top.document.referer!==""?encodeURIComponent(top.document.referrer.substring(0,2048)):""}catch(o){t=document.referrer!==null?document.referrer.toString().substring(0,2048):""}try{r=window&&window.top&&document.location&&window.top.location===document.location?document.location:window&&window.top&&window.top.location&&""!==window.top.location?window.top.location:document.location}catch(u){r=document.location}try{i=parent.location.href!==""?encodeURIComponent(parent.location.href.toString().substring(0,2048)):""}catch(a){try{i=r!==null?encodeURIComponent(r.toString().substring(0,2048)):""}catch(f){i=""}}var l,c=document.createElement("script"),h=null,p=document.getElementsByTagName("script"),d=Number(p.length)-1,v=document.getElementsByTagName("script")[d];if(typeof l==="undefined"){l=Math.floor(Math.random()*1e17)}h="dx.mountain.com/spx?"+"dxver="+b+"&shaid="+n+"&tdr="+t+"&plh="+i+"&cb="+l+additional;c.type="text/javascript";c.src=("https:"===document.location.protocol?"https://":"http://")+h;v.parentNode.insertBefore(c,v)})()
+</script>
+
+            <script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="facebook-domain-verification" content="7k4zrm7kp4p3u38na7fh29v5knigyf">
+<meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/5052170330/digital_wallets/dialog">
+<meta name="shopify-checkout-api-token" content="4d4478467d5a8db889a60b913f43d3ba">
+<script async="async" src="/checkouts/internal/preloads.js?locale=en-US"></script>
+<script async="async" src="https://shop.app/checkouts/internal/preloads.js?locale=en-US&shop_id=5052170330" crossorigin="anonymous"></script>
+<script id="apple-pay-shop-capabilities" type="application/json">{"shopId":5052170330,"countryCode":"US","currencyCode":"USD","merchantCapabilities":["supports3DS"],"merchantId":"gid:\/\/shopify\/Shop\/5052170330","merchantName":"Cirkul","requiredBillingContactFields":["postalAddress","email"],"requiredShippingContactFields":["postalAddress","email"],"shippingType":"shipping","supportedNetworks":["visa","masterCard","amex","discover","elo","jcb"],"total":{"type":"pending","label":"Cirkul","amount":"1.00"},"shopifyPaymentsEnabled":true,"supportsSubscriptions":true}</script>
+<script id="shopify-features" type="application/json">{"accessToken":"4d4478467d5a8db889a60b913f43d3ba","betas":["rich-media-storefront-analytics"],"domain":"drinkcirkul.com","predictiveSearch":true,"shopId":5052170330,"smart_payment_buttons_url":"https:\/\/drinkcirkul.com\/cdn\/shopifycloud\/payment-sheet\/assets\/latest\/spb.en.js","dynamic_checkout_cart_url":"https:\/\/drinkcirkul.com\/cdn\/shopifycloud\/payment-sheet\/assets\/latest\/dynamic-checkout-cart.en.js","locale":"en"}</script>
+<script>var Shopify = Shopify || {};
+Shopify.shop = "cirkul-dev.myshopify.com";
+Shopify.locale = "en";
+Shopify.currency = {"active":"USD","rate":"1.0"};
+Shopify.country = "US";
+Shopify.theme = {"name":"DrinkCirkul","id":39287423066,"theme_store_id":null,"role":"main"};
+Shopify.theme.handle = "null";
+Shopify.theme.style = {"id":null,"handle":null};
+Shopify.cdnHost = "drinkcirkul.com/cdn";
+Shopify.routes = Shopify.routes || {};
+Shopify.routes.root = "/";</script>
+<script type="module">!function(o){(o.Shopify=o.Shopify||{}).modules=!0}(window);</script>
+<script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
+<script id="shop-js-features" type="application/json">{"compact":true,"defer_modal_on_autofill":true}</script>
+<script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script>
+<script>(function() {
+  function asyncLoad() {
+    var urls = ["https:\/\/static.rechargecdn.com\/static\/js\/recharge.js?shop=cirkul-dev.myshopify.com","https:\/\/portal.zakeke.com\/Scripts\/integration\/shopify\/product.js?shop=cirkul-dev.myshopify.com","https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=JvEbhp\u0026shop=cirkul-dev.myshopify.com","https:\/\/apps.bazaarvoice.com\/deployments\/cirkul\/main_site\/production\/en_US\/bv.js?shop=cirkul-dev.myshopify.com","https:\/\/raze06rt.drinkcirkul.com\/assets\/shopify.js?rb_init_key=ZHJpbmtjaXJrdWx8dmlld3xwdXJjaGFzZXxzaWdudXB8bG9naW4=\u0026shop=cirkul-dev.myshopify.com","https:\/\/intg.snapchat.com\/shopify\/shopify-scevent-init.js?id=462f9051-84dc-483a-98a8-8f8cadf78a82\u0026shop=cirkul-dev.myshopify.com","https:\/\/static.klaviyo.com\/onsite\/js\/klaviyo.js?company_id=JvEbhp\u0026shop=cirkul-dev.myshopify.com","https:\/\/sdk.postscript.io\/sdk-script-loader.bundle.js?shopId=339430\u0026shop=cirkul-dev.myshopify.com"];
+    for (var i = 0; i < urls.length; i++) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = urls[i];
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+  };
+  if(window.attachEvent) {
+    window.attachEvent('onload', asyncLoad);
+  } else {
+    window.addEventListener('load', asyncLoad, false);
+  }
+})();</script>
+<script id="__st">var __st={"a":5052170330,"offset":-14400,"reqid":"f41721f0-b608-4b8d-8974-9ee2ec7d259a-1718762592","pageurl":"drinkcirkul.com\/pages\/privacy","s":"pages-23145873498","u":"ff754fca1c1b","p":"page","rtyp":"page","rid":23145873498};</script>
+<script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
+<script integrity="sha256-n5Uet9jVOXPHGd4hH4B9Y6+BxkTluaaucmYaxAjUcvY=" data-source-attribution="shopify.loadfeatures" defer="defer" src="//drinkcirkul.com/cdn/shopifycloud/shopify/assets/storefront/load_feature-9f951eb7d8d53973c719de211f807d63af81c644e5b9a6ae72661ac408d472f6.js" crossorigin="anonymous"></script>
+<script integrity="sha256-HAs5a9TQVLlKuuHrahvWuke+s1UlxXohfHeoYv8G2D8=" data-source-attribution="shopify.dynamic-checkout" defer="defer" src="//drinkcirkul.com/cdn/shopifycloud/shopify/assets/storefront/features-1c0b396bd4d054b94abae1eb6a1bd6ba47beb35525c57a217c77a862ff06d83f.js" crossorigin="anonymous"></script>
+
+
+<style id="shopify-dynamic-checkout-cart">@media screen and (min-width: 750px) {
+  #dynamic-checkout-cart {
+    min-height: 50px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #dynamic-checkout-cart {
+    min-height: 120px;
+  }
+}
+</style><script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+            <!-- Header hook for plugins -->
+            <script>
+    window.zakekeProductAdvancedProcessing = true;
+
+    
+    window.zakekePricingData = {
+      variantId: 17612343640154,
+      cart: {"note":null,"attributes":{},"original_total_price":0,"total_price":0,"total_discount":0,"total_weight":0.0,"item_count":0,"items":[],"requires_shipping":false,"currency":"USD","items_subtotal_price":0,"cart_level_discount_applications":[],"checkout_charge_amount":0},
+      product: {"id":1907289456730,"title":"Zakeke Customization (do not edit\/delete)","handle":"customization","description":"","published_at":"2019-07-25T03:37:14-04:00","created_at":"2019-07-25T03:38:57-04:00","vendor":"Cirkul","type":"zakeke-design","tags":[],"price":1,"price_min":1,"price_max":1,"available":true,"price_varies":false,"compare_at_price":null,"compare_at_price_min":0,"compare_at_price_max":0,"compare_at_price_varies":false,"variants":[{"id":17612343640154,"title":"Default Title","option1":"Default Title","option2":null,"option3":null,"sku":"","requires_shipping":false,"taxable":false,"featured_image":null,"available":true,"name":"Zakeke Customization (do not edit\/delete)","public_title":null,"options":["Default Title"],"price":1,"weight":0,"compare_at_price":null,"inventory_management":null,"barcode":"","requires_selling_plan":false,"selling_plan_allocations":[],"quantity_rule":{"min":1,"max":null,"increment":1}}],"images":[],"featured_image":null,"options":["Title"],"requires_selling_plan":false,"selling_plan_groups":[],"content":""}
+    };
+    
+
+    window.zakekeShopLocales = [
+      
+      {
+        iso_code: "en",
+        root_url: "\/",
+        primary: true
+      },
+      
+    ];
+</script>
+
+<script>
+    function zakekePostprocessProperties(props) {
+        if (props.customization) {
+            props._customization = props.customization;
+            delete props.customization;
+        }
+        if (props.Preview) {
+            delete props.Preview;
+        }
+        return props;
+    }
+</script>
+
+<script src="https://unpkg.com/@glidejs/glide@3.4.1/dist/glide.js"></script>
+<!-- Required Core Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.core.css">
+<!-- Optional Theme Stylesheet -->
+<link rel="stylesheet" href="https://unpkg.com/@glidejs/glide@3.4.1/dist/css/glide.theme.css">
+
+<style>
+    .glide__arrow.prev {
+        left: 0;
+    }
+
+    .glide__arrow.next {
+        right: 0;
+    }
+
+    .glide__slides {
+        margin: 0px;
+        list-style: none;
+    }
+
+    .glide__arrow {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .zakeke-cart-preview-window {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.94);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+    }
+
+    .zakeke-cart-preview-window-label {
+        padding: 20px;
+    }
+
+    .zakeke-cart-preview-window-label h3 {
+        color: white;
+    }
+
+    .zakeke-cart-previews {
+        position: relative;
+        max-width: 260px;
+    }
+
+    @media (max-width: 768px) {
+        .zakeke-cart-previews {
+            max-width: 130px;
+        }
+    }
+
+    .zakeke-cart-preview {
+        cursor: pointer;
+    }
+</style>
+
+        <link rel="canonical" href="https://drinkcirkul.com/pages/privacy">
+<link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
+<script>(function(){if ("sendBeacon" in navigator && "performance" in window) {var session_token = document.cookie.match(/_shopify_s=([^;]*)/);function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 5052170330,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token: session_token && session_token.length === 2 ? session_token[1] : "",page_type: "page"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
+<script id="web-pixels-manager-setup">(function e(e,n,a,t,r){var o="function"==typeof BigInt&&-1!==BigInt.toString().indexOf("[native code]")?"modern":"legacy";window.Shopify=window.Shopify||{};var i=window.Shopify;i.analytics=i.analytics||{};var s=i.analytics;s.replayQueue=[],s.publish=function(e,n,a){return s.replayQueue.push([e,n,a]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l=[a,"/wpm","/b",r,o.substring(0,1),".js"].join("");!function(e){var n=e.src,a=e.async,t=void 0===a||a,r=e.onload,o=e.onerror,i=document.createElement("script"),s=document.head,l=document.body;i.async=t,i.src=n,r&&i.addEventListener("load",r),o&&i.addEventListener("error",o),s?s.appendChild(i):l?l.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:l,async:!0,onload:function(){var a=window.webPixelsManager.init(e);n(a);var t=window.Shopify.analytics;t.replayQueue.forEach((function(e){var n=e[0],t=e[1],r=e[2];a.publishCustomEvent(n,t,r)})),t.replayQueue=[],t.publish=a.publishCustomEvent,t.visitor=a.visitor},onerror:function(){var n=e.storefrontBaseUrl.replace(/\/$/,""),a="".concat(n,"/.well-known/shopify/monorail/unstable/produce_batch"),r=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/2.0",payload:{version:t||"latest",page_url:self.location.href,status:"failed",error_msg:"".concat(l," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(a,r))return!0}catch(e){}var o=new XMLHttpRequest;try{return o.open("POST",a,!0),o.setRequestHeader("Content-Type","text/plain"),o.send(r),!0}catch(e){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 5052170330,storefrontBaseUrl: "https://drinkcirkul.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938"],webPixelsConfigList: [{"id":"18612314","configuration":"{\"pixelId\":\"462f9051-84dc-483a-98a8-8f8cadf78a82\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"bb41bf091d86ec09beb5141ead6fafc0","type":"APP","apiClientId":2556259,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"090","apiClientId":"shopify-pixel","type":"APP","purposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"090","apiClientId":"shopify-pixel","type":"CUSTOM","purposes":["ANALYTICS","MARKETING"]}],initData: {"cart":null,"checkout":null,"customer":null,"productVariants":[],"shop":{"name":"Cirkul","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"cirkul-dev.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/drinkcirkul.com"}},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed");},"https://drinkcirkul.com/cdn","a64ed00e496c8c32981f1178b2aaa15187d8df6e","b55a905fw9ecbde0dp236da2aame8f2f1ce",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
+window.ShopifyAnalytics.meta.currency = 'USD';
+var meta = {"page":{"pageType":"page","resourceType":"page","resourceId":23145873498}};
+for (var attr in meta) {
+  window.ShopifyAnalytics.meta[attr] = meta[attr];
+}</script>
+<script>window.ShopifyAnalytics.merchantGoogleAnalytics = function() {
+  
+};
+</script>
+<script class="analytics">(function () {
+    var customDocumentWrite = function(content) {
+      var jquery = null;
+
+      if (window.jQuery) {
+        jquery = window.jQuery;
+      } else if (window.Checkout && window.Checkout.$) {
+        jquery = window.Checkout.$;
+      }
+
+      if (jquery) {
+        jquery('body').append(content);
+      }
+    };
+
+    var hasLoggedConversion = function(token) {
+      if (token) {
+        return document.cookie.indexOf('loggedConversion=' + token) !== -1;
+      }
+      return false;
+    }
+
+    var setCookieIfConversion = function(token) {
+      if (token) {
+        var twoMonthsFromNow = new Date(Date.now());
+        twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+
+        document.cookie = 'loggedConversion=' + token + '; expires=' + twoMonthsFromNow;
+      }
+    }
+
+    var trekkie = window.ShopifyAnalytics.lib = window.trekkie = window.trekkie || [];
+    if (trekkie.integrations) {
+      return;
+    }
+    trekkie.methods = [
+      'identify',
+      'page',
+      'ready',
+      'track',
+      'trackForm',
+      'trackLink'
+    ];
+    trekkie.factory = function(method) {
+      return function() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift(method);
+        trekkie.push(args);
+        return trekkie;
+      };
+    };
+    for (var i = 0; i < trekkie.methods.length; i++) {
+      var key = trekkie.methods[i];
+      trekkie[key] = trekkie.factory(key);
+    }
+    trekkie.load = function(config) {
+      trekkie.config = config || {};
+      trekkie.config.initialDocumentCookie = document.cookie;
+      var first = document.getElementsByTagName('script')[0];
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.onerror = function(e) {
+        var scriptFallback = document.createElement('script');
+        scriptFallback.type = 'text/javascript';
+        scriptFallback.onerror = function(error) {
+                var Monorail = {
+      produce: function produce(monorailDomain, schemaId, payload) {
+        var currentMs = new Date().getTime();
+        var event = {
+          schema_id: schemaId,
+          payload: payload,
+          metadata: {
+            event_created_at_ms: currentMs,
+            event_sent_at_ms: currentMs
+          }
+        };
+        return Monorail.sendRequest("https://" + monorailDomain + "/v1/produce", JSON.stringify(event));
+      },
+      sendRequest: function sendRequest(endpointUrl, payload) {
+        // Try the sendBeacon API
+        if (window && window.navigator && typeof window.navigator.sendBeacon === 'function' && typeof window.Blob === 'function' && !Monorail.isIos12()) {
+          var blobData = new window.Blob([payload], {
+            type: 'text/plain'
+          });
+
+          if (window.navigator.sendBeacon(endpointUrl, blobData)) {
+            return true;
+          } // sendBeacon was not successful
+
+        } // XHR beacon
+
+        var xhr = new XMLHttpRequest();
+
+        try {
+          xhr.open('POST', endpointUrl);
+          xhr.setRequestHeader('Content-Type', 'text/plain');
+          xhr.send(payload);
+        } catch (e) {
+          console.log(e);
+        }
+
+        return false;
+      },
+      isIos12: function isIos12() {
+        return window.navigator.userAgent.lastIndexOf('iPhone; CPU iPhone OS 12_') !== -1 || window.navigator.userAgent.lastIndexOf('iPad; CPU OS 12_') !== -1;
+      }
+    };
+    Monorail.produce('monorail-edge.shopifysvc.com',
+      'trekkie_storefront_load_errors/1.1',
+      {shop_id: 5052170330,
+      theme_id: 39287423066,
+      app_name: "storefront",
+      context_url: window.location.href,
+      source_url: "//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js"});
+
+        };
+        scriptFallback.async = true;
+        scriptFallback.src = '//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js';
+        first.parentNode.insertBefore(scriptFallback, first);
+      };
+      script.async = true;
+      script.src = '//drinkcirkul.com/cdn/s/trekkie.storefront.6feac1db1e2c7d84269967dcaefdee0618af51f6.min.js';
+      first.parentNode.insertBefore(script, first);
+    };
+    trekkie.load(
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":5052170330,"isMerchantRequest":null,"themeId":39287423066,"themeCityHash":"11937133925828100988","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"Google Gtag Pixel":{"conversionId":"G-XJD9HF51YV","eventLabels":[{"type":"purchase","action_label":"G-XJD9HF51YV"},{"type":"page_view","action_label":"G-XJD9HF51YV"},{"type":"view_item","action_label":"G-XJD9HF51YV"},{"type":"search","action_label":"G-XJD9HF51YV"},{"type":"add_to_cart","action_label":"G-XJD9HF51YV"},{"type":"begin_checkout","action_label":"G-XJD9HF51YV"},{"type":"add_payment_info","action_label":"G-XJD9HF51YV"}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":false,"source":"trekkie-storefront-renderer"}}
+    );
+
+    var loaded = false;
+    trekkie.ready(function() {
+      if (loaded) return;
+      loaded = true;
+
+      window.ShopifyAnalytics.lib = window.trekkie;
+
+  
+      var originalDocumentWrite = document.write;
+      document.write = customDocumentWrite;
+      try { window.ShopifyAnalytics.merchantGoogleAnalytics.call(this); } catch(error) {};
+      document.write = originalDocumentWrite;
+
+      window.ShopifyAnalytics.lib.page(null,{"pageType":"page","resourceType":"page","resourceId":23145873498});
+
+      var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/)
+      var token = match? match[1]: undefined;
+      if (!hasLoggedConversion(token)) {
+        setCookieIfConversion(token);
+        
+      }
+    });
+
+
+        var eventsListenerScript = document.createElement('script');
+        eventsListenerScript.async = true;
+        eventsListenerScript.src = "//drinkcirkul.com/cdn/shopifycloud/shopify/assets/shop_events_listener-61fa9e0a912c675e178777d2b27f6cbd482f8912a6b0aa31fa3515985a8cd626.js";
+        document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);
+
+})();</script>
+<script class="boomerang">
+(function () {
+  if (window.BOOMR && (window.BOOMR.version || window.BOOMR.snippetExecuted)) {
+    return;
+  }
+  window.BOOMR = window.BOOMR || {};
+  window.BOOMR.snippetStart = new Date().getTime();
+  window.BOOMR.snippetExecuted = true;
+  window.BOOMR.snippetVersion = 12;
+  window.BOOMR.application = "storefront-renderer";
+  window.BOOMR.themeName = "DrinkCirkul";
+  window.BOOMR.themeVersion = "1.0.0";
+  window.BOOMR.shopId = 5052170330;
+  window.BOOMR.themeId = 39287423066;
+  window.BOOMR.renderRegion = "gcp-europe-west1";
+  window.BOOMR.url =
+    "https://drinkcirkul.com/cdn/shopifycloud/boomerang/shopify-boomerang-1.0.0.min.js";
+  var where = document.currentScript || document.getElementsByTagName("script")[0];
+  var parentNode = where.parentNode;
+  var promoted = false;
+  var LOADER_TIMEOUT = 3000;
+  function promote() {
+    if (promoted) {
+      return;
+    }
+    var script = document.createElement("script");
+    script.id = "boomr-scr-as";
+    script.src = window.BOOMR.url;
+    script.async = true;
+    parentNode.appendChild(script);
+    promoted = true;
+  }
+  function iframeLoader(wasFallback) {
+    promoted = true;
+    var dom, bootstrap, iframe, iframeStyle;
+    var doc = document;
+    var win = window;
+    window.BOOMR.snippetMethod = wasFallback ? "if" : "i";
+    bootstrap = function(parent, scriptId) {
+      var script = doc.createElement("script");
+      script.id = scriptId || "boomr-if-as";
+      script.src = window.BOOMR.url;
+      BOOMR_lstart = new Date().getTime();
+      parent = parent || doc.body;
+      parent.appendChild(script);
+    };
+    if (!window.addEventListener && window.attachEvent && navigator.userAgent.match(/MSIE [67]./)) {
+      window.BOOMR.snippetMethod = "s";
+      bootstrap(parentNode, "boomr-async");
+      return;
+    }
+    iframe = document.createElement("IFRAME");
+    iframe.src = "about:blank";
+    iframe.title = "";
+    iframe.role = "presentation";
+    iframe.loading = "eager";
+    iframeStyle = (iframe.frameElement || iframe).style;
+    iframeStyle.width = 0;
+    iframeStyle.height = 0;
+    iframeStyle.border = 0;
+    iframeStyle.display = "none";
+    parentNode.appendChild(iframe);
+    try {
+      win = iframe.contentWindow;
+      doc = win.document.open();
+    } catch (e) {
+      dom = document.domain;
+      iframe.src = "javascript:var d=document.open();d.domain='" + dom + "';void(0);";
+      win = iframe.contentWindow;
+      doc = win.document.open();
+    }
+    if (dom) {
+      doc._boomrl = function() {
+        this.domain = dom;
+        bootstrap();
+      };
+      doc.write("<body onload='document._boomrl();'>");
+    } else {
+      win._boomrl = function() {
+        bootstrap();
+      };
+      if (win.addEventListener) {
+        win.addEventListener("load", win._boomrl, false);
+      } else if (win.attachEvent) {
+        win.attachEvent("onload", win._boomrl);
+      }
+    }
+    doc.close();
+  }
+  var link = document.createElement("link");
+  if (link.relList &&
+    typeof link.relList.supports === "function" &&
+    link.relList.supports("preload") &&
+    ("as" in link)) {
+    window.BOOMR.snippetMethod = "p";
+    link.href = window.BOOMR.url;
+    link.rel = "preload";
+    link.as = "script";
+    link.addEventListener("load", promote);
+    link.addEventListener("error", function() {
+      iframeLoader(true);
+    });
+    setTimeout(function() {
+      if (!promoted) {
+        iframeLoader(true);
+      }
+    }, LOADER_TIMEOUT);
+    BOOMR_lstart = new Date().getTime();
+    parentNode.appendChild(link);
+  } else {
+    iframeLoader(false);
+  }
+  function boomerangSaveLoadTime(e) {
+    window.BOOMR_onload = (e && e.timeStamp) || new Date().getTime();
+  }
+  if (window.addEventListener) {
+    window.addEventListener("load", boomerangSaveLoadTime, false);
+  } else if (window.attachEvent) {
+    window.attachEvent("onload", boomerangSaveLoadTime);
+  }
+  if (document.addEventListener) {
+    document.addEventListener("onBoomerangLoaded", function(e) {
+      e.detail.BOOMR.init({
+        ResourceTiming: {
+          enabled: true,
+          trackedResourceTypes: ["script", "img", "css"]
+        },
+      });
+      e.detail.BOOMR.t_end = new Date().getTime();
+    });
+  } else if (document.attachEvent) {
+    document.attachEvent("onpropertychange", function(e) {
+      if (!e) e=event;
+      if (e.propertyName === "onBoomerangLoaded") {
+        e.detail.BOOMR.init({
+          ResourceTiming: {
+            enabled: true,
+            trackedResourceTypes: ["script", "img", "css"]
+          },
+        });
+        e.detail.BOOMR.t_end = new Date().getTime();
+      }
+    });
+  }
+})();</script>
+</head>
+
+        <body class="old-template--page">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript
+                ><iframe
+                    src="https://www.googletagmanager.com/ns.html?id=GTM-KT7B2TZ"
+                    height="0"
+                    width="0"
+                    style="display:none;visibility:hidden"
+                ></iframe
+            ></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+
+            <div class="off-canvas-wrapper">
+                <div class="off-canvas position-left navigation-off-canvas" id="offCanvasMenu" data-off-canvas data-transition="overlap">
+                    <div class="off-canvas-container">
+    <a class="off-canvas-close" data-toggle="offCanvasMenu"><img class="close-icon" src="//drinkcirkul.com/cdn/shop/t/4/assets/icon-close-blue.svg?v=10197444204773661521565156097" alt="Close"></a>
+
+    
+        <ul class="menu vertical menu-login-register">
+            <li><a href="/account/login">Log In</a></li>
+            <li><a href="/account/register">Create Account</a></li>
+        </ul>
+    
+
+    <ul class="menu vertical menu-navigation" data-accordion-menu data-submenu-toggle="true">
+        <li data-optimize-target="hide-plans-link">
+            <a href="/pages/plans">Plans</a>
+        </li>
+        <li>
+            <a class="has-submenu" href="/products">Products</a>
+            <ul class="menu vertical nested">
+                <li>
+                    <a href="/pages/flvr-lab" data-toggle="offCanvasMenu"><span class="menu-item-text">FLVR LAB</span></a>
+                </li>
+                <li>
+                    <a href="/pages/bottle-drops" data-toggle="offCanvasMenu"><span class="menu-item-text">Bottle Drops</span></a>
+                </li>
+                <li>
+                    <a href="/pages/bundle-builder" data-toggle="offCanvasMenu"><span class="menu-item-text">Bundles</span></a>
+                </li>
+                <li>
+                    <a href="/products#bottles" data-toggle="offCanvasMenu"><span class="menu-item-text">Bottles</span></a>
+                </li>
+                <li>
+                    <a href="/products#basics" data-toggle="offCanvasMenu"><span class="menu-item-text">Basics</span></a>
+                </li>
+                <li>
+                    <a href="/pages/flavors" data-toggle="offCanvasMenu"><span class="menu-item-text">Flavors</span></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="/pages/why-cirkul">Why Cirkul</a>
+        </li>
+        <li>
+            <a href="/pages/getting-started">Getting Started</a>
+        </li>
+        <li>
+            <a href="/pages/about">Learn More</a>
+        </li>
+        <li>
+            <a href="/pages/faq">FAQ</a>
+        </li>
+        <li>
+            <a href="/blogs/cirkular">Cirkular</a>
+        </li>
+    </ul>
+
+    <ul class="menu vertical menu-core">
+        <li>
+            
+                <a href="/account/login">Account</a>
+            
+        </li>
+        <li>
+            
+                <a href="/?showCart=true"> Cart </a>
+            
+        </li>
+        <li><a href="/pages/faq">Help</a></li>
+    </ul>
+
+    
+</div>
+
+                </div>
+
+                <div class="off-canvas-content" data-off-canvas-content>
+                    
+                    
+                    <div class="new-page-header page-header-use-light-theme">
+                        <div data-sticky-container>
+                            <div class="sticky is-anchored" data-sticky data-margin-top="0" data-stick-to="top" data-top-anchor="20" data-sticky-on="small">
+                                
+
+
+
+
+
+
+<div class="grid-container page-header-inner">
+    <div class="page-header-logo">
+        <a href="/">
+            <img class="header-logo page-header-dark-theme" src="//drinkcirkul.com/cdn/shop/files/2021-header-logo-white.svg?v=14923287801012519565" alt="Cirkul">
+            <img class="header-logo page-header-light-theme" src="//drinkcirkul.com/cdn/shop/files/2021-header-logo-blue.svg?v=4439436544074754903" alt="Cirkul">
+        </a>
+    </div>
+
+    <div class="row collapse page-header-grid">
+        <div class="columns shrink page-header-navigation-menu show-for-large-custom">
+            <ul class="menu dropdown" data-dropdown-menu>
+                <li>
+                    <a href="/"><span class="menu-item-text">Home</span></a>
+                </li>
+                <li data-optimize-target="hide-plans-link">
+                    <a href="/pages/plans"><span class="menu-item-text">Plans</span></a>
+                </li>
+                <li>
+                    <a class="has-submenu" href="/products"><span class="menu-item-text">Products</span></a>
+                    <ul class="menu">
+                        <li>
+                            <a href="/pages/flvr-lab"><span class="menu-item-text">FLVR LAB</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/bottle-drops"><span class="menu-item-text">Bottle Drops</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/bundle-builder"><span class="menu-item-text">Bundles</span></a>
+                        </li>
+                        <li>
+                            <a href="/products#bottles"><span class="menu-item-text">Bottles</span></a>
+                        </li>
+                        <li>
+                            <a href="/products#basics"><span class="menu-item-text">Basics</span></a>
+                        </li>
+                        <li>
+                            <a class="has-submenu" href="/pages/flavors"><span class="menu-item-text">Flavors</span></a>
+                            <ul class="menu">
+                                <li>
+                                    <a href="/collections/lifesip"><span class="menu-item-text">LifeSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/fitsip"><span class="menu-item-text">FitSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/gosip"><span class="menu-item-text">GoSip</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/gateway-tea"><span class="menu-item-text">Gateway Tea</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/wild-splash"><span class="menu-item-text">Wild Splash</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/sabrocita"><span class="menu-item-text">Sabrocita</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/inflow-energy"><span class="menu-item-text">Inflow Energy</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/flyte"><span class="menu-item-text">Flyte</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/squeeze"><span class="menu-item-text">Squeeze Lemonade</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/fission"><span class="menu-item-text">Fission</span></a>
+                                </li>
+                                
+                                
+                                
+                                
+                                    <li>
+                                        <a href="/collections/frosted-refreshers"><span class="menu-item-text">Frosted Refreshers</span></a>
+                                    </li>
+                                
+                                <li>
+                                    <a href="/collections/frosted"><span class="menu-item-text">Frosted Iced Coffee</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/stage"><span class="menu-item-text">Stage</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/verda"><span class="menu-item-text">Verda</span></a>
+                                </li>
+                                <li>
+                                    <a href="/collections/puressence"><span class="menu-item-text">Puressence</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="is-dropdown-submenu-parent">
+                    <a class="has-submenu" href="/pages/about"><span class="menu-item-text">About</span></a>
+                    <ul class="menu">
+                        <li>
+                            <a href="/pages/why-cirkul"><span class="menu-item-text">Why Cirkul</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/getting-started"><span class="menu-item-text">Getting Started</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/about"><span class="menu-item-text">Learn More</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/faq"><span class="menu-item-text">FAQ</span></a>
+                        </li>
+                        <li>
+                            <a href="/blogs/cirkular"><span class="menu-item-text">Cirkular</span></a>
+                        </li>
+                        <li>
+                            <a href="/pages/careers"><span class="menu-item-text">Careers</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/pages/faq"><span class="menu-item-text">Help</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="columns shrink page-header-mobile-menu hide-for-large-custom">
+            <ul class="menu">
+                <li>
+                    <a data-toggle="offCanvasMenu"><svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Menu</title>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 12C21.5523 12 22 12.4477 22 13C22 13.5128 21.614 13.9355 21.1166 13.9933L21 14H1C0.447715 14 0 13.5523 0 13C0 12.4872 0.38604 12.0645 0.883379 12.0067L1 12H21ZM21 6C21.5523 6 22 6.44772 22 7C22 7.51284 21.614 7.93551 21.1166 7.99327L21 8H1C0.447715 8 0 7.55228 0 7C0 6.48716 0.38604 6.06449 0.883379 6.00673L1 6H21ZM21 0C21.5523 0 22 0.447715 22 1C22 1.51284 21.614 1.93551 21.1166 1.99327L21 2H1C0.447715 2 0 1.55228 0 1C0 0.487164 0.38604 0.0644928 0.883379 0.00672773L1 0H21Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+</a>
+                </li>
+                <li>
+                    
+                        <a href="/?showCart=true">
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Cart</title>
+    <path d="M7.34126 17.875C6.21504 17.875 5.3391 18.8203 5.3391 19.9375C5.3391 21.0977 6.21504 22 7.34126 22C8.42576 22 9.34342 21.0977 9.34342 19.9375C9.34342 18.8203 8.42576 17.875 7.34126 17.875ZM19.3542 17.875C18.228 17.875 17.3521 18.8203 17.3521 19.9375C17.3521 21.0977 18.228 22 19.3542 22C20.4387 22 21.3564 21.0977 21.3564 19.9375C21.3564 18.8203 20.4387 17.875 19.3542 17.875ZM23.7339 1.93359C23.4837 1.58984 23.1083 1.375 22.6494 1.375H5.04711L4.96369 0.859375C4.88027 0.386719 4.46315 0 4.00432 0H1.00108C0.417117 0 0 0.472656 0 1.03125C0 1.63281 0.417117 2.0625 1.00108 2.0625H3.17009L5.67279 15.6836C5.75621 16.1562 6.17333 16.5 6.67387 16.5H20.3553C20.8976 16.5 21.3564 16.0703 21.3564 15.4688C21.3564 14.9102 20.8976 14.4375 20.3553 14.4375H7.46639L7.09099 12.375H20.397C20.981 12.375 21.4815 11.9883 21.6484 11.3867L23.9425 3.13672C24.0676 2.75 23.9842 2.27734 23.7339 1.93359ZM19.8965 10.3125H6.71558L5.46423 3.4375H21.7735L19.8965 10.3125Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+
+                        </a>
+                    
+                </li>
+            </ul>
+        </div>
+
+        <div class="columns shrink page-header-quick-menu">
+            <ul class="menu show-for-large-custom">
+                <li>
+                    
+                        <a href="/account/login"><svg width="19" height="22" viewBox="0 0 19 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Account</title>
+    <path d="M13.2746 13.0625C12.0446 13.0625 11.4933 13.75 9.5 13.75C7.46429 13.75 6.91295 13.0625 5.68304 13.0625C2.54464 13.0625 0 15.6836 0 18.8633V19.9375C0 21.0977 0.890625 22 2.03571 22H16.9643C18.067 22 19 21.0977 19 19.9375V18.8633C19 15.6836 16.4129 13.0625 13.2746 13.0625ZM16.9643 19.9375H2.03571V18.8633C2.03571 16.8008 3.64732 15.125 5.68304 15.125C6.3192 15.125 7.29464 15.8125 9.5 15.8125C11.6629 15.8125 12.6384 15.125 13.2746 15.125C15.3103 15.125 16.9643 16.8008 16.9643 18.8633V19.9375ZM9.5 12.375C12.8504 12.375 15.6071 9.625 15.6071 6.1875C15.6071 2.79297 12.8504 0 9.5 0C6.10714 0 3.39286 2.79297 3.39286 6.1875C3.39286 9.625 6.10714 12.375 9.5 12.375ZM9.5 2.0625C11.7054 2.0625 13.5714 3.95312 13.5714 6.1875C13.5714 8.46484 11.7054 10.3125 9.5 10.3125C7.25223 10.3125 5.42857 8.46484 5.42857 6.1875C5.42857 3.95312 7.25223 2.0625 9.5 2.0625Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+</a>
+                    
+                </li>
+                <li>
+                    
+                        <a href="/?showCart=true">
+                            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <title>Cart</title>
+    <path d="M7.34126 17.875C6.21504 17.875 5.3391 18.8203 5.3391 19.9375C5.3391 21.0977 6.21504 22 7.34126 22C8.42576 22 9.34342 21.0977 9.34342 19.9375C9.34342 18.8203 8.42576 17.875 7.34126 17.875ZM19.3542 17.875C18.228 17.875 17.3521 18.8203 17.3521 19.9375C17.3521 21.0977 18.228 22 19.3542 22C20.4387 22 21.3564 21.0977 21.3564 19.9375C21.3564 18.8203 20.4387 17.875 19.3542 17.875ZM23.7339 1.93359C23.4837 1.58984 23.1083 1.375 22.6494 1.375H5.04711L4.96369 0.859375C4.88027 0.386719 4.46315 0 4.00432 0H1.00108C0.417117 0 0 0.472656 0 1.03125C0 1.63281 0.417117 2.0625 1.00108 2.0625H3.17009L5.67279 15.6836C5.75621 16.1562 6.17333 16.5 6.67387 16.5H20.3553C20.8976 16.5 21.3564 16.0703 21.3564 15.4688C21.3564 14.9102 20.8976 14.4375 20.3553 14.4375H7.46639L7.09099 12.375H20.397C20.981 12.375 21.4815 11.9883 21.6484 11.3867L23.9425 3.13672C24.0676 2.75 23.9842 2.27734 23.7339 1.93359ZM19.8965 10.3125H6.71558L5.46423 3.4375H21.7735L19.8965 10.3125Z" fill="#ffffff" class="icon-main-color"/>
+</svg>
+
+                        </a>
+                    
+                </li>
+            </ul>
+
+            
+                
+                    <a class="button" href="/pages/bundle-builder" data-optimize-target="cta-button" data-trial-link id="new-2021-layout-header-trycirkul-cta">Try Cirkul</a>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    const isAuthed = window.meta.page.customerId;
+
+    if (!isAuthed) {
+        window.cirkulServices.experimentation.manuallyTriggerPage('unauthed_header_with_plans_link');
+
+        window.cirkulServices.experimentation.loadOptimizelyUnauthedExperiment({
+            experimentId: 26590820040, // Hide Plans Header Link for Unauthed Users
+            variationImplementers: {
+                26611430097: function () {}, // Do nothing (control)
+                26595850109: function () {
+                    window.cirkulServices.experimentation.hideItems('[data-optimize-target="hide-plans-link"]');
+                },
+            },
+            // devVariationId: 26595850109,
+        });
+    }
+</script>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="loading-overlay " data-loading-overlay>
+    <div class="loading-overlay-inner">
+        <p><span data-loading-message>Working... </span> <span class="fa fa-spinner fa-pulse fa-lg"></span></p>
+    </div>
+</div>
+
+                    <div class="page-content">
+                        
+                            <section class="row padded-row align-center basic-page-hero">
+    <h1>Privacy Policy</h1>
+</section>
+<section class="row padded-row basic-page-content">
+    <div class="columns">
+        <p>Effective date: March 27, 2024</p>
+<p>
+    At Cirkul, we take your privacy seriously. Please read this Privacy Policy to learn how we treat your personal data. <strong>By using or accessing our Services in any manner, you acknowledge that you accept the practices and policies outlined below, and you hereby consent that we will collect, use and share your
+        information as described in this Privacy Policy.</strong>
+</p>
+<p>
+    Remember that your use of Cirkul’s Services is at all times subject to our Terms of Service <a href="https://drinkcirkul.com/pages/terms">https://drinkcirkul.com/pages/terms</a>, which
+    incorporates this Privacy Policy. Any terms we use in this Policy without defining them have the definitions given to them in the Terms of Use
+</p>
+<p>
+    You may print a copy of this Privacy Policy by clicking <a href="https://cdn.shopify.com/s/files/1/0050/5217/0330/files/Cirkul_Inc._-_Privacy_Policy_3-27-24.pdf?v=1711562292">here</a>. If you
+    have a disability, you may access this Privacy Policy in an alternative format by contacting <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h2>Privacy Policy Table of Contents</h2>
+<ul>
+    <li><a href="https://drinkcirkul.com/pages/privacy#what-this-privacy-policy-covers">What this Privacy Policy Covers</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#personal-data">Personal Data</a></li>
+    <ul>
+        <li><a href="https://drinkcirkul.com/pages/privacy#categories-of-personal-data-we-collect">Categories of Personal Data We Collect</a></li>
+        <li><a href="https://drinkcirkul.com/pages/privacy#categories-of-sources-of-personal-data">Categories of Sources of Personal Data</a></li>
+        <li><a href="https://drinkcirkul.com/pages/privacy#our-commercial-or-business-purposes-for-collecting-personal-data">Our Commercial or Business Purposes for Collecting Personal Data</a></li>
+    </ul>
+    <li><a href="https://drinkcirkul.com/pages/privacy#how-we-disclose-your-personal-data">How We Disclose Your Personal Data</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#tracking-tools-advertising-and-opt-out">Tracking Tools, Advertising and Opt-Out</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#data-security-and-retention">Data Security and Retention</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#personal-data-of-children">Personal Data of Children</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#california-resident-rights">California Resident Rights</a></li>
+    <li>
+        <a href="https://drinkcirkul.com/pages/privacy#virginia-resident-rights"><u>Virginia Resident Rights</u></a>
+    </li>
+    <li>
+        <a href="https://drinkcirkul.com/pages/privacy#colorado-resident-rights"><u>Colorado Resident Rights</u></a>
+    </li>
+    <li>
+        <a href="https://drinkcirkul.com/pages/privacy#connecticut-resident-rights"><u>Connecticut Resident Rights</u></a>
+    </li>
+    <li>
+        <a href="https://drinkcirkul.com/pages/privacy#exercising-your-rights-under-the-state-privacy-laws"><u>Exercising Your Rights Under the State Privacy Laws</u></a>
+    </li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#other-state-law-privacy-rights">Other State Law Privacy Rights</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#changes-to-this-privacy-policy">Changes to this Privacy Policy</a></li>
+    <li><a href="https://drinkcirkul.com/pages/privacy#contact-information">Contact Information</a></li>
+</ul>
+<h2 id="what-this-privacy-policy-covers">What this Privacy Policy Covers</h2>
+<p>
+    This Privacy Policy covers how we treat Personal Data that we gather when you access or use our Services. “Personal Data” means any information that identifies or relates to a particular
+    individual and also includes information referred to as “personally identifiable information” or “personal information” under applicable data privacy laws, rules or regulations. This Privacy
+    Policy does not cover the practices of companies we don’t own or control or people we don’t manage.
+</p>
+<h2 id="personal-data">Personal Data</h2>
+<h4 id="categories-of-personal-data-we-collect">Categories of Personal Data We Collect</h4>
+<p>
+    This chart details the categories of Personal Data that we collect and have collected over the past 12 months for the detailed purposes, each described further in the “Our Commercial or Business
+    Purposes for Collecting or Disclosing Personal Data” section below:
+</p>
+<div class="table-scroll">
+    <table style="min-width: 800px;">
+        <thead>
+            <tr>
+                <td>
+                    <p>
+                        <strong><u>Category of Personal Data</u></strong>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <strong><u>Examples of Personal Data We Collect</u></strong>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <strong><u>Categories of Third Parties To Whom We Disclose this Personal Data</u></strong>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <strong><u>Purpose(s) for Collection</u></strong>
+                    </p>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p><strong>Account Data</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Account name and password</li>
+                        <li>First and last name</li>
+                        <li>Email</li>
+                        <li>Postal address</li>
+                        <li>Phone number</li>
+                        <li>Date of birth</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Payment Data </strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Credit or debit card number</li>
+                        <li>Expiration Date</li>
+                        <li>Billing address, phone number, and email</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers (specifically our payment processing partner, currently Shopify, Recharge and Braintree)</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Commercial Data</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Purchase history</li>
+                        <li>Consumer profiles</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                    </ul>
+                    <ul>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Web Analytics</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Web page interactions</li>
+                        <li>Referring webpage/source through which you accessed the Services</li>
+                        <li>Non-identifiable request IDs</li>
+                        <li>Statistics associated with the interaction between device or browser and the Services</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Social Network Data</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Email</li>
+                        <li>Phone number</li>
+                        <li>User name</li>
+                        <li>IP address</li>
+                        <li>Device ID</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Consumer Demographic Data</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Age / date of birth</li>
+                        <li>Gender</li>
+                        <li>Shopping preferences and consumer categories</li>
+                        <li>Information about your health and fitness preferences and interests</li>
+                        <li>Cultural, social and political identifiers (for example, veteran status, affiliations and interests)</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Geolocation Data</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>IP-address-based location information</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Categories of Data that may be Considered “Sensitive” </strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Race or ethnic origin</li>
+                        <li>Religion</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Inferences Drawn From Other Personal Data Collected</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Profiles reflecting user attributes</li>
+                        <li>Profiles reflecting user behavior</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Other Identifying Information that You Voluntarily Choose to Provide</strong></p>
+                </td>
+                <td>
+                    <ul>
+                        <li>Identifying information in emails or other communications you send us</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Service Providers</li>
+                        <li>Advertising Partners</li>
+                        <li>Business Partners</li>
+                        <li>Parties You Authorize, Access or Authenticate</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Providing, Customizing and Improving the Services</li>
+                        <li>Marketing the Services</li>
+                        <li>Corresponding with You</li>
+                        <li>Meeting Legal Requirements</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4 id="categories-of-sources-of-personal-data">
+    <br>
+    Categories of Sources of Personal Data
+</h4>
+<p>We collect Personal Data about you from the following categories of sources:</p>
+<ul>
+    <li><strong>You</strong></li>
+    <ul>
+        <li>
+<u>When you provide such information directly to us</u>.</li>
+        <ul>
+            <li>When you create an account or use our interactive tools and Services.</li>
+            <li>When you voluntarily provide information in free-form text boxes through the Services or through responses to surveys or questionnaires.</li>
+            <li>When you purchase something from our online store, as part of the buying and selling process.</li>
+            <li>When you send us an email or otherwise contact us.</li>
+        </ul>
+        <li>
+<u>When you use the Services and such information is collected automatically</u>.</li>
+        <ul>
+            <li>Through Cookies (defined in the “Tracking Tools, Advertising and Opt-Out” section below).</li>
+            <li>If you browse our online store or use a location-enabled browser, we may receive information about your browser, operating system, location and mobile device, as applicable.</li>
+        </ul>
+    </ul>
+    <li><strong>Third Parties</strong></li>
+    <ul>
+        <li><u>Vendors</u></li>
+        <ul>
+            <li>We may use analytics providers to analyze how you interact and engage with the Services, or third parties may help us provide you with customer support.</li>
+            <li>We may use vendors to obtain information to generate leads and create user profiles.</li>
+        </ul>
+        <li><u>Advertising Partners</u></li>
+        <ul>
+            <li>
+                We receive information about you from some of our vendors who assist us with marketing or promotional services related to how you interact with our websites, applications, products,
+                Services, advertisements or communications.
+            </li>
+        </ul>
+        <li><u>Social Networks</u></li>
+        <ul>
+            <li>
+                If you provide your social network account credentials to us or otherwise sign in to the Services through a third-party site or service, some content and/or information in those
+                accounts may be transmitted into your account with us.
+            </li>
+        </ul>
+    </ul>
+</ul>
+<h4 id="our-commercial-or-business-purposes-for-collecting-personal-data">Our Commercial or Business Purposes for Collecting or Disclosing Personal Data</h4>
+<ul>
+    <li><strong>Providing, Customizing and Improving the Services</strong></li>
+    <ul>
+        <li>Creating and managing your account or other user profiles.</li>
+        <li>Processing orders or other transactions; billing.</li>
+        <li>Providing you with the products, services or information you request.</li>
+        <li>Meeting or fulfilling the reason you provided the information to us.</li>
+        <li>Providing support and assistance for the Services.</li>
+        <li>Allowing you to access and manage current and past orders through the Services.</li>
+        <li>Improving the Services, including testing, research, internal analytics and product development.</li>
+        <li>Personalizing the Services, website content and communications based on your preferences.</li>
+        <li>Doing fraud protection, security and debugging.</li>
+        <li>
+            Carrying out other business purposes stated when collecting your Personal Data or as otherwise set forth in applicable data privacy laws, such as the California Consumer Privacy Act, as
+            amended by the California Privacy Rights Act of 2020 (together, the “CCPA”), the Virginia Consumer Data Protection Act (the “VCDPA”), the Colorado Privacy Act (the “CPA”), and the
+            Connecticut Data Privacy Act (the “CTDPA”).
+        </li>
+    </ul>
+    <li><strong>Marketing the Services</strong></li>
+    <ul>
+        <li>Marketing and selling the Services as well as our online store, new products and other updates (including checkout reminders).</li>
+        <li>Showing you advertisements, including interest-based or online behavioral or targeted advertising.</li>
+    </ul>
+    <li><strong>Corresponding with You</strong></li>
+    <ul>
+        <li>Responding to correspondence that we receive from you, contacting you when necessary or requested, and sending you information about Cirkul or the Services.</li>
+        <li>Sending emails and other communications according to your preferences or that display content that we think will interest you.</li>
+    </ul>
+    <li><strong>Meeting Legal Requirements and Enforcing Legal Terms</strong></li>
+    <ul>
+        <li>
+            Fulfilling our legal obligations under applicable law, regulation, court order or other legal process, such as preventing, detecting and investigating security incidents and potentially
+            illegal or prohibited activities.
+        </li>
+        <li>Protecting the rights, property or safety of you, Cirkul or another party.</li>
+        <li>Enforcing any agreements with you.</li>
+        <li>Responding to claims that any posting or other content violates third-party rights.</li>
+        <li>Resolving disputes.</li>
+    </ul>
+</ul>
+<p>We will not collect additional categories of Personal Data or use the Personal Data we collected for materially different, unrelated or incompatible purposes without providing you notice.</p>
+<p>
+    As noted in the list above, we may communicate with you if you’ve provided us the means to do so.  For example, if you’ve given us your email address, we may send you promotional email offers
+    or email you about your use of the Services.  If you do not want to receive communications from us, please indicate your preferences by emailing us at
+    <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h2 id="how-we-disclose-your-personal-data">How We Disclose Your Personal Data</h2>
+<p>
+    We disclose your Personal Data to the categories of service providers and other parties listed in this section. Depending on state laws that may be applicable to you, some of these disclosures may
+    constitute a “sale” of your Personal Data. For more information, please refer to the state-specific sections below.
+</p>
+<ul>
+    <ul>
+        <ul>
+            <li>
+<strong>Service Providers.</strong> These parties help us provide the Services or perform business functions on our behalf. They include:</li>
+            <ul>
+                <li>Hosting, technology and communication providers, including but not limited to text messaging service providers.</li>
+                <li>Security and fraud prevention consultants.</li>
+                <li>Analytics providers.</li>
+                <li>Support and customer service vendors.</li>
+                <li>Product fulfillment and delivery providers.</li>
+                <li>Payment processors.</li>
+                <ul>
+                    <li>Our payment processing partners Shopify, Recharge and Braintree collect your voluntarily-provided payment card information necessary to process your payment.</li>
+                    <li>
+                        Please see Shopify’s <a href="https://www.shopify.com/legal/terms">terms of service</a> and <a href="https://www.shopify.com/legal/privacy">privacy policy</a> for information
+                        on its use and storage of your Personal Data.
+                    </li>
+                    <li>
+                        Please see Recharge’s <a href="https://rechargepayments.com/terms-of-service/">terms of service</a> and
+                        <a href="https://rechargepayments.com/privacy-policy/">privacy policy</a> for information on its use and storage of your Personal Data.
+                    </li>
+                    <li>
+                        Please see Braintree’s <a href="https://www.braintreepayments.com/legal/payment-services-agreement">payment services agreement</a> and <a href="https://www.braintreepayments.com/legal/braintree-privacy-policy?_ga=1.241775426.1735848292.1577462059">privacy policy</a> for information on its
+                        use and storage of your Personal Data.
+                    </li>
+                </ul>
+            </ul>
+            <li>
+<strong>Advertising Partners. </strong>These parties help us market our services and provide you with other offers that may be of interest to you. They include:</li>
+            <ul>
+                <li>Ad networks.</li>
+                <li>Marketing providers.</li>
+                <li>Data cooperatives.</li>
+            </ul>
+            <li>
+<strong>Business Partners. </strong>These parties partner with us in offering various services. They include:</li>
+            <ul>
+                <li>Businesses that you have a relationship with.</li>
+                <li>Companies that we partner with to offer joint promotional offers or opportunities.</li>
+            </ul>
+            <li><strong>Parties You Authorize, Access or Authenticate</strong></li>
+            <ul>
+                <li>Third parties you access through the services.</li>
+                <li>Social media services.</li>
+                <li>Other parties authorized by you.</li>
+            </ul>
+        </ul>
+    </ul>
+</ul>
+<h4>Legal Obligations</h4>
+<p>
+    We may disclose any Personal Data that we collect to third parties in conjunction with any of the activities set forth under “Meeting Legal Requirements and Enforcing Legal Terms” in the “Our
+    Commercial or Business Purposes for Collecting Personal Data” section above.
+</p>
+<h4>Business Transfers</h4>
+<p>
+    All of your Personal Data that we collect may be transferred to a third party if we undergo a merger, acquisition, bankruptcy or other transaction in which that third party assumes control of our
+    business (in whole or in part). Should one of these events occur, we will make reasonable efforts to notify you before your information becomes subject to different privacy and security policies
+    and practices.
+</p>
+<h4>Data that is Not Personal Data</h4>
+<p>
+    We may create aggregated, de-identified or anonymized data from the Personal Data we collect, including by removing information that makes the data personally identifiable to a particular user. We
+    may use such aggregated, de-identified or anonymized data and disclose it to third parties for our lawful business purposes, including to analyze, build and improve the Services and promote our
+    business, provided that we will not disclose such data in a manner that could identify you.  
+</p>
+<h2 id="tracking-tools-advertising-and-opt-out">Tracking Tools, Advertising and Opt-Out</h2>
+<p>
+    The Services use cookies and similar technologies such as pixel tags, including the Meta Pixel, web beacons, clear GIFs and JavaScript (collectively, “Cookies”) as well as session replay, chat bot
+    and similar technology to enable our servers to recognize your web browser, tell us how and when you visit and use our Services, analyze trends, understand usage patterns, provide customer
+    support, learn about our user base and operate and improve our Services. Cookies are small pieces of data – usually text files – placed on your computer, tablet, phone or similar device when you
+    use that device to access our Services. We may also supplement the information we collect from you with information received from third parties, including third parties that have placed their own
+    Cookies on your device(s). Your browser may offer you a “Do Not Track” option, which allows you to signal to operators of websites and web applications and services that you do not wish such
+    operators to track certain of your online activities over time and across different websites. Please note that because of our use of Cookies, the Services do not support “Do Not Track” requests
+    sent from a browser at this time. To find out more about “Do Not Track,” you can visit <u>www.allaboutdnt.com</u>.
+</p>
+<p>We use the following types of Cookies:</p>
+<ul>
+    <li>
+        <u>Essential Cookies</u>. Essential Cookies are required for providing you with features or services that you have requested. For example, certain Cookies enable you to log into secure areas
+        of our Services. Disabling these Cookies may make certain features and services unavailable.
+    </li>
+    <li>
+        <u>Functional Cookies</u>. Functional Cookies are used to record your choices and settings regarding our Services, maintain your preferences over time and recognize you when you return to our
+        Services. These Cookies help us to personalize our content for you, greet you by name and remember your preferences (for example, your choice of language or region).
+    </li>
+    <li>
+        <u>Performance/Analytical Cookies</u>. Performance/Analytical Cookies allow us to understand how visitors use our Services. They do this by collecting information about the number of visitors
+        to the Services, what pages visitors view on our Services and how long visitors are viewing pages on the Services. Performance/Analytical Cookies also help us measure the performance of our
+        advertising campaigns in order to help us improve our campaigns and the Services’ content for those who engage with our advertising. For example, Google Inc. (“Google”) uses cookies in
+        connection with its Google Analytics services. Google’s ability to use and disclose information collected by Google Analytics about your visits to the Services is subject to the Google
+        Analytics Terms of Use and the Google Privacy Policy. You have the option to opt-out of Google’s use of Cookies by visiting the Google advertising opt-out page at
+        <a href="https://www.google.com/privacy_ads.html">www.google.com/privacy_ads.html</a> or the Google Analytics Opt-out Browser Add-on at
+        <a href="https://tools.google.com/dlpage/gaoptout/">https://tools.google.com/dlpage/gaoptout/</a>.
+    </li>
+    <li>
+        <u>Retargeting/Advertising Cookies</u>. Retargeting/Advertising Cookies collect data about your online activity and identify your interests so that we can provide advertising that we believe
+        is relevant to you. For more information about this, please see the section below titled “Information about Interest-Based Advertisements.”
+    </li>
+</ul>
+<p>
+    You can decide whether or not to accept Cookies through your internet browser’s settings. Most browsers have an option for turning off the Cookie feature, which will prevent your browser from
+    accepting new Cookies, as well as (depending on the sophistication of your browser software) allow you to decide on acceptance of each new Cookie in a variety of ways. You can also delete all
+    Cookies that are already on your device. If you do this, however, you may have to manually adjust some preferences every time you visit our website and some of the Services and functionalities may
+    not work.
+</p>
+<p>
+    To explore what Cookie settings are available to you, look in the “preferences” or “options” section of your browser’s menu. To find out more information about Cookies, including information about
+    how to manage and delete Cookies, please visit <a href="http://www.allaboutcookies.org/">http://www.allaboutcookies.org/</a>.
+</p>
+<h4>Session Replay Technology</h4>
+<p>
+    We may use session replay technology in order to identify and resolve customer issues, to monitor and analyze how you use our Services, to better understand user behavior, and to improve our
+    Services. By continuing to use the Services, you consent to the use of session replay technology. If you would like to change your settings with respect to session replay technology, you can
+    access your Cookie management settings by clicking <a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open'); return false;">here</a>.
+</p>
+<h4>Information about Interest-Based Advertisements:</h4>
+<p>
+    We may serve advertisements, and also allow third-party ad networks, including third-party ad servers, ad agencies, ad technology vendors and research firms, to serve advertisements through the
+    Services. These advertisements may be targeted to users who fit certain general profile categories or display certain preferences or behaviors (“Interest-Based Ads”). Information for
+    Interest-Based Ads (including Personal Data) may be provided to us by you, or derived from the usage patterns of particular users on the Services and/or services of third parties. Such information
+    may be gathered through tracking users’ activities across time and unaffiliated properties, including when you leave the Services. To accomplish this, we or our service providers may deliver
+    Cookies, including a file (known as a “web beacon”) from an ad network to you through the Services. Web beacons allow ad networks to provide anonymized, aggregated auditing, research and reporting
+    for us and for advertisers. Web beacons also enable ad networks to serve targeted advertisements to you when you visit other websites. Web beacons allow ad networks to view, edit or set their own
+    Cookies on your browser, just as if you had requested a web page from their site.
+</p>
+<p>
+    We comply with the Digital Advertising Alliance (“DAA”) Self-Regulatory Principles for Online Behavioral Advertising. Through the DAA and Network Advertising Initiative (“NAI”), several media and
+    marketing associations have developed an industry self-regulatory program to give consumers a better understanding of, and greater control over, ads that are customized based a consumer’s online
+    behavior across different websites and properties. To make choices about Interest-Based Ads from participating third parties, including to opt-out of receiving behaviorally targeted advertisements
+    from participating organizations, please visit the DAA’s or NAI’s consumer opt-out pages, which are located at <a href="http://www.networkadvertising.org/choices/">http://www.networkadvertising.org/choices/</a> or <a href="http://www.aboutads.info/choices">www.aboutads.info/choices</a>.
+</p>
+<h2 id="data-security-and-retention">Data Security and Retention</h2>
+<p>
+    We seek to protect your Personal Data from unauthorized access, use and disclosure using appropriate physical, technical, organizational and administrative security measures based on the type of
+    Personal Data and how we are processing that data. You should also help protect your data by appropriately selecting and protecting your password and/or other sign-on mechanism; limiting access to
+    your computer or device and browser; and signing off after you have finished accessing your account. Although we work to protect the security of your account and other data that we hold in our
+    records, please be aware that no method of transmitting data over the internet or storing data is completely secure.
+</p>
+<p>
+    We retain Personal Data about you for as long as necessary to provide you with our Services or to perform our business or commercial purposes for collecting your Personal Data. When establishing a
+    retention period for specific categories of data, we consider who we collected the data from, our need for the Personal Data, and the sensitivity of the Personal Data. In some cases we retain
+    Personal Data for longer, if doing so is necessary to comply with our legal obligations, resolve disputes or collect fees owed, or is otherwise permitted or required by applicable law, rule or
+    regulation. We may further retain information in an anonymous or aggregated form where that information would not identify you personally.
+</p>
+<p>For example:</p>
+<ul>
+    <li>We retain your profile information and credentials for as long as you have an account with us.</li>
+</ul>
+<ul>
+    <li>We retain your device/IP data for as long as we need it to ensure that our systems are working appropriately, effectively and efficiently.</li>
+</ul>
+<h2 id="personal-data-of-children">Personal Data of Children</h2>
+<p>
+    As noted in the Terms of Use, we do not knowingly collect or solicit Personal Data about children under 16 years of age; if you are a child under the age of 16, please do not attempt to register
+    for or otherwise use the Services or send us any Personal Data. If we learn we have collected Personal Data from a child under 16 years of age, we will delete that information as quickly as
+    possible. If you believe that a child under 16 years of age may have provided Personal Data to us, please contact us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h2 id="california-resident-rights">California Resident Rights</h2>
+<p>
+    If you are a California resident, you have the rights set forth in this section. Except as otherwise specified below, please see the “Exercising Your Rights Under the State Privacy Laws” section
+    below for instructions regarding how to exercise these rights. Please note that we may process Personal Data of our customers’ end users or employees in connection with our provision of certain
+    services to our customers. If we are processing your Personal Data as a service provider, you should contact the entity that collected your Personal Data in the first instance to address your
+    rights with respect to such data. Additionally, please note that these rights are subject to certain conditions and exceptions under applicable law, which may permit or require us to deny your
+    request.
+</p>
+<p>
+    If there are any conflicts between this section and any other provision of this Privacy Policy and you are a California resident, the portion that is more protective of Personal Data shall control
+    to the extent of such conflict. If you have any questions about this section or whether any of the following rights apply to you, please contact us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h4>Access</h4>
+<p>You have the right to request certain information about our collection and use of your Personal Data over the past 12 months. In response, we will provide you with the following information:</p>
+<ul>
+    <li>The categories of Personal Data that we have collected about you.</li>
+    <li>The categories of sources from which that Personal Data was collected.</li>
+    <li>The business or commercial purpose for collecting, selling or sharing your Personal Data.</li>
+    <li>The categories of third parties to whom we have disclosed your Personal Data.</li>
+    <li>The specific pieces of Personal Data that we have collected about you.</li>
+</ul>
+<p>
+    If we have disclosed your Personal Data to any third parties for a business purpose over the past 12 months, we will identify the categories of Personal Data disclosed to each category of third
+    party recipient. If we have sold or shared your Personal Data over the past 12 months, we will identify the categories of Personal Data sold to or shared with each category of third party
+    recipient.
+</p>
+<h4>Deletion</h4>
+<p>
+    You have the right to request that we delete the Personal Data that we have collected about you. Under the CCPA, this right is subject to certain exceptions: for example, we may need to retain
+    your Personal Data to provide you with the Services or complete a transaction or other action you have requested, or if deletion of your Personal Data involves disproportionate effort. If your
+    deletion request is subject to one of these exceptions, we may deny your deletion request.
+</p>
+<h4>Correction</h4>
+<p>
+    You have the right to request that we correct any inaccurate Personal Data we have collected about you. Under the CCPA, this right is subject to certain exceptions: for example, if we decide,
+    based on the totality of circumstances related to your Personal Data, that such data is correct. If your correction request is subject to one of these exceptions, we may deny your request.
+</p>
+<h4>Processing of Sensitive Personal Information Opt-Out</h4>
+<p>
+    We collect Personal Data that is considered “Sensitive Personal Information” under the CCPA. Because we use or disclose Sensitive Personal Information for purposes other than those set forth in
+    section 7027(m) of the CCPA regulations, California residents have the right to request that we limit the use or sharing of their Sensitive Personal Information (“Right to Limit”). The Right to
+    Limit allows California residents to direct a business that collects Sensitive Personal Information to limit its use of this information to that use which is necessary to perform the services or
+    provide the goods reasonably expected by an average consumer who requests those goods or services, to perform the services set forth in paragraphs (2), (4), (5), and (8) of subdivision (e) of
+    Section 1798.140, and as authorized in the CCPA regulations. You may exercise your Right to Limit by using the following methods:
+</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.</li>
+    <li>
+        By selecting “Limit Use of Sensitive Data” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form” available
+        <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+</ul>
+<h4>Personal Data Sales and Sharing Opt-Out and Opt-In</h4>
+<p>In this section, we use the terms ‘sell’ and ‘share’ as they are defined in the CCPA. We sell and share your Personal Data, subject to your right to opt-out of these sales and shares.</p>
+<p>
+    As described in the “Tracking Tools, Advertising and Opt-Out” section above, we have incorporated Cookies from certain third parties into our Services. These Cookies allow those third parties to
+    receive information about your activity on our Services that is associated with your browser or device. Those third parties may use that data to serve you relevant ads on our Services or on other
+    websites you visit. Under the CCPA, sharing your data through third party Cookies for online advertising may be considered a “sale” or “share” of information and California residents have certain
+    rights when a business “sells” or “shares” Personal Data” with a third party, including for purposes of cross-contextual behavioral advertising. You can opt out of these sales and the sharing of
+    Personal Data by following the instructions in this section.
+</p>
+<p>We may sell or share your Personal Data, including for the purposes of cross-contextual behavioral advertising, to and with the following categories of third parties:</p>
+<ul>
+    <li>Advertising Partners.</li>
+    <li>Business Partners.</li>
+    <li>Parties You Authorize, Access or Authenticate.</li>
+</ul>
+<p>Over the past 12 months, we may have sold or shared the following categories of your Personal Data to and with the categories of third parties listed above:</p>
+<ul>
+    <li>Account Data</li>
+    <li>Commercial Data</li>
+    <li>Web Analytics</li>
+    <li>Social Network Data</li>
+    <li>Consumer Demographic Data</li>
+    <li>Geolocation Data</li>
+    <li>Other Identifying Information that You Voluntarily Choose to Provide</li>
+</ul>
+<p>We may have sold or shared the foregoing categories of Personal Data for the following business or commercial purposes:</p>
+<ul>
+    <li>Improving the Services, including testing, research, internal analytics and product development.</li>
+    <li>Personalizing the Services, website content and communications based on your preferences.</li>
+    <li>Doing fraud protection, security and debugging.</li>
+    <li>Marketing and selling the Services.</li>
+    <li>Showing you advertisements, including interest-based or online behavioral advertising.</li>
+</ul>
+<p>You have the right to opt-out of the selling or sharing of your Personal Data by tracking technologies using the following methods:</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.</li>
+    <li>
+        By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form”
+        available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+    <li>
+        By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the CCPA. The
+        signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not include Do Not
+        Track signals.
+    </li>
+</ul>
+<p>You have the right to opt-out of the selling or sharing of your Personal Data by any other means using the following methods:</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.</li>
+    <li>
+        By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form”
+        available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+    <li>
+        By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the CCPA. The
+        signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not include Do Not
+        Track signals.
+    </li>
+</ul>
+<p>Once you have submitted an opt-out request, we will not ask you to reauthorize the sale or sharing of your Personal Data for at least 12 months.</p>
+<p>To our knowledge, we do not sell the Personal Data of minors under 16 years of age.</p>
+<h4>We Will Not Discriminate Against You for Exercising Your Rights Under the CCPA</h4>
+<p>
+    We will not discriminate against you for exercising your rights under the CCPA. We will not deny you our goods or services, charge you different prices or rates, or provide you a lower quality of
+    goods and services if you exercise your rights under the CCPA. However, we may offer different tiers of our Services as allowed by applicable data privacy laws (including the CCPA) with varying
+    prices, rates or levels of quality of the goods or services you receive related to the value of Personal Data that we receive from you.
+</p>
+<h4>Our Financial Incentive Program</h4>
+<p>
+    From time to time, we may offer financial incentives, including granting you points in our Inner Cirkul rewards program, for the collection of your Personal Data, the sale of your Personal Data,
+    the sharing of your Personal Data, or the deletion of your Personal Data. These financial incentives include you providing us with certain Personal Data (such as answers to Inner Cirkul survey
+    questions) in exchange for points which can be used towards Cirkul products and other promotional opportunities. For the terms and conditions applicable to the Inner Cirkul rewards program, please
+    see our <a href="https://drinkcirkul.com/pages/inner-cirkul-terms">Inner Cirkul Terms and Conditions</a>.
+</p>
+<h2 id="colorado-resident-rights">Colorado Resident Rights</h2>
+<p>
+    If you are a Colorado resident, you have the rights set forth under the CPA. Please see the “Exercising Your Rights Under the State Privacy Laws” section below for instructions regarding how to
+    exercise these rights. Please note that we may process Personal Data of our customers’ end users or employees in connection with our provision of certain services to our customers. If we are
+    processing your Personal Data as a service provider, you should contact the entity that collected your Personal Data in the first instance to address your rights with respect to such data.
+    Additionally, please note that these rights are subject to certain conditions and exceptions under applicable law, which may permit or require us to deny your request.
+</p>
+<p>
+    If there are any conflicts between this section and any other provision of this Privacy Policy and you are a Colorado resident, the portion that is more protective of Personal Data shall control
+    to the extent of such conflict. If you have any questions about this section or whether any of the following rights apply to you, please contact us at
+    <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h4>Access</h4>
+<p>You have the right to request confirmation of whether or not we are processing your Personal Data and to access your Personal Data.</p>
+<h4>Correction</h4>
+<p>
+    You have the right to correct inaccuracies in your Personal Data, to the extent such correction is appropriate in consideration of the nature of such data and our purposes of processing your
+    Personal Data.
+</p>
+<h4>Deletion</h4>
+<p>You have the right to delete your Personal Data.</p>
+<h4>Portability</h4>
+<p>You have the right to request a copy of your Personal Data in a machine-readable format, to the extent technically feasible, twice within a calendar year.</p>
+<h4>Personal Data Sales and Targeted Advertising Opt-Out and Opt-In</h4>
+<p>
+    In this section, we use the term ‘sell’ as it is defined in the CPA. We sell and process for the purposes of targeted advertising your Personal Data, subject to your right to opt-out of these
+    sales.
+</p>
+<p>
+    As described in the “Tracking Tools, Advertising and Opt-Out” section above, we have incorporated Cookies from certain third parties into our Services. These Cookies allow those third parties to
+    receive information about your activity on our Services that is associated with your browser or device. Those third parties may use that data to serve you relevant ads on our Services or on other
+    websites you visit. Under the CPA, sharing your data through third party Cookies for online advertising may be considered a “sale” of information. You can opt out of these sales by following the
+    instructions in this section.
+</p>
+<p>We may sell and process for the purposes of targeted advertising your Personal Data to the following categories of third parties:</p>
+<ul>
+    <li>Advertising Partners.</li>
+    <li>Business Partners.</li>
+    <li>Parties You Authorize, Access or Authenticate.</li>
+</ul>
+<p>We may sell and process for the purposes of targeted advertising the following categories of your Personal Data to categories of third parties listed above:</p>
+<ul>
+    <li>Account Data</li>
+    <li>Commercial Data</li>
+    <li>Web Analytics</li>
+    <li>Social Network Data</li>
+    <li>Consumer Demographic Data</li>
+    <li>Geolocation Data</li>
+    <li>Inferences Drawn From Other Personal Data Collected</li>
+    <li>Other Identifying Information that You Voluntarily Choose to Provide</li>
+</ul>
+<p>We may have sold the foregoing categories of Personal Data for the following business or commercial purposes:</p>
+<ul>
+    <li>Improving the Services, including testing, research, internal analytics and product development.</li>
+    <li>Personalizing the Services, website content and communications based on your preferences.</li>
+    <li>Doing fraud protection, security and debugging.</li>
+    <li>Marketing and selling the Services.</li>
+    <li>Showing you advertisements, including interest-based or online behavioral advertising.</li>
+</ul>
+<p>You have the right to opt-out of the sale or processing for the purposes of targeted advertising of your Personal Data by tracking technologies using the following methods:</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>
+</li>
+    <li>
+        By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form”
+        available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+    <li>
+        By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the CPA. The
+        signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not include Do Not
+        Track signals.
+    </li>
+</ul>
+<p>You have the right to opt-out of the sale or processing for the purposes of targeted advertising of your Personal Data by any other means using the following methods:</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>
+</li>
+    <li>
+        By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form”
+        available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+    <li>
+        By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the CPA. The
+        signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not include Do Not
+        Track signals.
+    </li>
+</ul>
+<h4>Our Bona Fide Loyalty Program</h4>
+<p>
+    From time to time, we may offer benefits to you for the sale of your Personal Data or the processing of your Personal Data for targeted advertising as part of our Bona Fide Loyalty Program, as
+    defined in the CPA (“Benefits”). For more information on our Bona Fide Loyalty Program, please see our Inner Cirkul Terms and Conditions, located
+    <a href="https://drinkcirkul.com/pages/inner-cirkul-terms">here</a>.
+</p>
+<h2 id="connecticut-resident-rights">Connecticut Resident Rights</h2>
+<p>
+    If you are a Connecticut resident, you have the rights set forth under the CTDPA. Please see the “Exercising Your Rights Under the State Privacy Laws” section below for instructions regarding how
+    to exercise these rights. Please note that we may process Personal Data of our customers’ end users or employees in connection with our provision of certain services to our customers. If we are
+    processing your Personal Data as a service provider, you should contact the entity that collected your Personal Data in the first instance to address your rights with respect to such data.
+    Additionally, please note that these rights are subject to certain conditions and exceptions under applicable law, which may permit or require us to deny your request.
+</p>
+<p>
+    If there are any conflicts between this section and any other provision of this Privacy Policy and you are a Connecticut resident, the portion that is more protective of Personal Data shall
+    control to the extent of such conflict. If you have any questions about this section or whether any of the following rights apply to you, please contact us at
+    <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h4>Access</h4>
+<p>You have the right to request confirmation of whether or not we are processing your Personal Data and to access your Personal Data.</p>
+<h4>Correction</h4>
+<p>
+    You have the right to correct inaccuracies in your Personal Data, to the extent such correction is appropriate in consideration of the nature of such data and our purposes of processing your
+    Personal Data.
+</p>
+<h4>Deletion</h4>
+<p>You have the right to delete your Personal Data.</p>
+<h4>Portability</h4>
+<p>You have the right to request a copy of your Personal Data that is processed automatically in a machine-readable format, to the extent technically feasible.</p>
+<h4>Personal Data Sales and Targeted Advertising Opt-Out and Opt-In</h4>
+<p>
+    In this section, we use the term ‘sell’ as it is defined in the CTDPA. We sell and process for the purposes of targeted advertising your Personal Data, subject to your right to opt-out of these
+    sales.
+</p>
+<p>
+    As described in the “Tracking Tools, Advertising and Opt-Out” section above, we have incorporated Cookies from certain third parties into our Services. These Cookies allow those third parties to
+    receive information about your activity on our Services that is associated with your browser or device. Those third parties may use that data to serve you relevant ads on our Services or on other
+    websites you visit. Under the CTDPA, sharing your data through third party Cookies for online advertising may be considered a “sale” of information. You can opt out of these sales by following the
+    instructions in this section.
+</p>
+<p>You have the right to opt-out of the sale or processing for the purposes of targeted advertising of your Personal Data. You can opt-out using the following methods:</p>
+<ul>
+    <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>
+</li>
+    <li>
+        By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request Form”
+        available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+    </li>
+    <li>
+        By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the CTDPA. The
+        signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not include Do Not
+        Track signals.
+    </li>
+</ul>
+<h2 id="virginia-resident-rights">Virginia Resident Rights</h2>
+<p>
+    If you are a Virginia resident, you have the rights set forth under the VCDPA. Please see the “Exercising Your Rights Under the State Privacy Laws” section below for instructions regarding how to
+    exercise these rights. Please note that we may process Personal Data of our customers’ end users or employees in connection with our provision of certain services to our customers. If we are
+    processing your Personal Data as a service provider, you should contact the entity that collected your Personal Data in the first instance to address your rights with respect to such data.
+    Additionally, please note that these rights are subject to certain conditions and exceptions under applicable law, which may permit or require us to deny your request.
+</p>
+<p>
+    If there are any conflicts between this section and any other provision of this Privacy Policy and you are a Virginia resident, the portion that is more protective of Personal Data shall control
+    to the extent of such conflict. If you have any questions about this section or whether any of the following rights apply to you, please contact us at
+    <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>,
+</p>
+<h4>Access</h4>
+<p>You have the right to request confirmation of whether or not we are processing your Personal Data and to access your Personal Data.</p>
+<h4>Correction</h4>
+<p>
+    You have the right to correct inaccuracies in your Personal Data, to the extent such correction is appropriate in consideration of the nature of such data and our purposes of processing your
+    Personal Data.
+</p>
+<h4>Portability</h4>
+<p>You have the right to request a copy of your Personal Data in a machine-readable format, to the extent technically feasible.</p>
+<h4>Deletion</h4>
+<p>You have the right to delete your Personal Data.</p>
+<p>Opt-Out of Certain Processing Activities</p>
+<ul>
+    <li>
+        You have the right to opt-out of the processing of your Personal Data for targeted advertising purposes. We process your Personal Data for targeted advertising purposes. To opt-out of our
+        processing of Personal Data for targeted advertising purposes, please:
+        <ul>
+            <li>Email us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>
+</li>
+            <li>
+                By selecting “Do Not Sell or Share to a Third Party” and “Opt Out of Targeted Advertising” from the “Request Type” dropdown and completing all other fields of the “Cirkul Data Request
+                Form” available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.
+            </li>
+            <li>
+                By implementing the Global Privacy Control or similar universal privacy control that is legally recognized by a government agency or industry standard and that complies with the VCDPA.
+                The signal issued by the control must be initiated by your browser and applies to the specific device and browser you use at the time you cast the signal. Please note this does not
+                include Do Not Track signals.
+            </li>
+        </ul>
+    </li>
+    <li>You have the right to opt-out to the sale of your Personal Data. We do not currently sell your Personal Data as defined under the VCDPA.</li>
+    <li>
+        You have the right to opt-out from the processing of your Personal Data for the purposes of profiling in furtherance of decisions that produce legal or similarly significant effects to you, if
+        applicable.
+    </li>
+</ul>
+<h2 id="exercising-your-rights-under-the-state-privacy-laws">Exercising Your Rights under the State Privacy Laws</h2>
+<h4>Submitting a Valid Request</h4>
+<p>
+    To exercise the rights described in this Privacy Policy, you or, if you are a California, Colorado or Connecticut resident, your Authorized Agent (defined below) must send us a request that (1)
+    provides sufficient information to allow us to verify that you are the person about whom we have collected Personal Data, and (2) describes your request in sufficient detail to allow us to
+    understand, evaluate and respond to it. Each request that meets both of these criteria will be considered a “Valid Request.” We may not respond to requests that do not meet these criteria. We will
+    only use Personal Data provided in a Valid Request to verify your identity and complete your request. You do not need an account to submit a Valid Request.
+</p>
+<p>
+    We will work to respond to your Valid Request within the time period required by applicable law. We will not charge you a fee for making a Valid Request unless your Valid Request(s) is excessive,
+    repetitive or manifestly unfounded. If we determine that your Valid Request warrants a fee, we will notify you of the fee and explain that decision before completing your request.
+</p>
+<p>You may submit a Valid Request using the following methods:</p>
+<ul>
+    <li>Email us at: <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>
+</li>
+    <li>By completing the “Cirkul Data Request Form” available <a href="https://my.datasubject.com/16CV35U5YZl1zH1f/34337">here</a>.</li>
+</ul>
+<p>
+    If you are a California, Colorado or Connecticut resident, you may also authorize an agent (an “Authorized Agent”) to exercise your rights on your behalf. To do this, you must provide your
+    Authorized Agent with written permission to exercise your rights on your behalf, and we may request a copy of this written permission from your Authorized Agent when they make a request on your
+    behalf.
+</p>
+<h4>Appealing a Denial</h4>
+<p>
+    If we refuse to take action on a Valid Request within a reasonable period of time after receiving your request in accordance with this section and you are in Colorado, Connecticut or Virginia, you
+    may appeal our decision. In such appeal, you must (1) provide sufficient information to allow us to verify that you are the person about whom the original request pertains and to identify the
+    original request, and (2) provide a description of the basis of your appeal. Please note that your appeal will be subject to your rights and obligations afforded to you under the CPA, CTDPA or
+    VCDPA, as applicable. If you are in Colorado, we will respond to your appeal within 45 days of receiving your request. If you are in Connecticut or Virginia, we will respond to your appeal within
+    60 days of receiving your request. If we deny your appeal, you have the right to contact the Colorado Attorney General, the Connecticut Attorney General or the
+    <a href="https://www.oag.state.va.us/consumer-protection/index.php/file-a-complaint">Virginia Attorney General</a>, as applicable.
+</p>
+<p>You may appeal a decision by us using the following methods:</p>
+<ul>
+    <li>Email us at: <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a> (title must include “Request Denial Appeal”)</li>
+</ul>
+<h2 id="other-state-law-privacy-rights">Other State Law Privacy Rights</h2>
+<h4>California Resident Rights</h4>
+<p>
+    Under California Civil Code Sections 1798.83-1798.84, California residents are entitled to contact us to prevent disclosure of Personal Data to third parties for such third parties’ direct
+    marketing purposes; in order to submit such a request, please contact us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a>.
+</p>
+<h4>Nevada Resident Rights</h4>
+<p>
+    If you are a resident of Nevada, you have the right to opt-out of the sale of certain Personal Data to third parties who intend to license or sell that Personal Data. You can exercise this right
+    by contacting us at <a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a> with the subject line “Nevada Do Not Sell Request” and providing us with your name and the email address
+    associated with your account. Please note that we do not currently sell your Personal Data as sales are defined in Nevada Revised Statutes Chapter 603A.
+</p>
+<h2 id="changes-to-this-privacy-policy">Changes to this Privacy Policy</h2>
+<p>
+    We’re constantly trying to improve our Services, so we may need to change this Privacy Policy from time to time, but we will alert you to any such changes by placing a notice on the
+    <u><a href="https://drinkcirkul.com">drinkcirkul.com</a></u> website, by sending you an email and/or by some other means. Please note that if you’ve opted not to receive legal notice emails from
+    us (or you haven’t provided us with your email address), those legal notices will still govern your use of the Services, and you are still responsible for reading and understanding them. If you
+    use the Services after any changes to the Privacy Policy have been posted, that means you agree to all of the changes. Use of information we collect is subject to the Privacy Policy in effect at
+    the time such information is collected.
+</p>
+<h2 id="contact-information">Contact Information:</h2>
+<p>
+    If you have any questions or comments about this Privacy Policy, the ways in which we collect and use your Personal Data or your choices and rights regarding such collection and use, please do not
+    hesitate to contact us at:
+</p>
+<ul>
+    <ul>
+        <li><a href="https://drinkcirkul.com">drinkcirkul.com</a></li>
+        <li><a href="mailto:privacy@drinkcirkul.com">privacy@drinkcirkul.com</a></li>
+        <li>3620 Queen Palm Dr. Tampa, FL 33619</li>
+    </ul>
+</ul>
+<ul>
+    <ul></ul>
+</ul>
+
+    </div>
+</section>
+
+                        
+                    </div>
+
+                    <div class="new-page-footer">
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-footer-facebook-community">
+    
+        
+
+
+<div class="background-transition-container">
+    
+        <svg
+            class="background-transition background-transition-desktop"
+            style="transform: scale(-1,-1) translateY(-1px);"
+            width="1920"
+            height="47"
+            viewBox="0 0 1920 47"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M900.717 23.4431C1266.17 47.1627 1354.56 48.9848 1499.99 43.1931C1679.9 36.0024 1825.42 15.8456 1920 0H0V47C71.6381 33.6597 158.455 20.6774 257.653 12.3316C376.338 2.35895 471.465 -4.40879 900.717 23.4431Z" fill="#005fae"/>
+        </svg>
+        <svg
+            class="background-transition background-transition-mobile"
+            style="transform: scale(-1,-1) translateY(-1px);"
+            width="414"
+            height="16"
+            viewBox="0 0 414 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path d="M194.217 7.98062C273.017 16.0554 292.077 16.6757 323.436 14.704C362.229 12.2561 393.605 5.39425 414 0H0V16C15.447 11.4586 34.1669 7.03911 55.5564 4.19799C81.1478 0.803046 101.66 -1.50087 194.217 7.98062Z" fill="#005fae"/>
+        </svg>
+    
+</div>
+
+    
+
+    <div class="section-inner">
+        <div class="grid-container">
+            <div class="row collapse">
+                <div class="columns small-12 medium-6-custom text-column">
+                    <h2>Join our Facebook Community</h2>
+                    <p>Connect with thousands of Sipsters on their healthy hydration journey.</p>
+                    <a href="https://facebook.com/DrinkCirkul" target="_blank" class="button" data-social-track-link>Join Us</a>
+                </div>
+
+                <div class="columns small-12 medium-6-custom images-column">
+                    <img
+                        class="community-image-1"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-1.jpg?v=8502631590133481459, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-1.jpg?v=8502631590133481459"
+                        alt=""
+                        width="517"
+                        height="517"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-2"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-2.png?v=736511717068765619, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-2.png?v=736511717068765619"
+                        alt=""
+                        width="133"
+                        height="133"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-3"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-3.jpg?v=14818127148548916438, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-3.jpg?v=14818127148548916438"
+                        alt=""
+                        width="122"
+                        height="122"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-4"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-4.jpg?v=16868228057167676521, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-4.jpg?v=16868228057167676521"
+                        alt=""
+                        width="152"
+                        height="152"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-5"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-5.jpg?v=10239697554410755523, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-5.jpg?v=10239697554410755523"
+                        alt=""
+                        width="236"
+                        height="236"
+                        loading="lazy"
+                    >
+                    <img
+                        class="community-image-6"
+                        data-interchange="[//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-6.jpg?v=6354468595782607384, xsmall]"
+                        src="//drinkcirkul.com/cdn/shop/files/2021-footer-facebook-6.jpg?v=6354468595782607384"
+                        alt=""
+                        width="228"
+                        height="228"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="page-footer-main">
+    
+
+
+<div class="background-transition-container">
+    
+        <svg class="background-transition background-transition-desktop" width="1920" height="47" viewBox="0 0 1920 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M900.717 23.4431C1266.17 47.1627 1354.56 48.9848 1499.99 43.1931C1679.9 36.0024 1825.42 15.8456 1920 0H0V47C71.6381 33.6597 158.455 20.6774 257.653 12.3316C376.338 2.35895 471.465 -4.40879 900.717 23.4431Z" fill="#00aaf5"/>
+        </svg>
+        <svg class="background-transition background-transition-mobile" width="414" height="16" viewBox="0 0 414 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M194.217 7.98062C273.017 16.0554 292.077 16.6757 323.436 14.704C362.229 12.2561 393.605 5.39425 414 0H0V16C15.447 11.4586 34.1669 7.03911 55.5564 4.19799C81.1478 0.803046 101.66 -1.50087 194.217 7.98062Z" fill="#00aaf5"/>
+        </svg>
+    
+</div>
+
+
+    <div class="section-inner">
+        <div class="grid-container">
+            <div class="row collapse footer-main-grid">
+                <div
+                    class="columns small-12 small-order-1-custom large-auto-custom large-order-3-custom footer-main-newsletter"
+                >
+                    <h4>Want to know the latest from Cirkul?</h4>
+
+                    <p>Sign up to be first to receive the latest Cirkul news!</p>
+
+                    <form novalidate data-abide data-newsletter-signup-form>
+                        <label for="email" class="hide">Email Address</label>
+                        <div class="input-group">
+                            <input
+                                class="input-group-field"
+                                name="emailAddress"
+                                type="email"
+                                id="email"
+                                placeholder="Your Email"
+                                required
+                            >
+                            <div class="input-group-button">
+                                <button type="submit" class="button">
+                                    <img
+                                        src="//drinkcirkul.com/cdn/shop/files/2021-submit-arrow.svg?v=99064018637792798"
+                                        alt="Submit"
+                                    >
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div
+                    class="columns small-12 small-order-2-custom medium-shrink-custom medium-order-3-custom large-order-2-custom footer-main-navigation"
+                >
+                    <ul class="menu vertical nav-menu">
+                        <li><a href="/pages/bundle-builder" data-trial-link>Try Cirkul</a></li>
+                        <li><a href="/pages/plans">Plans</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/pages/why-cirkul">How it Works</a></li>
+                        <li><a href="/pages/faq">Help</a></li>
+                        <li><a href="/pages/store-locator">Store Locator</a></li>
+                        <li><a href="/pages/about">About</a></li>
+                        <li class="custom-mobile-only"><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open'); return false;">Cookie Preferences</a></li>
+                        <li class="custom-mobile-only"><a href="/pages/careers">Careers</a></li>
+                        <li><a href="/pages/why-cirkul">Why Cirkul</a></li>
+                        <li><a href="/pages/faq">FAQ</a></li>
+                        <li><a href="/blogs/cirkular">Cirkular</a></li>
+                        
+                        <li class="custom-desktop-only"><a href="/pages/careers">Careers</a></li>
+                        <li class="custom-desktop-only"><a href="#" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open'); return false;">Cookie Preferences</a></li>
+                    </ul>
+                </div>
+
+                <div
+                    class="columns small-12 small-order-3-custom medium-shrink-custom medium-order-2-custom large-order-1-custom footer-main-core"
+                >
+                    <a class="footer-logo-link" href="/"
+                        ><img
+                            class="footer-logo"
+                            src="//drinkcirkul.com/cdn/shop/files/2021-footer-logo.svg?v=2599490955650269684"
+                            alt="Cirkul"
+                            width="119"
+                            height="35"
+                            loading="lazy"
+                    ></a>
+
+                    <a class="help-link" href="mailto:help@drinkcirkul.com">help@drinkcirkul.com</a>
+                    <a class="help-link" style="margin-top: -14px;" href="tel:18444247585">1-844-4-CIRKUL</a>
+
+                    <ul class="menu social-menu">
+                        <li>
+                            <a href="https://facebook.com/DrinkCirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-facebook-f" role="img" aria-label="Facebook"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/DrinkCirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-twitter" role="img" aria-label="Twitter"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/drinkcirkul" target="_blank" data-social-track-link>
+                                <span class="fa fa-instagram" role="img" aria-label="Instagram"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.tiktok.com/@drinkcirkul?lang=en"
+                                target="_blank"
+                                data-social-track-link
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 2859 3333"
+                                    shape-rendering="geometricPrecision"
+                                    text-rendering="geometricPrecision"
+                                    image-rendering="optimizeQuality"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    role="img"
+                                    aria-label="TikTok"
+                                >
+                                    <path d="M2081 0c55 473 319 755 778 785v532c-266 26-499-61-770-225v995c0 1264-1378 1659-1932 753-356-583-138-1606 1004-1647v561c-87 14-180 36-265 65-254 86-398 247-358 531 77 544 1075 705 992-358V1h551z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="menu legal-menu">
+                        <li>
+                            <a href="/pages/privacy">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="/pages/terms">Terms of Use</a>
+                        </li>
+                    </ul>
+
+                    <div class="footer-copyright">© 2021 Cirkul, Inc.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+                    </div>
+                </div>
+
+                <div data-cart-lock-check=""></div>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.25/moment-timezone-with-data-10-year-range.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+            <script src="//cdn.jsdelivr.net/npm/bluebird@3.5.3/js/browser/bluebird.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.24.0/dist/tagify.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.24.0/dist/tagify.polyfills.min.js"></script>
+            <script defer src="//drinkcirkul.com/cdn/shop/t/4/assets/app.min.js?v=1923822146747328961718669339"></script>
+
+            <!-- Gorgias Chat Widget -->
+
+
+
+
+
+
+
+
+
+<div id="gorgias-chat" data-gorgias-chat="begin" data-gorgias-customer-email="" data-gorgias-customer-id="">
+    <style>
+        #gorgias-chat-container,
+        #gorgias-chat-container #chat-button {
+            z-index: 1000 !important; // Should be above modals, which are 999
+        }
+    </style>
+    
+
+    <!-- Gorgias Chat Widget Start -->
+    <script id="gorgias-chat-widget-install">
+        !(function (_) {
+            (_.GORGIAS_CHAT_APP_ID = '281'), (_.GORGIAS_CHAT_BASE_URL = 'us-east1-898b.production.gorgias.chat'), (_.GORGIAS_API_BASE_URL = 'config.gorgias.chat');
+            var e = new XMLHttpRequest();
+            e.open('GET', 'https://config.gorgias.chat/applications/281', !0),
+                (e.onload = function (t) {
+                    if (4 === e.readyState)
+                        if (200 === e.status) {
+                            var n = JSON.parse(e.responseText);
+                            if (!n.application || !n.bundleVersion) throw new Error('Missing fields in the response body - https://config.gorgias.chat/applications/281');
+                            if (
+                                ((_.GORGIAS_CHAT_APP = n.application),
+                                (_.GORGIAS_CHAT_BUNDLE_VERSION = n.bundleVersion),
+                                n && n.texts && (_.GORGIAS_CHAT_TEXTS = n.texts),
+                                n && n.sspTexts && (_.GORGIAS_CHAT_SELF_SERVICE_PORTAL_TEXTS = n.sspTexts),
+                                !document.getElementById('gorgias-chat-container'))
+                            ) {
+                                var o = document.createElement('div');
+                                (o.id = 'gorgias-chat-container'), document.body.appendChild(o);
+                                var r = document.createElement('script');
+                                r.setAttribute('defer', !0),
+                                    (r.src = 'https://client-builds.production.gorgias.chat/{bundleVersion}/static/js/main.js'.replace('{bundleVersion}', n.bundleVersion)),
+                                    document.body.appendChild(r);
+                            }
+                        } else console.error('Failed request GET - https://config.gorgias.chat/applications/281');
+                }),
+                (e.onerror = function (_) {
+                    console.error(_);
+                }),
+                e.send();
+        })(window || {});
+    </script>
+    <!-- Gorgias Chat Widget End -->
+</div>
+
+            <div data-trial-subscription-ab-test="8CART-A"></div>
+
+            
+
+            <script>
+    window.Shopify.loadFeatures(
+        [
+            {
+                name: 'consent-tracking-api',
+                version: '0.1',
+            },
+        ],
+        function (error) {
+            if (!error) {
+                try {
+                    window.Osano.cm.ready('shopify');
+                } catch (error) {
+                    console.error('Osano must be loaded before initializing th Shopify API.');
+                }
+            }
+        }
+    );
+</script>
+
+
+            <script>
+                window.cirkulServices.experimentation.manuallyTriggerPage('24708110218_url_targeting_for_redirect_product_clicks_to_bb');
+
+                window.cirkulServices.experimentation.loadOptimizelyUnauthedExperiment({
+                    experimentId: 28012660245,
+                    variationImplementers: {
+                        28049760255: function () {
+                            // Do nothing (control)
+                        },
+                        28079750013: function () {
+                            var links = document.querySelectorAll('a[href="/products"]');
+                            for (var i = 0; i < links.length; i++) {
+                                links[i].setAttribute('href', '/pages/bundle-builder');
+                            }
+                        },
+                    },
+                    //devVariationId: 28079750013,
+                });
+            </script>
+        </body>
+    
+</html>
