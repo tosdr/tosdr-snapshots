@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Le raccourcisseur d'url qui respecte votre vie privée, nous n'utilisons pas de trackers et ne stockons pas vos données privées.'">
+    <base href="https://cpar.la/">
+    <title>Cparoù ? Cparlà ! - Le réducteur de lien qui respecte votre vie privée</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="assets/bootstrap-4.2.1/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-5.6.3-web/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <link rel="stylesheet" href="assets/nanoscroller.css">
+
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Réducteur de lien qui respecte votre vie privée">
+    <meta property="og:description" content="Cparlà est un raccourcisseur d'url français, nous n'utilisons pas de trackers et ne stockons pas vos données privées.">
+    <meta property="og:url" content="https://cpar.la/">
+    <meta property="og:site_name" content="Cparlà">
+    <meta property="og:image" content="https://cpar.la/assets/img/cparla-og-1.jpg" />
+
+    <style>
+        :root {
+            --input-padding-x: 1.5rem;
+            --input-padding-y: .75rem;
+        }
+
+        body {
+            background: #9CECFB;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #0052D4, #65C7F7, #9CECFB);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .card-signin {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-signin .card-title {
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-size: 1.2rem;
+        }
+
+        .card-signin .card-img-left {
+            width: 45%;
+            background: scroll center url(assets/img/firenze.jpg);
+            background-position: center bottom;
+            background-size: cover;
+            -background-repeat: no-repeat;
+            min-height: 550px;
+        }
+
+        .card-signin .card-body {
+            padding: 2rem;
+        }
+
+        .card-body {
+            width:55%;
+        }
+
+        .form-main {
+            width: 100%;
+        }
+
+        .form-main .btn {
+            font-size: 80%;
+            border-radius: 5rem;
+            letter-spacing: .1rem;
+            font-weight: bold;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-label-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .form-label-group input {
+            height: auto;
+            -border-radius: 2rem;
+        }
+        label {
+            color: #7d7d7d;
+        }
+
+        .cparla-link {
+            color: white;
+            font-family: 'Lobster';
+            position:absolute;
+            bottom: 20px;
+            left: 20px;
+            text-shadow: 2px 2px #00000085;
+            font-size: 2em;
+            border-radius: 9px;
+            padding: 5px;
+            background-color: #0000001a;
+        }
+
+        .cparla-link:hover {
+            color: white;
+            text-decoration: none;
+        }
+
+        .cparla-title, .cparla-title:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        .menu-aide {
+            position:absolute; bottom:5px;
+        }
+
+        #error-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            box-shadow: 10px 10px 5px #0000004d;
+            z-index: 9999;
+        }
+
+        @media only screen and (max-width: 600px) {
+
+            #error-alert {
+                bottom:0px;
+                right: 0px;
+                left: 0px;
+                width: 100%;
+                box-shadow: none;
+                margin: 0;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+            }
+
+            .menu-aide {
+                position:relative;
+                font-size: small;
+                margin-top: 10px;
+                margin-bottom: 0px;
+            }
+        }
+
+        .checked {
+            background-image: url('assets/checked-16.png');
+            background-position: right 5px center;
+            -background-size: contain;
+            background-repeat: no-repeat;
+            padding-right: 20px;
+        }
+
+        .notchecked {
+            background-image: url('assets/cancel-16.png');
+            background-position: right 5px center;
+            -background-size: contain;
+            background-repeat: no-repeat;
+            padding-right: 20px;
+        }
+
+        .hits-bg {
+            -position: absolute;
+            font-size: 1em;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: -55;
+            opacity: 0.4;
+            width: 500px;
+
+            text-align: center;
+        }
+
+        /* HIDE RADIO */
+        [type=radio] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        /* IMAGE STYLES */
+        [type=radio] + img {
+            cursor: pointer;
+            border: 2px solid #fff;
+        }
+
+        /* CHECKED STYLES */
+        [type=radio]:checked + img {
+            border: 2px solid #0069d9;
+        }
+
+        .para {
+            font-size: small;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="alert alert-danger" id="error-alert" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>Erreur</strong>
+    <p id="error-message"></p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+                <div class="card-img-left d-none d-md-flex">
+                    <!-- Background image for card set in CSS! -->
+                    <div><a target="_blank" class="cparla-link" href="https://cpar.la/firenze"><i class="fa fa-link"></i> firenze</a></div>
+                </div>
+                <div class="card-body">
+                    <h1 class="text-center" style="font-family: 'Lobster', cursive;color:black;"><a class="cparla-title" href="https://cpar.la">Cparlà</a></h1>
+                    <h5 class="card-title text-center">Raccourcissez vos adresses internet.</h5>
+
+                    <div class="nano">
+    <div class="nano-content">
+        <h5>Politique de confidentialité & CGU</h5>
+        <h6>Crédits</h6>
+        <p class="para">
+            Le service de raccourcissement d’URL <a href="https://cpar.la">https://cpar.la</a> a été créé et est
+            maintenu par la société CIBLEMUT – 63 impasse des lavandes, lot les mas du cros de l’estang – 83136 Méounes
+            Les Montrieux – France.
+            Il est hébergé chez OVH – 2 rue Kellermann – 59100 Roubaix – France.<br>
+            Le responsable de traitement du site est Monsieur David LAMA.<br>
+            Pour toute question relative la gestion de vos données personnelles par ce site, veuillez contacter notre
+            DPO, Monsieur Frédéric Ryckebusch, à l’adresse suivante : dpo @ ciblemut . net.<br>
+            Vu ce qui suit vous ne devriez pas à avoir à le contacter !
+        </p>
+        <h6>Respect de la vie privée</h6>
+        <p class="para">
+            Nous souhaitons que le service fourni par cpar.la soit un modèle de respect pour la vie privée sur le net.
+            C’est pourquoi le site ne conserve aucune donnée à caractère personnel.<br>
+            Rien n’est loggé, pas de cookies, pas même votre adresse IP n’est conservée ! Notre système de captcha est
+            fait maison et n’est pas contrôlé par une entreprise tiers, exit donc Alphabet, CIA, NSA et cetera !
+            (Ok pour la font google on a encore un effort à faire.)
+            Les seules données éventuellement à caractère personnel que nous serions à même de conserver sont celles
+            que vous mettez dans l’URL à raccourcir et ceci dans le seul but de vous fournir ledit service.
+            Vous consentez en utilisant le site à ce que nous les conservions dans le but de permettre le raccourci.<br>
+            La durée de conservation d’un lien est d’un an à partir de sa dernière utilisation, c’est-à-dire qu’au bout
+            d’un an de non utilisation, le lien s’autodétruit comme avec Monsieur Phelps.
+            Si vous souhaitez conserver un lien plus longtemps il vous suffit donc de l’appeler au moins une fois par an (si
+            le lien est votre ami, ça ne devrait pas poser de problème).
+        </p>
+        <h6>Conditions d’utilisations</h6>
+        <p class="para">
+            Toute personne qui utilise les services du site cpar.la s'engage à respecter les présentes conditions
+            générales d'utilisation.
+            L’utilisation du site cpar.la en l’état est libre et gratuite dans un cadre privé.
+            La revente du service en lui-même est interdite mais son utilisation comme outil au sein d’une activité
+            commerciale est autorisé.
+            Toute activité apparentée à du spam est prohibée.
+            Nous nous réservons le droit de supprimer sans préavis tout lien court généré par l’application en cas
+            d’utilisation que nous jugerions non conforme ou abusive.
+            Les liens personnalisés (alias) sont régis par la règle ancestrale du premier arrivé premier servi.
+            Le mot de passe qui protège votre lien est haché, salé, poivré, saucé, non loggé (bon appétit).
+            Nous ne pouvons pas vous restituer un mot de passe oublié car nous ne le connaissons pas.
+            Notez que nous ne protégeons que le lien court et non pas la page visée.
+        </p>
+        <p class="para">
+            Conformément au Règlement Général sur la Protection des Données, vous disposez d'un droit d'accès, de
+            rectification, de modification et de suppression des données personnelles que vous nous avez communiquées.
+            Vous pouvez à tout moment exercer ce droit en écrivant à : <a href="mailto:contact@cpar.la">contact@cpar.la</a>
+        </p>
+        <h6>Responsabilité</h6>
+        <p class="para">
+            L’utilisation de ce service est donnée « as is ».<br>
+            Le site pointé par le lien raccourci et son utilisation reste de la responsabilité de la personne qui a créé
+            le lien court et nous ne pourrions être tenus responsable de quelque fait que ce soit causé par sa
+            publication ou son utilisation.
+            De même, nous ne pourrions être tenus responsable de l'indisponibilité d’un lien ou d’un défaut de
+            redirection.<br>
+            Bien que gratuit nous nous efforçons de rendre le service 100% opérationnel 7j/7, mais personne n’est
+            parfait !
+        </p>
+        <h6>Droit applicable</h6>
+        <p class="para">
+            Les présentes conditions générales d'utilisation ainsi que l’ensemble du présent site sont soumis à la
+            législation Française. Tout litige portant sur leur interprétation, sera de la compétence exclusive du
+            tribunal de commerce
+            de DRAGUIGNAN. Tout lien suspect ou n’étant pas conforme à la législation Française sera effacé sans
+            préavis.
+            Aidez-nous à respecter la loi : un lien vous semble suspect ? Signalez le à <a href="mailto:contact@cpar.la">contact@cpar.la</a>
+        </p>
+
+
+    </div>
+</div>
+                    <div class="row menu-aide">
+                        <div class="col-12">
+                            <small><a href="https://cpar.la">Accueil</a> - <a href="politique-confidentialite">Politique de confidentialité</a> - <a href="aide">Aide</a></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="hits-bg mx-auto">Hits : 52085</div>
+    </div>
+</div>
+
+
+<script src="assets/jquery-3.3.1.min.js"></script>
+<script src="assets/bootstrap-4.2.1/js/bootstrap.bundle.min.js"></script>
+<script src="assets/jquery.nanoscroller.min.js"></script>
+<script src="assets/form-processing.js"></script>
+<script src="assets/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('#button-copy');
+    $(".nano").nanoScroller();
+</script>
+</body>
+</html>
