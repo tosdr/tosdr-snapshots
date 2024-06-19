@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta http-equiv="Content-Language" content="en_US" />
+
+	<script>
+	  !(function () {
+		(window.semaphore = window.semaphore || []),
+		  (window.ketch = function () {
+			window.semaphore.push(arguments);
+		  });
+		var e = new URLSearchParams(document.location.search),
+		  o = e.has("property") ? e.get("property") : "website_smart_tag",
+		  n = document.createElement("script");
+		  (n.type = "text/javascript"),
+		  (n.src = "https://global.ketchcdn.com/web/v2/config/forbes/".concat(o, "/boot.js")),
+		  (n.defer = n.async = !0),
+		  document.getElementsByTagName("head")[0].appendChild(n);
+	  })();
+	</script>
+	<script>
+	  (function () {
+		function isValidUrl(toURL) {
+		  return (toURL || "").match(/^(?:https?:?\/\/)?(?:[^.(){}\\\/]*)?\.?forbes\.com(?:\/|\?|$)/i);
+		}
+
+		function getUrlParameter(name) {
+		  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+		  var results = regex.exec(location.search);
+		  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+
+		/**
+		 * get the swb_consent cookie and url decode it to get it ready for parsing
+		 * @returns String that has the ketch cookie value
+		 */
+		function getSwbCookieValue() {
+		  let cookieValue = "";
+		  const hasConsentCookie = document.cookie.match(/_swb_consent_=/);
+
+		  if (!hasConsentCookie) {
+			return cookieValue;
+		  }
+
+		  const ketchCookieName = "_swb_consent_=";
+		  document.cookie.split(";").forEach((cookie) => {
+			if (cookie.trim().startsWith(ketchCookieName)) {
+			  cookieValue = decodeURIComponent(cookie.split("=")[1]);
+			}
+		  });
+
+		  return cookieValue;
+		}
+
+		/**
+		 * get the cookie and parse it into json from base64 string
+		 * @returns object that contains the consent details
+		 */
+		function getSwbCookie() {
+		  const ketchCookie = getSwbCookieValue();
+
+		  try {
+			const cookieInfo = window.atob(ketchCookie);
+			return JSON.parse(cookieInfo);
+
+		  } catch (error) {
+			return undefined;
+		  }
+		}
+
+		/**
+		 * checks if the user gave full consent or not
+		 * @param userConsent object that has the consent details
+		 * @returns if the user gave full consent or not
+		 */
+		function getFullConsent(userConsent) {
+		  let userConsentPrefrences = true;
+		  const purposesKeys = Object.keys(userConsent.purposes);
+
+		  // safety check for when the cookie is first intialized
+		  if (purposesKeys.length === 1) {
+			return false;
+		  }
+
+		  purposesKeys.forEach((element) => {
+			if (userConsent.purposes[element].allowed === "false") {
+			  userConsentPrefrences = false;
+			}
+		  });
+
+		  return userConsentPrefrences;
+		}
+
+		function setTrustArcCookie() {
+			const userConsent = getSwbCookie();
+			const expiry = new Date();
+            document.cookie = 'notice_gdpr_prefs=; Path=/; Domain=.forbes.com; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = 'notice_gdpr_prefs=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	  		expiry.setFullYear(expiry.getFullYear() + 1);
+
+			if(getFullConsent(userConsent)) {
+				document.cookie = 'notice_gdpr_prefs=0,1,2; Domain=.forbes.com; Path=/;expires=' + expiry.toUTCString();
+			} else {
+				document.cookie = 'notice_gdpr_prefs=0; Domain=.forbes.com; Path=/;expires=' + expiry.toUTCString();
+			}
+		};
+
+		function consentIsSet(reason) {
+			const expiry = new Date();
+			var toURL = getUrlParameter("toURL");
+
+			expiry.setFullYear(expiry.getFullYear() + 1);
+
+			if (reason !== 'WillNotShow') {
+				setTrustArcCookie();
+				document.cookie = 'forbes_consent=true; Domain=.forbes.com; Path=/;expires=' + expiry.toUTCString();
+			}
+
+			if (!isValidUrl(toURL)) {
+				toURL = "https://www.forbes.com";
+			}
+
+			location.href = toURL;
+		}
+
+		semaphore.push(["onHideExperience", consentIsSet]);
+	  })();
+	</script>
+	<style>
+		@font-face {
+        	font-display: swap;
+        	font-family: 'Work Sans';
+        	font-style: normal;
+        	font-weight: 400;
+        	src: local('Work Sans'), local('Work-Sans'),
+        	url('https://i.forbesimg.com/assets/fonts/work-sans/worksans-regular-webfont.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+        	url('https://i.forbesimg.com/assets/fonts/work-sans/worksans-regular-webfont.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+        }
+
+		#lanyard_root * {
+			font-family: "Work Sans";
+		}
+
+		#lanyard_root *:focus-visible,div[class*='switch__']:focus-within {
+			outline: 3px solid #4285F4;
+		}
+
+		#banner-title {
+			font: 600 18px/24px 'work sans';
+		}
+
+		#banner-description {
+			font: 400 14px/20px 'work sans';
+		}
+
+		#preference-title {
+			font: 600 36px/48px 'work sans';
+		}
+
+		#prefrence-description {
+			font: 400 12px/16px 'work sans';
+		}
+
+		#modal-title {
+			font: 600 18px/24px 'work sans';
+		}
+
+		#modal-description {
+			font: 400 12px/16px 'work sans';
+		}
+	</style>
+  </head>
+  <body></body>
+</html>
