@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang='en'>
+ <head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="shortcut icon" href="/favicon.ico?">
+  <link rel="stylesheet" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
+  <link rel='stylesheet' href='https://www.cyberbotics.com/jquery-ui-layout/1.4.4/layout-default.css'>
+  <link rel='stylesheet' href='https://www.cyberbotics.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://www.cyberbotics.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+  <link rel='stylesheet' href='https://www.cyberbotics.com/wwi/R2018b/wwi.css?R2018b'>
+  <link rel='stylesheet' href='/css/robotbenchmark.css?R2018b'>
+  <link rel='stylesheet' href='/css/social-network.css?R2018b'>
+<title>robotbenchmark</title>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+ </head>
+ <body>
+  <div id="alert" class="alert alert-success collapse" style="margin-bottom:0;">
+   <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+   <div id="alert-content"><strong>Success!</strong> Indicates a successful or positive action.</div>
+  </div>
+  <nav class="navbar navbar-inverse navbar-static-top">
+   <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><b>robot</b>benchmark</a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse navbar-form navbar-right" style="text-align:right">
+     <button class="btn btn-success" href="#signup" data-toggle="modal" data-target="#login-modal" onclick="onSignupButton()">Sign up</button>
+     <button class="btn btn-default" href="#login" data-toggle="modal" data-target="#login-modal" onclick="onLoginButton()">Log in</button>
+    </div>
+   </div>
+  </nav>
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog"> <!-- log in / sign up modal -->
+   <div class="modal-dialog">
+    <div class="modal-content">
+     <div>
+      <button type="button" class="close" data-dismiss="modal" style="margin:10px 15px">&times;</button>
+      <br>
+      <ul class="nav nav-tabs">
+       <li><a href="#signup" data-toggle="tab">Sign up</a></li>
+       <li class="active"><a href="#login" data-toggle="tab">Log in</a></li>
+       <li><a href="#why" data-toggle="tab">Why?</a></li>
+       <li class="hidden" id='password-tab'><a href="#reset-password" data-toggle="tab">Password reset</a></li>
+      </ul>
+     </div>
+     <div class="modal-body">
+      <div class="tab-content">
+       <div class="tab-pane fade in" id="why">
+        <p>You need to log in so that we can save your robotbenchmark data. When you will be back, you will find your data as if you never left. Rest assured your information will not be sold, traded, or given to anyone.</p>
+        <p>Please contact <a href="mailto:info@robotbenchmark.net">info@robotbenchmark.net</a> for any other inquiries.</p>
+       </div>
+       <div class="tab-pane fade active in" id="login">
+        <form id='login-form' class="form-horizontal" method="post" onsubmit="return onLogin();">
+         <fieldset>
+          <div class="control-group">
+           <div class="controls">
+            <br>
+            <input id="email" required="" name="email" type="email" class="form-control input-medium" placeholder="e-mail address" value="">
+            <br>
+            <input id="password" required="" name="password" type="password" class="form-control input-medium" placeholder="password" onclick="onPasswordChange()">
+            <div style="text-align:right"><small><a href="/" onclick="return onForgotPassword()">Forgot password?</a></small></div>
+            <label class="checkbox-inline" for="login-remember">
+             <input type="checkbox" name="remember" id="login-remember">Remember me
+            </label>
+           </div>
+          </div>
+          <div class="control-group">
+           <label class="control-label" for="login-button"></label>
+           <div class="controls">
+            <button id="login-button" name="login" class="btn btn-success" type="submit">Log in</button>
+            <span id="login-error" class="error-message"></span>
+           </div>
+          </div>
+         </fieldset>
+        </form>
+        <hr>
+        <div class="controls" style="text-align:center">or log in with one of these services</div>
+        <br>
+        <form class="form-horizontal">
+         <div class="control-group">
+          <div class="controls" style="text-align:center">
+           <div class="facebook-login btn btn-primary"><img src="/images/facebook-icon.png" height="32" style="margin-right:10px">Facebook</div>
+           <div class="github-login btn btn-primary"><img src="/images/github-icon.png" height="32" style="margin-right:10px">GitHub</div>
+           <div class="google-login btn btn-primary"><img src="/images/google-icon.png" height="32" style="margin-right:10px">Google</div>
+          </div>
+          <div><br></div>
+         </div>
+        </form>
+       </div>
+       <div class="tab-pane fade" id="signup">
+        <form class="form-horizontal" onsubmit="return onSignUp();">
+         <fieldset>
+          <div class="control-group">
+           <div class="controls">
+            <br>
+            <input id="signup-name" name="name" class="form-control input-medium" type="text" placeholder="name" required="">
+            <br>
+            <input required="" id="signup-email" name="email" type="email" class="form-control input-medium" placeholder="e-mail address">
+            <br>
+            <div id="signup-captcha"></div>
+           </div>
+          </div>
+          <div class="control-group">
+           <label class="control-label" for="signup-button"></label>
+           <div class="controls">
+            <button id="signup-button" name="signup" class="btn btn-success" type="submit">Sign up</button>
+            <span id="signup-error" class="error-message"></span>
+           </div>
+          </div>
+         </fieldset>
+        </form>
+        <hr>
+        <div class="controls" style="text-align:center">or log in with one of these services</div>
+        <br>
+        <form class="form-horizontal">
+         <div class="control-group">
+          <div class="controls" style="text-align:center">
+           <div class="facebook-login btn btn-primary"><img src="/images/facebook-icon.png" height="32" style="margin-right:10px">Facebook</div>
+           <div class="github-login btn btn-primary"><img src="/images/github-icon.png" height="32" style="margin-right:10px">GitHub</div>
+           <div class="google-login btn btn-primary"><img src="/images/google-icon.png" height="32" style="margin-right:10px">Google</div>
+          </div>
+          <div><br></div>
+         </div>
+        </form>
+       </div>
+       <div class="tab-pane fade" id="reset-password">
+        <form class="form-horizontal" onsubmit="return onResetPassword();">
+         <fieldset>
+          <div class="control-group">
+           <div class="controls">
+            <br>
+            <input required="" id="reset-password-email" name="email" type="email" class="form-control input-medium" placeholder="e-mail address">
+            <br>
+            <div id="reset-password-captcha"></div>
+           </div>
+          </div>
+          <div class="control-group">
+           <label class="control-label" for="reset-password-button"></label>
+           <div class="controls">
+            <button id="reset-password-button" name="reset-password" class="btn btn-success" type="submit">Reset password</button>
+            <span id="reset-password-error" class="error-message"></span>
+           </div>
+          </div>
+         </fieldset>
+        </form>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+<div class="jumbotron">
+  <div class="container">
+    <h1><img src="images/robotbenchmark-title.png" style="float:left;vertical-align:text-top;margin-right:35px"><b>robot</b>benchmark Privacy Policy</h1>
+  </div>
+</div>
+<div class="container">
+  <div>
+    <h2>Privacy Policy</h2>
+    <p>Last updated: March 30, 2020</p>
+    <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
+    <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
+    <h2>Interpretation and Definitions</h2>
+    <h3>Interpretation</h3>
+    <p>The words of which the initial letter is capitalized have meanings defined under the following conditions.</p>
+    <p>The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+    <h3>Definitions</h3>
+    <p>For the purposes of this Privacy Policy:</p>
+    <ul>
+      <li><p><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</p></li>
+      <li><p><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Cyberbotics Ltd., EPFL Innovation Park - building C, CH-1015 Lausanne.</p></li>
+      <li><p><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</p></li>
+      <li><p><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</p></li>
+      <li><p><strong>Website</strong> refers to robotbenchmark.net, accessible from https://robotbenchmark.net</p></li>
+      <li><p><strong>Service</strong> refers to the Website.</p></li>
+      <li><p><strong>Country</strong> refers to: Switzerland.</p></li>
+      <li><p><strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</p></li>
+      <li><p><strong>Third-party Social Media Service</strong> refers to any website or any social network website through which a User can log in or create an account to use the Service.</p></li>
+      <li><p><strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.</p></li>
+      <li><p><strong>Cookies</strong> are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</li>      <li><strong>Usage Data</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</p></li>
+    </ul>
+    <h2>Collecting and Using Your Personal Data</h2>
+    <h3>Types of Data Collected</h3>
+    <h4>Personal Data</h4>
+    <p>While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:</p>
+    <ul>
+      <li>Email address</li>
+      <li>Source Code of Robot Controllers</li>
+      <li>Usage Data</li>
+    </ul>
+    <h4>Usage Data</h4>
+    <p>Usage Data is collected automatically when using the Service.</p>
+    <p>Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
+    <p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>
+    <p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>
+    <h4>Tracking Technologies and Cookies</h4>
+    <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service.</p>
+    <p>You can instruct Your browser to refuse all Cookies or to indicate when a Cookie is being sent. However, if You do not accept Cookies, You may not be able to use some parts of our Service.</p>
+    <p>Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close your web browser.</p>
+    <p>We use both session and persistent Cookies for the purposes set out below:</p>
+    <ul>
+      <li>
+        <p><strong>Necessary / Essential Cookies</strong></p>
+        <p>Type: Session Cookies</p>
+        <p>Administered by: Us</p>
+        <p>Purpose: These Cookies are essential to provide You with services available through the Website and to enable You to use some of its features. They help to authenticate users and prevent fraudulent use of user accounts. Without these Cookies, the services that You have asked for cannot be provided, and We only use these Cookies to provide You with those services.</p>
+      </li>
+      <li>
+        <p><strong>Cookies Policy / Notice Acceptance Cookies</strong></p>
+        <p>Type: Persistent Cookies</p>
+        <p>Administered by: Us</p>
+        <p>Purpose: These Cookies identify if users have accepted the use of cookies on the Website.</p>
+      </li>
+      <li>
+        <p><strong>Functionality Cookies</strong></p>
+        <p>Type: Persistent Cookies</p>
+        <p>Administered by: Us</p>
+        <p>Purpose: These Cookies allow us to remember choices You make when You use the Website, such as remembering your login details or language preference. The purpose of these Cookies is to provide You with a more personal experience and to avoid You having to re-enter your preferences every time You use the Website.</p>
+      </li>
+    </ul>
+    <h3>Use of Your Personal Data</h3>
+    <p>The Company may use Personal Data for the following purposes:</p>
+    <ul>
+      <li><p><strong>To provide and maintain our Service</strong>, including to monitor the usage of our Service.</p></li>
+      <li><p><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service. The Personal Data You provide can give You access to different functionalities of the Service that are available to You as a registered user.</p></li>
+      <li><p><strong>To contact You:</strong> To contact You by email regarding updates or informative communications related to the functionalities, including the security updates, when necessary.<p></li>
+      <li><p><strong>To provide You</strong> with news and general information about services and events which we offer that are similar to those that you are using unless You have opted not to receive such information.<p></li>
+      <li><p><strong>To manage Your requests:</strong> To attend and manage Your requests to Us.</p></li>
+    </ul>
+    <p>We may share your personal information in the following situations:</p>
+    <ul>
+      <li><p><strong>With Service Providers:</strong> We may share Your personal information with Service Providers to monitor and analyze the use of our Service and to contact You.<p></li>
+      <li><p><strong>For Business transfers:</strong> We may share or transfer Your personal information in connection with, or during negotiations of, any merger, sale of Company assets, financing, or acquisition of all or a portion of our business to another company.<p></li>
+      <li><p><strong>With Affiliates:</strong> We may share Your information with Our affiliates, in which case we will require those affiliates to honor this Privacy Policy. Affiliates include Our parent company and any other subsidiaries, joint venture partners or other companies that We control or that are under common control with Us.</p></li>
+      <li><strong>With other users:</strong> when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside. If You interact with other users or register through a Third-Party Social Media Service, Your contacts on the Third-Party Social Media Service may see Your name, profile, pictures and description of Your activity. Similarly, other users will be able to view descriptions of Your activity, communicate with You and view Your profile.</li>
+    </ul>
+    <h3>Retention of Your Personal Data</h3>
+    <p>The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and policies.</p>
+    <p>The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</p>
+    <h3>Transfer of Your Personal Data</h3>
+    <p>Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.</p>
+    <p>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</p>
+    <p>The Company will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</p>
+    <h3>Disclosure of Your Personal Data</h3>
+    <h4>Business Transactions</h4>
+    <p>If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>
+    <h4>Law enforcement</h4>
+    <p>Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities (e.g. a court or a government agency).</p>
+    <h4>Other legal requirements</h4>
+    <p>The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
+    <ul>
+      <li>Comply with a legal obligation</li>
+      <li>Protect and defend the rights or property of the Company</li>
+      <li>Prevent or investigate possible wrongdoing in connection with the Service</li>
+      <li>Protect the personal safety of Users of the Service or the public</li>
+      <li>Protect against legal liability</li>
+    </ul>
+    <h3>Security of Your Personal Data</h3>
+    <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</p>
+    <h2>Children's Privacy</h2>
+    <p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us. If We become aware that We have collected Personal Data from anyone under the age of 13 without verification of parental consent, We take steps to remove that information from Our servers.</p>
+    <p>We also may limit how We collect, use, and store some of the information of Users between 13 and 18 years old. In some cases, this means We will be unable to provide certain functionality of the Service to these users.</p>
+    <p>If We need to rely on consent as a legal basis for processing Your information and Your country requires consent from a parent, We may require Your parent's consent before We collect and use that information.</p>
+    <h2>Links to Other Websites</h2>
+    <p>Our Service may contain links to other websites that are not operated by Us. If You click on a third party link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.</p>
+    <p>We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
+    <h2>Changes to this Privacy Policy</h2>
+    <p>We may update our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
+    <p>We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the "Last updated" date at the top of this Privacy Policy.</p>
+    <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+    <h2>Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, You can contact us by email at <a href="mailto:info@robotbenchmark.net">info@robotbenchmark.net</a>.</li>
+  </div>
+</div>
+<div class="container">
+  <hr>
+  <footer>
+    <p style='padding-top:20px;text-align:center'><small>co-funded by the <a href='https://www.humanbrainproject.eu' target='_blank'><img src='/images/hbp.png' width='32'> Humain Brain Project</a> and <a href='https://cyberbotics.com' target='_blank'><img src='/images/webots.png' width='32'> Webots</a>.</small></p>
+    <p style='text-align:center'><small>&copy; 2024 robotbenchmark.net</small></p>
+  </footer>
+</div>
+<form id='other-login-form' method='post'>
+  <input id='other-email' type='hidden' name='email'>
+  <input id='other-password' type='hidden' name='password_hash'>
+</form>
+<form id='logout-form' method='post' action="/"><input type='hidden' name='logout' value='1'></form>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://www.cyberbotics.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+<script src="https://www.cyberbotics.com/jquery-ui/1.11.4/jquery.ui.touch-punch.min.js"></script>
+<script src='https://www.cyberbotics.com/jquery-ui-layout/1.4.4/jquery.layout.js'></script>
+<script src="https://www.cyberbotics.com/jquery-dialogextend/2.0.4/jquery.dialogextend.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=MML_HTMLorMML"></script>
+<script src='https://cdn.jsdelivr.net/ace/1.2.6/min/ace.js'></script>
+<script src='https://www.cyberbotics.com/wwi/R2018b/request_methods.js?R2018b'></script>
+<script src="https://www.cyberbotics.com/wwi/R2018b/webots.js?R2018b"></script>
+<script>
+  var signupCaptcha, resetPasswordCaptcha;
+  var animation_view = null;
+  window.onbeforeunload = function(e) {
+    if (animation_view && animation_view.animation)
+      document.cookie = "animation_gui=" + animation_view.animation.gui;
+  };
+  function init() {
+    document.getElementById("login-remember").setAttribute("checked", true);
+    signupCaptcha = grecaptcha.render('signup-captcha', {
+      'sitekey': '6LfdhA4UAAAAAJoe35jR5L_LeJ9dGTT9LgV6-N3B',
+      'callback': captchaCallback
+    });
+    resetPasswordCaptcha = grecaptcha.render('reset-password-captcha', {
+      'sitekey': '6LfdhA4UAAAAAJoe35jR5L_LeJ9dGTT9LgV6-N3B'
+    });
+    // google authentication
+    gapi.load('auth2', function() {
+      var auth2 = gapi.auth2.init({
+        client_id: "253022191917-gu7t52a03au7tm189it97u6ad9korabv.apps.googleusercontent.com",
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile email'
+      });
+      auth2.then(function() {
+        var googleLogin = document.getElementsByClassName("google-login");
+        for (var i = 0; i < googleLogin.length; i++)
+          auth2.attachClickHandler(googleLogin.item(i), {}, onGoogleLogin, onGoogleError);
+      });
+    });
+    // github authentication
+    $('.github-login').on('click', function() {
+      console.log("github login");
+      var win = window.open('https://github.com/login/oauth/authorize?client_id=c5323c00924691ac7387&scope=user,user:email', '_blank', 'width=1024,height=768');
+      win.focus();
+    });
+    var view3d = document.getElementById("view3d");
+    if (view3d == null)
+      return;
+    name = view3d.getAttribute("name");
+    animation_view = new webots.View(view3d);
+    animation_view.open(name + ".x3d");
+    var cookieValues = document.cookie.split(";");
+    var action = 'play';
+    for (var i = 0; i < cookieValues.length; i++) {
+      var words = cookieValues[i].split('=');
+      if (words[0].trim() == 'animation_gui' && words.length > 1) {
+        action = words[1].trim();
+        break;
+      }
+    }
+    animation_view.setAnimation(name + '.json', action, true);
+  }
+  window.addEventListener("load", init, false);
+  (function(d, s, id) { // load facebook API
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) { return; }
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  } (document, 'script', 'facebook-jssdk'));
+  window.fbAsyncInit = function() { // init facebook API
+    FB.init({
+      appId   : '1771549983111682',
+      cookie  : true, // enable cookies to allow the server to access the session
+      xfbml   : true, // parse XFBML
+      version : 'v2.8'
+    });
+    $('.facebook-login').on('click', function() {
+      FB.login(function(response){
+        console.log(response);
+        console.log(response.authResponse);
+        if (response.authResponse) {
+          var access_token = response.authResponse.accessToken;
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', '/ajax/facebook.php');
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function() {
+            if (xhr.responseText.startsWith("Error: ")) {
+              $('#login-error').html(xhr.responseText);
+              return;
+            }
+            $('#login-modal').modal('toggle');
+            var lines = xhr.responseText.split('\n');
+            console.log("received: " + lines[0] + "\n" + lines[1]);
+            document.getElementById('other-email').value = lines[0];
+            document.getElementById('other-password').value = lines[1];
+            document.getElementById('other-login-form').submit();
+          };
+          xhr.send('access_token=' + access_token);
+        } else
+          console.log('The login failed because they were already logged in');
+      }, {scope:'email,public_profile'});
+    });
+  };
+  function bsAlert(text) {
+    var content;
+    var type;
+    if (text.startsWith("Error: ")) {
+      content = "<strong>Error: </strong>" + text.substring(7);
+      type = "alert-danger";
+    } else if (text.startsWith("Success: ")) {
+      content = "<strong>Success: </strong>" + text.substring(9);
+      type = "alert-success";
+    } else return;
+    $("#alert").removeClass("alert-success").removeClass("alert-danger").addClass(type);
+    $("#alert-content").html(content);
+    $("#alert").slideDown();
+  }
+  window.addEventListener('message', function (event) {
+    var lines = event.data.split('\n');
+    if (lines[0]=='_github@robotbenchmark') {
+      $('#login-modal').modal('toggle');
+      document.getElementById('other-email').value = lines[1];
+      document.getElementById('other-password').value = lines[2];
+      document.getElementById('other-login-form').submit();
+    }
+  });
+  function onLogin() {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    $.post("/ajax/login.php", { email: email, password: password }, function(data, status) {
+      if (data == "OK")
+        document.getElementById('login-form').submit();
+      else
+        $('#login-error').html(data);
+    });
+    return false;
+  }
+  function onPasswordChange() {
+    $('#login-error').html('');
+  }
+  function captchaCallback() {
+    var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    if (isChrome)
+      document.getElementById('signup-button').click();
+  }
+  function onSignUp() {
+    var name = document.getElementById('signup-name').value;
+    var email = document.getElementById('signup-email').value;
+    var gRecaptchaResponse = grecaptcha.getResponse(signupCaptcha);
+    if (gRecaptchaResponse === '')
+      $('#signup-error').html("Are you a robot?");
+    else {
+      $.post("/ajax/signup.php", { email: email, name: name, gRecaptchaResponse: gRecaptchaResponse }, function(data, status) {
+        if (data.startsWith("email: ")) {
+          var lines = data.split("\n");
+          var message = lines[0].substring(7);
+          document.getElementById('signup-email').setCustomValidity(message);
+          document.getElementById('signup-button').click(); // force display of the custom message
+          $('#signup-email').bind('input', function() {
+            $('#signup-email').unbind('input');
+            document.getElementById('signup-email').setCustomValidity("");
+            grecaptcha.reset(signupCaptcha);
+          });
+          if (lines.length > 1)
+            for (var i = 0; i < lines.length; i++)
+              console.log(lines[i]);
+        } else {
+          $('#login-modal').modal('toggle');
+          document.getElementById('signup-name').value = "";
+          document.getElementById('signup-email').value = "";
+          bsAlert(data);
+          console.log(data);
+          grecaptcha.reset(signupCaptcha);
+        }
+      });
+    }
+    return false;
+  }
+  function onForgotPassword() {
+    $('#password-tab').removeClass("hidden");
+    $('li > a[href="#reset-password"]').tab("show");
+    $('#login-modal').on('hidden.bs.modal', function () {
+      $('#password-tab').addClass("hidden");
+      $('li > a[href="#login"]').tab("show");
+    });
+    return false;
+  }
+  function onSignupButton() {
+    $('li > a[href="#signup"]').tab("show");
+  }
+  function onLoginButton() {
+    $('li > a[href="#login"]').tab("show");
+  }
+  function onResetPassword() {
+    var email = document.getElementById('reset-password-email').value;
+    var gRecaptchaResponse = grecaptcha.getResponse(resetPasswordCaptcha);
+    if (gRecaptchaResponse === '')
+      $('#reset-password-error').html("Are you a robot?");
+    else {
+      $.post("/ajax/reset-password.php", { email: email, gRecaptchaResponse: gRecaptchaResponse }, function(data, status) {
+        if (data.startsWith("email: ")) {
+          var lines = data.split("\n");
+          var message = lines[0].substring(7);
+          document.getElementById('reset-password-email').setCustomValidity(message);
+          document.getElementById('reset-password-button').click(); // force display of the custom message
+          document.getElementById('reset-password-email').setCustomValidity(""); // restore email check
+          if (lines.length > 1)
+            for (var i = 0; i < lines.length; i++)
+              console.log(lines[i]);
+        } else {
+          $('#login-modal').modal('toggle');
+          bsAlert(data);
+          console.log(data);
+        }
+      });
+    }
+    return false;
+  }
+  function onGoogleLogin(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    var id_token = googleUser.getAuthResponse().id_token;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/ajax/google.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      if (xhr.responseText.startsWith("Error: ")) {
+        $('#login-error').html(xhr.responseText);
+        return;
+      }
+      $('#login-modal').modal('toggle');
+      var lines = xhr.responseText.split('\n');
+      document.getElementById('other-email').value = lines[0];
+      document.getElementById('other-password').value = lines[1];
+      document.getElementById('other-login-form').submit();
+    };
+    xhr.send('id_token=' + id_token);
+  }
+  function onGoogleError(error) {
+    if (error['error'] != 'popup_closed_by_user')
+      console.log("Google error: " + JSON.stringify(error, undefined, 2));
+  }
+</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>
