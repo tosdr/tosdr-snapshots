@@ -1,0 +1,28 @@
+<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><title>腾讯隐私保护平台</title><link rel="stylesheet" href="//at.alicdn.com/t/c/font_3818186_20hcor7uhil.css"><script src="https://cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js"></script><script>const whiteList = {
+        'privacy.qq.com': 'aTSihIrSRVWqZDcKYL',
+        'privacy.tencent.com': 'aTSihIrSxCTAnCatsQ',
+      };
+      const id = whiteList[location.host];
+
+      if (id) {
+        const aegis = new Aegis({
+          id, // 项目ID，即上报id
+          uin: '', // 用户唯一 ID（可选）
+          reportApiSpeed: true, // 接口测速
+          reportAssetSpeed: true, // 静态资源测速
+          spa: true,
+          ext1: 1,
+          beforeRequest: function (data) {
+            let msg = data.logs?.msg || '';
+            if (
+              data.logType === 'log' &&
+              (msg.includes('Script error') ||
+                msg.includes('Uncaught TypeError') ||
+                msg.includes('ReferenceError') ||
+                msg.includes('Uncaught SyntaxError'))
+            ) {
+              return false; //  手动过滤掉这几种错误
+            }
+          },
+        });
+      }</script><link href="/static/css/chunk-vendors.529602ca.css" rel="stylesheet"><link href="/static/css/index.6961cc1f.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but 腾讯隐私保护平台 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script src="//vm.gtimg.cn/tencentvideo/txp/js/txplayer.js"></script><script src="/static/js/chunk-vendors.89e7d969.js"></script><script src="/static/js/index.589fdd15.js"></script></body></html>
