@@ -1,0 +1,976 @@
+
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+<script type="text/javascript">
+/* <![CDATA[ */
+ 
+//----------------------------------------------------------
+//------ JAVASCRIPT HOOK FUNCTIONS FOR GRAVITY FORMS -------
+//----------------------------------------------------------
+
+if ( ! gform ) {
+	document.addEventListener( 'gform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
+	window.addEventListener( 'DOMContentLoaded', function() { gform.domLoaded = true; } );
+
+	var gform = {
+		domLoaded: false,
+		scriptsLoaded: false,
+		initializeOnLoaded: function( fn ) {
+			if ( gform.domLoaded && gform.scriptsLoaded ) {
+				fn();
+			} else if( ! gform.domLoaded && gform.scriptsLoaded ) {
+				window.addEventListener( 'DOMContentLoaded', fn );
+			} else {
+				document.addEventListener( 'gform_main_scripts_loaded', fn );
+			}
+		},
+		hooks: { action: {}, filter: {} },
+		addAction: function( action, callable, priority, tag ) {
+			gform.addHook( 'action', action, callable, priority, tag );
+		},
+		addFilter: function( action, callable, priority, tag ) {
+			gform.addHook( 'filter', action, callable, priority, tag );
+		},
+		doAction: function( action ) {
+			gform.doHook( 'action', action, arguments );
+		},
+		applyFilters: function( action ) {
+			return gform.doHook( 'filter', action, arguments );
+		},
+		removeAction: function( action, tag ) {
+			gform.removeHook( 'action', action, tag );
+		},
+		removeFilter: function( action, priority, tag ) {
+			gform.removeHook( 'filter', action, priority, tag );
+		},
+		addHook: function( hookType, action, callable, priority, tag ) {
+			if ( undefined == gform.hooks[hookType][action] ) {
+				gform.hooks[hookType][action] = [];
+			}
+			var hooks = gform.hooks[hookType][action];
+			if ( undefined == tag ) {
+				tag = action + '_' + hooks.length;
+			}
+			if( priority == undefined ){
+				priority = 10;
+			}
+
+			gform.hooks[hookType][action].push( { tag:tag, callable:callable, priority:priority } );
+		},
+		doHook: function( hookType, action, args ) {
+
+			// splice args from object into array and remove first index which is the hook name
+			args = Array.prototype.slice.call(args, 1);
+
+			if ( undefined != gform.hooks[hookType][action] ) {
+				var hooks = gform.hooks[hookType][action], hook;
+				//sort by priority
+				hooks.sort(function(a,b){return a["priority"]-b["priority"]});
+
+				hooks.forEach( function( hookItem ) {
+					hook = hookItem.callable;
+
+					if(typeof hook != 'function')
+						hook = window[hook];
+					if ( 'action' == hookType ) {
+						hook.apply(null, args);
+					} else {
+						args[0] = hook.apply(null, args);
+					}
+				} );
+			}
+			if ( 'filter'==hookType ) {
+				return args[0];
+			}
+		},
+		removeHook: function( hookType, action, priority, tag ) {
+			if ( undefined != gform.hooks[hookType][action] ) {
+				var hooks = gform.hooks[hookType][action];
+				hooks = hooks.filter( function(hook, index, arr) {
+					var removeHook = (undefined==tag||tag==hook.tag) && (undefined==priority||priority==hook.priority);
+					return !removeHook;
+				} );
+				gform.hooks[hookType][action] = hooks;
+			}
+		}
+	};
+}
+ 
+/* ]]> */
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="manifest" href="https://www.c40.org/wp-content/themes/c40-cities/assets/general/site.webmanifest">
+    <meta name="theme-color" content="#02C245" />
+
+    <script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v22.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Terms of Use - C40 Cities</title>
+	<meta name="description" content="Details of the C40 Cities Terms of Use." />
+	<link rel="canonical" href="https://www.c40.org/terms-of-use/" />
+	<meta property="og:locale" content="en_GB" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Terms of Use - C40 Cities" />
+	<meta property="og:description" content="Details of the C40 Cities Terms of Use." />
+	<meta property="og:url" content="https://www.c40.org/terms-of-use/" />
+	<meta property="og:site_name" content="C40 Cities" />
+	<meta property="article:modified_time" content="2021-10-27T10:01:28+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Estimated reading time" />
+	<meta name="twitter:data1" content="21 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.c40.org/terms-of-use/","url":"https://www.c40.org/terms-of-use/","name":"Terms of Use - C40 Cities","isPartOf":{"@id":"https://www.c40.org/#website"},"datePublished":"2021-10-14T12:16:58+00:00","dateModified":"2021-10-27T10:01:28+00:00","description":"Details of the C40 Cities Terms of Use.","breadcrumb":{"@id":"https://www.c40.org/terms-of-use/#breadcrumb"},"inLanguage":"en-GB","potentialAction":[{"@type":"ReadAction","target":["https://www.c40.org/terms-of-use/"]}]},{"@type":"BreadcrumbList","@id":"https://www.c40.org/terms-of-use/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.c40.org/"},{"@type":"ListItem","position":2,"name":"Terms of Use"}]},{"@type":"WebSite","@id":"https://www.c40.org/#website","url":"https://www.c40.org/","name":"C40 Cities","description":"A global network of mayors taking urgent action to confront the climate crisis and create a future where everyone can thrive.","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.c40.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-GB"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//plausible.io' />
+            <link rel="dns-prefetch" href="//plausible.io">
+        <link rel='stylesheet' id='wp-block-library-css' href='https://www.c40.org/wp-includes/css/dist/block-library/style.css?ver=6.5.3' type='text/css' media='all' />
+<style id='safe-svg-svg-icon-style-inline-css' type='text/css'>
+.safe-svg-cover{text-align:center}.safe-svg-cover .safe-svg-inside{display:inline-block;max-width:100%}.safe-svg-cover svg{height:100%;max-height:100%;max-width:100%;width:100%}
+
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/**
+ * These rules are needed for backwards compatibility.
+ * They should match the button element rules in the base theme.json file.
+ */
+.wp-block-button__link {
+	color: #ffffff;
+	background-color: #32373c;
+	border-radius: 9999px; /* 100% causes an oval, but any explicit but really high value retains the pill shape. */
+
+	/* This needs a low specificity so it won't override the rules from the button element if defined in theme.json. */
+	box-shadow: none;
+	text-decoration: none;
+
+	/* The extra 2px are added to size solids the same as the outline versions.*/
+	padding: calc(0.667em + 2px) calc(1.333em + 2px);
+
+	font-size: 1.125em;
+}
+
+.wp-block-file__button {
+	background: #32373c;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+</style>
+<link rel='stylesheet' id='granola-styles-css' href='https://www.c40.org/wp-content/themes/c40-cities/assets/styles/main.1716376961.css' type='text/css' media='screen' />
+<link rel='stylesheet' id='granola-print-css' href='https://www.c40.org/wp-content/themes/c40-cities/assets/styles/print.1716376961.css' type='text/css' media='print' />
+<script type="text/javascript" defer data-domain='c40.org' data-api='https://plausible.io/api/event' src="https://plausible.io/js/plausible.outbound-links.js?ver=2.0.9" id="plausible"></script>
+<script type="text/javascript" id="plausible-analytics-js-after">
+/* <![CDATA[ */
+window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+/* ]]> */
+</script>
+<link rel='shortlink' href='https://www.c40.org/?p=17542' />
+<link rel="alternate" type="application/json+oembed" href="https://www.c40.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.c40.org%2Fterms-of-use%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.c40.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.c40.org%2Fterms-of-use%2F&#038;format=xml" />
+		<style type="text/css">
+						ol.footnotes>li {list-style-type:decimal;}
+						ol.footnotes { color:#666666; }
+ol.footnotes li { font-size:80%; }
+		</style>
+		<meta name='plausible-analytics-version' content='2.0.9' />
+            <script type="text/javascript" id="spai_js" data-cfasync="false">
+                document.documentElement.className += " spai_has_js";
+                (function(w, d){
+                    var b = d.getElementsByTagName('head')[0];
+                    var s = d.createElement("script");
+                    var v = ("IntersectionObserver" in w) ? "" : "-compat";
+                    s.async = true; // This includes the script as async.
+                    s.src = "https://cdn.shortpixel.ai/assets/js/bundles/spai-lib-bg" + v
+                        + ".1.1.min.js?v=3.9.0";
+                    w.spaiDomain = "cdn.shortpixel.ai";
+                    w.spaiData = {
+                        version: "3.9.0",
+                        key: "spai",
+                        quality: "glossy",
+                        convert: "webp",
+                        lqip: false,
+                                                rootMargin: "500px",
+                        crop: true,
+                        sizeBreakpoints: {"on":true,"base":50,"rate":10},
+                        backgroundsMaxWidth: 1920,
+                        resizeStyleBackgrounds: false,
+                        nativeLazyLoad: false,
+                        safeLazyBackgrounds: false,
+                        asyncInitialParsing: true,
+                        debug: false,
+                        doSelectors: [{"selectors":"img","type":"attr","targetAttr":"src","attrType":"url","lazy":true,"resize":true}],
+                        exclusions: {"selectors":{".team-members .team-members__item img":{"lazy":1,"cdn":1,"resize":0,"lqip":0,"crop":-1},".page-header .hero__media img":{"lazy":0,"cdn":1,"resize":1,"lqip":0,"crop":0}},"urls":{"regex:\/\\\/\\\/([^\\\/]*\\.|)gravatar.com\\\/\/":{"lazy":0,"cdn":0,"resize":0,"lqip":0,"crop":-1}}},
+                        sizeFromImageSuffix: true                    };
+                    b.appendChild(s);
+                }(window, document));
+            </script>
+                        <script async defer data-domain="c40.org"
+                src="https://plausible.io/js/script.file-downloads.outbound-links.js"></script>
+
+                <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PBJJMNB');</script>
+    <!-- End Google Tag Manager -->
+<link rel="icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-32x32.png" data-spai-egr="1" sizes="32x32" />
+<link rel="icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-192x192.png" data-spai-egr="1" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://cdn.shortpixel.ai/spai/q_glossy+ret_img+to_webp/www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-180x180.png" data-spai-egr="1" />
+<meta name="msapplication-TileImage" content="https://www.c40.org/wp-content/uploads/2021/09/cropped-Favicon-1-270x270.png" />
+<link href="https://cdn.shortpixel.ai" rel="preconnect" crossorigin></head>
+
+<body class="page-template-default page page-id-17542 wp-embed-responsive">
+        <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBJJMNB"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+        <a
+                    href="#main"
+                class="skip-link screen-reader-text">Skip to content</a>
+    <header class="header">
+
+    
+    <div class="header__inner">
+        <div class="header__top">
+            <a class="header__logo is-square" href="https://www.c40.org/">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA0OCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjQ4IiBkYXRhLXU9Imh0dHBzJTNBJTJGJTJGd3d3LmM0MC5vcmclMkZ3cC1jb250ZW50JTJGdGhlbWVzJTJGYzQwLWNpdGllcyUyRmFzc2V0cyUyRmltYWdlcyUyRmM0MC1sb2dvLnN2ZyIgZGF0YS13PSI3MiIgZGF0YS1oPSI0OCIgZGF0YS1iaXA9IiI+PC9zdmc+" data-spai="1" alt="C40 Cities" width="72" height="48">            </a>
+
+            <form class="header-search--mobile header-search" autocomplete="off" method="get" action="https://www.c40.org/">
+    <div class="header-search__inner">
+        <div class="header-search__control">
+            <label class="header-search__label" for="header-search6660855421aa4">
+                <span class="screen-reader-text">Search</span>
+            </label>
+
+            <button class="header-search__close js-header-search-toggle burger" type="button">
+            <span class="screen-reader-text">Close header menu</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+        <div class="header-search__search-bar">
+            <div class="header-search__search-bar-inner">
+                <input id="header-search6660855421aa4" aria-label="Search" class="header-search__input" name="s" type="text" placeholder="Search...">
+
+                <button class="header-search__submit" type="submit"><span class="screen-reader-text">Submit search form</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+            <button class="header__burger js-header-toggle burger" type="button" aria-controls="main-menu" aria-expanded="false">
+            <span class="screen-reader-text">Main menu button</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+
+        <div class="header__bottom">
+                            <nav class="header__navigation">
+                    <ul id="main-menu" class="header__main-menu  header__navigation__menu"><li id="menu-item-15" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-15"><a href="#">Who We Are</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-13073" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13073"><a href="https://www.c40.org/about-c40/">About C40</a></li>
+	<li id="menu-item-13114" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13114"><a href="https://www.c40.org/leadership/">Leadership</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-36918" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36918"><a href="https://www.c40.org/leadership/the-c40-co-chairs/">The C40 Co-Chairs</a></li>
+		<li id="menu-item-7175" class="menu-item menu-item-type-post_type_archive menu-item-object-steering-committee menu-item-7175"><a href="https://www.c40.org/steering-committee/">Steering Committee</a></li>
+		<li id="menu-item-7292" class="menu-item menu-item-type-taxonomy menu-item-object-team menu-item-7292"><a href="https://www.c40.org/our-team/teams/board-of-directors/">Board of Directors</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-7891" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7891"><a href="https://www.c40.org/funders-partners/">Funders &#038; Partners</a></li>
+	<li id="menu-item-7209" class="menu-item menu-item-type-post_type_archive menu-item-object-person menu-item-7209"><a href="https://www.c40.org/our-team/">Our Team</a></li>
+</ul></div>
+</li>
+<li id="menu-item-13075" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item--columns menu-item--columns-4 menu-item-13075"><a href="https://www.c40.org/what-we-do/">What We Do</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-13101" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13101"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/">Raising Climate Ambition</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-13100" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13100"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/1-5c-climate-action-plans/">1.5°C Climate Action Plans</a></li>
+		<li id="menu-item-13067" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13067"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/high-impact-accelerators/">High-Impact Accelerators</a></li>
+		<li id="menu-item-13104" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13104"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/inclusive-thriving-cities/">Inclusive &#038; Thriving Cities</a></li>
+		<li id="menu-item-29621" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-29621"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/research-and-knowledge/">Research &#038; Knowledge</a></li>
+		<li id="menu-item-38263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38263"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/climate-budgeting-programme/">Climate Budgeting</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-21596" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-21596"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/">Influencing the Global Agenda</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-29068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29068"><a href="https://www.c40.org/what-we-do/green-just-transition/">Green &#038; Just Transition</a></li>
+		<li id="menu-item-13107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13107"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/global-diplomacy-advocacy/">Global Diplomacy &#038; Advocacy</a></li>
+		<li id="menu-item-13110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13110"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/financing-the-green-transition/">Financing the Green Transition</a></li>
+		<li id="menu-item-13109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13109"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/engaging-the-private-sector/">Engaging the Private Sector</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-13111" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-13111"><a href="https://www.c40.org/what-we-do/building-a-movement/">Building a Movement</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-13103" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13103"><a href="https://www.c40.org/what-we-do/building-a-movement/global-green-new-deal/">Global Green New Deal</a></li>
+		<li id="menu-item-13108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13108"><a href="https://www.c40.org/what-we-do/building-a-movement/youth-engagement/">Youth Engagement</a></li>
+		<li id="menu-item-13074" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13074"><a href="https://www.c40.org/what-we-do/building-a-movement/cities-race-to-zero/">Cities Race to Zero</a></li>
+	</ul></div>
+</li>
+	<li id="menu-item-8184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-8184"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/">Scaling Up Climate Action</a>
+	<div class='sub-menu-wrap sub-menu--depth-1'><ul class='sub-menu'>
+		<li id="menu-item-10973" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10973"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/adaptation-water/">Adaptation &#038; Water</a></li>
+		<li id="menu-item-8424" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8424"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/air-quality/">Air Quality</a></li>
+		<li id="menu-item-8423" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8423"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/energy-and-buildings/">Energy &#038; Buildings</a></li>
+		<li id="menu-item-17487" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17487"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/food-systems/">Food Systems</a></li>
+		<li id="menu-item-8308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8308"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/transportation/">Transportation</a></li>
+		<li id="menu-item-33649" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33649"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/ports-and-shipping/">Ports &#038; Shipping</a></li>
+		<li id="menu-item-8185" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8185"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/urban-planning-design/">Urban Planning &#038; Design</a></li>
+		<li id="menu-item-8425" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8425"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/waste-management/">Waste Management</a></li>
+	</ul></div>
+</li>
+</ul></div>
+</li>
+<li id="menu-item-4258" class="menu-item menu-item-type-post_type_archive menu-item-object-city menu-item-4258"><a href="https://www.c40.org/cities/">Our Cities</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-18"><a href="/news">Latest</a>
+<div class='sub-menu-wrap sub-menu--depth-0'><ul class='sub-menu'>
+	<li id="menu-item-7253" class="menu-item menu-item-type-post_type_archive menu-item-object-news menu-item-7253"><a href="https://www.c40.org/news/">News &#038; Insights</a></li>
+	<li id="menu-item-30862" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-30862"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/research-and-knowledge/">Research &#038; Knowledge</a></li>
+	<li id="menu-item-29010" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-29010"><a href="https://www.c40.org/campaigns/">Campaigns</a></li>
+	<li id="menu-item-17459" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17459"><a href="https://www.c40.org/events/">Events</a></li>
+	<li id="menu-item-32938" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-32938"><a href="https://www.c40.org/case-studies/">Case Studies</a></li>
+</ul></div>
+</li>
+</ul>                </nav>
+            
+            <form class="header-search--desktop header-search" autocomplete="off" method="get" action="https://www.c40.org/">
+    <div class="header-search__inner">
+        <div class="header-search__control">
+            <label class="header-search__label" for="header-search6660855423ea0">
+                <span class="screen-reader-text">Search</span>
+            </label>
+
+            <button class="header-search__close js-header-search-toggle burger" type="button">
+            <span class="screen-reader-text">Close header menu</span>
+        <span class="burger__line burger__line--1"></span>
+    <span class="burger__line burger__line--2"></span>
+    <span class="burger__line burger__line--3"></span>
+</button>
+        </div>
+        <div class="header-search__search-bar">
+            <div class="header-search__search-bar-inner">
+                <input id="header-search6660855423ea0" aria-label="Search" class="header-search__input" name="s" type="text" placeholder="Search...">
+
+                <button class="header-search__submit" type="submit"><span class="screen-reader-text">Submit search form</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+            <div class="header__widgets">
+                                    <nav class="header__navigation header__language-switcher">
+                        <ul class="header__navigation__menu">
+                            <li class="menu-item menu-item-has-children is-language-switcher">
+                                <a class="current-language-name">Language</a>
+                                <div class="sub-menu-wrap sub-menu--depth-0">
+                                    <ul class="sub-menu">
+                                                                                <div class="gtranslate_wrapper" id="gt-wrapper-70896719"></div>                                    </ul>
+                                </div>
+                            </li>
+
+                                                            <li class="menu-item menu-item-has-children is-newsletter">
+                                    <a class="newsletter">Subscribe</a>
+                                    <div class="sub-menu-wrap sub-menu--depth-0">
+                                        <div class="sub-menu">
+                                            <h2>Subscribe to our newsletter</h2>
+<p>Stay up to date with C40.</p>
+<script type="text/javascript"></script>
+                <div class='gf_browser_chrome gform_wrapper gform_legacy_markup_wrapper gform-theme--no-framework' data-form-theme='legacy' data-form-index='0' id='gform_wrapper_26' ><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_26' id='gform_26'  action='/terms-of-use/' data-formid='26' novalidate>
+                        <div class='gform-body gform_body'><ul id='gform_fields_26' class='gform_fields top_label form_sublabel_below description_below validation_below'><li id="field_26_5" class="gfield gfield--type-email gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_5" ><label class='gfield_label gform-field-label' for='input_26_5'>Email<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_5' id='input_26_5' type='email' value='' class='large'    aria-required="true" aria-invalid="false"  />
+                        </div></li><li id="field_26_3" class="gfield gfield--type-name gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_3" ><label class='gfield_label gform-field-label gfield_label_before_complex' >Name<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_complex ginput_container ginput_container--name no_prefix has_first_name no_middle_name has_last_name no_suffix gf_name_has_2 ginput_container_name gform-grid-row' id='input_26_3'>
+                            
+                            <span id='input_26_3_3_container' class='name_first gform-grid-col gform-grid-col--size-auto' >
+                                                    <input type='text' name='input_3.3' id='input_26_3_3' value=''   aria-required='true'     />
+                                                    <label for='input_26_3_3' class='gform-field-label gform-field-label--type-sub '>First</label>
+                                                </span>
+                            
+                            <span id='input_26_3_6_container' class='name_last gform-grid-col gform-grid-col--size-auto' >
+                                                    <input type='text' name='input_3.6' id='input_26_3_6' value=''   aria-required='true'     />
+                                                    <label for='input_26_3_6' class='gform-field-label gform-field-label--type-sub '>Last</label>
+                                                </span>
+                            
+                        </div></li><li id="field_26_6" class="gfield gfield--type-text gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_6" ><label class='gfield_label gform-field-label' for='input_26_6'>City<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_text'><input name='input_6' id='input_26_6' type='text' value='' class='large'     aria-required="true" aria-invalid="false"   /> </div></li><li id="field_26_9" class="gfield gfield--type-consent gfield--type-choice gfield--input-type-consent gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"  data-js-reload="field_26_9" ><label class='gfield_label gform-field-label gfield_label_before_complex' >Consent *<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_consent'><input name='input_9.1' id='input_26_9_1' type='checkbox' value='1'   aria-required="true" aria-invalid="false"   /> <label class="gform-field-label gform-field-label--type-inline gfield_consent_label" for='input_26_9_1' >I agree to the <a href="https://www.c40.org/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://www.c40.org/terms-of-use/" target="_blank">Terms & Conditions</a> of C40 Cities Climate Leadership Group, Inc.</label><input type='hidden' name='input_9.2' value='I agree to the &lt;a href=&quot;https://www.c40.org/privacy-policy/&quot; target=&quot;_blank&quot;&gt;Privacy Policy&lt;/a&gt; and &lt;a href=&quot;https://www.c40.org/terms-of-use/&quot; target=&quot;_blank&quot;&gt;Terms &amp; Conditions&lt;/a&gt; of C40 Cities Climate Leadership Group, Inc.' class='gform_hidden' /><input type='hidden' name='input_9.3' value='21' class='gform_hidden' /></div></li></ul></div>
+        <div class='gform_footer top_label'> <input type='submit' id='gform_submit_button_26' class='gform_button button' value='Subscribe'  onclick='if(window["gf_submitting_26"]){return false;}  if( !jQuery("#gform_26")[0].checkValidity || jQuery("#gform_26")[0].checkValidity()){window["gf_submitting_26"]=true;}  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_26"]){return false;} if( !jQuery("#gform_26")[0].checkValidity || jQuery("#gform_26")[0].checkValidity()){window["gf_submitting_26"]=true;}  jQuery("#gform_26").trigger("submit",[true]); }' /> <input type='hidden' name='gform_ajax' value='form_id=26&amp;title=&amp;description=&amp;tabindex=0&amp;theme=legacy' />
+            <input type='hidden' class='gform_hidden' name='is_submit_26' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='26' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_26' value='WyJ7XCI5LjFcIjpcImU5NDg5ZTM3NTgxYzlhZTM3NDczNTZkYzJhNDM5YjQwXCIsXCI5LjJcIjpcIjAzMTYyMTMwNWQ5MzgwYmE0OTAyM2IyNzYzZWM2NTVjXCIsXCI5LjNcIjpcImIzZGRkMDk0ZmZlYWZlZWUzOTBkYzI2MmViZTdiZDcwXCJ9IiwiZTc1NzE0NzUxNmU0MzY5YTgwYjQ5YjA2N2Q3ZmM1ZjEiXQ==' />
+            <input type='hidden' class='gform_hidden' name='gform_target_page_number_26' id='gform_target_page_number_26' value='0' />
+            <input type='hidden' class='gform_hidden' name='gform_source_page_number_26' id='gform_source_page_number_26' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        </form>
+                        </div>
+		                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_26' id='gform_ajax_frame_26' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
+		                <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 26, 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true );jQuery('#gform_ajax_frame_26').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_26');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_26').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_26').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_26').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_26').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */  }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_26').val();gformInitSpinner( 26, 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7', true );jQuery(document).trigger('gform_page_loaded', [26, current_page]);window['gf_submitting_26'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_26').replaceWith(confirmation_content);jQuery(document).trigger('gform_confirmation_loaded', [26]);window['gf_submitting_26'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_26').text());}else{jQuery('#gform_26').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "26", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);                if (event && event.defaultPrevented) {                return;         }        const gformWrapperDiv = document.getElementById( "gform_wrapper_26" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_26";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_26" );        let postRenderFired = false;                function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            jQuery( document ).trigger( 'gform_post_render', [26, current_page] );            gform.utils.trigger( { event: 'gform/postRender', native: false, data: { formId: 26, currentPage: current_page } } );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]&gt; */
+</script>
+
+
+                                            <div class="social-icons">
+        <ul class="social-icons__icons">
+                        <li class="social-icons__icon social-icons__icon--twitter">
+                    <a target="_blank" rel="noopener noreferrer" href="https://x.com/c40cities">
+                                                    <span class="screen-reader-text">
+                                Visit our twitter page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.2 8.4v.8l-.8-.1a13 13 0 01-7.2-3.6l-1-1-.3.7a4.5 4.5 0 001 4.6c.6.6.5.7-.6.4l-.7-.2c-.1.1.3 1.5.6 2.1a5 5 0 002.1 2l.7.3h-.9c-.9 0-.9 0-.8.3.3 1 1.5 2.1 2.9 2.5l.9.3-.8.5a8.4 8.4 0 01-4.1 1.1l-1.3.1c0 .2 1.9 1 2.9 1.4 3.3 1 7.1.6 10-1.1a13 13 0 006.1-10.6c0-.7 0-.8.9-1.6l1.1-1.2c.2-.3.1-.3-.6 0-1.3.5-1.5.4-.8-.3.5-.5 1-1.4 1-1.6l-.5.2a5 5 0 01-1.3.5l-.8.3-.7-.5-1.3-.7a5 5 0 00-2.7.1 4.3 4.3 0 00-3 4.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--linkedin">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/c40-cities-climate-leadership-group">
+                                                    <span class="screen-reader-text">
+                                Visit our linkedin page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M7.3 8.9v12.3H3.2V8.9h4.1zm.3-3.8c0 1.2-.9 2.1-2.3 2.1S3 6.3 3 5.1C3 3.9 3.9 3 5.3 3s2.3.9 2.3 2.1zm14.5 9v7H18v-6.6c0-1.6-.6-2.8-2.1-2.8-1.1 0-1.8.8-2.1 1.5-.1.3-.1.6-.1 1v6.9H9.6s.1-11.1 0-12.3h4.1v1.7c.5-.8 1.5-2 3.7-2 2.7.1 4.7 1.9 4.7 5.6z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--instagram">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/c40cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our instagram page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.5 2.5c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.5.4-.6.3-1.2.6-1.7 1.2-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.5 2.5 0 1.1-.1 1.4-.1 4.1s0 3.1.1 4.1c0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5 1.1 0 1.4.1 4.1.1 2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1s0-3.1-.1-4.1c-.1-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5h-4.1zm-.9 1.8h.9c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.2.7.4.3.6.7.7 1.1.1.4.3.9.3 1.9 0 1.1.1 1.4.1 4s0 3-.1 4c0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.4.4-.7.6-1.2.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.5-.2-.8-.4-1.2-.7s-.6-.7-.7-1.1c-.1-.4-.3-.9-.3-1.9 0-1.1-.1-1.4-.1-4s0-3 .1-4c0-1 .2-1.5.3-1.9.2-.5.4-.8.7-1.2s.7-.6 1.2-.7c.4-.1.9-.3 1.9-.3h3.1zM17.8 6c-.7 0-1.2.5-1.2 1.2s.5 1.2 1.2 1.2S19 7.9 19 7.2 18.5 6 17.8 6zm-5.3 1.4c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 1.8c1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--facebook">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/C40Cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our facebook page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M13.6 21.2v-9.1h2.5l.4-3.1h-2.8V7.4c0-.8.1-1.3 1.3-1.3h1.6V3H14c-3 0-4.1 1.5-4.1 4.1V9H8v3.1h1.9v9.1h3.7z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--youtube">
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.youtube.com/user/C40CitiesLive">
+                                                    <span class="screen-reader-text">
+                                Visit our youtube page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" role="img" aria-hidden="true" width="30" height="25"><path d="M15.1 4c1.6 0 7.1.1 8.6.5 1 .3 1.8 1.1 2.1 2.1.2.6.3 1.5.3 2.3v.5l.1 2.9v.2l-.1 2.9v.5l-.3 2.3c-.3 1-1.1 1.8-2.1 2.1-.7.2-2.1.3-3.6.4h-.5l-4.8.1h-.3l-4.8-.1h-.5c-1.5-.1-2.9-.2-3.6-.4-1-.3-1.8-1.1-2.1-2.1a8 8 0 01-.3-2.3v-.5C3 14 3 12.8 3 12.5v-.2l.1-2.9v-.5l.3-2.3c.3-1 1.1-1.8 2.1-2.1 1.5-.4 7-.5 8.6-.5h1zm-2.6 5.1v7.3l5.8-3.6-5.8-3.7z"/></svg>                    </a>
+                </li>
+                    </ul>
+    </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                                    </ul>
+                    </nav>
+
+                
+                            </div>
+        </div>
+    </div>
+
+</header>
+<main class="main" id="main">
+    <article id="post-17542" class="article post-17542 page type-page status-publish hentry">
+            <div class="article__header entry-header">
+            <div class="page-header alignfull hero wp-block alignwide has-back-button has-blue-background-color has-background hero--media-type-image">
+    <div class="hero__inner">
+        
+                    <h1 class="hero__heading">Terms of Use</h1>        
+        
+        
+        
+            </div>
+    </div>
+        </div>
+                <div class="article__content entry-content">
+            
+<h2 class="wp-block-heading">Terms &amp; Conditions</h2>
+
+
+
+<p>PLEASE READ ALL OF THE FOLLOWING TERMS AND CONDITIONS OF USE (“TOU”) FOR THE c40.org WEB SITE (“Website”) BEFORE USING THIS WEBSITE. By continuing to access, link to, or use this Website, including but not limited to text, content, photographs, video, audio and graphics, services, and goods (the “Service”), you signify YOUR ACCEPTANCE OF THE TOU. C40 Cities Climate Leadership Group Inc. (“we” or “us”) reserves the right to modify the TOU at any time, and such modifications shall be effective immediately. Please continue to review the TOU whenever accessing, linking to, or using this Website. Your access, link to, or use of the Website, or any service on this Website, after the posting of modifications to the TOU will constitute YOUR ACCEPTANCE OF THE TOU, as modified. If, at any time, you do not wish to accept the TOU, you may not access, link to, or use this Website.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="has-text-align-left is-style-left-align has-black-color has-text-color wp-block-heading"><span style="color:#222" class="tadv-color">1. Use and Restrictions</span></h2>
+
+
+
+<p>(a) References to “you” mean the user of the Service individually (unless otherwise stated on the Service or on the TOU) and, if applicable, any entity that or individual who is the employer of the user or for whom the user acts as an agent (“employer”). You represent, warrant, and covenant that you are authorized by your employer to use the Service.</p>
+
+
+
+<p>(b) You acquire absolutely no rights or licenses in or to the Service and materials contained within the Service other than the limited right for you to access and use the Service in accordance with the TOU.</p>
+
+
+
+<p>(c) You represent, warrant, and covenant that you are (i) at least eighteen (18) years old; and (ii) shall use the Service only as set forth in this TOU. If you are at least eighteen (18) years old and you have not reached the age of majority in your jurisdiction, you may only use the Services if your parent or guardian consents to your use of the Services, assumes the obligations provided in the TOU, and assumes full responsibility for your use of the Services. You agree to comply with any other applicable terms and conditions of use set forth on the Service. When using the Service, you shall not impersonate any person or entity, or falsely state or otherwise misrepresent your affiliation with a person or entity. This Website is controlled and operated within the United States. We do not represent that materials in the Service are appropriate or available for use in any particular location. Those who choose to access the Service do so on their own initiative and are responsible for compliance with all applicable laws.</p>
+
+
+
+<p>(d) You may not use the Service for any illegal purpose, to facilitate the violation of any law or regulation, or in a manner inconsistent with this TOU. You agree that your use of the Service is solely for your own personal, non-commercial purposes and benefit and, if applicable, for your employer’s own non-commercial purposes and benefit. You may not copy, reproduce, recompile, decompile, disassemble, reverse engineer, distribute, publish, display, perform, modify, upload to, create derivative works from, transmit, download, or in any way exploit any part of the Service, except as set forth in the TOU or as explicitly specified in the Service. You may download material from the Service and/or make a reasonable number of copies of the material from the Service for your own, personal noncommercial use and benefit and if applicable, your employer’s own non-commercial purposes and benefit, provided that you retain all copyright and other proprietary notices. The Service and the information contained therein may not be used to construct a database of any kind. Nor may the Service be stored (in its entirety or in any party) in databases for access by you or any third party to distribute any database services containing all or part of the Service.</p>
+
+
+
+<p>(e) You may not access, monitor, or copy any content or information on the Service using any robot, spider, scraper, web crawler, or other automated means or any similar manual process. You may not violate the restrictions in any robot exclusion headers on the Service, if any, or bypass or circumvent other measures employed to prevent or limit access to the Service. You may not violate the security of this Service or attempt to gain unauthorized access to the Service or computer systems or networks connected to the Service through any means.</p>
+
+
+
+<p>(f) You will not use the Service or the information contained therein in unsolicited mailings or spam material. You will not use any of our, our licensors’, the Covered Entities’ (as defined below), or their licensors’ trademarks, trade names, service marks, copyrights, or logos in unsolicited mailings or spam material. You will not spam or send unsolicited mailings to any person or entity using the Service. You may use the sharing functions solely to inform others about content on this Website, and you shall immediately cease using these functions with regard to recipients who have requested not to receive such information. When using the Service, you shall remain friendly and civil and treat all users and recipients with respect and sincerity.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">2. Submissions</h2>
+
+
+
+<p>When using the Service, including but not limited to the sharing functions, you shall not send, submit, upload, post, or other otherwise make available any material that (a) infringes any patent, trademark, trade secret, copyright or other proprietary rights of any party; (b) is unlawful, harassing, libelous, slanderous, offensive, obscene, hateful, pornographic, violent, insulting, threatening, abusive, misleading, deceptive, or racially, ethnically, or otherwise objectionable; (c) contains any commercial, promotional, or solicitation information; (d) contains software viruses, worms, or any other harmful, invasive, or corrupted files, including but not limited to those designed to interrupt, destroy, or limit the functionality of any computer; or (e) contains personally identifiable information of another person.</p>
+
+
+
+<p>If you send, submit, upload, post, or otherwise make available material to the Service or to us or our representatives, including, without limitation, photographs, comments, information, text, video, feedback, or other materials, or unsolicited creative ideas, suggestions, or other materials (each a “Submission” and collectively, the “Submissions”), unless we indicate otherwise, you hereby grant us and our affiliates, partners, and representatives a nonexclusive, royalty-free, perpetual, irrevocable, and fully sublicensable right to use, reproduce, modify, adapt, publish, translate, create derivative works from, distribute, copy, and display any Submission, in whole or in part, throughout the world in any form, media, or technology now known or hereafter developed, including all promotion, marketing, publicity, and any other uses thereof, without notice or attribution to you or any other entity or person and without obtaining any further permission or license or making any payment whatsoever, and you acknowledge that we have no obligation to use your Submission. You grant to us and our affiliates, partners, and representatives, and sublicensees the right to use the name, voice, and/or likeness that you submit in connection with such Submission and all intellectual property and other proprietary rights included in the Submission.</p>
+
+
+
+<p>You represent and warrant that you own or otherwise control all of the rights to the Submission, and that you have a valid and enforceable license from all creators of such materials, including you, and all persons identified in your Submission to use and sublicense such materials herein; that the Submission is truthful and accurate; and that use of the material you supply does not violate the TOU and will not cause injury to any person or entity. You represent and warrant that you will indemnify us and our partners, Suppliers (as defined below), affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns for all claims resulting from the Submission. You hereby waive all copyright, trademark, right of publicity or privacy, and all other claims or causes of action against us and our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns. We take no responsibility and assume no liability for any Submission by you or any third party. You agree that any physical copy of your Submission shall be deemed, and shall remain, our property. You agree that you shall not be entitled for any reason to terminate or rescind this license and release, nor to enjoin, restrain, or otherwise impair the exercise of any rights and privileges granted hereunder.</p>
+
+
+
+<p>We retain the right, which we may or may not exercise in our sole discretion, to review, edit, or delete any material submitted which we, in our sole discretion, deem illegal, offensive, abusive, in violation of the TOU, or otherwise inappropriate or unacceptable. Any material you submit to this Service or to us or our representative is not confidential or proprietary and we shall be under no obligation to maintain the confidentiality of any content you submit.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">3. Intellectual Property</h2>
+
+
+
+<p>The Service is protected by copyrights, trademarks, service marks, international treaties, and/or other proprietary rights and laws of the U.S. and other countries. The Service is also protected as a collective work or compilation under U.S. copyright and other laws and treaties. All individual articles, columns and other elements making up the Service are also copyrighted works. You agree to abide by all applicable copyright and other laws, as well as any additional copyright notices or restrictions contained in the Service. You acknowledge that the Service has been developed, compiled, prepared, revised, selected, and arranged by us and others, through the application of methods and standards of judgment developed and applied through the expenditure of substantial time, effort, and money and constitutes valuable intellectual property of us and such others. You agree to protect the proprietary rights of us and all others having rights in the Service, during and after the term of this agreement and to comply with all reasonable written requests made by us or our partners, affiliates, suppliers, licensors, and owners of content, copyrights, trademarks, or otherwise (“Suppliers”) to protect their and others’ contractual, statutory, and common law rights in the Service. You agree to notify us in writing at&nbsp;<a href="mailto:copyright@c40.com">copyright@c40.com</a>&nbsp;promptly upon becoming aware of any unauthorized access or use of the Service by any individual or entity or of any claim that the Service infringes upon any copyright, trademark, or other contractual, statutory, or common law rights. All present and future rights in and to trade secrets, patents, copyrights, trademarks, service marks, know-how, and other proprietary rights of any type under the laws of any governmental authority, domestic or foreign, including rights in and to all applications and registrations relating to the Service (the “Intellectual Property Rights”) shall, as between you and us, at all times be and remain the sole and exclusive property of us, our affiliates, and our or their licensors. All present and future rights in and title to the Service (including the right to exploit the Service and any portions of the Service over any present or future technology) are reserved to us and our affiliates for our exclusive use.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">4. Account Registration</h2>
+
+
+
+<p>(a) As part of the registration process or the create a profile process which may be necessary to obtain access to parts of the Service, certain registration information will be provided to us. You represent that your registration information and any other information that you provide to us is accurate and truthful. You shall promptly update the registration information through the Service or as otherwise directed by us in order to keep such information true, accurate, and up to date. Each registration is for a single user only except as otherwise set forth herein for users authorized by their employers to use the Service. You agree that creation of your account may be denied based on the inability to verify the authenticity of your registration information. A login, such as a unique username and password (your unique username and password, the “Login”) will be created and may be used by you to gain access to the applicable portions of the Service only for so long as you are authorized to access and use the Service in accordance with the TOU. You agree to treat the Login as confidential and not to disclose the Login, or any part of it, either directly or indirectly, to any person. If your employer provides you with a Login to be used for the employer’s benefit, you agree to abide by the conditions set by your employer for use of the Login and to disclose the Login only to other employees authorized and designated by your employer. You shall not use a Login that we, in our sole discretion, deem offensive or inappropriate. You are fully responsible for all usage and activity of the Service through you, including, but not limited to, any use of the Login. You are responsible for all access by other users to materials that you maintain on the Service. Only you may access the Service through the Login and access may not be shared with any other person except as set forth herein for users authorized by their employers to use the Service. Access to the Service may not be used in any manner that is inconsistent with the TOU. You agree to maintain only one account with the Service at any time and certify that you currently have no other account(s) with the Service. You understand and agree that you have no ownership rights in your account. You understand and agree that, if you cancel your account, we and third parties may retain copies of information provided by you.</p>
+
+
+
+<p>(b) Security. You agree (i) immediately to notify us at&nbsp;<a href="mailto:privacy@c40.com">privacy@c40.com</a>&nbsp;of any known or suspected unauthorized use(s) of the Service, or any known or suspected breach of security, including but not limited to, loss, theft, or unauthorized disclosure of a Login; and (ii) properly to exit the Services at the end of each session. WE SHALL NOT BE LIABLE TO YOU OR ANY THIRD PERSON OR ENTITY FOR ANY LOSS OR DAMAGE ARISING FROM YOUR FAILURE TO COMPLY WITH THESE REQUIREMENTS. If a device on which the Service is accessed is sold or transferred to another party, you agree to delete all cookies and software files obtained by or through use of the Service that are stored on such device. Notwithstanding anything else herein, we reserve the right to pursue any and all claims against you and any person or entity using your Login. We may require you to change your Login. We reserve the right to suspend your account.</p>
+
+
+
+<p>(c) We reserve the right periodically to audit and monitor (physically or electronically) the use of the Service to ensure compliance with the TOU and to maintain and improve the provision of the Service.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">5. Linking and Framing</h2>
+
+
+
+<p>You may not frame this Website or any portion or page of this Website. You may not archive, cache, or mirror any page or portion of a page of this Website. You may not include a link(s) on your website to this Website, or any page or portion of the Website, without our written permission. To request permission to link to this Website, please contact&nbsp;<a href="mailto:copyright@c40.com">copyright@c40.com</a>. If you receive permission to link to this Website, you may not link to this Website any website containing inappropriate, profane, defamatory, infringing, obscene, indecent, or unlawful topics, names, or material or information that violates any applicable intellectual property, proprietary, privacy, or publicity rights. If you link to this Website, you may not portray any person or subject in a false or misleading light. In addition, you may not imply that we and/or our Suppliers are endorsing your products or services. Any violation of this provision may, in our discretion, result in termination of your access to and use of this Website effective immediately.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">6. DISLAIMER OF WARRANTIES/<br>LIMITATIONS ON LIABILITY</h2>
+
+
+
+<p>YOU AGREE THAT YOUR USE OF THE SERVICE IS AT YOUR SOLE RISK AND ACKNOWLEDGE THAT ALL INFORMATION CONTAINED IN THE SERVICE IS PROVIDED “AS IS” AND “AS AVAILABLE,” AND THAT WE MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE SERVICE, INCLUDING, BUT NOT LIMITED TO, MERCHANTABILITY, NON-INFRINGEMENT, TITLE, OR FITNESS FOR A PARTICULAR PURPOSE OR USE.</p>
+
+
+
+<p>We do not warrant that the Service is compatible with your equipment or that the Service, or e-mail sent by us or our representative, is free of errors or viruses, worms or “Trojan horses,” or any other harmful, invasive, or corrupted files, and is not liable for any damage you may suffer as a result of such destructive features. You agree that we and our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns shall have no responsibility or liability for: (i) any injury or damages, whether caused by our negligence or that of our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns or otherwise arising in connection with the Service and shall not be liable for any lost profits, losses, punitive, incidental, or consequential damages, or any claim against us; or (ii) any fault, inaccuracy, omission, delay, or any other failure in the Service caused by your computer equipment or arising from your use of the Service on such equipment.</p>
+
+
+
+<p>The content of other websites, services, goods, or advertisements that may be linked to or from the Service is not maintained or controlled by us. We are therefore not responsible for the availability, content, or accuracy of other websites, services, or goods that may be linked to or from the Service. We do not: (a) make any warranty, express or implied, with respect to the use of the links provided on, or to, the Service; (b) guarantee the accuracy, completeness, usefulness or adequacy of any other websites, services, or goods, that may be linked to or from the Service; or (c) make any endorsement, express or implied, of any other websites, services, or goods, that may be linked to or from the Service. For the avoidance of doubt, this paragraph covers websites linked to or from the Service, including, but not limited to social networking websites and the website of a city that is part of the C40 Cities Climate Leadership Group network. Any statements, opinions, or other information made available by third parties, including users, are solely those of the respective author(s) or distributor(s).</p>
+
+
+
+<p>We are also not responsible for the reliability or continued availability of the telephone lines, wireless services, communications media, and equipment you use to access the Service. You understand that we and/or Suppliers to the Service may choose at any time to inhibit or prohibit our or their content from being accessed under the TOU, even if you have already begun participating in a particular activity or utilizing a particular feature. You agree that your use of the Service does not guarantee that your application for a grant, etc. will be accepted or that you will be awarded a grant, etc. Anything to the contrary herein set forth notwithstanding, we and our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns shall not, directly or indirectly, be liable, in any way, to you or any other person for any: (x) inaccuracies or errors in or omissions from the Service; (y) delays, errors, or interruptions in the transmission or delivery of the Service; or (c) loss or damage therefrom or occasioned thereby, or by any reason of nonperformance.</p>
+
+
+
+<p>UNDER NO CIRCUMSTANCES, INCLUDING BUT NOT LIMITED TO NEGLIGENCE, SHALL WE AND OUR PARTNERS, SUPPLIERS, AND AFFILIATES AND THEIR RESPECTIVE OWNERS, MEMBERS, AGENTS, DIRECTORS, OFFICERS, EMPLOYEES, REPRESENTATIVES, AFFILIATES, SUCCESSORS, AND ASSIGNS BE LIABLE TO YOU OR ANY THIRD PARTY FOR DIRECT, INDIRECT, INCIDENTAL, CONSEQUENTIAL, SPECIAL, PUNITIVE, OR EXEMPLARY DAMAGES EVEN IF WE HAVE BEEN ADVISED SPECIFICALLY OF THE POSSIBILITY OF SUCH DAMAGES, ARISING FROM USE OF OR INABILITY TO USE THE SERVICE OR ANY LINKS OR ITEMS ON THE SERVICE OR ANY PROVISION OF THE TOU. APPLICABLE LAW MAY NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY OR INCIDENTAL OR CONSEQUENTIAL DAMAGES.</p>
+
+
+
+<p>In the event you have a dispute with one or more users of the Website, you release us and our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns from any claims, damages, liabilities, costs, and expenses, including reasonable attorney’s and expert’s fees, arising out of or in connection with such dispute.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">7. Indemnification</h2>
+
+
+
+<p>You agree, at your own expense, to indemnify, defend and hold us and our partners, Suppliers, and affiliates and our and their respective owners, members, agents, directors, officers, employees, representatives, affiliates, successors, and assigns against any claim, suit, action or other proceeding, from and against any and all claims, damages, liabilities, costs, and expenses, including reasonable attorney’s and expert’s fees, arising out of or in connection with the Service, or any links on the Service, including, but not limited: (i) any breach or violation of the TOU by you or someone using your computer; (ii) material entered into or transmitted through the Service with the use of your computer; (iii) your use or someone using your computer’s use of the Service; (iv) a claim that any use of the Service by you or someone using your computer infringes any Intellectual Property Right of any third party, or any right of privacy or publicity, is libelous or defamatory, or otherwise results in injury or damage to any third party; or (v) any deletions, additions, insertions or alterations to, or any unauthorized use of, the Service by you or someone using your computer. You agree to pay any and all costs, damages, and expenses, including, but not limited to, reasonable attorneys’ fees and costs awarded against or otherwise incurred by or in connection with or arising from any such claim, suit, action, or proceeding attributable to any such claim. We reserve the right, at our own expense, to assume the exclusive defense and control of any matter otherwise subject to indemnification by you, in which event you will fully cooperate with us in asserting any available defense.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">8. Privacy Policy</h2>
+
+
+
+<p>Click here for this website’s <a href="https://www.c40.org/privacy-policy/">Privacy Policy</a></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">9. Term and Termination</h2>
+
+
+
+<p>(a) You may terminate the TOU, with or without cause and at any time, by discontinuing your use of the Service and destroying all materials obtained from the Service.</p>
+
+
+
+<p>(b) We shall have the right immediately to terminate the TOU in the event of any breach by you of the TOU. We may discontinue the Service, or change its availability to you, at any time in our sole discretion. You accept that we have the right to change the content or technical specifications of any aspect of the Service at any time in our sole discretion. You further accept that such changes may result in your being unable to access the Service.</p>
+
+
+
+<p>(c) We shall not be liable to you or any third party for the termination or suspension of the Service, or any claims related to the termination or suspension of the Service. Upon termination of the TOU by you or us, you must discontinue your use of the Service and destroy promptly all materials obtained from the Service and any copies thereof.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">10. Governing Law</h2>
+
+
+
+<p>The TOU shall be governed and construed in accordance with the laws of the United States and the State of New York, without giving effect to conflicts-of-law principles thereof. You agree to submit to the personal jurisdiction of the state and federal courts located in New York County in the State of New York with respect to any legal proceedings that may arise in connection with the Service or from a dispute as to the interpretation or breach of the TOU and hereby waive any objection to the propriety or convenience of venue is such courts.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">11. Electronic Communications</h2>
+
+
+
+<p>When you visit this Website and when you communicate with us electronically, you consent to receive communications from us electronically and to electronically sign documents. You agree that all notices, disclosures, and other communications that we provide to you electronically satisfy any legal requirement that such communications be in writing. You agree that you have the ability to store such electronic communications such that they remain accessible to you in an unchanged form. We will retain a copy of any agreement or document you sign electronically, including through this Website, and you are responsible for retaining a copy of any agreement or document you sign electronically, including through this Website.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">12. Assignment/Delegation</h2>
+
+
+
+<p>You may not assign or transfer the TOU or the rights hereunder, including but not limited to, the limited right for you to access use the Service in accordance with the TOU. We may assign the TOU to an affiliated entity, partner, or any third party. You acknowledge and agree that we may delegate certain of our responsibilities, obligations, and duties under or in connection with the TOU to an affiliated entity, partner, or any third party, which may discharge those responsibilities, obligations, and duties on behalf of us.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">13. Parties/Third-Party Beneficiaries</h2>
+
+
+
+<p>You recognize that we and our affiliated entities, partners, and Suppliers, and their affiliated entities (together, the “Covered Entities”), each have rights with respect to the Service, including the information and other items provided by us and the Covered Entities by reason of your use of the Service. The TOU shall be for the benefit of the Covered Entities and the respective affiliates, successors, assigns, officers, directors, employees, Suppliers, and representatives of the Covered Entities.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">14. Trademarks</h2>
+
+
+
+<p>You may not use any of our trademarks, trade names, service marks, copyrights, or logos, or our licensors’, the Covered Entities’, or their licensors’ trademarks, trade names, service marks, copyrights, or logos, including without limitation C40, C40 CITIES, C40 CITIES CLIMATE LEADERSHIP GROUP, and C40 CITIES CLIMATE LEADERSHIP GROUP and Design, in any manner which creates the impression that such items (i) belong to or are associated with you or indicate the sponsorship or approval of us, our licensors, any Covered Entity, or their licensors; or (ii) except as otherwise provided herein, are used with our, our licensors’, the Covered Entities’, or their licensors’ consent, and you acknowledge that you have no ownership rights in or to any of such items.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">15. Careers</h2>
+
+
+
+<p>We may change a job description posted on the Careers pages on the Service at any time even if you have already applied, and not all jobs may be posted on the Website. We may correct, change, withdraw or do anything else with a job description even if you have already taken action based on it. We make no guarantees or representations that your use of the Service will result in an offer of employment.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">16. General</h2>
+
+
+
+<p>The TOU and any other terms and conditions of service on the Service, and its successor, constitute the entire agreement between you and us and govern your use of the Service. The section titles in the TOU are used solely for the convenience of you and us and have no legal or contractual significance. Our failure to exercise or enforce any right or provision of the TOU shall not constitute a waiver of such right or provision. If any provision of the TOU is found invalid or unenforceable, that provision will be enforced to the maximum extent permissible, and the other provisions of the TOU will remain in force. Sections 1(a), 1(c) – 1(f), 2 through 8, 9(c), and 10 through 16 shall survive termination or expiration of this TOU.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 class="is-style-left-align wp-block-heading">Copyright Agent for Copyright Infringement Claims (Digital Millennium Copyright Act)</h2>
+
+
+
+<p>The designated agent to receive notification of claimed infringement under Title II of the Digital Millennium Copyright Act is: Fiona Reid, 25 East 78th St, New York, NY 10075, telephone (212) 205-0100, e-mail:&nbsp;<a href="mailto:fiona@c40.com">fiona@c40.com</a></p>
+        </div>
+    </article>
+</main>
+<footer class="footer">
+    <div class="footer__inner">
+        <a class="footer__logo is-square" href="https://www.c40.org/">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MiA0OCIgd2lkdGg9IjcyIiBoZWlnaHQ9IjQ4IiBkYXRhLXU9Imh0dHBzJTNBJTJGJTJGd3d3LmM0MC5vcmclMkZ3cC1jb250ZW50JTJGdGhlbWVzJTJGYzQwLWNpdGllcyUyRmFzc2V0cyUyRmltYWdlcyUyRmM0MC1sb2dvLnN2ZyIgZGF0YS13PSI3MiIgZGF0YS1oPSI0OCIgZGF0YS1iaXA9IiI+PC9zdmc+" data-spai="1" alt="C40 Cities" width="72" height="48">        </a>
+
+        <div class="footer__who-we-are">
+                            <h3 class="footer__menu-header">Who We Are</h3>
+                <div class="menu-footer-who-we-are-container"><ul id="menu-footer-who-we-are" class="footer__menu"><li id="menu-item-7293" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7293"><a href="https://www.c40.org/about-c40/">About C40</a></li>
+<li id="menu-item-13119" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13119"><a href="https://www.c40.org/leadership/">Leadership</a></li>
+<li id="menu-item-13118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13118"><a href="https://www.c40.org/funders-partners/">Funders &#038; Partners</a></li>
+<li id="menu-item-43" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-43"><a href="/our-team/">Our Team</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__what-we-do">
+                            <h3 class="footer__menu-header">What We Do</h3>
+                <div class="menu-footer-what-we-do-container"><ul id="menu-footer-what-we-do" class="footer__menu"><li id="menu-item-13125" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13125"><a href="https://www.c40.org/what-we-do/raising-climate-ambition/">Raising Climate Ambition</a></li>
+<li id="menu-item-22234" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22234"><a href="https://www.c40.org/what-we-do/influencing-the-global-agenda/">Influencing the Global Agenda</a></li>
+<li id="menu-item-13123" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13123"><a href="https://www.c40.org/what-we-do/building-a-movement/">Building a Movement</a></li>
+<li id="menu-item-13126" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13126"><a href="https://www.c40.org/what-we-do/scaling-up-climate-action/">Scaling Up Climate Action</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__site-sections">
+                            <div class="menu-footer-site-sections-container"><ul id="menu-footer-site-sections" class="footer__menu"><li id="menu-item-48" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-48"><a href="/cities/">Our Cities</a></li>
+<li id="menu-item-49" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-49"><a href="/news/">News &#038; Insights</a></li>
+<li id="menu-item-13391" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13391"><a href="https://www.c40.org/careers/">Careers</a></li>
+<li id="menu-item-13400" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13400"><a href="https://www.c40.org/contact/">Contact</a></li>
+<li id="menu-item-35204" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-35204"><a href="https://c40.us6.list-manage.com/subscribe?u=529235039ea48b192727b37a9&#038;id=c8eaa84d3a">Subscribe</a></li>
+<li id="menu-item-11679" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11679"><a href="https://www.c40.org/location-and-policies/">Locations &#038; Policies</a></li>
+</ul></div>                    </div>
+
+        <div class="footer__actions">
+            <div class="footer__actions__item footer__cta-1">
+                                        <a
+                    href="https://www.c40knowledgehub.org/"
+                rel="noopener" target="_blank">C40 Knowledge Hub</a>
+                            </div>
+
+            <div class="footer__actions__item footer__cta-2">
+                            </div>
+
+            <div class="social-icons">
+        <ul class="social-icons__icons">
+                        <li class="social-icons__icon social-icons__icon--twitter">
+                    <a target="_blank" rel="noopener noreferrer" href="https://x.com/c40cities">
+                                                    <span class="screen-reader-text">
+                                Visit our twitter page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.2 8.4v.8l-.8-.1a13 13 0 01-7.2-3.6l-1-1-.3.7a4.5 4.5 0 001 4.6c.6.6.5.7-.6.4l-.7-.2c-.1.1.3 1.5.6 2.1a5 5 0 002.1 2l.7.3h-.9c-.9 0-.9 0-.8.3.3 1 1.5 2.1 2.9 2.5l.9.3-.8.5a8.4 8.4 0 01-4.1 1.1l-1.3.1c0 .2 1.9 1 2.9 1.4 3.3 1 7.1.6 10-1.1a13 13 0 006.1-10.6c0-.7 0-.8.9-1.6l1.1-1.2c.2-.3.1-.3-.6 0-1.3.5-1.5.4-.8-.3.5-.5 1-1.4 1-1.6l-.5.2a5 5 0 01-1.3.5l-.8.3-.7-.5-1.3-.7a5 5 0 00-2.7.1 4.3 4.3 0 00-3 4.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--linkedin">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/c40-cities-climate-leadership-group">
+                                                    <span class="screen-reader-text">
+                                Visit our linkedin page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M7.3 8.9v12.3H3.2V8.9h4.1zm.3-3.8c0 1.2-.9 2.1-2.3 2.1S3 6.3 3 5.1C3 3.9 3.9 3 5.3 3s2.3.9 2.3 2.1zm14.5 9v7H18v-6.6c0-1.6-.6-2.8-2.1-2.8-1.1 0-1.8.8-2.1 1.5-.1.3-.1.6-.1 1v6.9H9.6s.1-11.1 0-12.3h4.1v1.7c.5-.8 1.5-2 3.7-2 2.7.1 4.7 1.9 4.7 5.6z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--instagram">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/c40cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our instagram page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M12.5 2.5c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.5.4-.6.3-1.2.6-1.7 1.2-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.5 2.5 0 1.1-.1 1.4-.1 4.1s0 3.1.1 4.1c0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5 1.1 0 1.4.1 4.1.1 2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1s0-3.1-.1-4.1c-.1-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5h-4.1zm-.9 1.8h.9c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.2.7.4.3.6.7.7 1.1.1.4.3.9.3 1.9 0 1.1.1 1.4.1 4s0 3-.1 4c0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.4.4-.7.6-1.2.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.5-.2-.8-.4-1.2-.7s-.6-.7-.7-1.1c-.1-.4-.3-.9-.3-1.9 0-1.1-.1-1.4-.1-4s0-3 .1-4c0-1 .2-1.5.3-1.9.2-.5.4-.8.7-1.2s.7-.6 1.2-.7c.4-.1.9-.3 1.9-.3h3.1zM17.8 6c-.7 0-1.2.5-1.2 1.2s.5 1.2 1.2 1.2S19 7.9 19 7.2 18.5 6 17.8 6zm-5.3 1.4c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 1.8c1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--facebook">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/C40Cities/">
+                                                    <span class="screen-reader-text">
+                                Visit our facebook page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" role="img" aria-hidden="true" width="25" height="25"><path d="M13.6 21.2v-9.1h2.5l.4-3.1h-2.8V7.4c0-.8.1-1.3 1.3-1.3h1.6V3H14c-3 0-4.1 1.5-4.1 4.1V9H8v3.1h1.9v9.1h3.7z"/></svg>                    </a>
+                </li>
+                        <li class="social-icons__icon social-icons__icon--youtube">
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.youtube.com/user/C40CitiesLive">
+                                                    <span class="screen-reader-text">
+                                Visit our youtube page                            </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 25" role="img" aria-hidden="true" width="30" height="25"><path d="M15.1 4c1.6 0 7.1.1 8.6.5 1 .3 1.8 1.1 2.1 2.1.2.6.3 1.5.3 2.3v.5l.1 2.9v.2l-.1 2.9v.5l-.3 2.3c-.3 1-1.1 1.8-2.1 2.1-.7.2-2.1.3-3.6.4h-.5l-4.8.1h-.3l-4.8-.1h-.5c-1.5-.1-2.9-.2-3.6-.4-1-.3-1.8-1.1-2.1-2.1a8 8 0 01-.3-2.3v-.5C3 14 3 12.8 3 12.5v-.2l.1-2.9v-.5l.3-2.3c.3-1 1.1-1.8 2.1-2.1 1.5-.4 7-.5 8.6-.5h1zm-2.6 5.1v7.3l5.8-3.6-5.8-3.7z"/></svg>                    </a>
+                </li>
+                    </ul>
+    </div>
+        </div>
+
+        <div class="footer__bottom">
+            <div class="footer__utility-menu">
+                <div class="menu-footer-utility-menu-container"><ul id="menu-footer-utility-menu" class="footer__menu"><li id="menu-item-17537" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17537"><a href="https://www.c40.org/accessibility/">Accessibility</a></li>
+<li id="menu-item-53" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-53"><a href="/privacy-notice">Privacy Notice</a></li>
+<li id="menu-item-17546" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-17542 current_page_item menu-item-17546"><a href="https://www.c40.org/terms-of-use/" aria-current="page">Terms of Use</a></li>
+<li id="menu-item-55" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-55"><a href="https://www.wholegraindigital.com/">Website by Wholegrain Digital</a></li>
+</ul></div>            </div>
+
+            <div class="footer__text">
+                <span>&copy; 2024</span>
+
+                                    <p>C40 Cities Climate Leadership Group, Inc. All rights reserved.</p>
+                
+                            </div>
+        </div>
+    </div>
+</footer>
+<style id='core-block-supports-inline-css' type='text/css'>
+/**
+ * Core styles: block-supports
+ */
+
+</style>
+<script type="text/javascript" id="granola-scripts-js-extra">
+/* <![CDATA[ */
+var params = {"ajax_url":"https:\/\/www.c40.org\/wp-admin\/admin-ajax.php","home_url":"https:\/\/www.c40.org"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.c40.org/wp-content/themes/c40-cities/assets/scripts/main.1a1166cc649c857b6081.js" id="granola-scripts-js"></script>
+<script type="text/javascript" id="gt_widget_script_70896719-js-before">
+/* <![CDATA[ */
+window.gtranslateSettings = /* document.write */ window.gtranslateSettings || {};window.gtranslateSettings['70896719'] = {"default_language":"en","languages":["af","zh-CN","nl","en","fr","de","it","pl","pt","ru","es"],"url_structure":"sub_directory","flag_style":"2d","wrapper_selector":"#gt-wrapper-70896719","alt_flags":[],"float_switcher_open_direction":"bottom","switcher_horizontal_position":"inline","flags_location":"\/wp-content\/plugins\/gtranslate\/flags\/"};
+/* ]]> */
+</script><script src="https://www.c40.org/wp-content/plugins/gtranslate/js/float.js?ver=6.5.3" data-no-optimize="1" data-no-minify="1" data-gt-orig-url="/terms-of-use/" data-gt-orig-domain="www.c40.org" data-gt-widget-id="70896719" defer></script><script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/wp-polyfill-inert.js?ver=3.1.2" id="wp-polyfill-inert-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/regenerator-runtime.js?ver=0.14.0" id="regenerator-runtime-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/vendor/wp-polyfill.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/dom-ready.js?ver=5b9fa8df0892dc9a7c41" id="wp-dom-ready-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/hooks.js?ver=2e6d63e772894a800ba8" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/i18n.js?ver=2aff907006e2aa00e26e" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" id="wp-a11y-js-translations">
+/* <![CDATA[ */
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", {"translation-revision-date":"2024-04-09 12:18:08+0000","generator":"GlotPress\/4.0.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=2; plural=n != 1;","lang":"en_GB"},"Notifications":["Notifications"]}},"comment":{"reference":"wp-includes\/js\/dist\/a11y.js"}} );
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/dist/a11y.js?ver=e4f0f9508f80ce638f3d" id="wp-a11y-js"></script>
+<script type="text/javascript" src="https://www.c40.org/wp-includes/js/jquery/jquery.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/js/jquery.json.js?ver=2.8.12" id="gform_json-js"></script>
+<script type="text/javascript" id="gform_gravityforms-js-extra">
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mo","tuesday":"Tu","wednesday":"We","thursday":"Th","friday":"Fr","saturday":"Sa","sunday":"Su"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1,"iconText":"Select date"}};
+var gf_legacy_multi = [];
+var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file is not allowed. Must be one of the following:","delete_file":"Delete this file","in_progress":"in progress","file_exceeds_limit":"File exceeds size limit","illegal_extension":"This type of file is not allowed.","max_reached":"Maximum number of files reached","unknown_error":"There was a problem while saving the file on the server","currently_uploading":"Please wait for the uploading to complete","cancel":"Cancel","cancel_upload":"Cancel this upload","cancelled":"Cancelled"},"vars":{"images_url":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/images"}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","version_hash":"32dfd3111c0a3463aafa2eca6f54c38e","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/js/gravityforms.js?ver=2.8.12" id="gform_gravityforms-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/utils.min.js?ver=50c7bea9c2320e16728e44ae9fde5f26" id="gform_gravityforms_utils-js"></script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/vendor-theme.min.js?ver=54e7080aa7a02c83aa61fae430b9d869" id="gform_gravityforms_theme_vendors-js"></script>
+<script type="text/javascript" id="gform_gravityforms_theme-js-extra">
+/* <![CDATA[ */
+var gform_theme_config = {"common":{"form":{"honeypot":{"version_hash":"32dfd3111c0a3463aafa2eca6f54c38e"}}},"hmr_dev":"","public_path":"https:\/\/www.c40.org\/wp-content\/plugins\/gravityforms\/assets\/js\/dist\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" defer='defer' src="https://www.c40.org/wp-content/plugins/gravityforms/assets/js/dist/scripts-theme.min.js?ver=bab19fd84843dabc070e73326d787910" id="gform_gravityforms_theme-js"></script>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+           document.querySelectorAll("ul.nav-menu").forEach(
+               ulist => { 
+                    if (ulist.querySelectorAll("li").length == 0) {
+                        ulist.style.display = "none";
+
+                                            } 
+                }
+           );
+            /* ]]> */
+        </script>
+        <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 26) {jQuery( "#gform_26" ).on( 'submit', function( event ) {
+	jQuery( '<input>' )
+		.attr( 'type', 'hidden' )
+		.attr( 'name', 'gf_zero_spam_key' )
+		.attr( 'value', 'N8B2B2jhu9Huo6RE8Hc6D5h1HB8j6oHkYO4xblrAtrndNSPyrebaeeo4ad9AcE2x' )
+		.attr( 'autocomplete', 'new-password' )
+		.appendTo( jQuery( this ) );
+} );} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "26", currentPage: "1", abort: function() { this.preventDefault(); } }]);                if (event && event.defaultPrevented) {                return;         }        const gformWrapperDiv = document.getElementById( "gform_wrapper_26" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_26";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_26" );        let postRenderFired = false;                function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            jQuery( document ).trigger( 'gform_post_render', [26, 1] );            gform.utils.trigger( { event: 'gform/postRender', native: false, data: { formId: 26, currentPage: 1 } } );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+</script>
+    <div class="cookie-notice">
+        <div class="cookie-notice__banner">
+            <div class="cookie-notice__message">
+                <p>We use cookies. Learn more about how in our <a href="https://www.c40.org/privacy-policy/">Privacy Policy</a>.</p>
+            </div>
+
+            <ul class="cookie-notice__actions">
+                <li class="cookie-notice__action">
+                    <button type="button" class="button cookie-notice__accept js-cookie-notice-accept">
+                        Accept                    </button>
+                </li>
+
+                                    <li class="cookie-notice__action">
+                        <button type="button" class="cookie-notice__reject js-cookie-notice-reject">
+                            Decline                        </button>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
