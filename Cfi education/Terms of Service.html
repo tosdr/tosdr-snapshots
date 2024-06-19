@@ -1,0 +1,1371 @@
+
+<!doctype html>
+<html lang="en-US">
+<head><meta charset="utf-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.3",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],window.addEventListener("pageshow",t=>{this.persisted=t.persisted}),window.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(t){if(document.hidden){t._triggerListener();return}this.triggerEvents.forEach(e=>window.addEventListener(e,t.userEventHandler,{passive:!0})),window.addEventListener("touchstart",t.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",t.touchStartHandler),document.addEventListener("visibilitychange",t.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(t){"HTML"!==t.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),t.target.addEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(t){t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this.interceptedClicks.push(t),t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(t=>{t.target.dispatchEvent(new MouseEvent("click",{view:t.view,bubbles:!0,cancelable:!0}))})}_waitForPendingClicks(){return new Promise(t=>{this._isClickPending?this._pendingClickFinished=t:t()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(t,e,r){t.hasAttribute&&t.hasAttribute(e)&&(event.target.setAttribute(r,event.target.getAttribute(e)),event.target.removeAttribute(e))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let t=[];document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{if(e.hasAttribute("src")){let r=new URL(e.src).origin;r!==location.origin&&t.push({src:r,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this._batchInjectResourceHints(t,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._triggerWindowLoad()}catch(t){console.error(t)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _transformScript(t){return new Promise((await this._littleBreath(),navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)?e=>{let r=document.createElement("script");[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),r.setAttribute(e,t.nodeValue))}),t.text&&(r.text=t.text),r.hasAttribute("src")?(r.addEventListener("load",e),r.addEventListener("error",e)):(r.text=t.text,e());try{t.parentNode.replaceChild(r,t)}catch(i){e()}}:async e=>{function r(){t.setAttribute("data-rocket-status","failed"),e()}try{let i=t.getAttribute("data-rocket-type"),n=t.getAttribute("data-rocket-src");t.text,i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",function r(){t.setAttribute("data-rocket-status","executed"),e()}),t.addEventListener("error",r),n?(t.removeAttribute("data-rocket-src"),t.src=n):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}catch(s){r()}})}async _loadScriptsFromList(t){let e=t.shift();return e&&e.isConnected?(await this._transformScript(e),this._loadScriptsFromList(t)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(t,e){var r=document.createDocumentFragment();t.forEach(t=>{let i=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(i){let n=document.createElement("link");n.href=i,n.rel=e,"preconnect"!==e&&(n.as="script"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),r.appendChild(n),this.trash.push(n)}}),document.head.appendChild(r)}_delayEventListeners(t){let e={};function r(t,r){!function t(r){!e[r]&&(e[r]={originalFunctions:{add:r.addEventListener,remove:r.removeEventListener},eventsToRewrite:[]},r.addEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.add.apply(r,arguments)},r.removeEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.remove.apply(r,arguments)});function i(t){return e[r].eventsToRewrite.indexOf(t)>=0?"rocket-"+t:t}}(t),e[t].eventsToRewrite.push(r)}function i(t,e){let r=t[e];Object.defineProperty(t,e,{get:()=>r||function(){},set(i){t["rocket"+e]=r=i}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),i(document,"onreadystatechange"),i(window,"onload"),i(window,"onpageshow")}_delayJQueryReady(t){let e;function r(r){if(r&&r.fn&&!t.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(e){return t.domReadyFired?e.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>e.bind(document)(r)),r([])};let i=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){if(this[0]===window){function t(t){return t.split(" ").map(t=>"load"===t||0===t.indexOf("load.")?"rocket-jquery-load":t).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=t(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let r=arguments[0][e];delete arguments[0][e],arguments[0][t(e)]=r})}return i.apply(this,arguments),this},t.allJQueries.push(r)}e=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){r(t)}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this._littleBreath();let t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}_handleDocumentWrite(){let t=new Map;document.write=document.writeln=function(e){let r=document.currentScript;r||console.error("WPRocket unable to document.write this: "+e);let i=document.createRange(),n=r.parentElement,s=t.get(r);void 0===s&&(s=r.nextSibling,t.set(r,s));let a=document.createDocumentFragment();i.setStart(a,0),a.appendChild(i.createContextualFragment(e)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}_emptyTrash(){this.trash.forEach(t=>t.remove())}static run(){let t=new RocketLazyLoadScripts;t._addUserInteractionListener(t)}}RocketLazyLoadScripts.run();</script>
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/fonts/UtopiaStd-Semibold.otf" as="font" type="font/otf">
+<link rel="preload" href="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/fonts/Inter-Regular.ttf" as="font" type="font/ttf">
+<link rel="preload" href="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/fonts/Inter-Bold.ttf" as="font" type="font/ttf">
+<script type="rocketlazyloadscript">
+      dataLayer = [{
+        'userStatus': 'Guest',
+        'userID': '0',
+        'postAuthor': 'Corporate Finance Institute'
+      }];
+      sessionStorage.setItem("analyticsUserID", "0");
+    </script>
+ <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/1b96de0cdb9029f4aa9e423b/script.js"></script> 
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<script data-cfasync="false" nowprocket type="text/javascript">
+		var _vwo_clicks = 10;
+	</script>
+
+
+<link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
+<script data-cfasync="false" nowprocket type="text/javascript" id="vwoCode">
+	/* Fix: wp-rocket (application/ld+json) */
+	window._vwo_code || (function () {
+	var account_id=735299, // replace 1 with ${accountId} in release string
+	version=2.1,
+	settings_tolerance=2000,
+	library_tolerance=2500,
+	use_existing_jquery=false,
+	hide_element='body',
+	hide_element_style='opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important',
+	/* DO NOT EDIT BELOW THIS LINE */
+	f=false,w=window,d=document,v=d.querySelector('#vwoCode'),cK='_vwo_'+account_id+'_settings',cc={};try{var c=JSON.parse(localStorage.getItem('_vwo_'+account_id+'_config'));cc=c&&typeof c==='object'?c:{}}catch(e){}var stT=cc.stT==='session'?w.sessionStorage:w.localStorage;code={use_existing_jquery:function(){return typeof use_existing_jquery!=='undefined'?use_existing_jquery:undefined},library_tolerance:function(){return typeof library_tolerance!=='undefined'?library_tolerance:undefined},settings_tolerance:function(){return cc.sT||settings_tolerance},hide_element_style:function(){return'{'+(cc.hES||hide_element_style)+'}'},hide_element:function(){if(performance.getEntriesByName('first-contentful-paint')[0]){return''}return typeof cc.hE==='string'?cc.hE:hide_element},getVersion:function(){return version},finish:function(e){if(!f){f=true;var t=d.getElementById('_vis_opt_path_hides');if(t)t.parentNode.removeChild(t);if(e)(new Image).src='https://dev.visualwebsiteoptimizer.com/ee.gif?a='+account_id+e}},finished:function(){return f},addScript:function(e){var t=d.createElement('script');t.type='text/javascript';if(e.src){t.src=e.src}else{t.text=e.text}d.getElementsByTagName('head')[0].appendChild(t)},load:function(e,t){var i=this.getSettings(),n=d.createElement('script'),r=this;t=t||{};if(i){n.textContent=i;d.getElementsByTagName('head')[0].appendChild(n);if(!w.VWO||VWO.caE){stT.removeItem(cK);r.load(e)}}else{var o=new XMLHttpRequest;o.open('GET',e,true);o.withCredentials=!t.dSC;o.responseType=t.responseType||'text';o.onload=function(){if(t.onloadCb){return t.onloadCb(o,e)}if(o.status===200){_vwo_code.addScript({text:o.responseText})}else{_vwo_code.finish('&e=loading_failure:'+e)}};o.onerror=function(){if(t.onerrorCb){return t.onerrorCb(e)}_vwo_code.finish('&e=loading_failure:'+e)};o.send()}},getSettings:function(){try{var e=stT.getItem(cK);if(!e){return}e=JSON.parse(e);if(Date.now()>e.e){stT.removeItem(cK);return}return e.s}catch(e){return}},init:function(){if(d.URL.indexOf('__vwo_disable__')>-1)return;var e=this.settings_tolerance();w._vwo_settings_timer=setTimeout(function(){_vwo_code.finish();stT.removeItem(cK)},e);var t;if(this.hide_element()!=='body'){t=d.createElement('style');var i=this.hide_element(),n=i?i+this.hide_element_style():'',r=d.getElementsByTagName('head')[0];t.setAttribute('id','_vis_opt_path_hides');v&&t.setAttribute('nonce',v.nonce);t.setAttribute('type','text/css');if(t.styleSheet)t.styleSheet.cssText=n;else t.appendChild(d.createTextNode(n));r.appendChild(t)}else{t=d.getElementsByTagName('head')[0];var n=d.createElement('div');n.style.cssText='z-index: 2147483647 !important;position: fixed !important;left: 0 !important;top: 0 !important;width: 100% !important;height: 100% !important;background: white !important;';n.setAttribute('id','_vis_opt_path_hides');n.classList.add('_vis_hide_layer');t.parentNode.insertBefore(n,t.nextSibling)}var o='https://dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&vn='+version;if(w.location.search.indexOf('_vwo_xhr')!==-1){this.addScript({src:o})}else{this.load(o+'&x=true')}}};w._vwo_code=code;code.init();})();
+	</script>
+
+
+<script data-cfasync="false" data-pagespeed-no-defer>
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+</script>
+
+
+<title>Website Terms &amp; Conditions of Use</title>
+<link rel="preload" as="font" href="https://corporatefinanceinstitute.com/wp-content/themes/cfi/dist/fonts/fa-regular-400.woff2" crossorigin>
+<link rel="preload" as="font" href="https://corporatefinanceinstitute.com/wp-content/themes/cfi/dist/fonts/fa-brands-400.woff2" crossorigin>
+<meta name="description" content="Please read our website terms and conditions." />
+<link rel="canonical" href="https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Corporate Finance Institute® Website Terms of Use" />
+<meta property="og:description" content="Please read our website terms and conditions." />
+<meta property="og:url" content="https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/" />
+<meta property="og:site_name" content="Corporate Finance Institute" />
+<meta property="article:publisher" content="https://www.facebook.com/corporatefinanceinstitute.cfi/" />
+<meta property="article:modified_time" content="2023-01-23T20:51:18+00:00" />
+<meta property="og:image" content="https://cdn.corporatefinanceinstitute.com/assets/drive-your-career-in-finance.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="675" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@CFI_education" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/","url":"https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/","name":"Website Terms & Conditions of Use","isPartOf":{"@id":"https://corporatefinanceinstitute.com/#website"},"datePublished":"2018-08-01T02:52:10+00:00","dateModified":"2023-01-23T20:51:18+00:00","description":"Please read our website terms and conditions.","breadcrumb":{"@id":"https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/"]}]},{"@type":"BreadcrumbList","@id":"https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://corporatefinanceinstitute.com/"},{"@type":"ListItem","position":2,"name":"About Corporate Finance Institute® (CFI)","item":"https://corporatefinanceinstitute.com/about-cfi/"},{"@type":"ListItem","position":3,"name":"Corporate Finance Institute® Website Terms of Use"}]},{"@type":"WebSite","@id":"https://corporatefinanceinstitute.com/#website","url":"https://corporatefinanceinstitute.com/","name":"Corporate Finance Institute","description":"","publisher":{"@id":"https://corporatefinanceinstitute.com/#organization"},"inLanguage":"en-US"},{"@type":"Organization","@id":"https://corporatefinanceinstitute.com/#organization","name":"Corporate Finance Institute","alternateName":"CFI","url":"https://corporatefinanceinstitute.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://corporatefinanceinstitute.com/#/schema/logo/image/","url":"//cdn.corporatefinanceinstitute.com/assets/cfi-logo.png","contentUrl":"//cdn.corporatefinanceinstitute.com/assets/cfi-logo.png","width":1000,"height":351,"caption":"Corporate Finance Institute"},"image":{"@id":"https://corporatefinanceinstitute.com/#/schema/logo/image/"},"sameAs":["https://www.facebook.com/corporatefinanceinstitute.cfi/","https://x.com/CFI_education","https://www.instagram.com/corporatefinanceinstitute/","https://www.linkedin.com/school/corporate-finance-institute-cfi-/","https://www.youtube.com/c/Corporatefinanceinstitute-CFI"],"publishingPrinciples":"https://corporatefinanceinstitute.com/about-cfi/editorial-standards/","ownershipFundingInfo":"https://corporatefinanceinstitute.com/about-cfi/"}]}</script>
+
+<style id="global-styles-inline-css" type="text/css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="stylesheet" href="//cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/styles/main-0900c77ab083a3a8b136.css">
+<script type="text/javascript" src="//cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/scripts/jquery-importer-0900c77ab083a3a8b136.js" id="jquery-js"></script>
+<script type="application/ld+json">[]</script>
+
+<script type="rocketlazyloadscript">!function(){"use strict";function l(e){for(var t=e,r=0,n=document.cookie.split(";");r<n.length;r++){var o=n[r].split("=");if(o[0].trim()===t)return o[1]}}function s(e){return localStorage.getItem(e)}function u(e){return window[e]}function d(e,t){e=document.querySelector(e);return t?null==e?void 0:e.getAttribute(t):null==e?void 0:e.textContent}var e=window,t=document,r="script",n="dataLayer",o="NVD2HG2",a="https://stream.corporatefinanceinstitute.com",i="",c="vdnfhfgo",E="cookie",I="_sbp",v="",g=!1;try{var g=!!E&&(m=navigator.userAgent,!!(m=new RegExp("Version/([0-9._]+)(.*Mobile)?.*Safari.*").exec(m)))&&16.4<=parseFloat(m[1]),A="stapeUserId"===E,f=g&&!A?function(e,t,r){void 0===t&&(t="");var n={cookie:l,localStorage:s,jsVariable:u,cssSelector:d},t=Array.isArray(t)?t:[t];if(e&&n[e])for(var o=n[e],a=0,i=t;a<i.length;a++){var c=i[a],c=r?o(c,r):o(c);if(c)return c}else console.warn("invalid uid source",e)}(E,I,v):void 0;g=g&&(!!f||A)}catch(e){console.error(e)}var m=e,E=(m[n]=m[n]||[],m[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"}),t.getElementsByTagName(r)[0]),I="dataLayer"===n?"":"&l="+n,v=f?"&bi="+encodeURIComponent(f):"",A=t.createElement(r),e=g?"kp"+c:c,n=!g&&i?i:a;A.async=!0,A.src=n+"/"+e+".js?st="+o+I+v,null!=(f=E.parentNode)&&f.insertBefore(A,E)}();</script>
+
+
+
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">
+	var dataLayer_content = {"pagePostType":"page","pagePostType2":"single-page","pagePostAuthor":"Corporate Finance Institute"};
+	dataLayer.push( dataLayer_content );
+</script>
+<script type="rocketlazyloadscript">
+	console.warn && console.warn("[GTM4WP] Google Tag Manager container code placement set to OFF !!!");
+	console.warn && console.warn("[GTM4WP] Data layer codes are active but GTM container must be loaded using custom coding !!!");
+</script>
+ <style id="wpsp-style-frontend"></style>
+<link rel="icon" href="//cdn.corporatefinanceinstitute.com/assets/cropped-cfi-favicon-2-32x32.png" sizes="32x32" />
+<link rel="icon" href="//cdn.corporatefinanceinstitute.com/assets/cropped-cfi-favicon-2-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="//cdn.corporatefinanceinstitute.com/assets/cropped-cfi-favicon-2-180x180.png" />
+<meta name="msapplication-TileImage" content="//cdn.corporatefinanceinstitute.com/assets/cropped-cfi-favicon-2-270x270.png" />
+</head>
+<body class="page-template page-template-template-section-builder page-template-template-section-builder-php page page-id-20090 page-child parent-pageid-44042 wp-schema-pro-2.7.18 website-terms-of-use">
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NVD2HG2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!--[if IE]>
+      <div class="alert alert-warning">
+        You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.      </div>
+    <![endif]-->
+<div id="header-menu-wrapper" class="header-menu-wrapper-new no-splash ">
+<header class="banner short_search_name ">
+<div class="navbar-header  ">
+<div class="container">
+<div class="row">
+<div class="left-side">
+<a class="brand" href="https://corporatefinanceinstitute.com/">
+Corporate Finance Institute </a>
+<div class="controls-group">
+<button type="button" class="navbar-toggle hamburger hamburger--squeeze" aria-label="Menu toggle button">
+<span class="sr-only">Menu</span>
+<span class="hamburger-box">
+<span class="hamburger-inner"></span>
+</span>
+</button>
+</div>
+</div>
+<div class="right-side">
+<div class="action-button-wrapper">
+<nav class="top-menu nav-primary">
+<div class="menu-desktop">
+<ul id="menu-header-menu-mar-26-2024" class="nav navbar-nav"><li class="courses-dropdown no-link three-columns depth-0 menu-item menu-item-has-children menu-explore-courses"><span class="no-anchor-item icon-list-enabled" class="icon-list-enabled">Explore Courses<span class="lazybg icon-item icon-item--after icon-item--carat-down-white icon-item--size-10 icon-item--after--offset-8" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/carat-down-white.svg"></span></span>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="unclickable desktop-only depth-1 menu-item menu-item-has-children menu-earn-a-certification"><a href="https://corporatefinanceinstitute.com/certifications/">Earn a Certification</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-cfi-certifications"><a href="#">CFI Certifications</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fmva depth-2 menu-item menu-financial-modeling-valuation-analyst-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FMVA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FMVA_Certification.svg"></span>Financial Modeling &#038; Valuation Analyst (FMVA®)</a></li>
+<li class="program-cbca depth-2 menu-item menu-commercial-banking-credit-analyst-cbca"><a href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CBCA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CBCA_Certification.svg"></span>Commercial Banking &#038; Credit Analyst (CBCA®)</a></li>
+<li class="program-cmsa depth-2 menu-item menu-capital-markets-securities-analyst-cmsa"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CMSA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CMSA_Certification.svg"></span>Capital Markets &#038; Securities Analyst (CMSA®)</a></li>
+<li class="program-bida depth-2 menu-item menu-business-intelligence-data-analyst-bida"><a href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_BIDA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_BIDA_Certification.svg"></span>Business Intelligence &#038; Data Analyst (BIDA®)</a></li>
+<li class="program-fpwm depth-2 menu-item menu-financial-planning-wealth-management-fpwm"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FPWM_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FPWM_Certification.svg"></span>Financial Planning &#038; Wealth Management (FPWM™)</a></li>
+<li class="program-ftip depth-2 menu-item menu-fintech-industry-professional-ftip"><a href="https://corporatefinanceinstitute.com/certifications/fintech-industry-professional/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--ftip-badge icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/ftip-badge.svg"></span>FinTech Industry Professional (FTIP™)</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable desktop-only bundles depth-1 menu-item menu-item-has-children menu-master-a-specialization"><a href="#">Master a Specialization</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-cfi-specializations"><a href="#">CFI Specializations</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fpa depth-2 menu-item menu-fpa"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-analysis-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--custom icon-item--size-44 icon-item--before--offset-16" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/fpa-specialization-badge.svg"></span>FP&#038;A</a></li>
+<li class="program-lep depth-2 menu-item menu-leadership-effectiveness"><a href="https://corporatefinanceinstitute.com/certifications/leadership-effectiveness-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_LEPS_Specialization icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_LEPS_Specialization.svg"></span>Leadership Effectiveness</a></li>
+<li class="program-esg depth-2 menu-item menu-esg"><a href="https://corporatefinanceinstitute.com/certifications/environmental-social-governance-specialist/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_ESG_Specialization icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_ESG_Specialization.svg"></span>ESG</a></li>
+<li class="program-dae depth-2 menu-item menu-data-analysis-in-excel"><a href="https://corporatefinanceinstitute.com/certifications/excel-data-analysis-specialist/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--custom icon-item--size-44 icon-item--before--offset-16" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/DAE-Specialization-Badge.png"></span>Data Analysis in Excel</a></li>
+<li class="program-bia depth-2 menu-item menu-business-intelligence"><a href="https://corporatefinanceinstitute.com/certifications/bi-analyst/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-bundle-bia-icon icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-bundle-bia-icon.svg"></span>Business Intelligence</a></li>
+<li class="program-dsa depth-2 menu-item menu-data-science"><a href="https://corporatefinanceinstitute.com/certifications/become-data-science-analyst/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-bundle-dsa-icon icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-bundle-dsa-icon.svg"></span>Data Science</a></li>
+<li class="program-macabacus depth-2 menu-item menu-macabacus"><a href="https://corporatefinanceinstitute.com/certifications/macabacus-specialist/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_MACABACUS_Specialization icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_MACABACUS_Specialization.svg"></span>Macabacus</a></li>
+<li class="program-cref depth-2 menu-item menu-real-estate-finance"><a href="https://corporatefinanceinstitute.com/certifications/commercial-real-estate-finance-specialist/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CREF_Specialization icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CREF_Specialization.svg"></span>Real Estate Finance</a></li>
+<li class="program-cda depth-2 menu-item menu-crypto-and-digital-assets"><a href="https://corporatefinanceinstitute.com/certifications/crypto-digital-assets-specialist/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-bundle-cda-icon icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-bundle-cda-icon.svg"></span>Crypto and Digital Assets</a></li>
+<li class="program-beb depth-2 menu-item menu-business-essentials"><a href="https://corporatefinanceinstitute.com/certifications/business-essentials-bundle/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_BEB_logo icon-item--size-44 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_BEB_logo.svg"></span>Business Essentials</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable desktop-only roles depth-1 menu-item menu-item-has-children menu-roles"><a href="#">Roles</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-roles"><a href="#">Roles</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-2 menu-item menu-item-has-children menu-investment-banking"><a href="#">Investment Banking</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-investment-banking"><a href="#">Investment Banking</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-advisory"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp1">Advisory</a></li>
+<li class="depth-3 menu-item menu-dcm"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp2">DCM</a></li>
+<li class="depth-3 menu-item menu-ecm"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp3">ECM</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-2 menu-item menu-item-has-children menu-capital-markets"><a href="#">Capital Markets</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-capital-markets"><a href="#">Capital Markets</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-commercial-relationship-manager"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp6">Commercial Relationship Manager</a></li>
+<li class="depth-3 menu-item menu-commercial-credit-analyst"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp4">Commercial Credit Analyst</a></li>
+<li class="depth-3 menu-item menu-commercial-real-estate-lender"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp5">Commercial Real Estate Lender</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-2 menu-item menu-item-has-children menu-global-markets-sales-and-trading"><a href="#">Global Markets &#8211; Sales and Trading</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-global-markets-sales-and-trading"><a href="#">Global Markets &#8211; Sales and Trading</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-equity-sales-trader"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp8">Equity Sales-Trader</a></li>
+<li class="depth-3 menu-item menu-fixed-income-credit-sales"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp9">Fixed Income Credit Sales</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-2 menu-item menu-item-has-children menu-buy-side-institutions"><a href="#">Buy-Side Institutions</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-buy-side-institutions"><a href="#">Buy-Side Institutions</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-derivatives-risk"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp12">Derivatives Risk</a></li>
+<li class="depth-3 menu-item menu-equity-execution-trader"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp13">Equity Execution Trader</a></li>
+<li class="depth-3 menu-item menu-fixed-income-researcher"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp14">Fixed Income Researcher</a></li>
+<li class="depth-3 menu-item menu-hedge-fund"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp15">Hedge Fund</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-2 menu-item menu-item-has-children menu-fpa"><a href="#">FP&#038;A</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-fpa"><a href="#">FP&#038;A</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-business-intelligence"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp16">Business Intelligence</a></li>
+<li class="depth-3 menu-item menu-data-science-analyst"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp17">Data Science Analyst</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-2 menu-item menu-item-has-children menu-wealth-management"><a href="#">Wealth Management</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-wealth-management"><a href="#">Wealth Management</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-financial-planner"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp18">Financial Planner</a></li>
+<li class="depth-3 menu-item menu-investment-advisor"><a href="https://corporatefinanceinstitute.com/learning-paths/#lp19">Investment Advisor</a></li>
+</ul></div> </ul>
+</li>
+</ul></div> </ul>
+</li>
+<li class="unclickable desktop-only lps depth-1 menu-item menu-item-has-children menu-categories"><a href="#">Categories</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-categories"><a href="#">Categories</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="unclickable depth-2 menu-item menu-item-has-children menu-commercial-banking"><a href="#">Commercial Banking</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-commercial-banking"><a href="#">Commercial Banking</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-cbca depth-3 menu-item menu-commercial-banking-credit-analyst-cbca"><a href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CBCA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CBCA_Certification.svg"></span>Commercial Banking &#038; Credit Analyst (CBCA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-commercial-banking-courses"><a href="#">Popular Commercial Banking courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugfundamentals-of-credit"><a href="https://corporatefinanceinstitute.com/course/fundamentals-of-credit/"><span class="menu-item-course-info" data-url="/course/fundamentals-of-credit">Fundamentals of Credit</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugventure-debt"><a href="#"><span class="menu-item-course-info" data-url="/course/venture-debt">Venture Debt</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-sluglending-to-complex-structures"><a href="#"><span class="menu-item-course-info" data-url="/course/lending-to-complex-structures">Lending to Complex Structures</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86425">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-capital-markets"><a href="#">Capital Markets</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-capital-markets"><a href="#">Capital Markets</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-cmsa depth-3 menu-item menu-capital-markets-securities-analyst-cmsa"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CMSA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CMSA_Certification.svg"></span>Capital Markets &#038; Securities Analyst (CMSA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-capital-markets-courses"><a href="#">Popular Capital Markets courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugintroduction-to-capital-markets"><a href="#"><span class="menu-item-course-info" data-url="/course/introduction-to-capital-markets">Introduction to Capital Markets</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugapplied-fixed-income"><a href="#"><span class="menu-item-course-info" data-url="/course/applied-fixed-income">Applied Fixed Income</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugconvertible-bonds"><a href="#"><span class="menu-item-course-info" data-url="/course/convertible-bonds">Convertible Bonds</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86426">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-private-equity"><a href="#">Private Equity</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-private-equity"><a href="#">Private Equity</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fmva depth-3 menu-item menu-financial-modeling-valuation-analyst-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FMVA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FMVA_Certification.svg"></span>Financial Modeling &#038; Valuation Analyst (FMVA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-private-equity-courses"><a href="#">Popular Private Equity courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugadvanced-excel-formulas-and-functions"><a href="#"><span class="menu-item-course-info" data-url="/course/advanced-excel-formulas-and-functions">Advanced Excel Formulas & Functions</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugdcf-valuation-modeling"><a href="#"><span class="menu-item-course-info" data-url="/course/dcf-valuation-modeling">DCF Valuation Modeling</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugcomparable-valuation-analysis"><a href="#"><span class="menu-item-course-info" data-url="/course/comparable-valuation-analysis">Comparable Valuation Analysis</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86427">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-investment-banking"><a href="#">Investment Banking</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-investment-banking"><a href="#">Investment Banking</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fmva depth-3 menu-item menu-financial-modeling-valuation-analyst-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FMVA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FMVA_Certification.svg"></span>Financial Modeling &#038; Valuation Analyst (FMVA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-investment-banking-courses"><a href="#">Popular Investment Banking courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugadvanced-financial-modeling-mergers-acquisitions"><a href="#"><span class="menu-item-course-info" data-url="/course/advanced-financial-modeling-mergers-acquisitions">Mergers & Acquisitions (M&A) Modeling</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugexcel-fundamentals-formulas-for-finance"><a href="#"><span class="menu-item-course-info" data-url="/course/excel-fundamentals-formulas-for-finance">Excel Fundamentals - Formulas for Finance</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugpowerpoint-pitchbook"><a href="#"><span class="menu-item-course-info" data-url="/course/powerpoint-pitchbook">PowerPoint & Pitchbooks</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86428">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-wealth-management"><a href="#">Wealth Management</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-wealth-management"><a href="#">Wealth Management</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fpwm depth-3 menu-item menu-financial-planning-wealth-management-fpwm"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FPWM_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FPWM_Certification.svg"></span>Financial Planning &#038; Wealth Management (FPWM™)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-wealth-management-courses"><a href="#">Popular Wealth Management courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugbehavioral-finance"><a href="#"><span class="menu-item-course-info" data-url="/course/behavioral-finance">Behavioral Finance</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugclient-discovery"><a href="#"><span class="menu-item-course-info" data-url="/course/client-discovery">Mastering Client Discovery</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugretail-portfolio-management"><a href="#"><span class="menu-item-course-info" data-url="/course/retail-portfolio-management">Portfolio Management for Retail Clients</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86429">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-asset-management"><a href="#">Asset Management</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-asset-management"><a href="#">Asset Management</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-cmsa depth-3 menu-item menu-capital-markets-securities-analyst-cmsa"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_CMSA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_CMSA_Certification.svg"></span>Capital Markets &#038; Securities Analyst (CMSA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-asset-management-courses"><a href="#">Popular Asset Management courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugportfolio-management-fundamentals"><a href="#"><span class="menu-item-course-info" data-url="/course/portfolio-management-fundamentals">Portfolio Management Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slughedge-fund-fundamentals"><a href="#"><span class="menu-item-course-info" data-url="/course/hedge-fund-fundamentals">Hedge Fund Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugprime-services-and-securities-lending"><a href="#"><span class="menu-item-course-info" data-url="/course/prime-services-and-securities-lending">Prime Services and Securities Lending</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86430">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-corporate-finance-fpa"><a href="#">Corporate Finance (FP&#038;A)</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-corporate-finance-fpa"><a href="#">Corporate Finance (FP&#038;A)</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-fmva depth-3 menu-item menu-financial-modeling-valuation-analyst-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_FMVA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_FMVA_Certification.svg"></span>Financial Modeling &#038; Valuation Analyst (FMVA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-corporate-finance-fpa-courses"><a href="#">Popular Corporate Finance (FP&#038;A) courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-slugcorporate-finance-fundamentals"><a href="#"><span class="menu-item-course-info" data-url="/course/corporate-finance-fundamentals">Corporate Finance Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-sluglearn-accounting-fundamentals-corporate-finance"><a href="#"><span class="menu-item-course-info" data-url="/course/learn-accounting-fundamentals-corporate-finance">Accounting Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugfinancial-analysis-fundamentals"><a href="#"><span class="menu-item-course-info" data-url="/course/financial-analysis-fundamentals">Financial Analysis Fundamentals</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86431">View All</a></li>
+</ul></div> </ul>
+</li>
+<li class="unclickable depth-2 menu-item menu-item-has-children menu-business-intelligence-analytics"><a href="#">Business Intelligence &#038; Analytics</a>
+<ul class="sub-menu">
+<li class="group-label depth-3 menu-item menu-business-intelligence-analytics"><a href="#">Business Intelligence &#038; Analytics</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="program-bida depth-3 menu-item menu-business-intelligence-data-analyst-bida"><a href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--CFI_BIDA_Certification icon-item--size-48 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/CFI_BIDA_Certification.svg"></span>Business Intelligence &#038; Data Analyst (BIDA®)</a></li>
+</ul></div> <li class="group-label depth-3 menu-item menu-popular-business-intelligence-analytics-courses"><a href="#">Popular Business Intelligence &#038; Analytics courses</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-3 menu-item menu-menu_item_course_info-sluglearn-sql"><a href="#"><span class="menu-item-course-info" data-url="/course/learn-sql">SQL Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugtableau-fundamentals"><a href="#"><span class="menu-item-course-info" data-url="/course/tableau-fundamentals">Tableau Fundamentals</span> </a></li>
+<li class="depth-3 menu-item menu-menu_item_course_info-slugpower-query-course"><a href="#"><span class="menu-item-course-info" data-url="/course/power-query-course">Power Query Fundamentals</span> </a></li>
+<li class="link-with-arrow depth-3 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86432">View All</a></li>
+</ul></div> </ul>
+</li>
+</ul></div> </ul>
+</li>
+<li class="unclickable desktop-only topics depth-1 menu-item menu-item-has-children menu-popular-topics"><a href="#">Popular Topics</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-popular-topics"><a href="#">Popular Topics</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-2 menu-item menu-cryptocurrency"><a href="https://corporatefinanceinstitute.com/topic/cryptocurrency/">Cryptocurrency</a></li>
+<li class="depth-2 menu-item menu-excel"><a href="https://corporatefinanceinstitute.com/topic/excel/">Excel</a></li>
+<li class="depth-2 menu-item menu-accounting"><a href="https://corporatefinanceinstitute.com/topic/accounting/">Accounting</a></li>
+<li class="depth-2 menu-item menu-commercial-real-estate"><a href="https://corporatefinanceinstitute.com/topic/commercial-real-estate/">Commercial Real Estate</a></li>
+<li class="depth-2 menu-item menu-esg"><a href="https://corporatefinanceinstitute.com/topic/environment-social-governance-esg/">ESG</a></li>
+<li class="depth-2 menu-item menu-wealth-management"><a href="https://corporatefinanceinstitute.com/topic/wealth-management/">Wealth Management</a></li>
+<li class="depth-2 menu-item menu-foreign-exchange"><a href="https://corporatefinanceinstitute.com/topic/foreign-exchange/">Foreign Exchange</a></li>
+<li class="depth-2 menu-item menu-management-skills"><a href="https://corporatefinanceinstitute.com/topic/management-skills/">Management Skills</a></li>
+<li class="depth-2 menu-item menu-machine-learning"><a href="https://corporatefinanceinstitute.com/topic/data-science-machine-learning/">Machine Learning</a></li>
+<li class="depth-2 menu-item menu-financial-modeling"><a href="https://corporatefinanceinstitute.com/topic/financial-modeling/">Financial Modeling</a></li>
+<li class="depth-2 menu-item menu-fpa"><a href="https://corporatefinanceinstitute.com/topic/financial-planning-analysis-fpa/">FP&#038;A</a></li>
+<li class="depth-2 menu-item menu-business-intelligence"><a href="https://corporatefinanceinstitute.com/topic/business-intelligence/">Business Intelligence</a></li>
+</ul></div> <li class="button-inside outlined depth-2 menu-item menu-explore-all-topics"><a href="https://corporatefinanceinstitute.com/topics/">Explore All Topics</a></li>
+</ul>
+</li>
+<li class="button-inside depth-1 menu-item menu-view-all-courses"><a href="https://corporatefinanceinstitute.com/collections/">View All Courses</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="unclickable courses-dropdown corporate-training no-link depth-0 menu-item menu-item-has-children menu-cfi-for-teams"><span class="no-anchor-item icon-list-enabled">CFI For Teams</span>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-item-has-children menu-overview"><a href="#">Overview</a>
+<ul class="sub-menu">
+<li class="depth-2 menu-item menu-overview"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/">Overview</a></li>
+<li class="depth-2 menu-item menu-pricing"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/pricing-plans/">Pricing</a></li>
+<li class="depth-2 menu-item menu-why-cfi-certifications"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/certified-professionals/">Why CFI Certifications?</a></li>
+<li class="button-inside depth-2 menu-item menu-get-started"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/pricing-plans/">Get Started</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-how-cfi-can-help"><a href="#">How CFI Can Help</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-how-cfi-can-help"><a href="#">How CFI Can Help</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-2 menu-item menu-new-hire-training"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/onboarding/">New Hire Training</a></li>
+<li class="depth-2 menu-item menu-hybrid-team-training"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/distributed-training/">Hybrid Team Training</a></li>
+<li class="depth-2 menu-item menu-upskilling-and-reskilling"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/upskilling-reskilling/">Upskilling and Reskilling</a></li>
+<li class="with-icon icon-new-hire-training depth-2 menu-item menu-retaining-talent"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/hiring-retention/">Retaining Talent</a></li>
+</ul></div> </ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-corporate-solutions"><a href="#">Corporate Solutions</a>
+<ul class="sub-menu">
+<li class="group-label depth-2 menu-item menu-corporate-solutions"><a href="#">Corporate Solutions</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-2 menu-item menu-finance-teams"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-finance-teams/">Finance Teams</a></li>
+<li class="depth-2 menu-item menu-financial-services"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-financial-services/">Financial Services</a></li>
+<li class="depth-2 menu-item menu-professional-services"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-professional-services/">Professional Services</a></li>
+</ul></div> </ul>
+</li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="no-link depth-0 menu-item menu-item-has-children menu-pricing"><span class="no-anchor-item icon-list-enabled">Pricing</span>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-for-individuals"><a href="https://corporatefinanceinstitute.com/pricing/">For Individuals</a></li>
+<li class="depth-1 menu-item menu-for-teams"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/pricing-plans/">For Teams</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="courses-dropdown no-link depth-0 menu-item menu-item-has-children menu-resources"><span class="no-anchor-item icon-list-enabled">Resources</span>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 active menu-item menu-item-has-children menu-card"><a href="#">Card</a>
+<ul class="sub-menu">
+<li class="desktop-only topics depth-2 menu-item menu-menu_card-id1"><a><span class="menu-card-wrapper" data-url="https://corporatefinanceinstitute.com/resources/accounting/financial-ratios-definitive-guide/" data-target>
+<img class="menu-card-image lazy" src data-src="//cdn.corporatefinanceinstitute.com/assets/Financial-Ratios-Definitive-Guide_Nav.png" alt width="976" height="476">
+<span class="menu-card-title">Financial Ratios Definitive Guide</span>
+<span class="menu-card-content">A free best practices guide for essential ratios in comprehensive financial analysis and business decision-making.</span>
+<span class="menu-card-link">Download Now</span>
+</span>
+</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-resources"><a href="#">Resources</a>
+<ul class="sub-menu">
+<li class="group-label hidden depth-2 menu-item menu-resources"><a href="#">Resources</a></li>
+<div class="group-items-container"><ul class="group-items"> <li class="depth-2 menu-item menu-elearning"><a href="https://corporatefinanceinstitute.com/topic/elearning/">eLearning</a></li>
+<li class="depth-2 menu-item menu-career"><a href="https://corporatefinanceinstitute.com/topic/career/">Career</a></li>
+<li class="depth-2 menu-item menu-team-development"><a href="https://corporatefinanceinstitute.com/topic/team-development/">Team Development</a></li>
+<li class="depth-2 menu-item menu-management"><a href="https://corporatefinanceinstitute.com/topic/management-skills/">Management</a></li>
+<li class="depth-2 menu-item menu-excel"><a href="https://corporatefinanceinstitute.com/topic/excel/">Excel</a></li>
+<li class="depth-2 menu-item menu-accounting"><a href="https://corporatefinanceinstitute.com/topic/accounting/">Accounting</a></li>
+<li class="depth-2 menu-item menu-valuation"><a href="https://corporatefinanceinstitute.com/topic/valuation/">Valuation</a></li>
+<li class="depth-2 menu-item menu-economics"><a href="https://corporatefinanceinstitute.com/topic/economics/">Economics</a></li>
+<li class="depth-2 menu-item menu-esg"><a href="https://corporatefinanceinstitute.com/topic/environment-social-governance-esg/">ESG</a></li>
+<li class="depth-2 menu-item menu-capital-markets"><a href="https://corporatefinanceinstitute.com/topic/capital-markets/">Capital Markets</a></li>
+<li class="depth-2 menu-item menu-data-science"><a href="https://corporatefinanceinstitute.com/topic/data-science/">Data Science</a></li>
+<li class="depth-2 menu-item menu-risk-management"><a href="https://corporatefinanceinstitute.com/topic/risk-management/">Risk Management</a></li>
+</ul></div> <li class="button-inside outlined depth-2 menu-item menu-corporate-finance-resources"><a href="https://corporatefinanceinstitute.com/resources/">Corporate Finance Resources</a></li>
+</ul>
+</li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+</ul> </div>
+<div class="search-box">
+<div class="search-form">
+<input class="search-field search-input" data-id="callTheSearchBox" placeholder="Search" required type="search">
+<svg class="icon-search fa-search" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="10" cy="10" r="7" stroke="#3271D2" stroke-width="2" />
+<path d="M16.12 15.3086L15.8114 15L15 15.8114L15.3086 16.12L15.4376 16.7131C15.4783 16.9004 15.5721 17.0721 15.7076 17.2076L20.2929 21.7929C20.6834 22.1834 21.3166 22.1834 21.7071 21.7929L21.7929 21.7071C22.1834 21.3166 22.1834 20.6834 21.7929 20.2929L17.2076 15.7076C17.0721 15.5721 16.9004 15.4783 16.7131 15.4376L16.12 15.3086Z" fill="#3271D2" />
+</svg>
+</div>
+</div>
+<div class="account-links">
+<div class="user-logged-in-menu user-logged-in">
+<ul id="menu-quick-user-navigation" class="nav navbar-nav"><li class="depth-0 menu-item menu-item-has-children menu-my-account"><a href="#">My Account</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-my-courses"><a href="https://learn.corporatefinanceinstitute.com/catalog/collections" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-squares icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-squares.svg"></span>My Courses</a></li>
+<li class="depth-1 menu-item menu-my-profile"><a href="https://learn.corporatefinanceinstitute.com/user/edit/my-profile" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-profile icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-profile.svg"></span>My Profile</a></li>
+<li class="depth-1 menu-item menu-sign-out"><a href="https://lms.corporatefinanceinstitute.com/twig/users/logout" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-log-out icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-log-out.svg"></span>Sign Out</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+</ul> </div>
+<div class="user-logged-in">
+<a href="https://learn.corporatefinanceinstitute.com/dashboard" rel="nofollow" class="account-link btn-main">My Dashboard</a>
+</div>
+<div class="user-logged-out">
+<div class="user-link sign-in">
+<a href="https://learn.corporatefinanceinstitute.com/auth/login" rel="nofollow">Log In</a>
+</div>
+<a href="https://learn.corporatefinanceinstitute.com/auth/registration" class="btn-main">
+Start Free </a>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<nav class="nav-primary navbar-collapse collapse " role="navigation">
+<div class="container">
+<div class="row">
+<div class="search-box">
+<div class="search-form">
+<div class="search-wrapper">
+<input class="search-field search-input" data-id="callTheSearchBox" placeholder="What would you like to learn?" required type="search">
+<svg class="icon-search fa-search" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="10" cy="10" r="7" stroke="#3271D2" stroke-width="2" />
+<path d="M16.12 15.3086L15.8114 15L15 15.8114L15.3086 16.12L15.4376 16.7131C15.4783 16.9004 15.5721 17.0721 15.7076 17.2076L20.2929 21.7929C20.6834 22.1834 21.3166 22.1834 21.7071 21.7929L21.7929 21.7071C22.1834 21.3166 22.1834 20.6834 21.7929 20.2929L17.2076 15.7076C17.0721 15.5721 16.9004 15.4783 16.7131 15.4376L16.12 15.3086Z" fill="#3271D2" />
+</svg>
+</div>
+</div>
+</div>
+<nav class="top-menu">
+<ul id="menu-header-navigation-mobile" class="nav navbar-nav"><li class="unclickable depth-0 menu-item menu-item-has-children menu-certifications"><a href="https://corporatefinanceinstitute.com/certifications/">Certifications</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-financial-modeling-valuation-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">Financial Modeling &#038; Valuation (FMVA®)</a></li>
+<li class="depth-1 menu-item menu-certified-banking-credit-analyst-cbca"><a href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/">Certified Banking &#038; Credit Analyst (CBCA®)</a></li>
+<li class="depth-1 menu-item menu-capital-markets-securities-analyst-cmsa"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/">Capital Markets &#038; Securities Analyst (CMSA®)</a></li>
+<li class="depth-1 menu-item menu-business-intelligence-data-analyst-bida"><a href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/">Business Intelligence &#038; Data Analyst (BIDA®)</a></li>
+<li class="depth-1 menu-item menu-financial-planning-wealth-management-fpwm"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/">Financial Planning &#038; Wealth Management (FPWM™)</a></li>
+<li class="depth-1 menu-item menu-fintech-industry-professional-ftip"><a href="https://corporatefinanceinstitute.com/certifications/fintech-industry-professional/">FinTech Industry Professional (FTIP™)</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="unclickable depth-0 menu-item menu-item-has-children menu-specializations"><a href="#">Specializations</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-financial-planning-analysis-fpa-specialization"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-analysis-program/">Financial Planning &#038; Analysis (FP&#038;A) Specialization</a></li>
+<li class="depth-1 menu-item menu-commercial-real-estate-finance-specialization"><a href="https://corporatefinanceinstitute.com/certifications/commercial-real-estate-finance-specialist/">Commercial Real Estate Finance Specialization</a></li>
+<li class="depth-1 menu-item menu-environmental-social-governance-specialization"><a href="https://corporatefinanceinstitute.com/certifications/environmental-social-governance-specialist/">Environmental, Social &#038; Governance Specialization</a></li>
+<li class="depth-1 menu-item menu-data-analysis-in-excel-specialization"><a href="https://corporatefinanceinstitute.com/certifications/excel-data-analysis-specialist/">Data Analysis in Excel Specialization</a></li>
+<li class="depth-1 menu-item menu-cryptocurrencies-and-digital-assets-specialization"><a href="https://corporatefinanceinstitute.com/certifications/crypto-digital-assets-specialist/">Cryptocurrencies and Digital Assets Specialization</a></li>
+<li class="depth-1 menu-item menu-business-intelligence-analyst-specialization"><a href="https://corporatefinanceinstitute.com/certifications/bi-analyst/">Business Intelligence Analyst Specialization</a></li>
+<li class="depth-1 menu-item menu-leadership-effectiveness-certificate-program"><a href="https://corporatefinanceinstitute.com/certifications/leadership-effectiveness-program/">Leadership Effectiveness Certificate Program</a></li>
+<li class="depth-1 menu-item menu-data-science-analyst"><a href="https://corporatefinanceinstitute.com/certifications/become-data-science-analyst/">Data Science Analyst</a></li>
+<li class="depth-1 menu-item menu-macabacus-specialist"><a href="https://corporatefinanceinstitute.com/certifications/macabacus-specialist/">Macabacus Specialist</a></li>
+<li class="depth-1 menu-item menu-business-essentials-bundle-beb"><a href="https://corporatefinanceinstitute.com/certifications/business-essentials-bundle/">Business Essentials Bundle (BEB)</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="depth-0 menu-item menu-item-has-children menu-categories"><a href="#">Categories</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-item-has-children menu-corporate-finance-fpa"><a href="/wp_course_category/corporate-finance-fpa/">Corporate Finance (FP&amp;A)</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-financial-modeling-valuation-analyst-fmva-certification"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">Financial Modeling &#038; Valuation Analyst (FMVA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-corporate-finance-fpa-courses"><a href="#">Popular Corporate Finance (FP&#038;A) courses</a></li>
+<li class="depth-2 menu-item menu-corporate-finance-fundamentals"><a href="https://corporatefinanceinstitute.com/course/corporate-finance-fundamentals/">Corporate Finance Fundamentals</a></li>
+<li class="depth-2 menu-item menu-accounting-fundamentals"><a href="https://corporatefinanceinstitute.com/course/learn-accounting-fundamentals-corporate-finance/">Accounting Fundamentals</a></li>
+<li class="depth-2 menu-item menu-financial-analysis-fundamentals"><a href="https://corporatefinanceinstitute.com/course/financial-analysis-fundamentals/">Financial Analysis Fundamentals</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86431">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-investment-banking"><a href="/wp_course_category/investment-banking/">Investment Banking</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-financial-modeling-valuation-analyst-fmva-certification"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">Financial Modeling &#038; Valuation Analyst (FMVA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-investment-banking-courses"><a href="#">Popular Investment Banking courses</a></li>
+<li class="depth-2 menu-item menu-mergers-acquisitions-ma-modeling"><a href="https://corporatefinanceinstitute.com/course/advanced-financial-modeling-mergers-acquisitions/">Mergers &#038; Acquisitions (M&#038;A) Modeling</a></li>
+<li class="depth-2 menu-item menu-excel-fundamentals-formulas-for-finance"><a href="https://corporatefinanceinstitute.com/course/excel-fundamentals-formulas-for-finance/">Excel Fundamentals – Formulas for Finance</a></li>
+<li class="depth-2 menu-item menu-powerpoint-pitchbooks"><a href="https://corporatefinanceinstitute.com/course/powerpoint-pitchbook/">PowerPoint &#038; Pitchbooks</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86428">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-private-equity"><a href="/wp_course_category/private-equity/">Private Equity</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-financial-modeling-valuation-analyst-fmva-certification"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">Financial Modeling &#038; Valuation Analyst (FMVA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-private-equity-courses"><a href="#">Popular Private Equity courses</a></li>
+<li class="depth-2 menu-item menu-advance-excel-formulas-functions"><a href="https://corporatefinanceinstitute.com/course/advanced-excel-formulas-and-functions/">Advance Excel Formulas &#038; Functions</a></li>
+<li class="depth-2 menu-item menu-dcf-valuation-modeling"><a href="https://corporatefinanceinstitute.com/course/dcf-valuation-modeling/">DCF Valuation Modeling</a></li>
+<li class="depth-2 menu-item menu-comparable-valuation-analysis"><a href="https://corporatefinanceinstitute.com/course/comparable-valuation-analysis/">Comparable Valuation Analysis</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86427">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-business-intelligence-analytics"><a href="/wp_course_category/business-intelligence-analytics/">Business Intelligence &amp; Analytics</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-business-intelligence-data-analyst-bida-certification"><a href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/">Business Intelligence &#038; Data Analyst (BIDA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-business-intelligence-analytics-courses"><a href="#">Popular Business Intelligence &#038; Analytics courses</a></li>
+<li class="depth-2 menu-item menu-sql"><a href="https://corporatefinanceinstitute.com/topic/sql/">SQL</a></li>
+<li class="depth-2 menu-item menu-tableau"><a href="https://corporatefinanceinstitute.com/topic/tableau/">Tableau</a></li>
+<li class="depth-2 menu-item menu-power-query"><a href="https://corporatefinanceinstitute.com/topic/power-query/">Power Query</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86432">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-commercial-banking"><a href="/wp_course_category/commercial-banking/">Commercial Banking</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-commercial-banking-credit-analyst-cbca-certification"><a href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/">Commercial Banking &#038; Credit Analyst (CBCA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-commercial-banking-courses"><a href="#">Popular Commercial Banking courses</a></li>
+<li class="depth-2 menu-item menu-fundamentals-of-credit"><a href="https://corporatefinanceinstitute.com/course/fundamentals-of-credit/">Fundamentals of Credit</a></li>
+<li class="depth-2 menu-item menu-venture-debt"><a href="https://corporatefinanceinstitute.com/course/venture-debt/">Venture Debt</a></li>
+<li class="depth-2 menu-item menu-lending-to-complex-structures"><a href="https://corporatefinanceinstitute.com/course/lending-to-complex-structures/">Lending to Complex Structures</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86425">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-asset-management"><a href="/wp_course_category/asset-management/">Asset Management</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-capital-markets-securities-analyst-cmsa-certification"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/">Capital Markets &#038; Securities Analyst (CMSA®) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-asset-management-courses"><a href="#">Popular Asset Management courses</a></li>
+<li class="depth-2 menu-item menu-portfolio-management-fundamentals"><a href="https://corporatefinanceinstitute.com/course/portfolio-management-fundamentals/">Portfolio Management Fundamentals</a></li>
+<li class="depth-2 menu-item menu-hedge-fund-fundamentals"><a href="https://corporatefinanceinstitute.com/course/hedge-fund-fundamentals/">Hedge Fund Fundamentals</a></li>
+<li class="depth-2 menu-item menu-prime-services-and-securities-lending"><a href="https://corporatefinanceinstitute.com/course/prime-services-and-securities-lending/">Prime Services and Securities Lending</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86430">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-capital-markets"><a href="/wp_course_category/capital-markets/">Capital Markets</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-capital-markets-securities-analyst-cmsa-certification"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/">Capital Markets &#038; Securities Analyst (CMSA®) Certification</a></li>
+<li class="depth-2 menu-item menu-popular-capital-markets-courses"><a href="#">Popular Capital Markets courses</a></li>
+<li class="depth-2 menu-item menu-introduction-to-capital-markets"><a href="https://corporatefinanceinstitute.com/course/introduction-to-capital-markets/">Introduction to Capital Markets</a></li>
+<li class="depth-2 menu-item menu-applied-fixed-income"><a href="https://corporatefinanceinstitute.com/course/applied-fixed-income/">Applied Fixed Income</a></li>
+<li class="depth-2 menu-item menu-convertible-bonds"><a href="https://corporatefinanceinstitute.com/course/convertible-bonds-course/">Convertible Bonds</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86426">View All</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-item-has-children menu-wealth-management"><a href="/wp_course_category/wealth-management/">Wealth Management</a>
+<ul class="sub-menu">
+<li class="three-columns-group-label depth-2 menu-item menu-certifications"><a href="#">Certifications</a></li>
+<li class="depth-2 menu-item menu-financial-planning-wealth-management-fpwm-certification"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/">Financial Planning &#038; Wealth Management (FPWM™) Certification</a></li>
+<li class="three-columns-group-label depth-2 menu-item menu-popular-wealth-management-courses"><a href="#">Popular Wealth Management courses</a></li>
+<li class="depth-2 menu-item menu-behavioral-finance"><a href="https://corporatefinanceinstitute.com/course/behavioral-finance/">Behavioral Finance</a></li>
+<li class="depth-2 menu-item menu-mastering-client-discovery"><a href="https://corporatefinanceinstitute.com/course/client-discovery/">Mastering Client Discovery</a></li>
+<li class="depth-2 menu-item menu-portfolio-management-for-retail-clients"><a href="https://corporatefinanceinstitute.com/course/retail-portfolio-management/">Portfolio Management for Retail Clients</a></li>
+<li class="link-with-arrow depth-2 menu-item menu-view-all"><a href="https://corporatefinanceinstitute.com/collections/?categories=86429">View All</a></li>
+</ul>
+</li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="depth-0 menu-item menu-item-has-children menu-topics"><a href="https://corporatefinanceinstitute.com/topics/">Topics</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-accounting"><a href="https://corporatefinanceinstitute.com/topic/accounting/">Accounting</a></li>
+<li class="depth-1 menu-item menu-business-intelligence"><a href="https://corporatefinanceinstitute.com/topic/business-intelligence/">Business Intelligence</a></li>
+<li class="depth-1 menu-item menu-commercial-real-estate"><a href="https://corporatefinanceinstitute.com/topic/commercial-real-estate/">Commercial Real Estate</a></li>
+<li class="depth-1 menu-item menu-cryptocurrency"><a href="https://corporatefinanceinstitute.com/topic/cryptocurrency/">Cryptocurrency</a></li>
+<li class="depth-1 menu-item menu-environmental-social-governance-esg"><a href="https://corporatefinanceinstitute.com/topic/environment-social-governance-esg/">Environmental Social Governance (ESG)</a></li>
+<li class="depth-1 menu-item menu-excel"><a href="https://corporatefinanceinstitute.com/topic/excel/">Excel</a></li>
+<li class="depth-1 menu-item menu-financial-modeling"><a href="https://corporatefinanceinstitute.com/topic/financial-modeling/">Financial Modeling</a></li>
+<li class="depth-1 menu-item menu-financial-planning-analysis-fpa"><a href="https://corporatefinanceinstitute.com/topic/financial-planning-analysis-fpa/">Financial Planning &#038; Analysis (FP&#038;A)</a></li>
+<li class="depth-1 menu-item menu-foreign-exchange"><a href="https://corporatefinanceinstitute.com/topic/foreign-exchange/">Foreign Exchange</a></li>
+<li class="depth-1 menu-item menu-machine-learning"><a href="https://corporatefinanceinstitute.com/topic/data-science-machine-learning/">Machine Learning</a></li>
+<li class="depth-1 menu-item menu-management-skills"><a href="https://corporatefinanceinstitute.com/topic/management-skills/">Management Skills</a></li>
+<li class="depth-1 menu-item menu-wealth-management"><a href="https://corporatefinanceinstitute.com/topic/wealth-management/">Wealth Management</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="unclickable depth-0 menu-item menu-item-has-children menu-cfi-for-teams"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/">CFI For Teams</a>
+<ul class="sub-menu">
+<div class="dropdown-container"><div class="dropdown-row">
+<li class="depth-1 menu-item menu-overview"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/">Overview</a></li>
+<li class="unclickable depth-1 menu-item menu-item-has-children menu-how-cfi-can-help"><a href="#">How CFI Can Help</a>
+<ul class="sub-menu">
+<li class="depth-2 menu-item menu-new-hire-training"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/onboarding/">New Hire Training</a></li>
+<li class="depth-2 menu-item menu-hybrid-team-training"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/distributed-training/">Hybrid Team Training</a></li>
+<li class="depth-2 menu-item menu-upskilling-and-reskilling"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/upskilling-reskilling/">Upskilling and Reskilling</a></li>
+<li class="depth-2 menu-item menu-retaining-talent"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/hiring-retention/">Retaining Talent</a></li>
+</ul>
+</li>
+<li class="unclickable depth-1 menu-item menu-item-has-children menu-corporate-solutions"><a href="#">Corporate Solutions</a>
+<ul class="sub-menu">
+<li class="depth-2 menu-item menu-finance-teams"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/certified-professionals/">Finance Teams</a></li>
+<li class="depth-2 menu-item menu-financial-services"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-financial-services/">Financial Services</a></li>
+</ul>
+</li>
+<li class="depth-1 menu-item menu-pricing"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/pricing-plans/">Pricing</a></li>
+</div></div><div class="dropdown-arrow"></div><div class="dropdown-placeholder"></div></ul>
+</li>
+<li class="depth-0 menu-item menu-pricing"><a href="https://corporatefinanceinstitute.com/pricing/">Pricing</a></li>
+<li class="depth-0 menu-item menu-resources"><a href="https://corporatefinanceinstitute.com/resources/">Resources</a></li>
+</ul>
+<div class="user-logged-in-menu user-logged-in">
+<ul id="menu-quick-user-navigation-1" class="nav navbar-nav"><li class="menu-item menu-item-has-children menu-my-account"><a href="#">My Account</a>
+<ul class="sub-menu">
+<li class="menu-item menu-my-courses"><a href="https://learn.corporatefinanceinstitute.com/catalog/collections" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-squares icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-squares.svg"></span>My Courses</a></li>
+<li class="menu-item menu-my-profile"><a href="https://learn.corporatefinanceinstitute.com/user/edit/my-profile" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-profile icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-profile.svg"></span>My Profile</a></li>
+<li class="menu-item menu-sign-out"><a href="https://lms.corporatefinanceinstitute.com/twig/users/logout" class="icon-list-enabled"><span class="lazybg icon-item icon-item--before icon-item--header-menu-log-out icon-item--size-24 icon-item--before--offset-16" data-lazybg="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/header-menu-log-out.svg"></span>Sign Out</a></li>
+</ul>
+</li>
+</ul> </div>
+<div class="mobile-buttons-wrapper">
+<div class="user-logged-out">
+<a href="https://learn.corporatefinanceinstitute.com/auth/login" rel="nofollow" class="account-link btn-main btn-secondary-blue btn-login">Log In</a>
+</div>
+<div class="user-logged-out">
+<a href="https://learn.corporatefinanceinstitute.com/auth/registration" class="btn-main btn-default">Start
+Free</a>
+</div>
+</div>
+</nav>
+</div>
+</div>
+</nav>
+
+</header>
+</div>
+<section class="section splash default" style="
+    ">
+<div class="container">
+<div class="content col-12">
+<div class="title">
+<h1>
+Corporate Finance Institute® Website Terms of Use </h1>
+<div class="lead text ">
+By using our website you agree to these terms and conditions of use. </div>
+</div>
+</div>
+</section>
+<div class>
+<div id="section-1" class=" section
+        content        default        bg-default                 default " style>
+<div class="container">
+<div class="row default">
+<div class="content">
+<p>Last Updated: January 23, 2023.</p>
+<p>This website is owned and operated by CFI Education Inc.</p>
+<p>Please carefully read these Website Terms of Use before using the CFI website. These Website Terms of Use are a binding agreement that governs the use of the CFI website, exempts CFI and other persons from liability, specifies the jurisdiction for the resolution of disputes and contains other important provisions.</p>
+<p>By using the CFI website, you acknowledge and signify that you have read, understand and agree to these terms of use. If you do not agree to these terms of use, then you may not use the CFI website.</p>
+<p><strong>1.&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Your Acceptance of these Website Terms of Use</strong></p>
+<p>These Website Terms of Use are a binding agreement between you and CFI Education Inc. (&ldquo;<strong>CFI</strong>&rdquo;) regarding your access to and use of the CFI website (the&nbsp;&ldquo;<strong>Website</strong>&rdquo;). Each time you use the Website, you signify your unconditional acceptance and agreement, without limitation or qualification, to the most current version of these Website Terms of Use. If you do not unconditionally accept and agree to these Website Terms of Use, then you may not use the Website.</p>
+<p>In this Agreement, a reference to the Website includes all of the Website&rsquo;s content (including all text, graphics, images, video, and other elements available on or through the Website) and the design, structure, selection, arrangement and look and feel of each element of Website content and the Website as a whole.</p>
+<p><strong>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Other Agreements</strong></p>
+<p>These Website Terms of Use related to the Website only. Products and services advertised on or available through the Website are governed by other applicable agreements prescribed by CFI or its corporate affiliates, including the <a href="https://corporatefinanceinstitute.com/about-cfi/cfi-terms-of-service/">Corporate Finance Institute<sup>&reg; </sup>Terms of Service</a>.</p>
+<p>Certain features or functionalities of the Website are restricted to individuals who hold a valid and subsisting CFI account, which is governed by the Corporate Finance Institute<sup>&reg; </sup>Terms of Service.</p>
+<p><strong>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Changes to these Website Terms of Use</strong></p>
+<p>CFI in its discretion may change these Website Terms of Use at any time and from time to time, without any prior notice, by posting the changed Website Terms of Use on the Website. The changed Website Terms of Use are effective immediately on posting on the Website, unless the changed Website Terms of Use expressly state otherwise. It is your responsibility to check the &ldquo;Last Updated&rdquo; date at the top of these Website Terms of Use and review any changes since the previous version. By using the Website after these Website Terms of Use have been changed by CFI, you signify your unconditional acceptance and agreement to be bound by the changed Website Terms of Use. You may not change these Website Terms of Use in any manner.</p>
+<p><strong>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permitted Users</strong></p>
+<p>The Website may be used only by individuals (natural persons) who are the age of majority in the jurisdiction in which they live and are capable of forming a binding contract under applicable law. You may not use the Website if you do not accept and agree to these Website Terms of Use, if you have breached these Website Terms of Use or if your permission to use the Website has been suspended or terminated by CFI.</p>
+<p><strong>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Personal Information Privacy</strong></p>
+<p>By using the Website, you consent to the collection, use, disclosure and retention of your personal information by or on behalf of CFI as explained in the <a href="https://corporatefinanceinstitute.com/about-cfi/privacy-policy/">Corporate Finance Institute<sup>&reg;</sup> Privacy Policy</a>, as revised from time to time, and as otherwise permitted by applicable law.</p>
+<p><strong>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No Advice</strong></p>
+<p>The Website is for informational and educational purposes only. The Website is not intended to be a comprehensive or detailed statements concerning the matters addressed, and is not professional advice or recommendations (including financial, legal or other professional advice). It is your responsibility to obtain appropriate advice suitable to your particular circumstances from a qualified professional before acting or omitting to act based on any information obtained on or through the Website.</p>
+<p><strong>7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permitted and Prohibited Use of the Website</strong></p>
+<p>Subject to these Website Terms of Use and all applicable laws, you may use the Website for your lawful, personal use for non-commercial purposes only, only in the manner purposefully made available by the Website and subject to these Website Terms of Use and all applicable laws. Use of the Website for any other purpose or in any other manner is strictly prohibited.</p>
+<p>You will not: (a) use the Website in any manner or for any purpose except as expressly permitted by these Website Terms of Use; (b)&nbsp;use the Website for a commercial or business purpose (whether or not for profit) or on behalf of, or for the benefit of, any other person; (c)&nbsp;attempt to circumvent the ordinary navigational structure, technical delivery systems or display of the Website or attempt to access or use the Website by any means that is not purposely made available for that purpose by CFI; (d)&nbsp;use the Website in a way that interferes with or disrupts the security, integrity, functionality, operation or performance of the Website or any related computer system, network or data; (e)&nbsp;license, sublicense, grant, sell, resell, lend, rent, lease, loan, share, transfer, assign, pledge, copy, reproduce, distribute, imitate, publish, republish, translate, repost, publicly display, publicly perform, transmit, distribute, create any interest in, commercially exploit, or otherwise give or make available or permit access or use of the Website to or for the benefit of any other person, whether as a service bureau or otherwise, and with or without charge; (f)&nbsp;index, crawl, catalogue, mirror, frame, scrape, cache, or otherwise collect or mine data from the Website for any purpose whatsoever, using any technologies, tools or methods (including robots, spiders, crawlers, or other automatic devices, programs or methodologies) whatsoever; (g) alter, violate, circumvent, conceal, modify or remove any notices (including proprietary rights notices), proprietary codes or locks, means of identification, digital rights tools or management information, technological protection measures, security or control measures, or agreements on, in or in relation to the Website; or (h)&nbsp;authorize, permit, assist, encourage or enable any other person to do any of the foregoing or to use the Website in a way that would constitute an infringement of the rights of CFI or a breach of these Website Terms of Use if it were done by you. The foregoing restrictions do not apply if and to the extent, but only to the extent, that the restrictions are prohibited by applicable law.</p>
+<p><strong>8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CFI&trade; Marketplace</strong></p>
+<p>(a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Application: This Section 8 applies to your use of the CFI&trade; Marketplace portion of the Website and your purchase of products made available to you through the CFI&trade; Marketplace (each a &ldquo;Product&rdquo;).</p>
+<p>(b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CFI&trade; Marketplace Vendors:&nbsp; Certain Products may be provided or supplied by vendors (each a &ldquo;Vendor&rdquo;) that are separate from and not affiliated with CFI. CFI has no responsibility or liability for Vendors and does not guarantee the accuracy, veracity or completeness of any Product. You are solely responsible for your selection and use of Products and your interactions with Vendors, and you access and use the CFI Marketplace at your own risk. You will not make any claim against CFI arising from, connected with or relating to the CFI&trade; Marketplace, Products or Vendors. All complaints, claims, concerns, requests or questions regarding a Product provided by a Vendor must be directed to that Vendor.</p>
+<p>(c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Online Payment Service: For your convenience, the Website may provide access to an online payment service (the &ldquo;Payment Service&rdquo;) that you may use to pay outstanding amounts under an existing purchase order that you have placed with CFI for the purchase of a Product. You will ensure that all information you provide through the Payment Service (including your credit card numbers and their expiration dates) is true, accurate and complete and you will retain a copy of each payment confirmation you receive in connection with your use of the Payment Service. The processing of your payment through the Payment Service may be delayed. You will be solely responsible and liable for your use and misuse of the Payment Service and for any and all loss, damage and additional costs that you, CFI or any other person may incur as a result of your misuse of the Payment Service, your submission of any false, incorrect or incomplete information or any delays in processing your payment through the Payment Service.</p>
+<p>(d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Product Availability: CFI cannot guarantee that Products advertised on the Website will be available when ordered or thereafter, and does not warrant that the specifications and descriptions of Products on the CFI&trade; Marketplace are accurate or complete. CFI reserves the right to change or remove the Products advertised on the CFI&trade; Marketplace, limit quantities of Products available for sale or sold or refuse any order you place for a Product, all at any time without prior notice or liability to you or any other person.</p>
+<p>(e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CFI&trade; Marketplace Refund Policy:&nbsp; In general, Products are non-refundable. However, we want you to be satisfied with Products and we understand that there may be technical or other issues with a Product from time to time. If you are dissatisfied with a Product you have purchased through the CFI&trade; Marketplace from CFI, you may contact CFI at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="afc3caceddc1c6c1c8efccc0dddfc0ddcedbcac9c6c1cec1cccac6c1dcdbc6dbdadbca81ccc0c2">[email&#160;protected]</a> within seven (7) days after the date on which you purchased the Product. If you are dissatisfied with a Product you have purchased through the CFI&trade; Marketplace from a Vendor, please contact the Vendor directly using the contact information provided to you by the Vendor within seven (7) days after the date on which you purchased the Product with: (i) proof of purchase of the Product; and (ii) a description of the technical or other issue you have experienced with the Product. If the issue has not been resolved to your satisfaction after you have contacted the applicable Vendor, you may contact CFI at <a href="/cdn-cgi/l/email-protection#d4a7a1a4a4bba6a094b7bba6a4bba6b5a0b1b2bdbab5bab7b1bdbaa7a0bda0a1a0b1fab7bbb9"><span class="__cf_email__" data-cfemail="d8b4bdb9aab6b1b6bf98bbb7aaa8b7aab9acbdbeb1b6b9b6bbbdb1b6abacb1acadacbdf6bbb7b5">[email&#160;protected]</span></a> within seven (7) days after the date on which you first contacted the Vendor with your issue. CFI may in its discretion, but is not obligated to, respond to requests you send to CFI outside the time periods set out above. CFI reserves the right to refuse a refund request for any reason.</p>
+<p><strong>9.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Currency/Errors, Changes, Prices</strong></p>
+<p>The information and content on or available through the Website is updated periodically, but is not intended to be a comprehensive, current or complete statement of all matters and developments concerning CFI and its business, products and services. The information and content on or available through the Website might not be accurate, current or complete, and misprints, errors, inaccuracies or omissions (including incorrect specifications for prices, products and services) or other errors might not be corrected. CFI does not warrant that the content of the Website (including specifications for prices, products and services) is accurate or complete. CFI does not accept any liability for any information or content on or available through the Website. CFI reserves the right to (a) correct any error, inaccuracy or omission at any time without prior notice or liability to you or any other person; (b) change at any time the content of the Website, including any promotional offers without any notice or liability to you or any other. The advertisements on the Website are invitations to make offers to purchase products and services and are not offers to sell. All prices and other amounts appearing on the Website are quoted in US dollars.</p>
+<p><strong>10.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Your Information</strong></p>
+<p>You will ensure that all information you provide to CFI, through the Website or otherwise, including purchase order information (including your legal name, residential address, email address and order number), payment information (including your credit card numbers and their expiration dates) and transaction-related information is true, accurate, current and complete. CFI will rely on the information you provide. You will be solely responsible and liable for any and all loss, damage and additional costs that you, CFI or any other person may incur as a result of your submission of any false, incorrect or incomplete information or your failure to promptly update your information if it changes.</p>
+<p><strong>11.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ownership of Website</strong></p>
+<p>Copyright &copy; 2019. CFI Education Inc. All Rights Reserved. The Website and the technologies and data used to operate the Website and all related proprietary rights (including copyright) are owned solely by CFI and its licensors and are protected by Canadian and international intellectual property laws. You will not acquire any right, title or interest in, to or associated with the Website or any related technologies and data. Read CFI&rsquo;s entire Copyright Notice.</p>
+<p><strong>12.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trademarks</strong></p>
+<p>Corporate Finance Institute<sup>&reg;</sup>, the CFI logo and other related trademarks and symbols are registered or unregistered trademarks, service marks and trade names owned or used under license by CFI. Other product and company names and logos appearing on the Website may be registered or unregistered trademarks, service marks or trade names of their respective owners. Any use of the trademarks, service marks or trade names displayed on the Website is strictly prohibited, and nothing appearing on the Website will be construed as granting, by implication, estoppel, or otherwise, any licence or right to use any of those trademarks, service marks or trade names. <a href="https://corporatefinanceinstitute.com/about-cfi/copyright-trademark-notice/">Read CFI&rsquo;s entire Trademark Notice</a>.</p>
+<p><strong>13.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Linked Sites</strong></p>
+<p>For your convenience, the Website may provide links or references to Internet sites or resources operated by independent persons (collectively &ldquo;<strong>Linked Sites</strong>&rdquo;). Linked Sites are independent from CFI, and CFI does not endorse, and have responsibility or liability for or control over, any Linked Site, any products, services or content available through a Linked Site or the collection of your personal information through a Linked Site or by the owner or operator of a Linked Site. Your use of a Linked Site and your dealings with the owner or operator of a Linked Site are at your own risk, and you will not make any claim against CFI arising from, connected with, or relating to your use of a Linked Site, your dealings with the owner or operator of a Linked Site or any product, service or content available through a Linked Site.</p>
+<p><strong>14.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disclaimers</strong></p>
+<p><strong>General Disclaimers:&nbsp; </strong>To the fullest extent permitted by applicable law, the Website is made available and provided to you on an &ldquo;as is&rdquo;, &ldquo;as available&rdquo; and &ldquo;with all faults&rdquo; basis and without any representations, warranties, conditions or guarantees of any nature or kind whatsoever, whether express, implied or statutory, or arising from custom or trade usage or by any course of dealing or course of performance, including any representations, warranties, conditions or guarantees of or relating to accuracy, capacity, completeness, delays, durability, errors, fitness for a particular purpose, lack of negligence, viruses or other harmful component, interrupted service, merchantability, non-infringement, performance, results, quality, timeliness, title or workmanlike effort, all of which are hereby waived by you and disclaimed by CFI Group to the fullest extent permitted by applicable law; and no representations, warranties, conditions or guarantees will be created by any advice or information, whether oral or written, provided by or on behalf of CFI Group. If you are dissatisfied with the Website, your sole remedy is to discontinue use of the Website.</p>
+<p><strong>Technology Disclaimers:</strong>&nbsp; The Website may be subject to limitations, delays and other problems inherent in the use of the Internet and electronic communications. CFI Group is not responsible or liable for any delays, delivery failures or other damage or loss resulting from any of those problems.</p>
+<p><strong>Linked Sites Disclaimer:&nbsp; </strong>Without limiting the generality of any other disclaimer, you are solely responsible for the selection of Linked Sites to achieve your intended results, and you access, deal with, purchase and use Linked Sites at your own risk. CFI Group does not make or give any representation, warranty, condition or guarantee of any nature or kind whatsoever, whether express, implied or statutory, or arising from custom or trade usage or by any course of dealing or course of performance, regarding any Linked Site. CFI Group does not control, and is not responsible or liable for, any Linked Site.</p>
+<p><strong>Reservation:&nbsp; </strong>The laws in some jurisdictions prohibit or limit the disclaimer of certain warranties and conditions or the exclusion or limitation of certain liabilities, and so the disclaimers and liability exclusions and limitations in these terms and conditions might not apply to you.</p>
+<p><strong>Definition:&nbsp; </strong>In these Website Terms of Use, &ldquo;<strong>CFI Group</strong>&rdquo; means CFI and its corporate affiliates, and each of their respective licensors, suppliers and service providers, and each of their respective directors, officers, employees, contractors, agents, shareholders, distributors, and representatives, jointly and severally.</p>
+<p><strong>15.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Liability Exclusions</strong></p>
+<p>To the fullest extent permitted by applicable law, in no event and under no circumstances will CFI Group be liable to you or any other person for any loss, damage or liability (including direct, indirect, special, incidental, consequential and punitive damages) arising from, connected with or relating to your use of, or inability to use, the Website or any related matter, under any theory (including contract, tort, strict liability, statutory liability or any other theory of law), regardless of any negligence or other fault or wrongdoing (including fundamental breach or gross negligence) by or on behalf of CFI Group, even if other remedies are not available or do not adequately compensate you or any other person for the loss, damage and liability and even if CFI Group knew or should have known of the possibility of the potential loss, damage or liability being incurred.</p>
+<p><strong>16.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Restrictions/Changes/Termination</strong></p>
+<p>The Website may contain technologies that restrict or limit the use of the Website (including restrictions based on time or location). CFI in its discretion may change, suspend or terminate the Website, or limit, suspend or terminate your use of the Website, effective immediately at any time and without any prior notice or liability to you or any other person. The Website may be interrupted or unavailable from time to time, including for maintenance or due to causes beyond the control of CFI, all without notice or liability to you or any other person.</p>
+<p>If your permission to use the Website is terminated for any reason, then these Website Terms of Use will continue to apply and be binding regarding your access to and use of the Website before termination and all related matters (including any related dispute).</p>
+<p><strong>17.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Governing Law</strong></p>
+<p>CFI has its head offices in Vancouver, British Columbia. These Website Terms of Use and the Website and all related matters are governed by, and will be construed and interpreted solely in accordance with, the laws of the Province of British Columbia, Canada and applicable federal laws of Canada, excluding any rules of private international law or the conflict of laws that would lead to the application of the laws of any other jurisdiction.</p>
+<p><strong>18.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disputes</strong></p>
+<p>Except as expressly set out below, and unless applicable law requires otherwise, the courts of British Columbia, Canada sitting in the city of Vancouver, British Columbia, Canada will have original and exclusive jurisdiction over any and all disputes, controversies and claims arising under, out of, in connection with, or in relation to these Website Terms of Use or the Website or any related matter (each a &ldquo;<strong>Dispute</strong>&rdquo;), and you and CFI each hereby unconditionally and irrevocably submit and attorn to the original and exclusive jurisdiction of those courts regarding a Dispute.</p>
+<p>Notwithstanding the foregoing, CFI may commence legal proceedings against you in the courts of any jurisdiction seeking injunctive relief (or similar urgent legal remedies) to enforce these Website Terms of Use or to protect CFI&rsquo;s rights and interests.</p>
+<p>You will commence legal proceedings regarding a Dispute within twelve (12) months after the Dispute arises, after which time any and all legal proceedings by you regarding the Dispute will be forever barred. Any shorter time limit provided by law remains unaffected.</p>
+<p><strong>19.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; General Matters</strong></p>
+<p><strong>Miscellaneous:&nbsp; </strong>These Website Terms of Use are binding on you and your heirs, executors, administrators, successors and personal representatives. These Website Terms of Use are for the benefit of CFI Group. No consent or waiver by CFI to or of any breach of these Website Terms of Use by you will be effective unless in writing and signed by CFI or will be considered to be a consent to or waiver of a continuing breach or any other breach by you. The rights and remedies of CFI Group under these Website Terms of Use are cumulative and not exhaustive or exclusive of any other rights or remedies to which CFI Group may be lawfully entitled under these Website Terms of Use or at law, and CFI Group may pursue any and all rights and remedies concurrently, consecutively and alternatively. You will not assign or transfer these Website Terms of Use or any of your rights and obligations under these Website Terms of Use without the express prior written consent of CFI, which consent may be withheld in CFI&rsquo;s discretion. CFI may, without your consent, assign its rights and obligations under these Website Terms of Use. If any provision of these Website Terms of Use is held by a court or arbitrator of competent jurisdiction to be unenforceable or invalid for any reason, then the provision will be deemed severed from these Website Terms of Use and the remaining provisions will continue in full force and effect unless as a result of the severance these Website Terms of Use would fail in their essential purpose.</p>
+<p><strong>Interpretation:&nbsp; </strong>In these Website Terms of Use: (a)&nbsp;a reference to &ldquo;<strong>Website Terms of Use</strong>&rdquo; refers to these Website Terms of Use as a whole, and not just to the particular provision in which those words appear; (b)&nbsp;headings are for reference only; (c)&nbsp;words importing the singular number only include the plural, and vice versa; (d)&nbsp;&ldquo;<strong>person</strong>&rdquo; includes an individual, corporation and any other legal entity; (e)&nbsp;&ldquo;<strong>including</strong>&rdquo; or &ldquo;<strong>includes</strong>&rdquo; means including or includes (as applicable) without limitation or restriction; (f)&nbsp;&ldquo;<strong>law</strong>&rdquo; includes common law, equity, statutes and regulations; and (g)&nbsp;&ldquo;<strong>discretion</strong>&rdquo; mean a person&rsquo;s sole, absolute and unfettered discretion.</p>
+<p><strong>Complete Agreement:&nbsp; </strong>These Website Terms of Use set out the entire agreement between you and CFI regarding your use of the Website. These Website Terms of Use may not be modified except as set out in section 3. There are no representations, warranties, terms, conditions, undertakings or collateral agreements, express, implied or statutory, between you and CFI regarding the Website. For greater certainty, products and services advertised on or available through the Website are governed by other applicable agreements.</p>
+<p><strong>Language:&nbsp; </strong>You and CFI have each expressly requested and required that these Website Terms of Use and all related notices and other documents be drawn up in the English language. Les parties conviennent et exigent express&eacute;ment que ce Contrat et tous les documents qui s&rsquo;y rapportent soient r&eacute;dig&eacute;s en anglais. Subject to applicable law, any non-English translation of these Website Terms of Use provided by CFI is for convenience only, and if there is a conflict or inconsistency between the English version and a non-English version then the English version of these Website Terms of Use will take priority and govern.</p>
+<p>If you have any questions or comments regarding these Website Terms of Use, please contact CFI&rsquo;s customer care at <a href="/cdn-cgi/l/email-protection#bfcccacfcfd0cdcbffdcd0cdcfd0cddecbdad9d6d1ded1dcdad6d1cccbd6cbcacbda91dcd0d2"><span class="__cf_email__" data-cfemail="c2aea7a3b0acabaca582a1adb0b2adb0a3b6a7a4abaca3aca1a7abacb1b6abb6b7b6a7eca1adaf">[email&#160;protected]</span></a>.</p>
+<p><strong>IF YOU DO NOT ACCEPT AND AGREE TO THESE TERMS </strong><strong>OF USE</strong><strong>, THEN YOU MAY NOT USE THE WEBSITE.</strong></p>
+<p>_____________________________________________________________</p>
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="section footer-link-section ">
+<div class="container">
+<div class="row">
+<div class="footer-links-wrapper">
+<div class="footer-link-section-content">
+<a href="https://corporatefinanceinstitute.com/collections/" class="icon-with-link" title="Corporate Finance Institute">
+<img src class="lazy" data-src="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/images/logo-large-r.svg" alt="Corporate Finance Institute" width="585" height="120">
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="section ">
+<div class="container">
+<div class="menu-wrapper footer-icons-floating-as-row">
+<ul id="menu-footer-navigation" class="footer-navigation "><li class="active menu-item menu-item-has-children menu-company"><a href="https://corporatefinanceinstitute.com/about-cfi/">Company</a>
+<ul class="sub-menu">
+<li class="active menu-item menu-about-cfi"><a href="https://corporatefinanceinstitute.com/about-cfi/">About CFI</a></li>
+<li class="menu-item menu-meet-our-team"><a href="https://corporatefinanceinstitute.com/about-cfi/faculty-team/">Meet Our Team</a></li>
+<li class="menu-item menu-careers-at-cfi"><a href="https://corporatefinanceinstitute.com/about-cfi/careers-at-cfi/">Careers at CFI</a></li>
+<li class="menu-item menu-editorial-standards"><a href="https://corporatefinanceinstitute.com/about-cfi/editorial-standards/">Editorial Standards</a></li>
+<li class="menu-item menu-cpe-credits"><a href="https://corporatefinanceinstitute.com/about-cfi/cpe-credits-online/">CPE Credits</a></li>
+<li class="menu-item menu-learner-reviews"><a href="https://corporatefinanceinstitute.com/learner-reviews/">Learner Reviews</a></li>
+<li class="menu-item menu-partnerships"><a href="https://corporatefinanceinstitute.com/partnerships/">Partnerships</a></li>
+<li class="menu-item menu-affiliates"><a href="https://corporatefinanceinstitute.com/affiliates/">Affiliates</a></li>
+<li class="menu-item menu-higher-education"><a href="https://corporatefinanceinstitute.com/higher-education/">Higher Education</a></li>
+<li class="menu-item menu-newsroom"><a href="https://corporatefinanceinstitute.com/resources/newsroom/">Newsroom</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-has-children menu-certifications"><a href="https://corporatefinanceinstitute.com/certifications/">Certifications</a>
+<ul class="sub-menu">
+<li class="menu-item menu-fmva"><a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">FMVA®</a></li>
+<li class="menu-item menu-cbca"><a href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/">CBCA®</a></li>
+<li class="menu-item menu-cmsa"><a href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/">CMSA®</a></li>
+<li class="menu-item menu-bida"><a href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/">BIDA®</a></li>
+<li class="menu-item menu-fpwm"><a href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/">FPWM™</a></li>
+<li class="menu-item menu-esg"><a href="https://corporatefinanceinstitute.com/certifications/environmental-social-governance-specialist/">ESG</a></li>
+<li class="menu-item menu-leadership"><a href="https://corporatefinanceinstitute.com/certifications/leadership-effectiveness-program/">Leadership</a></li>
+<li class="menu-item menu-excel"><a href="https://corporatefinanceinstitute.com/certifications/excel-data-analysis-specialist/">Excel</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-has-children menu-cfi-for-teams"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/">CFI For Teams</a>
+<ul class="sub-menu">
+<li class="menu-item menu-financial-services"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-financial-services/">Financial Services</a></li>
+<li class="menu-item menu-corporate-finance"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-finance-teams/">Corporate Finance</a></li>
+<li class="menu-item menu-professional-services"><a href="https://corporatefinanceinstitute.com/cfi-for-teams/for-professional-services/">Professional Services</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-has-children menu-support"><a href="https://help.corporatefinanceinstitute.com/">Support</a>
+<ul class="sub-menu">
+<li class="menu-item menu-help-faq"><a href="https://help.corporatefinanceinstitute.com/">Help | FAQ</a></li>
+<li class="menu-item menu-legal"><a href="https://corporatefinanceinstitute.com/about-cfi/legal/">Legal</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-has-children menu-community"><a href="#">Community</a>
+<ul class="sub-menu">
+<li class="menu-item menu-member-community"><a href="https://corporatefinanceinstitute.com/member-community/">Member Community</a></li>
+<li class="menu-item menu-whats-new"><a href="https://corporatefinanceinstitute.com/whats-new/">What’s New</a></li>
+<li class="menu-item menu-resources"><a href="https://corporatefinanceinstitute.com/resources/">Resources</a></li>
+<li class="menu-item menu-podcast"><a href="https://corporatefinanceinstitute.com/resources/finpod/">Podcast</a></li>
+</ul>
+</li>
+</ul> </div>
+<div class="footer-icons footer-icons-floating">
+<div class="row">
+<div class="footer-icon ">
+<a href="https://corporatefinanceinstitute.com/about-cfi/about-macabacus/" rel="nofollow noreferrer">
+<span class="sr-only">Logo</span>
+<img src data-src="//cdn.corporatefinanceinstitute.com/assets/footer-macabacus-icon.png" class="attachment-full size-full lazy" alt width="359" height="72">
+</a>
+</div>
+<div class="footer-icon ">
+<a href="https://www.bbb.org/ca/bc/vancouver/profile/online-education/corporate-finance-institute-cfi-0037-2405665/#sealclick" id="bbblink" class="ruhzbus" target="_blank" rel="nofollow"><img class="lazy" data-src="https://seal-mbc.bbb.org/logo/ruhzbul/bbb-2405665.png" style="border: 0;" alt="Corporate Finance Institute (CFI) A+ BBB Business Review" /></a> </div>
+<div class="footer-icon soc2-logo">
+<img src data-src="//cdn.corporatefinanceinstitute.com/assets/soc2-logo.png" class="attachment-full size-full lazy" alt="SOC for Service Organizations" width="748" height="743">
+</div>
+<div class="footer-icon trustpilot-logo">
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+
+ <div class="trustpilot-widget" data-locale="en-US" data-template-id="53aa8807dec7e10d38f59f32" data-businessunit-id="5c1426a3ec4d1f000114af1f" data-theme="light"> <a href="https://www.trustpilot.com/review/corporatefinanceinstitute.com" target="_blank" rel="noopener">Trustpilot</a> </div>  </div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="footer-links-subsection">
+<div class="bottom-menu">
+<div class="copyright-wrap">
+© 2015 to 2024 CFI Education Inc. </div>
+<div class="social-links-wrap">
+<a class="social-button" title="Follow us on LinkedIn" href="https://www.linkedin.com/school/corporate-finance-institute-cfi/" target="_blank" rel="nofollow noreferrer">
+<span class="sr-only">Follow us on LinkedIn</span>
+<i class="fab fa-linkedin"></i>
+</a>
+<a class="social-button" title="Follow us on Instagram" href="https://www.instagram.com/corporatefinanceinstitute/" target="_blank" rel="nofollow noreferrer">
+<span class="sr-only">Follow us on Instagram</span>
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-button" title="Follow us on Facebook" href="https://www.facebook.com/corporatefinanceinstitute.CFI/" target="_blank" rel="nofollow noreferrer">
+<span class="sr-only">Follow us on Facebook</span>
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-button" title="Follow us on YouTube" href="https://www.youtube.com/c/Corporatefinanceinstitute-CFI" target="_blank" rel="nofollow noreferrer">
+<span class="sr-only">Follow us on YouTube</span>
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+<div class="footer-links-wrap">
+<ul id="menu-footer-links" class="footer-links-menu"><li class="menu-item menu-privacy-policy"><a href="https://corporatefinanceinstitute.com/about-cfi/privacy-policy/">Privacy Policy</a></li>
+<li class="active menu-item menu-terms-of-use"><a href="https://corporatefinanceinstitute.com/about-cfi/website-terms-of-use/" aria-current="page">Terms of Use</a></li>
+<li class="menu-item menu-terms-of-service"><a href="https://corporatefinanceinstitute.com/about-cfi/cfi-terms-of-service/">Terms of Service</a></li>
+<li class="menu-item menu-legal"><a href="https://corporatefinanceinstitute.com/about-cfi/legal/">Legal</a></li>
+</ul> </div>
+</div>
+</div>
+</div>
+</footer>
+<script type="rocketlazyloadscript" async data-rocket-type="text/javascript" data-rocket-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TsKLPy"></script>
+<div class="search-fixed-box " id="searchFixedBox">
+<div class="mobile-close-btn closeSearchFixedBox" tabindex="0">
+<i class="far fa-times"></i>
+</div>
+
+<div class="search-header">
+<div class="container">
+<div class="row">
+<a class="brand" href="https://corporatefinanceinstitute.com/">
+Corporate Finance Institute </a>
+<div class="search-box">
+<form role="search" method="get" class="search-form" action="https://corporatefinanceinstitute.com">
+<input class="search-field search-input" autocomplete="off" placeholder="Search for courses, lessons and resources..." data-id="callTheSearchBox" required type="search" maxlength="40" minlength="3" data-minlength_message="Search query should be at least 3 characters long" data-maxlength_message="Search query should be no more than 40 characters long">
+<svg class="icon-search fa-search" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="10" cy="10" r="7" stroke="#3271D2" stroke-width="2" />
+<path d="M16.12 15.3086L15.8114 15L15 15.8114L15.3086 16.12L15.4376 16.7131C15.4783 16.9004 15.5721 17.0721 15.7076 17.2076L20.2929 21.7929C20.6834 22.1834 21.3166 22.1834 21.7071 21.7929L21.7929 21.7071C22.1834 21.3166 22.1834 20.6834 21.7929 20.2929L17.2076 15.7076C17.0721 15.5721 16.9004 15.4783 16.7131 15.4376L16.12 15.3086Z" fill="#3271D2" />
+</svg>
+<div class="cancel-button closeSearchFixedBox" tabindex="0">
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="8.00016" cy="8.00001" r="6.66667" fill="#3271D2" />
+<path d="M6 10L10 6" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+<path d="M10 10L6 6" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+</svg>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="container search-fixed-box-body search-result ">
+<div class="row">
+<div class="col-12" id="searchResult">
+<div class="row">
+<div class="col-12">
+<div class="back-home-container">
+<a href="https://corporatefinanceinstitute.com" class="link-back" data-ignore-recent-search="true">Back to Website</a>
+</div>
+<div class="search-term-result">
+0 search results for &lsquo;<span class="term"></span>&rsquo;
+</div>
+<div class="row"><div class="col-md-6 col-sm-12"></div><div class="col-md-6 col-sm-12 search-section-courses"></div></div><div class="search-section">
+<div class="search-section-body">
+<div class="people-also-search">
+<div class="search-terms">
+<span class="title">
+People also search for:
+</span>
+<span class="search-term" tabindex="0">
+excel </span>
+<span class="search-term" tabindex="0">
+esg </span>
+<span class="search-term" tabindex="0">
+Free courses </span>
+<span class="search-term" tabindex="0">
+accounting </span>
+<span class="search-term" tabindex="0">
+Free </span>
+<span class="search-term" tabindex="0">
+real estate </span>
+<span class="search-term" tabindex="0">
+Forex trading courses </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="container search-fixed-box-body search-preview ">
+<div class="row">
+<div class="col-12" id="previewContent">
+<div class="search-section">
+<div class="search-section-header">
+<div class="sub-title">
+Explore Our Certifications </div>
+</div>
+<div class="search-section-body">
+<div class="certificate-cards">
+<div class="swiper-container">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">
+<div class="certificate-title">
+Financial Modeling &amp; Valuation Analyst (FMVA)® </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/fmva-certified-icon-1.svg"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/FMVA_Certificate_CFI.jpg"></div>
+</a>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/commercial-banking-credit-analyst-certification-cbca/">
+<div class="certificate-title">
+Commercial Banking &amp; Credit Analyst (CBCA)® </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/cbca-certified-icon-1.svg"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/cbca_certificate_image_cfi.jpg"></div>
+</a>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/capital-markets-securities-analyst-cmsa/">
+<div class="certificate-title">
+Capital Markets &amp; Securities Analyst (CMSA)® </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/CMSA-Certification-badge-1.svg"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/cmsa_certificate_image_cfi.jpg"></div>
+</a>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/business-intelligence-data-analyst-bida/">
+<div class="certificate-title">
+Certified Business Intelligence &amp; Data Analyst (BIDA)® </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/bida-logo.svg"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/Certificate-BIDA.png"></div>
+</a>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/financial-planning-and-wealth-management-fpwm-program/">
+<div class="certificate-title">
+Financial Planning &amp; Wealth Management (FPWM)™ </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/fpwm-badge.png"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/FPWM_Certificate_CFI.jpg"></div>
+</a>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="certificate-card">
+<a class="certificate-card-content" href="https://corporatefinanceinstitute.com/certifications/fintech-industry-professional/">
+<div class="certificate-title">
+FinTech Industry Professional (FTIP)™ </div>
+<div class="certificate-logo lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/ftip-badge.png"></div>
+<div class="certificate-image lazybg" data-lazybg="//cdn.corporatefinanceinstitute.com/assets/ftip-certificate.jpg"></div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="slider-navigation-container">
+<div class="swiper-navbutton-container prev">
+<div class="swiper-button-prev"></div>
+</div>
+<div class="swiper-pagination"></div>
+<div class="swiper-navbutton-container next">
+<div class="swiper-button-next"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><div class="col-md-6 col-sm-12"><div class="search-section">
+<div class="search-section-header">
+<div class="sub-title">
+Resources </div>
+</div>
+<div class="search-section-body">
+<div id="_ddcf50c292" class="search-box-cards-wrapper">
+<div class="page-card ">
+<a href="https://corporatefinanceinstitute.com/resources/excel/excel-shortcuts-pc-mac/" data-title="Excel Shortcuts PC Mac">
+<span class="page-content">
+<span class="page-title">
+Excel Shortcuts PC Mac </span>
+<span class="page-description">
+List of Excel Shortcuts
+Excel shortcuts[citation... </span>
+</span>
+</a>
+</div>
+<div class="page-card ">
+<a href="https://corporatefinanceinstitute.com/resources/financial-modeling/free-financial-modeling-guide/" data-title="Financial Modeling Guidelines">
+<span class="page-content">
+<span class="page-title">
+Financial Modeling Guidelines </span>
+<span class="page-description">
+CFI’s free Financial Modeling Guidelines is a thorough and complete resource covering model design, model building blocks, and common tips, tricks, and... </span>
+</span>
+</a>
+</div>
+<div class="page-card ">
+<a href="https://corporatefinanceinstitute.com/resources/data-science/sql-data-types/" data-title="SQL Data Types">
+<span class="page-content">
+<span class="page-title">
+SQL Data Types </span>
+<span class="page-description">
+What are SQL Data Types?
+The Structured Query Language (SQL) comprises several different data types that allow it to store different types of information... </span>
+</span>
+</a>
+</div>
+<div class="page-card ">
+<a href="https://corporatefinanceinstitute.com/resources/data-science/structured-query-language-sql/" data-title="Structured Query Language (SQL)">
+<span class="page-content">
+<span class="page-title">
+Structured Query Language (SQL) </span>
+<span class="page-description">
+What is Structured Query Language (SQL)?
+Structured Query Language (known as SQL) is a programming language used to interact with a database.... </span>
+</span>
+</a>
+</div>
+</div>
+</div>
+<div class="search-section-footer">
+<a href="https://corporatefinanceinstitute.com/resources/" class="btn-link-arrow right" data-title="Resources">
+<span class="desktop">See All Resources</span>
+<span class="mobile">See All</span>
+</a>
+</div>
+</div>
+</div><div class="col-md-6 col-sm-12"><div class="search-section">
+<div class="search-section-header">
+<div class="sub-title">
+Popular Courses </div>
+</div>
+<div class="search-section-body">
+<div id="_7ef22b9769" class="search-box-cards-wrapper">
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/excel-fundamentals-formulas-for-finance/" data-title="Excel Fundamentals - Formulas for Finance">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="Excel Fundamentals - Formulas for Finance" data-src="https://static.corporatefinanceinstitute.com/lms/course_image/d58fad35-cb68-440b-a93f-4ad1c061ff79.png" width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span class="course-free-badge">
+Free!
+</span>
+<span>FMVA® Prep Course</span>
+</span>
+<span>3.5h</span>
+</span>
+<span class="course-title">
+Excel Fundamentals - Formulas for Finance </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/3-statement-modeling/" data-title="3-Statement Modeling">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="3-Statement Modeling" data-src="https://static.corporatefinanceinstitute.com/course_image/172fcdda-691f-4462-9696-5fd9121c30fc.png" width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span>FMVA® Required</span>
+</span>
+<span>6.5h</span>
+</span>
+<span class="course-title">
+3-Statement Modeling </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/intro-business-valuation/" data-title="Introduction to Business Valuation">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="Introduction to Business Valuation" data-src="https://static.corporatefinanceinstitute.com/lms/course_image/b6345d70-2265-4628-b354-dfc4682bf022.jpg" width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span>FMVA® Required</span>
+</span>
+<span>6h</span>
+</span>
+<span class="course-title">
+Introduction to Business Valuation </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/sensitivity-analysis-financial-modeling/" data-title="Scenario & Sensitivity Analysis in Excel">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="Scenario & Sensitivity Analysis in Excel" data-src="https://static.corporatefinanceinstitute.com/course_image/826007ba-d85e-4fb7-b952-c60e268ca69c." width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span>FMVA® Required</span>
+</span>
+<span>2.5h</span>
+</span>
+<span class="course-title">
+Scenario & Sensitivity Analysis in Excel </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/excel-dashboard-and-data-visualization-course-onlineexcel-dashboard-and-data-visualization-course-online/" data-title="Dashboards & Data Visualization">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="Dashboards & Data Visualization" data-src="https://static.corporatefinanceinstitute.com/course_image/b0d83e7b-fdbf-4f33-b740-6a314681499c." width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span>FMVA® Required</span>
+</span>
+<span>6h</span>
+</span>
+<span class="course-title">
+Dashboards & Data Visualization </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+<div class="course-card  ">
+<div class="course-content">
+<a href="https://corporatefinanceinstitute.com/course/leveraged-buyout-lbo-modeling/" data-title="Leveraged Buyout (LBO) Modeling">
+<span class="course-content-header">
+<span class="course-image">
+<img class="lazy" src alt="Leveraged Buyout (LBO) Modeling" data-src="https://static.corporatefinanceinstitute.com/course_image/61e5f900-c568-4ff1-8ec2-0050a6139bdf." width="100" height="58" />
+</span>
+<span class="course-title-wrap">
+<span class="course-before-title">
+<span class="course-before-title-category">
+<span>FMVA® Electives</span>
+</span>
+<span>15h</span>
+</span>
+<span class="course-title">
+Leveraged Buyout (LBO) Modeling </span>
+</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="search-section-footer">
+<a href="https://corporatefinanceinstitute.com/collections/" class="btn-link-arrow right" data-title="Popular Courses">
+<span class="desktop">See All Courses</span>
+<span class="mobile">See All</span>
+</a>
+</div>
+</div>
+</div></div>
+<div class="row" id="searchPortableBlock">
+<div class="col-md-6 col-sm-12" id="recentSearches">
+<div class="search-section">
+<div class="search-section-header">
+<div class="sub-title">
+Recent Searches </div>
+</div>
+<div class="search-section-body">
+<div class="links-list">
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-sm-12">
+<div class="search-section">
+<div class="search-section-header">
+<div class="sub-title">
+Suggestions </div>
+</div>
+<div class="search-section-body">
+<div class="links-list">
+<a href="https://corporatefinanceinstitute.com/collections/free/">
+Free Courses </a>
+<a href="https://corporatefinanceinstitute.com/topic/excel/">
+Excel Courses </a>
+<a href="https://corporatefinanceinstitute.com/certifications/financial-modeling-valuation-analyst-fmva-program/">
+Financial Modeling &amp; Valuation Analyst (FMVA)® </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="modal fade modal-template" id="modal_template_free" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+<div class="modal-body">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<div class="content-wrapper">
+<div class="template-thumbnail"><div class="img"></div></div>
+<div class="template-content">
+<h3 class="block-title">Create a free account to unlock this Template</h3>
+<div class="block-description">
+<p>Access and download collection of free Templates to help power your productivity and performance.</p>
+</div>
+<div class="block-button">
+<a class="btn-main btn-default">Create a Free Account</a>
+</div>
+<div class="block-footer">
+<p>Already have an account? <a class="link-login">Log in</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade modal-template" id="modal_template_self_study" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+<div class="modal-body">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<div class="content-wrapper">
+<div class="template-thumbnail"><div class="img"></div></div>
+<div class="template-content">
+<h3 class="block-title">Supercharge your skills with Premium Templates</h3>
+<div class="block-description">
+<p>Take your learning and productivity to the next level with our Premium Templates.</p>
+<p>Upgrading to a paid membership gives you access to our extensive collection of plug-and-play Templates designed to power your performance—as well as CFI's full course catalog and accredited Certification Programs.</p>
+</div>
+<div class="block-button">
+<a href="https://corporatefinanceinstitute.com/pricing/" class="btn-main btn-default">Discover Paid Memberships</a>
+</div>
+<div class="block-footer">
+<p>Already have a Self-Study or Full-Immersion membership? <a class="link-login">Log in</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade modal-template" id="modal_template_full_immersion" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal-content">
+<div class="modal-body">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<div class="content-wrapper">
+<div class="template-thumbnail"><div class="img"></div></div>
+<div class="template-content">
+<h3 class="block-title">Access Exclusive Templates</h3>
+<div class="block-description">
+<p>Gain unlimited access to more than 250 productivity Templates, CFI's full course catalog and accredited Certification Programs, hundreds of resources, expert reviews and support, the chance to work with real-world finance and research tools, and more.</p>
+</div>
+<div class="block-button">
+<a href="https://corporatefinanceinstitute.com/pricing/" class="btn-main btn-default">Discover Full-Immersion Membership</a>
+</div>
+<div class="block-footer">
+<p>Already have a Full-Immersion membership? <a class="link-login">Log in</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<noscript><iframe src="https://stream.corporatefinanceinstitute.com/ns.html?id=NVD2HG2"
+		                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div id="fa-source" data-src="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/styles/fontawesome-0900c77ab083a3a8b136.css"></div><noscript><link rel="stylesheet" type="text/css" href="https://cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/styles/fontawesome-0900c77ab083a3a8b136.css"></noscript><script type="text/javascript" id="afl-wc-utm-public-js-extra">
+/* <![CDATA[ */
+var afl_wc_utm_public = {"ajax_url":"https:\/\/corporatefinanceinstitute.com\/wp-admin\/admin-ajax.php","action":"afl_wc_utm_view","nonce":"","cookie_prefix":"afl_wc_utm_","cookie_expiry":{"days":"90"},"cookie_renewal":"force","cookie_consent_category":"marketing","domain_info":{"domain":"corporatefinanceinstitute.com","path":"\/"},"last_touch_window":"1800","wp_consent_api_enabled":"","user_has_active_attribution":"0","attr_first_non_utm":"1"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//cdn.corporatefinanceinstitute.com/wp-content/plugins/afl-wc-utm/public/js/afl-wc-utm-public.min.js?ver=2.13.5" id="afl-wc-utm-public-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//cdn.corporatefinanceinstitute.com/wp-content/plugins/duracelltomi-google-tag-manager/dist/js/gtm4wp-form-move-tracker.js?ver=1.20.2" id="gtm4wp-form-move-tracker-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
+/* <![CDATA[ */
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+/* ]]> */
+</script>
+<script type="text/javascript" id="rocket-preload-links-js-extra">
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/corporatefinanceinstitute.com","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-preload-links-js-after">
+/* <![CDATA[ */
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+/* ]]> */
+</script>
+<script type="text/javascript" id="sage/js-js-extra">
+/* <![CDATA[ */
+var ajax_global = {"ajax_url":"https:\/\/corporatefinanceinstitute.com\/wp-admin\/admin-ajax.php","site_url":"https:\/\/corporatefinanceinstitute.com","profile_url":"https:\/\/api.corporatefinanceinstitute.com\/api\/users\/profile","thinkific_url":"https:\/\/thinkific.corporatefinanceinstitute.com\/ajax\/","data_api_url":"https:\/\/thinkific.corporatefinanceinstitute.com\/api","search_api_url":"https:\/\/search.corporatefinanceinstitute.com\/api\/public\/"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="//cdn.corporatefinanceinstitute.com/wp-content/themes/cfi/dist/scripts/main-0900c77ab083a3a8b136.js" id="sage/js-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="wpsp-script-frontend"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+      if (typeof(jQuery) !== 'undefined') {
+        jQuery('body').on('user_interacted', function() {
+          
+jQuery(document).ready(function(){
+!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});
+});
+
+jQuery(document).ready(function(){
+window.Beacon('init', '502360b4-52f7-46dd-902b-7daddfb94664');
+});
+
+          jQuery('body').trigger('beacon_initialized');
+          window.beacon_initialized = true;
+        });
+      }
+    </script>
+<div id="brochure-confirm"></div> </body>
+</html>
