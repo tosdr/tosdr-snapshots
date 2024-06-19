@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.5.1",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],this.interceptedClickListeners=[],this._interceptClickListeners(this),window.addEventListener("pageshow",e=>{this.persisted=e.persisted,this.everythingLoaded&&this._triggerLastFunctions()}),document.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(e){if(document.hidden){e._triggerListener();return}this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventHandler,{passive:!0})),window.addEventListener("touchstart",e.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",e.touchStartHandler),document.addEventListener("visibilitychange",e.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(e=>window.removeEventListener(e,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(e){"HTML"!==e.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),e.target.addEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!0),this._renameDOMAttribute(e.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(e){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(e){e.target.removeEventListener("click",this.clickHandler),this._disableOtherEventListeners(e.target,!1),this._renameDOMAttribute(e.target,"rocket-onclick","onclick"),this.interceptedClicks.push(e),e.preventDefault(),e.stopPropagation(),e.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(e=>{e.target.dispatchEvent(new MouseEvent("click",{view:e.view,bubbles:!0,cancelable:!0}))})}_interceptClickListeners(e){EventTarget.prototype.addEventListenerBase=EventTarget.prototype.addEventListener,EventTarget.prototype.addEventListener=function(t,i,r){"click"!==t||e.windowLoaded||i===e.clickHandler||e.interceptedClickListeners.push({target:this,func:i,options:r}),(this||window).addEventListenerBase(t,i,r)}}_disableOtherEventListeners(e,t){this.interceptedClickListeners.forEach(i=>{i.target===e&&(t?e.removeEventListener("click",i.func,i.options):e.addEventListener("click",i.func,i.options))}),e.parentNode!==document.documentElement&&this._disableOtherEventListeners(e.parentNode,t)}_waitForPendingClicks(){return new Promise(e=>{this._isClickPending?this._pendingClickFinished=e:e()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(e,t,i){e.hasAttribute&&e.hasAttribute(t)&&(event.target.setAttribute(i,event.target.getAttribute(t)),event.target.removeAttribute(t))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let e=[];document.querySelectorAll("script[type=rocketlazyloadscript][data-rocket-src]").forEach(t=>{let i=t.getAttribute("data-rocket-src");if(i&&0!==i.indexOf("data:")){0===i.indexOf("//")&&(i=location.protocol+i);try{let r=new URL(i).origin;r!==location.origin&&e.push({src:r,crossOrigin:t.crossOrigin||"module"===t.getAttribute("data-rocket-type")})}catch(n){}}}),e=[...new Map(e.map(e=>[JSON.stringify(e),e])).values()],this._batchInjectResourceHints(e,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._pendingWebpackRequests(this),await this._triggerWindowLoad()}catch(e){console.error(e)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this.everythingLoaded=!0,this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{e.hasAttribute("data-rocket-src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){if(await this._littleBreath(),!0===e.noModule&&"noModule"in HTMLScriptElement.prototype){e.setAttribute("data-rocket-status","skipped");return}return new Promise(t=>{let i;function r(){(i||e).setAttribute("data-rocket-status","executed"),t()}try{if(navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)i=document.createElement("script"),[...e.attributes].forEach(e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type"),"data-rocket-src"===t&&(t="src"),i.setAttribute(t,e.nodeValue))}),e.text&&(i.text=e.text),i.hasAttribute("src")?(i.addEventListener("load",r),i.addEventListener("error",function(){i.setAttribute("data-rocket-status","failed"),t()}),setTimeout(()=>{i.isConnected||t()},1)):(i.text=e.text,r()),e.parentNode.replaceChild(i,e);else{let n=e.getAttribute("data-rocket-type"),s=e.getAttribute("data-rocket-src");n?(e.type=n,e.removeAttribute("data-rocket-type")):e.removeAttribute("type"),e.addEventListener("load",r),e.addEventListener("error",function(){e.setAttribute("data-rocket-status","failed"),t()}),s?(e.removeAttribute("data-rocket-src"),e.src=s):e.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(e.text)))}}catch(a){e.setAttribute("data-rocket-status","failed"),t()}})}async _loadScriptsFromList(e){let t=e.shift();return t&&t.isConnected?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(e,t){var i=document.createDocumentFragment();e.forEach(e=>{let r=e.getAttribute&&e.getAttribute("data-rocket-src")||e.src;if(r){let n=document.createElement("link");n.href=r,n.rel=t,"preconnect"!==t&&(n.as="script"),e.getAttribute&&"module"===e.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),e.crossOrigin&&(n.crossOrigin=e.crossOrigin),e.integrity&&(n.integrity=e.integrity),i.appendChild(n),this.trash.push(n)}}),document.head.appendChild(i)}_delayEventListeners(e){let t={};function i(i,r){return t[r].eventsToRewrite.indexOf(i)>=0&&!e.everythingLoaded?"rocket-"+i:i}function r(e,r){var n;!t[n=e]&&(t[n]={originalFunctions:{add:n.addEventListener,remove:n.removeEventListener},eventsToRewrite:[]},n.addEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.add.apply(n,arguments)},n.removeEventListener=function(){arguments[0]=i(arguments[0],n),t[n].originalFunctions.remove.apply(n,arguments)}),t[e].eventsToRewrite.push(r)}function n(t,i){let r=t[i];t[i]=null,Object.defineProperty(t,i,{get:()=>r||function(){},set(n){e.everythingLoaded?r=n:t["rocket"+i]=r=n}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t;function i(t){return e.everythingLoaded?t:t.split(" ").map(e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e).join(" ")}function r(r){if(r&&r.fn&&!e.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(t){return e.domReadyFired?t.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>t.bind(document)(r)),r([])};let n=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){return this[0]===window&&("string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=i(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let t=arguments[0][e];delete arguments[0][e],arguments[0][i(e)]=t})),n.apply(this,arguments),this},e.allJQueries.push(r)}t=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>t,set(e){r(e)}})}async _pendingWebpackRequests(e){let t=document.querySelector("script[data-webpack]");async function i(){return new Promise(e=>{t.addEventListener("load",e),t.addEventListener("error",e)})}t&&(await i(),await e._requestAnimFrame(),await e._pendingWebpackRequests(e))}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded"))}async _triggerWindowLoad(){await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange(),await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(e=>e(window).trigger("rocket-jquery-load")),await this._littleBreath();let e=new Event("rocket-pageshow");e.persisted=this.persisted,window.dispatchEvent(e),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted}),this.windowLoaded=!0}_triggerLastFunctions(){document.onreadystatechange&&document.onreadystatechange(),window.onload&&window.onload(),window.onpageshow&&window.onpageshow({persisted:this.persisted})}_handleDocumentWrite(){let e=new Map;document.write=document.writeln=function(t){let i=document.currentScript;i||console.error("WPRocket unable to document.write this: "+t);let r=document.createRange(),n=i.parentElement,s=e.get(i);void 0===s&&(s=i.nextSibling,e.set(i,s));let a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(e=>setTimeout(e)):new Promise(e=>requestAnimationFrame(e))}_emptyTrash(){this.trash.forEach(e=>e.remove())}static run(){let e=new RocketLazyLoadScripts;e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta property="marketo_url" content="//app-lon08.marketo.com">
+<meta property="marketo_id" content="481-PYW-994">
+<link rel="shortcut icon" href="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-32x32.png" type="image/x-icon"><link rel="icon" href="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-32x32.png" type="image/x-icon">
+<script id="vwoCode" data-cfasync="false" src="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/scripts/vwo-config.js" defer></script>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<title>Privacy Policy | Perimeter 81 - Perimeter 81</title>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-400.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-500.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-600.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-700.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-800.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.perimeter81.com/app/themes/perimeter81/resources/assets/fonts/inter/inter-900.woff2" crossorigin>
+<meta name="description" content="This Privacy Policy describes the policy of Perimeter 81 (&quot;Perimeter 81&quot;) regarding the collection, use and disclosure of personal information when using the Site and/or Service." />
+<link rel="canonical" href="https://www.perimeter81.com/legal/privacy" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Privacy Policy | Perimeter 81" />
+<meta property="og:description" content="This Privacy Policy describes the policy of Perimeter 81 (&quot;Perimeter 81&quot;) regarding the collection, use and disclosure of personal information when using the Site and/or Service." />
+<meta property="og:url" content="https://www.perimeter81.com/legal/privacy" />
+<meta property="og:site_name" content="Perimeter 81" />
+<meta property="article:modified_time" content="2023-05-17T14:36:27+00:00" />
+<meta property="og:image" content="https://assets.perimeter81.com/uploads/2021/12/icon_company-logo-blue.png" />
+<meta property="og:image:width" content="326" />
+<meta property="og:image:height" content="64" />
+<meta property="og:image:type" content="image/png" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.perimeter81.com/legal/privacy","url":"https://www.perimeter81.com/legal/privacy","name":"Privacy Policy | Perimeter 81 - Perimeter 81","isPartOf":{"@id":"https://www.perimeter81.com/#website"},"primaryImageOfPage":{"@id":"https://www.perimeter81.com/legal/privacy#primaryimage"},"image":{"@id":"https://www.perimeter81.com/legal/privacy#primaryimage"},"thumbnailUrl":"https://assets.perimeter81.com/uploads/2021/12/icon_company-logo-blue.png","datePublished":"2021-01-19T19:14:27+00:00","dateModified":"2023-05-17T14:36:27+00:00","description":"This Privacy Policy describes the policy of Perimeter 81 (\"Perimeter 81\") regarding the collection, use and disclosure of personal information when using the Site and/or Service.","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.perimeter81.com/legal/privacy"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.perimeter81.com/legal/privacy#primaryimage","url":"https://assets.perimeter81.com/uploads/2021/12/icon_company-logo-blue.png","contentUrl":"https://assets.perimeter81.com/uploads/2021/12/icon_company-logo-blue.png","width":326,"height":64},{"@type":"WebSite","@id":"https://www.perimeter81.com/#website","url":"https://www.perimeter81.com/","name":"Perimeter 81","description":"","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.perimeter81.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"}]}</script>
+
+<link rel="dns-prefetch" href="//www.perimeter81.com" />
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+<link rel="dns-prefetch" href="//assets.perimeter81.com" />
+<link rel="dns-prefetch" href="//cms.perimeter81.com" />
+<link rel="dns-prefetch" href="//static.perimeter81.com" />
+<link rel="dns-prefetch" href="//t.co" />
+<link rel="dns-prefetch" href="//c.clarity.ms" />
+<link rel="dns-prefetch" href="//481-pyw-994.mktoresp.com" />
+<link rel="dns-prefetch" href="//in.hotjar.com" />
+<link rel="stylesheet" id="wp-block-library-css" href="https://www.perimeter81.com/wp/wp-includes/css/dist/block-library/style.min.css?ver=6.5.3" media="all" />
+<link data-minify="1" rel="stylesheet" id="atomic-blocks-style-css-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/app/mu-plugins/atomic-blocks/dist/blocks.style.build.css?ver=1718270950" media="all" />
+<style id="global-styles-inline-css">
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--main-blue-d: #2262C9;--wp--preset--color--main-blue: #266FE2;--wp--preset--color--main-blue-l: #2B7BFC;--wp--preset--color--main-dark-d: #212F4A;--wp--preset--color--main-dark: #2D3F63;--wp--preset--color--main-dark-l: #384F7D;--wp--preset--color--main-gray-d: #626F96;--wp--preset--color--main-gray: #546491;--wp--preset--color--main-gray-l: #8395C9;--wp--preset--color--light-gray-d: #C5CED9;--wp--preset--color--light-gray-d-sec: #7181AF;--wp--preset--color--light-gray: #DDE6F2;--wp--preset--color--light-gray-l: #F6F9FF;--wp--preset--color--pure-white: #FFF;--wp--preset--color--approved: #44D7B6;--wp--preset--color--error: #FD596F;--wp--preset--color--warning: #FFC955;--wp--preset--color--blog-bg: #F7F8FA;--wp--preset--color--light-blue-bg: #F4F8FD;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--gradient--main: linear-gradient(136deg,rgba(220,231,248,1) 0%,rgba(255,255,255,1) 100%);--wp--preset--gradient--icon: linear-gradient(134deg,rgba(76,217,237,1) 0%,rgba(70,165,236,1) 54%,rgba(67,127,236,1) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-size--header-1: 56px;--wp--preset--font-size--header-2: 46px;--wp--preset--font-size--header-3: 26px;--wp--preset--font-size--header-4: 21px;--wp--preset--font-size--header-5: 16px;--wp--preset--font-size--header-6: 14px;--wp--preset--font-size--small-title: 20px;--wp--preset--font-size--article-text: 14px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}body { margin: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){margin-left: auto !important;margin-right: auto !important;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: underline;}.wp-element-button, .wp-block-button__link{background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;line-height: inherit;padding: calc(0.667em + 2px) calc(1.333em + 2px);text-decoration: none;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-main-blue-d-color{color: var(--wp--preset--color--main-blue-d) !important;}.has-main-blue-color{color: var(--wp--preset--color--main-blue) !important;}.has-main-blue-l-color{color: var(--wp--preset--color--main-blue-l) !important;}.has-main-dark-d-color{color: var(--wp--preset--color--main-dark-d) !important;}.has-main-dark-color{color: var(--wp--preset--color--main-dark) !important;}.has-main-dark-l-color{color: var(--wp--preset--color--main-dark-l) !important;}.has-main-gray-d-color{color: var(--wp--preset--color--main-gray-d) !important;}.has-main-gray-color{color: var(--wp--preset--color--main-gray) !important;}.has-main-gray-l-color{color: var(--wp--preset--color--main-gray-l) !important;}.has-light-gray-d-color{color: var(--wp--preset--color--light-gray-d) !important;}.has-light-gray-d-sec-color{color: var(--wp--preset--color--light-gray-d-sec) !important;}.has-light-gray-color{color: var(--wp--preset--color--light-gray) !important;}.has-light-gray-l-color{color: var(--wp--preset--color--light-gray-l) !important;}.has-pure-white-color{color: var(--wp--preset--color--pure-white) !important;}.has-approved-color{color: var(--wp--preset--color--approved) !important;}.has-error-color{color: var(--wp--preset--color--error) !important;}.has-warning-color{color: var(--wp--preset--color--warning) !important;}.has-blog-bg-color{color: var(--wp--preset--color--blog-bg) !important;}.has-light-blue-bg-color{color: var(--wp--preset--color--light-blue-bg) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-main-blue-d-background-color{background-color: var(--wp--preset--color--main-blue-d) !important;}.has-main-blue-background-color{background-color: var(--wp--preset--color--main-blue) !important;}.has-main-blue-l-background-color{background-color: var(--wp--preset--color--main-blue-l) !important;}.has-main-dark-d-background-color{background-color: var(--wp--preset--color--main-dark-d) !important;}.has-main-dark-background-color{background-color: var(--wp--preset--color--main-dark) !important;}.has-main-dark-l-background-color{background-color: var(--wp--preset--color--main-dark-l) !important;}.has-main-gray-d-background-color{background-color: var(--wp--preset--color--main-gray-d) !important;}.has-main-gray-background-color{background-color: var(--wp--preset--color--main-gray) !important;}.has-main-gray-l-background-color{background-color: var(--wp--preset--color--main-gray-l) !important;}.has-light-gray-d-background-color{background-color: var(--wp--preset--color--light-gray-d) !important;}.has-light-gray-d-sec-background-color{background-color: var(--wp--preset--color--light-gray-d-sec) !important;}.has-light-gray-background-color{background-color: var(--wp--preset--color--light-gray) !important;}.has-light-gray-l-background-color{background-color: var(--wp--preset--color--light-gray-l) !important;}.has-pure-white-background-color{background-color: var(--wp--preset--color--pure-white) !important;}.has-approved-background-color{background-color: var(--wp--preset--color--approved) !important;}.has-error-background-color{background-color: var(--wp--preset--color--error) !important;}.has-warning-background-color{background-color: var(--wp--preset--color--warning) !important;}.has-blog-bg-background-color{background-color: var(--wp--preset--color--blog-bg) !important;}.has-light-blue-bg-background-color{background-color: var(--wp--preset--color--light-blue-bg) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-main-blue-d-border-color{border-color: var(--wp--preset--color--main-blue-d) !important;}.has-main-blue-border-color{border-color: var(--wp--preset--color--main-blue) !important;}.has-main-blue-l-border-color{border-color: var(--wp--preset--color--main-blue-l) !important;}.has-main-dark-d-border-color{border-color: var(--wp--preset--color--main-dark-d) !important;}.has-main-dark-border-color{border-color: var(--wp--preset--color--main-dark) !important;}.has-main-dark-l-border-color{border-color: var(--wp--preset--color--main-dark-l) !important;}.has-main-gray-d-border-color{border-color: var(--wp--preset--color--main-gray-d) !important;}.has-main-gray-border-color{border-color: var(--wp--preset--color--main-gray) !important;}.has-main-gray-l-border-color{border-color: var(--wp--preset--color--main-gray-l) !important;}.has-light-gray-d-border-color{border-color: var(--wp--preset--color--light-gray-d) !important;}.has-light-gray-d-sec-border-color{border-color: var(--wp--preset--color--light-gray-d-sec) !important;}.has-light-gray-border-color{border-color: var(--wp--preset--color--light-gray) !important;}.has-light-gray-l-border-color{border-color: var(--wp--preset--color--light-gray-l) !important;}.has-pure-white-border-color{border-color: var(--wp--preset--color--pure-white) !important;}.has-approved-border-color{border-color: var(--wp--preset--color--approved) !important;}.has-error-border-color{border-color: var(--wp--preset--color--error) !important;}.has-warning-border-color{border-color: var(--wp--preset--color--warning) !important;}.has-blog-bg-border-color{border-color: var(--wp--preset--color--blog-bg) !important;}.has-light-blue-bg-border-color{border-color: var(--wp--preset--color--light-blue-bg) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-main-gradient-background{background: var(--wp--preset--gradient--main) !important;}.has-icon-gradient-background{background: var(--wp--preset--gradient--icon) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-header-1-font-size{font-size: var(--wp--preset--font-size--header-1) !important;}.has-header-2-font-size{font-size: var(--wp--preset--font-size--header-2) !important;}.has-header-3-font-size{font-size: var(--wp--preset--font-size--header-3) !important;}.has-header-4-font-size{font-size: var(--wp--preset--font-size--header-4) !important;}.has-header-5-font-size{font-size: var(--wp--preset--font-size--header-5) !important;}.has-header-6-font-size{font-size: var(--wp--preset--font-size--header-6) !important;}.has-small-title-font-size{font-size: var(--wp--preset--font-size--small-title) !important;}.has-article-text-font-size{font-size: var(--wp--preset--font-size--article-text) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="stylesheet" id="wpah-front-styles-css" href="https://www.perimeter81.com/app/plugins/wp-accessibility-helper/assets/css/wp-accessibility-helper.min.css?ver=0.5.9.4" media="all" />
+<link data-minify="1" rel="stylesheet" id="sage/main.css-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/app/themes/perimeter81/dist/styles/main.css?ver=1718270950" media="all" />
+<link data-minify="1" rel="stylesheet" id="sage/choices.css-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/npm/choices.js/public/assets/styles/choices.min.css?ver=1718270950" media="all" />
+<script data-cfasync="false" src="https://www.perimeter81.com/app/plugins/jquery-updater/js/jquery-3.7.1.min.js?ver=3.7.1" id="jquery-core-js" defer></script>
+<script data-cfasync="false" src="https://www.perimeter81.com/app/plugins/jquery-updater/js/jquery-migrate-3.4.1.min.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
+<script type="rocketlazyloadscript" data-cfasync="true" id="p81-comeet-get-script-js-before">
+const comeetData = {"uid":"64.00C","token":"46C161C161C11B046C8D81EF48D827CC161C","careerPage":"career","companyName":"Perimeter81"}
+</script>
+<script type="rocketlazyloadscript" data-cfasync="true" data-rocket-src="https://www.perimeter81.com/app/mu-plugins/comeet-p81/public/assets/scripts/common.js?ver=6.5.3" id="p81-comeet-get-script-js" defer></script>
+<script type="rocketlazyloadscript" data-cfasync="true" id="p81-accessibility-custom-script-js-before">
+const accessibilityCustomData = {"maxClicks":"15"}
+</script>
+<script type="rocketlazyloadscript" data-cfasync="true" data-rocket-src="https://www.perimeter81.com/app/mu-plugins/p81-wp-accessibility-helper/public/assets/scripts/common.js?ver=6.5.3" id="p81-accessibility-custom-script-js" defer></script>
+<link rel="alternate" type="application/json+oembed" href="https://www.perimeter81.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.perimeter81.com%2Flegal%2Fprivacy" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.perimeter81.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.perimeter81.com%2Flegal%2Fprivacy&#038;format=xml" />
+
+<style data-cfasync="false">.async-hide { opacity: 0 !important} </style>
+<script type="rocketlazyloadscript" data-cfasync="false">(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',2000,
+{'GTM-MX3P6LG':true});</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">(function() {var gs = document.createElement('script');gs.src = 'https://js.partnerstack.com/v1/';gs.type = 'text/javascript';gs.async = 'true';gs.onload = gs.onreadystatechange = function() {var rs = this.readyState;if (rs && rs != 'complete' && rs != 'loaded') return;try {growsumo._initialize('pk_7THIoes4UKtBHQOWTlQ6i7dm9ELwIbtM');if (typeof(growsumoInit) === 'function') {growsumoInit();}} catch (e) {}};var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gs, s);})();</script>
+<script type="rocketlazyloadscript">
+// Wait for Intercom to boot (max 30 seconds)
+const timeout = setTimeout(() => clearInterval(interval), 30000);
+const interval = setInterval(() => {
+  if (typeof window.Intercom == 'function' && window.Intercom.booted) {
+    // Intercom is booted!
+    Intercom('update');
+
+    clearInterval(interval);
+    clearTimeout(timeout);
+  }
+}, 1000);
+</script>
+<script type="rocketlazyloadscript">
+document.querySelectorAll('.home .header .lang-switcher--dropdown .lang-list--item-link[href*="https://www.perimeter81.com/es"]').forEach((elem) => {elem.remove();})
+</script>
+<script type="rocketlazyloadscript">
+    (function () {
+        try {
+
+            const windowLocationHash = window.location.hash;
+            const windowLocationHref = window.location.href;
+            const windowLocationOrigin = window.location.origin;
+            const windowLocationPathname = window.location.pathname;
+            const windowLocationSearch = window.location.search;
+
+            if (windowLocationHash !== '') {
+                    let timerId = setInterval(() => {
+
+                        let windowLocationHashNew = windowLocationHash.substring(
+                            windowLocationHash.indexOf("#")
+                        );
+
+                        if(windowLocationHashNew.indexOf('&') !== -1){
+                            windowLocationHashNew = windowLocationHashNew.substring(
+                            0,
+                                windowLocationHashNew.indexOf("&") - 1
+                            );
+                        }
+
+                        history.pushState({}, '', windowLocationOrigin + windowLocationPathname + windowLocationSearch + windowLocationHashNew);
+                    }, 200);
+
+                    setTimeout(() => { clearInterval(timerId); }, 3000);
+            }
+
+                window.onload = () => {
+
+                    const anchorLinks =  document.querySelectorAll('a[href*="#"]');
+
+                    for (i = 0; i < anchorLinks.length; ++i) {
+
+                        let curLink = anchorLinks[i];
+                        let curLinkHref = curLink.getAttribute('href');
+
+                        if(windowLocationSearch !== '' && curLinkHref !== null && curLinkHref.length > 1 && curLinkHref.indexOf('#') !== -1 && curLinkHref.indexOf('&') !== -1){
+ 
+                            curLinkHref = curLinkHref.substring(
+                                curLinkHref.indexOf("#")
+                            );
+
+                            curLinkHref = curLinkHref.substring(
+                                0,
+                                curLinkHref.indexOf("&")
+                            );
+
+
+                            curLink.setAttribute('href', curLinkHref); 
+
+                            curLink.onclick = () => {
+                                document.querySelector(curLink.getAttribute('href')).scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            };
+                        }
+
+
+                        curLink.onclick = () => {
+                            history.pushState({}, '', windowLocationOrigin + windowLocationPathname + windowLocationSearch + curLink.getAttribute('href'));
+                        };
+
+
+                    }
+                }
+
+
+           
+        }catch (e) {
+           console.warn(e);
+        }
+    })();
+</script>
+<style data-cfasync="false">
+
+  .text-align-center {
+    text-align: center !important;
+  }
+
+.wp-block-columns.is-layout-flex {
+	column-gap: 0 !important;
+        flex-wrap: nowrap!important;
+}
+
+@media (max-width: 992px) {
+    .wp-block-columns.is-layout-flex {
+        flex-wrap: wrap !important
+    }
+}
+
+.category-blog--sticky .category-blog--inner.sticky {
+  top: -100% !important;
+}
+
+.category-blog--sticky.replace-main-menu .category-blog--inner.sticky {
+  top: 0 !important;
+}
+
+// TMP Settings For Checkpoint Banner
+    html.om-position-floating-top body {
+        padding-top: 0px!important;
+        margin-top: -2px !important;
+    }
+	
+    html.om-position-floating-top .header {
+        top: 72px !important;
+    }
+
+    .header-inner .vwo-notification-bar {
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        max-width: 100vw;
+        padding: 8px 0 !important;
+        display: flex;
+        justify-content: center;
+    }
+
+    .header-inner .vwo-notification-bar .vwo-notification-bar__wrapper {
+        margin: 0 auto !important;
+        max-width: 100% !important;
+    }
+
+    body .wp-block-p81-logos-display {
+        max-width: 1010px;
+    }
+
+    .wp-block-p81-marketo-form label#LblacceptCommunication1.mktoLabel,
+    .wp-block-p81-marketo-form label#LblacceptCommunication2.mktoLabel {
+         position: static !important;
+         padding-left: 24px !important;
+         padding-top: 1px !important;
+         white-space: normal !important;
+         line-height: 20px !important;
+    }
+
+    .wp-block-p81-marketo-form .check-field .checkbox-item:checked+label:after {
+        top: 5px !important;
+    }
+</style>
+<style data-cfasync="true">
+            .visible {opacity: 1 !important;}
+        </style>
+<script type="rocketlazyloadscript" data-cfasync="true">
+            const rootEl = document.getElementsByTagName("html")[0];
+            rootEl.classList.add("visible");
+        </script> 
+<script type="rocketlazyloadscript" data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MX3P6LG');</script>
+
+<style>.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css">.broken_link, a.broken_link {
+	text-decoration: none;
+}</style><link rel="icon" href="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-180x180.png" />
+<meta name="msapplication-TileImage" content="https://assets.perimeter81.com/uploads/2023/09/cropped-Perimeter-81-check-point-logo-symbol-blue-270x270.png" />
+<style id="wp-custom-css">
+			.glossary-filter--block .glossary-container.features-container {
+	width: !00% !important;
+	margin-left: 0 !important;
+}
+
+.primary-navigation .has_cursor > a {
+	cursor: pointer !important;
+}
+
+.primary-navigation .has_cursor > a:hover {
+	color: #2262c9 !important;
+}
+
+.wp-block-p81-marketo-form-extended .mktoForm[data-litestyle=true] .mktoFieldWrap.error .mktoField~.error-mess, .wp-block-p81-marketo-form .mktoForm[data-litestyle=true] .mktoFieldWrap.error .mktoField~.error-mess {
+	top: auto !important;
+}
+
+.lazyload.lazyloaded {
+    height: auto;
+}
+
+.home .header .lang-switcher--dropdown .lang-list--item-link[href*="https://www.perimeter81.com/es"] {
+	//display: none !important;
+}
+
+.header .lang-switcher--dropdown .lang-list--item-link {
+	flex-wrap: nowrap !important;
+}
+
+button[disabled] {
+    background: #dde6f2 !important;
+    border-color: #dde6f2 !important;
+    cursor: default !important;
+}
+
+.tmp-flex-elem-p81 {
+	display: flex;
+}
+
+@media(max-width: 767px) {
+	.wp-block-logo-slider-inner {
+    overflow: hidden;
+    margin: 0 -24px;
+	}
+}		</style>
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript></head>
+<body class="legal-template-default single single-legal postid-1419 single-format-standard chrome osx wp-accessibility-helper wah_fstype_script accessibility-underline-setup accessibility-location-right privacy init-top-bar app-data index-data singular-data single-data single-legal-data single-legal-privacy-data">
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MX3P6LG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+ <header class="header">
+<div class="top-bar">
+<div class="header-inner">
+<div class="left-side"></div>
+<div class="right-side">
+<a class="button btn--top-link" id="top-login" href="//app.perimeter81.com/sign-in" target="_blank">
+Login</a>
+<a class="button btn--top-link" id="top-support" href="//support.perimeter81.com" target="_blank">
+Support</a>
+</div>
+</div>
+</div>
+<div class="header-inner">
+<div class="header-inner__wrap-mobile">
+<a href="https://www.perimeter81.com/" class="header-inner__logo default-logo">
+<img class="header-inner__logo--img svg" src="https://www.perimeter81.com/app/themes/perimeter81/dist/images/svg/icons/icon_logo_checkpoint.svg" alt="Perimeter 81" width="190" height="48">
+</a>
+<div class="mobile-right-block">
+<div class="header-inner__mobile-menu-toggle">
+<svg class="p81_icon close-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M14.55 16a1.34 1.34 0 01-.93-.38L8 10l-5.63 5.62a1.29 1.29 0 01-1.83 0 1.62 1.62 0 01-.52-1 1.21 1.21 0 01.36-.94L6 8 .38 2.38A1.34 1.34 0 010 1.46 1.32 1.32 0 01.38.54 1.42 1.42 0 011.46 0a1.34 1.34 0 01.92.38L8 6 13.63.38a1.26 1.26 0 01.92-.38 1.3 1.3 0 01.91.38A1.46 1.46 0 0116 1.46a1.28 1.28 0 01-.38.91L10 8l5.63 5.62a1.34 1.34 0 01.38.92 1.32 1.32 0 01-.38.92 1.44 1.44 0 01-1.08.54z" /></svg> <svg class="p81_icon open-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2 3a1 1 0 011-1h10a1 1 0 010 2H3a1 1 0 01-1-1zm11 4H3a1 1 0 000 2h10a1 1 0 000-2zm0 5H3a1 1 0 000 2h10a1 1 0 000-2z" /></svg> </div>
+</div>
+</div>
+<nav class="header-inner__nav">
+
+<ul class="primary-navigation new_primary_navigation">
+<li class="active full alignLeft full_three nav-item menu-item dropdown menu-item-has-children menu-products-services"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products &#038; Services<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<div class="mega_menu">
+<div class="mega_menu_cover">
+<div class="mega_menu_cover_link">
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full big nav-item menu-item menu-unified-network"><a class="nav-link hasIcon" href="/global-backbone-network"><span>Unified Network<span class="icon"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="icon" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/icon_unified_network.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/icon_unified_network.png" alt="icon"></noscript></span><span class="subtitle">Global Backbone Network</span><span class="description">Connect company resources over a high-performance global network</span><span class="link_text fake-link">Read more</span></span></a></li>
+<li class="full big nav-item menu-item dropdown menu-item-has-children menu-private-access"><a class="nav-link dropdown-toggle hasIcon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/zero-trust-network-access"><span>Private Access<span class="icon"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="icon" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/icon_private_access.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/icon_private_access.png" alt="icon"></noscript></span><span class="subtitle">Zero-trust network accesss (ZTNA)</span><span class="description">Securely connect users to company resources, on-prem or in the cloud</span><span class="link_text fake-link">Read more</span><span class="submenu_title">Features:</span></span></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-agentless-ztna"><a class="nav-link noIcon" href="/zero-trust-application-access"><span>Agentless ZTNA</span></a></li>
+<li class="full small nav-item menu-item menu-device-posture-check-dpc"><a class="nav-link noIcon" href="/device-posture-check"><span>Device Posture Check (DPC)</span></a></li>
+<li class="full small nav-item menu-item menu-saas-protection-saaspass"><a class="nav-link noIcon" href="/saaspass"><span>SaaS protection (SaaSPass)</span></a></li>
+<li class="full small nav-item menu-item menu-firewall-as-a-service-fwaas"><a class="nav-link noIcon" href="/firewall-as-a-service"><span>Firewall as a service (FWaaS)</span></a></li>
+</ul>
+</li>
+<li class="full big nav-item menu-item dropdown menu-item-has-children menu-internet-access"><a class="nav-link dropdown-toggle hasIcon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/hybrid-swg"><span>Internet Access<span class="icon"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="icon" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/icon_internet_access.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/icon_internet_access.png" alt="icon"></noscript></span><span class="subtitle">Secure web gateway (SWG)</span><span class="description">Protect users and the network from internet-borne threats</span><span class="link_text fake-link">Read more</span><span class="submenu_title">Features:</span></span></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-advance-malware-protection"><a class="nav-link noIcon" href="/malware-protection"><span>Advance Malware Protection</span></a></li>
+<li class="full small nav-item menu-item menu-web-filtering"><a class="nav-link noIcon" href="/web-filtering"><span>Web filtering</span></a></li>
+<li class="full small nav-item menu-item menu-dns-filtering"><a class="nav-link noIcon" href="/solutions/dns-filtering"><span>DNS filtering</span></a></li>
+<li class="full small nav-item menu-item menu-automatic-wifi-security"><a class="nav-link noIcon" href="/solutions/automatic-wifi-security"><span>Automatic WiFi security</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sidebar_menu" style="background: transparent linear-gradient(197deg, #dce7f8 0%, #ffffff 100%) 0% 0% no-repeat padding-box;">
+<div class="sidebar_data">
+<div class="image"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/banner_ztna.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/banner_ztna.png"></noscript></div>
+<div class="text_line_1">White Paper</div>
+<div class="text_line_2">How a ZTNA solution does what VPNs can’t</div>
+<a class="button btn--ghost" href="/whitepapers/ztna-vs-vpn" style="background: #ffffff;border-color: #2262c9;color: #2262c9;">Download Now</a>
+</div>
+</div>
+</div>
+</li>
+<li class="active full full_two nav-item menu-item dropdown menu-item-has-children menu-solutions"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solutions<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<div class="mega_menu">
+<div class="mega_menu_cover">
+<div class="mega_menu_cover_link">
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-vpn-replacement"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">VPN Replacement<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-vpn-alternative"><a class="nav-link noIcon" href="/vpn-alternative"><span>VPN alternative</span></a></li>
+<li class="full small nav-item menu-item menu-sdp-vs-vpn"><a class="nav-link noIcon" href="/solutions/sdp-vs-vpn"><span>SDP vs VPN</span></a></li>
+<li class="full small nav-item menu-item menu-remote-access"><a class="nav-link noIcon" href="/solutions/for-remote-workers"><span>Remote access</span></a></li>
+<li class="full small nav-item menu-item menu-cloud-vpn"><a class="nav-link noIcon" href="/solutions/what-is-a-cloud-vpn"><span>Cloud VPN</span></a></li>
+<li class="full small nav-item menu-item menu-business-vpn"><a class="nav-link noIcon" href="/glossary/business-vpn"><span>Business VPN</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-by-role"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">By Role<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-for-it-management"><a class="nav-link noIcon" href="/solutions/role/it-managers"><span>For IT Management</span></a></li>
+<li class="full small nav-item menu-item menu-for-devops"><a class="nav-link noIcon" href="/solutions/role/devops"><span>For DevOps</span></a></li>
+<li class="full small nav-item menu-item menu-for-cisos"><a class="nav-link noIcon" href="/solutions/role/cisos"><span>For CISOs</span></a></li>
+<li class="full small nav-item menu-item menu-small-business-owners"><a class="nav-link noIcon" href="/solutions/role/small-business-owners"><span>Small Business Owners</span></a></li>
+<li class="full small nav-item menu-item menu-marketers"><a class="nav-link noIcon" href="/solutions/role/marketers"><span>Marketers</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-by-industry"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">By Industry<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-technology-saas"><a class="nav-link noIcon" href="/solutions/industry/technology-saas"><span>Technology &#038; SaaS</span></a></li>
+<li class="full small nav-item menu-item menu-healthcare"><a class="nav-link noIcon" href="/solutions/industry/healthcare"><span>Healthcare</span></a></li>
+<li class="full small nav-item menu-item menu-finance"><a class="nav-link noIcon" href="/solutions/industry/finance"><span>Finance</span></a></li>
+<li class="full small nav-item menu-item menu-retail-and-e-commerce"><a class="nav-link noIcon" href="/solutions/industry/retail-e-commerce"><span>Retail and E-Commerce</span></a></li>
+<li class="full small nav-item menu-item menu-insurance-providers"><a class="nav-link noIcon" href="/solutions/industry/insurance"><span>Insurance Providers</span></a></li>
+<li class="full small nav-item menu-item menu-government-education"><a class="nav-link noIcon" href="/solutions/industry/government-education"><span>Government &#038; Education</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-product-integrations"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product integrations<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-amazon-aws"><a class="nav-link noIcon" href="/aws"><span>Amazon AWS</span></a></li>
+<li class="full small nav-item menu-item menu-microsoft-azure"><a class="nav-link noIcon" href="/microsoft"><span>Microsoft Azure</span></a></li>
+<li class="full small nav-item menu-item menu-google-cloud"><a class="nav-link noIcon" href="/solutions/integrations/google-cloud"><span>Google Cloud</span></a></li>
+<li class="full small nav-item menu-item menu-heroku"><a class="nav-link noIcon" href="/solutions/integrations/heroku"><span>Heroku</span></a></li>
+<li class="full small nav-item menu-item menu-salesforce"><a class="nav-link noIcon" href="/solutions/integrations/salesforce"><span>Salesforce</span></a></li>
+<li class="full small nav-item menu-item menu-splunk"><a class="nav-link noIcon" href="/solutions/integrations/splunk"><span>Splunk</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-regulatory-compliance"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Regulatory Compliance<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-overview"><a class="nav-link noIcon" href="/solutions/compliance"><span>Overview</span></a></li>
+<li class="full small nav-item menu-item menu-iso-27001-compliance"><a class="nav-link noIcon" href="/solutions/compliance/iso-27001-27002"><span>ISO 27001 Compliance</span></a></li>
+<li class="full small nav-item menu-item menu-hipaa-compliance"><a class="nav-link noIcon" href="/glossary/hipaa"><span>HIPAA Compliance</span></a></li>
+<li class="full small nav-item menu-item menu-soc-2-type-2-compliance"><a class="nav-link noIcon" href="/solutions/compliance/soc-2"><span>SOC 2 Type 2 Compliance</span></a></li>
+<li class="full small nav-item menu-item menu-gdpr"><a class="nav-link noIcon" href="/solutions/compliance/gdpr"><span>GDPR</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-frameworks"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Frameworks<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-sase"><a class="nav-link noIcon" href="/sase"><span>SASE</span></a></li>
+<li class="full small nav-item menu-item menu-sse"><a class="nav-link noIcon" href="/glossary/sse-security-service-edge"><span>SSE</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sidebar_menu" style="background: transparent linear-gradient(197deg, #dce7f8 0%, #ffffff 100%) 0% 0% no-repeat padding-box;">
+<div class="sidebar_data">
+<div class="image"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/banner_ztna_buyer.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/banner_ztna_buyer.png"></noscript></div>
+<div class="text_line_1">White Paper</div>
+<div class="text_line_2">ZTNA: The Ultimate Buyer’s Guide</div>
+<a class="button btn--ghost" href="/whitepapers/ztna-ultimate-buyers-guide" style="background: #ffffff;border-color: #2262c9;color: #2262c9;">Download Now</a>
+</div>
+</div>
+</div>
+</li>
+<li class="full small nav-item menu-item menu-customers"><a class="nav-link noIcon" href="/customers"><span>Customers</span></a></li>
+<li class="active full alignRight full_two nav-item menu-item dropdown menu-item-has-children menu-resources"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<div class="mega_menu">
+<div class="mega_menu_cover">
+<div class="mega_menu_cover_link">
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-feature-overview"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Feature Overview<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-corporate-vpn"><a class="nav-link noIcon" href="/resources/corporate-vpn-solution"><span>Corporate VPN<span class="badget" style="color:#266FE2;background-color:#dfebff; ">Coming Soon</span></span></a></li>
+<li class="full small nav-item menu-item menu-monitioring-dashboard"><a class="nav-link noIcon" href="/monitoring-dashboard"><span>Monitioring Dashboard</span></a></li>
+<li class="full small nav-item menu-item menu-identity-management"><a class="nav-link noIcon" href="/glossary/iam"><span>Identity Management</span></a></li>
+<li class="full small nav-item menu-item menu-automatic-wifi-security"><a class="nav-link noIcon" href="/solutions/automatic-wifi-security"><span>Automatic WiFi Security</span></a></li>
+<li class="full small nav-item menu-item menu-advanced-security"><a class="nav-link noIcon" href="/advanced-security-features"><span>Advanced Security</span></a></li>
+<li class="full small nav-item menu-item menu-dns-filtering"><a class="nav-link noIcon" href="/datasheets/dns-filtering"><span>DNS Filtering</span></a></li>
+<li class="full small nav-item menu-item menu-saaspass"><a class="nav-link noIcon" href="/saaspass"><span>SaaSPass</span></a></li>
+<li class="full small has-active-state nav-item menu-item menu-see-more"><a class="nav-link noIcon" href="/features"><span>See more</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-resource-library"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resource Library<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-support-center"><a class="nav-link noIcon" target="_blank" rel="noopener" href="https://support.perimeter81.com/docs"><span>Support Center</span></a></li>
+<li class="full small nav-item menu-item menu-whitepapers"><a class="nav-link noIcon" href="/resources/whitepapers"><span>Whitepapers</span></a></li>
+<li class="full small nav-item menu-item menu-datasheets"><a class="nav-link noIcon" href="/resources/datasheets"><span>Datasheets</span></a></li>
+<li class="full small nav-item menu-item menu-videos"><a class="nav-link noIcon" href="/video"><span>Videos</span></a></li>
+<li class="full small nav-item menu-item menu-webinars"><a class="nav-link noIcon" href="/resources/webinars"><span>Webinars</span></a></li>
+<li class="full small nav-item menu-item menu-product-walkthrough"><a class="nav-link noIcon" href="/resources/walkthrough"><span>Product Walkthrough</span></a></li>
+</ul>
+</li>
+<li class="full small nav-item menu-item menu-blog"><a class="nav-link noIcon" href="/blog"><span>Blog</span></a></li>
+<li class="full small nav-item menu-item menu-glossary"><a class="nav-link noIcon" href="/glossary"><span>Glossary</span></a></li>
+<li class="full small nav-item menu-item menu-whats-new"><a class="nav-link noIcon" href="/whats-new"><span>What&#8217;s New</span></a></li>
+</ul>
+</div>
+<div class="sidebar_menu" style="background: transparent linear-gradient(197deg, #dce7f8 0%, #ffffff 100%) 0% 0% no-repeat padding-box;">
+<div class="sidebar_data">
+<div class="image"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://assets.perimeter81.com/uploads/2023/12/banner_report.png"><noscript><img src="https://assets.perimeter81.com/uploads/2023/12/banner_report.png"></noscript></div>
+<div class="text_line_1">Report</div>
+<div class="text_line_2">2023 Gartner Market Guide for Zero Trust Network Access</div>
+<a class="button btn--ghost" href="/gartner-2023-market-guide-ztna" style="background: #ffffff;border-color: #2262c9;color: #2262c9;">Get the Report</a>
+</div>
+</div>
+</div>
+</li>
+<li class="active full full_small nav-item menu-item dropdown menu-item-has-children menu-company"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Company<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<div class="mega_menu">
+<div class="mega_menu_cover">
+<div class="mega_menu_cover_link">
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-about-us"><a class="nav-link noIcon" href="/about-us"><span>About Us</span></a></li>
+<li class="full small nav-item menu-item menu-events"><a class="nav-link noIcon" href="/events"><span>Events</span></a></li>
+<li class="full small nav-item menu-item menu-awards"><a class="nav-link noIcon" href="/awards"><span>Awards</span></a></li>
+<li class="full small nav-item menu-item menu-press-center"><a class="nav-link noIcon" href="/press"><span>Press Center</span></a></li>
+<li class="full small nav-item menu-item menu-careers"><a class="nav-link noIcon" href="https://careers.checkpoint.com/"><span>Careers</span></a></li>
+<li class="full small nav-item menu-item menu-contact-us"><a class="nav-link noIcon" href="/contact"><span>Contact Us</span></a></li>
+</ul>
+</div>
+<div class="sidebar_menu" style="background: transparent linear-gradient(197deg, #dce7f8 0%, #ffffff 100%) 0% 0% no-repeat padding-box;">
+<div class="sidebar_data">
+<div class="image"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://assets.perimeter81.com/uploads/2024/01/badges-company-winter24.png"><noscript><img src="https://assets.perimeter81.com/uploads/2024/01/badges-company-winter24.png"></noscript></div>
+<div class="text_line_1">Awards</div>
+<div class="text_line_2">It’s always great to be recognized!</div>
+</div>
+</div>
+</div>
+</li>
+<li class="active full alignRight full_two nav-item menu-item dropdown menu-item-has-children menu-partners"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Partners<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-partners"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Partners<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-msps-mssps"><a class="nav-link noIcon" href="/partners/managed-service-providers"><span>MSPs/MSSPs</span></a></li>
+<li class="full small nav-item menu-item menu-technology-alliances"><a class="nav-link noIcon" href="/partners/technology-alliances"><span>Technology Alliances</span></a></li>
+</ul>
+</li>
+<li class="active full small nav-item menu-item dropdown menu-item-has-children menu-program-resources"><a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Program &#038; Resources<svg class="p81_icon main-dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M12 6.74a.73.73 0 01-.2.51l-3.3 3.53a.68.68 0 01-1 0L4.2 7.25a.73.73 0 01-.2-.51.75.75 0 01.2-.52.69.69 0 011 0L8 9.21l2.79-3a.7.7 0 011 0 .75.75 0 01.21.53z" /></svg></a>
+<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<li class="full small nav-item menu-item menu-become-a-partner"><a class="nav-link noIcon" href="/partners"><span>Become A Partner</span></a></li>
+<li class="full small nav-item menu-item menu-partners-portal"><a class="nav-link noIcon" target="_blank" rel="noopener" href="https://perimeter81.my.site.com/partners/login"><span>Partners Portal</span></a></li>
+<li class="full small nav-item menu-item menu-partners-locator"><a class="nav-link noIcon" href="/partners/locator"><span>Partners Locator</span></a></li>
+<li class="full small nav-item menu-item menu-off-site-traning"><a class="nav-link noIcon" href="/partners/partner-off-site-training"><span>Off-Site Traning</span></a></li>
+</ul>
+</li>
+<li class="full button nav-item menu-item menu-become-a-partner"><a class="nav-link noIcon" href="/become-a-partner"><span>Become a Partner</span></a></li>
+</ul>
+</li>
+<li class="full small nav-item menu-item menu-pricing"><a class="nav-link noIcon" href="/pricing"><span>Pricing</span></a></li>
+<li class="nav-item menu-item custom-nav-item">
+<a class="nav-link" href="//app.perimeter81.com/sign-in" target="_blank">
+Login
+</a>
+</li>
+<li class="nav-item menu-item custom-nav-item">
+<a class="nav-link" href="//support.perimeter81.com" target="_blank">
+Support
+</a>
+</li>
+</ul>
+</nav>
+<div class="header-inner__buttons">
+<a class="button btn--slim btn--demo-btn btn--primary" id="header-menu__demo" href="//www.perimeter81.com/demo">
+Request Demo</a>
+<a class="button btn--slim btn--start-now-btn btn--ghost btn--" id="header-menu__start" href="//www.perimeter81.com/start-now">
+Start Now</a>
+</div>
+</div>
+</header>
+<div class="wrap container" role="document">
+<div class="content">
+<main class="main">
+<article class="post-1419 legal type-legal status-publish format-standard has-post-thumbnail hentry">
+<div class="entry-content legal_page">
+<div class="wp-block-p81-bg-layer undefined hide-on-mobile bg_image_326cc0fc-60cb-48bc-8a73-d7b4fba84aaf" style="position:relative;margin:0 auto;width:100%"><img decoding="async" class="wp-image-593" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.in/app/uploads/2020/09/23122244/wide_heroBG.svg" /><noscript><img decoding="async"  class="wp-image-593" src="https://assets.perimeter81.in/app/uploads/2020/09/23122244/wide_heroBG.svg" alt=""/></noscript><style>.bg_image_326cc0fc-60cb-48bc-8a73-d7b4fba84aaf img {position: absolute; top: -136px; left: calc(50% - 190px); margin: 0 auto; z-index: -1; width: 2200px; min-width: 2200px; transform: translateX(-50%);}</style></div>
+<div class="wp-block-p81-bg-layer undefined hide-on-desktop bg_image_8d6c75d0-07c9-428c-a129-d022f4b44fb7" style="position:relative;margin:0 auto;width:100%"><img decoding="async" class="wp-image-879" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.in/app/uploads/2020/10/22092229/mainPicMobile.svg" /><noscript><img decoding="async"  class="wp-image-879" src="https://assets.perimeter81.in/app/uploads/2020/10/22092229/mainPicMobile.svg" alt=""/></noscript><style>.bg_image_8d6c75d0-07c9-428c-a129-d022f4b44fb7 img {position: absolute; top: -196px; left: calc(50% - 96px); margin: 0 auto; z-index: -1; width: 700px; min-width: 700px; transform: translateX(-50%);}</style></div>
+<div style="background-color:#ffffff00" class="wp-block-atomic-blocks-ab-container glossary_content_layout entry-content--resources  ab-block-container alignfull"><div class="ab-container-inside"><div class="ab-container-content" style="max-width:1088px">
+<div style="height:136px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<h1 class="wp-block-heading has-header-2-font-size" id="h-perimeter-81-privacy-policy">Perimeter 81 Privacy Policy</h1>
+<div style="height:32px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<div style="height:16px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+<div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-2 wp-block-columns-is-layout-flex">
+<div class="wp-block-column content-resources custom_medium is-layout-flow wp-block-column-is-layout-flow" style="--width-medium:100%;">
+<h2 class="wp-block-heading undefined border-has-main-dark-color" id="h-1-terms-of-service"><span class="has-header-4-font-size">1. Terms of Service</span></h2>
+<p>This Privacy Policy forms an integral part of Perimeter 81&#8217;s Terms of Service, and the provisions thereof, including (without limitation), the provisions regarding limitation on damages, governing law and dispute resolution, apply to this Privacy Policy.</p>
+<p>Unless otherwise stated, any defined terms used herein shall have the meaning assigned to them in the Terms of Service.</p>
+<p>For the purposes hereof, &#8220;Information&#8221; means facts and other information and data about you, including (but not limited to) your personal information which you elect to disclose by using the Service, such as your name, telephone number, and email address.</p>
+<p>“Personal Data/Personal Information” means personal data within the meaning of the Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data and repealing Directive 95/46/EC (The General Data Protection Regulation – GDPR), processed by Perimeter 81 Ltd. (or a Sub-processor) on behalf of the Customer pursuant to or in connection with the Agreement.</p>
+<h2 class="wp-block-heading" id="h-2-your-consent"><span class="has-header-4-font-size">2. Your Consent</span></h2>
+<p>By accessing, viewing and/or otherwise using the Site and Service, you consent to:<br>(i) The collection, transfer, manipulation, storage, disclosure and other uses of your Information as described in the Terms of Service and in this Privacy Policy, and<br>(ii) To the transfer of such Information outside of the country where you reside in and outside the European Economic Area (&#8220;<strong>EEA</strong>&#8220;), to other countries for storage, processing and use by us, and to the transmission of data on an international basis.</p>
+<h2 class="wp-block-heading" id="h-3-collection-of-information"><span class="has-header-4-font-size">3. Collection of Information</span></h2>
+<div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-1 wp-block-columns-is-layout-flex">
+<div class="wp-block-column custom_width custom_large custom_medium custom_small marginLeftFull marginLeftMedium is-layout-flow wp-block-column-is-layout-flow" style="--flex-basis:100%;--width-large:100%;--width-medium:100%;--width-small:100%;--margin-left:32px;--margin-left-medium:20px;">
+<ul class=" has-main-gray-color has-main-gray-color-icon point    block-editor-block-list__block">
+<li><strong>&nbsp;Creating a Tenant:</strong>&nbsp;When a User creates or reconfigures a Tenant, the business owner provides his/her e-mail address, company name, contact details and any other personal or preference information that you elect to provide to us.<br></li>
+<li><strong>PERIMETER 81&#8217;s Website Data:</strong>&nbsp;Our website servers automatically record information created by User&#8217;s use of our website. Such data is collected by web server logs and cookies (see explanation in Section 4 below) and may include information such as the date and time of visits to PERIMETER 81&#8217;s website, the pages viewed, time spent at our Site, and the Internet sites visited just before and just after our Site.<br></li>
+<li><strong>&nbsp;Service Use Data and Logs:</strong>&nbsp;We collect minimal usage statistics to maintain our quality of service. To protect your business and provide the business owner with valuable audit and monitoring data we record the following data:</li>
+</ul>
+<ol class=" has-main-gray-color has-main-gray-color-icon ordered-list    block-editor-block-list__block">
+<li>Admin actions – We record all admin actions including: inviting new team member, deleting a team member, changing team permissions, creating new cloud-based access gateways and any other action that can be taken on our management portal.</li>
+<li>Team member actions – We record connection and login timestamp, login success / error, location of the device that was connected, the hostname of the connected devices of the team members, the server the business user has been connected to and the time stamps of the connections. As for private access gateways, which are used to access secured business environments we do log origin IP address that have been connected from to enhance the security and business audit capabilities. For public locations (based on the business owner permissions) we do not log any IP addresses. For users of certain features, we may also collect and monitor data regarding web browsing activity, including encrypted pages.</li>
+</ol>
+<div style="height:16px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+<div style="height:24px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<ul class=" has-main-gray-color has-main-gray-color-icon point    block-editor-block-list__block">
+<li><strong>Payment Data:</strong>&nbsp;In order to pay for the use of our Service, we will direct you to perform payment through one of the Third-Party Payment Processors we work with. The Third-Party Payment Processor of your choosing will provide us with, and we shall then store, the date on which you made the payment and the date that your Subscription Plan will expire, along with a generic number (the &#8220;Order ID Number&#8221;). We need your Order ID Number in order to link your order to your Tenant.<br><br>In addition, in case you selected to pay through a credit card we will also store the last four (4) digits of your credit card number.<br><br>We also store your name and address, and this data may also be independently stored by the Third-Party Payment Processor handling the transaction.<br>We store this information as it enables us to know when your Subscription Plan will expire and to prevent and detect fraud.<br>You may contact us, as specified in Section 11 below, in order to request the deletion of your home address from our servers.<br><br>We are not responsible for any Third-Party Payment Processor handling your transaction and you should refer to the Third Party Payment Processor&#8217;s privacy policy to see how they use your data since it is subject to their rules and policies.<br><br></li>
+<li><strong>Information Posted on the Site</strong>: As a User you may post Comments on the Site. Any personal information you elect to post on the Site as part of such Comments, and the sharing of such personal information, is done at your own risk. Any personal information post by you on the Site may be saved, copied, re-sent or otherwise used by other Users, and we cannot control the use of such personal information by any such recipients. We cannot and do not guarantee that personal information posted by you will not be used by unauthorized persons. You understand and acknowledge that, even after personal information, that was posted by you, was removed from the Site, such personal information may be collected, used and redistributed if stored by other Users.<br></li>
+<li><strong>&nbsp;Contacting PERIMETER 81</strong>: If you email or otherwise contact us, we may keep your message, email address, and contact information to respond to your request. Your provision of such information is entirely optional.</li>
+</ul>
+</div>
+<div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow"></div>
+</div>
+<div style="height:32px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<div style="height:32px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+<h2 class="wp-block-heading" id="h-4-cookies"><span class="has-header-4-font-size">4. Cookies</span></h2>
+<p>A cookie is a small text document, which often includes an anonymous unique identifier. When you visit an Internet site, that site&#8217;s computer asks your computer for permission to store this file in a part of your hard drive specifically designated for cookies. Each Internet site can send its own cookie to your browser if your browser&#8217;s preferences allow it, but to protect your privacy, your browser only permits an Internet site to access the cookies it has already sent to you, not the cookies sent to you by other sites.</p>
+<p>As you use our Site, the Site uses its cookies to differentiate you from other Users. Cookies, in conjunction with our Internet server&#8217;s log files, allow us to calculate the aggregate number of people visiting our Site and which parts of the Site are most popular. This helps us gather feedback in order to constantly improve our Site and better serve our customers. Cookies do not allow us to gather any personal information about you and we do not generally store any personal information that you provided to us in your cookies.</p>
+<h2 class="wp-block-heading" id="h-5-information-sharing-and-disclosure"><span class="has-header-4-font-size">5. Information Sharing and Disclosure</span></h2>
+<p>We may use information we collect in order to:</p>
+<ul class=" has-main-gray-color has-main-gray-color-icon point    block-editor-block-list__block">
+<li>facilitate the provision of the Service to you,</li>
+<li>maintain and improve Perimeter 81&#8217;s site and services,</li>
+<li>sending notices to you, and to</li>
+<li>protect the rights of Perimeter 81, of its Users and of other third parties (e.g., in order to prevent and detect (i) fraud against our Service (such as credit card fraud (and (ii) abuse of our network (such as spamming other illicit activity). </li>
+</ul>
+<p>We do not disclose personally identifying Information to third parties, except if we &#8211;</p>
+<ul class=" has-main-gray-color has-main-gray-color-icon point    block-editor-block-list__block">
+<li>believe that it is necessary to comply with a law, regulation, legal request or legal process; to protect the rights, property or personal safety of Perimeter 81, its Users and any other person; to address fraud, security or technical issues; or to protect Perimeter 81&#8217;s rights (including investigation of potential violations thereof) or property;<br></li>
+<li>are involved in a bankruptcy, merger, acquisition, reorganization or sale of assets, where your Information may be sold or transferred as part of that transaction. In any such transfer of Information, we will ensure the confidentiality of any personal Information involved in such transactions and provide notice before personal Information is transferred and becomes subject to a different privacy policy;<br></li>
+<li>believe that it is necessary for the provision of the Service, such as responding to your requests for customer services or disclosure to third parties who host the Service at a co-location facility for servers; or</li>
+<li>have obtained your consent, as provided, for example, under Section 2 above.</li>
+</ul>
+<p>We may share with third parties certain pieces of aggregated Information, which does not identify you individually.</p>
+<h2 class="wp-block-heading" id="h-6-protection-of-personal-information"><span class="has-header-4-font-size">6. Protection of Personal Information</span></h2>
+<ul class=" has-main-gray-color has-main-gray-color-icon point    block-editor-block-list__block">
+<li>We take administrative and technical measures to safeguard your personal Information against loss, theft, and misuse, as well as unauthorized access, alteration, disclosure or destruction.</li>
+<li>We process personal Information on servers located in various countries worldwide.</li>
+<li>Any improper collection or misuse of Information provided via our Site or Service is a violation of this Privacy Policy.</li>
+<li>We will cooperate with the appropriate regulatory authorities, including local data protection authorities, to resolve any complaints regarding the transfer of personal data that cannot be resolved between PERIMETER 81 and an individual.</li>
+</ul>
+<div style="height:32px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+<div style="height:32px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<h2 class="wp-block-heading" id="h-7-external-sites"><span class="has-header-4-font-size">7. External Sites</span></h2>
+<p>We are not responsible for the practices employed by External Sites uploaded or linked to or from our Site, nor the information or content contained therein. When a User uses a link to go from our Site to External Sites or when a User accesses an External Site while using our Service, our Privacy Policy is no longer in effect. A User&#8217;s browsing and interaction on any External Site, including, but not limited to, Internet sites which have a link on our Site, is subject to that External Site&#8217;s own rules and policies.</p>
+<h2 class="wp-block-heading" id="h-8-changes-to-this-policy"><span class="has-header-4-font-size">8. Changes to this Policy</span></h2>
+<p>We may revise this Privacy Policy from time to time. Your continued use of the Site and/or Service will be deemed to constitute your acceptance of any and all such changes.</p>
+<h2 class="wp-block-heading" id="h-9-information-access"><span class="has-header-4-font-size">9. Information Access</span></h2>
+<p>If under applicable law, you have the right to access Information held about you, such right of access can be exercised in accordance with the applicable law. Any access request may be subject, to the extent allowed by applicable law, to a fee of US $10 (ten US dollars) to meet our costs in providing you with details of the Information we hold about you. To make an access request please email:&nbsp;<a href="/cdn-cgi/l/email-protection#6a060f0d0b062a1a0f1803070f1e0f18525b44090507"><span class="__cf_email__" data-cfemail="355950525459756550475c58504150470d041b565a58">[email&#160;protected]</span>.</a></p>
+<h2 class="wp-block-heading" id="h-10-contact-information"><span class="has-header-4-font-size">10. Contact Information</span></h2>
+<p>If you have any questions or comments about this Privacy Policy, please contact us at&nbsp;<a href="/cdn-cgi/l/email-protection#1d71787a7c715d6d786f74707869786f252c337e7270"><span class="__cf_email__" data-cfemail="0c60696b6d604c5c697e65616978697e343d226f6361">[email&#160;protected]</span>.</a></p>
+<p>You can&nbsp;<a href="https://www.perimeter81.com/legal/dpa" target="_blank" rel="noreferrer noopener">view&nbsp;</a>our Data Processing Agreement/addendum (DPA) online. If you need a signed copy of the DPA, you can download it, send a signed copy to&nbsp;<a href="/cdn-cgi/l/email-protection#1f737a787e735f6f7a6d76727a6b7a6d272e317c7072"><span class="__cf_email__" data-cfemail="97fbf2f0f6fbd7c7f2e5fefaf2e3f2e5afa6b9f4f8fa">[email&#160;protected]</span></a>&nbsp;and we will provide you a countersigned copy.</p>
+<p>*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*</p>
+<p>Last updated: May 17, 2023</p>
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
+<div class="wp-block-button is-style-primary-btn-button"><a class="wp-block-button__link wp-element-button" href="https://assets.perimeter81.com/uploads/2022/01/Privacy-Policy-jan-22.pdf" target="_blank" rel="noreferrer noopener">Download as PDF</a></div>
+</div>
+<div style="height:88px" aria-hidden="true" class="wp-block-spacer hide-on-mobile"></div>
+<div style="height:64px" aria-hidden="true" class="wp-block-spacer hide-on-desktop"></div>
+</div>
+<div class="wp-block-column custom_medium marginLeftFull marginLeftLarge marginLeftMedium marginLeftSmall is-layout-flow wp-block-column-is-layout-flow" style="--width-medium:100%;--margin-left:0px;--margin-left-large:0px;--margin-left-medium:0px;--margin-left-small:0px;"></div>
+</div>
+</div></div></div>
+</div>
+<footer>
+</footer>
+</article>
+</main>
+</div>
+</div>
+<footer class="footer-site">
+<div class="content-info">
+<div class="container top-info">
+<section class="widget nav_menu-2 widget_nav_menu"><div class="widget-title">Platform</div><ul id="menu-platform" class="menu"><li class="nav-item menu-item menu-sase"><a class="nav-link" href="https://www.perimeter81.com/sase"><span>SASE</span></a></li>
+<li class="nav-item menu-item menu-firewall-as-a-service"><a class="nav-link" href="https://www.perimeter81.com/firewall-as-a-service"><span>Firewall as a Service</span></a></li>
+<li class="nav-item menu-item menu-zero-trust-network-access"><a class="nav-link" href="https://www.perimeter81.com/zero-trust-network-access"><span>Zero Trust Network Access</span></a></li>
+<li class="nav-item menu-item menu-software-defined-perimeter"><a class="nav-link" href="https://www.perimeter81.com/software-defined-perimeter"><span>Software-Defined Perimeter</span></a></li>
+<li class="nav-item menu-item menu-business-vpn"><a class="nav-link" href="https://www.perimeter81.com/glossary/business-vpn"><span>Business VPN</span></a></li>
+</ul></section><section class="widget nav_menu-3 widget_nav_menu"><div class="widget-title">Company</div><ul id="menu-company" class="menu"><li class="nav-item menu-item menu-about-us"><a class="nav-link" href="https://www.perimeter81.com/about-us"><span>About Us</span></a></li>
+<li class="nav-item menu-item menu-careers"><a class="nav-link" href="https://careers.checkpoint.com/"><span>Careers</span></a></li>
+<li class="nav-item menu-item menu-blog"><a class="nav-link" href="https://www.perimeter81.com/blog"><span>Blog</span></a></li>
+<li class="nav-item menu-item menu-press-center"><a class="nav-link" href="https://www.perimeter81.com/press"><span>Press Center</span></a></li>
+<li class="nav-item menu-item menu-contact-us"><a class="nav-link" href="https://www.perimeter81.com/contact"><span>Contact Us</span></a></li>
+</ul></section><section class="widget nav_menu-4 widget_nav_menu"><div class="widget-title">Resources</div><ul id="menu-resources" class="menu"><li class="nav-item menu-item menu-help-center"><a class="nav-link" href="https://support.perimeter81.com/docs"><span>Help Center</span></a></li>
+<li class="nav-item menu-item menu-glossary"><a class="nav-link" href="https://www.perimeter81.com/glossary"><span>Glossary</span></a></li>
+<li class="nav-item menu-item menu-whitepapers"><a class="nav-link" href="https://www.perimeter81.com/resources/whitepapers"><span>Whitepapers</span></a></li>
+<li class="nav-item menu-item menu-videos"><a class="nav-link" href="https://www.perimeter81.com/video"><span>Videos</span></a></li>
+</ul></section><section class="widget nav_menu-5 widget_nav_menu"><div class="widget-title">Partner Programs</div><ul id="menu-partner-programs" class="menu"><li class="nav-item menu-item menu-partners"><a class="nav-link" href="https://www.perimeter81.com/partners"><span>Partners</span></a></li>
+<li class="nav-item menu-item menu-affiliate"><a class="nav-link" href="https://www.perimeter81.com/affiliate-program"><span>Affiliate</span></a></li>
+</ul></section><section class="widget text-2 widget_text"><div class="widget-title">Our Mission</div> <div class="textwidget"><p>At Perimeter 81, our mission is to simplify secure network, cloud and application access for the modern and mobile workforce. To do so, we are transforming traditional network security technology with one unified Zero Trust Network as a Service.</p>
+<div class="footer-badgets"><a href="https://www.perimeter81.com/solutions/compliance/iso-27001-27002"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.com/uploads/2022/05/main-footer-ISO-1.svg" /><noscript><img decoding="async" src="https://assets.perimeter81.com/uploads/2022/05/main-footer-ISO-1.svg" alt="" /></noscript></a><br/>
+<a href="https://www.perimeter81.com/solutions/compliance/gdpr"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.com/uploads/2022/05/main-footer-GDPR-1.svg" /><noscript><img decoding="async" src="https://assets.perimeter81.com/uploads/2022/05/main-footer-GDPR-1.svg" alt="" /></noscript></a><br/>
+<a href="https://www.perimeter81.com/solutions/compliance/soc-2"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.com/uploads/2022/05/main-footer-AICPA-SOC-x2-1.png" /><noscript><img decoding="async" src="https://assets.perimeter81.com/uploads/2022/05/main-footer-AICPA-SOC-x2-1.png" alt="" /></noscript></a><br/>
+<a href="https://www.perimeter81.com/solutions/compliance/hipaa"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt data-lazy-src="https://assets.perimeter81.com/uploads/2022/05/main-footer-MED-1.svg" /><noscript><img decoding="async" src="https://assets.perimeter81.com/uploads/2022/05/main-footer-MED-1.svg" alt="" /></noscript></a></div>
+</div>
+</section> </div>
+<div class="container bottom-info">
+<a href="https://www.perimeter81.com/" class="header-inner__logo"><img class="header-inner__logo--img svg" src="https://www.perimeter81.com/app/themes/perimeter81/dist/images/svg/icons/icon_logo_checkpoint.svg" alt="Perimeter 81" width="190" height="48"></a>
+<div class="social-block"><div class="social-title">Follow US</div><ul class="social-list"><li class="social-list__item"><a href="https://www.facebook.com/Perimeter81/" class="social-list__item-link" target="_blank"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" class="attachment-full size-full" alt decoding="async" data-lazy-src="https://assets.perimeter81.com/uploads/2021/01/icon_facebook.svg" /><noscript><img src="https://assets.perimeter81.com/uploads/2021/01/icon_facebook.svg" class="attachment-full size-full" alt="" decoding="async" /></noscript></a></li><li class="social-list__item"><a href="https://twitter.com/perimeter_81" class="social-list__item-link" target="_blank"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" class="attachment-full size-full" alt decoding="async" data-lazy-src="https://assets.perimeter81.com/uploads/2021/01/icon_tweeter.svg" /><noscript><img src="https://assets.perimeter81.com/uploads/2021/01/icon_tweeter.svg" class="attachment-full size-full" alt="" decoding="async" /></noscript></a></li><li class="social-list__item"><a href="https://www.linkedin.com/company/perimeter-81" class="social-list__item-link" target="_blank"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" class="attachment-full size-full" alt decoding="async" data-lazy-src="https://assets.perimeter81.com/uploads/2021/01/icon_linkedIn.svg" /><noscript><img src="https://assets.perimeter81.com/uploads/2021/01/icon_linkedIn.svg" class="attachment-full size-full" alt="" decoding="async" /></noscript></a></li><li class="social-list__item"><a href="https://www.youtube.com/Perimeter81" class="social-list__item-link" target="_blank"><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" class="attachment-full size-full" alt decoding="async" data-lazy-src="https://assets.perimeter81.com/uploads/2021/01/icon_youtube.svg" /><noscript><img src="https://assets.perimeter81.com/uploads/2021/01/icon_youtube.svg" class="attachment-full size-full" alt="" decoding="async" /></noscript></a></li></ul></div> <div class="copy-policy">
+<div class="copy">Perimeter 81 Ltd. &copy 2024</div>
+<div class="policy">
+<a target="_blank" href="https://www.checkpoint.com/privacy/" class="policy-link policy_item">Privacy</a>
+<span class="separation_text">and</span>
+<a target="_blank" href="https://www.checkpoint.com/about-us/cloud-terms/" class="policy-link legal_item">Legal</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="pap_x2s6df8d" data-rocket-src="https://perimeter81.postaffiliatepro.com/scripts/xzunam9j"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+	PostAffTracker.setAccountId('default1');
+
+	try {
+		PostAffTracker.track();
+	} catch (err) { }
+</script>
+<script type="rocketlazyloadscript">
+// Broken menu icon fix
+(function() {
+    document.querySelectorAll('svg#a').forEach((element) => {
+        element.removeAttribute('id');
+        element.style.display = 'inherit';
+    });
+
+
+})();
+</script>
+<style>
+img.lazyload {
+  height: auto !important;
+}
+body.home header.has-offset {
+  top: 36px !important;
+}
+.footer-site .content-info .top-info .widget .textwidget p { margin-bottom: 0 !important; }
+.footer-badgets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.footer-badgets a {
+  width: 40px;
+  height: 40px;
+  display: block;
+}
+
+.footer-badgets a:not(:first-child) {
+  margin-left: 8px;
+}
+
+.footer-badgets a img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 1200px) {
+  .footer-site .content-info .top-info {
+    padding-bottom: 32px !important;
+  }
+  .footer-badgets {
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 992px) {
+  .footer-site .content-info .top-info {
+    padding-bottom: 16px !important;
+  }
+  .footer-badgets {
+    margin-top: 24px;
+  }
+}
+
+</style>
+
+<script type="rocketlazyloadscript">
+  window.intercomSettings = {
+    app_id: "rgt4wcyq"
+  };
+</script>
+<script>
+    var intercomLoader = function(){
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/rgt4wcyq';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+        window.Intercom('boot', {
+          app_id: "rgt4wcyq",
+        })
+        
+        window.removeEventListener('touchmove', intercomLoader)
+        window.removeEventListener('mousemove', intercomLoader)
+    }
+  window.addEventListener('touchmove', intercomLoader)
+  window.addEventListener('mousemove', intercomLoader)
+</script>
+<div id="wp_access_helper_container" class="accessability_container light_theme">
+
+
+<button type="button" class="wahout aicon_link" accesskey="z" aria-label="Accessibility Helper sidebar" title="Accessibility Helper sidebar">
+<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="Accessibility" class="aicon_image" data-lazy-src="https://assets.perimeter81.com/uploads/2022/06/icon-accesibility-white-1.svg" /><noscript><img src="https://assets.perimeter81.com/uploads/2022/06/icon-accesibility-white-1.svg"
+			alt="Accessibility" class="aicon_image" /></noscript>
+</button>
+<div id="access_container" aria-hidden="true">
+<button tabindex="-1" type="button" class="close_container wahout" accesskey="x" aria-label="Close" title="Close">
+Close </button>
+<div class="access_container_inner">
+<div class="a_module wah_font_resize">
+<div class="a_module_title">Font Resize</div>
+<div class="a_module_exe font_resizer">
+<button type="button" class="wah-action-button smaller wahout" title="smaller font size" aria-label="smaller font size">A-</button>
+<button type="button" class="wah-action-button larger wahout" title="larger font size" aria-label="larger font size">A+</button><button type="button" class="wah-action-button wah-font-reset wahout" title="Reset font size" aria-label="Reset font size">Reset font size</button>
+</div>
+</div><div class="a_module wah_underline_links">
+<div class="a_module_exe">
+<button type="button" class="wah-action-button wahout wah-call-underline-links" aria-label="Underline links" title="Underline links">Underline links</button>
+</div>
+</div><div class="a_module wah_highlight_links">
+<div class="a_module_exe">
+<button type="button" class="wah-action-button wahout wah-call-highlight-links" aria-label="Highlight Links" title="Highlight Links">Highlight Links</button>
+</div>
+</div><div class="a_module wah_greyscale">
+<div class="a_module_exe">
+<button type="button" id="greyscale" class="greyscale wah-action-button wahout wah-call-greyscale" aria-label="Images Greyscale" title="Images Greyscale">Images Greyscale</button>
+</div>
+</div><div class="a_module wah_invert">
+<div class="a_module_exe">
+<button type="button" class="wah-action-button wahout wah-call-invert" aria-label="Invert Colors" title="Invert Colors">Invert Colors</button>
+</div>
+</div><div class="a_module wah_clear_cookies">
+<div class="a_module_exe">
+<button type="button" class="wah-action-button wahout wah-call-clear-cookies" aria-label="Clear" title="Clear">Clear</button>
+</div>
+</div>
+<button type="button" title="Close sidebar" class="wah-skip close-wah-sidebar">
+Close
+</button>
+</div>
+</div>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+	
+		var roleLink = 1;
+	
+	
+		var removeLinkTitles = 1;
+	
+	
+	
+	
+	
+	
+	
+</script>
+<div class="wah-free-credits">
+<div class="wah-free-credits-inner">
+<a href="https://accessibility-helper.co.il/" target="_blank" title="Accessibility by WP Accessibility Helper Team">Accessibility by WAH</a>
+</div>
+</div>
+
+</div>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+		function atomicBlocksShare( url, title, w, h ){
+			var left = ( window.innerWidth / 2 )-( w / 2 );
+			var top  = ( window.innerHeight / 2 )-( h / 2 );
+			return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600, top='+top+', left='+left);
+		}
+	</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+        document.addEventListener('om.Scripts.init', function(event) {
+        event.detail.Scripts.enabled.fonts.googleFonts = false;
+        });
+        </script><link data-minify="1" rel="stylesheet" id="opt-singlepost-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/app/themes/perimeter81/dist/styles/opt-singlepost.css?ver=1718270950" media="all" />
+<link data-minify="1" rel="stylesheet" id="opt-breadcrumbssearch-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/app/themes/perimeter81/dist/styles/opt-breadcrumbssearch.css?ver=1718270950" media="all" />
+<link data-minify="1" rel="stylesheet" id="opt-socshare-css" href="https://www.perimeter81.com/app/uploads/cache/min/1/app/themes/perimeter81/dist/styles/opt-socshare.css?ver=1718270950" media="all" />
+<style id="core-block-supports-inline-css">
+.wp-container-core-columns-is-layout-1.wp-container-core-columns-is-layout-1{flex-wrap:nowrap;}.wp-container-core-columns-is-layout-2.wp-container-core-columns-is-layout-2{flex-wrap:nowrap;}
+</style>
+<script type="rocketlazyloadscript" data-cfasync="true" data-rocket-src="https://www.perimeter81.com/app/plugins/wp-accessibility-helper/assets/js/wp-accessibility-helper.min.js?ver=1.0.0" id="wp-accessibility-helper-js" defer></script>
+<script type="rocketlazyloadscript" data-cfasync="true" data-rocket-src="https://www.perimeter81.com/app/mu-plugins/atomic-blocks/dist/assets/js/dismiss.js?ver=1718028708" id="atomic-blocks-dismiss-js-js" defer></script>
+<script id="sage/main.js-js-extra">
+var websiteData = {"env":"","inc_hash":"","ajax":{"url":"https:\/\/www.perimeter81.com\/wp\/wp-admin\/admin-ajax.php"}};
+</script>
+<script data-cfasync="false" src="https://www.perimeter81.com/app/themes/perimeter81/dist/scripts/main.js" id="sage/main.js-js" defer></script>
+<script data-cfasync="true" src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js" id="sage/choices.js-js" defer></script>
+<script type="rocketlazyloadscript" data-cfasync="false" data-rocket-src="https://www.perimeter81.com/app/themes/perimeter81/dist/scripts/common.js" id="sage/common.js-js" defer></script>
+<script type="rocketlazyloadscript">
+(function() {
+				var expirationDate = new Date();
+				expirationDate.setTime( expirationDate.getTime() + 31536000 * 1000 );
+				document.cookie = "pll_language=en; expires=" + expirationDate.toUTCString() + "; path=/; secure; SameSite=Lax";
+			}());
+
+</script>
+<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.perimeter81.com/app/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script> </body>
+</html>
