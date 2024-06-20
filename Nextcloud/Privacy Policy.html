@@ -66,7 +66,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <link rel='stylesheet' id='wpml-menu-item-0-css' href='https://nextcloud.com/c/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.min.css?ver=1' type='text/css' media='all' />
 <link rel='stylesheet' id='style-bootstrap-css' href='https://nextcloud.com/c/themes/nextcloud-theme/dist/css/bootstrap.min.css?ver=1702023611' type='text/css' media='all' />
 <link rel='stylesheet' id='css-slick-css' href='https://nextcloud.com/c/themes/nextcloud-theme/dist/css/slick.css?ver=1702023611' type='text/css' media='all' />
-<link rel='stylesheet' id='css-style-css' href='https://nextcloud.com/c/themes/nextcloud-theme/dist/css/theme.min.css?ver=1718375509' type='text/css' media='all' />
+<link rel='stylesheet' id='css-style-css' href='https://nextcloud.com/c/themes/nextcloud-theme/dist/css/theme.min.css?ver=1718869650' type='text/css' media='all' />
 <link rel='stylesheet' id='style-css' href='https://nextcloud.com/c/themes/nextcloud-theme/style.css?ver=1702023612' type='text/css' media='all' />
 <link rel='stylesheet' id='vc_font_awesome_5_shims-css' href='https://nextcloud.com/p/js_composer/assets/lib/bower/font-awesome/css/v4-shims.min.css?ver=7.6' type='text/css' media='all' />
 <link rel='stylesheet' id='vc_font_awesome_5-css' href='https://nextcloud.com/p/js_composer/assets/lib/bower/font-awesome/css/all.min.css?ver=7.6' type='text/css' media='all' />
@@ -881,7 +881,12 @@ Frank Karlitschek</p>
     if(getCookie('nc_cookie_banner') ) {
         const cookieBanner = JSON.parse(getCookie('nc_cookie_banner'));
         if (cookieBanner.statistics && cookieBanner.statistics.matomo) {
-            _paq.push(['rememberCookieConsentGiven', 720]);
+            
+            if(!getCookie('mtm_cookie_consent')){
+                // set cookie only if not recently set
+                _paq.push(['rememberCookieConsentGiven', 720]);
+            }
+
         } else {
             //console.log("Stats consent NOT given, do NOT load rememberCookieConsentGiven");
             _paq.push(['forgetCookieConsentGiven']); // Ensure Matomo forgets the consent
@@ -923,7 +928,7 @@ var RocketPreloadLinksConfig = {"excludeUris":"\/sign-up\/|\/es\/sign-up\/|\/de\
 var main_js_strings = {"see_more":"See more","copied":"Copied!","copy_url":"Copy URL","events":"Events","see_less":"See less","hide_past_events":"Hide all events","show_past_events":"All events in","hide_older_years_events":"Hide previous years","show_older_years_events":"Show previous years"};
 /* ]]> */
 </script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://nextcloud.com/c/themes/nextcloud-theme/dist/js/main.js?ver=1718128316" id="main-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://nextcloud.com/c/themes/nextcloud-theme/dist/js/main.js?ver=1718796981" id="main-js" defer></script>
 <script type="rocketlazyloadscript"></script><script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
 if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
 images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
@@ -935,4 +940,4 @@ Performance optimized by Redis Object Cache. Learn more: https://wprediscache.co
 Retrieved 9909 objects (5 MB) from Redis using PhpRedis (v5.3.5).
 -->
 
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1718763352 -->
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1718886231 -->
