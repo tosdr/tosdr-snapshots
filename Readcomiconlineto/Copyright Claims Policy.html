@@ -36,8 +36,6 @@
     </head>
 <body>
     
-    
-    
     <div id="containerRoot">
         <div id="head">
             <h3>
@@ -350,5 +348,59 @@
     <script type="text/javascript">
         $('#footer').css('top', $(document).height() - $('#containerRoot').height());
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'89618087eeb99401',t:'MTcxODc3ODk1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    
+    <div id="adbWarnContainer" class="adbWarnContainer">
+        <div class="background"></div>
+        <div class="content">
+            <p style="color: #ff0000; font-size: 20px;">PLEASE DISABLE ADBLOCK</p>
+            <p><img src="/Content/images/adb.png" /></p>
+            <p>Adblock extensions will affect to a several website features (search, bookmark, etc...). Please turn off for the best experience!</p>
+            <p><a id="closeAdbWarn" href="javascript:void(0);" class="aButton" style="width: 140px; padding: 5px;">OK! I understood</a></p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('#closeAdbWarn').click(function() {
+            $('#adbWarnContainer').remove();
+            setCookieInMin('adbWarn', 1, 180);
+        });
+
+        var adbWarn = getCookie('adbWarn');
+        const ads_urls = ['https://units.adskeeper.co.uk/runtime.js', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'];
+        if (adbWarn == null) {
+            var curAdIdx = 0;
+            function checkAdsBlocked(callback) {
+                var xhr = new XMLHttpRequest();
+                xhr.timeout = 5000;
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                        callback(xhr.status === 0 || xhr.responseURL !== ads_urls[curAdIdx]);
+                    }
+                };
+                xhr.open('HEAD', ads_urls[curAdIdx], true);
+                xhr.send(null);
+            }
+
+            var isAdb = true;
+            checkAdsBlocked(adbCallback);
+
+            function adbCallback(adsBlocked) {
+                if (!adsBlocked) {
+                    isAdb = false;
+                } else if (curAdIdx < ads_urls.length - 1) {
+                    curAdIdx++;
+                    checkAdsBlocked(adbCallback);
+                }
+            }
+
+            setTimeout(function() {
+                if (isAdb) {
+                    $('#adbWarnContainer').css({
+                        display: "block"
+                    });
+                }
+            }, 8000);
+        }
+    </script>
+   
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'896f8f558a1377b4',t:'MTcxODkyNjM2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
