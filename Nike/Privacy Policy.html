@@ -1,93 +1,34 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<head>
-    <script type="text/javascript"  src="https://code.jquery.com/jquery-2.1.1.js"></script>
-    <script type="text/javascript">
-        /**
-         * Overrides the NikeScriptManager request method and prevents
-         * Unite from being loaded twice - It works by looking for the nike.gadget.mobile.OneNikeNav
-         * and removing the unite script, and the disabling the unite config
-         *
-         * Will fail if the ScriptLoader doesn't load with 7 seconds.
-         *
-         * Once the override occurs it falls back to
-         * @param w - window object (Global)
-         */
-        $(function() {
-            var w = window;
-
-            function monitor() {
-                nike.unlisten(nike.EVENT_REQUESTED_SCRIPTS_LOADED, monitor);
-                var originalRequest = nike.ScriptLoader.request;
-                nike.ScriptLoader.request = function request(o, a, b){
-
-                    originalRequest(o, function success(i) {
-                        if (o.data && o.data.gadgetName === 'nike.gadget.mobile.OneNikeNav') {
-                            nike.ScriptLoader.request = originalRequest;
-                            if (i && i.data) {
-                                i.data = i.data.replace(/<script.*unite.*<\/script>/, '');
-                                i.data = i.data.replace(/id="nike-unite/g, 'id="off-nike-unite');
-                            }
-                        }
-                        if (a) {
-                            a(i);
-                        }
-                    }, function failure() {
-                        if (o.data && o.data.gadgetName === 'nike.gadget.mobile.OneNikeNav') {
-                            nike.ScriptLoader.request = originalRequest;
-                        }
-                        if (b) {
-                            b.apply(arguments);
-                        }
-                    });
-                };
-            };
-            // Wait for the nike.listen object to be ready, and then
-            // listen for the EVENT_REQUESTED_SCRIPTS_LOADED event
-            function injectMonitor(w, c) {
-                if (!w.nike || !w.nike.listen) {
-                    if (c <= 1000) {
-                        setTimeout(function() {
-                            injectMonitor(w, c++);
-                        }, 10);
-                    }
-                } else {
-                    nike.listen(nike.EVENT_REQUESTED_SCRIPTS_LOADED, monitor);
-                }
-            };
-            injectMonitor(w, 0);
-        });
-    </script>
-    <script type="text/javascript">
-        var nsgConfig = {
-            HOST: 'https://www.nike.com',
-            BASEPATH: '/styleguide/nsg/',
-            TENANT: 'NIKE',
-            LOCALE: 'en_us',
-            PLATFORM: 'desktop',
-            PLACEMENT: 'prepend',
-            INPUT: 'touch'
-        };
-    </script>
-    <!-- Stylesheet should go here -->
-    <link href="https://s3-us-west-2.amazonaws.com/external.plus.nikecloud.com/agreementservice/legal.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//nike.com/static/ncss/4.1/dotcom/desktop/css/ncss.en-us.min.css" />
-    <link rel="stylesheet" href="//assets.commerce.nikecloud.com/ncss/glyphs/2.1/css/glyphs.min.css" />
+  <head>
+    
+    <!-- NSG config file should go here -->
+    <link rel='stylesheet' href='https://s3-us-west-2.amazonaws.com/external.plus.nikecloud.com/agreementservice/legal.css' type='text/css' />
+<link rel="stylesheet" href="//nike.com/static/ncss/4.1/dotcom/desktop/css/ncss.en-us.min.css" />
+    <!-- CSS file should go here -->
+    <!-- localized ncss should go here -->
+    <link
+      rel="stylesheet"
+      href="//assets.commerce.nikecloud.com/ncss/glyphs/2.1/css/glyphs.min.css"
+    />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <style>
-        .nav-panel__btn [class*=nsg-glyph--] {
-            position: absolute;
-        }
-        span.nav-right a {text-decoration:none;}
+      .nav-panel__btn [class*='nsg-glyph--'] {
+        position: absolute;
+      }
+      span.nav-right a {
+        text-decoration: none;
+      }
     </style>
-</head>
+  </head>
 
-<body class="legalContainer Desktop Mac">
-<div class="legalAgreement nsg-font-family--platform content" id="legalContainer">
-
-    <h1><strong>NIKE U.S. PRIVACY POLICY</strong></h1>
+  <body class="legalContainer Desktop Mac">
+    <div
+      class="legalAgreement nsg-font-family--platform content"
+      id="legalContainer"
+    >
+      <h1><strong>NIKE U.S. PRIVACY POLICY</strong></h1>
 <p><strong>Last Updated: March 15, 2023<br /></strong><strong><a title="Versión en español " href="https://agreementservice.svs.nike.com/rest/agreement?agreementType=privacyPolicy&amp;uxId=com.nike.commerce.nikedotcom.web&amp;country=US&amp;language=es&amp;requestType=redirect" target="_self">Versión en español </a></strong></p>
 <p></p>
 <p>This Privacy Policy describes how Nike, Inc. (referred to as “Nike”, “our”, “we” or “us” in this Policy) collects, uses, shares, and protects your personal information, what choices you have relating to your personal information, and how you can contact us. </p>
@@ -353,9 +294,9 @@
 <p> </p>
 <p><strong> </strong></p>
 
-</div>
-<link rel="stylesheet" type="text/css"  href="/_sec/cp_challenge/sec-4-4.css">
-                                        <script  src="/_sec/cp_challenge/sec-cpt-4-4.js" async defer></script>
+    </div>
+  <link rel="stylesheet" type="text/css"  href="/_sec/cp_challenge/sec-4-5.css">
+                                        <script  src="/_sec/cp_challenge/sec-cpt-4-5.js" async defer></script>
                                         <div id="sec-overlay" style="display:none;">
                                         <div id="sec-container">
                                         </div>
