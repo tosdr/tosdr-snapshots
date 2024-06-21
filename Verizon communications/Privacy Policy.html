@@ -78,7 +78,7 @@
   data-cfasync="false"
   onload="(async (event) => {
 	  window.airgapScriptLoadEvent=event;
-	  const THROTTLE_RATE = 1.0 * 256;
+	  const THROTTLE_RATE = 1.00 * 256;
 	  var APIDomainName = 'www.verizon.com';
 	  if (/vzwqa|wwwnssit5/i.test(location.host)) {
 		  APIDomainName = 'vzwqa3.verizonwireless.com';
@@ -202,13 +202,6 @@
 			  window.UDNS_THROTTLE = 'false';
 		  }
 	  }
-
-	  if (window.UDNS_OE != 'true' && THROTTLE_URL_PARM != 'false' && THROTTLE_RATE === 1) {
-			window.UDNS_THROTTLE = 'true';
-			console.log('Throttle Force at 100%');
-		}
-
-
 	  if (window.UDNS_THROTTLE != I_UD_THR) {
 		  await airgap.setConsentMetadata(window.airgapScriptLoadEvent,
 			  { ...(airgap.getConsent().metadata || {}), UDNS_THROTTLE: window.UDNS_THROTTLE });
@@ -216,6 +209,7 @@
 			  console.log(airgap.getConsent());
 	  }
 	  window.userPreference = 'H';
+    preparePrivacyBanner();
 	  const LCL_throttleUp = window.throttleUp = async function () {
 		  window.UDNS_THROTTLE = 'true';
 		  await airgap.setConsentMetadata(window.airgapScriptLoadEvent,
@@ -232,10 +226,198 @@
 	  }
 	  console.log(airgap.getConsent());
 	  console.log(airgap.loadOptions);
-  })(event)"
-></script>
+  })(event);
+  
+  /* ------------ Implement Privacy Banner Notification Begin ------------ */
+
+        function getCk(cName) {
+            var name = cName + '=';
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return '';
+        }
+
+        function setLclCk(cName, cVal, cExp = '') {
+            document.cookie =
+                cName +
+                '=' +
+                cVal +
+                '; domain=.' +
+                window.location.hostname.match(
+                    /^(?:.*?\.)?([a-zA-Z0-9\-_]{3,}\.(?:\w{2,8}|\w{2,4}\.\w{2,4}))$/
+                )[1] +
+                '; path=/; expires=' +
+                cExp;
+        }
+
+		function airgapDebugMsg(msgtxt1,msgtxt2='',msgtxt3='') {
+			if (window.airgapLoud) { 
+				console.log(msgtxt1,msgtxt2,msgtxt3)
+			}
+		}
+
+function preparePrivacyBanner () {
+	
+	window.displayNTC = function () {
+		 setTimeout(function() { document.getElementsByClassName('gnav20-footer-level-two')[0].style.paddingBottom = '90px'; }, 1000);
+
+		/* Log the display of the Privacy Banner */
+		window.coreData = window.coreData || [];
+		window.coreData.push({
+			task: 'emit',
+			event: 'openView',
+			params: {
+				selector: '#transcend-consent-manager',
+				name: 'PRIVACY_BANNER_DISPLAY',
+				trackAs : 'link'
+			}
+		});
+		transcend.showConsentManager({ viewState: 'PrivacyPolicyNotice' });
+
+		window.UDNS_NTC_VISUAL = Date.now();
+	}
+	window.airgapLoud = getCk('airgapLoud');
+	
+	var inApp = /(MY_VZW_APP|MFA)/i.test( (navigator && navigator.userAgent) || '');
+	if ((getCk('UDNS_NTCBLK') != 'TRUE') && inApp != true) {
+		var NTCinit=0;
+		for(let i=500;i<5001;i+=250) {
+			setTimeout(()=>{
+				if (NTCinit === 0) {
+					if ((typeof transcend === 'object') 
+					&& (typeof transcend.addEventListener === 'function')) {
+						airgapDebugMsg('Transcend Loaded: '+i);
+						NTCinit = i;
+						BuildAndShowNTC();
+					} else {
+						airgapDebugMsg('Transcend Not Yet Loaded: '+i);
+					}
+				}
+			},i);
+		}
+	}
+
+	function BuildAndShowNTC () {
+		airgapDebugMsg('----------- NTC ----------');
+		if (typeof transcend != 'object') {
+			airgapDebugMsg('Transcend Not Yet Loaded');
+			return 0;
+		}
+		airgapDebugMsg('BASNTC');
+		transcend.addEventListener(
+			'view-state-change',
+			({ detail: { viewState, previousViewState } }) => {
+				if ((viewState === 'Hidden') && (previousViewState === 'PrivacyPolicyNotice')) {
+					airgap
+						.sync()
+						.then(() =>
+							airgap.setConsentMetadata(window.airgapScriptLoadEvent, {
+								...(airgap.getConsent().metadata || {}),
+								UDNS_NTCD: Date.now(), UDNS_NTCV: 0,
+							})
+						)
+						.then(() => airgapDebugMsg('Incremented NTCD To ' + udnsNTCD)),
+						document.getElementsByClassName('gnav20-footer-level-two')[0].style.paddingBottom = '';
+
+					window.coreData = window.coreData || [];
+					window.coreData.push({
+						task: 'emit',
+						event: 'linkClick',
+						params: {
+							name: 'privacy banner close',
+							detail: 'PRIVACY_BANNER_DISPLAY'
+						}
+					});
+				}
+				airgapDebugMsg(`consent view state changed:`, {
+					viewState,
+					previousViewState,
+					timestamp: new Date().toISOString(),
+				})
+			}
+		);
+
+		const udnsMTD = airgap.getConsent().metadata;
+		var udnsNTCD = window.UDNS_NTCD = Number(udnsMTD.UDNS_NTCD) || 0;
+		var udnsNTCV = Number(udnsMTD.UDNS_NTCV) || 0;
+		if  ( udnsNTCD < (Date.now() - 7.776e9)) { /* Repeat banner after 90 days */
+			if (udnsNTCV < 2) {  /* Display the banner for no more than 2 visits  */
+				var UDNS_NTCS = Number(getCk('UDNS_NTCS'));
+				if (UDNS_NTCS === 0) {  /* No banner this session */
+					setLclCk('UDNS_NTCS',1);  
+					udnsNTCV += 1; 
+					airgap
+						.sync()
+						.then(() =>
+							airgap.setConsentMetadata(window.airgapScriptLoadEvent, {
+								...(airgap.getConsent().metadata || {}),
+								UDNS_NTCV: udnsNTCV,
+							})
+						)
+						.then(() => airgapDebugMsg('Incremented Visits To '+udnsNTCV))
+						.then(window.displayNTC());
+				} else {
+					/* Only show the banner to the first 3 pages in a session */
+					if (UDNS_NTCS < 3) {
+						UDNS_NTCS = UDNS_NTCS + 1;
+						setLclCk('UDNS_NTCS',UDNS_NTCS); 
+						window.displayNTC();
+					}
+				}
+			} else {
+				window.UDNS_NTCD = Date.now();
+				airgap
+					.sync()
+					.then(() =>
+						airgap.setConsentMetadata(window.airgapScriptLoadEvent, {
+							...(airgap.getConsent().metadata || {}),
+							UDNS_NTCD: window.UDNS_NTCD, UDNS_NTCV: 0,
+						})
+					)
+					.then(() => airgapDebugMsg('Incremented 3VNTCD To '+Date.now()))
+			}
+		}
+	}
+	window.NTCpvc = function() {
+		window.coreData = window.coreData || [];
+		window.coreData.push({
+			task: 'emit',
+			event: 'linkClick',
+			params: {
+				name: 'privacy banner policy link',
+				detail: 'PRIVACY_BANNER_DISPLAY'
+			}
+		});            
+		window.open('https://www.verizon.com/about/privacy','_blank');
+	}
+
+	window.resetNTCDisplay = function () {
+		airgap.setConsentMetadata(window.airgapScriptLoadEvent, {
+			...(airgap.getConsent().metadata || {}),
+			UDNS_NTCD: Date.now() - 7.777e9, UDNS_NTCV: 0,
+			});
+		setLclCk('UDNS_NTCS',0);
+	}
+
+	window.resetNTCVisits = function (visitCount = 0) {
+		airgap.setConsentMetadata(window.airgapScriptLoadEvent, {
+			...(airgap.getConsent().metadata || {}),
+			UDNS_NTCV: visitCount,
+			});
+		setLclCk('UDNS_NTCS',0);
+	}
+}"
+></script> 
  <!-- OneTrust Cookies Consent Notice start for www.verizon.com/about/ --> 
- <script src='https://cdn.cookielaw.org/scripttemplates/otSDKStub.js' data-document-language="true" type='text/javascript' charset='UTF-8' data-domain-script='6b3745af-fe59-4bf6-8e19-650ed92f9ee9' ></script> 
+ <script src='https://cdn.cookielaw.org/scripttemplates/otSDKStub.js' data-document-language="true" type='text/javascript' charset='UTF-8' data-domain-script='6b3745af-fe59-4bf6-8e19-650ed92f9ee9-test' ></script> 
  <script type='text/javascript'> 
  function OptanonWrapper() { } 
  </script> 
@@ -249,7 +431,7 @@
   script.id = id || "";
   script.src = url;
   document.head.appendChild(script);
-})("https://gateway.verizonwireless.com/glassbox-master-controller-prod.js?"+(new Date).getTime(), "_vzGB_Loader_master");
+})("https://gateway.verizonwireless.com/glassbox-master-controller-np.js?"+(new Date).getTime(), "_vzGB_Loader_master");
  </script>
  <!-- Glassbox script ends -->
     
@@ -4949,7 +5131,6 @@ article[about*="accessibility-faqs"] .hero_with_icon__container .hero-with-icon-
 				</a>
 			</li>
 			
-			
 		</ul>
 	</div>
 </div></div>
@@ -4994,7 +5175,6 @@ article[about*="accessibility-faqs"] .hero_with_icon__container .hero-with-icon-
 				</a>
 			</li>
 			
-			
 		</ul>
 	</div>
 </div></div>
@@ -5038,10 +5218,12 @@ article[about*="accessibility-faqs"] .hero_with_icon__container .hero-with-icon-
 					</svg>
 				</a>
 			</li>
-			
 			<li>
 				<a class="gnav20-social-media" href="https://www.linkedin.com/company/verizon/" target="_blank" aria-label="Follow Verizon Careers on Linkedin" title="Opens New Window">
-					<img src="https://www.verizon.com/content/dam/verizon/business/vbm/images/linkedln.jpeg" alt="linkedln"/>
+					<span>linkedin</span>
+					<svg viewBox="0 5 85 56" width="24" height="20" xmlns="http://www.w3.org/2000/svg">
+						<path fill="#fff" d="M 74.58 62.795 C 75.275 62.802 75.83 62.219 75.79 61.526 C 75.79 60.626 75.247 60.196 74.133 60.196 L 72.333 60.196 L 72.333 64.908 L 73.01 64.908 L 73.01 62.854 L 73.842 62.854 L 73.861 62.879 L 75.152 64.908 L 75.876 64.908 L 74.487 62.808 L 74.58 62.795 Z M 73.797 62.323 L 73.012 62.323 L 73.012 60.73 L 74.007 60.73 C 74.521 60.73 75.107 60.814 75.107 61.487 C 75.107 62.261 74.514 62.323 73.793 62.323 M 56.92 56.89 L 47.32 56.89 L 47.32 41.856 C 47.32 38.271 47.256 33.656 42.327 33.656 C 37.327 33.656 36.562 37.562 36.562 41.595 L 36.562 56.889 L 26.962 56.889 L 26.962 25.973 L 36.178 25.973 L 36.178 30.198 L 36.307 30.198 C 38.186 26.985 41.68 25.066 45.4 25.204 C 55.13 25.204 56.924 31.604 56.924 39.93 L 56.92 56.89 Z M 16.13 21.747 C 11.842 21.748 9.16 17.106 11.304 13.391 C 13.448 9.677 18.808 9.676 20.953 13.39 C 21.442 14.236 21.7 15.197 21.7 16.175 C 21.701 19.252 19.207 21.746 16.13 21.747 M 20.93 56.89 L 11.32 56.89 L 11.32 25.973 L 20.93 25.973 L 20.93 56.89 Z M 61.706 1.69 L 6.496 1.69 C 3.887 1.66 1.747 3.751 1.715 6.36 L 1.715 61.799 C 1.746 64.41 3.885 66.502 6.496 66.474 L 61.706 66.474 C 64.322 66.507 66.47 64.415 66.506 61.799 L 66.506 6.356 C 66.469 3.741 64.321 1.651 61.706 1.686"></path><path fill="#fff" d="M 73.879 58.097 C 70.478 58.13 68.388 61.832 70.117 64.76 C 71.846 67.689 76.097 67.648 77.769 64.687 C 79.422 61.758 77.327 58.129 73.964 58.097 L 73.879 58.097 M 73.879 66.427 C 70.897 66.477 68.98 63.28 70.428 60.673 C 71.876 58.065 75.603 58.003 77.137 60.561 C 77.487 61.144 77.677 61.809 77.688 62.489 L 77.688 62.554 C 77.733 64.647 76.073 66.38 73.98 66.425 L 73.88 66.425"></path>
+					</svg>
 				</a>
 			</li>
 		</ul>
@@ -5073,7 +5255,6 @@ article[about*="accessibility-faqs"] .hero_with_icon__container .hero-with-icon-
 			
 			
 			
-			
 		</ul>
 	</div>
 </div></div>
@@ -5095,7 +5276,6 @@ article[about*="accessibility-faqs"] .hero_with_icon__container .hero-with-icon-
 					</svg>
 				</a>
 			</li>
-			
 			
 			
 			
