@@ -216,7 +216,308 @@
     
     <div id="aem-en-landing" class="cmp-container">
         
-        <div class="targetprehiding">
+        <div class="devscripts">
+
+
+    
+
+<script>
+// Author: Goldie Young. 
+// TEMP FIX FOR SAFARI - 06/19/2024
+ 
+window.CHIPW = window.CHIPW || {};
+// branchio.js
+(function() {
+    let dataset = document.querySelector("meta[property='branchio']")?.dataset;
+    if(dataset !== undefined) {
+        (function (b, r, a, n, c, h, _, s, d, k) {
+            if (!b[n] || !b[n]._q) {
+                for (; s < _.length;) c(h, _[s++]);
+                d = r.createElement(a);
+                d.async = 1;
+                d.src = dataset.branchioUrl;
+                k = r.getElementsByTagName(a)[0];
+                k.parentNode.insertBefore(d, k);
+                b[n] = h
+            }
+        })(window, document, "script", "branch", function (b, r) {
+            b[r] = function () {
+                b._q.push([r, arguments])
+            }
+        }, {
+            _q: [],
+            _v: 1
+        }, "addListener applyCode autoAppIndex banner closeBanner closeJourney creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode trackCommerceEvent logEvent disableTracking".split(" "), 0);
+        branch.init(dataset.branchioAppkey);
+    }
+})();
+// datadog.js
+(function() {
+
+    let dataset = document.querySelector("meta[property='datadog']")?.dataset;
+    if(dataset !== undefined) {
+        (function (h, o, u, n, d) {
+            h = h[d] = h[d] || {
+                q: [], onReady: function (c) {
+                    h.q.push(c)
+                }
+            };
+            d = o.createElement(u);
+            d.async = 1;
+            d.src = n;
+            n = o.getElementsByTagName(u)[0];
+            n.parentNode.insertBefore(d, n);
+        })(window, document, 'script', dataset.datadogScripturl, 'DD_RUM');
+        DD_RUM.onReady(function () {
+            DD_RUM.init({
+                clientToken: dataset.datadogClienttoken,
+                applicationId: dataset.datadogAppid,
+                site: 'datadoghq.com',
+                service: dataset.datadogService,
+                env: dataset.datadogEnvironment,
+                version: '6.5.13',
+                sampleRate: 100,
+                sessionReplaySampleRate: 0,
+                trackInteractions: true,
+                trackResources: true,
+                trackLongTasks: true,
+                defaultPrivacyLevel: 'mask-user-input',
+            });
+            DD_RUM.startSessionReplayRecording();
+        });
+    }
+})();
+// google-maps.js
+(function() {
+    let dataset = document.querySelector("meta[property='googlemaps']")?.dataset;
+    if(dataset !== undefined) {
+        (function () {
+            window.CHIPW.googleMapsConfig = {
+                dataKey: dataset.datakey,
+                appKey: dataset.appkey,
+                correlationId: dataset.correlationid
+            }
+        })();
+    }
+})();
+// gtm.js
+(function() {
+    let dataset = document.querySelector("meta[property='chipotlegtm']")?.dataset;
+    if(dataset !== undefined) {
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', dataset.chipotlegtmId);
+    }
+})();
+
+// ketch.js
+(function() {
+
+    let dataset = document.querySelector("meta[property='ketch']")?.dataset
+    if(dataset !== undefined) {
+        !function () {
+            window.semaphore = window.semaphore || [], window.ketch = function () {
+                window.semaphore.push(arguments)
+            };
+            var e = new URLSearchParams(document.location.search),
+                o = e.has("property") ? e.get("property") : dataset.ketchPropertycode,
+                n = document.createElement("script");
+            n.type = "text/javascript",
+                n.src = dataset.ketchRegiondomainurl + "/" + dataset.ketchOrgcode + "/".concat(o, dataset.ketchBootfilepath),
+                n.defer = n.async = !0,
+                document.getElementsByTagName("head")[0].appendChild(n)
+        }();
+        !function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                ketch();
+            });
+            try {
+                ketch();
+            } catch(e) {/*ignore*/}
+        }();
+        function ketch() {
+            preventDefaultByClassName("data-request-over-ride", () => {
+                console.log("data-request-over-ride called ");
+                semaphore.push(['showPreferences', {tab: 'rightsTab'}]);
+            });
+            function preventDefaultByClassName(className, preventDefaultAction) {
+                const elements = document.getElementsByClassName(className);
+                for (const element of elements) {
+                    element.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        preventDefaultAction();
+                    });
+                }
+            };
+            console.log("data-request-over-ride event attached ");
+        };
+    }
+})();
+
+// liveperson.js
+function load_liveperson(livePersonSiteId) {
+    (window.lpTag = window.lpTag || {}),
+        "undefined" == typeof window.lpTag._tagCount
+            ? ((window.lpTag = {
+                wl: lpTag.wl || null,
+                scp: lpTag.scp || null,
+                site:
+                    livePersonSiteId ||
+                    "",
+                section: lpTag.section || "",
+                tagletSection: lpTag.tagletSection || null,
+                autoStart: lpTag.autoStart !== !1,
+                ovr: lpTag.ovr || {},
+                _v: "1.10.0",
+                _tagCount: 1,
+                protocol: "https:",
+                events: {
+                    bind: function (t, e, i) {
+                        lpTag.defer(function () {
+                            lpTag.events.bind(t, e, i);
+                        }, 0);
+                    },
+                    trigger: function (t, e, i) {
+                        lpTag.defer(function () {
+                            lpTag.events.trigger(t, e, i);
+                        }, 1);
+                    },
+                },
+                defer: function (t, e) {
+                    0 === e
+                        ? ((this._defB = this._defB || []), this._defB.push(t))
+                        : 1 === e
+                            ? ((this._defT = this._defT || []), this._defT.push(t))
+                            : ((this._defL = this._defL || []), this._defL.push(t));
+                },
+                load: function (t, e, i) {
+                    var n = this;
+                    setTimeout(function () {
+                        n._load(t, e, i);
+                    }, 0);
+                },
+                _load: function (t, e, i) {
+                    var n = t;
+                    t ||
+                    (n =
+                        this.protocol +
+                        "//" +
+                        (this.ovr && this.ovr.domain
+                            ? this.ovr.domain
+                            : "lptag.liveperson.net") +
+                        "/tag/tag.js?site=" +
+                        this.site);
+                    var o = document.createElement("script");
+                    o.setAttribute("charset", e ? e : "UTF-8"),
+                    i && o.setAttribute("id", i),
+                        o.setAttribute("src", n),
+                        document.getElementsByTagName("head").item(0).appendChild(o);
+                },
+                init: function () {
+                    (this._timing = this._timing || {}),
+                        (this._timing.start = new Date().getTime());
+                    var t = this;
+                    window.attachEvent
+                        ? window.attachEvent("onload", function () {
+                            t._domReady("domReady");
+                        })
+                        : (window.addEventListener(
+                            "DOMContentLoaded",
+                            function () {
+                                t._domReady("contReady");
+                            },
+                            !1
+                        ),
+                            window.addEventListener(
+                                "load",
+                                function () {
+                                    t._domReady("domReady");
+                                },
+                                !1
+                            )),
+                    "undefined" === typeof window._lptStop && this.load();
+                },
+                start: function () {
+                    this.autoStart = !0;
+                },
+                _domReady: function (t) {
+                    this.isDom ||
+                    ((this.isDom = !0),
+                        this.events.trigger("LPT", "DOM_READY", { t: t })),
+                        (this._timing[t] = new Date().getTime());
+                },
+                vars: lpTag.vars || [],
+                dbs: lpTag.dbs || [],
+                ctn: lpTag.ctn || [],
+                sdes: lpTag.sdes || [],
+                hooks: lpTag.hooks || [],
+                identities: lpTag.identities || [],
+                ev: lpTag.ev || [],
+            }),
+                lpTag.init())
+            : (window.lpTag._tagCount += 1);
+};
+
+(function() {
+    let dataset = document.querySelector("meta[property='liveperson']")?.dataset;
+    if(dataset !== undefined) {
+        load_liveperson(dataset.livepersonSiteid);
+    }
+})();
+
+// menumetadata-api.js
+(function() {
+    let dataset = document.querySelector("meta[property='mmd']")?.dataset;
+    if(dataset !== undefined) {
+        (function () {
+            window.CHIPW = window.CHIPW || {};
+            window.CHIPW.MenuMetadataApiConfig = {
+                menuIngredientsEndpoint: dataset.ingredients,
+                menuAllergenDietsEndpoint: dataset.allergens
+            };
+            window.CHIPW.chipotleServicesApiConfig = {
+                chipotleServicesBaseUrl: dataset.baseurl,
+                chipotleServicesAppKey: dataset.appkey
+            };
+        })();
+    }
+})();
+
+// restaurant-api.js
+(function() {
+    let dataset = document.querySelector("meta[property='rest']")?.dataset;
+    if(dataset !== undefined) {
+        window.CHIPW.restaurantConfig = {
+            endpoint: dataset.endpoint,
+            key: dataset.appkey
+        };
+    }
+})();
+
+// services.js
+(function() {
+    let dataset = document.querySelector("meta[property='servicesconfig']")?.dataset;
+    if(dataset !== undefined) {
+        window.CHIPW = window.CHIPW || {};
+        window.CHIPW.chipotleServicesApiConfig = {
+            chipotleServicesBaseUrl: dataset.host,
+            chipotleServicesAppKey: dataset.appkey,
+        };
+    }
+})();
+</script>
+</div>
+<div class="targetprehiding">
 <!-- Pre-hide the homepage hero until Adobe Target finishes loading the A/B tests -->
 <div id="aem-target-prehiding" class="aem-target-prehiding" data-hide-duration="2500">
     <style id="alloy-prehiding">
@@ -636,9 +937,9 @@
 
 </div>
 <div class="image w-50">
-<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width={width}" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/footer-app-download.png" id="app-store-image" data-cmp-data-layer="{&#34;app-store-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T18:02:05Z&#34;,&#34;dc:title&#34;:&#34;Apple App Store&#34;,&#34;xdm:linkURL&#34;:&#34;https://itunes.apple.com/us/app/chipotle/id327228455?mt=8&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;42a81337-7092-4971-b02e-63cf5b94fc2b&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:40:15Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/footer-app-download.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/landscape&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
+<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width={width}&amp;preferwebp=true" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/footer-app-download.png" id="app-store-image" data-cmp-data-layer="{&#34;app-store-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T18:02:05Z&#34;,&#34;dc:title&#34;:&#34;Apple App Store&#34;,&#34;xdm:linkURL&#34;:&#34;https://itunes.apple.com/us/app/chipotle/id327228455?mt=8&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;42a81337-7092-4971-b02e-63cf5b94fc2b&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:40:15Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/footer-app-download.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/landscape&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
     <a class="cmp-image__link" data-cmp-clickable href="https://itunes.apple.com/us/app/chipotle/id327228455?mt=8" target="_blank">
-        <img src="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=320 320w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=480 480w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=600 600w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=800 800w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=1024 1024w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=1200 1200w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;preferwebp=true&amp;width=1600 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="140" height="42" alt="Apple App Store" title="Apple App Store"/>
+        <img src="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=320&amp;preferwebp=true 320w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=480&amp;preferwebp=true 480w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=600&amp;preferwebp=true 600w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=800&amp;preferwebp=true 800w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=1024&amp;preferwebp=true 1024w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=1200&amp;preferwebp=true 1200w,/adobe/dynamicmedia/deliver/dm-aid--42a81337-7092-4971-b02e-63cf5b94fc2b/footer-app-download.png?quality=85&amp;width=1600&amp;preferwebp=true 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="140" height="42" alt="Apple App Store" title="Apple App Store"/>
     </a>
     
     <meta itemprop="caption" content="Apple App Store"/>
@@ -648,9 +949,9 @@
 
 </div>
 <div class="image w-50">
-<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width={width}" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/footer-google-play.png" id="play-store-image" data-cmp-data-layer="{&#34;play-store-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:46:36Z&#34;,&#34;dc:title&#34;:&#34;Google Play&#34;,&#34;xdm:linkURL&#34;:&#34;https://play.google.com/store/apps/details?id=com.chipotle.ordering&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;a9995df0-b5d5-403b-a6d7-03a8bb0c74fa&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:40:15Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/footer-google-play.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/landscape&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
+<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width={width}&amp;preferwebp=true" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/footer-google-play.png" id="play-store-image" data-cmp-data-layer="{&#34;play-store-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:46:36Z&#34;,&#34;dc:title&#34;:&#34;Google Play&#34;,&#34;xdm:linkURL&#34;:&#34;https://play.google.com/store/apps/details?id=com.chipotle.ordering&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;a9995df0-b5d5-403b-a6d7-03a8bb0c74fa&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:40:15Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/footer-google-play.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/landscape&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
     <a class="cmp-image__link" data-cmp-clickable href="https://play.google.com/store/apps/details?id=com.chipotle.ordering" target="_blank">
-        <img src="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=320 320w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=480 480w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=600 600w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=800 800w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=1024 1024w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=1200 1200w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;preferwebp=true&amp;width=1600 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="140" height="42" alt="Google Play" title="Google Play"/>
+        <img src="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=320&amp;preferwebp=true 320w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=480&amp;preferwebp=true 480w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=600&amp;preferwebp=true 600w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=800&amp;preferwebp=true 800w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=1024&amp;preferwebp=true 1024w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=1200&amp;preferwebp=true 1200w,/adobe/dynamicmedia/deliver/dm-aid--a9995df0-b5d5-403b-a6d7-03a8bb0c74fa/footer-google-play.png?quality=85&amp;width=1600&amp;preferwebp=true 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="140" height="42" alt="Google Play" title="Google Play"/>
     </a>
     
     <meta itemprop="caption" content="Google Play"/>
@@ -681,9 +982,9 @@
 
 </div>
 <div class="image">
-<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width={width}" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-insta.png" id="instagram-image" data-cmp-data-layer="{&#34;instagram-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:56:45Z&#34;,&#34;dc:title&#34;:&#34;instagram image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.instagram.com/chipotle/&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;66cfe770-ad76-4a66-a07c-e6b3111e2371&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:33:56Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-insta.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;],&#34;xdm:smartTags&#34;:{&#34;button&#34;:0.86,&#34;minimalist photography&#34;:0.918,&#34;thumbnail&#34;:0.752,&#34;clipart&#34;:0.814,&#34;web icon&#34;:0.85,&#34;khaki&#34;:0.792,&#34;qr code&#34;:0.753,&#34;dot&#34;:0.841,&#34;logo&#34;:0.781}}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
+<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width={width}&amp;preferwebp=true" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-insta.png" id="instagram-image" data-cmp-data-layer="{&#34;instagram-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:56:45Z&#34;,&#34;dc:title&#34;:&#34;instagram image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.instagram.com/chipotle/&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;66cfe770-ad76-4a66-a07c-e6b3111e2371&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:33:56Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-insta.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;],&#34;xdm:smartTags&#34;:{&#34;button&#34;:0.86,&#34;minimalist photography&#34;:0.918,&#34;thumbnail&#34;:0.752,&#34;clipart&#34;:0.814,&#34;web icon&#34;:0.85,&#34;khaki&#34;:0.792,&#34;qr code&#34;:0.753,&#34;dot&#34;:0.841,&#34;logo&#34;:0.781}}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
     <a class="cmp-image__link" data-cmp-clickable href="https://www.instagram.com/chipotle/" target="_blank">
-        <img src="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=320 320w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=480 480w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=600 600w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=800 800w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=1024 1024w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=1200 1200w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;preferwebp=true&amp;width=1600 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="instagram social icon " title="instagram image"/>
+        <img src="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=320&amp;preferwebp=true 320w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=480&amp;preferwebp=true 480w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=600&amp;preferwebp=true 600w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=800&amp;preferwebp=true 800w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=1024&amp;preferwebp=true 1024w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=1200&amp;preferwebp=true 1200w,/adobe/dynamicmedia/deliver/dm-aid--66cfe770-ad76-4a66-a07c-e6b3111e2371/social-icon-insta.png?quality=85&amp;width=1600&amp;preferwebp=true 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="instagram social icon " title="instagram image"/>
     </a>
     
     <meta itemprop="caption" content="instagram image"/>
@@ -693,9 +994,9 @@
 
 </div>
 <div class="image">
-<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width={width}" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-twitter.png" id="twitter-image" data-cmp-data-layer="{&#34;twitter-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:57:01Z&#34;,&#34;dc:title&#34;:&#34;twitter x image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.twitter.com/chipotletweets&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;1ca1feab-ec90-4002-8fee-88c10766910b&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:32:17Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-twitter.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;],&#34;xdm:smartTags&#34;:{&#34;badge&#34;:0.778,&#34;minimalist photography&#34;:0.815,&#34;symmetry&#34;:0.798,&#34;khaki&#34;:0.799,&#34;flex&#34;:0.755,&#34;fraternity&#34;:0.881,&#34;cross&#34;:0.787,&#34;logo&#34;:0.791,&#34;crossed arms&#34;:0.793}}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
+<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width={width}&amp;preferwebp=true" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-twitter.png" id="twitter-image" data-cmp-data-layer="{&#34;twitter-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:57:01Z&#34;,&#34;dc:title&#34;:&#34;twitter x image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.twitter.com/chipotletweets&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;1ca1feab-ec90-4002-8fee-88c10766910b&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:32:17Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-twitter.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;],&#34;xdm:smartTags&#34;:{&#34;badge&#34;:0.778,&#34;minimalist photography&#34;:0.815,&#34;symmetry&#34;:0.798,&#34;khaki&#34;:0.799,&#34;flex&#34;:0.755,&#34;fraternity&#34;:0.881,&#34;cross&#34;:0.787,&#34;logo&#34;:0.791,&#34;crossed arms&#34;:0.793}}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
     <a class="cmp-image__link" data-cmp-clickable href="https://www.twitter.com/chipotletweets" target="_blank">
-        <img src="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=320 320w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=480 480w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=600 600w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=800 800w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=1024 1024w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=1200 1200w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;preferwebp=true&amp;width=1600 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="twitter x social icon " title="twitter x image"/>
+        <img src="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=320&amp;preferwebp=true 320w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=480&amp;preferwebp=true 480w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=600&amp;preferwebp=true 600w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=800&amp;preferwebp=true 800w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=1024&amp;preferwebp=true 1024w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=1200&amp;preferwebp=true 1200w,/adobe/dynamicmedia/deliver/dm-aid--1ca1feab-ec90-4002-8fee-88c10766910b/social-icon-twitter.png?quality=85&amp;width=1600&amp;preferwebp=true 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="twitter x social icon " title="twitter x image"/>
     </a>
     
     <meta itemprop="caption" content="twitter x image"/>
@@ -705,9 +1006,9 @@
 
 </div>
 <div class="image">
-<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width={width}" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-facebook.png" id="facebook-image" data-cmp-data-layer="{&#34;facebook-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:56:12Z&#34;,&#34;dc:title&#34;:&#34;facebook image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.facebook.com/chipotle&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;5ddd6649-c2c5-455b-932b-0ceb4f8e2546&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:33:32Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-facebook.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
+<div data-cmp-is="image" data-cmp-widths="320,480,600,800,1024,1200,1600" data-cmp-src="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width={width}&amp;preferwebp=true" data-cmp-filereference="/content/dam/chipotle/global-ui/footer/social-icon-facebook.png" id="facebook-image" data-cmp-data-layer="{&#34;facebook-image&#34;:{&#34;@type&#34;:&#34;cmgaemacs/components/image&#34;,&#34;repo:modifyDate&#34;:&#34;2023-08-23T17:56:12Z&#34;,&#34;dc:title&#34;:&#34;facebook image&#34;,&#34;xdm:linkURL&#34;:&#34;https://www.facebook.com/chipotle&#34;,&#34;image&#34;:{&#34;repo:id&#34;:&#34;5ddd6649-c2c5-455b-932b-0ceb4f8e2546&#34;,&#34;repo:modifyDate&#34;:&#34;2024-04-25T21:33:32Z&#34;,&#34;@type&#34;:&#34;image/png&#34;,&#34;repo:path&#34;:&#34;/content/dam/chipotle/global-ui/footer/social-icon-facebook.png&#34;,&#34;xdm:tags&#34;:[&#34;properties:orientation/square&#34;]}}}" data-cmp-hook-image="imageV3" class="cmp-image" itemscope itemtype="http://schema.org/ImageObject">
     <a class="cmp-image__link" data-cmp-clickable href="https://www.facebook.com/chipotle" target="_blank">
-        <img src="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=320 320w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=480 480w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=600 600w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=800 800w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=1024 1024w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=1200 1200w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;preferwebp=true&amp;width=1600 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="facebook social icon" title="facebook image"/>
+        <img src="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&preferwebp=true" srcset="/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=320&amp;preferwebp=true 320w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=480&amp;preferwebp=true 480w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=600&amp;preferwebp=true 600w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=800&amp;preferwebp=true 800w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=1024&amp;preferwebp=true 1024w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=1200&amp;preferwebp=true 1200w,/adobe/dynamicmedia/deliver/dm-aid--5ddd6649-c2c5-455b-932b-0ceb4f8e2546/social-icon-facebook.png?quality=85&amp;width=1600&amp;preferwebp=true 1600w" loading="lazy" class="cmp-image__image" itemprop="contentUrl" width="96" height="96" alt="facebook social icon" title="facebook image"/>
     </a>
     
     <meta itemprop="caption" content="facebook image"/>
