@@ -123,7 +123,30 @@
 	        }
 	
 	      });
+	    },
+	    getVendorListConsent: function (vendorIdArr) {
+	      return new Promise((resolve, reject) => {
 	
+	          if (window.__tcfapi) {
+	            window.__tcfapi('getCustomVendorConsents', 2, function(tcData) {
+	              if (tcData) {
+	                  var consentArr = [];
+	                    vendorIdArr.map(function(vId){
+	                      var vendorConsent = tcData.grants[vId];
+	                      if(vendorConsent && vendorConsent.vendorGrant) {
+	                        consentArr.push(true);
+	                      }  else {
+	                        consentArr.push(false);
+	                      }
+	                    });
+	                  return resolve(consentArr);
+	              }
+	          });
+	        } else {
+	          reject(false);
+	        }
+	
+	      });
 	    }
 	
 	}
@@ -955,11 +978,12 @@
 
 <script>
   window.CSG_CONFIG = {
-    iframeUrl: 'https://static.formula1.com/account/2.0.31/react/index.html',
+    iframeUrl: 'https://static.formula1.com/account/2.0.32/react/index.html',
     container: 'csgWidget',
   }
 </script>
-<script src="https://static.formula1.com/account/2.0.31/ascendonController.js"></script>
+<script src="https://static.formula1.com/account/2.0.32/ascendonController.js"></script>
+<script src="https://static.formula1.com/mk-sdk/v1.0.0/main.js"></script>
 
 <script src="./scripts/libs.min.js"></script>
 
