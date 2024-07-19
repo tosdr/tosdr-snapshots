@@ -44,10 +44,28 @@
 
 
 
+<script>let setgeotarge = false; setgeofencing = false</script>
+
+        <script>setgeotarge = true;</script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
+            data-culture=""
+            type="text/javascript" data-consentmode="disabled" data-georegions="{'region':'GB,DE,FR,NL','cbid':'%207ca522be-0c36-4abe-b5be-20129dbf1b64'}" async></script>
+
+
+
+
+    <script>setgeofencing = true;</script>
+    <style>
+        .disable-abtn {
+            color: gray !important;
+            pointer-events: none !important;
+        }
+    </style>
+
 <script type="text/javascript">
 
-    function getcountrycode()
-    {
+    function getcountrycode() {
+
         if (document.getElementById("CybotCookiebotDialog")) {
             var countryCode = Cookiebot.userCountry.toUpperCase();
             var countryListEU = ["GB", "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "ES", "EE", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "SE"];
@@ -62,16 +80,10 @@
                 countryCode = "ccpa_default";
             }
             document.getElementById("CybotCookiebotDialog").classList.add(countryCode);
-            console.log("country code class " + countryCode);
+            //console.log("country code class " + countryCode);
         }
     }
 
-    function OpenPopupOnCookiebotRenewClick() {
-        ReshowPopup();
-        setTimeout(function () {
-            ReshowPopup();
-        }, 1400);
-    }
 
     function ReshowPopup() {
         if (document.cookie.indexOf('cbrenew') > -1) {
@@ -83,46 +95,33 @@
                 }
             }
         }
-        if (document.getElementById("isGeot")) { getcountrycode(); }
+        if (setgeotarge) { getcountrycode(); }
     }
 
+    function CalllSetTimeOut() {setTimeout(function () {console.log("."); ReshowPopup(); CalllSetTimeOutTwice(); },1500)}
+    function CalllSetTimeOutTwice() { setTimeout(function () {console.log(".."); ReshowPopup(); CalllSetTimeOutThrice(); }, 3000) }
+    function CalllSetTimeOutThrice() { setTimeout(function () {console.log("..."); ReshowPopup();  }, 4500) }
+
+
     function CookiebotRenewClick() {
-        if (document.getElementsByClassName("cb-renew").length > 0)
-        {
-            let renewCBBtn = document.getElementsByClassName("cb-renew")[0]; renewCBBtn.removeAttribute("onclick");renewCBBtn.href = "#";
+        if (document.getElementsByClassName("cb-renew").length > 0) {
+            let renewCBBtn = document.getElementsByClassName("cb-renew")[0];
+            renewCBBtn.removeAttribute("onclick");
+            renewCBBtn.href = "#";
+
             renewCBBtn.addEventListener('click', function () {
+               // document.cookie = "CookieConsent" + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                 Cookiebot.renew();
-                 OpenPopupOnCookiebotRenewClick();
-               
+                ReshowPopup();
+                setTimeout(function () { ReshowPopup(); CalllSetTimeOut(); }, 900);
             });
         }
     }
-    window.addEventListener("DOMContentLoaded", function () {
+
+    window.addEventListener('DOMContentLoaded', function () {
         CookiebotRenewClick();
     });
 
-</script>
-
-            <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
-                    type="text/javascript" data-consentmode="disabled"
-                    data-georegions="{'region':'GB,DE,FR,NL','cbid':'%207ca522be-0c36-4abe-b5be-20129dbf1b64'}" async></script>
-        <input type="hidden" id="isGeot" value="1" />
-        <script type="text/javascript">
-            window.addEventListener("DOMContentLoaded", function () {
-                setTimeout(function () { getcountrycode();}, 900);               
-            });
-        </script>
-
-
-
-
-    <style>
-        .disable-abtn {
-            color: gray !important;
-            pointer-events: none !important;
-        }
-    </style>
-    <script type="text/javascript">
 
 
         function setCookieForCountryCode(name, value, days) {
@@ -147,7 +146,7 @@
         }
 
         async function checkElementExists(element, timeout = Infinity) {
-            let startTime = Date.now();           
+            let startTime = Date.now();
             return new Promise((resolve) => {
                 const intervalId = setInterval(() => {
                     if (document.querySelector(element)) {
@@ -164,6 +163,7 @@
 
         function blockPopup()
         {
+
             var regionArray = [];
             var disableCountryCode = Cookiebot.userCountry.toUpperCase();
             setCookieForCountryCode("RegionCode", disableCountryCode, 365);
@@ -172,25 +172,44 @@
                    regionArray.push("US-53");
                    regionArray.push("US-32");
 
-            if (regionArray.includes(disableCountryCode))
+                if (regionArray.includes(disableCountryCode))
+                {
+                    if (document.getElementById("CybotCookiebotDialogBodyButtonAccept"))
+                        document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+
+                    if (document.getElementById("nvtext"))
+                        document.getElementById("nvtext").setAttribute('style', 'display:block !important');
+
+                    setCookieForCountryCode("cbrenew", "1", 365);
+
+                }
+                else
+                    CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "rm");
+            }
+
+        checkElementExists("#CybotCookiebotDialog", 120).then((result) => {
+            if (result)
             {
-                if (document.getElementById("CybotCookiebotDialogBodyButtonAccept"))
-                    document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+                if (setgeofencing) {
+                    blockPopup();
+                }
+                if (setgeotarge) {
+                    getcountrycode();
+                }
 
-                if (document.getElementById("nvtext"))
-                    document.getElementById("nvtext").setAttribute('style', 'display:block !important');
-
-                setCookieForCountryCode("cbrenew", "1", 365);
-     
             }
             else
-                CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "rm");
-        }
+            {
+                console.log("ncb");
+            }
+        });
 
-  checkElementExists("#CybotCookiebotDialog", 60).then((result) => { if (result) { blockPopup(); } else {console.log("ncb"); }});
+
+</script>
 
 
-    </script>
+
+
 
 
     
@@ -217,7 +236,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link href="/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css" rel="stylesheet" /><link href="/-/media/Base-Themes/LazyLoading/Styles/psuedolazyload.css" rel="stylesheet" /><link href="/-/media/Base-Themes/GeoTarget-Footer-CSS/Styles/Geotarget_Footer.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/main.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/aglobal-styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/alert.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/cl-customizedsearch.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/component-tabs.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-bootstrap.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/megamenu.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Print.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/search-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/amgen-com-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/tiles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/zfont-weight-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/sxaOverRide.css" rel="stylesheet" />
     
-<meta name="VIcurrentDateTime" content="638545670496164280" />
+<meta name="VIcurrentDateTime" content="638569492741769106" />
 <meta name="VirtualFolder" content="/" />
 <script type="text/javascript" src="/layouts/system/VisitorIdentification.js"></script>
 
