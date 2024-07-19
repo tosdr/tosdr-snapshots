@@ -194,7 +194,7 @@ try {
         window.g_config.channelEnv = "product";
         window.g_config.showPcSearchboxHotWords = false;
         window.g_config.newPcHeadFoot = true;
-    </script>
+    </script><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/css/main.css"/><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/css/p_index-index.css"/>
     <script>
     (function() {
       try {
@@ -259,7 +259,7 @@ try {
       }
     })();
     </script>
-    <link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/css/main.css"/><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/css/65.css"/><link rel="stylesheet" type="text/css" href="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/css/p_index-index.css"/>
+    
 		
 
 		
@@ -309,12 +309,12 @@ try {
     
     <script>
         window.__LIB_SEARCH_BOX_SCENE__ = 'default';
-        window.__LIB_SEARCH_BOX_VERSION__ = '0.4.11';
+        window.__LIB_SEARCH_BOX_VERSION__ = '0.4.16';
         window.__LIB_SEARCH_BOX_ASSETS_ENV__ = 'product';
         window.__GCP_ENV = 'production';
     </script>
-    <link rel="stylesheet" href="//g.lazcdn.com/g/lazada-search-fe/lzd-searchbox/0.4.11/index.css" />
-    <script src="//g.lazcdn.com/g/lazada-search-fe/lzd-searchbox/0.4.11/index.js"></script>
+    <link rel="stylesheet" href="//g.lazcdn.com/g/lazada-search-fe/lzd-searchbox/0.4.16/index.css" />
+    <script src="//g.lazcdn.com/g/lazada-search-fe/lzd-searchbox/0.4.16/index.js"></script>
 
 	<div id="New_LzdSiteNav" class="site-nav J_NavScroll"><div id="topActionHeaderWrapper" class="lzd-header" data-spm="header" data-tag="links"><div id="topActionHeader" class="lzd-header-content-wrap J_NavScroll"><div class="lzd-header-content "><div class="lzd-links-bar " id="topActionLinks"><div class="links-list header-content SG en">
 		
@@ -483,17 +483,19 @@ try {
 		<div class="top-links-item  grey" id="anonLogin">
 			
 			
+			
 			<a class="grey"  href="//member.lazada.sg/user/login" data-spm-click="gostr=/lzdpub.header.tbar;locaid=login">login</a>
 		</div>
 	
 		<div class="top-links-item  grey" id="anonSignup">
 			
 			
+			
 			<a class="grey"  href="//member.lazada.sg/user/register" data-spm-click="gostr=/lzdpub.header.tbar;locaid=signup">sign up</a>
 		</div>
 	
     <div class="top-links-item top-links-item-hidden" id="topActionUserAccont"  data-spm-click="gostr=/lzdpub.header.tbar;locaid=account">
-      <span id="myAccountTrigger" class="orange"></span>
+      <span id="myAccountTrigger" class="orange top-links-item-text-limit"></span>
 
       <div class="lzd-account-popup top-popup-wrap" id="lzdMyAccountPop">
         <div class="top-popup-content lzd-account-content">
@@ -503,7 +505,8 @@ try {
                     
                     
                     
-                      <a href="//member.lazada.sg/user/account#/" class="account-item-anchor">
+                      
+                      <a href="//member.lazada.sg/user/account#/" class="account-item-anchor" id="account-popup-manage-account">
                           <span class="account-icon test manage-account"></span>Manage My Account
                       </a>
                       
@@ -661,11 +664,11 @@ try {
     
     <script>
         window.__LIB_LOGIN_SIGNUP_POPUP_SCENE__ = 'default';
-        window.__LIB_LOGIN_SIGNUP_POPUP_VERSION__ = '0.0.20';
+        window.__LIB_LOGIN_SIGNUP_POPUP_VERSION__ = '0.0.30';
         window.__LIB_LOGIN_SIGNUP_POPUP_ASSETS_ENV__ = 'product';
         window.__GCP_ENV = 'production';
     </script>
-    <script src="//g.lazcdn.com/g/code/npm/@ali/multimod-lzd-member__signup-login-pop/0.0.20/lib-signuppop/index.umd.es5.production.js" crossorigin="anonymous"></script>
+    <script src="//g.lazcdn.com/g/code/npm/@ali/multimod-lzd-member__signup-login-pop/0.0.30/lib-signuppop/index.umd.es5.production.js" crossorigin="anonymous"></script>
 
 	
     
@@ -675,6 +678,28 @@ try {
     
 	
 		
+	 
+    <script>
+      (() => {
+        const ele = document.querySelector('.lzd-nav-search');
+        if(!ele) return;
+
+        const extraParam = {
+          taobao: {
+            showOnlyInTaobao: true,
+            onlyInTaobaoChecked: true,
+          },
+        }['default'] || {};
+        window.LZD &&
+          window.LZD.SearchBox &&
+          window.LZD.SearchBox.init(ele, {
+            lang: 'en',
+            regionID: 'SG',
+            submitSpm: 'gostr=/lzdpub.header.search;locaid=d_go',
+            ...extraParam,
+          });
+      })();
+    </script>
 	
           
         
@@ -817,71 +842,6 @@ try {
         window.g_config.showPcSearchboxHotWords = false;
         window.g_config.newPcHeadFoot = true;
     </script>
-    <script>
-    (function() {
-      try {
-        if (window.aplusPageIdSetComplete || /AliApp/i.test(navigator.userAgent)) {
-          return;
-        }
-    
-        var get_cookie = function (sName) {
-          var sRE = '(?:; )?' + sName + '=([^;]*);?';
-          var oRE = new RegExp(sRE);
-          if (oRE.test(document.cookie)) {
-          var str = decodeURIComponent(RegExp['$1']) || '';
-          if (str.trim().length > 0) {
-            return str;
-          } else {
-            return '-';
-          }
-          } else {
-            return '-';
-          }
-        };
-        var getRand = function () {
-          var page_id = get_cookie('cna') || '001';
-          page_id = page_id.toLowerCase().replace(/[^a-zd]/g, '');
-          page_id = page_id.substring(0, 16);
-          var d = (new Date()).getTime();
-          var randend = [
-            page_id,
-            d.toString(16)
-          ].join('');
-    
-          for (var i = 1; i < 10; i++) {
-            var _r = parseInt(Math.round(Math.random() * 10000000000), 10).toString(16);
-            randend += _r;
-          }
-          randend = randend.substr(0, 42);
-          return randend;
-        };
-        var pageid = getRand();
-        var aq = (window.aplus_queue || (window.aplus_queue = []));
-        aq.push({
-          'action':'aplus.appendMetaInfo',
-          'arguments':['aplus-cpvdata', {"pageid":pageid}]
-        });
-        aq.push({
-          'action':'aplus.appendMetaInfo',
-          'arguments':['aplus-exdata',{"st_page_id":pageid}]
-        });
-        // 兼容老版本aplus
-        var gq = (window.goldlog_queue || (window.goldlog_queue = []));
-        gq.push({
-          'action':'goldlog.appendMetaInfo',
-          'arguments':['aplus-cpvdata', {"pageid":pageid}]
-        });
-        gq.push({
-          'action':'goldlog.appendMetaInfo',
-          'arguments':['aplus-exdata',{"st_page_id":pageid}]
-        });
-        window.aplusPageIdSetComplete = true;
-      } catch(err) {
-        console.error(err);
-      }
-    })();
-    </script>
-    
             
         
 	
@@ -914,7 +874,7 @@ try {
 						
 							<li class="footer-li"><a href="//www.lazada.sg/helpcenter/products-on-lazada/#answer-faq-internationalproduct-ans">International Product Policy</a></li>
 						
-							<li class="footer-li"><a href="//www.lazada.sg/helpcenter/returns-refunds/#answer-faq-return-ans">How to Return</a></li>
+							<li class="footer-li"><a href="//www.lazada.sg/helpcenter/how-do-i-return-an-item-13301.html">How to Return</a></li>
 						
 							<li class="footer-li"><a href="//www.lazada.sg/contact/">Contact Lazada</a></li>
 						
@@ -1229,7 +1189,9 @@ try {
         </script>
 
     
-	<script>!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = {"appData":null,"loaderData":{"/":{"pageConfig":{}}},"routePath":"/","matchedIds":["/"],"documentOnly":true,"renderMode":"CSR"};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();</script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/cde6690e.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/26.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/p_index-utils-mockcategorytreedata.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/611.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/371.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/p_index-index.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/framework.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/472.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.43/js/main.js"></script>
+	
+      <script async src="//laz-g-cdn.alicdn.com/??mmfe/cps-rt-tracking/0.0.6/index.js,lzdmod/back-to-third-party-app/5.0.2/m/button.js"></script>
+	<script>!(function () {var a = window.__ICE_APP_CONTEXT__ || {};var b = {"appData":null,"loaderData":{"/":{"pageConfig":{}}},"routePath":"/","matchedIds":["/"],"documentOnly":true,"renderMode":"CSR"};for (var k in a) {b[k] = a[k]}window.__ICE_APP_CONTEXT__=b;})();</script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/cde6690e.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/545.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/p_index-utils-mockcategorytreedata.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/696.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/633.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/p_index-index.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/framework.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/26.js"></script><script src="//g.lazcdn.com/g/psolution/lzd-head-foot/1.0.54/js/main.js"></script>
           
         
       <script>window.gcpIsNewPCHeaderFooter = true;</script><script id="gcp-fsp">
