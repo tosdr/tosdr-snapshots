@@ -1314,6 +1314,259 @@ $(document).ready(function() {
 
 
 
+
+<!-- Subscription widget on the side -->
+
+<style>
+#subscription-panel {
+   	position: fixed; 
+   	top: 40%;
+   	top: calc(50% - 228px);
+	transform: translateX(332px); 
+	right: 0;
+   	-webkit-transition: all .5s;
+  	-moz-transition: all 0.5s;
+ 	-o-transition:all .5s;
+ 	transition: all .5s;
+ 	z-index: auto;
+}
+#subscription-panel * {
+	box-sizing: border-box;
+}
+#subscription-panel.expanded {
+   	transform: translateX(-10px);
+   	z-index: 100000;
+}
+#subscription-panel-button {padding:0 6px; position: absolute; width: 138px; min-height: 33px; left: -138px;cursor: pointer; z-index: 9999; box-shadow: 0px 2px 8px rgba(0,0,0,0.5); display: flex; align-items: center;top: 0;  background: #127c95; text-align: center; color: #fff;transform: translateY(-50%) rotate(-90deg);transform-origin: 100% 100%;}
+#subscription-panel-button #subscription-btn-icon  {
+	transform: rotate(90deg);
+}
+
+#subscription-panel-button #subscription-btn-icon img{
+	width: 20px;
+	margin: 12px 2px 6px;
+}
+
+#subscription-panel-button #subscription-btn-text {
+	text-align: center;
+	font-size: 17px; 
+	font-weight: bold;
+	margin: 0 10px;
+}
+#subscription-panel-container {z-index: 100000;position: relative;background-color: #127c95; color: #fff; padding: 30px 30px 70px 30px;font-size: 16px; width: 330px; text-align: center;}
+#subscription-subscription-panel-button, #subscription-panel-container {display:inline-block;float:left;}
+#subscription-panel h2 {font-size: 28px; font-weight: bold; color: #fff;margin-top: 0;margin-bottom: 20px;width: 100%;padding:0;background: transparent;border-bottom: 0;}
+#subscription-panel .img_stick_header_close_btn {z-index:1;width:32px; height: 32px;background: transparent; color: #fff; font-size: 16px; position: absolute; top: 2px; right: 5px;text-indent:0;border:0;padding:0;}
+#subscription-panel .subscription-description {display: flex; flex-direction: column; width: 180px; align-items: center; margin: 0 auto;}
+#subscription-panel .subscription-description > div {display: flex; text-align: left; align-items: center; margin-bottom: 7px; width: 100%;}
+#subscription-panel .subscription-description > div span {margin-left: 20px; line-height: 1.2em;}
+#subscription-panel #subscription-widget-form {margin-top: 15px;}
+#subscription-panel #subscription-widget-form form {width: 100%;}
+#subscription-panel #subscription-widget-form .grecaptcha-badge { left: 40px !important; bottom:10px !important; }
+#subscription-panel input[type="email"], #subscription-panel input[name="email"] {box-sizing:border-box;width: 234px; height: 40px;text-align:center;font-size: 17px; color: #797878;position: static; margin: 0 auto; border-radius: 3px;padding: 0 15px; border: 0;}
+#subscription-panel fieldset {width: auto; margin:0 auto 10px auto;}
+#subscription-panel input[type="submit"] {font-family: ariel, sans-serif;}
+#subscription-panel input[type="submit"], #subscription-panel #thank_you_close_btn {line-height: 33.5px;float:none;box-sizing: border-box; border-radius: 4px 4px 4px 4px;-moz-border-radius: 4px 4px 4px 4px;-webkit-border-radius: 4px 4px 4px 4px;color: #1c1c1c;border:0;font-weight: bold;padding: 3px 25px;width: 238px; height: 43px; font-size: 16px; background: #f0b310;  position: static;margin: 15px auto 5px auto;}
+#subscription-panel input[name="email"] {border-radius: 0; transition: border .1s;float: none;}
+#subscription-panel input[name="email"]:focus {outline: none; border: 2px solid #f0b310;}
+#subscription-panel input[name="email"]::-webkit-input-placeholder {color: #797878;}
+#subscription-panel #thank_you_close_btn {cursor: pointer;clear:both;}
+#subscription-panel #thank_you_msg {display:none; text-align: center;}
+#subscription-panel #thank_you_msg h2 {text-transform: uppercase; color: #fff;font-size: 24px; margin-top: 10px;margin-bottom: 20px; }
+#subscription-panel .note {font-size: 10px;color: #ffffff; opacity: 0.7;text-align: center;width: 100%;float: none;}
+#subscription-panel .hide_desktop {display: none;}
+
+@media (max-width: 767px) {
+	#subscription-panel {top: 45%;top: calc(50% - 153px);}
+}
+</style>
+<script async="async" src="/js/lib/placeholders.min.js"></script>
+<div id="subscription-panel">
+	<div id="subscription-panel-button">
+		<div id="subscription-btn-text">
+			Subscribe
+		</div>
+		<div id="subscription-btn-icon">
+			<img src="/images/sign-up-widget/icon-subscription-email.png" alt="Live Chat button" border="0">
+		</div>
+	</div>
+	<div id="subscription-panel-container">
+	  <button class="img_stick_header_close_btn" type="button">X</button>
+	  <h2>Join our community<br>and get updates on:</h2>
+	  <div class="subscription-description">
+	  	<div>
+	  		<img src="/images/sign-up-widget/icon-subscription-delivery.png" alt="Back in Stock icon">
+	  		<span>Exclusive offers and promotions</span>
+	  	</div>
+	  	<div>
+	  		<img src="/images/sign-up-widget/icon-subscription-timer.png" alt="Back in Stock icon">
+	  		<span>Time-sensitive market moves</span>
+	  	</div>
+	  	<div>
+	  		<img src="/images/sign-up-widget/icon-subscription-star.png" alt="Back in Stock icon">
+	  		<span>New arrivals</span>
+	  	</div>
+	  </div>
+	  <div id="subscription-widget-form">
+	    <form>
+	      <fieldset>
+	        <input
+	          placeholder="Enter Your Email"
+	          name="email"
+	          type="text"
+	          id="input_email"
+	        />
+	        <input
+	          class="g-recaptcha"
+	          data-sitekey="6Ldn0iMUAAAAAOEe5qlxlcXwSoTwRXs1aeu4VJcT"
+	          data-callback="onSubmit"
+	          data-badge="bottom"
+	          data-size="invisible"
+	          value="SUBSCRIBE NOW"
+	          type="submit"
+	        />
+	      </fieldset>
+	      <p class="note">You can withdraw your consent at any time</p>
+	      <script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+	      <script>
+	        function onSubmit(token) {
+	          if (
+	            $("#gRecaptchaResponse") != null &&
+	            $("#gRecaptchaResponse").attr("id") != null &&
+	            $("#gRecaptchaResponse").attr("id") != ""
+	          ) {
+	            $("#gRecaptchaResponse").val(token);
+	          }
+	          $("#subscription-widget-form form").submit();
+	        }
+	      </script>
+	      <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse" />
+	    </form>
+	  </div>
+	  <div id="thank_you_msg">
+	    <h2>
+	      Thank <br class="hide_desktop">You<br class="hide_mobile">
+	      For<br class="hide_desktop">
+	      Subscribing
+	    </h2>
+	    <div id="thank_you_close_btn">CLOSE WINDOW</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+	var userip = "undefined";
+
+	function ajaxCall(url, callback) {
+	    if (typeof callback == "undefined") {
+	      callback = function(data) {};
+	    }
+	
+	    if (window.XDomainRequest) {
+	      //IE9-10 implements crossdomain AJAX this way only
+	      var xhr = new window.XDomainRequest();
+	      xhr.open("GET", url, true);
+	      xhr.onload = function() {
+	        callback(xhr.responseText);
+	      };
+	      xhr.send();
+	    } else {
+	      $.ajax({
+	        url: url,
+	        success: callback,
+	        cache: true
+	      });
+	    }
+	  }
+	
+	
+	$(function() {
+		var cookieName = "hideOnlineSub201702";
+	    var channelID = 6;
+	    setTimeout(function() {
+	      if (are_cookies_enabled()) {
+	        //if cookies are enabled
+
+	          if (readCookie(cookieName) == null || readCookie(cookieName) == "") {
+	            //if user never clicks on close btn of the subscription widget
+	        	$("#subscription-panel").addClass("expanded");
+	        	ga('send', 'event', 'Popup', 'Subscribe', 'Open-auto');
+	        	//if subscription widget form is not in focus, then close the form after 5 seconds
+	      	    setTimeout(
+         		    function() {
+         		    	if(!$("#subscription-widget-form input").is(":focus") && $("#subscription-panel").hasClass("expanded")) {
+         		    		$("#subscription-panel").removeClass("expanded");
+         		    		ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+         		    		createCookie(cookieName, 1, 15);
+         		    	}
+         		}, 4000);
+	          }
+	      }
+	    }, 5000);
+	    $("#subscription-panel-button").click(function(e){
+	    	e.preventDefault();
+	    	$("#subscription-panel").toggleClass("expanded");
+	    	if($("#subscription-panel").hasClass("expanded")) {
+	    		ga('send', 'event', 'Popup', 'Subscribe', 'Open-user');
+	    	}else {
+	    		if (are_cookies_enabled()) {
+			        //if cookies are enabled
+			          if (readCookie(cookieName) == null || readCookie(cookieName) == "") {
+			        	  createCookie(cookieName, 1, 15);
+			          }
+		    	}
+	    		ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    	}
+	    });
+	    $("#subscription-panel-container .img_stick_header_close_btn").click(function(e){
+	    	$("#subscription-panel").removeClass("expanded");
+	    	if (are_cookies_enabled()) {
+		        //if cookies are enabled
+		          if (readCookie(cookieName) == null || readCookie(cookieName) == "") {
+		        	  createCookie(cookieName, 1, 15);
+		          }
+	    	}
+	    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    });
+	    $("#subscription-panel #thank_you_close_btn").click(function() {
+	    	$("#subscription-panel").removeClass("expanded");
+	    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    });
+	    $("#subscription-widget-form form").submit(function(e) {
+	      e.preventDefault();
+	      var EMAIL_REGEXP = /^[_a-z0-9\+]+(\.[_a-z0-9\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/i;
+	      var email = $.trim(
+	        $("#subscription-widget-form form input[name=email]").val()
+	      );
+	      if (EMAIL_REGEXP.test(email)) {
+    	  ajaxCall(
+   	          "//connect.kitco.com/subscription/ws/subscribe/?sourceId=8&channels=" +
+   	            channelID +
+   	            "&email=" +
+   	            email +
+   	            "&ipAddress=" +
+   	            userip,
+   	          function() {}
+   	        );
+    	  createCookie(cookieName, 1, 100000);
+	        ga('send', 'event', 'Popup', 'Subscribe', 'Subscribe-click');
+	        $("#subscription-widget-form").hide();
+	        $("#subscription-panel #thank_you_msg").show();
+	        setTimeout(
+     		    function() {
+     		    	$("#subscription-panel").removeClass("expanded");
+     		    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+     		}, 4000);
+	      } else {
+	        grecaptcha.reset();
+	        alert(
+	          "Sorry, but the email address is not valid. Please check for typing errors and try again."
+	        );
+	      }
+	    });
+	});
+</script>
+ 
 	<!-- 
 <div id="chat-panel" class="hidden-xs hidden-sm">
 	<a href="#" id="chat-img"><img src="/images/start-KitcoLiveChat.png" alt="Live Chat button" border="0"></a>
