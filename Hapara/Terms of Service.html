@@ -1698,13 +1698,19 @@ function displayTranslatedVersionTitle() {
 function displayTranslatedHeaderTitles(locale) {
   if (!locale) locale = getBrowserLocale().toLowerCase();
 
+  var locale_generic = locale.split('-')[0];
+
   var contracts = Object.keys(contractMap);
   for (i=0; i < contracts.length; i++) {
     var contract = contractMap[contracts[i]]
     var versionsContainer = document.getElementById('contract-versions-' + contract);
     var selectedVersion = Array.prototype.slice.call(versionsContainer.children).filter(function(v) { return v.style.display != 'none'; })[0];
     var versionLocale = selectedVersion.getElementsByClassName('version-locale-' + locale);
-    if (versionLocale.length === 0) continue
+    if (versionLocale.length === 0) {
+      if (locale === locale_generic) continue;
+      versionLocale = selectedVersion.getElementsByClassName('version-locale-' + locale_generic);
+      if (versionLocale.length === 0) continue;
+    }
     var translatedTitle = versionLocale[0].getAttribute('data-title-translation');
 
     var titleElement = document.getElementById('contract-nav-' + contract);
@@ -1914,7 +1920,8 @@ var contractMap = {
     "template-xjr9wmcry": "502382"
 };
 
-attachReadyHandlers();</script>
+attachReadyHandlers();
+</script>
 
 </head>
 <body>
@@ -1975,7 +1982,7 @@ attachReadyHandlers();</script>
                 <div id="version-languages-66622e5fc129f559af0d0b85" class="version-translation-container">
                   <div id="version-66622e5fc129f559af0d0b85-locale-en-us" class="version-translation version-locale-en-us" data-locale="en-us" data-locale-gen="en" data-title-translation="Hapara TOS">
                     <div class="row">
-                      <h5 class="effective-date" role="presentation">Effective June 6th 2024</h5>
+                      <h5 class="effective-date" role="presentation">Effective June 3rd 2024</h5>
                       <a id="download-version-66622e5fc129f559af0d0b85-locale-en-us" href="https://cordance.pactsafe.io/versions/66622e5fc129f559af0d0b85.pdf" target="_blank" rel="noopener" class="version-download-link inline-link">Download</a>
                     </div>
 
