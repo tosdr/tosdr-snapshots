@@ -1,0 +1,623 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+<link href="/-/media/Feature/Experience-Accelerator/Bootstrap/Bootstrap/Styles/optimized-min.css?t=20211109T071153Z" rel="stylesheet" /><link href="/-/media/Base-Themes/Core-Libraries/styles/optimized-min.css?t=20201014T125841Z" rel="stylesheet" /><link href="/-/media/Base-Themes/Main-Theme/styles/optimized-min.css?t=20201014T125842Z" rel="stylesheet" /><link href="/-/media/Themes/Wireframe/styles/optimized-min.css?t=20201014T125848Z" rel="stylesheet" />
+
+    
+<meta name="VIcurrentDateTime" content="638569663374575833" />
+<meta name="VirtualFolder" content="/" />
+<script type="text/javascript" src="/layouts/system/VisitorIdentification.js"></script>
+
+    
+
+
+<link href="../assets/_usge-theme/css/usge-theme.css" rel="stylesheet" />
+<link href="../assets/_usge-theme/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../assets/lib/map-module/css/select2.min.css" rel="stylesheet" />
+
+<script src="/Scripts/jquery-3.3.1.min.js"></script>
+<script src="/assets/assets/site/js/hammer.js"></script>
+
+
+
+
+    <title>Energy Rewards</title>
+
+
+<link rel="canonical" href="https://prod-lp-usc-sitecore-02-zr-cd-myeverydayenergy.usgande.com/" />
+
+
+
+
+
+
+<meta property="og:title"  content="Home" /><meta property="og:url"  content="https://prod-lp-usc-sitecore-02-zr-cd-myeverydayenergy.usgande.com/" />
+
+
+
+
+
+<meta property="twitter:title"  content="Home" /><meta property="twitter:card"  content="summary_large_image" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+</head>
+<body class="usgemaster default-device">
+    
+    
+<!-- #wrapper -->
+<div id="wrapper">
+    <!-- #header -->
+    <header>
+        <div id="header" class="container">
+            <div class="row">
+                
+
+
+
+<div class="component container col-xs-12">
+    <div class="component-content" >
+<div class="component image">
+    <div class="component-content">
+        <a title="Site Logo" href="/">
+            <img src="/-/media/Project/Retail-Expansion/GenericSites/Logo/EveryDayEnergy.gif" alt="Header Logo" class="">
+        </a>
+        <span class="image-caption field-imagecaption"></span>
+    </div>
+</div>    </div>
+</div>
+            </div>
+        </div>
+    </header>
+    <!-- /#header -->
+    <!-- #content -->
+    <main>
+        <div id="content" class="container">
+            <div class="row">
+                
+
+
+<section class="zipcode-search" style="background-image: url('/-/media/Project/Retail-Expansion/GenericSites/Hero-Banner/EveryDayEnergy.jpg)')">
+
+    <img src="/-/media/Project/Retail-Expansion/GenericSites/Mobile-Hero-Banner/EveryDayEnergy.jpg?h=914&amp;iar=0&amp;w=1600&amp;hash=4A0C2506A71B753CA1BEAEF5BE7854A3" class="img-for-mobile" alt="$name" width="1600" height="914" />
+
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <h1 class="mobile-no-break" id="heroHeading"><br /></h1>
+
+                <h3 id="heroSubHeader">A proud licensed<br />
+energy supplier.<br /></h3>
+
+                <a class="btn-link-back hidden utility-selection-area-item" id="back-btn"></a>
+                <a class="btn-link-back hidden availablity-message-area-item" id="availability-area-back-btn"></a>
+
+                <div class="usgande-ut-content utility-selection-area-item">
+                    <h3 class="hidden" id="confirm-utility-txt"></h3>
+                </div>
+
+                <div class="usgande-ut-content availablity-message-area-item">
+                    <h3 class="hidden" id="only-electricity-txt"></h3>
+                    <h3 class="hidden" id="only-gas-txt"></h3>
+                    <h3 class="hidden" id="both-elecgas-txt"></h3>
+                    <h3 class="hidden" id="no-utility-txt"></h3>
+                    <h3 class="hidden" id="no-plans-message-residential"></h3>
+                    <h3 class="hidden" id="no-plans-message-commercial"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $.ajaxSetup({ global: false });
+
+        if ('' == 1) {
+            setZipcode();
+
+            function setZipcode() {
+
+                $.getJSON('https://api.ipify.org?format=json',function (data) {
+                    $.getJSON('https://ipapi.co/' + data.ip + '/json', function (geo) {
+                        if (geo !== undefined && geo.postal !== undefined) {
+                            $("#search-zipcode").val(geo.postal);
+                        }
+                    });
+					$.ajaxSetup({ global: true });
+                });
+            }
+        }
+		else
+		{
+		    $.ajaxSetup({ global: true });
+		}
+
+
+        var elecSelectedVal = "";
+        var gasSelectedVal = "";
+
+        // Disable scroll when focused on a number input.
+        $('form').on('focus', 'input[type=number]', function (e) {
+            $(this).on('wheel', function (e) {
+                e.preventDefault();
+            });
+        });
+
+        // Restore scroll on number inputs.
+        $('form').on('blur', 'input[type=number]', function (e) {
+            $(this).off('wheel');
+        });
+
+        // Disable up and down keys.
+        $('form').on('keydown', 'input[type=number]', function (e) {
+            if (e.which == 38 || e.which == 40)
+                e.preventDefault();
+        });
+
+
+        /// for extended utility
+
+        $('#search-zipcode').keypress(function (e) {
+            if (e.which == 13) {
+                if (false == false)
+                {
+                    $("#view-plans-btn").trigger("click");
+                }
+                else
+                {
+                    $("#search-plans-btn").trigger("click");
+                }
+                return false;
+            }
+        });
+
+        $('#elec-util-select').select2();
+        $('#gas-util-select').select2();
+
+        $('#search-plans-btn').on('click', function (e) {
+
+            $('#elec-util-select').val("");
+            $('#gas-util-select').val("");
+            elecSelectedVal = "";
+            gasSelectedVal = "";
+
+            if ($('form').valid()) {
+
+                let zipCode = $('#search-zipcode'); zipCode = zipCode[0].value;
+                let customerClass = document.querySelector('input[name="CurrentStep.CustomerClassification"]:checked').value;
+
+                if (zipCode != null && zipCode != "") {
+
+                    $(".zip-code-form").addClass("hidden");
+                    $(this).addClass("hidden");
+                    $(".loading").removeClass("hidden");
+
+                    let params = JSON.stringify({ zipCode: zipCode, brandId: '', customerClass: customerClass, queryString: location.search});
+
+                    $.ajax({
+                        url: '/api/sitecore/PathToPlans/GetUtilitiesForExtendedCommodityType',
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: params,
+                        success: function (data) {
+                            if (data.Success && !isEmpty(data.Result)) {
+
+                                $("#view-plans-btn").hide();
+                                $("#pre-confirmation-btn").show();
+
+                                $(".utility-selection-area-item").show();
+                                $(".availablity-message-area-item").hide();
+
+                                if (!isEmpty(data.Result.ExternalUrl) && data.Result.ExternalUrl != "") {
+                                    window.location.href = data.Result.ExternalUrl;
+                                } else if (!isEmpty(data.Result.Utilities) && !isEmpty(data.Result.Utilities.Result) && !isEmpty(data.Result.ZipCodesite)) {
+                                    multiCommodityTypeGrouping(data.Result.Utilities.Result, data.Result.ZipCodesite);
+                                } else {
+                                    $(".availablity-message-area-item").show();
+
+                                    //$("#no-utility-txt").removeClass("hidden");
+
+                                    if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                                        $("#no-plans-message-residential").removeClass("hidden");
+                                    }
+                                    else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                                        $("#no-plans-message-commercial").removeClass("hidden");
+                                    }
+
+
+                                    $(".loading").addClass("hidden");
+                                    $("#heroHeading").addClass("hidden");
+                                    $("#heroSubHeader").addClass("hidden");
+                                    $("#back-btn").removeClass("hidden");
+                                    $("#contactUs-btn").removeClass("hidden");
+                                }
+                            }
+                            else if (!data.Success && !isEmpty(data.Result) && !isEmpty(data.Result.ExternalUrl) ){
+                                window.location.href = data.Result.ExternalUrl;
+                            }
+                            else {
+                                $(".availablity-message-area-item").show();
+
+                                //$("#no-utility-txt").removeClass("hidden");
+
+                                if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                                    $("#no-plans-message-residential").removeClass("hidden");
+                                }
+                                else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                                    $("#no-plans-message-commercial").removeClass("hidden");
+                                }
+
+                                $(".loading").addClass("hidden");
+                                $("#heroHeading").addClass("hidden");
+                                $("#heroSubHeader").addClass("hidden");
+                                $("#back-btn").removeClass("hidden");
+                                $("#contactUs-btn").removeClass("hidden");
+                            }
+                            $(".loading").addClass("hidden");
+                        }
+                    });
+
+                    delete_cookie("shoppingCart");
+                }
+            }
+        });
+
+        function delete_cookie(name) {
+            var cookieVal = "";
+            var domain = window.location.host.toString();
+            domain = domain.replace("enroll.", "");
+            document.cookie = [name, '=', cookieVal, '; domain=.', domain, '; path=/;'].join('');
+        }
+
+
+
+        function multiCommodityTypeGrouping(utility, siteName) {
+
+            $('#zipCodeSiteId').val(siteName);
+            //$('#isBothCommodityTypeAvailable').val(utility[0].IsBothCommodityTypeAvailable);
+            let elecType = null, gasType = null;
+
+            elecType = utility.filter(function (x) { return x.commodityType == "Elec" });
+            gasType = utility.filter(function (x) { return x.commodityType == "Gas" });
+
+            if (elecType.length > 1 || gasType.length > 1) {
+
+                $("#confirm-utility-txt").removeClass("hidden");
+                $("#elec-util-select").select2().next().hide();
+                $("#gas-util-select").select2().next().hide();
+
+                if (elecType.length > 0) {
+
+                    $('#elec-util-select').empty();
+                    $('#elec-util-select').append(`<option value="">Select Your Electricity Utility</option>`);
+                    $("#elec-util-select").select2().next().show();
+                    $(elecType).each(function () {
+                        $('#elec-util-select').append(`<option value="${this.utilityId}" commodityType="${this.commodityType}"> ${this.utilityName}
+                            </option>`);
+                    });
+                    $("#elec-util-select").removeClass("hidden");
+
+                    if (elecType.length === 1) {
+
+                        $("#elec-util-select").val(elecType[0].utilityId);
+
+                        setUtility(elecType[0].utilityId);
+                    }
+                }
+                else {
+                    $('#elec-util-select').empty();
+                    $('#elec-util-select').append(`<option value="">Select Your Gas Utility</option>`);
+                    $("#elec-util-select").select2().next().hide();
+                }
+
+                if (gasType.length > 0) {
+
+                    $('#gas-util-select').empty();
+                    $('#gas-util-select').append(`<option value="">Select Your Gas Utility</option>`);
+                    $("#gas-util-select").select2().next().show();
+                    $(gasType).each(function () {
+                        $('#gas-util-select').append(`<option value="${this.utilityId}" commodityType="${this.commodityType}"> ${this.utilityName}
+                            </option>`);
+                    });
+                    $("#gas-util-select").removeClass("hidden");
+
+                    if (gasType.length === 1) {
+
+                        $("#gas-util-select").val(gasType[0].utilityId);
+
+                        setGasUtility(gasType[0].utilityId);
+                    }
+                } else {
+                    $('#gas-util-select').empty();
+                    $('#gas-util-select').append(`<option value="">Select Your Gas Utility</option>`);
+                    $("#gas-util-select").select2().next().hide();
+                }
+
+                $(".select-dropdown").removeClass("hidden");
+                commonShowHide();
+
+            } else if (elecType.length === 1 || gasType.length === 1) {
+
+                $(".utility-selection-area-item").hide();
+                $(".availablity-message-area-item").show();
+                $("#availability-area-back-btn").addClass("hidden");
+                $("#back-btn").show();
+
+                if (elecType.length === 1 && gasType.length !== 1) {
+                    $("#only-electricity-txt").removeClass("hidden");
+                    setUtility(elecType[0].utilityId);
+                    commonShowHide();
+                } else if (gasType.length === 1 && elecType.length !== 1) {
+                    $("#only-gas-txt").removeClass("hidden");
+                    setGasUtility(gasType[0].utilityId);
+                    commonShowHide();
+                } else {
+                    $("#both-elecgas-txt").removeClass("hidden");
+                    setUtility(elecType[0].utilityId);
+                    setGasUtility(gasType[0].utilityId);
+
+                    commonShowHide();
+                }
+            }
+        }
+
+        function commonShowHide() {
+            $(".loading").addClass("hidden");
+            $("#heroHeading").addClass("hidden");
+            $("#heroSubHeader").addClass("hidden");
+            $("#back-btn").removeClass("hidden");
+            $(".contact.primary-btn-default").removeClass("hidden");
+
+            disableEnableContinueBtn();
+        }
+
+        $('#back-btn').on('click', function (e) {
+
+            //#region Hide Elements
+
+            $("#back-btn").addClass("hidden");
+
+            if (!$('#elec-util-select').hasClass('hidden'))
+                $("#elec-util-select").addClass("hidden");
+
+            if (!$('#gas-util-select').hasClass('hidden'))
+                $("#gas-util-select").addClass("hidden");
+
+            $(".select-dropdown").addClass("hidden");
+            $(".contact.primary-btn-default").addClass("hidden");
+            $("#confirm-utility-txt").addClass("hidden");
+            $("#only-electricity-txt").addClass("hidden");
+            $("#only-gas-txt").addClass("hidden");
+            $("#both-elecgas-txt").addClass("hidden");
+            //$("#no-utility-txt").addClass("hidden");
+
+            if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                $("#no-plans-message-residential").addClass("hidden");
+            }
+            else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                $("#no-plans-message-commercial").addClass("hidden");
+            }
+
+            $("#contactUs-btn").addClass("hidden");
+
+            //#endregion
+
+            //#region Show Elements
+
+            $(".zip-code-form").removeClass("hidden");
+            $("#search-plans-btn").removeClass("hidden");
+
+            $("#heroHeading").removeClass("hidden");
+            $("#heroSubHeader").removeClass("hidden");
+
+            $('#elec-util-select').val("");
+            $('#gas-util-select').val("");
+
+            elecSelectedVal = "";
+            gasSelectedVal = "";
+            //#endregion
+        });
+
+        $('#availability-area-back-btn').on('click', function (e) {
+            $("#availability-area-back-btn").addClass("hidden");
+            $(".utility-selection-area-item").show();
+            $(".availablity-message-area-item").hide();
+        });
+
+
+        $('#elec-util-select').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            setUtility(data.id);
+        });
+
+        $('#gas-util-select').on('select2:select', function (e) {
+
+            var data = e.params.data;
+            setGasUtility(data.id);
+        });
+
+        function setUtility(utilityId) {
+            elecSelectedVal = utilityId;
+            $('#utilityId').val(elecSelectedVal);
+            disableEnableContinueBtn();
+        }
+
+        function setGasUtility(utilityId) {
+            gasSelectedVal = utilityId;
+            $('#gasUtilityId').val(gasSelectedVal);
+            disableEnableContinueBtn();
+        }
+
+        function disableEnableContinueBtn() {
+            if (elecSelectedVal !== "" || gasSelectedVal !== "") {
+                $(".contact.primary-btn-default").removeClass("disabled");
+            } else if (elecSelectedVal === "" && gasSelectedVal === "") {
+                $(".contact.primary-btn-default").removeClass("disabled");
+                $(".contact.primary-btn-default").addClass("disabled");
+            }
+        }
+
+
+        $("#pre-confirmation-btn").click(function () {
+
+            if ($("#elec-util-select").val() !== "" && $("#gas-util-select").val() !== "") {
+                $("#availability-area-back-btn").removeClass("hidden");
+                $(".utility-selection-area-item").hide();
+                $(".availablity-message-area-item").show();
+                $("#both-elecgas-txt").removeClass("hidden");
+                $("#only-electricity-txt").addClass("hidden");
+                $("#only-gas-txt").addClass("hidden");
+                //$("#no-utility-txt").addClass("hidden");
+                if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                    $("#no-plans-message-residential").addClass("hidden");
+                }
+                else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                    $("#no-plans-message-commercial").addClass("hidden");
+                }
+
+            }
+            else if ($("#elec-util-select").val() !== "" && $("#gas-util-select").val() == "") {
+                $("#availability-area-back-btn").removeClass("hidden");
+                $(".utility-selection-area-item").hide();
+                $(".availablity-message-area-item").show();
+                $("#only-electricity-txt").removeClass("hidden");
+                $("#both-elecgas-txt").addClass("hidden");
+                $("#only-gas-txt").addClass("hidden");
+                //$("#no-utility-txt").addClass("hidden");
+                if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                    $("#no-plans-message-residential").addClass("hidden");
+                }
+                else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                    $("#no-plans-message-commercial").addClass("hidden");
+                }
+            }
+            else if ($("#elec-util-select").val() == "" && $("#gas-util-select").val() !== "") {
+                $("#availability-area-back-btn").removeClass("hidden");
+                $(".utility-selection-area-item").hide();
+                $(".availablity-message-area-item").show();
+                $("#only-gas-txt").removeClass("hidden");
+                $("#both-elecgas-txt").addClass("hidden");
+                $("#only-electricity-txt").addClass("hidden");
+                //$("#no-utility-txt").addClass("hidden");
+                if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                    $("#no-plans-message-residential").addClass("hidden");
+                }
+                else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                    $("#no-plans-message-commercial").addClass("hidden");
+                }
+            }
+            else {
+                $("#availability-area-back-btn").removeClass("hidden");
+                $(".availablity-message-area-item").show();
+                //$("#no-utility-txt").removeClass("hidden");
+                if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "home") {
+                    $("#no-plans-message-residential").removeClass("hidden");
+                }
+                else if ($('input[name="CurrentStep.CustomerClassification"]:checked').attr("id") == "business") {
+                    $("#no-plans-message-commercial").removeClass("hidden");
+                }
+                $("#both-elecgas-txt").addClass("hidden");
+                $("#only-electricity-txt").addClass("hidden");
+                $("#only-gas-txt").addClass("hidden");
+
+            }
+        });
+
+    });
+</script>
+
+            </div>
+        </div>
+    </main>
+    <!-- /#content -->
+    <!-- #footer -->
+    <footer>
+        <div id="footer" class="container">
+            <div class="row">
+                
+
+
+
+<div class="component container hidden">
+    <div class="component-content" >
+
+
+<div class="row component column-splitter">
+        <div class="">
+            
+        </div>
+        <div class="">
+            
+        </div>
+</div>    </div>
+</div>
+
+
+<div class="component container">
+    <div class="component-content" >
+
+
+<div class="row component column-splitter">
+        <div class="col-xs-12 col-sm-10 col-md-10">
+            
+
+    <div class="component rich-text col-xs-12">
+        <div class="component-content">
+<div>
+<span style="font-size: 14px; color: white;font-weight: bold;">Questions? Call: 855-753-1377</span><br />
+<span style="font-size: 12px; color: white;">Everyday Energy, LLC d/b/a Energy Rewards in CA (CTA0002), IL (13-0137 electric and 12-0396 natural gas), MA (CS-161), NH (DM 15-478), and PA (license nos. A-2012-2314724, A-2012-2318216).</span> <a></a></div>
+        </div>
+    </div>
+
+
+    <div class="component rich-text col-xs-12">
+        <div class="component-content">
+<span style="font-size: 12px; color: white;">Copyright 2024</span><span style="padding: 0px 5px; color: white;">|</span> <a href="/-/media/Project/Retail-Expansion/GenericSites/Privacy-Policy-Revision_EnergyRewards_APPROVED.pdf?sc_lang=en&amp;hash=090648A04BD964FCC5B0D3C34758DB93" style="font-size: 12px; color: white;font-weight: bold;" target="_blank">Privacy Policy</a>        </div>
+    </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-2">
+            
+        </div>
+</div>    </div>
+</div>
+
+
+            </div>
+        </div>
+    </footer>
+    <!-- /#footer -->
+</div>
+<!-- /#wrapper -->
+
+    
+
+
+<script src="/Scripts/jquery.validate.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="/assets/assets/lib/bootstrap/js/popper.min.js"></script>
+<script src="/assets/assets/lib/bootstrap/js/bootstrap.min.js"></script>  
+<script src="/assets/assets/lib/map-module/jquery.vmap.js"></script>
+<script src="/assets/assets/lib/map-module/jquery.vmap.usa.js"></script>
+<script src="/assets/assets/lib/map-module/select2.min.js"></script>
+<script src="/assets/assets/site/js/main.js"></script>
+<script src="/Scripts/Global.js"></script>
+
+
+
+    <script src="/-/media/Base-Themes/Core-Libraries/scripts/optimized-min.js?t=20201014T125840Z"></script><script src="/-/media/Base-Themes/XA-API/Scripts/optimized-min.js?t=20201014T125841Z"></script><script src="/-/media/Base-Themes/Main-Theme/scripts/optimized-min.js?t=20201014T125842Z"></script><script src="/-/media/Base-Themes/Google-Maps-JS-Connector/Scripts/optimized-min.js?t=20201014T125842Z"></script><script src="/-/media/Base-Themes/Maps/Scripts/optimized-min.js?t=20201014T125843Z"></script><script src="/-/media/Base-Themes/Components-Theme/Scripts/optimized-min.js?t=20201014T125844Z"></script><script src="/-/media/Base-Themes/Resolve-Conflicts/Scripts/optimized-min.js?t=20201014T125844Z"></script><script src="/-/media/Base-Themes/SearchTheme/Scripts/optimized-min.js?t=20201014T125846Z"></script><script src="/-/media/Themes/Wireframe/scripts/optimized-min.js?t=20201014T125846Z"></script>    <!-- /#wrapper -->
+</body>
+</html>
