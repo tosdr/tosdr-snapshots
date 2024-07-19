@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WTF is my IP⁉️</title>
+<style>
+  body {
+    margin: 0;
+  }
+
+  header {
+    padding-bottom: 12px;
+  }
+
+  .topemoji {
+    position: absolute;
+    top: 10px;
+    right: 4px;
+    font-size: 150%;
+  }
+
+  .topemoji a {
+    text-decoration: none;
+  }
+
+  h1 {
+    text-align: center;
+    font-style: italic;
+    padding: 8px;
+    border-bottom: 2px solid black;
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    background: #69f;
+  }
+
+  h1 a, .ip a {
+    color: black;
+  }
+
+  article {
+    margin: 0 auto;
+    width: 93%;
+  }
+
+  pre code {
+    display: block;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 4px 6px;
+    border: 1px solid #eee;
+    border-left-width: 20px;
+    line-height: 1.1;
+    overflow: auto;
+  }
+
+  @media only screen and (min-width: 768px) {
+    article {
+      width: 60%;
+    }
+  }
+
+  .ip {
+    text-align: center;
+    font-size: 150%;
+  }
+
+  .ipv4, .ipv6 {
+    font-weight: bold;
+  }
+
+  .ipv4 {
+    font-size: 280%;
+    color: red;
+  }
+
+  .ipv6 {
+    font-size: 150%;
+    color: green;
+  }
+
+  #extra-ip, #only-ip, #ip-space, .details {
+    margin-top: 2em;
+  }
+
+  .hidden, #extra-ip, #only-ip {
+    display: none;
+  }
+
+  .details a[href^="https://bgp.tools"] {
+    font-size: 90%;
+  }
+
+  .details .country {
+    font-size: 145%;
+    vertical-align: middle;
+  }
+
+  .details .city {
+    vertical-align: middle;
+  }
+
+  #ipv4-details .country, #ipv6-details .country {
+    font-size: 200%;
+    line-height: 1.2em;
+  }
+
+  .host {
+    line-height: 1.2em;
+  }
+
+  pre#http-request {
+    width: 100%;
+    overflow-y: scroll;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background: #f0f0f0;
+  }
+
+  pre#http-request a {
+    color: black;
+    text-decoration: none;
+  }
+
+  pre#http-request a:hover {
+    text-decoration: underline;
+  }
+
+  table.details-table {
+    border: 0;
+    width: 100%;
+  }
+
+  .details-table td {
+    vertical-align: top;
+    width: 50%;
+  }
+
+  details {
+    margin-bottom: .5em;
+  }
+
+  details a {
+    padding-left: 1em;
+  }
+
+  summary:focus {
+    outline: none;
+  }
+
+  details ul {
+    list-style: none;
+  }
+
+  details ul li {
+    margin-left: 1em;
+    text-indent: -1em;
+  }
+
+  footer {
+    margin-top: 1.5em;
+    text-align: center;
+    font-size: 90%;
+  }
+
+  footer, footer a {
+    color: #ccc;
+  }
+
+  footer ul li {
+    display: inline;
+    list-style-type: none;
+  }
+
+  footer li:not(:first-child)::before {
+    content: " • ";
+  }
+</style>
+<body>
+  <header>
+    <div class="topemoji"><a href="/about">⁉️</a></div>
+    <h1>WTF is my <a href="/">IP address</a>?</h1>
+  </header>
+  <article>
+    <div class="ip">
+        You're using <a href="https://en.wikipedia.org/wiki/IPv4">IPv4</a>:
+        <div class="ipv4" id="ip">51.195.149.220</div>
+    </div>
+
+    <div class="content">
+      <h2 id="about">About</h2>
+<p><a href="/">This site</a> shows you information about your <a href="https://en.wikipedia.org/wiki/IP_address">IP
+address</a> and web browser.</p>
+<p>It's not going to try to sell you a VPN. Don't listen to the misinformation
+about VPNs, instead watch <a href="https://www.youtube.com/watch?v=WVDQEoe6ZWY">this
+excellent</a> Tom Scott video.</p>
+<h2 id="api">API</h2>
+<p>Is there an API?  Yes.</p>
+<p>At its simplest you can do:</p>
+<pre><code id="your-ip">
+$ curl ip.wtf
+[your IP]</code></pre>
+<script>
+  (async function() {
+    let res = await fetch("https://ip.wtf", { headers: { Accept: "text/plain" } });
+    let data = await res.text();
+    document.querySelector("#your-ip").textContent = "$ curl ip.wtf\n" + data;
+  })();
+</script>
+<p>To get the IP address you're connecting from; the API detects access from curl
+and automatically defaults to just the text version.</p>
+<p>In code add a header <code>Accept: text/plain</code> to get the plain text version. You
+can also use <code>application/json</code> to get a bit more information.</p>
+<p>JavaScript example:</p>
+<pre><code>let res = await fetch(&quot;https://ip.wtf&quot;, { headers: { Accept: &quot;application/json&quot; } });
+let data = await res.json();
+console.log(data);
+</code></pre>
+<p>Which gives you:</p>
+<pre><code id="json-output"></code></pre>
+<script>
+  (async function() {
+    let res = await fetch("https://ip.wtf", { headers: { Accept: "application/json" } });
+    let data = await res.json();
+    p = document.querySelector("#json-output").textContent = JSON.stringify(data, "", "  ");
+  })();
+</script>
+<p>If you use the hostname <code>ip.wtf</code> the client (browser or other HTTP client) will
+pick the IP protocol to use. You can also use the hostnames <code>v4.ip.wtf</code> or
+<code>v6.ip.wtf</code> to force a particular protocol, or otherwise ask the client to pick
+the relevant protocol.</p>
+<p>For example with curl you can do:</p>
+<pre><code>$ curl -4 ip.wtf
+$ curl -6 ip.wtf
+</code></pre>
+<p>Access works over http or https; API access from a non-browser is never
+redirected to HTTPS (browsers may choose to use HTTPS though). If you want to
+force HTTP you can use the hostnames <code>nossl.ip.wtf</code> or <code>neverssl.ip.wtf</code>. (You
+can also use those hostnames manually in a similar way to
+<a href="http://neverssl.com">neverssl.com</a>.)</p>
+<p>Reasonable use is fine (i.e. 1 req/hour per source IP and not in something that
+is widely deployed). If you need more contact us first, we reserve the right to
+block unreasonable access otherwise.</p>
+<h2 id="fun">Fun</h2>
+<p>For a little easter egg try: <code>curl ip.wtf/moo</code></p>
+<p>There's a small collection of fun things, which is slowly growing into a set of
+demos; see <a href="https://ip.wtf/fun">ip.wtf/fun</a>.</p>
+<h2 id="privacy">Privacy</h2>
+<p>This site collects data about your device and connection to the site in order
+to implement its primary purpose of showing you this information.</p>
+<p>The information displayed includes your IP address and hostname.</p>
+<p>Depending on your configuration some of the tests performed by this site may
+reveal a different IP address; this data is only aggregated client side and
+never stored on a server.</p>
+<p>In order to look up your hostname a reverse DNS lookup is performed, this uses
+a third party DNS provider (Google Public DNS, see
+<a href="https://developers.google.com/speed/public-dns/privacy">privacy</a>).</p>
+<p>Any information collected that identifies your IP address is not stored for
+longer than one day, unless necessary to prevent abuse of the site, or if you
+otherwise share the data with us (e.g. send us an email, etc.).</p>
+<p>This site does not use cookies, or store data on your device.</p>
+<h2 id="licenses">Licenses</h2>
+<p>This product includes GeoLite2 data created by MaxMind, available from
+<a href="https://www.maxmind.com">https://www.maxmind.com</a>.</p>
+<p>On Windows the flag emojis are provided by Twemoji, via <a
+href="https://github.com/talkjs/country-flag-emoji-polyfill">country-flag-emoji-polyfill<a>,
+via <a
+href="https://github.com/mozilla/twemoji-colr/blob/master/LICENSE.md">Mozilla's
+Twemoji-colr</a> used under CC-BY-4.0; Copyright 2019 Twitter, Inc and other
+contributors.</p>
+<p>The site itself is available under the 0BSD licence, see <a
+href="http://©.st/dgl">http://©.st/dgl</a>.</p>
+<h2 id="sponsor">Sponsor</h2>
+<p>This site is open source, <a href="https://github.com/dgl/ip.wtf">contributions
+welcome</a>. If you like this, you can say thank you:
+<a href="https://ko-fi.com/webgl">ko-fi.com/webgl</a>. See <a href="https://dgl.c&#x78;/"
+id="me">dgl.cx</a> for more on my projects.</p>
+<h2 id="contact">Contact</h2>
+<p>You can <span id="contact-link"> <noscript><a href="https://dgl.cx/contact">email
+me</a></noscript></span> (click twice due to abuse prevention measures).</p>
+<style>
+  #contact-link { text-decoration: underline; color: blue; }
+</style>
+<script>
+const sd = location.hostname.split(/\./).slice(-2).join(".");
+const t = "email me";
+
+let a = document.createElement("a");
+{
+  (async function() {
+    let res = await fetch("https://8.8.8.8/resolve?name=__" + ([...document.querySelectorAll("h2")].at(-1).id) + "." + sd + "&type=TXT");
+    let data = await res.json();
+    x = data.Answer[0].data;
+  })();
+  a.addEventListener("click", e => { name = document.querySelector("#me").href.match(/\.(..)\//)[1] });
+  a.textContent = t;
+  let pp; pp = () => {
+    if (window.p && window.x)
+      a.href = "/about?" + window.p.match(new RegExp(x.replace(/x(..)/g, (_,x)=>String.fromCharCode(parseInt(x, 16)))))[2] + "=" + Math.random() + "#contact";
+    else
+      setTimeout(pp, 100);
+  };
+  window.addEventListener("mousemove", pp);
+  window.addEventListener("keypress", pp);
+  window.addEventListener("touchstart", pp);
+}
+document.querySelector('#contact-link').appendChild(a);
+</script>
+
+    </div>
+  </article>
+  <script>
+    (function(ipel) {
+      let n = 6;
+      while (ipel.scrollWidth > ipel.clientWidth)
+        ipel.style.fontSize = (ipel.clientWidth / n++) + "px"
+    })(document.querySelector("#ip"));
+  </script>
+  <footer>
+    <ul>
+      <li><a href="/about">about</a>
+      <li><a href="https://github.com/dgl/ip.wtf">github</a>
+      <li><a href="https://ko-fi.com/webgl">sponsor ☕️</a>
+    </ul>
+  </footer>
+</body>
