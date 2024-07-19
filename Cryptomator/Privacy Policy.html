@@ -22,7 +22,7 @@
     <meta name="apple-itunes-app" content="app-id=1560822163">
     
       
-      <link rel="stylesheet" href="/css/main.min.2c4861cfbfd5a89ecf09f53ef424198bb4e5b5164b968aff2560225a050c825a.css" integrity="sha256-LEhhz7/VqJ7PCfU&#43;9CQZi7TltRZLlor/JWAiWgUMglo=" media="screen" />
+      <link rel="stylesheet" href="/css/main.min.261b35316559d3eee547ad62450fd6ac2771c64107975665440583b516b8c605.css" integrity="sha256-Jhs1MWVZ0&#43;7lR61iRQ/WrCdxxkEHl1ZlRAWDtRa4xgU=" media="screen" />
     
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/feed.xml" />
     
@@ -32,84 +32,99 @@
       
     
   </head>
-  <body class="bg-dark font-body text-gray-900">
-    <nav x-data="{ isNavOpen: false }" :class="isNavOpen ? 'relative' : 'relative'" class="w-full text-primary absolute lg:px-8 bg-white border-t-2 border-primary shadow">
+  <body x-data="{ isNavOpen: false }" :class="isNavOpen && 'overflow-hidden'" class="bg-dark font-body text-gray-900">
+    <nav class="w-full max-h-screen text-primary fixed lg:px-8 bg-white shadow z-50">
   <div class="flex justify-between items-stretch w-full">
-    <a class="flex items-center hover:no-underline py-2 mx-2 lg:ml-0" href="/">
-      <img src="/img/logo.svg" class="h-8" alt="Logo"/>
-      <span class="font-headline font-bold ml-2 pb-px">CRYPTOMATOR</span>
-    </a>
+    
+    <div class="flex items-stretch">
+      
+      <button @click="isNavOpen = !isNavOpen" type="button" class="self-center lg:hidden border border-primary rounded px-2 py-1 mx-2" aria-label="Toggle Navigation">
+        <i x-show="isNavOpen" class="fas fa-times fa-fw"></i>
+        <i x-show="!isNavOpen" class="fas fa-bars fa-fw"></i>
+      </button>
 
-    
-    <ul class="hidden lg:flex items-stretch list-none m-0">
-      <li class="flex items-center lg:mx-2 border-b-2 border-transparent hover:border-primary">
-        <a class="p-2 hover:no-underline" href="/downloads/">Downloads</a>
-      </li>
-      <li class="flex items-center lg:mx-2 border-b-2 border-transparent hover:border-primary">
-        <a class="p-2 hover:no-underline" href="/hub/">Cryptomator Hub</a>
-      </li>
-      <li x-data="{ isSupportUsDropdownOpen: false }" class="flex items-center border-b-2 border-transparent">
-        <button @click="isSupportUsDropdownOpen = !isSupportUsDropdownOpen" class="whitespace-nowrap p-2">
-          <span>Support Us</span>
-          <i class="fas fa-chevron-down fa-fw text-xs"></i>
-        </button>
-        <div class="relative">
-          <div x-show="isSupportUsDropdownOpen" @click.outside="isSupportUsDropdownOpen = false" x-cloak class="absolute right-0 mt-6 py-2 w-64 bg-white rounded shadow-md z-50">
-            <a href="/supporter-cert/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Supporter Certificate</a>
-            <a href="/donate/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Donate</a>
-            <a href="/sponsors/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Sponsors</a>
+      <a class="flex items-center hover:no-underline p-2 lg:mr-2" href="/">
+        <img src="/img/logo.svg" class="h-8" alt="Logo"/>
+        <span class="hidden md:block font-headline font-bold ml-2 pb-px">CRYPTOMATOR</span>
+      </a>
+
+      <ul class="hidden lg:flex items-stretch list-none m-0">
+        <li class="flex items-center mx-2 border-b-2 border-transparent hover:border-primary">
+          <a class="p-2 hover:no-underline" href="/downloads/">Downloads</a>
+        </li>
+        <li class="flex items-center mx-2 border-b-2 border-transparent hover:border-primary">
+          <a class="p-2 hover:no-underline" href="/hub/">Cryptomator Hub</a>
+        </li>
+        <li x-data="{ isSupportUsDropdownOpen: false }" class="flex items-center mx-2 border-b-2 border-transparent">
+          <button @click="isSupportUsDropdownOpen = !isSupportUsDropdownOpen" class="whitespace-nowrap p-2">
+            <span>Support Us</span>
+            <i class="fas fa-chevron-down fa-fw text-xs"></i>
+          </button>
+          <div class="absolute">
+            <div x-show="isSupportUsDropdownOpen" @click.outside="isSupportUsDropdownOpen = false" x-cloak class="absolute mt-6 py-2 w-64 bg-white rounded shadow-md z-50">
+              <a href="/supporter-cert/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Supporter Certificate</a>
+              <a href="/donate/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Donate</a>
+              <a href="/sponsors/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Sponsors</a>
+            </div>
           </div>
-        </div>
-      </li>
-      <li x-data="{ isLearnMoreDropdownOpen: false }" class="flex items-center border-b-2 border-transparent">
-        <button @click="isLearnMoreDropdownOpen = !isLearnMoreDropdownOpen" class="whitespace-nowrap p-2">
-          <span>Learn More</span>
-          <i class="fas fa-chevron-down fa-fw text-xs"></i>
-        </button>
-        <div class="relative">
-          <div x-show="isLearnMoreDropdownOpen" @click.outside="isLearnMoreDropdownOpen = false" x-cloak class="absolute right-0 mt-6 py-2 w-96 bg-white rounded shadow-md z-50">
-            <a href="/open-source/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">How Open Source Strengthens Security</a>
-            <a href="/encrypt-dropbox/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Encrypt Your Dropbox</a>
-            <a href="/boxcryptor-alternative/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Alternative to Boxcryptor</a>
-            <a href="/coop/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Our Cooperation Partners</a>
-            <a href="/enterprise/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Customizations for Your Enterprise</a>
-            <a href="/gdpr/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">GDPR Compliancy</a>
-            <a href="/nis-2-guideline/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">NIS-2-Guideline</a>
-            <a href="/protecting-data-against-ai/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Protecting cloud data against AI</a>
+        </li>
+        <li x-data="{ isLearnMoreDropdownOpen: false }" class="flex items-center mx-2 border-b-2 border-transparent">
+          <button @click="isLearnMoreDropdownOpen = !isLearnMoreDropdownOpen" class="whitespace-nowrap p-2">
+            <span>Learn More</span>
+            <i class="fas fa-chevron-down fa-fw text-xs"></i>
+          </button>
+          <div class="absolute">
+            <div x-show="isLearnMoreDropdownOpen" @click.outside="isLearnMoreDropdownOpen = false" x-cloak class="absolute mt-6 py-2 w-96 bg-white rounded shadow-md z-50">
+              <a href="/open-source/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">How Open Source Strengthens Security</a>
+              <a href="/encrypt-dropbox/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Encrypt Your Dropbox</a>
+              <a href="/boxcryptor-alternative/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Alternative to Boxcryptor</a>
+              <a href="/coop/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Our Cooperation Partners</a>
+              <a href="/enterprise/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Customizations for Your Enterprise</a>
+              <a href="/gdpr/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">GDPR Compliancy</a>
+              <a href="/nis-2-guideline/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">NIS-2-Guideline</a>
+              <a href="/protecting-data-against-ai/" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Protecting Cloud Data Against AI</a>
+            </div>
           </div>
-        </div>
-      </li>
-      
-      <li class="flex items-center mx-5 my-3 border-l border-primary"></li>
-      
-      <li x-data="{ isLangDropdownOpen: false }" class="flex items-center border-b-2 border-transparent">
-        <button @click="isLangDropdownOpen = !isLangDropdownOpen" class="whitespace-nowrap p-2">
-          <span>EN</span>
-          <i class="fas fa-chevron-down fa-fw text-xs"></i>
-        </button>
-        <div class="relative">
-          <div x-show="isLangDropdownOpen" @click.outside="isLangDropdownOpen = false" x-cloak class="absolute right-0 mt-6 py-2 w-48 bg-white rounded shadow-md z-50">
-            <a :href="'/de/privacy/' + (window.location.search ?? '')" lang="de" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Deutsch</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex items-stretch">
+      <ul class="hidden lg:flex items-stretch list-none m-0">
+        <li class="flex items-center mx-2">
+          <a class="flex items-center hover:no-underline" href="https://github.com/cryptomator" target="_blank" rel="noopener">
+            <i class="fab fa-github text-2xl p-2" aria-label="GitHub"></i>
+            <span id="github-stargazers"></span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="flex items-stretch list-none m-0">
+        <li class="flex items-center mx-2">
+          <a href="/#get-started" role="button" class="self-center btn btn-primary py-1">Get Started</a>
+        </li>
+      </ul>
+
+      <ul class="hidden lg:flex items-stretch list-none m-0">
+        <li class="flex items-center m-3 border-l border-primary"></li>
+          
+        <li x-data="{ isLangDropdownOpen: false }" class="flex items-center mx-2">
+          <button @click="isLangDropdownOpen = !isLangDropdownOpen" class="whitespace-nowrap p-2">
+            <span>EN</span>
+            <i class="fas fa-chevron-down fa-fw text-xs"></i>
+          </button>
+          <div class="relative">
+            <div x-show="isLangDropdownOpen" @click.outside="isLangDropdownOpen = false" x-cloak class="absolute right-0 mt-6 py-2 w-48 bg-white rounded shadow-md z-50">
+              <a :href="'/de/privacy/' + (window.location.search ?? '')" lang="de" class="block px-4 py-2 text-gray-800 hover:bg-secondary hover:text-white hover:no-underline">Deutsch</a>
+            </div>
           </div>
-        </div>
-      </li>
-      <li class="flex items-center border-b-2 border-transparent">
-        <a class="p-2 hover:no-underline" href="https://mastodon.online/@cryptomator" target="_blank" rel="noopener"><i class="fab fa-mastodon fa-fw" aria-label="Fediverse"></i></a>
-      </li>
-      <li class="flex items-center border-b-2 border-transparent">
-        <a class="p-2 hover:no-underline" href="https://github.com/cryptomator" target="_blank" rel="noopener"><i class="fab fa-github fa-fw" aria-label="GitHub"></i></a>
-      </li>
-    </ul>
-    
-    
-    <button @click="isNavOpen = !isNavOpen" type="button" class="self-center lg:hidden border border-primary rounded px-2 py-1 mx-2" aria-label="Toggle Navigation">
-      <i x-show="isNavOpen" class="fas fa-times fa-fw"></i>
-      <i x-show="!isNavOpen" class="fas fa-bars fa-fw"></i>
-    </button>
+        </li>
+      </ul>
+    </div>
   </div>
   
   
-  <div :class="isNavOpen ? 'block' : 'hidden'" x-cloak class="lg:hidden">
+  <div :class="isNavOpen ? 'block' : 'hidden'" x-cloak class="lg:hidden max-h-[calc(100vh-48px)] overflow-y-auto">
     <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/downloads/">Downloads</a>
     <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/hub/">Cryptomator Hub</a>
     
@@ -137,7 +152,7 @@
       <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/enterprise/">Customizations for Your Enterprise</a>
       <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/gdpr/">GDPR Compliancy</a>
       <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/nis-2-guideline/">NIS-2-Guideline</a>
-      <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/protecting-data-against-ai/">Protecting cloud data against AI</a>
+      <a class="block py-2 mx-2 hover:text-secondary hover:no-underline" href="/protecting-data-against-ai/">Protecting Cloud Data Against AI</a>
     </div>
 
     <hr class="border-primary my-2"/>
@@ -150,13 +165,9 @@
       <a :href="'/de/privacy/' + (window.location.search ?? '')" lang="de" class="block px-2 py-1 hover:text-secondary hover:no-underline">Deutsch</a>
       
     </div>
-    
+
     <hr class="border-primary my-2"/>
-    
-    <a class="block p-2 hover:text-secondary hover:no-underline" href="https://mastodon.online/@cryptomator" target="_blank" rel="noopener">
-      <i class="fab fa-mastodon fa-fw"></i>
-      <span>Cryptomator on Fediverse</span>
-    </a>
+
     <a class="block p-2 hover:text-secondary hover:no-underline" href="https://github.com/cryptomator" target="_blank" rel="noopener">
       <i class="fab fa-github fa-fw"></i>
       <span>Cryptomator on GitHub</span>
@@ -164,7 +175,11 @@
   </div>
 </nav>
 
-    <div class="bg-gray-100 min-vh-80">
+
+  
+  <script type="text/javascript" src="/js/nav.min.8ba18145c25edacc876e54509beee6dc3f5c5592032906a2ac1bd50d25faf9c2.js" integrity="sha256-i6GBRcJe2syHblRQm&#43;7m3D9cVZIDKQairBvVDSX6&#43;cI=" defer></script>
+
+<div class="bg-gray-100 min-vh-80 pt-12">
     
     
   <div class="container-prose py-12">
@@ -196,7 +211,7 @@ Germany</p>
 Tobias Hagemann<br/>
 Sebastian Stenzel</p>
 <p>Contact:
-<a href="/cdn-cgi/l/email-protection#d5a5a7bca3b4b6ac95b6a7aca5a1bab8b4a1baa7fbbaa7b2"><span class="__cf_email__" data-cfemail="85f5f7ecf3e4e6fcc5e6f7fcf5f1eae8e4f1eaf7abeaf7e2">[email&#160;protected]</span></a></p>
+<a href="/cdn-cgi/l/email-protection#7606041f0017150f3615040f0602191b1702190458190411"><span class="__cf_email__" data-cfemail="1d6d6f746b7c7e645d7e6f646d6972707c69726f33726f7a">[email&#160;protected]</span></a></p>
 <h2 id="general">2. General Information on Data Processing</h2>
 <h3 id="21-extent-of-processing-of-personal-data">2.1 Extent of Processing of Personal Data</h3>
 <p>As a matter of principle, we collect and process personal data of our users only to the extent necessary to provide a functional website and our contents and services. The collection and use of personal data of our users is regularly only carried out with the consent of the user. An exception is made in cases where prior consent cannot be obtained for factual reasons and the processing of the data is permitted by law.</p>
@@ -257,7 +272,7 @@ This data is not stored together with other personal data of the user.</p>
 <p>If the purpose of the contact was the conclusion of a contract and if this contract has been concluded, the purpose is achieved after the contract has been fully executed. In addition, statutory storage obligations, e.g. according to the German tax code, may make further storage necessary.</p>
 <h3 id="55-opposition-and-removal-possibility">5.5 Opposition and Removal Possibility</h3>
 <p>The user has the possibility to revoke his consent to the processing of personal data at any time. If the user contacts us by email, he can object to the storage of his personal data at any time. In such a case the conversation cannot be continued.</p>
-<p>You can send your objection informally at any time to <a href="/cdn-cgi/l/email-protection#1c6c6e756a7d7f655c7f6e656c6873717d68736e32736e7b"><span class="__cf_email__" data-cfemail="2656544f5047455f6645545f5652494b4752495408495441">[email&#160;protected]</span></a> or any other means of contact provided by us (e.g. by post).</p>
+<p>You can send your objection informally at any time to <a href="/cdn-cgi/l/email-protection#f282809b8493918bb291808b82869d9f93869d80dc9d8095"><span class="__cf_email__" data-cfemail="c4b4b6adb2a5a7bd84a7b6bdb4b0aba9a5b0abb6eaabb6a3">[email&#160;protected]</span></a> or any other means of contact provided by us (e.g. by post).</p>
 <p>All personal data stored in the course of contacting will be deleted in this case.</p>
 <h2 id="payments">6. Use in the Course of Online Orders (E-Commerce)</h2>
 <h3 id="61-description-and-scope-of-data-processing">6.1 Description and Scope of Data Processing</h3>
@@ -439,7 +454,7 @@ This data is not stored together with other personal data of the user.</p>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript" src="/js/jquery/jquery.min.fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="></script>
 
     
-    <script type="text/javascript" src="/js/alpinejs/cdn.min.3009dc96fd3bd608049e941b7d65bac1e5d729de7012b5367d9eb2b8362f74f1.js" integrity="sha256-MAnclv071ggEnpQbfWW6weXXKd5wErU2fZ6yuDYvdPE=" defer></script>
+    <script type="text/javascript" src="/js/alpinejs/cdn.min.358d9afbb1ab5befa2f48061a30776e5bcd7707f410a606ba985f98bc3b1c034.js" integrity="sha256-NY2a&#43;7GrW&#43;&#43;i9IBhowd25bzXcH9BCmBrqYX5i8OxwDQ=" defer></script>
 
     
     <script type="text/javascript" src="/js/lazysizes/lazysizes.min.3d9120fa621da6d613c1698b7014ec6bdf4620366e8f2b7b547059f4b6f6272b.js" integrity="sha256-PZEg&#43;mIdptYTwWmLcBTsa99GIDZujyt7VHBZ9Lb2Jys=" async></script>
