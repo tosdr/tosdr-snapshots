@@ -165,6 +165,24 @@
 				}
 			});
 
+			let SECONDS_TO_WAIT_AFTER_VIEWABILITY = 60;
+			let AD_FIRST_REFRESH = [];
+			googletag.pubads().addEventListener("impressionViewable", function(event) {
+				const slot = event.slot;
+				if (slot.getTargeting('refresh')) {
+					if (slot.getTargeting('refresh').indexOf('true') > -1) {
+						if (!AD_FIRST_REFRESH.includes(slot)) {
+							googletag.pubads().refresh([slot]);
+							AD_FIRST_REFRESH.push(slot)
+						} else {
+							setTimeout(function() {
+								googletag.pubads().refresh([slot]);
+							}, SECONDS_TO_WAIT_AFTER_VIEWABILITY * 1000);
+						}
+					}
+				}
+			});
+
 			// Disable initial load to precisely control when ads are requested.
 			//googletag.pubads().disableInitialLoad();
 
@@ -421,7 +439,7 @@
 <li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-983244" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-983244 nav-item"><a title="WATCH" href="/watch/" class="nav-link" role="menuitem">WATCH</a></li>
 <li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-879763" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-879763 nav-item"><a title="PLAY" href="https://nerdist.com/play/" class="nav-link" role="menuitem">PLAY</a></li>
 <li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-974498" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-974498 nav-item"><a title="LISTEN" href="https://nerdist.com/listen/" class="nav-link" role="menuitem">LISTEN</a></li>
-<li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-698408" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-698408 nav-item"><a title="SHOP" href="https://shop.legendary.com/pages/nerdist-gift-guide?utm_source=nerdist.com&#038;utm_medium=referral&#038;utm_campaign=nerdist-gift-guide&#038;utm_content=nerdist-gift-guide" class="nav-link" role="menuitem">SHOP</a></li>
+<li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-698408" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-698408 nav-item"><a title="SHOP" href="https://shop.legendary.com/search?type=product&#038;q=nerdist&#038;options%5Bprefix%5D=last" class="nav-link" role="menuitem">SHOP</a></li>
 <li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-937365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-937365 nav-item"><a title="PITCH" href="https://nerdist.com/how-to-pitch/" class="nav-link" role="menuitem">PITCH</a></li>
 
                         <li role="presentation" itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" class="menu-item nav-item" id="search-navbar-wrapper"><label for="search-form-toggle" id="search-trigger-navbar" class="nav-link px-0x" style="display: block;background-color: transparent;border: none;color: #000006;cursor: pointer;padding-top: 0;padding-bottom: 0;padding-left: 15px;padding-right: 15px;font-size: 16px;letter-spacing: -.32px;margin-bottom:0;"><span class="sr-only">Open search</span><svg width="16" height="16" class="img-icon-search" aria-hidden="true" style="position: relative;width: 16.98px;bottom: 2px;"><use xlink:href="#nerdist-icon-search-dark" /></svg></label></li>
@@ -534,7 +552,7 @@
     <div class="nav-takeover-container-wrapper  " style="padding-top: 120px;">
         <div class="nav-takeover-container container " style="padding-bottom: 20px;text-align: center;">
                             <div class="text-center ads-container ads-large-leaderboard">
-                    <div  data-takeover='1' data-targeting='{&quot;page-type&quot;:&quot;home&quot;,&quot;ad-location&quot;:&quot;nav-takeover&quot;,&quot;authenticated&quot;:false,&quot;ad-unit&quot;:&quot;nerdist&quot;,&quot;terms&quot;:[],&quot;tags&quot;:[],&quot;post_type&quot;:&quot;page&quot;,&quot;post_id&quot;:922,&quot;title&quot;:&quot;Privacy Policy&quot;}' 
+                    <div  data-takeover='1' data-targeting='{&quot;page-type&quot;:&quot;home&quot;,&quot;ad-location&quot;:&quot;nav-takeover&quot;,&quot;authenticated&quot;:false,&quot;refresh&quot;:&quot;false&quot;,&quot;ad-unit&quot;:&quot;nerdist&quot;,&quot;terms&quot;:[],&quot;tags&quot;:[],&quot;post_type&quot;:&quot;page&quot;,&quot;post_id&quot;:922,&quot;title&quot;:&quot;Privacy Policy&quot;}' 
 				class='dfw-unit dfw-lazy-load'
 					data-adunit='nerdist'
 					data-size-mapping='mapping1'></div>                    <div class='nav-takeover-continue' style='display:none'>
@@ -576,7 +594,7 @@
 
 
 
-<p>This Privacy Policy has been designed to be reasonably accessible to people with disabilities. If you experience any difficulties accessing the information in the Privacy Policy, please contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="55393032343915393032303b3134272c7b363a38">[email&#160;protected]</a></strong>. You can <a href="https://assets.hermes.com/is/content/hermesedito/Legal/PrivacyPolicy_US_EN.pdf">print the complete text of our Privacy Policy</a>.</p>
+<p>This Privacy Policy has been designed to be reasonably accessible to people with disabilities. If you experience any difficulties accessing the information in the Privacy Policy, please contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5a9a0a2a4a985a9a0a2a0aba1a4b7bceba6aaa8">[email&#160;protected]</a></strong>. You can <a href="https://assets.hermes.com/is/content/hermesedito/Legal/PrivacyPolicy_US_EN.pdf">print the complete text of our Privacy Policy</a>.</p>
 
 
 
@@ -729,7 +747,7 @@
 
 
 <ul>
-<li><strong>Do Not Sell or Share My Personal Information (Opt-out of Targeted Advertising). </strong>Under certain U.S. State Privacy Laws, you may be able to request that we not sell, or share for targeted behavioral advertising, your Personal Information. We may sell, share, and use for targeted advertising the following categories of Personal Information to companies that provide marketing and advertising services to us, as well as advertisers that place advertisements on the Site: Demographic Information, Device, Internet, and Network Activity Information and Online Identifiers, General Location Information, and Inferences. You can request that we not sell or share your Personal Information by clicking <strong><a href="https://privacyportal-cdn.onetrust.com/dsarwebform/34c5b273-7cb8-4ee8-8f8c-026eee65741b/f386161f-2608-47f0-a36e-7d446a6033c1.html">Do Not Sell or Share My Personal Information</a></strong> on the Site or by sending an email to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3f5b5e4b5e4d5a4e4a5a4c4b7f535a585a515b5e4d46115c5052">[email&#160;protected]</a></strong> with your request. Please note that any opt-outs through these tools are specific to the device and browser you are using, so you should opt-out for each web browser and on each device you use. Your opt-out preferences will be deleted any time you clear your web browser&rsquo;s cookie cache.</li>
+<li><strong>Do Not Sell or Share My Personal Information (Opt-out of Targeted Advertising). </strong>Under certain U.S. State Privacy Laws, you may be able to request that we not sell, or share for targeted behavioral advertising, your Personal Information. We may sell, share, and use for targeted advertising the following categories of Personal Information to companies that provide marketing and advertising services to us, as well as advertisers that place advertisements on the Site: Demographic Information, Device, Internet, and Network Activity Information and Online Identifiers, General Location Information, and Inferences. You can request that we not sell or share your Personal Information by clicking <strong><a href="https://privacyportal-cdn.onetrust.com/dsarwebform/34c5b273-7cb8-4ee8-8f8c-026eee65741b/f386161f-2608-47f0-a36e-7d446a6033c1.html">Do Not Sell or Share My Personal Information</a></strong> on the Site or by sending an email to <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b4d0d5c0d5c6d1c5c1d1c7c0f4d8d1d3d1dad0d5c6cd9ad7dbd9">[email&#160;protected]</a></strong> with your request. Please note that any opt-outs through these tools are specific to the device and browser you are using, so you should opt-out for each web browser and on each device you use. Your opt-out preferences will be deleted any time you clear your web browser&rsquo;s cookie cache.</li>
 </ul>
 
 
@@ -753,7 +771,7 @@
 
 
 <ul>
-<li><strong>How to Submit a Request. </strong>You may <a href="https://privacyportal-cdn.onetrust.com/dsarwebform/34c5b273-7cb8-4ee8-8f8c-026eee65741b/f386161f-2608-47f0-a36e-7d446a6033c1.html">exercise these rights by clicking <strong>here</strong></a> or emailing us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92f6f3e6f3e0f7e3e7f7e1e6d2fef7f5f7fcf6f3e0ebbcf1fdff">[email&#160;protected]</a></strong>. Please note that we may deny certain requests, or fulfill a request only in part, based on our legal rights and obligations. For example, we may retain Personal Information as permitted by law, such as for tax or other record keeping purposes, to maintain an active account, and to process transactions and facilitate customer requests.</li>
+<li><strong>How to Submit a Request. </strong>You may <a href="https://privacyportal-cdn.onetrust.com/dsarwebform/34c5b273-7cb8-4ee8-8f8c-026eee65741b/f386161f-2608-47f0-a36e-7d446a6033c1.html">exercise these rights by clicking <strong>here</strong></a> or emailing us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48085908596819591819790a4888183818a8085969dca878b89">[email&#160;protected]</a></strong>. Please note that we may deny certain requests, or fulfill a request only in part, based on our legal rights and obligations. For example, we may retain Personal Information as permitted by law, such as for tax or other record keeping purposes, to maintain an active account, and to process transactions and facilitate customer requests.</li>
 </ul>
 
 
@@ -765,13 +783,13 @@
 
 
 <ul>
-<li><strong>Authorized Agent.</strong> You can designate an authorized agent to submit requests on your behalf. However, for requests to know, delete, and correct we will require written proof of the agent&rsquo;s permission to do so and we will need to verify your identity directly. If you would like to designate an authorized agent to submit a request to know, delete, or correct Personal Information on your behalf, please email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="315550455043544044544245715d5456545f555043481f525e5c">[email&#160;protected]</a> to verify your identity and provide written proof of permission. Once verified, your authorized agent may act on your behalf. When submitting the request, please ensure the authorized agent identifies himself/herself/themselves as an authorized agent.</li>
+<li><strong>Authorized Agent.</strong> You can designate an authorized agent to submit requests on your behalf. However, for requests to know, delete, and correct we will require written proof of the agent&rsquo;s permission to do so and we will need to verify your identity directly. If you would like to designate an authorized agent to submit a request to know, delete, or correct Personal Information on your behalf, please email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="513530253023342024342225113d3436343f353023287f323e3c">[email&#160;protected]</a> to verify your identity and provide written proof of permission. Once verified, your authorized agent may act on your behalf. When submitting the request, please ensure the authorized agent identifies himself/herself/themselves as an authorized agent.</li>
 </ul>
 
 
 
 <ul>
-<li><strong>Appeals. </strong>You may have a right to appeal decisions concerning your ability to exercise your consumer rights. Please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="533732273221362226362027133f3634363d3732212a7d303c3e">[email&#160;protected]</a> to request an appeal concerning decisions on your consumer request.</li>
+<li><strong>Appeals. </strong>You may have a right to appeal decisions concerning your ability to exercise your consumer rights. Please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7d3d6c3d6c5d2c6c2d2c4c3f7dbd2d0d2d9d3d6c5ce99d4d8da">[email&#160;protected]</a> to request an appeal concerning decisions on your consumer request.</li>
 </ul>
 
 
@@ -828,7 +846,7 @@
 
 
 
-<p><strong>Shine the Light.</strong> If you are a California resident, you have the right to ask us one time each year if we have shared Personal Information with third parties for their direct marketing purposes. To make a request, please send us an <strong><a href="/cdn-cgi/l/email-protection#731f1614121f331f1614161d1712010a5d101c1e">e-mail</a></strong>, or write to us at the address listed in the <strong><a href="https://www.legendary.com/about/">Contact Us</a></strong> section with &ldquo;Shine the Light&rdquo; in the subject line of your communication.<br><br><strong>Right to Erasure. </strong>If you are a California resident under 18 years old and you are registered with the Site, you can ask us to remove content or information you have posted to the Site. To make a request, <strong><a href="/cdn-cgi/l/email-protection#d6b2b7a2b7a4b3a7a3b3a5a296bab3b1b3b8b2b7a4aff8b5b9bb">e-mail us</a></strong> or write to us at the address listed in the <strong><a href="https://www.legendary.com/about/">Contact Us</a></strong> section with <strong>&ldquo;California Under 18 Content Removal Request&rdquo;</strong> in the subject line and tell us what you want removed. We may require additional information from you to allow us to verify your identity as well as details about where the content is posted. We will make reasonable good faith efforts to remove the post from prospective public view, although we cannot ensure the complete or comprehensive removal of the content and may retain the content as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.</p>
+<p><strong>Shine the Light.</strong> If you are a California resident, you have the right to ask us one time each year if we have shared Personal Information with third parties for their direct marketing purposes. To make a request, please send us an <strong><a href="/cdn-cgi/l/email-protection#cba7aeacaaa78ba7aeacaea5afaab9b2e5a8a4a6">e-mail</a></strong>, or write to us at the address listed in the <strong><a href="https://www.legendary.com/about/">Contact Us</a></strong> section with &ldquo;Shine the Light&rdquo; in the subject line of your communication.<br><br><strong>Right to Erasure. </strong>If you are a California resident under 18 years old and you are registered with the Site, you can ask us to remove content or information you have posted to the Site. To make a request, <strong><a href="/cdn-cgi/l/email-protection#284c495c495a4d595d4d5b5c68444d4f4d464c495a51064b4745">e-mail us</a></strong> or write to us at the address listed in the <strong><a href="https://www.legendary.com/about/">Contact Us</a></strong> section with <strong>&ldquo;California Under 18 Content Removal Request&rdquo;</strong> in the subject line and tell us what you want removed. We may require additional information from you to allow us to verify your identity as well as details about where the content is posted. We will make reasonable good faith efforts to remove the post from prospective public view, although we cannot ensure the complete or comprehensive removal of the content and may retain the content as necessary to comply with our legal obligations, resolve disputes, and enforce our agreements.</p>
 
 
 
@@ -1063,7 +1081,7 @@
 		</div>
 	</div><!-- #page we need this extra closing tag here -->
 </div>
-<div data-outofpage="true" data-takeover='' data-targeting='{&quot;page-type&quot;:&quot;footer&quot;,&quot;location&quot;:&quot;out of page&quot;,&quot;ad-location&quot;:&quot;oop&quot;,&quot;authenticated&quot;:false,&quot;ad-unit&quot;:&quot;nerdist&quot;,&quot;terms&quot;:[],&quot;tags&quot;:[],&quot;post_type&quot;:&quot;page&quot;,&quot;post_id&quot;:922,&quot;title&quot;:&quot;Privacy Policy&quot;}' 
+<div data-outofpage="true" data-takeover='' data-targeting='{&quot;page-type&quot;:&quot;footer&quot;,&quot;location&quot;:&quot;out of page&quot;,&quot;ad-location&quot;:&quot;oop&quot;,&quot;authenticated&quot;:false,&quot;refresh&quot;:&quot;false&quot;,&quot;ad-unit&quot;:&quot;nerdist&quot;,&quot;terms&quot;:[],&quot;tags&quot;:[],&quot;post_type&quot;:&quot;page&quot;,&quot;post_id&quot;:922,&quot;title&quot;:&quot;Privacy Policy&quot;}' 
 				class='dfw-unit'
 					data-adunit='nerdist'
 					data-size-mapping='mapping2'></div><style id='wp-block-list-inline-css'>
@@ -1071,11 +1089,11 @@ ol,ul{box-sizing:border-box}ol.has-background,ul.has-background{padding:1.25em 2
 </style>
 <link rel='stylesheet' id='dfp-css' href='https://nerdist.com/wp-content/plugins/doubleclick-for-wp/css/dfp.css?ver=0.3' media='all' />
 <script id="nerdist-scripts-js-extra">
-var nerdist = {"ajax_endpoint":"https:\/\/nerdist.com\/wp-admin\/admin-ajax.php","search_query":"","page_url":"https:\/\/nerdist.com\/privacy","page_id":"922","cast_app_id":"3452798E","dfp_network":"119371514","nerdist_home":"https:\/\/nerdist.com\/","ARTICLE_AND_VIDEO":"[\"article\",\"nerdist_video\"]","ARTICLE_ONLY":"[\"article\"]","VIDEO_ONLY":"[\"nerdist_video\"]","ARTICLE":"article","VIDEO":"nerdist_video","gPost":"922","default_image_article":"https:\/\/nerdist.com\/wp-content\/uploads\/2019\/05\/Nerdist_MissingMedia_Article_750x422.png","default_image_video":"https:\/\/nerdist.com\/wp-content\/uploads\/2019\/05\/Nerdist_MissingMedia_Video_750x422.png","default_image_user":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/public\/images\/author-logo.png","default_image_topic":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/img\/nerdist-rect.jpg","default_image_youtube":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/img\/youtube-no-img.jpg","is_single":"","page_views_nonce":"d9902770aa","sidebar_transient_key":null,"gns_play_ids":[2484],"ajax_nonce":"b43892ccae","captcha_vars":[]};
+var nerdist = {"ajax_endpoint":"https:\/\/nerdist.com\/wp-admin\/admin-ajax.php","search_query":"","page_url":"https:\/\/nerdist.com\/privacy","page_id":"922","cast_app_id":"3452798E","dfp_network":"119371514","nerdist_home":"https:\/\/nerdist.com\/","ARTICLE_AND_VIDEO":"[\"article\",\"nerdist_video\"]","ARTICLE_ONLY":"[\"article\"]","VIDEO_ONLY":"[\"nerdist_video\"]","ARTICLE":"article","VIDEO":"nerdist_video","gPost":"922","default_image_article":"https:\/\/nerdist.com\/wp-content\/uploads\/2019\/05\/Nerdist_MissingMedia_Article_750x422.png","default_image_video":"https:\/\/nerdist.com\/wp-content\/uploads\/2019\/05\/Nerdist_MissingMedia_Video_750x422.png","default_image_user":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/public\/images\/author-logo.png","default_image_topic":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/img\/nerdist-rect.jpg","default_image_youtube":"https:\/\/nerdist.com\/wp-content\/themes\/nerdist_2021\/img\/youtube-no-img.jpg","is_single":"","page_views_nonce":"e7053737bd","sidebar_transient_key":null,"gns_play_ids":[2484],"ajax_nonce":"215d0e6e62","captcha_vars":[]};
 var pr_infinite_options = {"pr_scroll_max":"3"};
 </script>
 <script defer='defer' src="https://nerdist.com/wp-content/themes/nerdist_2021/js/theme.min.js?ver=3.0.1717419942" id="nerdist-scripts-js"></script>
-<script defer='defer' src="https://nerdist.com/wp-content/plugins/doubleclick-for-wp/js/vendor/jquery.dfp.js/jquery.dfp.min.js?ver=0.3" id="jquery.dfp.js-js"></script>
+<script defer='defer' src="https://nerdist.com/wp-content/plugins/doubleclick-for-wp/js/vendor/jquery.dfp.js/jquery.dfp.js?ver=0.3" id="jquery.dfp.js-js"></script>
 <script id="jquery.dfw.js-js-extra">
 var dfw = {"dfpID":"119371514","network_code":"119371514","sizeMapping":{"mapping1":[{"browser":[1040,1],"ad_sizes":[[1800,450],[900,450],[1200,150],[970,250],[970,90]]},{"browser":[760,1],"ad_sizes":[[728,90]]},{"browser":[0,1],"ad_sizes":[[320,50]]}],"mapping2":[{"browser":[1040,1],"ad_sizes":[[1,1]]},{"browser":[0,1],"ad_sizes":[[1,1]]}]},"setTargeting":{"Page":["single"],"Category":[]}};
 </script>
