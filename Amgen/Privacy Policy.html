@@ -44,10 +44,28 @@
 
 
 
+<script>let setgeotarge = false; setgeofencing = false</script>
+
+        <script>setgeotarge = true;</script>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
+            data-culture=""
+            type="text/javascript" data-consentmode="disabled" data-georegions="{'region':'GB,DE,FR,NL','cbid':'%207ca522be-0c36-4abe-b5be-20129dbf1b64'}" async></script>
+
+
+
+
+    <script>setgeofencing = true;</script>
+    <style>
+        .disable-abtn {
+            color: gray !important;
+            pointer-events: none !important;
+        }
+    </style>
+
 <script type="text/javascript">
 
-    function getcountrycode()
-    {
+    function getcountrycode() {
+
         if (document.getElementById("CybotCookiebotDialog")) {
             var countryCode = Cookiebot.userCountry.toUpperCase();
             var countryListEU = ["GB", "AT", "BE", "BG", "CY", "CZ", "DE", "DK", "ES", "EE", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "SE"];
@@ -62,16 +80,10 @@
                 countryCode = "ccpa_default";
             }
             document.getElementById("CybotCookiebotDialog").classList.add(countryCode);
-            console.log("country code class " + countryCode);
+            //console.log("country code class " + countryCode);
         }
     }
 
-    function OpenPopupOnCookiebotRenewClick() {
-        ReshowPopup();
-        setTimeout(function () {
-            ReshowPopup();
-        }, 1400);
-    }
 
     function ReshowPopup() {
         if (document.cookie.indexOf('cbrenew') > -1) {
@@ -83,46 +95,33 @@
                 }
             }
         }
-        if (document.getElementById("isGeot")) { getcountrycode(); }
+        if (setgeotarge) { getcountrycode(); }
     }
 
+    function CalllSetTimeOut() {setTimeout(function () {console.log("."); ReshowPopup(); CalllSetTimeOutTwice(); },1500)}
+    function CalllSetTimeOutTwice() { setTimeout(function () {console.log(".."); ReshowPopup(); CalllSetTimeOutThrice(); }, 3000) }
+    function CalllSetTimeOutThrice() { setTimeout(function () {console.log("..."); ReshowPopup();  }, 4500) }
+
+
     function CookiebotRenewClick() {
-        if (document.getElementsByClassName("cb-renew").length > 0)
-        {
-            let renewCBBtn = document.getElementsByClassName("cb-renew")[0]; renewCBBtn.removeAttribute("onclick");renewCBBtn.href = "#";
+        if (document.getElementsByClassName("cb-renew").length > 0) {
+            let renewCBBtn = document.getElementsByClassName("cb-renew")[0];
+            renewCBBtn.removeAttribute("onclick");
+            renewCBBtn.href = "#";
+
             renewCBBtn.addEventListener('click', function () {
+               // document.cookie = "CookieConsent" + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                 Cookiebot.renew();
-                 OpenPopupOnCookiebotRenewClick();
-               
+                ReshowPopup();
+                setTimeout(function () { ReshowPopup(); CalllSetTimeOut(); }, 900);
             });
         }
     }
-    window.addEventListener("DOMContentLoaded", function () {
+
+    window.addEventListener('DOMContentLoaded', function () {
         CookiebotRenewClick();
     });
 
-</script>
-
-            <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="3c04f870-41c9-42bc-965e-776f1eef473a"
-                    type="text/javascript" data-consentmode="disabled"
-                    data-georegions="{'region':'GB,DE,FR,NL','cbid':'%207ca522be-0c36-4abe-b5be-20129dbf1b64'}" async></script>
-        <input type="hidden" id="isGeot" value="1" />
-        <script type="text/javascript">
-            window.addEventListener("DOMContentLoaded", function () {
-                setTimeout(function () { getcountrycode();}, 900);               
-            });
-        </script>
-
-
-
-
-    <style>
-        .disable-abtn {
-            color: gray !important;
-            pointer-events: none !important;
-        }
-    </style>
-    <script type="text/javascript">
 
 
         function setCookieForCountryCode(name, value, days) {
@@ -147,7 +146,7 @@
         }
 
         async function checkElementExists(element, timeout = Infinity) {
-            let startTime = Date.now();           
+            let startTime = Date.now();
             return new Promise((resolve) => {
                 const intervalId = setInterval(() => {
                     if (document.querySelector(element)) {
@@ -164,6 +163,7 @@
 
         function blockPopup()
         {
+
             var regionArray = [];
             var disableCountryCode = Cookiebot.userCountry.toUpperCase();
             setCookieForCountryCode("RegionCode", disableCountryCode, 365);
@@ -172,25 +172,44 @@
                    regionArray.push("US-53");
                    regionArray.push("US-32");
 
-            if (regionArray.includes(disableCountryCode))
+                if (regionArray.includes(disableCountryCode))
+                {
+                    if (document.getElementById("CybotCookiebotDialogBodyButtonAccept"))
+                        document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+
+                    if (document.getElementById("nvtext"))
+                        document.getElementById("nvtext").setAttribute('style', 'display:block !important');
+
+                    setCookieForCountryCode("cbrenew", "1", 365);
+
+                }
+                else
+                    CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "rm");
+            }
+
+        checkElementExists("#CybotCookiebotDialog", 120).then((result) => {
+            if (result)
             {
-                if (document.getElementById("CybotCookiebotDialogBodyButtonAccept"))
-                    document.getElementById("CybotCookiebotDialogBodyButtonAccept").setAttribute('style', 'border:1px solid gray !important;color:gray !important');
+                if (setgeofencing) {
+                    blockPopup();
+                }
+                if (setgeotarge) {
+                    getcountrycode();
+                }
 
-                if (document.getElementById("nvtext"))
-                    document.getElementById("nvtext").setAttribute('style', 'display:block !important');
-
-                setCookieForCountryCode("cbrenew", "1", 365);
-     
             }
             else
-                CheckELMAndApplyCSS("CybotCookiebotDialogBodyButtonAccept", "disable-abtn", "rm");
-        }
+            {
+                console.log("ncb");
+            }
+        });
 
-  checkElementExists("#CybotCookiebotDialog", 60).then((result) => { if (result) { blockPopup(); } else {console.log("ncb"); }});
+
+</script>
 
 
-    </script>
+
+
 
 
     
@@ -217,7 +236,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link href="/-/media/Feature/Experience-Accelerator/Bootstrap-4/Bootstrap-4/Styles/bootstrap-grid.css" rel="stylesheet" /><link href="/-/media/Base-Themes/LazyLoading/Styles/psuedolazyload.css" rel="stylesheet" /><link href="/-/media/Base-Themes/GeoTarget-Footer-CSS/Styles/Geotarget_Footer.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/main.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/aglobal-styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/alert.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/cl-customizedsearch.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/component-tabs.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-bootstrap.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/megamenu.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Print.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/search-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/styles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/Custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/amgen-com-custom.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/tiles.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/custom-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/zfont-weight-css.css" rel="stylesheet" /><link href="/-/media/Themes/CorporateAffairs/amgen-com/amgen-com/styles/sxaOverRide.css" rel="stylesheet" />
     
-<meta name="VIcurrentDateTime" content="638545682047952656" />
+<meta name="VIcurrentDateTime" content="638569508086563112" />
 <meta name="VirtualFolder" content="/" />
 <script type="text/javascript" src="/layouts/system/VisitorIdentification.js"></script>
 
@@ -2274,14 +2293,18 @@ div.quantum-accordion__item-contents  * {
 
 
 
+
+
+
+
 <div class="content">
 <p>Last Updated December 13, 2023</p>
-    <p>This Supplemental Website Privacy Notice ("Supplemental Notice") applies only to information collected about Consumers of U.S. states with comprehensive privacy legislation that requires provision of a privacy notice. Specifically, it provides information required under comprehensive state privacy legislation in California, Colorado, Connecticut, Montana, Oregon, Tennessee, Texas, Utah, and Virginia (collectively, "U.S. Privacy Laws").   We also provide additional disclosures for compliance with the Washington My Health My Data Act, the Nevada My Health My Data Act and Nevada Revised Statutes Chapter 603A. These disclosures are included  at the end of this Supplemental Notice. The other portions of this Supplemental Notice do not apply to Washington and Nevada consumers.</p>
+  <p>This Supplemental Website Privacy Notice ("Supplemental Notice") applies only to information collected about Consumers of U.S. states with comprehensive privacy legislation that requires provision of a privacy notice. Specifically, it provides information required under comprehensive state privacy legislation in California, Colorado, Connecticut, Montana, Oregon, Tennessee, Texas, Utah, and Virginia (collectively, "U.S. Privacy Laws").   We also provide additional disclosures for compliance with the Washington My Health My Data Act, the Nevada My Health My Data Act and Nevada Revised Statutes Chapter 603A – please see <a href="https://wwwext.amgen.com/healthdataprivacypolicy">amgen.com/healthdataprivacypolicy</a></p>
 <p>This Supplemental Notice describes Amgen's ("we," "us," "our") practices regarding the collection, use, and
         disclosure of Personal Information and provides instructions for submitting data subject requests. This
         Supplemental Notice is broader in scope than our Privacy Statement because this Supplemental Notice applies to
         Personal Information we Collect from you when you interact with us online (through our Site and our other
-        websites, Apps, and Services) and offline.</p>
+  websites, Apps, and Services) and offline.</p>
     <p>Some portions of this Supplemental Notice apply only to consumers of particular states. In those instances, we
         have indicated that such language applies only to those consumers. </p>
     <p>Please also note that this Supplemental Notice does not address our collection and processing of Personal
@@ -2570,8 +2593,8 @@ div.quantum-accordion__item-contents  * {
         data subject request, so that we may adequately address your appeal. We will respond to your appeal in
       accordance with applicable law.</li>
     <li><strong>Opt-Out Preference Signals. </strong>We do not sell or share Personal Information, or use or disclose Sensitive Personal Information for purposes other than those authorized by the CCPA and its implementing regulations, as listed in Section E. Accordingly, we do not process opt-out preference signals. If we process opt-out preference signals in the future, we will update this policy to provide details about how we do so.</li>
-    </ul>
-    <p><strong>H. Other Disclosures</strong></p>
+  </ul>
+  <p><strong>H. Other Disclosures</strong></p>
     <ul>
         <li><strong>California Residents Under Age 18. </strong>If you are a resident of California under the age of 18
             and a registered user of any of the Services, then you may request that we remove any of your User
@@ -2598,29 +2621,8 @@ div.quantum-accordion__item-contents  * {
         <li><strong>Financial Incentives for California Consumers.</strong> Under California law, we do not provide
             financial incentives to California consumers who allow us to collect, retain, sell, or share their Personal
             Information. We will describe such programs to you if and when we offer them to you.</li>
-        <li><strong>Washington &amp; Nevada My Health My Data Act Disclosures.</strong> This section only applies to Consumers as the term "Consumer" is defined by the Washington My Health My Data Act and the Nevada My Health My Data Act, respectively. Terms used in this section that have defined meanings under the Washington My Health My Data Act or the Nevada My Health My Data Act shall have the meanings afforded to them in those statutes as this section applies to Consumers of those states. We Collect and Share the below categories of Consumer Health Data from Consumers, and we Process such categories of Consumer Health Data for the purposes and in the manners listed in Section E:    </li>
-    </ul>
-    <ul>
-      <ul>
-        <li>Individual health conditions, treatment, diseases, or diagnosis; </li>
-        <li>Social, psychological, behavioral, and medical interventions; </li>
-        <li>Health-related surgeries or procedures; </li>
-        <li>Use or purchase of prescribed medication; </li>
-        <li>Bodily functions, vital signs, symptoms, or measurements of health information; </li>
-        <li>Diagnoses or diagnostic testing, treatment, or medication; </li>
-        <li>Genetic data; </li>
-        <li>Precise location information that could reasonably indicate a resident's attempt to acquire or receive health services or supplies; </li>
-        <li>Data that identifies a resident seeking health care services; and </li>
-        <li>Any inferences of the above categories of health data derived or extrapolated from non-health  information. </li>
-      </ul>
 
-    <p>We Collect these categories of Consumer Health Data from the sources listed in Section D, and we Share these categories of Consumer Health Data with the categories of entities listed in Section F, including the following affiliates: Amgen Inc., Amgen USA Inc., Horizon Therapeutics USA, Inc. Consumers may exercise their data subject rights, including obtaining access to and requesting changes to their Consumer Health Data, under the Washington My Health My Data Act and the Nevada My Health My Data Act by contacting us via the methods listed in Section G.    </p>
-    <p>We limit Third Party Collection of Consumer Health Data over time and across different websites or online services when the Consumer uses our websites or online services. We do this by ensuring that entities whose cookies, web beacons, pixels, and other online trackers we use on our websites and online services are our Vendors under applicable U.S. Privacy Laws and under the Washington and Nevada My Health My Data Acts. Nonetheless, please note that Third Parties may still be able to Collect Consumer Health Data from you over time and across different websites depending on your browser, browser add-ons, and associated permissions you set on your device. This Collection of Consumer Health Data by those Third Parties is unrelated to Amgen's Collection of Consumer Health Data from you, and we encourage you to view those Third Parties' privacy notices for more information about their Processing of Consumer Health Data and the methods they provide to allow you to opt out of such Processing.</p>
-      <li><strong>Privacy Notice for Nevada Residents.</strong> We do not sell Covered Information as defined under
-        Nevada law, and we generally do not disclose or share personal information as defined under Nevada law for
-        commercial purposes. Under Nevada law, you have the right to direct us to not sell or license your personal
-        information to third parties. To exercise this right, if applicable, you or your authorized representative
-        may contact our Privacy Compliance at <a href="mailto:privacy@amgen.com">privacy@amgen.com</a>. </li>
+
       <li><strong>Changes to our Supplemental Notice. </strong>We reserve the right to amend this Supplemental Notice
         at our discretion and at any time. When we make material changes to this Supplemental Notice, we will notify
         you by posting an updated Supplemental Notice on our website and listing the effective date of such updates.
@@ -3265,9 +3267,13 @@ div.quantum-accordion__item-contents  * {
 
 
 
+
+
+
+
 <div class="content" >
   <p>Última actualización : 13 de diciembre del  2023 </p>
-<p>Este Aviso de privacidad complementario del sitio web (&quot;Aviso complementario&quot;) se aplica  únicamente a la información recopilada sobre los consumidores de los estados de EE. UU. con una legislación de privacidad integral que requiere la provisión de un aviso de privacidad. Específicamente, proporciona información requerida según la legislación estatal integral de privacidad en California, Colorado,  Connecticut , Montana, Oregón, Tennessee, Texas, Utah y Virginia (colectivamente,  "Leyes de Privacidad de EE. UU."). También proporcionamos divulgaciones adicionales para el cumplimiento de la Ley My Health My Data de Washington, la Ley  My Health My Data de Nevada  y el  Capítulo 603A de  los Estatutos Revisados de Nevada . Estas divulgaciones se incluyen al final de este Aviso  complementario. Las otras partes de este Aviso  complementario no se aplican a los consumidores de Washington y Nevada.</p>
+<p>Este Aviso de privacidad complementario del sitio web (&quot;Aviso complementario&quot;) se aplica  únicamente a la información recopilada sobre los consumidores de los estados de EE. UU. con una legislación de privacidad integral que requiere la provisión de un aviso de privacidad. Específicamente, proporciona información requerida según la legislación estatal integral de privacidad en California, Colorado,  Connecticut , Montana, Oregón, Tennessee, Texas, Utah y Virginia (colectivamente,  "Leyes de Privacidad de EE. UU."). También proporcionamos divulgaciones adicionales para el cumplimiento de la Ley My Health My Data de Washington, la Ley  My Health My Data de Nevada  y el  Capítulo 603A de  los Estatutos Revisados de Nevada . Estas divulgaciones se incluyen al final de este Aviso  complementario – consulte <a href="https://wwwext.amgen.com/healthdataprivacypolicy">amgen.com/healthdataprivacypolicy</a></p>
 <p>Este Aviso Complementario  describe las prácticas de Amgen (&quot;nosotros&quot;, &quot;nos&quot;,  &quot;nuestro&quot;) con respecto a la recopilación, el uso y la divulgación de  Información personal y proporciona instrucciones para enviar solicitudes de los  interesados. Este Aviso Complementario tiene un alcance más amplio que nuestra Declaración  de Privacidad porque este Aviso Complementario se aplica a la Información personal que recopilamos de usted cuando interactúa  con nosotros en línea (a través de nuestro Sitio y nuestros otros Sitios Web,  Aplicaciones y Servicios) y fuera de línea. </p>
   <p>Algunas partes de este Aviso Complementario  se aplican solo a consumidores de estados particulares. En esos casos, hemos  indicado que ese lenguaje se aplica únicamente a esos consumidores. </p>
   <p>Tenga en cuenta también que este Aviso Complementario  no aborda nuestra recopilación y procesamiento de Información personal de  empleados, solicitantes de empleo, otras personas con las que interactuamos en  un contexto relacionado con el empleo, profesionales de la salud (HCP) u otros  contactos de empresa a empresa. Los residentes de California que caen en una de  esas categorías pueden acceder a las divulgaciones de privacidad de nuestro  sitio web aplicables a ellos seleccionando el aviso que se aplica a ellos a  continuación. </p>
@@ -3457,24 +3463,6 @@ div.quantum-accordion__item-contents  * {
       Amgen hará  un esfuerzo de buena fe para eliminar o retirar su contribución de usuario de  la vista pública tan pronto como sea razonablemente posible. Tenga en cuenta,  sin embargo, que su solicitud de que eliminemos su contribución de usuario no  garantiza la eliminación completa o exhaustiva de su contribución de usuario.  Su contribución de usuario puede permanecer en medios de copia de seguridad,  almacenados en caché o retenidos de otro modo por Amgen para fines  administrativos o legales, o su contribución de usuario puede permanecer disponible públicamente si usted u otra  persona ha reenviado o vuelto a publicarla en otro sitio web o servicio antes  de su eliminación. Amgen también puede estar obligado por ley a no eliminar (o  permitir la eliminación) de su ontribución de usuario. </li>
     <li><strong>Divulgación  sobre mercadeo directo para residentes de California. </strong> El Código Civil  de California § 1798.83 permite a los residentes de California solicitar  anualmente cierta información sobre nuestra divulgación de Información Personal  a otras entidades para sus fines de mercadeo directo en el año calendario  anterior. No distribuimos su información personal a terceros (según lo define  el Código Civil de California § 1798.83) para sus propios fines de mercadeo directo. </li>
     <li><strong>Incentivos  financieros para los consumidores de</strong> <strong>California</strong><strong>.</strong>  Según la ley de California, no  proporcionamos incentivos financieros a los consumidores de California que nos  permiten recopilar, retener, vender o compartir su Información Personal. Le  describiremos dichos programas siempre y cuando se los ofrezcamos. </li>
-    <li><strong>Divulgaciones      de la Ley My Health My Data de Washington y Nevada. </strong>Esta sección solo se      aplica a los Consumidores, ya que el término &quot;Consumidor&quot; se      define en la Ley My Health My Data de Washington y la Ley My Health My      Data de Nevada, respectivamente. Los términos utilizados en esta sección      que tienen significados definidos según la Ley My Health My Data de      Washington o la Ley My Health My Data de Nevada tendrán el significado que      se les otorga en esos estatutos, ya que esta sección se aplica a los      Consumidores de esos estados. Recopilamos y compartimos las siguientes      categorías de Datos de salud del consumidor de los consumidores, y      procesamos dichas categorías de Datos de salud del consumidor para los      fines y de la manera enumerada en la Sección E:
-		<ul>
-    <li>Condiciones de salud, tratamientos, enfermedades o diagnósticos individuales;</li>
-    <li>Intervenciones sociales, psicológicas, conductuales y médicas;</li>
-    <li>Cirugías o procedimientos relacionados con la salud;</li>
-    <li>Uso o compra de medicamentos recetados;</li>
-    <li>Funciones corporales, signos vitales, síntomas o mediciones de información de salud;</li>
-    <li>Diagnósticos o pruebas de diagnóstico, tratamiento o medicación;</li>
-    <li>Datos genéticos;</li>
-    <li>Información de ubicación precisa que podría indicar razonablemente el intento de un residente de adquirir o recibir servicios o suministros de salud;</li>
-    <li>Datos que identifican a un residente que busca servicios de atención médica; y</li>
-    <li>Cualquier inferencia de las categorías anteriores de datos de salud derivadas o extrapoladas de información no relacionada con la salud.</li>
-  </ul>
-
-
-		<p>Recopilamos estas categorías de Datos de salud del consumidor de las fuentes enumeradas en la Sección D y compartimos estas categorías de Datos de salud del consumidor con las categorías de entidades enumeradas en la Sección F, incluidas las siguientes afiliadas: Amgen Inc., Amgen USA Inc., Horizon Therapeutics USA, Inc. Los consumidores pueden ejercer sus derechos como sujetos de datos, incluida la obtención de acceso y la solicitud de cambios en sus Datos de salud del consumidor, según la Ley My Health My Data de Washington y la Ley My Health My Data de Nevada, comunicándose con nosotros a través de los métodos enumerados en Sección G.   </p>
-		<p>Limitamos la recopilación de datos de salud del consumidor por parte de terceros a lo largo del tiempo y en diferentes sitios web o servicios en línea cuando el consumidor utiliza nuestros sitios web o servicios en línea. Hacemos esto asegurándonos de que las entidades cuyas cookies, balizas web, ossib y otros rastreadores en línea utilizamos en nuestros sitios web y servicios en línea sean nuestros Proveedores según las leyes de privacidad de EE. UU. Aplicables y las leyes My Health My Data de Washington y Nevada. No obstante, tenga en cuenta que es ossible que los terceros aún puedan recopilar sus datos de salud del consumidor a lo largo del tiempo y en diferentes sitios web, según su navegador, los complementos del navegador y los permisos asociados que haya configurado en su dispositivo. Esta recopilación de datos de salud del consumidor por parte de dichos terceros no está relacionada con la recopilación de datos de salud del consumidor que Amgen realiza de usted, y le recomendamos que consulte los avisos de privacidad de dichos terceros para obtener más información sobre su procesamiento de datos de salud del consumidor y los métodos que proporcionan para le permiten optar por no participar en dicho procesamiento.</p>
-    <li><strong>Aviso  de privacidad para residentes de Nevada. </strong>No vendemos Información  cubierta según lo define  la ley de Nevada y,  en general, no divulgamos ni compartimos información personal según  lo define  la ley de Nevada con fines comerciales. Según la ley de Nevada, usted tiene derecho a indicarnos que no vendamos ni  concedamos licencias sobre su información personal a terceros. Para ejercer este derecho, si corresponde, usted o su representante autorizado pueden comunicarse con nuestro  Departamento de Cumplimiento de Privacidad en <a href="mailto:privacy@amgen.com">privacy@amgen.com</a>. </li>
     <li><strong>Cambios  a nuestro Aviso  <strong>complementario. </strong></strong>Nos reservamos el derecho de modificar este Aviso  complementario a nuestra discreción y en cualquier momento. Cuando realicemos cambios sustanciales  en este Aviso complementario, se lo notificaremos publicando un Aviso  complementario actualizado en nuestro sitio web y enumerando la fecha de  entrada en vigor de dichas actualizaciones.</li>
     <li><strong>Contactarnos. </strong>Si tiene alguna pregunta, comentario, solicitud o inquietud relacionada con este Aviso  complementario, las prácticas de información de Amgen o cómo acceder a esta política en otro formato, comuníquese con nosotros  en Cumplimiento de privacidad, One Amgen Center Drive, MS 28-4-A., Thousand Oaks, California 91320 o en <a href="mailto:privacy@amgen.com">privacy@amgen.com</a> para obtener ayuda. </li>
   </ul>
