@@ -11,24 +11,77 @@
     
     
     
-    <link rel="dns-prefetch" href="https://js.hs-analytics.net">
-    <link rel="dns-prefetch" href="https://api.hubapi.com">
-    <link rel="dns-prefetch" href="https://static.hsappstatic.net">
-    <link rel="dns-prefetch" href="https://cdn2.hubspot.net">
-    <link rel="dns-prefetch" href="https://api.hubspot.net">
-    <link rel="dns-prefetch" href="https://app.hubspot.net">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://www.google-analytics.com">
-    <link rel="dns-prefetch" href="https://use.typekit.net">
-    <link rel="dns-prefetch" href="https://js.hs-banner.com">
-    <link rel="dns-prefetch" href="https://js.hsleadflows.net">
+    <link rel="preconnect" href="https://js.hs-analytics.net" crossorigin>
+    <link rel="preconnect" href="https://js.hs-banner.com" crossorigin>
+    <link rel="preconnect" href="https://js.hscollectedforms.net" crossorigin>
+    <link rel="preconnect" href="https://js.hubspot.com" crossorigin>
+    <link rel="preconnect" href="https://app.hubspot.com" crossorigin>
     <link rel="preconnect" href="https://use.typekit.net" crossorigin>
     
+    <style>
+      @font-face {
+        font-family: "Merriweather";
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+        src: url("/_hcms/googlefonts/Merriweather/700.woff2") format("woff2"), url("/_hcms/googlefonts/Merriweather/700.woff") format("woff");
+      }
+      @font-face {
+        font-family: "Poppins";
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+        src: url("/_hcms/googlefonts/Poppins/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Poppins/regular.woff") format("woff");
+      }
+      @font-face {
+        font-family: "Poppins";
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+        src: url("/_hcms/googlefonts/Poppins/600.woff2") format("woff2"), url("/_hcms/googlefonts/Poppins/600.woff") format("woff");
+      }
+    </style>
     
-    <link as="style" href="https://use.typekit.net/adn8myx.css" rel="preload">
-    <link rel="stylesheet" href="https://use.typekit.net/adn8myx.css">
- 
+    
+    
+    <script>
+    
+      (function() {
+        var originalCreateElement = document.createElement;
+        var originalSetSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src').set;
+        var delayedScripts = [];
 
+        document.createElement = function(tagName) {
+            var element = originalCreateElement.call(document, tagName);
+            if (tagName.toLowerCase() === 'script') {
+                Object.defineProperty(element, 'src', {
+                    set: function(src) {
+                        if (src.includes('web-interactives-embed.js') ||
+                            src.includes('hscollectedforms.net/collectedforms.js') ||
+                            src.includes('js.hs-banner.com/v2/1556449/banner.js')) {
+                            console.log('Intercepted script: ' + src);
+                            element._delayedSrc = src;
+                            delayedScripts.push(element);
+                        } else {
+                            originalSetSrc.call(this, src);
+                        }
+                    }
+                });
+            }
+            return element;
+        };
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                delayedScripts.forEach(function(script) {
+                    console.log('Now really loading the script: ' + script._delayedSrc);
+                    originalSetSrc.call(script, script._delayedSrc);
+                });
+            }, 3000);
+        });
+    })();   
+    </script>
+    
     
     
     
@@ -48,12 +101,12 @@
 a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-box !important;box-sizing:content-box !important;vertical-align:middle}.hs-breadcrumb-menu{list-style-type:none;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}.hs-breadcrumb-menu-item{float:left;padding:10px 0px 10px 10px}.hs-breadcrumb-menu-divider:before{content:'›';padding-left:10px}.hs-featured-image-link{border:0}.hs-featured-image{float:right;margin:0 0 20px 20px;max-width:50%}@media (max-width: 568px){.hs-featured-image{float:none;margin:0;width:100%;max-width:100%}}.hs-screen-reader-text{clip:rect(1px, 1px, 1px, 1px);height:1px;overflow:hidden;position:absolute !important;width:1px}
 </style>
 
-<link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363314/1718811231532/Ocean_Pro_-_MS/css/main.min.css">
-<link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/71152907318/1718765005978/Ocean_Pro_-_MS/child.min.css">
-<link class="hs-async-css" rel="preload" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/102057144210/1718811241952/Ocean_Pro_-_MS/css/components/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/102057144210/1718811241952/Ocean_Pro_-_MS/css/components/animate.min.css"></noscript>
-<link class="hs-async-css" rel="preload" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363310/1718811196178/Ocean_Pro_-_MS/css/components/_fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363310/1718811196178/Ocean_Pro_-_MS/css/components/_fancybox.min.css"></noscript>
+<link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363314/1721176974932/Ocean_Pro_-_MS/css/main.css">
+<link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/71152907318/1721176984505/Ocean_Pro_-_MS/child.min.css">
+<link class="hs-async-css" rel="preload" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/102057144210/1721176946114/Ocean_Pro_-_MS/css/components/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/102057144210/1721176946114/Ocean_Pro_-_MS/css/components/animate.min.css"></noscript>
+<link class="hs-async-css" rel="preload" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363310/1721176928271/Ocean_Pro_-_MS/css/components/_fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363310/1721176928271/Ocean_Pro_-_MS/css/components/_fancybox.min.css"></noscript>
 
 <style>
   
@@ -273,7 +326,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   display: flex;
   position: relative;
   overflow: hidden;
-  border-radius: var(--cornerRadius);
+  border-radius: var(--cornerRadiusImage);
 }
 .fn_overlay{
   position: absolute;
@@ -353,8 +406,8 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
 }
 
 #hs_cos_wrapper_widget_1656468825574 .main__reviews__person-img {
-  height:30px;
-  width:30px;
+  height:40px;
+  width:40px;
   border-radius:30px;
   overflow:hidden;
 }
@@ -434,6 +487,10 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   border:none;
   color:var(--secondaryColor);
 }
+
+#hs_cos_wrapper_widget_1656468825574 .flickity-button:focus { padding:0; }
+
+#hs_cos_wrapper_widget_1656468825574 .flickity-button:before {}
 
 #hs_cos_wrapper_widget_1656468825574 .flickity-button:hover { cursor:pointer; }
 
@@ -532,11 +589,15 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   line-height:1.4;
 }
 
-#hs_cos_wrapper_widget_1656468825574 .main__reviews__review-el {}
+#hs_cos_wrapper_widget_1656468825574 .main__reviews__review-el {
+  display:flex;
+  flex-direction:column;
+}
 
 #hs_cos_wrapper_widget_1656468825574 .main__reviews__person-img {
   width:40px;
   height:40px;
+  margin-bottom:10px;
 }
 
 #hs_cos_wrapper_widget_1656468825574 .main__reviews__person-name {}
@@ -576,8 +637,16 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   #hs_cos_wrapper_widget_1656468825574 .main__reviews__wrapper { width:calc(100%/1); }
 }
 
-#hs_cos_wrapper_widget_1656468825574 .main__reviews-el { padding:0px; }
+#hs_cos_wrapper_widget_1656468825574 .main__reviews-el {
+  border-radius:var(--cornerRadius);
+  padding:0px;
+}
 
+  .hs-inline-edit .flickity-button{
+    
+    background-color:var(--buttonPrimaryBackground);
+    
+  }
 </style>
 
 
@@ -606,46 +675,32 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
 
 <style>
   @font-face {
-    font-family: "Roboto Slab";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url("/_hcms/googlefonts/Roboto_Slab/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Roboto_Slab/regular.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Roboto Slab";
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-    src: url("/_hcms/googlefonts/Roboto_Slab/700.woff2") format("woff2"), url("/_hcms/googlefonts/Roboto_Slab/700.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Roboto";
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-    src: url("/_hcms/googlefonts/Roboto/500.woff2") format("woff2"), url("/_hcms/googlefonts/Roboto/500.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Roboto";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url("/_hcms/googlefonts/Roboto/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Roboto/regular.woff") format("woff");
-  }
-  @font-face {
-    font-family: "Roboto";
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-    src: url("/_hcms/googlefonts/Roboto/700.woff2") format("woff2"), url("/_hcms/googlefonts/Roboto/700.woff") format("woff");
-  }
-  @font-face {
     font-family: "Oxygen";
     font-weight: 400;
     font-style: normal;
     font-display: swap;
     src: url("/_hcms/googlefonts/Oxygen/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Oxygen/regular.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    src: url("/_hcms/googlefonts/Poppins/600.woff2") format("woff2"), url("/_hcms/googlefonts/Poppins/600.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Poppins";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/_hcms/googlefonts/Poppins/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Poppins/regular.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Poppins";
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("/_hcms/googlefonts/Poppins/700.woff2") format("woff2"), url("/_hcms/googlefonts/Poppins/700.woff") format("woff");
   }
   @font-face {
     font-family: "Fira Sans";
@@ -681,6 +736,20 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
     font-style: normal;
     font-display: swap;
     src: url("/_hcms/googlefonts/K2D/700.woff2") format("woff2"), url("/_hcms/googlefonts/K2D/700.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Merriweather";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/_hcms/googlefonts/Merriweather/regular.woff2") format("woff2"), url("/_hcms/googlefonts/Merriweather/regular.woff") format("woff");
+  }
+  @font-face {
+    font-family: "Merriweather";
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("/_hcms/googlefonts/Merriweather/700.woff2") format("woff2"), url("/_hcms/googlefonts/Merriweather/700.woff") format("woff");
   }
   @font-face {
     font-family: "Lexend Deca";
@@ -906,7 +975,7 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
   margin-bottom: 60px !important;
 }
 </style>
-    <script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/116417189405/1718811196959/Ocean_Pro_-_MS/js/modules/tocbot.min.js"></script>
+    <script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/116417189405/1721176929912/Ocean_Pro_-_MS/js/modules/tocbot.min.js"></script>
 
     
     <link rel="canonical" href="https://www.mediasource.mx/privacidad/">
@@ -978,8 +1047,6 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
 }
 </script> 
 <meta property="fb:pages" content="228972237138695">
-<script src="https://tag.clearbitscripts.com/v1/pk_5d02dcbfc91e046a03eaf067bb41bd83/tags.js" referrerpolicy="strict-origin-when-cross-origin"></script>
-
 
 <meta property="og:url" content="https://www.mediasource.mx/privacidad/">
 <meta name="twitter:card" content="summary">
@@ -1321,10 +1388,12 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">Servicios</a>
+      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">
+        Servicios
+      </a>
       
         
-          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false">
+          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false" aria-label="Expand submenu">
             <span class="show-for-sr">Show submenu for Servicios</span>
               <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512" aria-hidden="true"><g id="chevron-down1_layer"><path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" /></g></svg>
           </button>
@@ -1338,7 +1407,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/inbound-marketing-ventas">Inbound Marketing y Ventas</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/inbound-marketing-ventas">
+        Inbound Marketing y Ventas
+      </a>
       
     </li>
   
@@ -1350,7 +1421,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/diseno-y-desarrollo-web">Diseño y desarrollo Web</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/diseno-y-desarrollo-web">
+        Diseño y desarrollo Web
+      </a>
       
     </li>
   
@@ -1362,7 +1435,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/posicionamiento-web/">Posicionamiento en buscadores</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/posicionamiento-web/">
+        Posicionamiento en buscadores
+      </a>
       
     </li>
   
@@ -1374,7 +1449,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/tema-hubspot/ocean-pro">Ocean Pro Theme</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/tema-hubspot/ocean-pro">
+        Ocean Pro Theme
+      </a>
       
     </li>
   
@@ -1386,7 +1463,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/hubspot/cms-hub">Migración CMS Hub</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/hubspot/cms-hub">
+        Migración CMS Hub
+      </a>
       
     </li>
   
@@ -1398,7 +1477,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/hubspot-software/">Capacitación e implementación HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/hubspot-software/">
+        Capacitación e implementación HubSpot
+      </a>
       
     </li>
   
@@ -1416,7 +1497,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/clientes">Clientes</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/clientes">
+        Clientes
+      </a>
       
     </li>
   
@@ -1428,7 +1511,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/nosotros">Nosotros</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/nosotros">
+        Nosotros
+      </a>
       
     </li>
   
@@ -1440,7 +1525,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/blog">Blog</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/blog">
+        Blog
+      </a>
       
     </li>
   
@@ -1464,10 +1551,12 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">Recursos</a>
+      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">
+        Recursos
+      </a>
       
         
-          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false">
+          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false" aria-label="Expand submenu">
             <span class="show-for-sr">Show submenu for Recursos</span>
               <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512" aria-hidden="true"><g id="chevron-down1_layer"><path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" /></g></svg>
           </button>
@@ -1481,7 +1570,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/checklists">Checklists Marketing, Ventas y HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/checklists">
+        Checklists Marketing, Ventas y HubSpot
+      </a>
       
     </li>
   
@@ -1493,7 +1584,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/reporte/sitio-web">Reporte de Sitio Web</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/reporte/sitio-web">
+        Reporte de Sitio Web
+      </a>
       
     </li>
   
@@ -1505,7 +1598,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-retorno-de-la-inversion-publicitaria">Calculadora de ROAS de publicidad</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-retorno-de-la-inversion-publicitaria">
+        Calculadora de ROAS de publicidad
+      </a>
       
     </li>
   
@@ -1517,7 +1612,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-roi-hubspot">Calculadora de ROI de HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-roi-hubspot">
+        Calculadora de ROI de HubSpot
+      </a>
       
     </li>
   
@@ -1529,7 +1626,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/link-de-whatsapp">Generar enlace de WhatsApp</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/link-de-whatsapp">
+        Generar enlace de WhatsApp
+      </a>
       
     </li>
   
@@ -1541,7 +1640,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/creador-de-url-utms">Generador de UTMs</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/creador-de-url-utms">
+        Generador de UTMs
+      </a>
       
     </li>
   
@@ -1583,10 +1684,12 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">Servicios</a>
+      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">
+        Servicios
+      </a>
       
         
-          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false">
+          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false" aria-label="Expand submenu">
             <span class="show-for-sr">Show submenu for Servicios</span>
               <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512" aria-hidden="true"><g id="chevron-down1_layer"><path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" /></g></svg>
           </button>
@@ -1600,7 +1703,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/inbound-marketing-ventas">Inbound Marketing y Ventas</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/inbound-marketing-ventas">
+        Inbound Marketing y Ventas
+      </a>
       
     </li>
   
@@ -1612,7 +1717,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/diseno-y-desarrollo-web">Diseño y desarrollo Web</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/diseno-y-desarrollo-web">
+        Diseño y desarrollo Web
+      </a>
       
     </li>
   
@@ -1624,7 +1731,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/posicionamiento-web/">Posicionamiento en buscadores</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/posicionamiento-web/">
+        Posicionamiento en buscadores
+      </a>
       
     </li>
   
@@ -1636,7 +1745,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/tema-hubspot/ocean-pro">Ocean Pro Theme</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/tema-hubspot/ocean-pro">
+        Ocean Pro Theme
+      </a>
       
     </li>
   
@@ -1648,7 +1759,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/hubspot/cms-hub">Migración CMS Hub</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/hubspot/cms-hub">
+        Migración CMS Hub
+      </a>
       
     </li>
   
@@ -1660,7 +1773,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/hubspot-software/">Capacitación e implementación HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/servicios/hubspot-software/">
+        Capacitación e implementación HubSpot
+      </a>
       
     </li>
   
@@ -1678,7 +1793,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/clientes">Clientes</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/clientes">
+        Clientes
+      </a>
       
     </li>
   
@@ -1690,7 +1807,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/nosotros">Nosotros</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/nosotros">
+        Nosotros
+      </a>
       
     </li>
   
@@ -1702,7 +1821,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/blog">Blog</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/blog">
+        Blog
+      </a>
       
     </li>
   
@@ -1726,10 +1847,12 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">Recursos</a>
+      <a class="header__menu-link header__menu-link--toggle " href="javascript:;" aria-haspopup="true" aria-expanded="false">
+        Recursos
+      </a>
       
         
-          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false">
+          <button class="header__menu-child-toggle child-level-2 no-button" aria-expanded="false" aria-label="Expand submenu">
             <span class="show-for-sr">Show submenu for Recursos</span>
               <svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 448 512" aria-hidden="true"><g id="chevron-down1_layer"><path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z" /></g></svg>
           </button>
@@ -1743,7 +1866,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/checklists">Checklists Marketing, Ventas y HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/checklists">
+        Checklists Marketing, Ventas y HubSpot
+      </a>
       
     </li>
   
@@ -1755,7 +1880,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/reporte/sitio-web">Reporte de Sitio Web</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/reporte/sitio-web">
+        Reporte de Sitio Web
+      </a>
       
     </li>
   
@@ -1767,7 +1894,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-retorno-de-la-inversion-publicitaria">Calculadora de ROAS de publicidad</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-retorno-de-la-inversion-publicitaria">
+        Calculadora de ROAS de publicidad
+      </a>
       
     </li>
   
@@ -1779,7 +1908,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-roi-hubspot">Calculadora de ROI de HubSpot</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/calculadora-de-roi-hubspot">
+        Calculadora de ROI de HubSpot
+      </a>
       
     </li>
   
@@ -1791,7 +1922,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/link-de-whatsapp">Generar enlace de WhatsApp</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/link-de-whatsapp">
+        Generar enlace de WhatsApp
+      </a>
       
     </li>
   
@@ -1803,7 +1936,9 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
       
         
       
-      <a class="header__menu-link  " href="https://www.mediasource.mx/creador-de-url-utms">Generador de UTMs</a>
+      <a class="header__menu-link  " href="https://www.mediasource.mx/creador-de-url-utms">
+        Generador de UTMs
+      </a>
       
     </li>
   
@@ -2502,16 +2637,18 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
         
         
         <div class="main__reviews__title">
+          
           <h3 class="main__reviews__title-el off__toc">¡100% recomendables!</h3>
+          
         </div>
         
         <div class="main__reviews__review">
-            <p class="main__reviews__review-el">Media Source nos ayudó a rediseñar nuestro website y a migrarlo en tiempo récord. La atención a cliente es espectacular al igual que el seguimiento que nos han dado, desde la primera junta entendieron perfecto lo que buscábamos y estamos encantados con su servicio, tanto que ya estamos empezando una siguiente fase con ellos.</p>
+            <span class="main__reviews__review-el">Media Source nos ayudó a rediseñar nuestro website y a migrarlo en tiempo récord. La atención a cliente es espectacular al igual que el seguimiento que nos han dado, desde la primera junta entendieron perfecto lo que buscábamos y estamos encantados con su servicio, tanto que ya estamos empezando una siguiente fase con ellos.</span>
         </div>
         <div class="main__reviews__person">
           
           <div class="main__reviews__person-img">
-            <img class="main__reviews__person-img-el" src="https://www.mediasource.mx/hs-fs/hubfs/WebSite2020/testimoniales/KS.jpeg?height=60&amp;name=KS.jpeg" alt="KS" loading="lazy" widht="60" height="60">
+            <img class="main__reviews__person-img-el" src="https://www.mediasource.mx/hs-fs/hubfs/WebSite2020/testimoniales/KS.jpeg?height=60&amp;name=KS.jpeg" alt="KS" widht="60" height="60">
           </div>
           
           <div class="main__reviews__person-name">
@@ -2555,16 +2692,18 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
         
         
         <div class="main__reviews__title">
+          
           <h3 class="main__reviews__title-el off__toc">100% recommendable!</h3>
+          
         </div>
         
         <div class="main__reviews__review">
-            <p class="main__reviews__review-el">La agencia trabaja con empresas de diferentes industrias y brinda una gama de servicios adecuados para promocionar todo tipo de negocios, lo que la hace perfecta para los fotógrafos que desean aumentar su visibilidad e ingresos en línea.</p>
+            <span class="main__reviews__review-el">La agencia trabaja con empresas de diferentes industrias y brinda una gama de servicios adecuados para promocionar todo tipo de negocios, lo que la hace perfecta para los fotógrafos que desean aumentar su visibilidad e ingresos en línea.</span>
         </div>
         <div class="main__reviews__person">
           
           <div class="main__reviews__person-img">
-            <img class="main__reviews__person-img-el" src="https://www.mediasource.mx/hs-fs/hubfs/Site2022/YwgxdRRg.png?height=60&amp;name=YwgxdRRg.png" alt="Kate Gross " loading="lazy" widht="60" height="60">
+            <img class="main__reviews__person-img-el" src="https://www.mediasource.mx/hs-fs/hubfs/Site2022/YwgxdRRg.png?height=60&amp;name=YwgxdRRg.png" alt="Kate Gross " widht="60" height="60">
           </div>
           
           <div class="main__reviews__person-name">
@@ -3059,100 +3198,16 @@ a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-b
     
     
     
-    
-    
-    
 <!-- HubSpot performance collection script -->
 <script defer src="https://static.hsappstatic.net/content-cwv-embed/static-1.971/embed.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/71149477189/1718714891429/Ocean_Pro_-_MS/child.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/149647544230/1718811242095/Ocean_Pro_-_MS/js/jquery-3.7.1.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65031210623/1718811182439/Ocean_Pro_-_MS/js/waypoints.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363334/1718811181657/Ocean_Pro_-_MS/js/modules/flickity.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65031901311/1718811200573/Ocean_Pro_-_MS/js/modules/hs-nav-scroller.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032014932/1718811204179/Ocean_Pro_-_MS/js/modules/isotope.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032014773/1718811197888/Ocean_Pro_-_MS/js/modules/tabs.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032016898/1718811182895/Ocean_Pro_-_MS/js/modules/typed.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032016757/1718811207626/Ocean_Pro_-_MS/js/modules/paroller.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/71658376100/1718811181229/Ocean_Pro_-_MS/js/modules/jquery.matchHeight.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/102050479958/1718811212820/Ocean_Pro_-_MS/js/modules/sticky-kit.min.js"></script>
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032014769/1718811205703/Ocean_Pro_-_MS/js/global.min.js"></script>
-
-<!-- Facebook Pixel Code -->
-<script>
-  function LoadFBPixel() {
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-     n.queue=[];t=b.createElement(e);t.async=!0;
-     t.src=v;s=b.getElementsByTagName(e)[0];
-     s.parentNode.insertBefore(t,s)}(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1112983885727284');
-    fbq('track', 'PageView');
-    console.log('Script Loaded: Facebook Pixel');
-  }
-  setTimeout(function(){
-    LoadFBPixel()
-    /* Facebook ViewContent */
-    $(window).on('load', function () {
-      if ($('head').find('meta').filter(function() {return ($(this).attr('name')||"").toLowerCase() == 'robots'}).length > 0) {
-        if (($('head').find('meta').filter(function() {return ($(this).attr('name')||"").toLowerCase() == 'robots'}).attr('content').toLowerCase().indexOf("noindex") > -1)&&(($('body').hasClass('hs--user'))||(editor()))) {
-          // none
-        }
-      } else {
-        fbq('track', 'ViewContent');
-      }
-    });
-    /* End Facebook View Content */
-  }, 8000);
-</script>
-<!-- End Facebook Pixel -->
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1112983885727284&amp;ev=PageView&amp;noscript=1"></noscript>
-
-<noscript>
-  <img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=352921&amp;fmt=gif">
-</noscript>
-
-
-<script type="text/javascript"> 
-  function loadLinkedinTracking() {
-      
-      _linkedin_data_partner_id = "352921";
-      (function(){
-        var s = document.getElementsByTagName("script")[0];
-        var b = document.createElement("script");
-        b.type = "text/javascript";b.async = true;
-        b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
-        s.parentNode.insertBefore(b, s);
-        console.log('Script loaded: Linkedin');    
-       })();
-      
-  }
-</script>
-<script>
-  setTimeout(function(){ 
-    loadLinkedinTracking();
-  }, 8000)
-</script>
-
-
-
-<div id="adwordsAsyncScripts"></div>
-<script>
-function loadGoogleAddwords() {
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-956885017');
-}
- setTimeout(function(){ 
-   $("<script>").appendTo("#adwordsAsyncScripts").on("load", function(){}).prop("type","text/javascript").prop("src","https://www.googletagmanager.com/gtag/js?id=AW-956885017");
-  loadGoogleAddwords();
-   console.log('Script loaded: GoogleAds');    
- }, 8000)
-</script>
-
-
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/71149477189/1721176916388/Ocean_Pro_-_MS/child.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/149647544230/1721176928701/Ocean_Pro_-_MS/js/jquery-3.7.1.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65031210623/1721176946611/Ocean_Pro_-_MS/js/waypoints.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65025363334/1721176923855/Ocean_Pro_-_MS/js/modules/flickity.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65031901311/1721176970863/Ocean_Pro_-_MS/js/modules/hs-nav-scroller.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032014773/1721176929262/Ocean_Pro_-_MS/js/modules/tabs.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032016757/1721176936598/Ocean_Pro_-_MS/js/modules/paroller.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/template_assets/65032014769/1721176945413/Ocean_Pro_-_MS/js/global.min.js"></script>
 <script>
 var hsVars = hsVars || {}; hsVars['language'] = 'es-mx';
 </script>
@@ -3169,7 +3224,7 @@ var hsVars = hsVars || {}; hsVars['language'] = 'es-mx';
     }
   </script>
   
-<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/module_assets/65031901303/1715273686856/module_65031901303_website-header.min.js"></script>
+<script src="https://www.mediasource.mx/hs-fs/hub/1556449/hub_generated/module_assets/65031901303/1720741628854/module_65031901303_website-header.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -3355,8 +3410,8 @@ _hsq.push(["setContentMetadata", {
 
 <script type="text/javascript">
 var hsVars = {
-    render_id: "15ddee3f-fc52-4e35-90cf-ade0da34ee8d",
-    ticks: 1718842130307,
+    render_id: "fb72e316-486b-4a20-b931-fdbfdc39dbc6",
+    ticks: 1721352824080,
     page_id: 5191025167,
     
     content_group_id: 0,
@@ -3374,30 +3429,22 @@ var hsVars = {
 </script>
 
 
-<script defer src="/hs/hsstatic/HubspotToolsMenu/static-1.321/js/index.js"></script>
-
-
+<script defer src="/hs/hsstatic/HubspotToolsMenu/static-1.349/js/index.js"></script>
 
 <script>
- setTimeout(function(){ 
-  loadGoogleAddwords();
- }, 400)
+setTimeout(function(){
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://kit.fontawesome.com/b01f20ad8d.js"; 
+    script.onload = function() {
+        console.log('Script loaded: Fontawesome Pro');
+    };
+    script.onerror = function() {
+        console.log('Error loading script: Fontawesome Pro');
+    };
+  	document.body.appendChild(script);
+}, 2000);
 </script>
-
-<script>
-class HSLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach(t=>window.addEventListener(t,e.userEventListener,e.eventOptions))}_removeUserInteractionListener(e){this.triggerEvents.forEach(t=>window.removeEventListener(t,e.userEventListener,e.eventOptions))}triggerListener(){this._removeUserInteractionListener(this),this._loadEverythingNow()}async _loadEverythingNow(){this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("hs-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=hslazyloadscript]").forEach(e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-hs-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)})}async _transformScript(e){return await this._requestAnimFrame(),new Promise(t=>{var n=document.createElement("script");[...e.attributes].forEach(e=>{let t=e.nodeName;"type"!==t&&("data-hs-type"===t&&(t="type"),n.setAttribute(t,e.nodeValue))}),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)})}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach(t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}}),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"hs-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){const n=e[t];Object.defineProperty(e,t,{get:n||function(){},set:n=>{e["hs"+t]=n}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("hs-DOMContentLoaded",()=>t.bind(document)(n))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map(e=>"load"===e?"hs-load":e).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]})}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("hs-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("hs-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("hs-readystatechange")),await this._requestAnimFrame(),document.hsonreadystatechange&&document.hsonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("hs-load")),await this._requestAnimFrame(),window.hsonload&&window.hsonload(),await this._requestAnimFrame(),this.allJQueries.forEach(e=>e(window).trigger("hs-load")),window.dispatchEvent(new Event("hs-pageshow")),await this._requestAnimFrame(),window.hsonpageshow&&window.hsonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,i=document.createRange(),r=n.parentElement;let s=e.get(n);void 0===s&&(s=n.nextSibling,e.set(n,s));const a=document.createDocumentFragment();i.setStart(a,0),a.appendChild(i.createContextualFragment(t)),r.insertBefore(a,s)}}async _requestAnimFrame(){return new Promise(e=>requestAnimationFrame(e))}static run(){const e=new HSLoadScripts(["keydown","mouseover","touchmove","touchstart","wheel"]);e._delayEventListeners(),e._delayJQueryReady(e),e._addUserInteractionListener(e)}}HSLoadScripts.run();
-</script>
-
-<!-- Google Tag Manager -->  
-<script type="hslazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MJ42PL');</script>
-<!-- End Google Tag Manager -->  
-
-<script async src="https://kit.fontawesome.com/b01f20ad8d.js" crossorigin="anonymous"></script>
-
 
 
     
