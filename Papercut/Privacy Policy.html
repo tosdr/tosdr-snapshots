@@ -68,7 +68,7 @@
 
      
 
-<script defer src='https://www.papercut.com/js/build.min.a0c4a42ed08113752eb1c43293365c4f5bebe7260a4d25ca84e49d634141a56a.js' ></script>
+<script defer src='https://www.papercut.com/js/build.min.126a737b149e315d80bc025c31f1f8372ce08366355df05be14edbef001f80e9.js' ></script>
 
 
 <meta name="google-site-verification" content="xk0NeGJoP-1gvWBtABzhsCzOH7KKbym9FZWXiuYysO8" />
@@ -82,8 +82,169 @@
 
 
 
+ <script type="text/javascript">
+  var _hsp = (window._hsp = window._hsp || []);
+  _hsp.push([
+    "addPrivacyConsentListener",
+    function (consent) {
+      if (consent.categories.analytics) {
+      +function(a,p,P,b,y){a.braze={};a.brazeQueue=[];for(var s="BrazeSdkMetadata DeviceProperties Card Card.prototype.dismissCard Card.prototype.removeAllSubscriptions Card.prototype.removeSubscription Card.prototype.subscribeToClickedEvent Card.prototype.subscribeToDismissedEvent Card.fromContentCardsJson ImageOnly CaptionedImage ClassicCard ControlCard ContentCards ContentCards.prototype.getUnviewedCardCount Feed Feed.prototype.getUnreadCardCount ControlMessage InAppMessage InAppMessage.SlideFrom InAppMessage.ClickAction InAppMessage.DismissType InAppMessage.OpenTarget InAppMessage.ImageStyle InAppMessage.Orientation InAppMessage.TextAlignment InAppMessage.CropType InAppMessage.prototype.closeMessage InAppMessage.prototype.removeAllSubscriptions InAppMessage.prototype.removeSubscription InAppMessage.prototype.subscribeToClickedEvent InAppMessage.prototype.subscribeToDismissedEvent InAppMessage.fromJson FullScreenMessage ModalMessage HtmlMessage SlideUpMessage User User.Genders User.NotificationSubscriptionTypes User.prototype.addAlias User.prototype.addToCustomAttributeArray User.prototype.addToSubscriptionGroup User.prototype.getUserId User.prototype.getUserId User.prototype.incrementCustomUserAttribute User.prototype.removeFromCustomAttributeArray User.prototype.removeFromSubscriptionGroup User.prototype.setCountry User.prototype.setCustomLocationAttribute User.prototype.setCustomUserAttribute User.prototype.setDateOfBirth User.prototype.setEmail User.prototype.setEmailNotificationSubscriptionType User.prototype.setFirstName User.prototype.setGender User.prototype.setHomeCity User.prototype.setLanguage User.prototype.setLastKnownLocation User.prototype.setLastName User.prototype.setPhoneNumber User.prototype.setPushNotificationSubscriptionType InAppMessageButton InAppMessageButton.prototype.removeAllSubscriptions InAppMessageButton.prototype.removeSubscription InAppMessageButton.prototype.subscribeToClickedEvent FeatureFlag FeatureFlag.prototype.getStringProperty FeatureFlag.prototype.getNumberProperty FeatureFlag.prototype.getBooleanProperty FeatureFlag.prototype.getImageProperty FeatureFlag.prototype.getJsonProperty FeatureFlag.prototype.getTimestampProperty automaticallyShowInAppMessages destroyFeed hideContentCards showContentCards showFeed showInAppMessage deferInAppMessage toggleContentCards toggleFeed changeUser destroy getDeviceId getDeviceId initialize isPushBlocked isPushPermissionGranted isPushSupported logCardClick logCardDismissal logCardImpressions logContentCardImpressions logContentCardClick logCustomEvent logFeedDisplayed logInAppMessageButtonClick logInAppMessageClick logInAppMessageHtmlClick logInAppMessageImpression logPurchase openSession requestPushPermission removeAllSubscriptions removeSubscription requestContentCardsRefresh requestFeedRefresh refreshFeatureFlags requestImmediateDataFlush enableSDK isDisabled setLogger setSdkAuthenticationSignature addSdkMetadata disableSDK subscribeToContentCardsUpdates subscribeToFeedUpdates subscribeToInAppMessage subscribeToSdkAuthenticationFailures toggleLogging unregisterPush wipeData handleBrazeAction subscribeToFeatureFlagsUpdates getAllFeatureFlags logFeatureFlagImpression".split(" "),i=0;i<s.length;i++){for(var m=s[i],k=a.braze,l=m.split("."),j=0;j<l.length-1;j++)k=k[l[j]];k[l[j]]=(new Function("return function "+m.replace(/\./g,"_")+"(){window.brazeQueue.push(arguments); return true}"))()}window.braze.getDeferredInAppMessage=function(){return new window.braze.InAppMessage};window.braze.getCachedContentCards=function(){return new window.braze.ContentCards};window.braze.getCachedFeed=function(){return new window.braze.Feed};window.braze.getUser=function(){return new window.braze.User};window.braze.getFeatureFlag=function(){return new window.braze.FeatureFlag};(y=p.createElement(P)).type='text/javascript';
+        y.src='https://js.appboycdn.com/web-sdk/5.3/braze.min.js';
+        y.async=1;(b=p.getElementsByTagName(P)[0]).parentNode.insertBefore(y,b)
+      }(window,document,'script');
+    }
+  },
+]);
+</script>
+
+<script>
+  let contentCards;
+  var _hsp = (window._hsp = window._hsp || []);
+  _hsp.push([
+    "addPrivacyConsentListener",
+    function (consent) {
+      if (consent.categories.analytics) {
+        
+        
+        braze.initialize('a75f80b5-9aa8-464a-9388-9eab407cbcfc', {
+          baseUrl: "sdk.iad-07.braze.com",
+          enableLogging: true,
+          allowUserSuppliedJavascript: true
+        });
+        
+        braze.subscribeToContentCardsUpdates((updates) => {
+          contentCards = updates.cards;
+          console.log(contentCards)
+        });
+        
+        braze.automaticallyShowInAppMessages();
+
+        
+        braze.openSession();
+        braze.requestContentCardsRefresh();
+      }
+    },
+  ]);
+</script>
 
 
+
+<script>
+  var _hsp = (window._hsp = window._hsp || []);
+    _hsp.push([
+      "addPrivacyConsentListener",
+      function (consent) {
+        if (consent.categories.analytics) {
+          setTimeout(function() { 
+            (function() {
+              function fetchBrazeContentCards() {
+                if (typeof braze !== 'undefined' && braze.getUser) {
+                  console.log("Executed content card refresh");
+                  braze.requestContentCardsRefresh();
+                  localStorage.setItem('forcedContentCardsLastRun', new Date().toISOString());
+                } else {
+                  setTimeout(fetchBrazeContentCards, 100); 
+                }
+              }
+
+              function shouldRunScript() {
+                var lastRun = localStorage.getItem('forcedContentCardsLastRun');
+                if (lastRun) {
+                  var lastRunDate = new Date(lastRun);
+                  var now = new Date();
+                  var thirtyMinutes = 30 * 60 * 1000; 
+                  if ((now - lastRunDate) >= thirtyMinutes) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                } else {
+                  return true; 
+                }
+              }
+
+              if (shouldRunScript()) {
+                fetchBrazeContentCards();
+              }
+            })(); 
+          }, 6000); 
+        }
+      }
+    ]);
+
+</script>
+<script>
+
+  
+  function getXid() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('xid');
+  }
+  
+  
+  function updateBrazeUser(xid) {
+    if (typeof braze !== 'undefined' && braze.changeUser) {
+      console.log("Updating Braze user with xid:", xid);
+      braze.changeUser(xid);
+    } else {
+      setTimeout(() => {
+        updateBrazeUser(xid);
+      }, 100); 
+    }
+  }
+
+
+  var _hsp = (window._hsp = window._hsp || []);
+  _hsp.push([
+      "addPrivacyConsentListener",
+      function(consent) {
+        if (consent.categories.analytics) {
+          window.onload = function() {
+            function waitForBraze() {
+              if (typeof braze !== "undefined" && typeof braze.getDeviceId === "function") {
+                const braze_device_id = braze.getDeviceId();
+
+                
+                if (typeof braze_device_id === 'string' && braze_device_id.trim() !== '') {
+                  
+                  const inputField = document.querySelector('input[name="braze_device_id"].hs-input[type="hidden"]');
+                  if (inputField) {
+                    inputField.value = braze_device_id;
+                  }
+                }
+
+                
+                const xid = getXid(); 
+                if (xid) {
+                  updateBrazeUser(xid); 
+                }
+              } else {
+                setTimeout(waitForBraze, 500); 
+              }
+            }
+            waitForBraze();
+          };
+        }
+      }
+  ]);
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+              
+              console.log('Service worker registered successfully:', registration);
+          })
+          .catch(err => {
+              console.error('SW registration failed! 😱', err);
+          });
+    });
+  } else {
+    
+    console.log('Service workers are not supported in this browser.');
+  }
+</script>
 
 
 
@@ -125,46 +286,6 @@
     },
   ]);
 </script>
-
-
-
-<script type="text/javascript">
-    var _hsp = window._hsp = window._hsp || []; 
-    _hsp.push(['addPrivacyConsentListener', function(consent) { 
-        if (consent.categories.analytics) {
-            (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
-            ;r.type="text/javascript"
-            ;r.integrity="sha384-tzcaaCH5+KXD4sGaDozev6oElQhsVfbJvdi3//c2YvbY02LrNlbpGdt3Wq4rWonS"
-            ;r.crossOrigin="anonymous";r.async=true
-            ;r.src="https://cdn.amplitude.com/libs/amplitude-8.5.0-min.gz.js"
-            ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
-            console.log("[Amplitude] Error: could not load SDK")}}
-            ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
-            ;function s(e,t){e.prototype[t]=function(){
-            this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
-            var o=function(){this._q=[];return this}
-            ;var a=["add","append","clearAll","prepend","set","setOnce","unset","preInsert","postInsert","remove"]
-            ;for(var c=0;c<a.length;c++){s(o,a[c])}n.Identify=o;var u=function(){this._q=[]
-            ;return this}
-            ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
-            ;for(var p=0;p<l.length;p++){s(u,l[p])}n.Revenue=u
-            ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","enableTracking","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
-            ;function v(e){function t(t){e[t]=function(){
-            e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
-            for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
-            e=(!e||e.length===0?"$default_instance":e).toLowerCase()
-            ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
-            }return n._iq[e]};e.amplitude=n})(window,document);
-            amplitude.getInstance().init("075dfa7287c52d63a84e8aafa53bd578", null, {
-                includeFbclid: true,
-                includeGclid: true,
-                includeReferrer: true,
-                includeUtm: true
-            });
-        }
-    }]);
-</script>
-
 
 
 
@@ -465,88 +586,119 @@
 </a>
 
 <script defer>
-
-const checkHeaderContentCards = () => {
-  if (contentCards && contentCards.length > 0) {
-    const topNavCards = contentCards.filter(card => 
-      card.extras && card.extras.blocks && card.extras.blocks.includes("c-top-bar-left-link")
-    );
-
-    if (topNavCards.length > 0) {
-      
-      const lowestWeightCard = topNavCards.reduce((lowest, card) => 
-        !lowest || parseInt(card.extras.weight) < parseInt(lowest.extras.weight) ? card : lowest, null);
-      processHeaderContentCards(lowestWeightCard);
-      console.log("Lowest Weight Top Nav Card Selected");
-    } else {
-      console.log("No Top Nav Cards Found");
-    }
-  } else {
-    setTimeout(checkHeaderContentCards, 1000); 
-    console.log("Checking");
-  }
-};
-
-
-const processHeaderContentCards = (card) => {
-  const recommendationLink = document.getElementById('top_bar_recommendation');
-
   
-  if (card.imageUrl) {
-    loadHeaderImage(card.imageUrl)
-      .then(thumbImg => {
-        thumbImg.className = 'c-top-bar-left-link__icon'; 
-        recommendationLink.innerHTML = ''; 
-        recommendationLink.href = card.url || '#'; 
-        recommendationLink.appendChild(thumbImg);
-
-        const cardTitle = document.createElement('span');
-        cardTitle.textContent = card.title.substring(0, 45) || ''; 
-        recommendationLink.appendChild(cardTitle);
-
-        const arrowSvg = document.createElement('svg');
-        arrowSvg.className = 'c-top-bar-left-link__arrow'; 
-        arrowSvg.setAttribute('width', '5');
-        arrowSvg.setAttribute('height', '9');
-        arrowSvg.setAttribute('viewBox', '0 0 5 9');
-        arrowSvg.setAttribute('fill', 'none');
-        arrowSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-        arrowSvg.innerHTML = '<path d="M4.11996 4.37081L0.739367 1.31358C0.659771 1.2416 0.532116 1.2416 0.45252 1.31358C0.372923 1.38556 0.372923 1.50101 0.45252 1.57299L3.68894 4.49983L0.45252 7.42667C0.372923 7.49866 0.372923 7.6141 0.45252 7.68608C0.491567 7.72139 0.544131 7.74041 0.595192 7.74041C0.646254 7.74041 0.698818 7.72275 0.737865 7.68608L4.11846 4.62886C4.19806 4.55823 4.19806 4.44143 4.11996 4.37081Z"/>';
-        recommendationLink.appendChild(arrowSvg);
-      })
-      .catch(error => console.error('Error loading image:', error));
-  } else {
-    recommendationLink.href = card.url || '#'; 
-    recommendationLink.innerHTML = ''; 
+  const checkHeaderContentCards = () => {
+    if (contentCards && contentCards.length > 0) {
+      
+      const topNavCards = contentCards.filter(card => 
+        card.extras && card.extras.blocks && card.extras.blocks.includes("c-top-bar-left-link")
+      );
+  
+      
+      if (topNavCards.length > 0) {
+        
+        const lowestWeightCard = topNavCards.reduce((lowest, card) => 
+          !lowest || parseInt(card.extras.weight) < parseInt(lowest.extras.weight) ? card : lowest, null);
+        processHeaderContentCards(lowestWeightCard);
+      } 
+    } else {
+      
+      setTimeout(checkHeaderContentCards, 1000); 
+    }
+  };
+  
+  
+  const processHeaderContentCards = (card) => {
+    const recommendationLink = document.getElementById('top_bar_recommendation');
+  
     
-    const cardTitle = document.createElement('span');
-    cardTitle.textContent = card.title.substring(0, 45) || ''; 
-    recommendationLink.appendChild(cardTitle);
+    if (card.imageUrl) {
+      loadHeaderImage(card.imageUrl) 
+        .then(thumbImg => {
+          thumbImg.className = 'c-top-bar-left-link__icon'; 
+          recommendationLink.innerHTML = ''; 
+          recommendationLink.href = card.url || '#'; 
+          recommendationLink.appendChild(thumbImg); 
+  
+          
+          const cardTitle = document.createElement('span');
+          cardTitle.textContent = card.title.substring(0, 59) || '...'; 
+          recommendationLink.appendChild(cardTitle);
+  
+          
+          const arrowSvg = document.createElement('svg');
+          arrowSvg.className = 'c-top-bar-left-link__arrow'; 
+          arrowSvg.setAttribute('width', '5');
+          arrowSvg.setAttribute('height', '9');
+          arrowSvg.setAttribute('viewBox', '0 0 5 9');
+          arrowSvg.setAttribute('fill', 'none');
+          arrowSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+          arrowSvg.innerHTML = '<path d="M4.11996 4.37081L0.739367 1.31358C0.659771 1.2416 0.532116 1.2416 0.45252 1.31358C0.372923 1.38556 0.372923 1.50101 0.45252 1.57299L3.68894 4.49983L0.45252 7.42667C0.372923 7.49866 0.372923 7.6141 0.45252 7.68608C0.491567 7.72139 0.544131 7.74041 0.595192 7.74041C0.646254 7.74041 0.698818 7.72275 0.737865 7.68608L4.11846 4.62886C4.19806 4.55823 4.19806 4.44143 4.11996 4.37081Z"/>';
+          recommendationLink.appendChild(arrowSvg);
+  
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && !entry.target.dataset.impressionLogged) {
+                
+                braze.logContentCardImpressions([card]); 
+                
+                entry.target.dataset.impressionLogged = true;
+                observer.disconnect();
+              }
+            });
+          }, { threshold: 0.5 }); 
+  
+          observer.observe(recommendationLink);
+  
+        
+        recommendationLink.addEventListener('click', (event) => {
+            event.preventDefault(); 
 
-    const arrowSvg = document.createElement('svg');
-    arrowSvg.className = 'c-top-bar-left-link__arrow'; 
-    arrowSvg.setAttribute('width', '5');
-    arrowSvg.setAttribute('height', '9');
-    arrowSvg.setAttribute('viewBox', '0 0 5 9');
-    arrowSvg.setAttribute('fill', 'none');
-    arrowSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    arrowSvg.innerHTML = '<path d="M4.11996 4.37081L0.739367 1.31358C0.659771 1.2416 0.532116 1.2416 0.45252 1.31358C0.372923 1.38556 0.372923 1.50101 0.45252 1.57299L3.68894 4.49983L0.45252 7.42667C0.372923 7.49866 0.372923 7.6141 0.45252 7.68608C0.491567 7.72139 0.544131 7.74041 0.595192 7.74041C0.646254 7.74041 0.698818 7.72275 0.737865 7.68608L4.11846 4.62886C4.19806 4.55823 4.19806 4.44143 4.11996 4.37081Z"/>';
-    recommendationLink.appendChild(arrowSvg);
-  }
-};
-
-
-checkHeaderContentCards();
-
-
-const loadHeaderImage = src =>
-  new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
-</script>
+            
+            if (braze.logContentCardClick(card)) {
+              
+              setTimeout(() => {
+                window.location.href = card.url; 
+              }, 5000);
+            } 
+          });
+        })
+        .catch(error => console.error('Error loading image:', error));
+    } else {
+      recommendationLink.href = card.url || '#'; 
+      recommendationLink.innerHTML = ''; 
+      
+      
+      const cardTitle = document.createElement('span');
+      cardTitle.textContent = card.title.substring(0, 45) || ''; 
+      recommendationLink.appendChild(cardTitle);
+  
+      
+      const arrowSvg = document.createElement('svg');
+      arrowSvg.className = 'c-top-bar-left-link__arrow'; 
+      arrowSvg.setAttribute('width', '5');
+      arrowSvg.setAttribute('height', '9');
+      arrowSvg.setAttribute('viewBox', '0 0 5 9');
+      arrowSvg.setAttribute('fill', 'none');
+      arrowSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      arrowSvg.innerHTML = '<path d="M4.11996 4.37081L0.739367 1.31358C0.659771 1.2416 0.532116 1.2416 0.45252 1.31358C0.372923 1.38556 0.372923 1.50101 0.45252 1.57299L3.68894 4.49983L0.45252 7.42667C0.372923 7.49866 0.372923 7.6141 0.45252 7.68608C0.491567 7.72139 0.544131 7.74041 0.595192 7.74041C0.646254 7.74041 0.698818 7.72275 0.737865 7.68608L4.11846 4.62886C4.19806 4.55823 4.19806 4.44143 4.11996 4.37081Z"/>';
+      recommendationLink.appendChild(arrowSvg);
+    }
+  };
+  
+  
+  checkHeaderContentCards();
+  
+  
+  const loadHeaderImage = src =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  </script>
 <!--bookshop-live end-->
     <div class="c-top-bar__nav-items">
         
@@ -2216,12 +2368,12 @@ x-on:click="burgerOpen = ! burgerOpen">
 
 <div class="c-sub-nav-label">
     
-        <a href="https://www.papercut.com/resources/reports/grid-report-for-print-management-spring-2024/" reseed-ignore class="c-sub-nav-label__primary-small-with-image">
+        <a href="https://www.papercut.com/resources/reports/grid-report-for-print-management-summer-2024/" reseed-ignore class="c-sub-nav-label__primary-small-with-image">
             <div class="c-sub-nav-label__primary-small-with-image__image-container">
                 <img src="https://cdn1.papercut.com/web/cloudcannon/G2_Logo_Red_RGB.svg" alt="label icon">
             </div>
             <div class="c-sub-nav-label__primary-small-with-image__content-container">
-                <p class="c-sub-nav-label__primary-small-with-image__content-container__heading">Grid® Report for Print Management | Spring 2024</p>
+                <p class="c-sub-nav-label__primary-small-with-image__content-container__heading">Grid® Report for Print Management | Summer 2024</p>
                 <p class="c-sub-nav-label__primary-small-with-image__content-container__description"> </p>
             </div>
         </a>
@@ -4158,12 +4310,12 @@ x-on:click="burgerOpen = ! burgerOpen">
 
 <div class="c-sub-nav-label">
     
-        <a href="https://www.papercut.com/resources/reports/grid-report-for-print-management-spring-2024/" reseed-ignore class="c-sub-nav-label__primary-small-with-image">
+        <a href="https://www.papercut.com/resources/reports/grid-report-for-print-management-summer-2024/" reseed-ignore class="c-sub-nav-label__primary-small-with-image">
             <div class="c-sub-nav-label__primary-small-with-image__image-container">
                 <img src="https://cdn1.papercut.com/web/cloudcannon/G2_Logo_Red_RGB.svg" alt="label icon">
             </div>
             <div class="c-sub-nav-label__primary-small-with-image__content-container">
-                <p class="c-sub-nav-label__primary-small-with-image__content-container__heading">Grid® Report for Print Management | Spring 2024</p>
+                <p class="c-sub-nav-label__primary-small-with-image__content-container__heading">Grid® Report for Print Management | Summer 2024</p>
                 <p class="c-sub-nav-label__primary-small-with-image__content-container__description"> </p>
             </div>
         </a>
@@ -4960,8 +5112,7 @@ x-on:click="burgerOpen = ! burgerOpen">
 
 
 
-  <p class="c-heading c-heading--h5">Subscribe to PaperCut communications</p>
-
+  <p class="c-heading c-heading--h5 c-heading--">Subscribe to PaperCut communications</p>
 
 <!--bookshop-live end-->
     
@@ -5252,7 +5403,7 @@ x-on:click="burgerOpen = ! burgerOpen">
                 <!--bookshop-live name(structures/footer/footer-navigation/footer-link-group)-->
 
 <div class="c-footer-link-group">
-    <p class="c-footer-link-group__heading">Have a Read</p>
+    <p class="c-footer-link-group__heading">Learn more</p>
     <ul class="c-footer-link-group__link-list">
         
         <li class="c-footer-link-group__link-list__item">
@@ -5264,6 +5415,12 @@ x-on:click="burgerOpen = ! burgerOpen">
         <li class="c-footer-link-group__link-list__item">
             
                 <a class="c-footer-link-group__link-list__item__link" href="https://www.papercut.com/resources/"  reseed-ignore>Resources</a>
+            
+        </li>
+        
+        <li class="c-footer-link-group__link-list__item">
+            
+                <a class="c-footer-link-group__link-list__item__link" href="https://www.papercut.com/products/demo/"  reseed-ignore>Interactive demos</a><span class="c-footer-link-group__link-list__item__link--postscript">new!</span>
             
         </li>
         
@@ -5305,6 +5462,12 @@ x-on:click="burgerOpen = ! burgerOpen">
             
         </li>
         
+        <li class="c-footer-link-group__link-list__item">
+            
+                <a class="c-footer-link-group__link-list__item__link" href="https://www.papercut.com/book-a-demo/"  reseed-ignore>Book a demo</a><span class="c-footer-link-group__link-list__item__link--postscript">new!</span>
+            
+        </li>
+        
     </ul>
 </div>
 <!--bookshop-live end-->
@@ -5324,6 +5487,12 @@ x-on:click="burgerOpen = ! burgerOpen">
         <li class="c-footer-link-group__link-list__item">
             
                 <a class="c-footer-link-group__link-list__item__link" href="https://www.papercut.com/about/life-at-papercut/"  reseed-ignore>Careers</a>
+            
+        </li>
+        
+        <li class="c-footer-link-group__link-list__item">
+            
+                <a class="c-footer-link-group__link-list__item__link" href="https://www.papercut.com/about/b-corp/"  reseed-ignore>B Corp</a>
             
         </li>
         
@@ -5397,9 +5566,8 @@ x-on:click="burgerOpen = ! burgerOpen">
 
 
 
-  <h6 class="c-heading c-heading--h3">Share your thoughts</h6>
+  <h6 class="c-heading c-heading--h3 c-heading--">Share your thoughts</h6>
   
-
 <!--bookshop-live end--></div>
         <p class="c-floating-box__body-content">How easy was it to find what you were looking for on our website?</p>
         <div id="floatingboxcta" class="c-floating-box__button">
@@ -5438,13 +5606,6 @@ x-on:click="burgerOpen = ! burgerOpen">
     
     
     ctaButton.onclick = function () {
-        
-        
-        
-        
-        
-        
-        
         closeButton();
         window.location.href = "https://www.google.com";
     };
@@ -5459,22 +5620,8 @@ x-on:click="burgerOpen = ! burgerOpen">
         hasSeenPopup = readCookie("pc_nps");
         if ((hasSeenPopup == "false") && (sessionTime > 90)) {
             targetDiv.style.display = "block";
-            
-            
-            
-            
-            
-            
-            
         } else {
             targetDiv.style.display = "none";
-            
-            
-            
-            
-            
-            
-            
         }
     }
     
