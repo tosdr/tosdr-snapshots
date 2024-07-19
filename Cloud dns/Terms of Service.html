@@ -43,31 +43,26 @@
 				<link rel="icon" type="image/png" href="/images/web/favicon.gif" />
 		<link rel="apple-touch-icon" href="/i/apple-touch-icon.png">
 		
-		<script src="/js/jquery.min.js?ver=40468" type="text/javascript"></script>
-		<script src="/js/jquery.ui.js?ver=40468" type="text/javascript"></script>
-		<script src="/js/jquery.additional.min.js?ver=40468" type="text/javascript"></script>
+		<script src="/js/jquery.min.js?ver=40665" type="text/javascript"></script>
+		<script src="/js/jquery.ui.js?ver=40665" type="text/javascript"></script>
+		<script src="/js/jquery.additional.min.js?ver=40665" type="text/javascript"></script>
 				
-		<link href="/css/additional.min.css?ver=40468" rel="stylesheet" type="text/css" defer />
+		<link href="/css/additional.min.css?ver=40665" rel="stylesheet" type="text/css" defer />
 		
-					<link href="/css/fonts.css?ver=40468" rel="stylesheet" type="text/css" defer />
-				<link href="/css/new-style.css?ver=40468" rel="stylesheet" type="text/css" defer />
-		<link href="/css/icons.css?ver=40468" rel="stylesheet" type="text/css" defer />
+					<link href="/css/fonts.css?ver=40665" rel="stylesheet" type="text/css" defer />
+				<link href="/css/new-style.css?ver=40665" rel="stylesheet" type="text/css" defer />
+		<link href="/css/icons.css?ver=40665" rel="stylesheet" type="text/css" defer />
 		
-				<link href="/css/tos.css?ver=40468" rel="stylesheet" type="text/css" />
+				<link href="/css/tos.css?ver=40665" rel="stylesheet" type="text/css" />
 				
-		<link href="/css/responsive.css?ver=40468" rel="stylesheet" type="text/css" defer /> 
-		<link href="/css/popup.css?ver=40468" rel="stylesheet" type="text/css" defer />
-		<link href="/css/header-responsive.css?ver=40468" rel="stylesheet" type="text/css" defer />
+		<link href="/css/responsive.css?ver=40665" rel="stylesheet" type="text/css" defer /> 
+		<link href="/css/popup.css?ver=40665" rel="stylesheet" type="text/css" defer />
+		<link href="/css/header-responsive.css?ver=40665" rel="stylesheet" type="text/css" defer />
 					<script type="text/javascript">
 				var darkTheme = window.matchMedia("(prefers-color-scheme: dark)");
 				
 				if (darkTheme.matches) {
-					var link = document.createElement('link');
-					link.href = "/css/darktheme.css?ver=40468";
-					link.rel = "stylesheet";
-					link.type = "text/css";
-					link.defer = true;
-					document.head.appendChild(link);
+					changeTheme('dark', '', '40665');
 				}
 			</script>
 				<!-- Facebook -->
@@ -399,25 +394,6 @@
 			<div class="wraper">
 				<a href="/" class="logo"></a>
 				<div class="mobile-settings-bar">
-					<div class="theme-bar mobile-lang-bar">
-						<a href="javascript:void(0);" onClick="loadJs(function(){showThemes(event)}); return false;" class="drop-down">
-							<span class="theme icon icon-white icon-sun"></span>
-						</a>
-						<ul class="drop-down-menu">
-															<li >
-									<a href="/main/theme/light/">
-										<span class="theme icon icon-dark icon-sun"></span>
-										<span>Light theme</span>
-									</a>
-								</li>
-															<li >
-									<a href="/main/theme/dark/">
-										<span class="theme icon icon-dark icon-moon"></span>
-										<span>Dark theme</span>
-									</a>
-								</li>
-													</ul>
-					</div>
 														<div class="lang-bar mobile-lang-bar">
 						<a href="javascript:void(0);" onClick="loadJs(function(){showLanguages(event)}); return false;" class="drop-down">
 							<span class="lang lang-en"></span>
@@ -565,6 +541,7 @@
 								<li><a href="/reverse-dns/">Reverse DNS</a></li>
 								<li><a href="/dnssec/">DNSSEC</a></li>
 								<li><a href="/dns-failover/">DNS Failover</a></li>
+								<li><a href="/dns-backups/">Backup DNS<span class="upper-text"><strong>NEW</strong></span></a></li>
 								<li><a href="/managed-dns/">Managed DNS</a></li>
 								<li><a href="/anycast-dns/">Anycast DNS</a></li>
 								<li><a href="/monitoring/">Monitoring</a></li>
@@ -574,8 +551,7 @@
 								<li><a href="/ssl-certificates/">SSL Certificates</a></li>
 								<li><a href="/private-dns-servers/">Private DNS servers</a></li>
 								<li><a href="/domain-parking/">Domain Parking</a></li>
-								<li><a href="/dns-for-tlds/">DNS for TLDs<span class="upper-text"><strong>NEW</strong></span></a></li>
-								<li><a href="https://www.cloudprima.com/?utm_source=footer&amp;utm_campaign=ClouDNS+Web" target="_blank">DDoS Protected VPS</a></li>
+								<li><a href="/dns-for-tlds/">DNS for TLDs</a></li>
 							</ul>
 						</li>
 						<li>
@@ -755,13 +731,13 @@
 							</a>
 							<ul class="drop-down-menu">
 																	<li >
-										<a href="/tos/theme/light/">
+										<a href="javascript: void(0);" onClick="changeTheme('light')">
 											<span class="theme icon icon-dark icon-sun"></span>
 											<span>Light theme</span>
 										</a>
 									</li>
 																	<li >
-										<a href="/tos/theme/dark/">
+										<a href="javascript: void(0);" onClick="changeTheme('dark')">
 											<span class="theme icon icon-dark icon-moon"></span>
 											<span>Dark theme</span>
 										</a>
@@ -773,6 +749,12 @@
 				<button class="mobile-nav-btn" id="mobileNavBtn" onClick="loadJs(function(){openMobileMenu()});"><span></span></button>
 				<div class="mobile-nav a-c">
 					<ul>
+						<li>
+														<a href="javascript: void(0);" onClick="loadJs(function(){changeTheme('dark')});">
+								<span class="theme icon icon-dark icon-moon"></span>
+								<span>Dark theme</span>
+							</a>
+						</li>
 						<li onClick="expandMobileMenu(this);">
 							<a href="javascript: void(0);" class="drop-down cursor-default">DNS Hosting</a>
 							<ul class="drop-down-menu">
@@ -791,6 +773,7 @@
 								<li><a href="/reverse-dns/">Reverse DNS</a></li>
 								<li><a href="/dnssec/">DNSSEC</a></li>
 								<li><a href="/dns-failover/">DNS Failover</a></li>
+								<li><a href="/dns-backups/">Backup DNS<span class="upper-text"><strong>NEW</strong></span></a></li>
 								<li><a href="/managed-dns/">Managed DNS</a></li>
 								<li><a href="/anycast-dns/">Anycast DNS</a></li>
 								<li><a href="/monitoring/">Monitoring</a></li>
@@ -801,7 +784,6 @@
 								<li><a href="/private-dns-servers/">Private DNS servers</a></li>
 								<li><a href="/domain-parking/">Domain Parking</a></li>
 								<li><a href="/dns-for-tlds/">DNS for TLDs<span class="upper-text"><strong>NEW</strong></span></a></li>
-								<li><a href="https://www.cloudprima.com/?utm_source=footer&amp;utm_campaign=ClouDNS+Web" target="_blank">DDoS Protected VPS</a></li>
 							</ul>
 						</li>
 						
@@ -1042,11 +1024,12 @@
 						<li><a href="/dynamic-dns/">Dynamic DNS</a></li>
 						<li><a href="/reverse-dns/">Reverse DNS</a></li>
 						<li><a href="/dns-failover/">DNS Failover</a></li>
-						<li><a href="/anycast-dns/">Anycast DNS</a></li>
-						<li><a href="/email-forwarding/">Email Forwarding</a></li>
-						<li><a href="/domain-pricing-list/">Domain names</a></li>
-						<li><a href="/private-dns-servers/">Private DNS servers</a></li>
-						<li><a href="/dns-for-tlds/">DNS for TLDs</a></li>
+						<li><a href="/managed-dns/">Managed DNS</a></li>
+						<li><a href="/monitoring/">Monitoring</a></li>
+						<li><a href="/google-workspace/">Google Workspace</a></li>
+						<li><a href="/ssl-certificates/">SSL Certificates</a></li>
+						<li><a href="/domain-parking/">Domain Parking</a></li>
+						<li><a href="https://www.cloudprima.com/?utm_source=footer&amp;utm_campaign=ClouDNS+Web" target="_blank">DDoS Protected VPS</a></li>
 					</ul>
 				</div>
 				<div class="col">
@@ -1055,12 +1038,12 @@
 						<li class="footer-mbl-link-list"></li>
 						<li><a href="/secondary-dns/">Secondary DNS</a></li>
 						<li><a href="/dnssec/">DNSSEC</a></li>
-						<li><a href="/managed-dns/">Managed DNS</a></li>
-						<li><a href="/monitoring/">Monitoring</a></li>
-						<li><a href="/google-workspace/">Google Workspace</a></li>
-						<li><a href="/ssl-certificates/">SSL Certificates</a></li>
-						<li><a href="/domain-parking/">Domain Parking</a></li>
-						<li><a href="https://www.cloudprima.com/?utm_source=footer&amp;utm_campaign=ClouDNS+Web" target="_blank">DDoS Protected VPS</a></li>
+						<li><a href="/dns-backups/">Backup DNS</li>
+						<li><a href="/anycast-dns/">Anycast DNS</a></li>
+						<li><a href="/email-forwarding/">Email Forwarding</a></li>
+						<li><a href="/domain-pricing-list/">Domain names</a></li>
+						<li><a href="/private-dns-servers/">Private DNS servers</a></li>
+						<li><a href="/dns-for-tlds/">DNS for TLDs</a></li>
 					</ul>
 				</div>
 				<div class="col off-870">
@@ -1174,7 +1157,7 @@
 			var WL_FCP = 0;
 			var WL_RT = 0;
 			var STATIC_URL = '';
-			var STATIC_VERSION = 40468;
+			var STATIC_VERSION = 40665;
 			if (typeof PerformanceObserver == 'function') {
 				new PerformanceObserver((entryList) => {
 					for (const entry of entryList.getEntriesByName('first-contentful-paint')) {
@@ -1232,7 +1215,7 @@
 					
 					var MY_LAST_ERROR = {'stack':'undefined'};
 					var lastClicked = 'undefined';
-					var lastClickedTimestamp = 1718990625;
+					var lastClickedTimestamp = 1721367555;
 					$('body').on('click', function(e) {
 						lastClicked = e.target;
 						lastClickedTimestamp = Math.floor(Date.now() / 1000);
