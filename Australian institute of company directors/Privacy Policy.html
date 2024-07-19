@@ -148,11 +148,11 @@
                 const profileUrl = document.querySelector('[data-profile-url]').dataset.profileUrl;
                 let urlMember = document.querySelector('[data-member-url]').dataset.memberUrl;
                 urlMember = urlMember + "?service=memberDetails";
-                fetch(profileUrl).then(function (response){
+                fetch(profileUrl).then((response) => { 
                     if(!response.ok)
                         throw new Error(`Invalid Response`);
                     return response.json();
-                }).then(function (data){
+                }).then((data) => {
                     if(data.ResponseData?.profile.userId !== undefined && data.ResponseData?.profile.userId !== 'anonymous' || data.ResponseData?.profile.hashed_email){
                         if(data.ResponseData?.profile.hashed_email == hashedEmail){
                             pushToGA(contactId, hashedEmail, persona, membershipGrade, membershipStatus);
@@ -171,12 +171,19 @@
                         localStorage.removeItem('membershipStatus');
                         return Promise.reject();
                     }
+                    localStorage.setItem("pageLoading", true);
                     return fetch(urlMember);
-                }).then(function (response){
+                }).then((response) => {
                     if(!response.ok)
                         throw new Error(`Invalid Response`);
                     return response.json();
-                }).then(function (data){
+                }).then((data) => {
+                    if(data){
+                        localStorage.setItem("profile_userDetails", JSON.stringify(data.ResponseData))
+                        localStorage.setItem("pageLoaded", true);
+                    }else{
+                        localStorage.removeItem("pageLoading");
+                    }
                     if(data.ResponseData?.uniqueid){
                         localStorage.setItem('contactId', Base64.encode(data.ResponseData?.uniqueid));
                     }
@@ -184,7 +191,10 @@
                         localStorage.setItem('persona', Base64.encode(data.ResponseData?.nbsSegment));
                     }
                     pushToGA(data.ResponseData?.uniqueid, Base64.decode(localStorage.getItem('hashedEmail')), data.ResponseData?.nbsSegment);
-                }).catch(e => console.warn(e));
+                }).catch(e => {
+                    localStorage.removeItem("pageLoading");
+                    console.warn(e)
+                });
             }
 
                 getAnalyticsData();
@@ -263,9 +273,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="component component--header component--no-gutter">
     <div class="header-bg"></div>
     <div class="header-wrapper ">
-        <header class="header" itemscope itemtype="http://schema.org/WPHeader" data-suggestions-url="https://www.aicd.com.au/search-results.searchsuggestions.json" data-notification-banner-text="&lt;p style=&#34;text-align: center;&#34;>The website and MyLearning will be unavailable due to maintenance starting from 10:00PM 18-06-2024 (AEST) to 05:00AM 19-06-2024 (AEST). We apologise for any inconvenience.&lt;br />
+        <header class="header" itemscope itemtype="http://schema.org/WPHeader" data-suggestions-url="https://www.aicd.com.au/search-results.searchsuggestions.json" data-notification-banner-text="&lt;p style=&#34;text-align: center;&#34;>The website and MyLearning will be unavailable due to maintenance starting from 10:00PM 10-07-2024 (AEST) to 05:00AM 11-07-2024 (AEST). We apologise for any inconvenience.&lt;br />
 &lt;/p>
-" data-maintance-page-path="/content/aicd/maintenance" data-banner-text="&lt;p style=&#34;text-align: center;&#34;>The website and MyLearning will be unavailable due to maintenance starting from 10:00PM 18-06-2024 (AEST) to 05:00AM 19-06-2024 (AEST). We apologise for any inconvenience.&lt;br />
+" data-maintance-page-path="/content/aicd/maintenance" data-banner-text="&lt;p style=&#34;text-align: center;&#34;>The website and MyLearning will be unavailable due to maintenance starting from 10:00PM 10-07-2024 (AEST) to 05:00AM 11-07-2024 (AEST). We apologise for any inconvenience.&lt;br />
 &lt;/p>
 ">
 
@@ -356,6 +366,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </div>
                         
                             <div class="header__drawer-block customDrawerBlock">
+                                <a href="https://www.aicd.com.au/about-aicd/work-aicd.html" class="header__drawer-sub-heading customHeaderDrawer">
+                                    Work at AICD <i class="icon icon-arrow-right" aria-hidden="true"></i>
+                                </a>
+                                <button class="header__toggle-drawer-list">
+                                    <i class="icon icon-chevron-down" aria-hidden="true"></i>
+                                    <span class="sr-only">Open Sub Menu</span>
+                                </button>
+                                <div class="header__drawer-list-slider">
+                                    <ul class="header__drawer-list" role="menu">
+                                        <li class="header__drawer-item" role="menuitem">
+                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/why-work-here.html" class="header__drawer-anchor customDrawerAchor">
+                                                Why work here?
+                                            </a>
+                                        </li>
+                                    
+                                        <li class="header__drawer-item" role="menuitem">
+                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/role-types.html" class="header__drawer-anchor customDrawerAchor">
+                                                Types of roles we offer
+                                            </a>
+                                        </li>
+                                    
+                                        <li class="header__drawer-item" role="menuitem">
+                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/current-vacancies.html" class="header__drawer-anchor customDrawerAchor">
+                                                Current vacancies
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        
+                            <div class="header__drawer-block customDrawerBlock">
                                 <a href="https://www.aicd.com.au/about-aicd/aicd-membership.html" class="header__drawer-sub-heading customHeaderDrawer">
                                     Membership <i class="icon icon-arrow-right" aria-hidden="true"></i>
                                 </a>
@@ -424,6 +465,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                             </div>
                         
                             <div class="header__drawer-block customDrawerBlock">
+                                <a href="https://www.aicd.com.au/about-aicd/board-insights.html" class="header__drawer-sub-heading customHeaderDrawer">
+                                    AICD Board Insights <i class="icon icon-arrow-right" aria-hidden="true"></i>
+                                </a>
+                                
+                                
+                            </div>
+                        
+                            <div class="header__drawer-block customDrawerBlock">
                                 <a href="https://www.aicd.com.au/about-aicd/consulting.html" class="header__drawer-sub-heading customHeaderDrawer">
                                     Board Advance <i class="icon icon-arrow-right" aria-hidden="true"></i>
                                 </a>
@@ -434,45 +483,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <div class="header__drawer-list-slider">
                                     <ul class="header__drawer-list" role="menu">
                                         <li class="header__drawer-item" role="menuitem">
-                                            <a href="https://www.aicd.com.au/about-aicd/consulting/board-advice.html" class="header__drawer-anchor customDrawerAchor">
-                                                Performance Assessment
-                                            </a>
-                                        </li>
-                                    
-                                        <li class="header__drawer-item" role="menuitem">
                                             <a href="https://www.aicd.com.au/about-aicd/consulting/in-house-governance.html" class="header__drawer-anchor customDrawerAchor">
                                                 In-House Governance Development
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        
-                            <div class="header__drawer-block customDrawerBlock">
-                                <a href="https://www.aicd.com.au/about-aicd/work-aicd.html" class="header__drawer-sub-heading customHeaderDrawer">
-                                    Work at AICD <i class="icon icon-arrow-right" aria-hidden="true"></i>
-                                </a>
-                                <button class="header__toggle-drawer-list">
-                                    <i class="icon icon-chevron-down" aria-hidden="true"></i>
-                                    <span class="sr-only">Open Sub Menu</span>
-                                </button>
-                                <div class="header__drawer-list-slider">
-                                    <ul class="header__drawer-list" role="menu">
-                                        <li class="header__drawer-item" role="menuitem">
-                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/why-work-here.html" class="header__drawer-anchor customDrawerAchor">
-                                                Why work here?
-                                            </a>
-                                        </li>
-                                    
-                                        <li class="header__drawer-item" role="menuitem">
-                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/role-types.html" class="header__drawer-anchor customDrawerAchor">
-                                                Types of roles we offer
-                                            </a>
-                                        </li>
-                                    
-                                        <li class="header__drawer-item" role="menuitem">
-                                            <a href="https://www.aicd.com.au/about-aicd/work-aicd/current-vacancies.html" class="header__drawer-anchor customDrawerAchor">
-                                                Current vacancies
                                             </a>
                                         </li>
                                     </ul>
@@ -1085,7 +1097,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                                         <div class="cmp-cart__product-price" v-if="item.secondaryItem !== undefined && item.secondaryItem.price === 0">FREE</div>
                                                     </td>
                                                     <td>
-                                                        <button class="cmp-cart__delete" aria-label="Delete" v-bind:aria-controls="item.itemId" v-on:click="deleteItem(item, item.secondaryItem)" v-if="item.isSuggestion !== true">
+                                                        <button class="cmp-cart__delete" aria-label="Delete" v-bind:aria-controls="item.itemId" v-on:click="deleteItem(item, item.secondaryItem)" v-if="item.isSuggestion !== true && item.sku !== 'MEM0001'">
                                                             <i class="icon icon-bin" aria-hidden="true"></i>
                                                         </button>
 
