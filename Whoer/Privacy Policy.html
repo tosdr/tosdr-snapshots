@@ -59,7 +59,6 @@ body {
 
 </head>
 <body>
-
 <div id="wrapper">
 <header class="header">
 <div class="header__background ">
@@ -102,8 +101,8 @@ Antidetect Browser
 </a>
 </li>
 <li>
-<a class="header__navlink" href="https://cardspro.capitalist.net/?from=b5c1034ca3">
-Virtual cards
+<a class="header__navlink" href="https://whoaml.is/">
+AML check
 </a>
 </li>
 <li id="openButton" class="header__navlink--services">
@@ -163,8 +162,8 @@ Buy VPN now
 </button>
 <ul class="header__nav-list">
 <li>
-<a class=" header__navlink header__navlink--mobile" href="https://cardspro.capitalist.net/?from=b5c1034ca3">
-Virtual cards
+<a class=" header__navlink header__navlink--mobile" href="https://whoaml.is/">
+AML check
 </a>
 </li>
 <li>
@@ -599,7 +598,7 @@ Whois
       margin-bottom: 20px;">Useful links</h1>
 <ul>
 <li>
-<a id="open-jivo-chat" onclick="event.preventDefault();jivoOpen();" style="color: #ff7d19; cursor: pointer;">
+<a id="open-jivo-chat" style="color: #ff7d19; cursor: pointer;" onclick="event.preventDefault();jivoOpen();">
 Customer Support
 </a>
 </li>
@@ -623,22 +622,12 @@ How to install OpenVPN on your router
 How to disable Internet when VPN goes offline
 </a>
 </li>
-
 <li>
 <a href="/vpn-for-games">
 VPN for games
 </a>
 </li>
-<li>
-<a href="/vpn-russia">
-VPN for Russia
-</a>
-</li>
-<li>
-<a href="/vpn-crimea">
-VPN for Crimea
-</a>
-</li>
+<span></span>
 </ul>
 </div>
 <div class="column footer__store-links--apps">
@@ -794,7 +783,7 @@ VPN for Crimea
 </div>
 </div>
 </footer>
-<script defer src="/js/jquery.main.js??v=30"></script>
+<script defer src="/js/jquery.main.js??v=1"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const currentYear = document.querySelector('#year');
@@ -1079,31 +1068,22 @@ accurateTrackBounce:true
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
-    function whatIsPage() {
-        const path = window.location.pathname;
-        return path.endsWith('/antidetect') || path.endsWith('/aml');
-    }
+    const jivoLoad = () => {
+        var widget_id = 'sUhi1DSw3m';
+        var d = document;
+        var w = window;
 
-    function isAMLPage() {
-        const path = window.location.pathname;
-        return path.endsWith('/aml');
-    }
-
-    function loadJivoScript() {
-        const widget_id = 'sUhi1DSw3m';
-        const d = document;
-        const w = window;
-
-        function l() {
-            const s = document.createElement('script');
+        function
+        l() {
+            var s = document.createElement('script');
             s.type = 'text/javascript';
             s.async = true;
             s.src = '//code.jivosite.com/script/widget/' + widget_id;
-            const ss = document.getElementsByTagName('script')[0];
-            ss.parentNode.insertBefore(s, ss);
+            var ss = document.getElementsByTagName('script')[0];
+            ss.parentNode.insertBefore(s,
+                ss);
         }
-
-        if (d.readyState === 'complete') {
+        if (d.readyState == 'complete') {
             l();
         } else {
             if (w.attachEvent) {
@@ -1112,39 +1092,24 @@ accurateTrackBounce:true
                 w.addEventListener('load', l, false);
             }
         }
-    }
+    };
 
-    const jivoOpen = document.getElementById('jivoOpen')
+    const jivoOpen = () => {
+        const jivoInit = document.querySelector('#jivo-iframe-container');
 
-    if (jivoOpen) {
-        jivoOpen.addEventListener('click', function() {
-            if (isAMLPage()) {
-                jivo_api.open();
-            }
-        });
-    }
-
-
-    if (whatIsPage()) {
-        loadJivoScript();
-    }
-
-    const toggleJivoChat = () => {
-        if (jivo_api.isOpen()) {
-            jivo_api.close();
-        } else {
+        if(jivoInit) {
             jivo_api.open();
+        } else  {
+            jivoLoad()
         }
     };
 
-    document.addEventListener('click', function(event) {
-        const jivoContainer = document.querySelector('#jivo-iframe-container');
-        const jivoButton = document.querySelector('.jivo_button');
 
-        if (event.target === jivoContainer || event.target === jivoButton) {
-            toggleJivoChat();
-        }
-    });
+    function jivo_onLoadCallback() {
+        console.log('jivo_onLoadCallback');
+        jivo_api.open();
+    }
+
 </script>
 <div class="cookies-info">
 <div class="cookies-info__wrapper">
@@ -1169,6 +1134,72 @@ Accept
       return matches ? decodeURIComponent(matches[1]) : undefined;
     }
     </script>
+
+
+
+<script>
+          const popUpCounter = document.querySelector('.popup-counter-deal__wrapper');
+              menu_privacy_policy
+          document.addEventListener('scroll', function () {
+              const firstBlock = document.querySelector('#content section');
+              const firstBlockHeight = firstBlock.getBoundingClientRect().height;
+              const baseHeightHeader = 65;
+
+
+              if ((firstBlockHeight - pageYOffset - baseHeightHeader) <= 0) {
+                  popUpCounter.classList.add('popup-counter-deal__wrapper--fadeIn');
+              } else {
+                  popUpCounter.classList.remove('popup-counter-deal__wrapper--fadeIn');
+              }
+          })
+      </script>
+<script>
+const counter = document.querySelectorAll('.counter-end');
+const counterDays = document.querySelectorAll('.discount-counter__digits--days');
+const counterHours =  document.querySelectorAll('.discount-counter__digits--hours');
+const counterMinutes = document.querySelectorAll('.discount-counter__digits--minutes');
+const counterSeconds = document.querySelectorAll('.discount-counter__digits--seconds');
+const timerDigits = document.querySelectorAll('.discount-counter__digits');
+
+let stateNeonDigits = true;
+
+const counterDiscount  = setInterval(updateTimer, 1000);
+
+document.addEventListener('DOMContentLoaded', function () {counterDiscount});
+
+function updateTimer() {
+  const future = Date.parse("July 08, 2024 18:30:00");
+  // const future = Date.parse("November 23, 2021 18:30:00");
+  const now = new Date();
+
+  const diff = future - now;
+  const days = Math.floor( diff / (1000*60*60*24) );
+  const hours = Math.floor( diff / (1000*60*60) );
+  const mins = Math.floor( diff / (1000*60) );
+  const secs = Math.floor( diff / 1000 );
+
+  const d = days < 10 ? `0${days}` : days;
+  const h = (hours - days  * 24) < 10 ? `0${(hours - days  * 24)}` : (hours - days  * 24);
+  const m = (mins  - hours * 60) < 10 ? `0${(mins  - hours * 60)}` : (mins  - hours * 60);
+  const s = (secs  - mins  * 60) < 10 ? `0${(secs  - mins  * 60)}` : (secs  - mins  * 60);
+
+  if (diff > 0) {
+      counterDays.forEach(e => e.textContent = d);
+      counterHours.forEach(e => e.textContent = h);
+      counterMinutes.forEach(e => e.textContent = m);
+      counterSeconds.forEach(e => e.textContent = s);
+
+      if (days === 0 && stateNeonDigits) {
+        timerDigits.forEach(e => e.classList.add('digits-neon'));
+        stateNeonDigits = false;
+      }
+  } else {
+    clearInterval(counterDiscount);
+    counter.forEach(e => e.innerHTML = 'Promotion is over')
+    //counter.innerHTML = 'Promotion is over'
+  }
+}
+</script>
 </div>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'89729e9f6cd87726',t:'MTcxODk1ODQ0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8a629605cbc66548',t:'MTcyMTQ3NDY3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
