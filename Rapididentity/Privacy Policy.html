@@ -1,862 +1,1451 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en-US" >
-<head><meta charset="UTF-8" /><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.3",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],window.addEventListener("pageshow",t=>{this.persisted=t.persisted}),window.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(t){if(document.hidden){t._triggerListener();return}this.triggerEvents.forEach(e=>window.addEventListener(e,t.userEventHandler,{passive:!0})),window.addEventListener("touchstart",t.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",t.touchStartHandler),document.addEventListener("visibilitychange",t.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(t){"HTML"!==t.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),t.target.addEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(t){t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this.interceptedClicks.push(t),t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(t=>{t.target.dispatchEvent(new MouseEvent("click",{view:t.view,bubbles:!0,cancelable:!0}))})}_waitForPendingClicks(){return new Promise(t=>{this._isClickPending?this._pendingClickFinished=t:t()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(t,e,r){t.hasAttribute&&t.hasAttribute(e)&&(event.target.setAttribute(r,event.target.getAttribute(e)),event.target.removeAttribute(e))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let t=[];document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{if(e.hasAttribute("src")){let r=new URL(e.src).origin;r!==location.origin&&t.push({src:r,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this._batchInjectResourceHints(t,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._triggerWindowLoad()}catch(t){console.error(t)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _transformScript(t){return new Promise((await this._littleBreath(),navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)?e=>{let r=document.createElement("script");[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),r.setAttribute(e,t.nodeValue))}),t.text&&(r.text=t.text),r.hasAttribute("src")?(r.addEventListener("load",e),r.addEventListener("error",e)):(r.text=t.text,e());try{t.parentNode.replaceChild(r,t)}catch(i){e()}}:async e=>{function r(){t.setAttribute("data-rocket-status","failed"),e()}try{let i=t.getAttribute("data-rocket-type"),n=t.getAttribute("data-rocket-src");t.text,i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",function r(){t.setAttribute("data-rocket-status","executed"),e()}),t.addEventListener("error",r),n?(t.removeAttribute("data-rocket-src"),t.src=n):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}catch(s){r()}})}async _loadScriptsFromList(t){let e=t.shift();return e&&e.isConnected?(await this._transformScript(e),this._loadScriptsFromList(t)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(t,e){var r=document.createDocumentFragment();t.forEach(t=>{let i=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(i){let n=document.createElement("link");n.href=i,n.rel=e,"preconnect"!==e&&(n.as="script"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),r.appendChild(n),this.trash.push(n)}}),document.head.appendChild(r)}_delayEventListeners(t){let e={};function r(t,r){!function t(r){!e[r]&&(e[r]={originalFunctions:{add:r.addEventListener,remove:r.removeEventListener},eventsToRewrite:[]},r.addEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.add.apply(r,arguments)},r.removeEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.remove.apply(r,arguments)});function i(t){return e[r].eventsToRewrite.indexOf(t)>=0?"rocket-"+t:t}}(t),e[t].eventsToRewrite.push(r)}function i(t,e){let r=t[e];Object.defineProperty(t,e,{get:()=>r||function(){},set(i){t["rocket"+e]=r=i}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),i(document,"onreadystatechange"),i(window,"onload"),i(window,"onpageshow")}_delayJQueryReady(t){let e;function r(r){if(r&&r.fn&&!t.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(e){return t.domReadyFired?e.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>e.bind(document)(r)),r([])};let i=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){if(this[0]===window){function t(t){return t.split(" ").map(t=>"load"===t||0===t.indexOf("load.")?"rocket-jquery-load":t).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=t(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let r=arguments[0][e];delete arguments[0][e],arguments[0][t(e)]=r})}return i.apply(this,arguments),this},t.allJQueries.push(r)}e=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){r(t)}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this._littleBreath();let t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}_handleDocumentWrite(){let t=new Map;document.write=document.writeln=function(e){let r=document.currentScript;r||console.error("WPRocket unable to document.write this: "+e);let i=document.createRange(),n=r.parentElement,s=t.get(r);void 0===s&&(s=r.nextSibling,t.set(r,s));let a=document.createDocumentFragment();i.setStart(a,0),a.appendChild(i.createContextualFragment(e)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}_emptyTrash(){this.trash.forEach(t=>t.remove())}static run(){let t=new RocketLazyLoadScripts;t._addUserInteractionListener(t)}}RocketLazyLoadScripts.run();</script>
-	
-	<meta name="designer" content="www.emagine.com" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link data-minify="1" rel="stylesheet" href="https://www.identityautomation.com/wp-content/cache/min/1/bootstrap/3.4.1/css/bootstrap.min.css?ver=1699568692" crossorigin="anonymous">
-	<title>Privacy Policy | Identity Automation</title><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Nunito%20Sans%3A300%2C400%2C600%2C700%2C800&#038;display=swap" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito%20Sans%3A300%2C400%2C600%2C700%2C800&#038;display=swap" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito%20Sans%3A300%2C400%2C600%2C700%2C800&#038;display=swap" /></noscript>
-	<!-- xml sitemap -->
-	<link rel="sitemap" href="https://www.identityautomation.com/sitemap_index.xml" />
-    <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' data-cfasync='false' data-rocket-src='https://www.identityautomation.com/wp-content/cache/min/1/h.js?ver=1699568692' defer></script>	
-	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<!doctype html><html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Privacy Policy | Identity Automation</title>
+    <link rel="shortcut icon" href="https://www.identityautomation.com/hubfs/Singularity/logos/id-auto-logo-mark-black.svg">
+    <meta name="description" content="Identity Automation is committed to protecting your privacy. View our Privacy Policy to see how we protect your information. ">
+    
+    
+    
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&amp;display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- This site is optimized with the Yoast SEO plugin v21.5 - https://yoast.com/wordpress/plugins/seo/ -->
-	<meta name="description" content="Identity Automation is strongly committed to protecting the privacy of site visitors, prospects, and customers. View our privacy policy to learn more." />
-	<link rel="canonical" href="https://www.identityautomation.com/privacy-policy/" />
-	<meta property="og:locale" content="en_US" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content="Privacy Policy | Identity Automation" />
-	<meta property="og:description" content="Identity Automation is strongly committed to protecting the privacy of site visitors, prospects, and customers. View our privacy policy to learn more." />
-	<meta property="og:url" content="https://www.identityautomation.com/privacy-policy/" />
-	<meta property="og:site_name" content="Identity Automation" />
-	<meta property="article:modified_time" content="2023-01-30T09:29:28+00:00" />
-	<meta name="twitter:card" content="summary_large_image" />
-	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://www.identityautomation.com/privacy-policy/","url":"https://www.identityautomation.com/privacy-policy/","name":"Privacy Policy | Identity Automation","isPartOf":{"@id":"https://www.identityautomation.com/#website"},"datePublished":"2017-06-08T19:27:22+00:00","dateModified":"2023-01-30T09:29:28+00:00","description":"Identity Automation is strongly committed to protecting the privacy of site visitors, prospects, and customers. View our privacy policy to learn more.","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.identityautomation.com/privacy-policy/"]}]},{"@type":"WebSite","@id":"https://www.identityautomation.com/#website","url":"https://www.identityautomation.com/","name":"Identity Automation","description":"Identity Automation","publisher":{"@id":"https://www.identityautomation.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.identityautomation.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.identityautomation.com/#organization","name":"Identity Automation","url":"https://www.identityautomation.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.identityautomation.com/#/schema/logo/image/","url":"https://www.identityautomation.com/wp-content/uploads/2017/06/IA_color.svg","contentUrl":"https://www.identityautomation.com/wp-content/uploads/2017/06/IA_color.svg","caption":"Identity Automation"},"image":{"@id":"https://www.identityautomation.com/#/schema/logo/image/"}}]}</script>
-	<!-- / Yoast SEO plugin. -->
+    <script src="/hs/hsstatic/jquery-libs/static-1.4/jquery/jquery-1.11.2.js"></script>
+<script>hsjQuery = window['jQuery'];</script>
+    <meta property="og:description" content="Identity Automation is committed to protecting your privacy. View our Privacy Policy to see how we protect your information. ">
+    <meta property="og:title" content="Privacy Policy | Identity Automation">
+    <meta name="twitter:description" content="Identity Automation is committed to protecting your privacy. View our Privacy Policy to see how we protect your information. ">
+    <meta name="twitter:title" content="Privacy Policy | Identity Automation">
 
+    
 
-<link rel='dns-prefetch' href='//platform.linkedin.com' />
-<link rel='dns-prefetch' href='//js.hs-scripts.com' />
-<link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
-<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-<style id='wp-emoji-styles-inline-css' type='text/css'>
-
-	img.wp-smiley, img.emoji {
-		display: inline !important;
-		border: none !important;
-		box-shadow: none !important;
-		height: 1em !important;
-		width: 1em !important;
-		margin: 0 0.07em !important;
-		vertical-align: -0.1em !important;
-		background: none !important;
-		padding: 0 !important;
-	}
+    
+    <style>
+a.cta_button{-moz-box-sizing:content-box !important;-webkit-box-sizing:content-box !important;box-sizing:content-box !important;vertical-align:middle}.hs-breadcrumb-menu{list-style-type:none;margin:0px 0px 0px 0px;padding:0px 0px 0px 0px}.hs-breadcrumb-menu-item{float:left;padding:10px 0px 10px 10px}.hs-breadcrumb-menu-divider:before{content:'›';padding-left:10px}.hs-featured-image-link{border:0}.hs-featured-image{float:right;margin:0 0 20px 20px;max-width:50%}@media (max-width: 568px){.hs-featured-image{float:none;margin:0;width:100%;max-width:100%}}.hs-screen-reader-text{clip:rect(1px, 1px, 1px, 1px);height:1px;overflow:hidden;position:absolute !important;width:1px}
 </style>
-<link rel='stylesheet' id='wp-block-library-css' href='https://www.identityautomation.com/wp-includes/css/dist/block-library/style.min.css?ver=6.5.3' type='text/css' media='all' />
-<style id='classic-theme-styles-inline-css' type='text/css'>
-/*! This file is auto-generated */
-.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
-</style>
-<style id='global-styles-inline-css' type='text/css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
-:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
-:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
-.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
-</style>
-<link rel='stylesheet' id='bsearch-style-css' href='https://www.identityautomation.com/wp-content/plugins/better-search/includes/css/bsearch-styles.min.css?ver=3.2.2' type='text/css' media='all' />
-<style id='bsearch-style-inline-css' type='text/css'>
-.highlight{
-	background-color: #ffed77;
+
+<link rel="stylesheet" href="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/template_assets/162034916659/1721221787775/Singularity/css/main.min.css">
+<link rel="stylesheet" href="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/module_assets/162314840666/1711658341180/module_162314840666_utility-nav.min.css">
+<link rel="stylesheet" href="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/module_assets/162035351101/1721221907442/module_162035351101_menu.min.css">
+
+  <style>
+    #hs_cos_wrapper_navigation-primary .menu .menu__submenu {}
+
+@media (min-width:767px) {
+  #hs_cos_wrapper_navigation-primary .menu__submenu--level-2>.menu__item:first-child:before {}
 }
-</style>
-<link data-minify="1" rel='stylesheet' id='cpsh-shortcodes-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/column-shortcodes/assets/css/shortcodes.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='em-accordions-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/em-accordions/css/em-accordions.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='em-people-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/em-people/core/css/em-people.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='em-tabs-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/em-tabs/em-tabs.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='emagine-base-styles-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/em-base/core/css/global.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='font-awesome-css' href='https://www.identityautomation.com/wp-content/cache/min/1/font-awesome/4.7.0/css/font-awesome.min.css?ver=1699568692' type='text/css' media='all' />
 
-<link data-minify="1" rel='stylesheet' id='theme-styles-css' href='https://www.identityautomation.com/wp-content/cache/background-css/www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/identity-automation/core/css/global.css?ver=1699568692&wpr_t=1718907505' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='selectric-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/identity-automation/core/css/vendor/selectric.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='em-base-font-awesome-css' href='https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/em-base/core/css/font-awesome.min.css?ver=1699568692' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='jquery-lazyloadxt-spinner-css-css' href='https://www.identityautomation.com/wp-content/cache/background-css/www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/a3-lazy-load/assets/css/jquery.lazyloadxt.spinner.css?ver=1699568692&wpr_t=1718907505' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='hm_custom_css-css' href='https://www.identityautomation.com/wp-content/cache/background-css/www.identityautomation.com/wp-content/cache/min/1/wp-content/uploads/hm_custom_css_js/custom.css?ver=1699568692&wpr_t=1718907505' type='text/css' media='all' />
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/in.js?ver=1699568692" id="linkedin-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/em-base/core/js/vendor/modernizr.js?ver=1699568692" id="modernizr-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/em-base/core/js/vendor/picturefill.js?ver=1699568692" id="picturefill-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/uploads/hm_custom_css_js/custom.js?ver=1699568692" id="hm_custom_js-js" defer></script>
-<link rel="https://api.w.org/" href="https://www.identityautomation.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.identityautomation.com/wp-json/wp/v2/pages/196" /><link rel='shortlink' href='https://www.identityautomation.com/?p=196' />
-<link rel="alternate" type="application/json+oembed" href="https://www.identityautomation.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.identityautomation.com%2Fprivacy-policy%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://www.identityautomation.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.identityautomation.com%2Fprivacy-policy%2F&#038;format=xml" />
-			<!-- DO NOT COPY THIS SNIPPET! Start of Page Analytics Tracking for HubSpot WordPress plugin v11.0.28-->
-			<script type="rocketlazyloadscript" class="hsq-set-content-id" data-content-id="standard-page">
-				var _hsq = _hsq || [];
-				_hsq.push(["setContentType", "standard-page"]);
-			</script>
-			<!-- DO NOT COPY THIS SNIPPET! End of Page Analytics Tracking for HubSpot WordPress plugin -->
-			    <script type="rocketlazyloadscript" data-rocket-type='text/javascript'>
-    (function (d, t) {
-      var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-      bh.type = 'text/javascript';
-      bh.src = '//www.bugherd.com/sidebarv2.js?apikey=';
-      s.parentNode.insertBefore(bh, s);
-      })(document, 'script');
-    </script>
-  	<link rel="icon" href="https://www.identityautomation.com/wp-content/uploads/2021/03/Logo_IA-62x60-1.png" sizes="32x32" />
-<link rel="icon" href="https://www.identityautomation.com/wp-content/uploads/2021/03/Logo_IA-62x60-1.png" sizes="192x192" />
-<link rel="apple-touch-icon" href="https://www.identityautomation.com/wp-content/uploads/2021/03/Logo_IA-62x60-1.png" />
-<meta name="msapplication-TileImage" content="https://www.identityautomation.com/wp-content/uploads/2021/03/Logo_IA-62x60-1.png" />
-		<style type="text/css" id="wp-custom-css">
-			.page-id-6095 .main {padding-top:80px;}
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__link,
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__link:hover,
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__link:focus {}
 
-.page-home-v2 .panel_slider .home-slide {background-position:right;}
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon,
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon:hover,
+#hs_cos_wrapper_navigation-primary .menu__submenu .menu__child-toggle-icon:focus {}
 
+  </style>
 
-@media screen and (max-width: 767px) {
-    .page-careers .main .layer.content > .wrap > .inner.grid {
-        padding: 0;
-    }
-	
-.layer-home.panel_slider .inner {
-		height: auto !important;		
-	}
-	
-	.page-home-v2 .panel_slider .home-slide {background-position:initial;}
-}		</style>
-		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<meta name="google-site-verification" content="0bbdFVGMp2myABxnxDLBLUUg760RTG1QM-lahS8J_CY" />
-<style id="wpr-lazyload-bg"></style><style id="wpr-lazyload-bg-exclusion"></style>
-<noscript>
-<style id="wpr-lazyload-bg-nostyle">:root{--wpr-bg-d60879e3-9896-4ccc-83cb-e34f7b028a78: url('../../../../../../../../../../../../themes/identity-automation/core/images/play-icon.svg');}:root{--wpr-bg-8a051ba1-596f-49ec-a949-d004d8b2a20f: url('../../../../../../../../../../../../themes/identity-automation/core/images/panel-graphic.svg');}:root{--wpr-bg-ba59ce9e-2ae3-41c3-928e-3f92a44f452c: url('../../../../../../../../../../../../themes/identity-automation/core/images/footer_bg.svg');}:root{--wpr-bg-aa9b775b-16bf-421e-a1d2-24dd034faba0: url('../../../../../../../../../../../../plugins/a3-lazy-load/assets/css/loading.gif');}:root{--wpr-bg-1e923e0d-58a5-42c4-9820-c12d7081f081: url('https://www.identityautomation.com/wp-content/uploads/2021/05/identity-automation-logo_600x196.png');}:root{--wpr-bg-c3e29245-f435-4ecb-91c4-591e8a642ac3: url('https://www.identityautomation.com/wp-content/uploads/2020/12/Logo_IA_right.png');}:root{--wpr-bg-210470e7-56fd-42d9-9095-df7b92212c6a: url('https://www.identityautomation.com/wp-content/uploads/2020/12/Privacy-Policy-300x300.jpg');}:root{--wpr-bg-8371fb1b-151d-4edc-80f1-686d16aa2752: url('https://www.identityautomation.com/wp-content/uploads/2020/12/Privacy-Policy-600x457.jpg');}:root{--wpr-bg-7668c7b3-5ed7-41ef-8638-d3f52a81cfaf: url('https://www.identityautomation.com/wp-content/uploads/2020/12/Privacy-Policy-1000x457.jpg');}:root{--wpr-bg-7416f722-c8ee-4942-940e-eb0771a84109: url('https://www.identityautomation.com/wp-content/uploads/2020/12/Privacy-Policy.jpg');}</style>
-</noscript>
-<script type="application/javascript">const rocket_pairs = [{"selector":".play-btn","style":":root{--wpr-bg-d60879e3-9896-4ccc-83cb-e34f7b028a78: url('..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/themes\/identity-automation\/core\/images\/play-icon.svg');}","hash":"d60879e3-9896-4ccc-83cb-e34f7b028a78"},{"selector":".layer-home.panel_slider .inner","style":":root{--wpr-bg-8a051ba1-596f-49ec-a949-d004d8b2a20f: url('..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/themes\/identity-automation\/core\/images\/panel-graphic.svg');}","hash":"8a051ba1-596f-49ec-a949-d004d8b2a20f"},{"selector":".site-footer .wrap","style":":root{--wpr-bg-ba59ce9e-2ae3-41c3-928e-3f92a44f452c: url('..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/themes\/identity-automation\/core\/images\/footer_bg.svg');}","hash":"ba59ce9e-2ae3-41c3-928e-3f92a44f452c"},{"selector":".lazy-hidden,.entry img.lazy-hidden,img.thumbnail.lazy-hidden","style":":root{--wpr-bg-aa9b775b-16bf-421e-a1d2-24dd034faba0: url('..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/..\/plugins\/a3-lazy-load\/assets\/css\/loading.gif');}","hash":"aa9b775b-16bf-421e-a1d2-24dd034faba0"},{"selector":".site-header .custom-logo-link","style":":root{--wpr-bg-1e923e0d-58a5-42c4-9820-c12d7081f081: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2021\/05\/identity-automation-logo_600x196.png');}","hash":"1e923e0d-58a5-42c4-9820-c12d7081f081"},{"selector":".site-footer .wrap","style":":root{--wpr-bg-c3e29245-f435-4ecb-91c4-591e8a642ac3: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2020\/12\/Logo_IA_right.png');}","hash":"c3e29245-f435-4ecb-91c4-591e8a642ac3"},{"selector":".masthead__bg","style":":root{--wpr-bg-210470e7-56fd-42d9-9095-df7b92212c6a: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2020\/12\/Privacy-Policy-300x300.jpg');}","hash":"210470e7-56fd-42d9-9095-df7b92212c6a"},{"selector":".masthead__bg","style":":root{--wpr-bg-8371fb1b-151d-4edc-80f1-686d16aa2752: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2020\/12\/Privacy-Policy-600x457.jpg');}","hash":"8371fb1b-151d-4edc-80f1-686d16aa2752"},{"selector":".masthead__bg","style":":root{--wpr-bg-7668c7b3-5ed7-41ef-8638-d3f52a81cfaf: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2020\/12\/Privacy-Policy-1000x457.jpg');}","hash":"7668c7b3-5ed7-41ef-8638-d3f52a81cfaf"},{"selector":".masthead__bg","style":":root{--wpr-bg-7416f722-c8ee-4942-940e-eb0771a84109: url('https:\/\/www.identityautomation.com\/wp-content\/uploads\/2020\/12\/Privacy-Policy.jpg');}","hash":"7416f722-c8ee-4942-940e-eb0771a84109"}]; const rocket_excluded_pairs = [];</script></head>
-<body class="privacy-policy default page page-id-196 wp-custom-logo branding-design page-privacy-policy interior">
-			<!-- Google Tag Manager -->
-		<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KN4Z3G5"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		<script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-KN4Z3G5');</script>
-		<!-- End Google Tag Manager -->
-			<header id="js-site-header" class="site-header">
-		<div class="inner clearfix">
-			<div class="grid-noGutter-middle">
-				<div class="col-3_sm-9">
-					<a href="https://www.identityautomation.com/" class="custom-logo-link" rel="home"><img width="318" height="79" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20318%2079'%3E%3C/svg%3E" class="custom-logo" alt="Identity Automation" decoding="async" data-lazy-src="https://www.identityautomation.com/wp-content/uploads/2017/06/IA_color.svg" /><noscript><img width="318" height="79" src="https://www.identityautomation.com/wp-content/uploads/2017/06/IA_color.svg" class="custom-logo" alt="Identity Automation" decoding="async" /></noscript></a>				</div>
-				<div class="col-9_sm-3">
-					<div class="utilities">
-						<ul class="utilities-menu menu clearfix"><li id="menu-item-2499" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2499"><a href="https://www.identityautomation.com/contact-us/">Contact Us</a></li>
-<li id="menu-item-1656" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1656"><a target="_blank" rel="noopener" href="https://info.identityautomation.com/identity-automation-demo">Request a Demo</a></li>
-<li id="menu-item-7318" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7318"><a href="https://identityautomation.force.com/support/s">Support</a></li>
-<li id="menu-item-1657" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1657"><a target="_blank" rel="noopener" href="https://blog.identityautomation.com/">Blog</a></li>
-</ul>
-      <form role="search" method="" class="search-form" action="https://www.identityautomation.com">
-      	<div><input placeholder="Search" type="text" value="" name="s" class="search__input" /><button type="submit" class="search__button no-button-style fa" value=""><i class="fa fa-search" aria-hidden="true"></i></button>
-      	</div>
-      </form>
-    					</div>
-					<nav class="main-menu-container menu-container clearfix"><ul class="main-menu menu clearfix"><li id="menu-item-264" class="top-align-child menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-264"><a href="https://www.identityautomation.com/how-we-help/">How We Help</a>
-<ul class="sub-menu">
-	<li id="menu-item-266" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-266"><a href="https://www.identityautomation.com/how-we-help/your-need/">Your Need</a></li>
-	<li id="menu-item-268" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-268"><a href="https://www.identityautomation.com/how-we-help/your-need/upgrading-your-iam-solution/">Upgrading Your IAM Solution</a></li>
-	<li id="menu-item-270" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-270"><a href="https://www.identityautomation.com/how-we-help/your-need/connecting-to-all-apps/">Connection to All Apps with Single Sign-On</a></li>
-	<li id="menu-item-272" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-272"><a href="https://www.identityautomation.com/how-we-help/your-need/identity-lifecycle-management-for-all-users/">Identity Lifecycle Management for All Users</a></li>
-	<li id="menu-item-274" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-274"><a href="https://www.identityautomation.com/how-we-help/your-need/picking-the-right-authentication-methods/">Picking the Right Authentication Methods</a></li>
-	<li id="menu-item-276" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-276"><a href="https://www.identityautomation.com/how-we-help/your-need/prevent-upcoming-cybersecurity-breach/">Preventing Your Upcoming Breach</a></li>
-</ul>
-</li>
-<li id="menu-item-296" class="top-align-child menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-296"><a href="https://www.identityautomation.com/iam-software/">RapidIdentity: IAM</a>
-<ul class="sub-menu">
-	<li id="menu-item-298" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-298"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/">RapidIdentity: Identity &#038; Access Management</a></li>
-	<li id="menu-item-300" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-300"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/identity-lifecycle-management/">Identity Lifecycle Management</a></li>
-	<li id="menu-item-304" class="top-align-child menu-item menu-item-type-post_type menu-item-object-page menu-item-304"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/single-sign-on-multi-factor-authentication/">Authentication (MFA &#038; SSO)</a></li>
-	<li id="menu-item-13176" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13176"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/antiphishing-software-phishid/">PhishID Anti-Phishing Software</a></li>
-	<li id="menu-item-12845" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12845"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/safeid-credential-monitoring/">SafeID Credential Monitoring</a></li>
-	<li id="menu-item-10570" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10570"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/k12-class-rostering/">Class Roster Synching for K-12</a></li>
-	<li id="menu-item-302" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-302"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/identity-governance/">Identity Governance</a></li>
-	<li id="menu-item-13803" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13803"><a href="https://www.identityautomation.com/iam-software/rapididentity-universal-identity/">RapidIdentity Universal Identity</a></li>
-	<li id="menu-item-7327" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-7327"><a href="https://www.identityautomation.com/iam-software/support-services/">Support Services</a></li>
-</ul>
-</li>
-<li id="menu-item-12737" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-12737"><a href="https://www.identityautomation.com/how-we-help/your-industry/">Your Industry</a>
-<ul class="sub-menu">
-	<li id="menu-item-292" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-292"><a href="https://www.identityautomation.com/how-we-help/your-industry/k-12-education/">K-12 EDU</a></li>
-	<li id="menu-item-290" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-290"><a href="https://www.identityautomation.com/how-we-help/your-industry/higher-education/">Higher Ed</a></li>
-	<li id="menu-item-12754" class="bold menu-item menu-item-type-post_type menu-item-object-page menu-item-12754"><a href="https://www.identityautomation.com/how-we-help/your-industry/healthcare/">Healthcare</a></li>
-</ul>
-</li>
-<li id="menu-item-346" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-346"><a href="https://www.identityautomation.com/why-ia/">Why IA?</a></li>
-<li id="menu-item-350" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-350"><a href="https://www.identityautomation.com/resources-2/">Resources</a>
-<ul class="sub-menu">
-	<li id="menu-item-1907" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1907"><a href="https://www.identityautomation.com/resources-2/customer-success-stories/">Customer Success Stories</a></li>
-	<li id="menu-item-1908" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1908"><a href="https://www.identityautomation.com/resources-2/white-papers-ebooks/">White Papers &#038; eBooks</a></li>
-	<li id="menu-item-1906" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1906"><a href="https://www.identityautomation.com/resources-2/brochures-and-data-sheets/">Brochures &#038; Datasheets</a></li>
-	<li id="menu-item-1909" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1909"><a href="https://www.identityautomation.com/resources-2/videos-webinars/">Videos &#038; Webinars</a></li>
-	<li id="menu-item-12747" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12747"><a href="https://info.identityautomation.com/k12-assessment">K-12 Digital Readiness Assessment</a></li>
-	<li id="menu-item-10266" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10266"><a href="https://info.identityautomation.com/identity-access-management-maturity-assessment">Higher Ed IAM Maturity Assessment</a></li>
-	<li id="menu-item-12434" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12434"><a href="https://www.identityautomation.com/trust-center/">Trust Center</a></li>
-	<li id="menu-item-10718" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-10718"><a href="https://www.identityautomation.com/rapididentity-cloud-reference-architecture/">RapidIdentity Cloud Reference Architecture</a></li>
-	<li id="menu-item-1910" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1910"><a target="_blank" rel="noopener" href="https://blog.identityautomation.com/">Blog</a></li>
-</ul>
-</li>
-<li id="menu-item-364" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-364"><a href="https://www.identityautomation.com/about-us/">About Us</a>
-<ul class="sub-menu">
-	<li id="menu-item-366" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-366"><a href="https://www.identityautomation.com/about-us/our-story/">Our Story</a></li>
-	<li id="menu-item-8319" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8319"><a href="https://www.identityautomation.com/about-us/careers/">Careers</a></li>
-	<li id="menu-item-368" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-368"><a href="https://www.identityautomation.com/about-us/news/">News</a></li>
-	<li id="menu-item-370" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-370"><a href="https://www.identityautomation.com/about-us/events/">Events</a></li>
-	<li id="menu-item-348" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-348"><a href="https://www.identityautomation.com/customers/">Featured Customers</a></li>
-	<li id="menu-item-372" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-372"><a href="https://www.identityautomation.com/about-us/partners-2/">Partner Program – VIP</a></li>
-	<li id="menu-item-12721" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12721"><a href="https://www.identityautomation.com/pathfinder/">The Pathfinder Program</a></li>
-</ul>
-</li>
-</ul></nav>					<button id="js-navicon" class="navicon no-button-style" href="javascript:;">
-						<div class="navicon__trigger"></div>
-					</button>
-				</div>
-			</div>
-
-		</div>
-	</header>
+<link rel="stylesheet" href="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/module_assets/164771132707/1714061648972/module_164771132707_simple-hero-banner.min.css">
 
 <style>
+#hs_cos_wrapper_widget_1713374822403 .simple-hero-banner-wrapper { background-color:rgba(64,169,202,1.0); }
 
-    .page-id-9508 .rowing,
-    .page-id-9579 .rowing,
-    .page-id-8528 .rowing,
-    .page-id-9377 .rowing,
-    .page-id-8924 .rowing{
-        display: inline-flex !important;
-        width: 100% !important;
-    }
-
-    .page-id-9508 .rowing .colom,
-    .page-id-9579 .rowing .colom,
-    .page-id-8528 .rowing .colom,    
-    .page-id-9377 .rowing .colom,
-    .page-id-8924 .rowing .colom {
-        width: 50% !important;
-        margin: 3px 5px !important;
-    }
-
-    .page-id-9508 .with-errors,
-    .page-id-9579 .with-errors,  
-    .page-id-8528 .with-errors,    
-    .page-id-9377 .with-errors,
-    .page-id-8924 .with-errors {
-        padding-left: 5px;
-    }
-
-    .page-id-9508 .six-submit,
-    .page-id-9579 .six-submit,
-    .page-id-8528 .six-submit,    
-    .page-id-9377 .six-submit,
-    .page-id-8924 .six-submit {
-        display: flex;
-        flex: 2;
-        justify-content: center;
-        height: 60px;
-    }
-
-    .page-id-9508 .six-submit p,
-    .page-id-9579 .six-submit p,
-    .page-id-8528 .six-submit p,    
-    .page-id-9377 .six-submit p,
-    .page-id-8924 .six-submit p{
-        width: 45px;
-        position: relative;
-        top: 7px;
-        left: 10px;
-    }
-
-    .page-id-9508 .six-submit p #loader,
-    .page-id-9579 .six-submit p #loader, 
-    .page-id-8528 .six-submit p #loader,    
-    .page-id-9377 .six-submit p #loader,
-    .page-id-8924 .six-submit p #loader {
-        display: none;
-        margin-top: 12px;
-    }
-
-    .page-id-9508 .six-submit #loader,
-    .page-id-9579 .six-submit #loader,
-    .page-id-8528 .six-submit #loader,    
-    .page-id-9377 .six-submit #loader,
-    .page-id-8924 .six-submit #loader {
-        display: none;
-        margin-top: 12px;
-    }
-    
-    /*//for red background*/
-    /*.page-id-9536 .main .grid-noGutter .content .wrap,
-    .page-id-8528 .main .grid-noGutter .content .wrap,
-    .page-id-9488 .main .grid-noGutter .content .wrap,
-    .page-id-9377 .main .grid-noGutter .content .wrap{
-        background-color: rgb(227,38,38) !important;
-    }*/
-
-    .page-id-9508 .six-input,
-    .page-id-9579 .six-input,
-    .page-id-8528 .six-input,    
-    .page-id-9377 .six-input,
-    .page-id-8924 .six-input{
-        width: 100% !important;
-        border: 1px solid #cbd6e2 !important;
-    }
-    
-    .aab:hover::after,
-    .aa:hover::after{
-        background-color: #a22b2a !important;
-    }
-    
-    .aab::after {
-        border: 2px solid #fff !important;
-        transform: skew(16deg,0deg) !important;
-        transition: background-color .3s ease !important;
-        background-color: transparent !important;
-        content: "" !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        z-index: -1 !important;
-    }
-    
-    .aa::after {
-        transform: skew(16deg,0deg) !important;
-        transition: background-color .3s ease !important;
-        background-color: #e32726 !important;
-        content: "" !important;
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        z-index: -1 !important;
-    }
-    
-    .aa .buton {
-        background: transparent !important;
-    }
-    
-    
-    /* if only red start */
-    /*.page-id-9536 .aab::after,*/
-    .page-id-9508 .aab::after,
-    .page-id-9488 .aab::after,
-    .page-id-9484 .aab::after,
-    .page-id-9377 .aab::after,
-    .page-id-9579 .aab::after {
-        border: 2px solid #fff;
-    }
-    
-    /* if only red end */
-    
-    
-    /* end */
-
+#hs_cos_wrapper_widget_1713374822403 .simple-hero-banner-wrapper .slide .text::before { background:rgba(111,204,233,1.0); }
 
 </style>
 
+<link rel="stylesheet" href="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/module_assets/164693404601/1714498043311/module_164693404601_footer.min.css">
+<!-- Editor Styles -->
+<style id="hs_editor_style" type="text/css">
+.dnd_area-row-0-force-full-width-section > .row-fluid {
+  max-width: none !important;
+}
+/* HubSpot Styles (default) */
+.dnd_area-row-0-padding {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+</style>
+    
+
+    
+<!--  Added by GoogleAnalytics4 integration -->
+<script>
+var _hsp = window._hsp = window._hsp || [];
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+var useGoogleConsentModeV2 = true;
+var waitForUpdateMillis = true ? 1000 : 0;
 
 
+if (!window._hsGoogleConsentRunOnce) {
+  window._hsGoogleConsentRunOnce = true;
 
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': waitForUpdateMillis
+  });
 
+  if (useGoogleConsentModeV2) {
+    _hsp.push(['useGoogleConsentModeV2'])
+  } else {
+    _hsp.push(['addPrivacyConsentListener', function(consent){
+      var hasAnalyticsConsent = consent && (consent.allowed || (consent.categories && consent.categories.analytics));
+      var hasAdsConsent = consent && (consent.allowed || (consent.categories && consent.categories.advertisement));
 
-<script type="rocketlazyloadscript" data-minify="1"
-  data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/jquery-3.4.1.min.js?ver=1699568692"
-  crossorigin="anonymous" defer></script>
-<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
-$(document).ready(function() { 
- 
- var urls = 
-    window.location.href =="https://www.identityautomation.com/test-page-do-not-delete/" ||
-    window.location.href == "https://www.identityautomation.com/how-we-help/your-industry/k-12-education/" ||
-    window.location.href == "https://www.identityautomation.com/test-page-sixlogs/" ||
-    window.location.href == "https://www.identityautomation.com/test-page-2-demo-form-testing/" ||
-    window.location.href == "https://www.identityautomation.com/test-page-sixlogs-3/" || 
-    window.location.href == "https://www.identityautomation.com/test-page-sixlogs-2/"
- ;
- 
-
-    if(urls){
-        $("form").submit(function(e){
-        e.preventDefault();
-    });
-        
-        
-        console.log(window.location.href);
-       
-       
-       
-       
-       
-        $( ".senddata").click(function( event ) {
-              event.preventDefault();
-              console.log('firstname   ',$(this).closest('.stacked')[0][0].value);
-              console.log('lastname   ',$(this).closest('.stacked')[0][1].value);
-              console.log('email   ',$(this).closest('.stacked')[0][2].value);
-              console.log('company   ',$(this).closest('.stacked')[0][3].value);
-              
-            //   console.log('closest   ',$(this));
-            //   console.log('val()   ' ,$( "input[name*='firstname']" ).val());
-            //   console.log('aaaaaa   ',$(this).closest("input[name*='company']").closest("input[name*='company']").val());
-    //   console.log( $( "input[name*='company']" ).val() );
-    //      console.log( $( "input[name*='firstname']" ).val() );
-    //      console.log( $( "input[name*='lastname']" ).val() );
-    //      console.log( $( "input[name*='email']" ).val() );
-    if($(this).closest('.stacked')[0][0].value== "" || $(this).closest('.stacked')[0][1].value == ""|| $(this).closest('.stacked')[0][2].value == "" || $(this).closest('.stacked')[0][3].value == ""){
-        
-        if($(this).closest('.stacked')[0][0].value == ""){
-        $(this).closest('.hbspt-form').find('#error-firstname').html("First name is required");
-        // console.log("bbbb ",$(this).closest('#error-firstname'));
-        // $('#error-firstname').html("First name is required");
-    }else{
-        $(this).closest('.hbspt-form').find('#error-firstname').html("");
-        // $('#error-firstname').html("");
-    }
-    
-    if($(this).closest('.stacked')[0][1].value == ""){
-        $(this).closest('.hbspt-form').find('#error-lastname').html("Last name is required");
-        // $('#error-lastname').html("Last name is required");
-    }else{
-        $(this).closest('.hbspt-form').find('#error-lastname').html("");
-        // $('#error-lastname').html("");
-    }
-    
-    if($(this).closest('.stacked')[0][2].value == ""){
-        $(this).closest('.hbspt-form').find('#error-email').html("Email address is required");
-        // $('#error-email').html("Email address is required");
-    }else{
-        $(this).closest('.hbspt-form').find('#error-email').html("");
-        // $('#error-email').html("");
-    }
-    
-    if($(this).closest('.stacked')[0][3].value == ""){
-        $(this).closest('.hbspt-form').find('#error-companyname').html("Company name is required");
-        // $('#error-companyname').html("Company name is required");
-    }else{
-        $(this).closest('.hbspt-form').find('#error-companyname').html("");
-        // $('#error-companyname').html("");
-    }
-        
-    }else{
-        $("#loader").show();
-        $(this).closest('.hbspt-form').find('#error-firstname').html("");
-        $(this).closest('.hbspt-form').find('#error-lastname').html("");
-        $(this).closest('.hbspt-form').find('#error-companyname').html("");
-        $(this).closest('.hbspt-form').find('#error-email').html("");
-        
-        // $('#error-firstname').html("");
-        // $('#error-lastname').html("");
-        //  $('#error-companyname').html("");
-        //  $('#error-email').html("");
-         $(".buton").attr("disabled", true);
-         $(".buton").css('cursor','not-allowed');
-       func($(this).closest('.stacked')[0][3].value , $(this).closest('.stacked')[0][0].value , $(this).closest('.stacked')[0][1].value ,$(this).closest('.stacked')[0][2].value ); 
-    }
-    
-    
-    
-    //func($( "input[name*='company']" ).val() , $( "input[name*='firstname']" ).val() ,$( "input[name*='lastname']" ).val(),$( "input[name*='email']" ).val() ); 
-      
-         //func($( "input[name*='company']" ).val());
-      
-        });
-        
-        
-  var func = function(company,firstname, lastname, email) {
-      
-      
-  //var func = function(company) {  
-      //var url = "https://server.feedbackwow.com/salesforce/identity_api";
-    //var url = "https://ec54ef40.ngrok.io/salesforce/identity_api";
-    
-    
-    var url = "https://www.identityautomation.com/ringleadapi.php";
-      $.ajax({
-        url: url,
-        type: "POST",
-        crossDomain: true,
-    	dataType: 'json',
-        data:{myData: {
-            companyname : company,
-          firstname : firstname,
-          lastname : lastname,
-          email : email,
-        }
-    
-        },
-        headers: {
-        
-        'Access-Control-Allow-Origin': '*'
-    	},
-        
-        contentType: "application/x-www-form-urlencoded; charset=utf-8",
-        success: function(result) {
-           $("#loader").hide();
-           $(".buton").attr("disabled", false);
-           $(".buton").css('cursor','pointer');
-          alert("Thank you for requesting a demo. One of our representatives will follow up with you via email within one business day to schedule your demo.");
-         
-          
-        },
-          
-        failure: function(errMsg) {
-          alert("Form not send");
-        }
+      gtag('consent', 'update', {
+        'ad_storage': hasAdsConsent ? 'granted' : 'denied',
+        'analytics_storage': hasAnalyticsConsent ? 'granted' : 'denied',
+        'ad_user_data': hasAdsConsent ? 'granted' : 'denied',
+        'ad_personalization': hasAdsConsent ? 'granted' : 'denied'
       });
+    }]);
+  }
+}
+
+gtag('js', new Date());
+gtag('set', 'developer_id.dZTQ1Zm', true);
+gtag('config', 'G-DD1VS1JN1R');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DD1VS1JN1R"></script>
+
+<!-- /Added by GoogleAnalytics4 integration -->
+
+<!--  Added by GoogleTagManager integration -->
+<script>
+var _hsp = window._hsp = window._hsp || [];
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+var useGoogleConsentModeV2 = true;
+var waitForUpdateMillis = true ? 1000 : 0;
+
+
+
+var hsLoadGtm = function loadGtm() {
+    if(window._hsGtmLoadOnce) {
+      return;
     }
-        
-        
-        
+
+    if (useGoogleConsentModeV2) {
+
+      gtag('set','developer_id.dZTQ1Zm',true);
+
+      gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': waitForUpdateMillis
+      });
+
+      _hsp.push(['useGoogleConsentModeV2'])
     }
-});     
-// ========================SIXLOGS TECHNOLOGIES WORK FOR FORM======================
-});</script>
-	<section class="masthead masthead-normal">
-		<style scoped>
-			.masthead__bg {
-				background-image: var(--wpr-bg-210470e7-56fd-42d9-9095-df7b92212c6a);
-			}
 
-			@media only screen and (min-width: 768px) {
-				.masthead__bg {
-					background-image: var(--wpr-bg-8371fb1b-151d-4edc-80f1-686d16aa2752);
-				}
-			}
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KN4Z3G5');
 
-			@media only screen and (min-width: 1024px) {
-				.masthead__bg {
-					background-image: url(https://www.identityautomation.com/wp-content/uploads/2020/12/Privacy-Policy-1000x457.jpg);
-				}
-			}
+    window._hsGtmLoadOnce = true;
+};
 
-			@media only screen and (min-width: 1200px) {
-				.masthead__bg {
-					background-image: var(--wpr-bg-7416f722-c8ee-4942-940e-eb0771a84109);
-				}
-			}
-		</style>
-		<div class="masthead__bg">
-							<div class="masthead_overlay" style="background-color: rgba(0,0,0,0.4)"></div>
-					</div>
-		<div class="inner">
-			<p class="breadcrumbs"><span><span class="breadcrumb_last" aria-current="page">Privacy Policy</span></span></p>
-			<div class="vertical-align">
-				<div class="row">
-					<div class="cell">
-						<header class="masthead__header">
+_hsp.push(['addPrivacyConsentListener', function(consent){
+  if(consent.allowed || (consent.categories && consent.categories.analytics)){
+    hsLoadGtm();
+  }
+}]);
 
-							
-							<h1 class="masthead__title ">
-																Privacy Policy							</h1>
+</script>
 
-							
-						</header>
+<!-- /Added by GoogleTagManager integration -->
+
+    <link rel="canonical" href="https://www.identityautomation.com/privacy-policy">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript" data-cfasync="false" src="https://tribl.io/h.js?orgId=gJP7pB8vOKswLY1WdG0D"></script>
+
+<script>
+var _prum = [['id', '58f6592683797513f2550c68'],
+             ['mark', 'firstbyte', (new Date()).getTime()]];
+(function() {
+    var s = document.getElementsByTagName('script')[0]
+      , p = document.createElement('script');
+    p.async = 'async';
+    p.src = '//rum-static.pingdom.net/prum.min.js';
+    s.parentNode.insertBefore(p, s);
+})();
+</script>
+
+
+<meta name="google-site-verification" content="g4P3c_Ez7SKrb1wQXOpcxmv5A_yqcYwcCFzvZMXOGVI">
+<meta property="og:url" content="https://www.identityautomation.com/privacy-policy">
+<meta name="twitter:card" content="summary">
+<meta http-equiv="content-language" content="en">
+
+
+
+
+
+
+  <meta name="generator" content="HubSpot"></head>
+  <body>
+<!--  Added by GoogleTagManager integration -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KN4Z3G5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- /Added by GoogleTagManager integration -->
+
+    <div class="body-wrapper   hs-content-id-165538428500 hs-site-page page hs-content-path-privacy-policy hs-content-name-privacy-policy  ">
+      
+        <div data-global-resource-path="Singularity/templates/partials/header.html"><header class="header">
+
+  
+
+  <a href="#main-content" class="header__skip">Skip to content</a>
+
+  
+
+	<div id="hs_cos_wrapper_module_17115610998288" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module">
+<div class="utility-nav-wrapper">
+	<div class="bg-area">
+		<div class="content-area">
+			
+			<div class="alert">
+				<span id="hs_cos_wrapper_module_17115610998288_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_icon" style="" data-hs-cos-general-type="widget" data-hs-cos-type="icon"><svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" aria-hidden="true"><g id="Triangle Exclamation1_layer"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" /></g></svg></span>
+				
+				
+				<a href="https://www.identityautomation.com/products/phishing-protection?hsLang=en">
+					Spear Phishing Attacks are on the rise. Learn more about Phishing Protection licenses for K-12 School Districts. Click to Learn More.
+				</a>
+			</div>
+			
+			<div class="quick-links">
+				<span id="hs_cos_wrapper_module_17115610998288_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_simple_menu" style="" data-hs-cos-general-type="widget" data-hs-cos-type="simple_menu"><div id="hs_menu_wrapper_module_17115610998288_" class="hs-menu-wrapper active-branch flyouts hs-menu-flow-horizontal" role="navigation" data-sitemap-name="" data-menu-id="" aria-label="Navigation Menu">
+ <ul role="menu">
+  <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="https://www.identityautomation.com/request-a-demo" role="menuitem" target="_self">Request a Demo</a></li>
+  <li class="hs-menu-item hs-menu-depth-1" role="none"><a href="https://www.identityautomation.com/contact-us" role="menuitem" target="_self">Contact Us</a></li>
+ </ul>
+</div></span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+	<div class="header__wrapper">
+		<div class="header__container">
+
+			
+
+			<div class="header__logo header__logo--main">
+				<div id="hs_cos_wrapper_site_logo" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-logo" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module">
+  
+
+
+
+
+
+  <span id="hs_cos_wrapper_site_logo_hs_logo_widget" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_logo" style="" data-hs-cos-general-type="widget" data-hs-cos-type="logo"><a href="https://www.identityautomation.com?hsLang=en" id="hs-link-site_logo_hs_logo_widget" style="border-width:0px;border:0px;"><img src="https://www.identityautomation.com/hubfs/Singularity/logos/id-auto-logo-mark-black.svg" class="hs-image-widget " height="33" style="height: auto;width:35px;border-width:0px;border:0px;" width="35" alt="id-auto-logo-mark-black" title="id-auto-logo-mark-black" loading="eager"></a></span>
+</div>
+				<a href="https://www.identityautomation.com/?hsLang=en" class="header__company-name" style="color:black;text-decoration:none;">
+					<div id="hs_cos_wrapper_module_17114841127468" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><span id="hs_cos_wrapper_module_17114841127468_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="text">Identity Automation</span></div>
+				</a>
+			</div>
+
+			
+
+			<div class="header__column">
+
+				
+
+				
+
+				<div class="header__row">
+					<button type="button" class="header--toggle header__navigation--toggle no-button">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span class="label">Menu</span>
+					</button>
+					<div class="header__navigation header--element">
+						<div id="hs_cos_wrapper_navigation-primary" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module">
+
+
+
+
+
+
+
+
+
+<nav class="menu menu--desktop" aria-label="Main menu">
+  <ul class="menu__wrapper no-list">
+    
+
+  
+
+  
+
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Products</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Products</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Identity Solutions</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Identity Solutions</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-3 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/identity-lifecycle-management"> 
+            Identity Lifecycle Management
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/access-governance"> 
+            Access Governance
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/authentication-and-assurance"> 
+            Authentication &amp; Assurance
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/threat-detection-and-response"> 
+            Threat Detection &amp; Response
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Classroom Solutions</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Classroom Solutions</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-3 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/student-teacher-portal"> 
+            Student-Teacher Portal
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/rostering"> 
+            Rostering
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/insights"> 
+            Insights
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/phishing-protection"> 
+            Phishing Protection
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Industries</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Industries</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/k-12-education"> 
+            K-12
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/higher-ed"> 
+            Higher Ed
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/healthcare"> 
+            Healthcare
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Resources</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Resources</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://blog.identityautomation.com/"> 
+            Knowledge Base
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/resources/events"> 
+            Events
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://help.rapididentity.com/"> 
+            Support
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/trust-center"> 
+            Trust Center
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          menu__link--toggle
+          
+          " href="https://www.identityautomation.com/about-us" aria-haspopup="true" aria-expanded="false"> 
+            About Us
+        </a>
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for About Us</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/why-ia"> 
+            Why IA?
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/careers"> 
+            Careers
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/partnerships"> 
+            Partnerships
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+
+
+  </ul>
+</nav>
+
+
+
+<nav class="menu menu--mobile" aria-label="Main menu">
+  <ul class="menu__wrapper no-list">
+    
+
+  
+
+  
+
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Products</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Products</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Identity Solutions</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Identity Solutions</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-3 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/identity-lifecycle-management"> 
+            Identity Lifecycle Management
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/access-governance"> 
+            Access Governance
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/authentication-and-assurance"> 
+            Authentication &amp; Assurance
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/threat-detection-and-response"> 
+            Threat Detection &amp; Response
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Classroom Solutions</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Classroom Solutions</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-3 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/student-teacher-portal"> 
+            Student-Teacher Portal
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/rostering"> 
+            Rostering
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/insights"> 
+            Insights
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-3    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/products/phishing-protection"> 
+            Phishing Protection
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Industries</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Industries</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/k-12-education"> 
+            K-12
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/higher-ed"> 
+            Higher Ed
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/industries/healthcare"> 
+            Healthcare
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        
+          <a class="menu__link menu__link--toggle" href="#" aria-haspopup="true" aria-expanded="false">Resources</a>
+        
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for Resources</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://blog.identityautomation.com/"> 
+            Knowledge Base
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/resources/events"> 
+            Events
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://help.rapididentity.com/"> 
+            Support
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/trust-center"> 
+            Trust Center
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+    
+    <li class="menu__item menu__item--depth-1 menu__item--has-submenu   hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          menu__link--toggle
+          
+          " href="https://www.identityautomation.com/about-us" aria-haspopup="true" aria-expanded="false"> 
+            About Us
+        </a>
+      
+      
+        
+          
+          <button class="menu__child-toggle no-button" aria-expanded="false">
+            <span class="show-for-sr">Show submenu for About Us</span>
+            <span class="menu__child-toggle-icon"></span>
+          </button>
+          <ul class="menu__submenu menu__submenu--level-2 no-list">
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/why-ia"> 
+            Why IA?
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/careers"> 
+            Careers
+        </a>
+      
+      
+    </li>
+  
+            
+              
+    <li class="menu__item menu__item--depth-2    hs-skip-lang-url-rewrite">
+      
+        <a class="menu__link
+          
+          
+          " href="https://www.identityautomation.com/partnerships"> 
+            Partnerships
+        </a>
+      
+      
+    </li>
+  
+            
+          </ul>
+          
+      
+    </li>
+  
+  
+
+
+  </ul>
+</nav></div>
 					</div>
 				</div>
+
 			</div>
 
 		</div>
-	</section>
-<main class="main">
-	<div class="grid-noGutter">
-<section class='layer content'> 
-<div class="wrap" style="background-color: #fff">
-	<div class='inner grid'>
-		
-			<article class="col-12" style="text-align: left">
-				
-					<h1><span>Identity Automation Privacy Policy</span></h1>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Last Updated November </span><span style="font-weight: 400;">17</span><span style="font-weight: 400;">, 2022</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation is committed to protecting your privacy. This Privacy Policy describes how we collect, receive, use, store, share, transfer, and process your Personal Data when you visit and interact with our website (</span><a href="http://www.identityautomation.com"><span style="font-weight: 400;">www.identityautomation.com</span></a><span style="font-weight: 400;">) and all other related sub-domains, including the Identity Automation Blog (</span><a href="https://blog.identityautomation.com/"><span style="font-weight: 400;">https://blog.identityautomation.com/</span></a><span style="font-weight: 400;">) and Identity Automation landing pages (</span><a href="https://info.identityautomation.com"><span style="font-weight: 400;">https://info.identityautomation.com</span></a><span style="font-weight: 400;">). Our Privacy Policy also describes your choices and rights with respect to your Personal Data, including your rights of access and correction of your Personal Data. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">For the purposes of this Privacy Policy, Personal Data means any information relating to an identified or identifiable individual, including, but not limited to, a first and last name, a physical address, an email address, or other contact information, whether at work or at home. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">The term “Visitors” in this Privacy Policy refers to individuals who visit our Website and is separate and distinct from “Users” of RapidIdentity. These differing use cases have separate policies related to Personal Data. Please reference our End-User License Agreement, linked below, for our policy relating to the Personal Data of RapidIdentity Users.</span></p>
-<p>&nbsp;</p>
-<p><b>End-User License Agreement:</b></p>
-<p><span style="font-weight: 400;">For information regarding our Terms and Conditions for RapidIdentity customers and their users, please reference our customer End-User License Agreement</span> <a href="https://www.identityautomation.com/terms-and-conditions/"><b>here</b></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<p><b>Trust Center:</b></p>
-<p><span style="font-weight: 400;">For more information regarding Identity Automation’s approach to compliance and security, please visit our Trust Center, </span><a href="https://www.identityautomation.com/trust-center/"><b>here</b></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<p><b>Our Privacy Pledge:</b></p>
-<p><span style="font-weight: 400;">Identity Automation pledges to ensure consistent safeguards over the personal information that is required to perform the identity and access management that our customers and their users count on every day. Personal information will never be monetized beyond the delivery of the services to which our customers knowingly subscribe. Identity Automation will regularly review and update our information privacy practices to ensure compliance with specified disclosures about the collection, use, sharing, and protection of all users’ personal information. To preserve your trust, we pledge to protect your privacy by adhering to the practices described below.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Concerns or questions about how we protect your data should be directed to </span><a href="/cdn-cgi/l/email-protection#0f7f7d66796e6c764f666b6a617b667b766e7a7b60626e7b666061216c6062"><span style="font-weight: 400;"><span class="__cf_email__" data-cfemail="c7b7b5aeb1a6a4be87aea3a2a9b3aeb3bea6b2b3a8aaa6b3aea8a9e9a4a8aa">[email&#160;protected]</span></span></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<ol>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Data Usage for Marketing Purposes </span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Cookies and Similar Technologies</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">GDPR</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Contact Information &amp; Right to be forgotten</span></li>
-</ol>
-<h3><span style="font-weight: 400;">1. Data Usage for Marketing Purposes</span></h3>
-<p><span style="font-weight: 400;">On some pages where Identity Automation collects Personal Data on our Website, Identity Automation may post a purpose statement that explains why your Personal Data will be collected. In all other cases where Identity Automation collects Personal Data, Identity Automation will use Personal Data in accordance with the purposes outlined below. Unless expressly noted in this Privacy Policy, Identity Automation will not transfer Personal Data without Your consent to third-parties who are not bound to act on Identity Automation’s behalf.</span></p>
-<h4><span style="font-weight: 400;">Use of Data:</span></h4>
-<p><span style="font-weight: 400;">Identity Automation may use the information to contact You to further discuss Your interest in our company and products, to send information regarding our company or partners, such as promotions and events, and to respond to Your requests for information.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">At any time, You have the ability to opt-out of receiving marketing communications from us, but You may not opt out of administrative emails. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Portions of the Identity Automation Website contain functions for collecting Personal Data including names and email addresses as well as an individual’s or account’s access history. We may also collect and track other personally identifiable and non-personally identifiable information about You, such as: Your IP address, the type of browser You use, and the website You visited before visiting our Website or Identity Automation Platform.</span></p>
-<h4><span style="font-weight: 400;">Automatic Collection of Information:</span></h4>
-<p><span style="font-weight: 400;">Even if You only browse through an Identity Automation Website and read the information contained on any Identity Automation Website pages, Identity Automation will gather certain information about Your visit automatically. This information does not identify You personally, but may, for example, reflect how You found or were directed to or used Identity Automation’s Website. The Identity Automation Website may log Your computer’s IP address when You use any portion of the Website. An IP address is automatically assigned to Your computer when You access the internet and is used by web servers to identify Your computer. Identity Automation logs IP addresses for system administration, for auditing the use of the Website, and for collecting statistical information for marketing and other purposes.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">It also may collect the name and URL of the website that You visited immediately preceding Your visit to Identity Automation’s Website. Identity Automation may use this type of non- Personal Data on a cumulative basis to better understand what pages Visitors and prospective customers access or visit, and Identity Automation may disclose this information to business and trade partners.</span></p>
-<h4><span style="font-weight: 400;">Voluntarily-Provided Information:</span></h4>
-<p><span style="font-weight: 400;">When You participate in, access, or sign up to receive any of Identity Automation’s services, activities, or online content, such as email publications, blogs, newsletters, or webinars, Identity Automation may receive Personal Data about You. Identity Automation will use Your Personal Data for a number of purposes which include, responding to Your requests for information, blogs or newsletters, adding Your details to Identity Automation’s list of persons who receive blog updates or other publications, and providing these to You on a regular or as-requested basis.</span></p>
-<p><span style="font-weight: 400;">Identity Automation will also compile data based on responses received from Visitors in order to allow Identity Automation to analyze the experience of Visitors so that Identity Automation can improve the services that Identity Automation currently offers and to allow Identity Automation to predict future products or services that Identity Automation may consider offering. This information may also be used by Identity Automation for its business purposes and shared with Affiliates for their business purposes. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">The data that Identity Automation compiles from responses received from Visitors to any Website may also be shared with third parties that deliver services to Identity Automation. One of the purposes of sharing such information with third party service providers is to allow them and Identity Automation to analyze the profile of Visitors to any Identity Automation Website and help them and Identity Automation to provide a better Visitor experience. By using any Identity Automation Website and providing this information, You are agreeing to these uses of Your information. If You do decide to provide information through any Identity Automation Website or to otherwise contact Identity Automation, then it is implied that You consent to receiving a response from Identity Automation to Your email address or via other contact information that You provided to Identity Automation. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Note that requesting information using any Identity Automation Website does not give You a right to receive a response. Other than as particularly described in this Privacy Policy, any requests for information will be responded to entirely at the discretion of Identity Automation, and there is no obligation on the part of Identity Automation to respond to such requests or to provide any responsive information unless by Federal or legal obligation.</span></p>
-<h3><span style="font-weight: 400;">2. Cookies and Similar Technologies </span></h3>
-<p><span style="font-weight: 400;">Identity Automation’s Website may utilize cookies and other tracking technologies. When You visit our Website, Identity Automation may place one or more cookies on Your computer. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">A cookie is a small text file that may be used, for example, to collect information about Website activity. Some cookies and other technologies may serve to recall Personal Data previously indicated by a Website visitor. Identity Automation uses cookies for all or any of the following purposes:</span></p>
-<ul>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Identify You when You access, visit, log-in to or complete a form submission on any Identity Automation Website. This enables You to re-visit any Identity Automation Website without having to re-enter information upon each visit.</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">To note different areas of any Identity Automation Website which have recently been accessed through Your computer. Information collected in this way may be used to develop and manage the online services of Identity Automation by, for example, storing information about Your preferences so as to enable Identity Automation to customize any Identity Automation Website according to Your individual interests.</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Delivering content on any Identity Automation Website which is relevant to Your individual interest.</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Monitoring the effectiveness of any promotions or marketing campaigns by Identity Automation or its Affiliates.</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Tracking Your entries, submissions, and status in promotions, sweepstakes, and contests.</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Improving any Website content and conducting various other diagnostics to improve Identity Automation’s services. Identity Automation may, for example, use cookies to monitor aggregate metrics such as total number of Visitors and pages viewed. </span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Analyzing and improving Website security.</span></li>
-</ul>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">The Identity Automation Website does not respond to “do not track” signals from browsers. Thus, Your selection of the “do not track” option provided by Your browser may not have any effect on our collection of cookie information for analytic and internal purposes. To effectively manage our collection of cookie information, You may set most browsers to notify You if You receive a cookie, or You may choose to block cookies through the settings associated with Your browser. But note, that if You choose to erase or block cookies, You will need to re-enter Your original information (e.g., user name, password or general contact info) to gain access to certain parts of the Identity Automation Website and may not be able to access other parts of the Identity Automation Website.</span></p>
-<h3><span style="font-weight: 400;">GDPR</span></h3>
-<h4><span style="font-weight: 400;">GDPR Principles</span></h4>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation complies with the principles of GDPR. The six overall guiding principles are:</span></p>
-<ul>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Lawfulness, transparency and fairness</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Purpose Limitation</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Data Minimization</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Accuracy</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Storage Limitation</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Confidentiality and Integrity</span></li>
-</ul>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Your privacy and security is of the utmost importance to us. We will always follow these principles and ask how you would like us (or our partners) to communicate with you.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Where Personal Data originates from the European Economic Area or Switzerland and is transferred to the United States, Identity Automation agrees to comply with the EU-General Data Protection Regulation. With respect to such Personal Data, to the extent of any conflict between the terms of this “Privacy Policy” and the “GDPR” Principles, the “GDPR” Principles govern. For more information on the General Data Protection Regulation please visit </span><a href="https://gdpr-info.eu/"><span style="font-weight: 400;">https://gdpr-info.eu/</span></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<h4><span style="font-weight: 400;">Disclosures, Sharing and Onward Transfers of Your Information</span></h4>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation will not disclose or provide your Personal Data to third parties, except when one or more of the following conditions is true:</span></p>
-<ul>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">To provide products or services that You have requested from Identity Automation;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">Identity Automation has Your permission to make the disclosure;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The disclosure is required by a lawful request by public authorities;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The disclosure is reasonably related to a Transfer (see “Transfer or Information” section below);</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The information in question is publicly available;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The information is seen by third parties who provide web services or professional services to Identity Automation (including Payment Processors);</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The information is used to investigate and correct technical problems and malfunctions in any Website or the computer systems that support any Website;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The information is necessary to investigate, prevent or take action with regard to a violation of any Website or in respect of the Terms and Conditions or to verify or enforce compliance with the policies (including but not limited to the “Privacy Policy”) governing any Website;</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The disclosure is reasonably necessary for the establishment or defense of legal claims, or to investigate, prevent or take action regarding illegal activities, suspected fraud, or situations involving potential threats to the physical safety of any person; or</span></li>
-<li style="font-weight: 400;" aria-level="1"><span style="font-weight: 400;">The disclosure is to another Identity Automation entity, Affiliate or to persons or entities providing services on Identity Automation’s behalf (each a “transferee”), consistent with the purpose for which the information was obtained, if the transferee, with respect to the information in question:</span>
-<ul>
-<li style="font-weight: 400;" aria-level="2"><span style="font-weight: 400;">is subject to law providing an adequate level of privacy protection; or</span></li>
-<li style="font-weight: 400;" aria-level="2"><span style="font-weight: 400;">has agreed in writing to provide an adequate level of privacy protection; or</span></li>
-<li style="font-weight: 400;" aria-level="2"><span style="font-weight: 400;">subscribes to the Privacy Principles.</span></li>
-</ul>
-</li>
-</ul>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation values data privacy and will request that such third parties use Personal Data only for the purposes disclosed in this Privacy Policy with respect to Personal Data originating from the European Economic Area or Switzerland. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Permitted transfers of information, either to third parties or within Identity Automation, include the transfer of data from one jurisdiction to another, including transfers to and from the United States. Because privacy laws vary from one jurisdiction to another, Personal Data may be transferred to a jurisdiction where the laws provide less or different protection than the jurisdiction in which the information originated.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Contact lists and information are properly considered assets of Identity Automation’s business. Accordingly, if Identity Automation merges with another entity or if Identity Automation assets are acquired by a third-party, Identity Automation’s contact lists and information, which may include Personal Data you have provided Identity Automation, would be included among the assets that would be transferred and Identity Automation would request that the entity treat Your information in accordance with this Privacy Policy. This same provision is applicable for each Affiliate of Identity Automation.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">In the event that Identity Automation is involved in a merger, reorganization, dissolution, sale of business or assets or similar event, information disclosed to or collected by Identity Automation may be transferred to Identity Automation’s successor, or to the purchaser of such assets, as applicable. You will be notified via email and a prominent notice on our Website of any change in ownership or uses of your personal information, as well as any choices you may have regarding your personal information.</span></p>
-<p>&nbsp;</p>
-<h4><span style="font-weight: 400;">Ownership and Storage of Information</span></h4>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation owns the code, databases, and all rights to all Websites and any feedback You provide. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation may store Personal Data up to six months that You provide to Identity Automation or any of its Affiliates through any Website and will destroy such information in accordance with any policy or directive of Identity Automation or any of its Affiliates for destruction of data or as applicable. For so long as Identity Automation stores such information, Identity Automation will comply. To request Identity Automation remove your data, submit the </span><a href="https://info.identityautomation.com/right-to-erasure"><span style="font-weight: 400;">Right to Erasure request form</span></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<h4><span style="font-weight: 400;">Privacy Policies and Links to Third-Party Websites</span></h4>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Any Website may contain or reference links to non-Identity Automation websites. The linked sites are not under the control of Identity Automation and Identity Automation is not responsible for the content of any third-party website or any link contained in a third-party website, or any changes or updates to such sites. The inclusion of a link within any Website does not imply any endorsement by or any affiliation with Identity Automation. Access to any third-party website is at Your own risk, and You should be aware that third-party websites may contain privacy policies that have terms that are different from that of this Privacy Policy.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">In connection with Your use of any Website, You may be made aware of services, products, articles, offers, and promotions provided by third parties, and not by us. If You decide to use these third-party services, You are responsible for reviewing and understanding the privacy policies governing those services. You agree that the third party, and not Identity Automation, is responsible for all data privacy obligations related to the Personal Data You provide to such third party and You expressly relieve Identity Automation and its Affiliates from any and all liability arising from or related to such Personal Data.</span></p>
-<h4><span style="font-weight: 400;">US Privacy Shield Framework</span></h4>
-<p><span style="font-weight: 400;">Identity Automation complies with the EU-U.S. Privacy Shield Framework and the Swiss-U.S. Privacy Shield Framework, as set forth by the U.S. Department of Commerce regarding the collection, use, and retention of personal information transferred from the European Union and/or Switzerland, to the United States.  Identity Automation has certified to the Department of Commerce that it adheres to the Privacy Shield Principles.  If there is any conflict between the terms in this privacy policy and the Privacy Shield Principles, the Privacy Shield Principles shall govern.  To learn more about the Privacy Shield program, and to view our certification, please visit </span><a href="https://www.privacyshield.gov/"><span style="font-weight: 400;">https://www.privacyshield.gov/</span></a><span style="font-weight: 400;">.</span></p>
-<p>&nbsp;</p>
-<h3><span style="font-weight: 400;">Contact Information and Right to Be Forgotten</span></h3>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation offers You certain choices in connection with the Personal Data collected from You. To update Your preferences, have Your information removed from Identity Automation mailing lists, or to submit a request, please contact Identity Automation as indicated below. To the extent provided by law, You may request access to the Personal Data we maintain about You or request that we correct, amend, delete or block the information by contacting Identity Automation at the contact addresses indicated below. </span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">If You wish to access, modify or delete other Personal Data that You have provided to Identity Automation, such as Your address, please contact us at </span><a href="/cdn-cgi/l/email-protection#2f5f5d46594e4c566f464b4a415b465b564e5a5b40424e5b464041014c4042"><span style="font-weight: 400;"><span class="__cf_email__" data-cfemail="b1c1c3d8c7d0d2c8f1d8d5d4dfc5d8c5c8d0c4c5dedcd0c5d8dedf9fd2dedc">[email&#160;protected]</span></span></a><span style="font-weight: 400;"> or (877) 221-8401 for assistance.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">For disputes regarding Identity Automation’s collection or use of Your Personal Data or for more information, or questions or comments concerning the Privacy Policy, please contact Identity Automation at:</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Identity Automation</span></p>
-<p><span style="font-weight: 400;">7102 N Sam Houston Pkwy W, Ste 100</span></p>
-<p><span style="font-weight: 400;">Houston, TX 77064</span></p>
-<p><span style="font-weight: 400;">USA</span></p>
-<p><span style="font-weight: 400;">Telephone: +1 (877) 221-8401</span></p>
-<p><span style="font-weight: 400;">Email: </span><a href="/cdn-cgi/l/email-protection#fe8e8c97889f9d87beb79a9b908a978a87bf8b8a91939f8a979190d09d9193"><span style="font-weight: 400;"><span class="__cf_email__" data-cfemail="3d4d4f544b5c5e447d74595853495449447c484952505c49545253135e5250">[email&#160;protected]</span></span></a></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">You may also stop email messages and other promotional mailings by contacting Identity Automation at the above address or email.</span></p>
-<p>&nbsp;</p>
-<p><span style="font-weight: 400;">Our goal is to resolve all disputes through our internal processes. If You have a complaint regarding our collection, use, disclosure or retention of Personal Data originating from the European Economic Area or Switzerland that cannot be resolved through those processes, You may (1) submit the complaint to the relevant data protection authorities, EU Data Protection Authorities and Swiss Federal Data Protection and Information Commissioner (FDPIC) (“DPAs”); (2) at no cost to You, resolve the complaint through JAMS using this link: https://www.jamsadr.com/eu-us-privacy-shield; or (3) provide notice to Identity Automation that You desire to resolve the complaint through binding arbitration. Identity Automation is subject to the enforcement powers of the U.S. Federal Trade Commission. In the event that we or such authorities determine that we did not comply with this Privacy Policy, we will take appropriate steps to address any adverse effects and to promote future compliance.</span></p>
+  </div>
+</header></div>
+      
 
-			</article>
+      
 
-		
-	 </div>
+      <main id="main-content" class="body-container-wrapper">
+        
+
+<div class="container-fluid body-container body-container--all-purpose">
+<div class="row-fluid-wrapper">
+<div class="row-fluid">
+<div class="span12 widget-span widget-type-cell " style="" data-widget-type="cell" data-x="0" data-w="12">
+
+<div class="row-fluid-wrapper row-depth-1 row-number-1 dnd_area-row-0-force-full-width-section dnd-section dnd_area-row-0-padding">
+<div class="row-fluid ">
+<div class="span12 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="12">
+
+<div class="row-fluid-wrapper row-depth-1 row-number-2 dnd-row">
+<div class="row-fluid ">
+<div class="span12 widget-span widget-type-custom_widget dnd-module" style="" data-widget-type="custom_widget" data-x="0" data-w="12">
+<div id="hs_cos_wrapper_widget_1713374822403" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><div class="simple-hero-banner-wrapper">
+	<img class="pattern" src="https://www.identityautomation.com/hubfs/Singularity/patterns/IA_Dot_Pattern_Right.svg" alt="IA_Dot_Pattern_Right" loading="lazy" width="553" height="617" style="max-width: 100%; height: auto;">
+	<div class="bg-area">
+		<div class="content-area">
+			<div class="slide">
+				<div class="text">
+					<div id="hs_cos_wrapper_widget_1713374822403_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_inline_rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="inline_rich_text" data-hs-cos-field="rich_text"><h1>Privacy Policy</h1></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 </div>
 
-</section>		</div><!-- GRID -->
-</main>
-	<footer class="site-footer">
-		<div class="wrap">
-			<div class="inner clearfix">
-				<div class="grid-noGutter">
-					<div class="col-12">
-						<ul class="footer-menu footer-menu--bottom"><li id="menu-item-407" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-407"><a href="https://www.identityautomation.com/how-we-help/your-need/">Your Need</a>
-<ul class="sub-menu">
-	<li id="menu-item-408" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-408"><a href="https://www.identityautomation.com/how-we-help/your-need/upgrading-your-iam-solution/">Upgrading Your IAM Solution</a></li>
-	<li id="menu-item-409" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-409"><a href="https://www.identityautomation.com/how-we-help/your-need/connecting-to-all-apps/">Connection to All Apps with Single Sign-On</a></li>
-	<li id="menu-item-410" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-410"><a href="https://www.identityautomation.com/how-we-help/your-need/identity-lifecycle-management-for-all-users/">Identity Lifecycle Management for All Users</a></li>
-	<li id="menu-item-411" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-411"><a href="https://www.identityautomation.com/how-we-help/your-need/picking-the-right-authentication-methods/">Picking the Right Authentication Methods</a></li>
-	<li id="menu-item-412" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-412"><a href="https://www.identityautomation.com/how-we-help/your-need/prevent-upcoming-cybersecurity-breach/">Preventing Your Upcoming Breach</a></li>
+</div><!--end widget-span -->
+</div><!--end row-->
+</div><!--end row-wrapper -->
+
+</div><!--end widget-span -->
+</div><!--end row-->
+</div><!--end row-wrapper -->
+
+<div class="row-fluid-wrapper row-depth-1 row-number-3 dnd-section">
+<div class="row-fluid ">
+<div class="span12 widget-span widget-type-cell dnd-column" style="" data-widget-type="cell" data-x="0" data-w="12">
+
+<div class="row-fluid-wrapper row-depth-1 row-number-4 dnd-row">
+<div class="row-fluid ">
+<div class="span12 widget-span widget-type-custom_widget dnd-module" style="" data-widget-type="custom_widget" data-x="0" data-w="12">
+<div id="hs_cos_wrapper_widget_1714067170714" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><span id="hs_cos_wrapper_widget_1714067170714_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="rich_text"><h2>Identity Automation Privacy Policy</h2>
+<p><span>Last Updated November&nbsp;</span><span>17</span><span>, 2022</span></p>
+<p><span>Identity Automation is committed to protecting your privacy. This Privacy Policy describes how we collect, receive, use, store, share, transfer, and process your Personal Data when you visit and interact with our website (</span><a href="//www.identityautomation.com/?hsLang=en"><span>www.identityautomation.com</span></a><span>) and all other related sub-domains, including the Identity Automation Blog (</span><a href="https://blog.identityautomation.com/?hsLang=en"><span>https://blog.identityautomation.com/</span></a><span>) and Identity Automation landing pages (</span><a href="https://info.identityautomation.com/?hsLang=en"><span>https://info.identityautomation.com</span></a><span>). Our Privacy Policy also describes your choices and rights with respect to your Personal Data, including your rights of access and correction of your Personal Data.&nbsp;</span></p>
+<p><span>For the purposes of this Privacy Policy, Personal Data means any information relating to an identified or identifiable individual, including, but not limited to, a first and last name, a physical address, an email address, or other contact information, whether at work or at home.&nbsp;</span></p>
+<p><span>The term “Visitors” in this Privacy Policy refers to individuals who visit our Website and is separate and distinct from “Users” of RapidIdentity. These differing use cases have separate policies related to Personal Data. Please reference our End-User License Agreement, linked below, for our policy relating to the Personal Data of RapidIdentity Users.</span></p>
+<h3 style="font-weight: normal;">End-User License Agreement:</h3>
+<p><span>For information regarding our Terms and Conditions for RapidIdentity customers and their users, please reference our customer End-User License Agreement</span><span>&nbsp;</span><a href="https://www.identityautomation.com/terms-and-conditions/?hsLang=en"><strong>here</strong></a><span>.</span></p>
+<h3 style="font-weight: normal;">Trust Center:</h3>
+<p><span>For more information regarding Identity Automation’s approach to compliance and security, please visit our Trust Center,&nbsp;</span><a href="https://www.identityautomation.com/trust-center/?hsLang=en"><strong>here</strong></a><span>.</span></p>
+<h3 style="font-weight: normal;">Our Privacy Pledge:</h3>
+<p><span>Identity Automation pledges to ensure consistent safeguards over the personal information that is required to perform the identity and access management that our customers and their users count on every day. Personal information will never be monetized beyond the delivery of the services to which our customers knowingly subscribe. Identity Automation will regularly review and update our information privacy practices to ensure compliance with specified disclosures about the collection, use, sharing, and protection of all users’ personal information. To preserve your trust, we pledge to protect your privacy by adhering to the practices described below.</span></p>
+<p><span>Concerns or questions about how we protect your data should be directed to&nbsp;</span><a href="mailto:privacy@identityautomation.com"><span>privacy@identityautomation.com</span></a><span>.</span></p>
+<ol>
+<li aria-level="1"><span>Data Usage for Marketing Purposes&nbsp;</span></li>
+<li aria-level="1"><span>Cookies and Similar Technologies</span></li>
+<li aria-level="1"><span>GDPR</span></li>
+<li aria-level="1"><span>Contact Information &amp; Right to be forgotten</span></li>
+</ol>
+<h3><span>1. Data Usage for Marketing Purposes</span></h3>
+<p><span>On some pages where Identity Automation collects Personal Data on our Website, Identity Automation may post a purpose statement that explains why your Personal Data will be collected. In all other cases where Identity Automation collects Personal Data, Identity Automation will use Personal Data in accordance with the purposes outlined below. Unless expressly noted in this Privacy Policy, Identity Automation will not transfer Personal Data without Your consent to third-parties who are not bound to act on Identity Automation’s behalf.</span></p>
+<h4><span>Use of Data:</span></h4>
+<p><span>Identity Automation may use the information to contact You to further discuss Your interest in our company and products, to send information regarding our company or partners, such as promotions and events, and to respond to Your requests for information.</span></p>
+<p><span>At any time, You have the ability to opt-out of receiving marketing communications from us, but You may not opt out of administrative emails.&nbsp;</span></p>
+<p><span>Portions of the Identity Automation Website contain functions for collecting Personal Data including names and email addresses as well as an individual’s or account’s access history. We may also collect and track other personally identifiable and non-personally identifiable information about You, such as: Your IP address, the type of browser You use, and the website You visited before visiting our Website or Identity Automation Platform.</span></p>
+<h4><span>Automatic Collection of Information:</span></h4>
+<p><span>Even if You only browse through an Identity Automation Website and read the information contained on any Identity Automation Website pages, Identity Automation will gather certain information about Your visit automatically. This information does not identify You personally, but may, for example, reflect how You found or were directed to or used Identity Automation’s Website. The Identity Automation Website may log Your computer’s IP address when You use any portion of the Website. An IP address is automatically assigned to Your computer when You access the internet and is used by web servers to identify Your computer. Identity Automation logs IP addresses for system administration, for auditing the use of the Website, and for collecting statistical information for marketing and other purposes.</span></p>
+<p><span>It also may collect the name and URL of the website that You visited immediately preceding Your visit to Identity Automation’s Website. Identity Automation may use this type of non- Personal Data on a cumulative basis to better understand what pages Visitors and prospective customers access or visit, and Identity Automation may disclose this information to business and trade partners.</span></p>
+<h4><span>Voluntarily-Provided Information:</span></h4>
+<p><span>When You participate in, access, or sign up to receive any of Identity Automation’s services, activities, or online content, such as email publications, blogs, newsletters, or webinars, Identity Automation may receive Personal Data about You. Identity Automation will use Your Personal Data for a number of purposes which include, responding to Your requests for information, blogs or newsletters, adding Your details to Identity Automation’s list of persons who receive blog updates or other publications, and providing these to You on a regular or as-requested basis.</span></p>
+<p><span>Identity Automation will also compile data based on responses received from Visitors in order to allow Identity Automation to analyze the experience of Visitors so that Identity Automation can improve the services that Identity Automation currently offers and to allow Identity Automation to predict future products or services that Identity Automation may consider offering. This information may also be used by Identity Automation for its business purposes and shared with Affiliates for their business purposes.&nbsp;</span></p>
+<p><span>The data that Identity Automation compiles from responses received from Visitors to any Website may also be shared with third parties that deliver services to Identity Automation. One of the purposes of sharing such information with third party service providers is to allow them and Identity Automation to analyze the profile of Visitors to any Identity Automation Website and help them and Identity Automation to provide a better Visitor experience. By using any Identity Automation Website and providing this information, You are agreeing to these uses of Your information. If You do decide to provide information through any Identity Automation Website or to otherwise contact Identity Automation, then it is implied that You consent to receiving a response from Identity Automation to Your email address or via other contact information that You provided to Identity Automation.&nbsp;</span></p>
+<p><span>Note that requesting information using any Identity Automation Website does not give You a right to receive a response. Other than as particularly described in this Privacy Policy, any requests for information will be responded to entirely at the discretion of Identity Automation, and there is no obligation on the part of Identity Automation to respond to such requests or to provide any responsive information unless by Federal or legal obligation.</span></p>
+<h3><span>2. Cookies and Similar Technologies&nbsp;</span></h3>
+<p><span>Identity Automation’s Website may utilize cookies and other tracking technologies. When You visit our Website, Identity Automation may place one or more cookies on Your computer.&nbsp;</span></p>
+<p><span>A cookie is a small text file that may be used, for example, to collect information about Website activity. Some cookies and other technologies may serve to recall Personal Data previously indicated by a Website visitor. Identity Automation uses cookies for all or any of the following purposes:</span></p>
+<ul>
+<li aria-level="1"><span>Identify You when You access, visit, log-in to or complete a form submission on any Identity Automation Website. This enables You to re-visit any Identity Automation Website without having to re-enter information upon each visit.</span></li>
+<li aria-level="1"><span>To note different areas of any Identity Automation Website which have recently been accessed through Your computer. Information collected in this way may be used to develop and manage the online services of Identity Automation by, for example, storing information about Your preferences so as to enable Identity Automation to customize any Identity Automation Website according to Your individual interests.</span></li>
+<li aria-level="1"><span>Delivering content on any Identity Automation Website which is relevant to Your individual interest.</span></li>
+<li aria-level="1"><span>Monitoring the effectiveness of any promotions or marketing campaigns by Identity Automation or its Affiliates.</span></li>
+<li aria-level="1"><span>Tracking Your entries, submissions, and status in promotions, sweepstakes, and contests.</span></li>
+<li aria-level="1"><span>Improving any Website content and conducting various other diagnostics to improve Identity Automation’s services. Identity Automation may, for example, use cookies to monitor aggregate metrics such as total number of Visitors and pages viewed.&nbsp;</span></li>
+<li aria-level="1"><span>Analyzing and improving Website security.</span></li>
+</ul>
+<p><span>The Identity Automation Website does not respond to “do not track” signals from browsers. Thus, Your selection of the “do not track” option provided by Your browser may not have any effect on our collection of cookie information for analytic and internal purposes. To effectively manage our collection of cookie information, You may set most browsers to notify You if You receive a cookie, or You may choose to block cookies through the settings associated with Your browser. But note, that if You choose to erase or block cookies, You will need to re-enter Your original information (e.g., user name, password or general contact info) to gain access to certain parts of the Identity Automation Website and may not be able to access other parts of the Identity Automation Website.</span></p>
+<h3><span>GDPR</span></h3>
+<h4><span>GDPR Principles</span></h4>
+<p><span>Identity Automation complies with the principles of GDPR. The six overall guiding principles are:</span></p>
+<ul>
+<li aria-level="1"><span>Lawfulness, transparency and fairness</span></li>
+<li aria-level="1"><span>Purpose Limitation</span></li>
+<li aria-level="1"><span>Data Minimization</span></li>
+<li aria-level="1"><span>Accuracy</span></li>
+<li aria-level="1"><span>Storage Limitation</span></li>
+<li aria-level="1"><span>Confidentiality and Integrity</span></li>
+</ul>
+<p><span>Your privacy and security is of the utmost importance to us. We will always follow these principles and ask how you would like us (or our partners) to communicate with you.</span></p>
+<p><span>Where Personal Data originates from the European Economic Area or Switzerland and is transferred to the United States, Identity Automation agrees to comply with the EU-General Data Protection Regulation. With respect to such Personal Data, to the extent of any conflict between the terms of this “Privacy Policy” and the “GDPR” Principles, the “GDPR” Principles govern. For more information on the General Data Protection Regulation please visit&nbsp;</span><a href="https://gdpr-info.eu/"><span>https://gdpr-info.eu/</span></a><span>.</span></p>
+<h4><span>Disclosures, Sharing and Onward Transfers of Your Information</span></h4>
+<p><span>Identity Automation will not disclose or provide your Personal Data to third parties, except when one or more of the following conditions is true:</span></p>
+<ul>
+<li aria-level="1"><span>To provide products or services that You have requested from Identity Automation;</span></li>
+<li aria-level="1"><span>Identity Automation has Your permission to make the disclosure;</span></li>
+<li aria-level="1"><span>The disclosure is required by a lawful request by public authorities;</span></li>
+<li aria-level="1"><span>The disclosure is reasonably related to a Transfer (see “Transfer or Information” section below);</span></li>
+<li aria-level="1"><span>The information in question is publicly available;</span></li>
+<li aria-level="1"><span>The information is seen by third parties who provide web services or professional services to Identity Automation (including Payment Processors);</span></li>
+<li aria-level="1"><span>The information is used to investigate and correct technical problems and malfunctions in any Website or the computer systems that support any Website;</span></li>
+<li aria-level="1"><span>The information is necessary to investigate, prevent or take action with regard to a violation of any Website or in respect of the Terms and Conditions or to verify or enforce compliance with the policies (including but not limited to the “Privacy Policy”) governing any Website;</span></li>
+<li aria-level="1"><span>The disclosure is reasonably necessary for the establishment or defense of legal claims, or to investigate, prevent or take action regarding illegal activities, suspected fraud, or situations involving potential threats to the physical safety of any person; or</span></li>
+<li aria-level="1"><span>The disclosure is to another Identity Automation entity, Affiliate or to persons or entities providing services on Identity Automation’s behalf (each a “transferee”), consistent with the purpose for which the information was obtained, if the transferee, with respect to the information in question:</span>
+<ul>
+<li aria-level="2"><span>is subject to law providing an adequate level of privacy protection; or</span></li>
+<li aria-level="2"><span>has agreed in writing to provide an adequate level of privacy protection; or</span></li>
+<li aria-level="2"><span>subscribes to the Privacy Principles.</span></li>
 </ul>
 </li>
-<li id="menu-item-414" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-414"><a href="https://www.identityautomation.com/how-we-help/your-industry/">Industry</a>
-<ul class="sub-menu">
-	<li id="menu-item-416" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-416"><a href="https://www.identityautomation.com/how-we-help/your-industry/healthcare/">Healthcare</a></li>
-	<li id="menu-item-419" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-419"><a href="https://www.identityautomation.com/how-we-help/your-industry/higher-education/">Higher Education</a></li>
-	<li id="menu-item-420" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-420"><a href="https://www.identityautomation.com/how-we-help/your-industry/k-12-education/">K-12 Education</a></li>
 </ul>
-</li>
-<li id="menu-item-421" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-421"><a href="https://www.identityautomation.com/iam-software/">RapidIdentity: IAM</a>
-<ul class="sub-menu">
-	<li id="menu-item-422" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-422"><a href="https://www.identityautomation.com/iam-software/rapididentityidentity-access-management/">RapidIdentity IAM</a></li>
-	<li id="menu-item-7328" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7328"><a href="https://identityautomation.force.com/support/s">Support Services</a></li>
-</ul>
-</li>
-<li id="menu-item-425" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-parent menu-item-425"><a href="https://www.identityautomation.com/resources-2/">Resources</a>
-<ul class="sub-menu">
-	<li id="menu-item-9977" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9977"><a href="https://info.identityautomation.com/identity-access-management-maturity-assessment">IAM Maturity Assessment</a></li>
-	<li id="menu-item-12078" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12078"><a href="https://www.identityautomation.com/resources-2/rapididentity-cloud-reference-architecture/">RapidIdentity Cloud Reference Architecture</a></li>
-	<li id="menu-item-3753" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3753"><a href="https://www.identityautomation.com/resources-2/customer-success-stories/">Success Stories</a></li>
-	<li id="menu-item-3752" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3752"><a href="https://www.identityautomation.com/resources-2/white-papers-ebooks/">White Papers &#038; eBooks</a></li>
-	<li id="menu-item-3754" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3754"><a href="https://www.identityautomation.com/resources-2/brochures-and-data-sheets/">Brochures &#038; Data Sheets</a></li>
-	<li id="menu-item-3755" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3755"><a href="https://www.identityautomation.com/resources-2/videos-webinars/">Videos &#038; Webinars</a></li>
-	<li id="menu-item-430" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-430"><a target="_blank" rel="noopener" href="https://blog.identityautomation.com/">Blog</a></li>
-</ul>
-</li>
-</ul>
-						 <div class="grid-noGutter">
-						 	<div class="col-4_xs-12">
-								<h4>Contact</h4>
-<p>Toll Free: 877-221-8401</p>
-<p>Voice: 281-220-0021</p>
-<p><a href="/cdn-cgi/l/email-protection#2b0b584a474e586b424f4e455f425f524a5e5f44464a5f42444505484446">Sales</a></p>
-<p><a href="/cdn-cgi/l/email-protection#f5d5868085859a8781b59c91909b819c818c9480819a9894819c9a9bdb969a98">Support</a></p>
-<p><a href="/cdn-cgi/l/email-protection#24044d4a424b644d40414a504d505d4551504b4945504d4b4a0a474b49">Other Information</a></p>
-							</div>
-							<div class="col-4_xs-12">
-								<h4>Follow Us</h4>
-<ul class="social no-list-style"><li class="social__item" ><a class="social__link fa fb" target="_blank" href="https://www.facebook.com/identityautomation/">&#xf09a;</a></li><li class="social__item" ><a class="social__link fa tw" target="_blank" href="https://twitter.com/identityauto/">&#xf099;</a></li><li class="social__item" ><a class="social__link fa li" target="_blank" href="https://www.linkedin.com/company/identity-automation">&#xf0e1;</a></li><li class="social__item" ><a class="social__link fa ig" target="_blank" href="https://www.instagram.com/identityautomation/">&#xf16d;</a></li><li class="social__item" data-yt="https://www.youtube.com/channel/UCZxWwMBIg2-EiCmIf8cCcTA"><a class="social__link fa yt" target="_blank" href="https://www.youtube.com/channel/UCZxWwMBIg2-EiCmIf8cCcTA">&#xf167;</a></li></ul>
-							</div>
-						 </div>
+<p><span>Identity Automation values data privacy and will request that such third parties use Personal Data only for the purposes disclosed in this Privacy Policy with respect to Personal Data originating from the European Economic Area or Switzerland.&nbsp;</span></p>
+<p><span>Permitted transfers of information, either to third parties or within Identity Automation, include the transfer of data from one jurisdiction to another, including transfers to and from the United States. Because privacy laws vary from one jurisdiction to another, Personal Data may be transferred to a jurisdiction where the laws provide less or different protection than the jurisdiction in which the information originated.</span></p>
+<p><span>Contact lists and information are properly considered assets of Identity Automation’s business. Accordingly, if Identity Automation merges with another entity or if Identity Automation assets are acquired by a third-party, Identity Automation’s contact lists and information, which may include Personal Data you have provided Identity Automation, would be included among the assets that would be transferred and Identity Automation would request that the entity treat Your information in accordance with this Privacy Policy. This same provision is applicable for each Affiliate of Identity Automation.</span></p>
+<p><span>In the event that Identity Automation is involved in a merger, reorganization, dissolution, sale of business or assets or similar event, information disclosed to or collected by Identity Automation may be transferred to Identity Automation’s successor, or to the purchaser of such assets, as applicable. You will be notified via email and a prominent notice on our Website of any change in ownership or uses of your personal information, as well as any choices you may have regarding your personal information.</span></p>
+<h4><span>Ownership and Storage of Information</span></h4>
+<p><span>Identity Automation owns the code, databases, and all rights to all Websites and any feedback You provide.&nbsp;</span></p>
+<p><span>Identity Automation may store Personal Data up to six months that You provide to Identity Automation or any of its Affiliates through any Website and will destroy such information in accordance with any policy or directive of Identity Automation or any of its Affiliates for destruction of data or as applicable. For so long as Identity Automation stores such information, Identity Automation will comply. To request Identity Automation remove your data, submit the&nbsp;</span><a href="https://info.identityautomation.com/right-to-erasure?hsLang=en"><span>Right to Erasure request form</span></a><span>.</span></p>
+<h4><span>Privacy Policies and Links to Third-Party Websites</span></h4>
+<p><span>Any Website may contain or reference links to non-Identity Automation websites. The linked sites are not under the control of Identity Automation and Identity Automation is not responsible for the content of any third-party website or any link contained in a third-party website, or any changes or updates to such sites. The inclusion of a link within any Website does not imply any endorsement by or any affiliation with Identity Automation. Access to any third-party website is at Your own risk, and You should be aware that third-party websites may contain privacy policies that have terms that are different from that of this Privacy Policy.</span></p>
+<p><span>In connection with Your use of any Website, You may be made aware of services, products, articles, offers, and promotions provided by third parties, and not by us. If You decide to use these third-party services, You are responsible for reviewing and understanding the privacy policies governing those services. You agree that the third party, and not Identity Automation, is responsible for all data privacy obligations related to the Personal Data You provide to such third party and You expressly relieve Identity Automation and its Affiliates from any and all liability arising from or related to such Personal Data.</span></p>
+<h4><span>US Privacy Shield Framework</span></h4>
+<p><span>Identity Automation complies with the EU-U.S. Privacy Shield Framework and the Swiss-U.S. Privacy Shield Framework, as set forth by the U.S. Department of Commerce regarding the collection, use, and retention of personal information transferred from the European Union and/or Switzerland, to the United States.&nbsp; Identity Automation has certified to the Department of Commerce that it adheres to the Privacy Shield Principles.&nbsp; If there is any conflict between the terms in this privacy policy and the Privacy Shield Principles, the Privacy Shield Principles shall govern.&nbsp; To learn more about the Privacy Shield program, and to view our certification, please visit&nbsp;</span><a href="https://www.privacyshield.gov/"><span>https://www.privacyshield.gov/</span></a><span>.</span></p>
+<h3><span>Contact Information and Right to Be Forgotten</span></h3>
+<p><span>Identity Automation offers You certain choices in connection with the Personal Data collected from You. To update Your preferences, have Your information removed from Identity Automation mailing lists, or to submit a request, please contact Identity Automation as indicated below. To the extent provided by law, You may request access to the Personal Data we maintain about You or request that we correct, amend, delete or block the information by contacting Identity Automation at the contact addresses indicated below.&nbsp;</span></p>
+<p><span>If You wish to access, modify or delete other Personal Data that You have provided to Identity Automation, such as Your address, please contact us at&nbsp;</span><a href="mailto:privacy@identityautomation.com"><span>privacy@identityautomation.com</span></a><span>&nbsp;or (877) 221-8401 for assistance.</span></p>
+<p><span>For disputes regarding Identity Automation’s collection or use of Your Personal Data or for more information, or questions or comments concerning the Privacy Policy, please contact Identity Automation at:</span></p>
+<p><span>Identity Automation</span></p>
+<p><span>7102 N Sam Houston Pkwy W, Ste 100</span></p>
+<p><span>Houston, TX 77064</span></p>
+<p><span>USA</span></p>
+<p><span>Telephone: +1 (877) 221-8401</span></p>
+<p><span>Email:&nbsp;</span><a href="mailto:privacy@IdentityAutomation.com"><span>privacy@IdentityAutomation.com</span></a></p>
+<p><span>You may also stop email messages and other promotional mailings by contacting Identity Automation at the above address or email.</span></p>
+<p><span>Our goal is to resolve all disputes through our internal processes. If You have a complaint regarding our collection, use, disclosure or retention of Personal Data originating from the European Economic Area or Switzerland that cannot be resolved through those processes, You may (1) submit the complaint to the relevant data protection authorities, EU Data Protection Authorities and Swiss Federal Data Protection and Information Commissioner (FDPIC) (“DPAs”); (2) at no cost to You, resolve the complaint through JAMS using this link: https://www.jamsadr.com/eu-us-privacy-shield; or (3) provide notice to Identity Automation that You desire to resolve the complaint through binding arbitration. Identity Automation is subject to the enforcement powers of the U.S. Federal Trade Commission. In the event that we or such authorities determine that we did not comply with this Privacy Policy, we will take appropriate steps to address any adverse effects and to promote future compliance.</span></p></span></div>
+
+</div><!--end widget-span -->
+</div><!--end row-->
+</div><!--end row-wrapper -->
+
+</div><!--end widget-span -->
+</div><!--end row-->
+</div><!--end row-wrapper -->
+
+</div><!--end widget-span -->
+</div>
+</div>
+</div>
+
+      </main>
+
+      
+        <div data-global-resource-path="Singularity/templates/partials/footer.html"><footer class="footer">
+	<div class="footer__container">
+		<div id="hs_cos_wrapper_module_171332991502214" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><div class="footer-wrapper">
+	<div class="bg-area">
+		<div class="content-area">
+			<div class="main">
+				<div class="logo">
+					
+					<span id="hs_cos_wrapper_module_171332991502214_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_logo" style="" data-hs-cos-general-type="widget" data-hs-cos-type="logo"><a href="https://www.identityautomation.com?hsLang=en" id="hs-link-module_171332991502214_" style="border-width:0px;border:0px;"><img src="https://www.identityautomation.com/hubfs/Singularity/logos/logo-white-full.svg" class="hs-image-widget " height="44" style="height: auto;width:186px;border-width:0px;border:0px;" width="186" alt="Identity Automation" title="Identity Automation" loading=""></a></span>
+				</div>
+				<div class="menu">
+					<span id="hs_cos_wrapper_module_171332991502214_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_menu" style="" data-hs-cos-general-type="widget" data-hs-cos-type="menu"><div id="hs_menu_wrapper_module_171332991502214_" class="hs-menu-wrapper active-branch flyouts hs-menu-flow-horizontal" role="navigation" data-sitemap-name="default" data-menu-id="162046863276" aria-label="Navigation Menu">
+ <ul role="menu">
+  <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Identity Solutions</a>
+   <ul role="menu" class="hs-menu-children-wrapper">
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/identity-lifecycle-management" role="menuitem">Identity Lifecycle Management</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/access-governance" role="menuitem">Access Governance</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/authentication-and-assurance" role="menuitem">Authentication &amp; Assurance</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/threat-detection-and-response" role="menuitem">Threat Detection &amp; Response</a></li>
+   </ul></li>
+  <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Classroom Solutions</a>
+   <ul role="menu" class="hs-menu-children-wrapper">
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/student-teacher-portal" role="menuitem">Student-Teacher Portal</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/rostering" role="menuitem">Rostering</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/insights" role="menuitem">Insights</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/products/phishing-protection" role="menuitem">Phishing Protection</a></li>
+   </ul></li>
+  <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Industries</a>
+   <ul role="menu" class="hs-menu-children-wrapper">
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/industries/k-12-education" role="menuitem">K-12</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/industries/higher-ed" role="menuitem">Higher Ed</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/industries/healthcare" role="menuitem">Healthcare</a></li>
+   </ul></li>
+  <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children" role="none"><a href="javascript:;" aria-haspopup="true" aria-expanded="false" role="menuitem">Resources</a>
+   <ul role="menu" class="hs-menu-children-wrapper">
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://blog.identityautomation.com" role="menuitem">Knowledge Base</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/resources/events" role="menuitem">Events</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://help.rapididentity.com/" role="menuitem" target="_blank" rel="noopener">Support</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/trust-center" role="menuitem">Trust Center</a></li>
+   </ul></li>
+  <li class="hs-menu-item hs-menu-depth-1 hs-item-has-children" role="none"><a href="https://www.identityautomation.com/about-us" aria-haspopup="true" aria-expanded="false" role="menuitem">About Us</a>
+   <ul role="menu" class="hs-menu-children-wrapper">
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/why-ia" role="menuitem">Why IA?</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/careers" role="menuitem">Careers</a></li>
+    <li class="hs-menu-item hs-menu-depth-2" role="none"><a href="https://www.identityautomation.com/partnerships" role="menuitem">Partnerships</a></li>
+   </ul></li>
+ </ul>
+</div></span>
+				</div>
+			</div>
+			
+			<div class="mid">
+				
+					
+					
+					<div>
+						<a href="https://www.identityautomation.com/contact-us?hsLang=en" class="button white-btn">
+							Contact Us
+						</a>
 					</div>
+				
+					
+					
+					<div>
+						<a href="https://www.identityautomation.com/request-a-demo?hsLang=en" class="button white-btn">
+							Request A Demo
+						</a>
+					</div>
+				
+			</div>
+			
+			<div class="sub">
+				<div class="privacy-policy">
+					
+					
+					<a href="https://www.identityautomation.com/privacy-policy">
+						<small>Privacy Policy</small>
+					</a>
+				</div>
+				<div class="terms-conditions">
+					
+					
+					<a href="https://www.identityautomation.com/terms-of-use?hsLang=en">
+						<small>Terms &amp; Conditions</small>
+					</a>
+				</div>
+				<div class="copyright">
+					<small>© 2024 | All Rights Reserved</small>
 				</div>
 			</div>
 		</div>
-		<div class="copyright">
-			<div class="inner grid-noGutter">
-				<div class="col-6_sm-12">
-					© 2024 Copyright Identity Automation. All Rights Reserved.				</div>
-				<div class="col-6_sm-12">
-					<ul class="footer-utility-menu footer-menu--bottom"><li id="menu-item-204" class="privacy menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy current-menu-item page_item page-item-196 current_page_item menu-item-204"><a rel="privacy-policy" href="https://www.identityautomation.com/privacy-policy/" aria-current="page">Privacy Policy</a></li>
-<li id="menu-item-203" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-203"><a href="https://www.identityautomation.com/site-map/">Site Map</a></li>
-<li id="menu-item-202" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-202"><a href="https://www.identityautomation.com/terms-of-use/">Terms of Use</a></li>
-</ul>				</div>
-			</div>
-		</div>
-	</footer>
+	</div>
+</div></div>
+	</div>
+</footer></div>
+      
+    </div>
+    
+    
+    
+<!-- HubSpot performance collection script -->
+<script defer src="https://static.hsappstatic.net/content-cwv-embed/static-1.971/embed.js"></script>
+<script src="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/template_assets/162034916622/1711393946302/Singularity/js/main.min.js"></script>
+<script>
+var hsVars = hsVars || {}; hsVars['language'] = 'en';
+</script>
 
-	                <!-- Start of Async HubSpot Analytics Code -->
-                <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="rocketlazyloadscript" data-rocket-type="text/javascript">
-                    (function(d,s,i,r) {
-                        if (d.getElementById(i)){return;}
-                        var n=d.createElement(s),e=d.getElementsByTagName(s)[0];
-                        n.id=i;n.src='//js.hs-analytics.net/analytics/'+(Math.ceil(new Date()/r)*r)+'/458532.js';
-                        e.parentNode.insertBefore(n, e);
-                    })(document,"script","hs-analytics",300000);
-                </script>
-                <!-- End of Async HubSpot Analytics Code -->
-                <link data-minify="1" rel='stylesheet' id='custom-responsive-style-css' href='https://www.identityautomation.com/wp-content/cache/background-css/www.identityautomation.com/wp-content/cache/min/1/wp-content/uploads/hm_custom_css_js/custom.css?ver=1699568692&wpr_t=1718907505' type='text/css' media='screen' />
-<script type="text/javascript" id="leadin-script-loader-js-js-extra">
-/* <![CDATA[ */
-var leadin_wordpress = {"userRole":"visitor","pageType":"page","leadinPluginVersion":"11.0.28"};
-/* ]]> */
-</script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/458532.js?ver=1699568693" id="leadin-script-loader-js-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
-/* <![CDATA[ */
-"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
-/* ]]> */
-</script>
-<script type="text/javascript" id="rocket-preload-links-js-extra">
-/* <![CDATA[ */
-var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/www.identityautomation.com","onHoverDelay":"100","rateThrottle":"3"};
-/* ]]> */
-</script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-preload-links-js-after">
-/* <![CDATA[ */
-(function() {
-"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
-}());
-/* ]]> */
-</script>
-<script type="text/javascript" id="rocket_lazyload_css-js-extra">
-/* <![CDATA[ */
-var rocket_lazyload_css_data = {"threshold":"300"};
-/* ]]> */
-</script>
-<script type="text/javascript" id="rocket_lazyload_css-js-after">
-/* <![CDATA[ */
-!function o(n,c,a){function s(t,e){if(!c[t]){if(!n[t]){var r="function"==typeof require&&require;if(!e&&r)return r(t,!0);if(u)return u(t,!0);throw(r=new Error("Cannot find module '"+t+"'")).code="MODULE_NOT_FOUND",r}r=c[t]={exports:{}},n[t][0].call(r.exports,function(e){return s(n[t][1][e]||e)},r,r.exports,o,n,c,a)}return c[t].exports}for(var u="function"==typeof require&&require,e=0;e<a.length;e++)s(a[e]);return s}({1:[function(e,t,r){"use strict";!function(){const r="undefined"==typeof rocket_pairs?[]:rocket_pairs,e="undefined"==typeof rocket_excluded_pairs?[]:rocket_excluded_pairs;e.map(t=>{var e=t.selector;const r=document.querySelectorAll(e);r.forEach(e=>{e.setAttribute("data-rocket-lazy-bg-".concat(t.hash),"excluded")})});const o=document.querySelector("#wpr-lazyload-bg");var t=rocket_lazyload_css_data.threshold||300;const n=new IntersectionObserver(e=>{e.forEach(t=>{if(t.isIntersecting){const e=r.filter(e=>t.target.matches(e.selector));e.map(t=>{t&&(o.innerHTML+=t.style,t.elements.forEach(e=>{n.unobserve(e),e.setAttribute("data-rocket-lazy-bg-".concat(t.hash),"loaded")}))})}})},{rootMargin:t+"px"});function c(){0<(0<arguments.length&&void 0!==arguments[0]?arguments[0]:[]).length&&r.forEach(t=>{try{const e=document.querySelectorAll(t.selector);e.forEach(e=>{"loaded"!==e.getAttribute("data-rocket-lazy-bg-".concat(t.hash))&&"excluded"!==e.getAttribute("data-rocket-lazy-bg-".concat(t.hash))&&(n.observe(e),(t.elements||(t.elements=[])).push(e))})}catch(e){console.error(e)}})}c();const a=function(){const o=window.MutationObserver;return function(e,t){if(e&&1===e.nodeType){const r=new o(t);return r.observe(e,{attributes:!0,childList:!0,subtree:!0}),r}}}();t=document.querySelector("body"),a(t,c)}()},{}]},{},[1]);
-/* ]]> */
-</script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-includes/js/jquery/jquery.js?ver=1699568693" id="jquery-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/identity-automation/core/js/plugins.js?ver=1699568693" id="jquery-plugins-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/identity-automation/core/js/global.js?ver=1699568693" id="theme-global-js" defer></script>
-<script type="text/javascript" src="https://www.identityautomation.com/wp-content/themes/identity-automation/core/js/vendor/lazysizes.min.js" id="lazysizes-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/themes/identity-automation/core/js/vendor/jquery.selectric.min.js" id="selectric-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/identity-automation/core/js/vendor/Chart.js?ver=1699568693" id="chart-js" defer></script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/themes/em-base/core/js/global.js?ver=1699568693" id="global-js" defer></script>
-<!--[if lt IE 10]>
-<script type="text/javascript" src="https://www.identityautomation.com/wp-content/themes/em-base/core/js/flexibility.js" id="flexibility-js"></script>
-<![endif]-->
-<script type="text/javascript" id="jquery-lazyloadxt-js-extra">
-/* <![CDATA[ */
-var a3_lazyload_params = {"apply_images":"1","apply_videos":"1"};
-/* ]]> */
-</script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//www.identityautomation.com/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extra.min.js?ver=2.7.1" id="jquery-lazyloadxt-js" defer></script>
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="//www.identityautomation.com/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.srcset.min.js?ver=2.7.1" id="jquery-lazyloadxt-srcset-js" defer></script>
-<script type="text/javascript" id="jquery-lazyloadxt-extend-js-extra">
-/* <![CDATA[ */
-var a3_lazyload_extend_params = {"edgeY":"0","horizontal_container_classnames":""};
-/* ]]> */
-</script>
-<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.identityautomation.com/wp-content/cache/min/1/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extend.js?ver=1699568693" id="jquery-lazyloadxt-extend-js" defer></script>
-<script>window.lazyLoadOptions=[{elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}},{elements_selector:".rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,}];window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
-if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
-images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
-if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.identityautomation.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.8.3/lazyload.min.js"></script>		
-<script type="rocketlazyloadscript" data-rocket-type="text/javascript"> _linkedin_partner_id = "5438260"; window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; window._linkedin_data_partner_ids.push(_linkedin_partner_id); </script><script type="rocketlazyloadscript" data-rocket-type="text/javascript"> (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} var s = document.getElementsByTagName("script")[0]; var b = document.createElement("script"); b.type = "text/javascript";b.async = true; b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; s.parentNode.insertBefore(b, s);})(window.lintrk); </script> <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=5438260&fmt=gif" /> </noscript>
-	</body>
-</html>
+<script src="/hs/hsstatic/cos-i18n/static-1.53/bundles/project.js"></script>
+<script src="https://www.identityautomation.com/hs-fs/hub/458532/hub_generated/module_assets/162035351101/1721221906686/module_162035351101_menu.min.js"></script>
+<script src="/hs/hsstatic/keyboard-accessible-menu-flyouts/static-1.17/bundles/project.js"></script>
 
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
+<!-- Start of HubSpot Analytics Code -->
+<script type="text/javascript">
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+_hsq.push(["setCanonicalUrl", "https:\/\/www.identityautomation.com\/privacy-policy"]);
+_hsq.push(["setPageId", "165538428500"]);
+_hsq.push(["setContentMetadata", {
+    "contentPageId": 165538428500,
+    "legacyPageId": "165538428500",
+    "contentFolderId": null,
+    "contentGroupId": null,
+    "abTestId": null,
+    "languageVariantId": 165538428500,
+    "languageCode": "en",
+    
+    
+}]);
+</script>
+
+<script type="text/javascript" id="hs-script-loader" async defer src="/hs/scriptloader/458532.js"></script>
+<!-- End of HubSpot Analytics Code -->
+
+
+<script type="text/javascript">
+var hsVars = {
+    render_id: "66a4ec70-8fe2-4dea-a1e5-1288942da460",
+    ticks: 1721344449337,
+    page_id: 165538428500,
+    
+    content_group_id: 0,
+    portal_id: 458532,
+    app_hs_base_url: "https://app.hubspot.com",
+    cp_hs_base_url: "https://cp.hubspot.com",
+    language: "en",
+    analytics_page_type: "standard-page",
+    scp_content_type: "",
+    analytics_page_id: "165538428500",
+    category_id: 1,
+    folder_id: 0,
+    is_hubspot_user: false
+}
+</script>
+
+
+<script defer src="/hs/hsstatic/HubspotToolsMenu/static-1.349/js/index.js"></script>
+
+<script type="text/javascript">
+_linkedin_partner_id = "5438260";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(l) {
+if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+window.lintrk.q=[]}
+var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})(window.lintrk);
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=5438260&amp;fmt=gif">
+</noscript>
+
+
+  
+</body></html>
