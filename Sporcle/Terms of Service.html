@@ -124,13 +124,27 @@
                     
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript">if (jQuery) { jQuery.noConflict(); var $j = jQuery; }</script>
+        <script type="text/javascript">
+            window.preventCommentAnchorDefaultBehavior = function (href, anchor) {
+                if (href === window.location.pathname) {
+                    if (anchor === window.location.hash) {
+                        window.location.reload(); 
+                        return false;
+                    } else {
+                        window.location.hash = anchor;
+                        window.location.reload();
+                        return false;
+                    } 
+                }
+            }
+        </script>
 
                     <script type="text/javascript" src="/js/libs/domvm.micro.min.js"></script>
                     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
                                 
                     <link rel="stylesheet" type="text/css" href="/style/themes.sp.css?v=24a29b0a3b54203438bb9ee8048a6705" />
                     <link rel="stylesheet" type="text/css" href="/style/main.css?v=130290" />
-                    <link rel="stylesheet" type="text/css" href="/style/main_desktop.sp.css?v=c425b13d9a70ee34cfd071fc9031ae22" />
+                    <link rel="stylesheet" type="text/css" href="/style/main_desktop.sp.css?v=208c71b2dac70bcd950f1918405738ba" />
                     <link rel="stylesheet" type="text/css" href="/style/games/showdown/desktop.sp.css?v=14490a9bd0dcc946041e40ed52207147" />
                     <link rel="stylesheet" type="text/css" href="/style/privacy/desktop.sp.css?v=5a98fd0a467594e872865ec420bbdbb4" />
                         
@@ -197,7 +211,7 @@
                             <header id="main-header">
                     <div id="sporcle-banners">
                             <div id='banner-sporcle-promo' class="banner-alert color-yellow">
-                    <span class="banner-alert-item"><a target='_blank' href=https://www.youtube.com/live/I30ShnXyrbo>MDQL</a>'s going Brazilian! Check the <a href=https://www.sporcle.com/groups/topics/77d83efc3891>thread</a>!</span>
+                    <span class="banner-alert-item"><a target='_blank' href=https://www.youtube.com/watch?v=HLKLHL4oFIM>MDQL is packed to the gills.</a> </span>
                     <span class="banner-alert-dismiss"></span>
                 </div>
                     </div>
@@ -220,7 +234,7 @@
                                 <a href="/videos/">Videos</a>
                             </li>
                                                     <li class="">
-                                <a href="/events/private-events/">Private Events</a>
+                                <a href="/events/sporclecon/">SporcleCon</a>
                             </li>
                                             </ol>
                 
@@ -559,6 +573,13 @@
                                         </a>
                                     
                                                                     </li>
+                                                            <li class="extra-section ea-math-test ">
+                                                                            <a href="/math-test/" class="section-name">
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Math Test</span>
+                                        </a>
+                                    
+                                                                    </li>
                                                             <li class="extra-section ea-reference ">
                                                                             <a href="/reference/" class="section-name">
                                             <span class="item-icon"></span>
@@ -579,24 +600,24 @@
                                     
                                                                             <ol class="section-items" id="section-items-sporcle-events">
                                             
+                                                                                            <li id="Find a Game">
+                                                    <a href="/events/locations/" class="section-item">
+                                                        <span>Find a Game</span>
+                                                                                                            </a>
+                                                </li>
                                                                                             <li id="Private Events">
                                                     <a href="/events/private-events/" class="section-item">
                                                         <span>Private Events</span>
                                                                                                             </a>
                                                 </li>
-                                                                                            <li id="Virtual Trivia">
-                                                    <a href="/events/virtual-trivia/" class="section-item">
-                                                        <span>Virtual Trivia</span>
+                                                                                            <li id="Theme Nights">
+                                                    <a href="/events/theme-nights/" class="section-item">
+                                                        <span>Theme Nights</span>
                                                                                                             </a>
                                                 </li>
                                                                                             <li id="Globe League">
                                                     <a href="/events/the-globe/" class="section-item">
                                                         <span>Globe League</span>
-                                                                                                            </a>
-                                                </li>
-                                                                                            <li id="Become a Host">
-                                                    <a href="/jobs/trivia-host/" class="section-item">
-                                                        <span>Become a Host</span>
                                                                                                             </a>
                                                 </li>
                                                                                             <li id="Pub Owners">
@@ -609,9 +630,14 @@
                                                         <span>SporcleCon</span>
                                                                                                             </a>
                                                 </li>
-                                                                                            <li id="Opinionation">
-                                                    <a href="/events/opinionation/" class="section-item">
-                                                        <span>Opinionation</span>
+                                                                                            <li id="Virtual Trivia">
+                                                    <a href="/events/virtual-trivia/" class="section-item">
+                                                        <span>Virtual Trivia</span>
+                                                                                                            </a>
+                                                </li>
+                                                                                            <li id="Become a Host">
+                                                    <a href="/jobs/trivia-host/" class="section-item">
+                                                        <span>Become a Host</span>
                                                                                                             </a>
                                                 </li>
                                                                                             <li id="Our Games">
@@ -619,9 +645,9 @@
                                                         <span>Our Games</span>
                                                                                                             </a>
                                                 </li>
-                                                                                            <li id="Theme Nights">
-                                                    <a href="/events/theme-nights/" class="section-item">
-                                                        <span>Theme Nights</span>
+                                                                                            <li id="Opinionation">
+                                                    <a href="/events/opinionation/" class="section-item">
+                                                        <span>Opinionation</span>
                                                                                                             </a>
                                                 </li>
                                                                                     </ol>
@@ -688,7 +714,7 @@
                     </div>
 
                                 <a id="main-logo" href="/" aria-label="Sporcle Home" class="">
-                    <img id="header-logo-img" class="logo-img" src="/images/sporcle-logo-theme-light.svg" alt="Sporcle ">
+                    <img id="header-logo-img" class="logo-img" src="https://d31xsmoz1lk3y3.cloudfront.net/images/header_logos/cfa053779226546994ed6414444976c1.svg" alt="Sporcle ">
 
                                     </a>
 
@@ -696,6 +722,9 @@
             <ol class="items" id="scroll-items">
                                             <li class="ci-categories">
             <a href="/categories/">Categories</a>
+        </li>
+                                                <li class="ci-quiz-types">
+            <a href="/type/">Quiz Types</a>
         </li>
                                                 <li class="ci-badges">
             <a href="/achievements/">Badges</a>
@@ -714,6 +743,9 @@
         </li>
                                                 <li class="ci-live-5">
             <a href="/livefive/">Live 5</a>
+        </li>
+                                                <li class="ci-math-test">
+            <a href="/math-test/">Math Test</a>
         </li>
                                 </ol>
 
@@ -724,6 +756,9 @@
                                                 <li class="ci-categories">
             <a href="/categories/">Categories</a>
         </li>
+                                                <li class="ci-quiz-types">
+            <a href="/type/">Quiz Types</a>
+        </li>
                                                 <li class="ci-badges">
             <a href="/achievements/">Badges</a>
         </li>
@@ -741,6 +776,9 @@
         </li>
                                                 <li class="ci-live-5">
             <a href="/livefive/">Live 5</a>
+        </li>
+                                                <li class="ci-math-test">
+            <a href="/math-test/">Math Test</a>
         </li>
                                     </ol>
             </div>
@@ -770,7 +808,7 @@
                     </li>
                 </ol>
             </nav>
-        </header>
+                    </header>
     
                     
                     <main id='CenterContent'>
@@ -1001,7 +1039,7 @@
             </div>
             <span class="pageFooter-slogan">mentally stimulating diversions</span>
         </a>
-        <p class="pageFooter-playCounter">5,647,428,887 quizzes played</p>
+        <p class="pageFooter-playCounter">5,685,851,335 quizzes played</p>
 	</div>
     <div class="pageFooter-group pageFooter-group--links">
      
@@ -1166,7 +1204,7 @@
 	window._payload['active_flairs'] = {"1":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/801ad9cb29ae3133e8d0bf0ab53a384f.svg","description":"Bot"},"2":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/e54946f904d597114117ed6853349175.svg","description":"Sporcle Admin"},"3":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/197ef9eb41ab32836061d5afb8e8ece3.svg","description":"Sporcle Staff"},"4":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/ef2fe7cce309bf1d253f6b1a80b17484.svg","description":"Moderator"},"5":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/583b680056784a597f3bab6ac5f9fcb7.svg","description":"Editor"},"6":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/171ac3b5c0132a57f44b826c802e533b.svg","description":"Curator"},"7":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/416aeb08bfe6b5d4b12d53a006387c57.svg","description":"Partner"},"8":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/53c18c045d4079628366538c0332bde8.svg","description":"Host"},"9":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/1905bd3ae657221b56c5013bd4eab43d.svg","description":"Orange"},"10":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/08339da9fbec88239bba83244e74fa94.svg","description":"Earned Quest 1"},"11":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/26a65d44ecc9e312eca6c0147c2a7ca5.svg","description":"Earned Quest 2"},"12":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/c1df2076d470e6581dd9b4d84b099047.svg","description":"Tiger - for Orange subscribers only"},"13":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/167fd1c65abaafd0a3c563802b57bb93.svg","description":"Orange Slice - for Orange subscribers only"},"14":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/fd90d55696a0d80e7d0bdda8c6a1106b.svg","description":"Fish - for Orange subscribers only"},"15":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/22c8592c657743d15576e1368c703aae.svg","description":"Bark bark!"},"16":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/07a1388ca549c1f700d4fd093f801d03.svg","description":"It's a panda!"},"17":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/77beb4cee873e4be35d0f0965fd8cb49.svg","description":"Ribbit!"},"18":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/4b44169db0f564294156274bfdc805a5.svg","description":"Earned Quest 3"},"19":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/17968fbc9527311c506fa7f42e65b6fb.svg","description":"Butterfly - for Orange subscribers only"},"20":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/d440b0a9fac466a9eb7fc1e41cbbbe79.svg","description":"Fire - for Orange subscribers only"},"21":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/29954be53db8c98b03486b7eced1582c.svg","description":"Full-sized aortic pump!"},"22":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/0416e90a0e0e02b450cd7adca253de07.svg","description":"MDQL Bracket Challenge Winner"},"23":{"image":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/flairs\/deb8b47f0214a94f02f7790366a7fad5.svg","description":"I'm Going to SporcleCon 2024!"}};
 	
     	
-	var jsPayload = {"adb":false,"logged_in":false,"user_id":0,"user_key":0,"has_membership":false,"user_blocked":0,"user_verified":0,"uenv":false,"header":{"themes":{"1":{"image_url":"\/images\/sporcle-logo-theme-light.svg","description":"","class_name":"theme-light"},"2":{"image_url":"\/images\/sporcle-logo-theme-dark.svg","description":"","class_name":"theme-dark"}},"aut":false,"description":""}};
+	var jsPayload = {"adb":false,"logged_in":false,"user_id":0,"user_key":0,"has_membership":false,"block_type":"","user_verified":0,"uenv":false,"header":{"themes":{"1":{"image_url":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/header_logos\/cfa053779226546994ed6414444976c1.svg","description":"That's one small step for Sporclers... <a href='https:\/\/www.sporcle.com\/blog\/2023\/12\/weird-things-we-left-on-the-moon\/'>Learn More.<\/a>","class_name":"theme-light"},"2":{"image_url":"https:\/\/d31xsmoz1lk3y3.cloudfront.net\/images\/header_logos\/4b8d1223405122637769faafa334584c.svg","description":"That's one small step for Sporclers... <a href='https:\/\/www.sporcle.com\/blog\/2023\/12\/weird-things-we-left-on-the-moon\/'>Learn More.<\/a>","class_name":"theme-dark"}},"aut":false,"description":"That's one small step for Sporclers... <a href='https:\/\/www.sporcle.com\/blog\/2023\/12\/weird-things-we-left-on-the-moon\/'>Learn More.<\/a>"}};
 	for (var attrname in jsPayload) { window._payload[attrname] = jsPayload[attrname]; }
 
     window.admiral = window.admiral || function() {(admiral.q = admiral.q || []).push(arguments)};
@@ -1256,12 +1294,12 @@
 
 				var s = document.createElement('script');
 				s.type = 'text/javascript';
-				s.src = "\/js\/showdown\/game\/index.sp.js?v=620e86706f2a43d6ec108a6493d9b37f";
+				s.src = "\/js\/showdown\/game\/index.sp.js?v=682662e84a2f59a5e3569891531940f6";
 				document.getElementsByTagName('body')[0].appendChild(s);
 
 				var s = document.createElement('script');
 				s.type = 'text/javascript';
-				s.src = "\/js\/chat\/desktop.sp.js?v=4d9677aa0a73387c16ceec9bdf10ef7b";
+				s.src = "\/js\/chat\/desktop.sp.js?v=e2d7b6ed552684d6d3c60ed38927ce6a";
 				document.getElementsByTagName('body')[0].appendChild(s);
 			}
 		}
@@ -1301,5 +1339,5 @@ function isElementInViewport (el) {
 }
 </script>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/opentip/2.4.6/downloads/opentip-jquery.min.js"></script><script type="text/javascript" src="/js/remodal_sporcle.min.js?v=130001"></script><script type="text/javascript" src="/js/tinybox.js?v=130197"></script><script type="text/javascript" src="/js/header.sp.js?v=2c17ca91de4681cdc020620bbe8dd89a"></script><script type="text/javascript" src="/js/main.js?v=130183"></script><script type="text/javascript" src="/js/sitdown.sp.js?v=af46c1352e897f15c9ef9b14df68ca46"></script><script type="text/javascript" src="/js/modals/index.sp.js?v=dbdc0dd9037d33afe10d66442f4b3102"></script></body>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/opentip/2.4.6/downloads/opentip-jquery.min.js"></script><script type="text/javascript" src="/js/remodal_sporcle.min.js?v=130001"></script><script type="text/javascript" src="/js/tinybox.js?v=130197"></script><script type="text/javascript" src="/js/header.sp.js?v=87ba10d1b55c4a91789935302d912f05"></script><script type="text/javascript" src="/js/main.js?v=130183"></script><script type="text/javascript" src="/js/sitdown.sp.js?v=af46c1352e897f15c9ef9b14df68ca46"></script><script type="text/javascript" src="/js/modals/index.sp.js?v=dbdc0dd9037d33afe10d66442f4b3102"></script></body>
 </html>
