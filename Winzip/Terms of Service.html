@@ -23,23 +23,23 @@
 
 		
 		
-<link rel="alternate" hreflang="fr" href="https://www.winzip.com/fr/company/legal/terms-of-use/" />
+<link rel="alternate" hreflang="pt-br" href="https://www.winzip.com/br/company/legal/terms-of-use/" />
 		
-<link rel="alternate" hreflang="de" href="https://www.winzip.com/de/company/legal/terms-of-use/" />
+<link rel="alternate" hreflang="ja-jp" href="https://www.winzip.com/jp/company/legal/terms-of-use/" />
 		
-<link rel="alternate" hreflang="zh-Hans" href="https://www.winzip.com/cn/company/legal/terms-of-use/" />
+<link rel="alternate" hreflang="fr-fr" href="https://www.winzip.com/fr/company/legal/terms-of-use/" />
+		
+<link rel="alternate" hreflang="zh-Hans-cn" href="https://www.winzip.com/cn/company/legal/terms-of-use/" />
+		
+<link rel="alternate" hreflang="de-de" href="https://www.winzip.com/de/company/legal/terms-of-use/" />
 		
 <link rel="alternate" hreflang="es" href="https://www.winzip.com/es/company/legal/terms-of-use/" />
 		
-<link rel="alternate" hreflang="it" href="https://www.winzip.com/it/company/legal/terms-of-use/" />
-		
-<link rel="alternate" hreflang="nl" href="https://www.winzip.com/nl/company/legal/terms-of-use/" />
-		
-<link rel="alternate" hreflang="ja" href="https://www.winzip.com/jp/company/legal/terms-of-use/" />
-		
-<link rel="alternate" hreflang="pt" href="https://www.winzip.com/br/company/legal/terms-of-use/" />
-		
 <link rel="alternate" hreflang="en" href="https://www.winzip.com/en/company/legal/terms-of-use/" />
+		
+<link rel="alternate" hreflang="nl-nl" href="https://www.winzip.com/nl/company/legal/terms-of-use/" />
+		
+<link rel="alternate" hreflang="it-it" href="https://www.winzip.com/it/company/legal/terms-of-use/" />
 		
 	
 
@@ -78,9 +78,6 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <link rel="preload" href="/static/common/scripts/gtm/gtm-container.min.js" as="script"></link>
 <script src="/static/common/scripts/gtm/gtm-container.min.js"></script>
-<script nomodule>window.MSInputMethodContext && document.documentMode && document.write('<script crossorigin="anonymous" src="https://polyfill.io/v3/polyfill.min.js?features=default%2CNumber.parseInt%2CNumber.parseFloat%2CArray.prototype.find%2CArray.prototype.includes"><\/script><script src="https://cdn.jsdelivr.net/combine/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js,npm/ie11-custom-properties@4,npm/element-qsa-scope@1"><\/script>');</script>
-
-	
 
 <link rel="preload" href="/static/common/scripts/jquery-3.6.0.min.js" as="script"></link>
 <link rel="preload" href="/static/common/scripts/dynamic-pricing/dynamic-pricing-promotions.min.js" as="script"></link>
@@ -89,12 +86,50 @@
 <script src="/static/common/scripts/dynamic-pricing/dynamic-pricing-promotions.min.js"></script>
 	
 <script>
-    window.optimizely = window.optimizely || [];
+window.dataLayer = window.dataLayer || [];
+
+window.dataLayer.push = function() {
+    Array.prototype.push.apply(this, arguments);
+    if (arguments[0].event === 'OneTrustGroupsUpdated') {
+        checkOptOutStatus();
+    }
+};
+
+function checkOptOutStatus() {
+    var optOut = true;
+    
+    for (var i = 0; i < window.dataLayer.length; i++) {
+        if (window.dataLayer[i].event === 'OneTrustGroupsUpdated') {
+            var activeGroups = window.dataLayer[i].OnetrustActiveGroups;
+            if (activeGroups && activeGroups.indexOf('C0002') !== -1) {
+                optOut = false;
+            }
+            break;
+        }
+    }
+
+    window["optimizely"] = window["optimizely"] || [];
     window["optimizely"].push({
-        "type": "holdEvents"
+        "type": "optOut",
+        "isOptOut": optOut
     });
+
+    if (!window.optimizelyLoaded) {
+        var script = document.createElement('script');
+        script.src = "https://cdn.optimizely.com/js/26811070246.js";
+        document.head.appendChild(script);
+        window.optimizelyLoaded = true;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.dataLayer.some(function(item) {
+        return item.event === 'OneTrustGroupsUpdated';
+    })) {
+        checkOptOutStatus();
+    }
+});
 </script>
-<script src="https://cdn.optimizely.com/js/26811070246.js"></script>
 
 </head>
 <body id="winzip" class="support" >	
@@ -636,7 +671,7 @@ if (!(window.MSInputMethodContext && document.documentMode)) {
             </div>
             <div class="no-download pp">
                 If your download did not start automatically, please <a
-                href="https://download.winzip.com/gl/nkln/winzip28-pp.exe"
+                href="https://download.winzip.com/gl/nkln/winzip76-pp.exe"
                 class="download-link" data-track-event="e_trialDownload" 
 				title="Start download">click here</a>
             </div>
