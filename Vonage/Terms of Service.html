@@ -35,7 +35,7 @@
         window._6si.push(['setToken', '91a5c4dd35a5b8ecddbe76b53d4a13bf']);
         window._6si.push(['setEndpoint', 'b.6sc.co']);
         window._6si.push(['enableCompanyDetails', true]);
-        window._6si.push(['setEpsilonKey', 'b4bcebec670e4a5424afc8885f753d993fd09ae8']);
+        window._6si.push(['setEpsilonKey', 'e5b8ae70c026afbc025109d5decc8cd1336ce103']);
     </script>
 <script>
      window.addEventListener('OneTrustGroupsUpdated',triggerSixthSense);
@@ -170,6 +170,7 @@
               }
         };
 
+        // Set Ecomm Info into AA
         (function(){
             var width = ( window.innerWidth != "undefined" ) ? window.innerWidth : document.documentElement.clientWidth;
             digitalData.user.profile.profileInfo.responsiveSiteVersion = ( width < 720 ) ? "mobile" : ( width < 992 ) ? "tablet" : "desktop";
@@ -179,7 +180,7 @@
             if (lsIds !== null && lsIds.masterAgentID !== null) { masterAgent = lsIds.masterAgentID; } else { if (urlParams.has('masteragentid')) { masterAgent = urlParams.get('masteragentid'); }}
             if (lsIds !== null && lsIds.subAgentID !== null) { subAgent =lsIds.subAgentID ; } else { if (urlParams.has('subagentid')) { subAgent = urlParams.get('subagentid'); } else { subAgent = masterAgent }}
             if (lsIds !== null && lsIds.couponcode !== null) { couponCode = lsIds.couponcode; } else { if (urlParams.has('couponcode')) { couponCode = urlParams.get('couponcode'); }}
-           
+
             var ecomFlowType = document.querySelector("input[name='ecommFlowType']");
             if(ecomFlowType && ecomFlowType.value == "partner-2.0") {
               isSalesRep = "yes"
@@ -193,6 +194,24 @@
             digitalData.transaction.couponcode = couponCode;
 
 
+        })();
+
+        // DataDome to AA
+        (function() {
+          if (document.cookie.indexOf('vng-datadome') != -1) {
+            var match = document.cookie.match(new RegExp('(^| )vng-datadome=([^;]+)'));
+            if (match) parts =  match[2];
+            var jsonObj = JSON.parse(parts);
+            digitalData.user.profile.botinfo = {};
+            if (typeof jsonObj['x-datadome-botname'] != 'undefined') {
+              digitalData.user.profile.botinfo.botname = jsonObj['x-datadome-botname']
+            } else {
+              digitalData.user.profile.botinfo.botname = ""
+            }
+            digitalData.user.profile.botinfo.ruletype = jsonObj['x-datadome-ruletype'];
+                var isBot={'0':'Human','1':'Bot','NA':'Disabled'};
+                digitalData.user.profile.botinfo.isbot=isBot[jsonObj['x-datadome-isbot']]
+          }
         })();
 
     </script>
@@ -220,9 +239,9 @@
 <input type="hidden" name="isContracted" id="isContracted" value="false" />
 <input type="hidden" name="ecommFlowType" id="ecommFlowType" value="regular" />
 <input type="hidden" name="attributionCampaign" id="attributionCampaign" />
-<link rel="stylesheet" href="/etc.clientlibs/vonage/clientlibs/clientlib-site.min.4d9f2d72d52095ccf99580bcb88900b2.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/vonage/clientlibs/clientlib-site.min.6d773f21908052dd76a6a5bfb62a942e.css" type="text/css">
 <pre style="display: none;">Device Type: desktop</pre>
-<link rel="stylesheet" href="/etc.clientlibs/vonage/clientlibs/clientlib-site-desktop.min.1ab48092a1d0cd1ac91a069bf584324d.css" type="text/css" />
+<link rel="stylesheet" href="/etc.clientlibs/vonage/clientlibs/clientlib-site-desktop.min.d782aad03f4065b1fd237850b82e4496.css" type="text/css" />
 </head>
 <body class="generic-page page basicpage">
 <div>
@@ -506,17 +525,17 @@ Conversational Commerce
 </ul>
 <ul>
 <li>
+<a href="/communications-apis/messages/features/rcs/" target="_self" aria-label="RCS" data-icmp-value="megamenu|mainnav_products_gotothecommunicationsapispage_gotothemessagingpage_gotothercspage">RCS</a>
+</li>
+</ul>
+<ul>
+<li>
 <a href="/communications-apis/messages/features/whatsapp/" target="_self" aria-label="WhatsApp" data-icmp-value="megamenu|mainnav_products_gotothecommunicationsapispage_gotothemessagingpage_gotothewhatsapppage">WhatsApp</a>
 </li>
 </ul>
 <ul>
 <li>
 <a href="/communications-apis/messages/features/facebook-messenger/" target="_self" aria-label="Facebook Messenger" data-icmp-value="megamenu|mainnav_products_gotothecommunicationsapispage_gotothemessagingpage_gotothefacebookmessengerpage">Facebook Messenger</a>
-</li>
-</ul>
-<ul>
-<li>
-<a href="/communications-apis/messages/features/viber/" target="_self" aria-label="Viber" data-icmp-value="megamenu|mainnav_products_gotothecommunicationsapispage_gotothemessagingpage_gototheviberpage">Viber</a>
 </li>
 </ul>
 </li>
@@ -1065,6 +1084,11 @@ Conversational Commerce
 </ul>
 <ul>
 <li>
+<a href="/conversational-commerce/channels/rcs/" target="_self" aria-label="RCS" data-icmp-value="megamenu|mainnav_products_gototheconversationalcommercepage_gototheconversationalcommercechannelspage_rcs">RCS</a>
+</li>
+</ul>
+<ul>
+<li>
 <a href="/conversational-commerce/channels/" target="_self" aria-label="View all" data-icmp-value="megamenu|mainnav_products_gototheconversationalcommercepage_gototheconversationalcommercechannelspage_gotothechannelspagetoviewallconversationalcommercechannels">View all</a>
 </li>
 </ul>
@@ -1294,6 +1318,9 @@ Australia (English)
 <option value="https://www.vonage.co.uk/">
 United Kingdom (English)
 </option>
+<option value="https://www.vonage.com.tw/">
+Taiwan (English)
+</option>
 <option value="https://www.vonage.sg/">
 Singapore (English)
 </option>
@@ -1327,11 +1354,20 @@ Deutschland (Deutsch)
 <option value="https://www.vonage.fr/">
 France (Français)
 </option>
+<option value="https://www.vonage.cl/">
+Chile (Español)
+</option>
+<option value="https://www.vonage.co/">
+Colombia (Español)
+</option>
 <option value="https://www.vonage.mx/">
 México (Español)
 </option>
 <option value="https://www.vonage.com.es/">
 España (Español)
+</option>
+<option value="https://www.vonage.com.ar/">
+Argentina (Español)
 </option>
 <option value="https://www.vonage.com.br/">
 Brasil (português)
@@ -1568,6 +1604,9 @@ Legal/Policy
 <a class="Vlt-footer-alternative__link true" href="/legal/privacy-policy/" target="_self">Privacy</a>
 </li>
 <li class="Vlt-footer-alternative__item">
+<a class="Vlt-footer-alternative__link true" href="https://privacyportal-eu.onetrust.com/webform/96777f10-6f1e-44b1-b0f7-9c318f8d2e5f/b879048e-a00f-4b8e-8721-d84f2a1bda05?adobe_mc=MCMID%3D79591487455718016410916570164728098041%7CMCORGID%3DA8833BC75245AF9E0A490D4D%2540AdobeOrg%7CTS%3D1719429860" target="_blank" aria-describedby="new-window">Your Privacy Choices</a>
+</li>
+<li class="Vlt-footer-alternative__item">
 <button id="ot-sdk-btn" class="ot-sdk-show-settings Vlt-footer-alternative__link" data-original-text="Cookie Settings">Cookie Settings</button>
 </li>
 <li class="Vlt-footer-alternative__item">
@@ -1657,6 +1696,6 @@ For a better experience, switch to a different browser.
 <section class="date-time-section">
 <div class="display-date-time"></div>
 </section>
-<script src="/etc.clientlibs/vonage/clientlibs/clientlib-site.min.e7e6725c2bbbc7ebfa0a7e0b386b9419.js"></script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'897249838821768c',t:'MTcxODk1NDk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script src="/etc.clientlibs/vonage/clientlibs/clientlib-site.min.b906e94d34e18791ef49b8ccaa7b3f85.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'8a624bb57ed163aa',t:'MTcyMTQ3MTY0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
