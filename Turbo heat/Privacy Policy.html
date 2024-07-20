@@ -9187,7 +9187,7 @@ body {
 <script type="text/javascript" src="/shared/js/common.js?v=6.0.1724.1550&language=English&cb=1"></script>
 
 
-<script type="text/javascript" src="/shared/js/jquery.eflex.fw.js?ts=638545321538166030"></script>
+<script type="text/javascript" src="/shared/js/jquery.eflex.fw.js?ts=638570480832990056"></script>
 
 
 <script id="DTMFWJS" type="text/javascript">
@@ -15325,7 +15325,7 @@ body {
             self.config = config || {};
             self.allowSearch = false;
             self.disable = false;
-            self.sessionId = 'f27b056f-1699-4483-8be7-3f72e844c93a';
+            self.sessionId = '599a14aa-d677-4ff8-ba90-7157a26f116f';
             self.PlacesChoiceId = "";
             self.defaultCountry = 'USA';
             self.currentCountry = '';
@@ -16449,94 +16449,6 @@ function hasValidCharacters(text) {
     return isRegexMatch;
        
 }
-
-
-
-    $(window).on('load', function () {
-        $('#BillingStreet').on("focus", function () { $(this).attr('autocomplete', 'section-bill billing new-password'); });
-        $('#ShippingStreet').on("focus", function () { $(this).attr('autocomplete', 'section-ship shipping new-password'); });
-        var cache = {};
-        $('#BillingStreet, #ShippingStreet').autocomplete({
-            create: function (e, u) {
-                $('#BillingStreet').attr('autocomplete', 'section-bill billing address-line1');
-                $('#ShippingStreet').attr('autocomplete', 'section-ship shipping address-line1');
-            },
-            source: function (request, response) {
-                var term = request.term;
-                if (term in cache) {
-                    response(cache[term]);
-                    return;
-                }
-                $.post("/Shared/Services/SmartyStreets.ashx",
-                    {
-                        a: term
-                    },
-                    function (data, status) {
-
-                        if (status == "success") {
-
-                            if (data.suggestions != null && data.suggestions.length > 0) {
-                                var finalData = $.map(data.suggestions, function (item) {
-                                    return {
-                                        label: item.street_line + ' ' + item.secondary + ' , ' + item.city + ', ' + item.state,
-                                        value: item.street_line,
-                                        city: item.city,
-                                        state: item.state,
-                                        zipcode: item.zipcode,
-                                        street2: item.secondary
-                                    };
-                                });
-
-                                cache[term] = finalData;
-                                response(finalData);
-                            }
-                        }
-                    });
-            },
-            select: function (event, ui) {
-
-                var name = event.target.name;
-                var type = name.replace("Street", "");
-
-                $('#' + type + 'Zip').val(ui.item.zipcode);
-                $('#' + type + 'City').val(ui.item.city);
-                $('#' + type + 'State').val(ui.item.state);
-                $('#' + type + 'Country').val("USA");
-                $('#' + type + 'Street2').val(ui.item.street2);
-
-                if (typeof triggerEvent == 'function') {
-                    triggerEvent("GoogleAutoComplete_AddressUpdated");
-                }
-
-            },
-
-            minLength: 5
-        });
-        
-        var hasAutoCompleteFields = typeof $('#BillingStreet, #ShippingStreet').data('ui-autocomplete') != "undefined";
-        
-        if (hasAutoCompleteFields){
-            $('#BillingStreet, #ShippingStreet').data('ui-autocomplete')._renderItem = function (ul, item) {
-                
-                //Each list item is rendered here
-                return $("<li/>")
-                    .append($("<span/>", {
-                        class: "ui-menu-address",
-                        html: $("<span/>", {
-                            class: "ui-menu-droppin"
-                        })
-                    }).append($("<strong/>", {
-                        text: item.value + " " + item.street2
-                    })).append($("<small/>", {
-                        text: item.city + " " + item.state + " " + item.zipcode
-                    })))
-                    .attr("value", item.value)
-                    //Add Custom attributes, classes here
-                    .appendTo(ul);
-            }; 
-        }
-    });
-    
 
 
 </script>
