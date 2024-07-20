@@ -354,11 +354,96 @@ footer { clear: both; background: #ca1134; border-bottom: 5px solid #fff; }
 </a>
 <div class="social-blob">
 <div class="social-blob-text">
+I don't know of any particular way to do that and I'm not really inclined to support it, since it's an ultra-niche use case.</p>
+<p>Someone is free to PR it, but with DriverKit being the way it is I feel like it'd be tricky to develop outside of this org - but perhaps with a properly disabled SIP + systemextensionctl setup it's possible.</p>
+<p>You might be able to get away with using just <code>gcusbadapter.kext</code> from the hjelmn project (with SIP kext checks disabled only, don't disable all of SIP necessarily), since GCAdapterDriver handles the part that <code>gcusbadapter_raw.kext</code> does. kexts are not guaranteed to work forever though, so... YMMV.</p>
+<p>on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/17" title="View Expose GC Controllers to system as Gamepads? on GitHub">Expose GC Controllers to system as Gamepads?</a>
+<a href target="_blank" title="On 2 days ago" class="social-blob-dt">2 days ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
+Well then.</p>
+<p>Thanks for catching that, heh. Merged! on <a href="https://github.com/ryanmcgrath/cacao/pull/123" title="View fix: typo in window’s set_subtitle fn on GitHub">fix: typo in window’s set_subtitle fn</a>
+<a href target="_blank" title="On 4 days ago" class="social-blob-dt">4 days ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
+Pushed <a href="https://github.com/ryanmcgrath/cacao/compare/e3bbb9366c8cf5a5474c5b134ae60e9641da3b7b...7ffe39891cd73984c4bea5e37d463f3398361320" title="View these changes on GitHub">1 commit</a> to <a href="https://github.com/ryanmcgrath/cacao" title="View ryanmcgrath/cacao on GitHub">@ryanmcgrath/cacao</a>
+<a href target="_blank" title="On 4 days ago" class="social-blob-dt">4 days ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
+Closed a pull request in <a href="https://github.com/ryanmcgrath/cacao" title="View ryanmcgrath/cacao on GitHub">@ryanmcgrath/cacao</a>:</p>
+<p><a href="https://github.com/ryanmcgrath/cacao/pull/123" title="View this PR on GitHub">fix: typo in window’s set_subtitle fn</a>
+<a href target="_blank" title="On 4 days ago" class="social-blob-dt">4 days ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
+Hmmm, might be down to a difference in <code>obj</code>/<code>objc2</code>. <a href="https://github.com/madsmtm">@madsmtm</a> might know more, otherwise I'd have to find time to dig in - and I'll be busy + traveling the next two weeks.</p>
+<p>If you wanted to tinker and debug, a webview not loading sounds like something not getting retained somewhere - either the webview itself, or the webview's delegate. It's where I'd start looking at least. on <a href="https://github.com/ryanmcgrath/cacao/issues/122" title="View Browser Example Broken on GitHub">Browser Example Broken</a>
+<a href target="_blank" title="On 2 weeks ago" class="social-blob-dt">2 weeks ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
+Hmmm, are you saying that the webview isn't loading anything, or that <code>back</code> doesn't work?</p>
+<p>And what version of macOS are you testing against...? on <a href="https://github.com/ryanmcgrath/cacao/issues/122" title="View Browser Example Broken on GitHub">Browser Example Broken</a>
+<a href target="_blank" title="On 2 weeks ago" class="social-blob-dt">2 weeks ago</a>
+</div>
+</div>
+</li>
+<li class="github social-blob-wrapper">
+<a href class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="30" height="30" viewBox="0 0 32 32">
+<use xlink:href="#github" fill="#e4e8f1" />
+</svg>
+</a>
+<div class="social-blob">
+<div class="social-blob-text">
 Do you have more info on what you're trying to accomplish? e.g is this for a bare <code>CALayer</code> you own or a <code>CALayer</code> backing an <code>NSView</code>?</p>
 <p>Since the <code>objc</code> property of <code>CALayer</code> is exposed publicly, you can message it directly with <code>objc</code> calls (e.g <code>let _: () = msg_send![my_view.layer.id, surface];</code>). You of course need to handle the lifetimes and safety yourself, but this is one of those territories where it's the preferred way of doing it at the moment.</p>
 <p>If you wind up finding a more comfortable API and/or you want to buff the <code>CALayer</code> wrapper to be more comprehensive, a pull request is always welcome. I wouldn't pull <code>IOSurface</code> into this framework necessarily, similar to how <code>Metal</code> isn't really in here either (though other crates exist for it). In general I just try to make it possible for crates to interop via the <code>objc</code> layer if possible.</p>
 <p>I considered making a channel on Matrix at one point, but the level of activity here isn't so significant that it's needed. on <a href="https://github.com/ryanmcgrath/cacao/issues/120" title="View missing CALayer.contents -&gt; Any? on GitHub">missing CALayer.contents -&gt; Any?</a>
-<a href target="_blank" title="On 4 days ago" class="social-blob-dt">4 days ago</a>
+<a href target="_blank" title="On a month ago" class="social-blob-dt">a month ago</a>
 </div>
 </div>
 </li>
@@ -372,7 +457,7 @@ Do you have more info on what you're trying to accomplish? e.g is this for a bar
 <div class="social-blob-text">
 Opened a pull request in <a href="https://github.com/vitaly-m/postgis-diesel" title="View vitaly-m/postgis-diesel on GitHub">@vitaly-m/postgis-diesel</a>:</p>
 <p><a href="https://github.com/vitaly-m/postgis-diesel/pull/27" title="View this PR on GitHub">Remove default features, no 32-col tables by default</a>
-<a href target="_blank" title="On a week ago" class="social-blob-dt">a week ago</a>
+<a href target="_blank" title="On a month ago" class="social-blob-dt">a month ago</a>
 </div>
 </div>
 </li>
@@ -386,7 +471,7 @@ Opened a pull request in <a href="https://github.com/vitaly-m/postgis-diesel" ti
 <div class="social-blob-text">
 Hmmm, yeah, you'd need to dig around in Core Graphics to find an equivalent for drawing the image directly - it's been a bit since I've had to spelunk that low so my memory is unfortunately hazy there.</p>
 <p>One odd path you could also consider: creating a <code>cacao::image::Image</code> and calling <a href="https://developer.apple.com/documentation/appkit/nsimage/1519861-cgimageforproposedrect">CGImageForProposedRect:context:hints:</a> to get a <code>CGImageRef</code> from the underlying <code>NSImage</code>, then taking that into a new image (or custom draw handler). on <a href="https://github.com/ryanmcgrath/cacao/issues/119" title="View Capability to resize Images on GitHub">Capability to resize Images</a>
-<a href target="_blank" title="On 2 weeks ago" class="social-blob-dt">2 weeks ago</a>
+<a href target="_blank" title="On a month ago" class="social-blob-dt">a month ago</a>
 </div>
 </div>
 </li>
@@ -401,7 +486,7 @@ Hmmm, yeah, you'd need to dig around in Core Graphics to find an equivalent for 
 Hmm, does using <code>ResizeBehavior::Stretch</code> not hit the behavior you're after?</p>
 <p><a href="https://github.com/ryanmcgrath/cacao/blob/e3bbb9366c8cf5a5474c5b134ae60e9641da3b7b/src/image/image.rs#L18-L32">https://github.com/ryanmcgrath/cacao/blob/e3bbb9366c8cf5a5474c5b134ae60e9641da3b7b/src/image/image.rs#L18-L32</a></p>
 <p>(Alternatively, you could implement a <a href="%5Bhttps://github.com/ryanmcgrath/cacao/blob/e3bbb9366c8cf5a5474c5b134ae60e9641da3b7b/src/image/image.rs#L257C12-L257C16%5D(https://github.com/ryanmcgrath/cacao/blob/e3bbb9366c8cf5a5474c5b134ae60e9641da3b7b/src/image/image.rs#L257C12-L257C16)">custom <code>draw</code> closure</a> - maybe that'd help?) on <a href="https://github.com/ryanmcgrath/cacao/issues/119" title="View Capability to resize Images on GitHub">Capability to resize Images</a>
-<a href target="_blank" title="On 2 weeks ago" class="social-blob-dt">2 weeks ago</a>
+<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
 </div>
 </div>
 </li>
@@ -414,101 +499,21 @@ Hmm, does using <code>ResizeBehavior::Stretch</code> not hit the behavior you're
 <div class="social-blob">
 <div class="social-blob-text">
 You're in the settings screen for the standard controller. You need to select &quot;WiiU Controller&quot; or whatever it is so that you get the native GC Controller protocol. on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/25" title="View Troubleshooting: Adapter Not Detected Sonoma on GitHub">Troubleshooting: Adapter Not Detected Sonoma</a>
-<a href target="_blank" title="On a month ago" class="social-blob-dt">a month ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-You still <em>can</em>, GitHub just arbitrarily changes wiki links: <a href="https://github.com/project-slippi/Ishiiruka/wiki/Overclocking-Controllers-on-macOS-Big-Sur,-Monterey,-Ventura,-or-Sonoma">https://github.com/project-slippi/Ishiiruka/wiki/Overclocking-Controllers-on-macOS-Big-Sur,-Monterey,-Ventura,-or-Sonoma</a></p>
-<p>This particular feature requires me doing some work that I just don't have time for. It's not something that someone can contribute as it primarily deals with signing the driver itself. on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/9" title="View Support for overclocking on macOS 11.0+ on GitHub">Support for overclocking on macOS 11.0+</a>
 <a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
 </div>
 </div>
 </li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
+<li class="dribbble social-blob-wrapper">
+<a href="https:&#x2f;&#x2f;dribbble.com&#x2f;shots&#x2f;15959220-DriverKit-Icon" class="iconLink" title="View this on Twitter" target="_blank">
+<svg width="22" height="22" viewBox="0 0 16 16">
+<use xlink:href="#dribbble" fill="#ea4c89" />
 </svg>
 </a>
 <div class="social-blob">
 <div class="social-blob-text">
-Just set all your ports in that config panel to WiiU adapter, then each port would technically work.</p>
-<p>Right now you only have one port enabled in the config, and the adapter says detected but not reading... which is why I ask this. on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-This is plugged into port 1, correct? If it's detect, it should be outputting a Hz measurement... on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-Screenshot your controller(s) panel from Dolphin~ on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-Kk, and how are you connecting the adapter to your machine? Is there a particular USB hub/adapter you're using?</p>
-<p>(And as dumb as it might sound, you're using the black cord right? <em>Not</em> the rumble cord?) on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-Also - what adapter type are you attempting to connect? on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
-</div>
-</div>
-</li>
-<li class="github social-blob-wrapper">
-<a href class="iconLink" title="View this on Twitter" target="_blank">
-<svg width="30" height="30" viewBox="0 0 32 32">
-<use xlink:href="#github" fill="#e4e8f1" />
-</svg>
-</a>
-<div class="social-blob">
-<div class="social-blob-text">
-A restart, yes. :) on <a href="https://github.com/secretkeysio/GCAdapterDriver/issues/23" title="View GCAdapterDriver not working over the apple one on GitHub">GCAdapterDriver not working over the apple one</a>
-<a href target="_blank" title="On 2 months ago" class="social-blob-dt">2 months ago</a>
+Unveiled a new Shot: <a href="https://dribbble.com/shots/15959220-DriverKit-Icon" title="View DriverKit Icon on Dribbble">DriverKit Icon</a> <a href="https://dribbble.com/shots/15959220-DriverKit-Icon" title="View DriverKit Icon on Dribbble"><img src="https://cdn.dribbble.com/users/52427/screenshots/15959220/gcadapterdriver_icon_dribbble_teaser.png" alt="DriverKit Icon" /></a></p>
+<p><a href="https://dribbble.com/ryanmcgrath/tags/gaming" title="View shots tagged gaming on Dribbble">#gaming</a> <a href="https://dribbble.com/ryanmcgrath/tags/icon" title="View shots tagged icon on Dribbble">#icon</a> <a href="https://dribbble.com/ryanmcgrath/tags/macos" title="View shots tagged macos on Dribbble">#macos</a>
+<a href="https:&#x2f;&#x2f;dribbble.com&#x2f;shots&#x2f;15959220-DriverKit-Icon" target="_blank" title="Shot 3 years ago" class="social-blob-dt">3 years ago</a>
 </div>
 </div>
 </li>
