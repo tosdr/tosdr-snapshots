@@ -70,6 +70,16 @@ jQuery(window).on("load", () => {
 		breadcrumbs: "/master/promos/Privacy-Statement/privacy",
 		environment: "LiveSite"
 	};
+    var getRcpUserId = () => {
+        try {
+          return JSON.parse(localStorage.getItem("backstage-state")).state.userInfo.id;
+        } catch (err) {
+          return "n/a";
+        }
+    };
+    var dlUser = {
+        rcpUserId: getRcpUserId()
+    };
 	var currentPageTemplate = "Roland.OneColumns";
 	if (currentPageTemplate === "Roland.Product") {
 		var bc = [];
@@ -89,9 +99,9 @@ jQuery(window).on("load", () => {
 				subCategory1: subcat
 			}
 		}];
-		window.digitalData.push({event:dlEvent, page:dlPage, subevent:dlSubevent, hardware:dlHardware});
+		window.digitalData.push({event:dlEvent, page:dlPage, user:dlUser, subevent:dlSubevent, hardware:dlHardware});
 	} else {
-		window.digitalData.push({event:dlEvent, page:dlPage});
+		window.digitalData.push({event:dlEvent, page:dlPage, user:dlUser});
 	}
 });
 </script>
@@ -103,7 +113,7 @@ jQuery(window).on("load", () => {
 <body class="LTR Unknown ENJM ContentBody" >
     
     <form method="post" action="/global/privacy/?lang=en-JM" id="form">
-<input type="hidden" name="__CMSCsrfToken" id="__CMSCsrfToken" value="yrlOZJ+uB7BdOUZCg5Cy5Mb8d6bj6WvnozQLY+Zl04/UP5QJJS0L4rpAF5rdVNWBZ9oYcyuUakPk6E2zHuli8rh0sJwieYqcs8D8peCd660=" />
+<input type="hidden" name="__CMSCsrfToken" id="__CMSCsrfToken" value="J9703MQWtm8Ci/HmwK0LsSVfeA3q4VL4F2c8kMIF7FLQafMziw8fViH72TobuWiY1VUF/Lr/9O0op9lFXQAqniGu9wT2aUKvIABHl2JilVg=" />
 
 
 <input type="hidden" name="lng" id="lng" value="en-JM" />
@@ -1319,22 +1329,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-WMTGPC');</script>
 <!-- End Google Tag Manager -->
 <!-- Common Metatags -->
-<!-- AudienceX -->
-<script type="text/javascript">
-var utag_data = {
-	revenue : "",
-	orderid : ""
-}
-</script>
-
-<script type="text/javascript">
-(function(a,b,c,d){
-	a='https://tags.tiqcdn.com/utag/audiencex/roland/prod/utag.js';
-	b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
-	a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
-})();
-</script>
-<!-- /AudienceX -->
+<!-- what? -->
 <!-- End Common Metatags -->
 
 
@@ -1345,7 +1340,7 @@ var utag_data = {
 	//<![CDATA[
 WebServiceCall('/cmsapi/webanalytics', 'LogHit', '{"NodeAliasPath":"/master/promos/Privacy-Statement/privacy","DocumentCultureCode":"en-JM","UrlReferrer":""}')
 //]]>
-</script><script src="https://static.roland.com/global/js/replaceSearch.js" type="text/javascript"></script>  <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="i5jL+N36+WAB8LloYWYtQJkW0eM6KP+7BPKA6AhwUMxAmb3Ldsc9hzCp08ITMyuPUj7Z4phuunm4jLy5vqGfto934JVKScPyiTzWKIOvACLv+2SpaJyMTk2qCvDIO5jKZFBoJi5ePvvLkWZ3QvSabSfVu96ztmazlEsDsHmTiW5hVfu7Cm2kmFOeVqQU0kba7xTS2D+ia/b0UDn78ftdqO2uKX5ti/CI80yAp86HvGieIBws67PzoWsJkhMAVAHahf7heDWYhjgMsP2pKS79RErOIUpf7YZeGyjoR1bWo34wzTjTNnBtn9waXVHZfR9CgeoXCL5eO4yzVtBKEPiyitfO9nIC4KzD0hxxzptBNpfL5iGBKwaZ2UX6I59fLIRKDVh7SMw0BIN2S9HOj0eFvZQiVfuhS5QAVTiZaD+GuXgqN025G+XljAAQALODecfTxnZqNPIL8m8srW9wDa+QYNOOV45EVGeEd/EzxG5NiQijmQXV/x4g8N3YjNQ6c9ci7fIjqqUoDRy6kflqZNJQej80PNVS5eB7bleBE3ZEcdx96qAWI3HZejPdNYoRoFkZg5BQJF7l0dqyUswxTT5GBgfAJf3GlBhnOp3Mj+9BpFsntI+Hd1xj9+PVSiusjheHnKRQJAPBolOqvhqh9IPSCEdlogfQLPdVVVqHwDUxhM/CAfCBUNdg5XX0T4MtCN/YoCHrLor3vz+rBIrZvcBGrTpU5qCW9NtOGyNLMCeOH0GPHJCS1gduvkmVbtO82ypjkw3iYzVXYDleOqiDTkpkLg==" />
+</script><script src="https://static.roland.com/global/js/replaceSearch.js" type="text/javascript"></script>  <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="8c+PyKjYh1N7/qVlZ3EiAedSlVE8Ok1x4TG/tCcEPkGqvs16FPcS+uIBiHBgDJ739q6DR64CkrYHoCD7Ml2FIPyzp4Bk2Ngw46xddwBq4YE8zz1C4oukk+/qfwS6VUfjPx82xLC833sPBo5fpzSaDdeI6tlnj73lF3ao1dQEVeb0cRryy9C8athk+6sPMc/i4HaOOjBrRXCPGsfJnTZRGt35Lp7rHQ3/EL/6xxltjyFh3oiJK8eYlZxx3bD737IzEy3iJ6Bjz9A6ZoMp0fcuakPkc0X0ESggQdDCVvo0VHXG+p5qU92FHSgBdJ4tK/89qSi17CYu8y6ayjy1OvhyCRL3Zi7W2H7h3+meil3Pmrlz+YzExyIqiN03D7fci0RI0IzTw5/lD8WDDazMIoRJVFxbZwWuzgR0tZ32JKjNahNkQFNn5VK80PhN/Oz5SJHMTjBJiImYWDZNEyd/h9Jtje/g65pbrPwZYnY7TMH7GmIXsmZ8RSP4XBMTakyajjOLCCRF3sqbWO2zcPDQ+FaAR38hvwDXk8qMpB9wmfbbCaFXDBe9PNeVlAAEc/Gs6JTehbUZeIiRXAvUhDd/BoNEF5kZH4phW9FlL+A7kAzz/OeyhaUikxWsrR8qp2kg/tVba3wgGpncmg+ZoM56/7NGLbHIVgbAUsN5xG0+qxyZq9r62xR9RCZsIwWrjCyALYo5iU3vAoWPl8WADdgMO+STsoSXSlNIj5Y4DNGqmyzoOBJDDuOYFKTCogJh/pCbBEM6utQAmxh9s1hu8nLAdNcOGQ==" />
   <script type="text/javascript">
       //<![CDATA[
       if (window.WebForm_InitCallback) {
