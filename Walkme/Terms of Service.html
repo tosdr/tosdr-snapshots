@@ -226,7 +226,7 @@
         var ec_var = {};
         var brief_url = '';
                                         let isZoomInfoEnable = false;
-        var client_ip = "51.195.149.0";var client_remote_ip = "51.195.149.220";var ajaxuscanadaurl = "https://www.walkme.com/wp-admin/admin-ajax.php";
+        var client_ip = "158.220.94.0";var client_remote_ip = "158.220.94.70";var ajaxuscanadaurl = "https://www.walkme.com/wp-admin/admin-ajax.php";
         function setCookie(e, t, i, r) {
             try {
                 "string" != typeof t && (t = t.toString()), t.indexOf(";") > -1 && t.replace(";", ""), t = t.replace(/,/g, "%2C");
@@ -4135,7 +4135,7 @@ Email: legal@walkme.com</p>
                                             clearTimeout(popupTimeout);
                                         }, 1000);
                                     }
-                                    if(jQuery('html[lang=en-US]').length <= 0 || jQuery('body').hasClass('single-funnel_gated_content')) {
+                                    if((jQuery('html[lang=en-US]').length <= 0 && jQuery('html[lang=ja-JP]').length <= 0) || jQuery('body').hasClass('single-funnel_gated_content')) {
                                         showPopupOnPageLoad();
                                     }
                                     //footer chatbot issue on page zoom
@@ -4158,6 +4158,7 @@ Email: legal@walkme.com</p>
                                 });
                             </script>
                                                         <script type="rocketlazyloadscript">
+                                const current_lang = (document.querySelector('html').hasAttribute('lang') && (document.querySelector('html').getAttribute('lang') == 'ja-JP')) ? 'JP' : "";
                                 const redirectionRuleForm = (occurence, type) => {                                   
                                     occurence.addEventListener('click', (e) => {
                                          console.info(e);
@@ -4177,27 +4178,48 @@ Email: legal@walkme.com</p>
                                     if (occurence.href.indexOf(window.location.origin + "/walkme-quote") > -1) {
                                         occurence.href =  getRedirectURL("/walkme-quote/");                                      
                                         redirectionRuleForm(occurence, 'quote');
-                                    } else if (occurence.href.indexOf(window.location.origin + "/walkme-demo") > -1) {
+                                    } else if (occurence.href.indexOf(window.location.origin + "/jp/walkme-demo") > -1) {
+                                        occurence.href =  getRedirectURL("/jp/walkme-demo/");
+                                        redirectionRuleForm(occurence, 'demo-jp');
+                                    }else if (occurence.href.indexOf(window.location.origin + "/walkme-demo") > -1) {
                                         occurence.href =  getRedirectURL("/walkme-demo/");
                                         redirectionRuleForm(occurence, 'demo');
                                     }else if (occurence.href.indexOf(window.location.origin + "/ai/walkme-x-demo") > -1) {
                                         occurence.href =  getRedirectURL("/ai/walkme-x-demo/");
-                                        //redirectionRuleForm(occurence, 'demo');
                                     }
                                 });
-                                document.querySelectorAll('a.popup-demo').forEach(occurence => {
+                                document.querySelectorAll('body.japaneselang a.popup-demo').forEach(occurence => {
+                                    if (occurence.href !=null && occurence.href.indexOf("javascript:void(0)") > -1) {
+                                        occurence.href =  getRedirectURL("/jp/walkme-demo/");
+                                    }
+                                    redirectionRuleForm(occurence, 'demo-jp');
+                                });
+
+                                document.querySelectorAll('body.japaneselang button.popup-demo').forEach(occurence => {
+                                    redirectionRuleForm(occurence, 'demo-jp');
+                                });
+
+                                
+                                document.querySelectorAll('body:not(.japaneselang) a.popup-demo').forEach(occurence => {
                                     if (occurence.href !=null && occurence.href.indexOf("javascript:void(0)") > -1) {
                                         occurence.href =  getRedirectURL("/walkme-demo/");
                                     }
                                     redirectionRuleForm(occurence, 'demo');
                                 });
 
-                                document.querySelectorAll('button.popup-demo').forEach(occurence => {
+                                document.querySelectorAll('body:not(.japaneselang) button.popup-demo').forEach(occurence => {
                                     redirectionRuleForm(occurence, 'demo');
                                 });
                                 
                                 const redirectToDemoLandingPageFooter = (type = "demo") => {
-                                                                            const requestDemoFormSlug = (type == 'demo') ? "/walkme-demo/" : "/walkme-quote/";
+                                    let requestDemoFormSlug="/walkme-quote/";
+                                                                                if(type=='demo-jp'){
+                                                 requestDemoFormSlug =  "/jp/walkme-demo/";
+                                            }else if(type=='demo'){
+                                                 requestDemoFormSlug =  "/walkme-demo/";
+                                            }else{
+                                                 requestDemoFormSlug =  "/walkme-quote/";
+                                            }                                       
                                                                         let host = window.location.origin;
                                     let demo_page_slug = requestDemoFormSlug;
                                     let redirect_url = host + demo_page_slug;                                    
@@ -4276,7 +4298,7 @@ var theme_global_options = {"ajax_url":"https:\/\/www.walkme.com\/wp-admin\/admi
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.walkme.com/wp-content/themes/walkme-new/new-templates/assets/js/main.min.js?ver=1704278066" id="main-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.walkme.com/wp-content/themes/walkme-new/new-templates/assets/libs/js/lazysizes.min.js?ver=1700546224" id="lazysizes-js" defer></script>
 <script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.walkme.com/wp-content/themes/walkme-new/new-templates/assets/js/pages/table-component.min.js?ver=6.5.5" id="table-component-js-js" defer></script>
-    <script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" id="maxmind-script" data-rocket-src="https://www.walkme.com/wp-content/cache/min/1/js/apis/geoip2/v2.1/geoip2.js?ver=1721391337" defer></script>
+    <script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" id="maxmind-script" data-rocket-src="https://www.walkme.com/wp-content/cache/min/1/js/apis/geoip2/v2.1/geoip2.js?ver=1721640246" defer></script>
     <script type="rocketlazyloadscript">
         document.getElementById('maxmind-script').addEventListener('load', function() {
             this.onload = onMaxmindScriptLoad();
