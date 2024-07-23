@@ -189,7 +189,92 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
   
       
 <header style="width:100%; margin-right: auto; margin-left: auto;" class="nav-bamboo light" id="bamboo-header">
-    <nav class="light " style="margin-right: auto; margin-left: auto; box-sizing: border-box;">
+  
+  
+  <div id="announcement-bar" class="announcement-bar" style="display: none;" data-id="cloudfest_learn_more">
+
+    <div class="ab-content">
+      <div style="color:white;line-height: 30px;">We’re excited to announce our latest improvements for B2B companies including a new Hubspot Integration and a wide variety of APIs. <a href="/blog/fastspring-launches-hubspot-integration-and-expands-its-b2b-offering-with-summer-product-releases/" style="color:white;height: 30px;margin-left: 1.5rem;padding-top: .5rem;" class="nav-bamboo-cta cta cta-style-1">
+    Learn more here.
+    </a> 
+</div>    </div>
+
+    <div class="ab-close" aria-label="Close Announcement"></div>
+  </div>
+
+<script>window.fsabHelper = {
+  showBar : null,
+  id      : ""
+};
+
+fsabHelper.setID = function() {
+  fsabHelper.id = "fsab_" + jQuery("#announcement-bar").data("id");
+};
+
+fsabHelper.showAnnouncementBar = function() {
+  if (fsabHelper.showBar && (jQuery(window).outerWidth() > 768) ) {
+    jQuery("body").addClass("ab-showing");
+    jQuery("#announcement-bar").show();
+    fsabHelper.fixOffsets();
+  } else {
+    fsabHelper.hideAnnouncementBar(false);
+  }
+};
+
+fsabHelper.hideAnnouncementBar = function(storeCookie) {
+  jQuery("#announcement-bar").hide();
+  fsabHelper.fixOffsets({ resetOffsets : true });
+  jQuery("body").removeClass("ab-showing");
+  if (storeCookie == true) {
+    Cookies.set(fsabHelper.id, "false");
+  }
+}
+
+fsabHelper.fixOffsets = function(options) {
+  var options = options || {};
+  var defaultOffset = 81;
+  var newOffset = 0;
+
+  if (options.resetOffsets) {
+    newOffset = defaultOffset;
+  } else {
+    newOffset = jQuery(".announcement-bar").outerHeight() + defaultOffset;
+  }
+
+  $("div#nav-bamboo-dropdown-container, div#nav-bamboo-search-container").css({
+    "top" : newOffset + "px"
+  });
+};
+
+fsabHelper.checkShowHideCookie = function() {
+  var cook = Cookies.getJSON(fsabHelper.id);
+  if (cook == undefined) {
+    return true;
+  } else {
+    return cook;
+  }
+};
+
+jQuery(document).ready(function() {
+  fsabHelper.setID();
+  fsabHelper.showBar = fsabHelper.checkShowHideCookie();
+
+  fsabHelper.showAnnouncementBar();
+
+  jQuery(window).on("resize", function() { fsabHelper.showAnnouncementBar() } );
+
+  jQuery(".ab-close").on("click", function(e) {
+    fsabHelper.hideAnnouncementBar(true);
+  });
+
+  jQuery("#announcement-bar a").on("click", function() {
+  });
+
+});
+
+</script>  
+
+  <nav class="light " style="margin-right: auto; margin-left: auto; box-sizing: border-box;">
 
     
       <a class="logo" href="https://fastspring.com" style="display: inline-block;">
@@ -903,8 +988,8 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 
  
 
-<style>    @media screen and (min-width: 1025px) {      #bvs-669c7e4241698 { height: 90px; }    }    @media screen and (min-width: 769px) and (max-width: 1024px) {      #bvs-669c7e4241698 { height: 90px; }    }    @media screen and (max-width: 768px) {      #bvs-669c7e4241698 { height: 90px;}    }  </style>
-<div class="bamboo-vertical-space" id="bvs-669c7e4241698"></div>
+<style>    @media screen and (min-width: 1025px) {      #bvs-669ffbb36fc0f { height: 90px; }    }    @media screen and (min-width: 769px) and (max-width: 1024px) {      #bvs-669ffbb36fc0f { height: 90px; }    }    @media screen and (max-width: 768px) {      #bvs-669ffbb36fc0f { height: 90px;}    }  </style>
+<div class="bamboo-vertical-space" id="bvs-669ffbb36fc0f"></div>
 
 
 
