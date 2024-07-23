@@ -1398,7 +1398,9 @@
 	<script src="/js/angular.js.pagespeed.jm.MweU_hyUAL.js"></script>
 	<script src="/js/angular-resource.js.pagespeed.jm.owGCBXTdV8.js"></script>
 	<script src="/js/vendor/ui-bootstrap-tpls-0.13.3.js.pagespeed.jm.Mteqcoztcl.js"></script>
-	<script src="/js/subpageapp.js"></script>
+	<script>service=angular.module("blockonomics_subpage.services",["ngResource"]);app=angular.module("blockonomics_subpage",["blockonomics_subpage.services",'ui.bootstrap'])
+function setCrypto($rootScope){cryptoInfoElem=document.getElementById('crypto-info');if(cryptoInfoElem!=undefined){$rootScope.crypto=getComputedStyle(cryptoInfoElem).getPropertyValue('--crypto');$rootScope.crypto_long=getComputedStyle(cryptoInfoElem).getPropertyValue('--crypto-long');}}app.run(function($rootScope,$http){setCrypto($rootScope)
+$http.get('/api/info').success(function(data){$rootScope.email_id=data.email;setLoginButton(data.email);}).error(function(data){setLoginButton(data.email);});});</script>
 </body>
 
 </html>
