@@ -4,7 +4,150 @@
 	<meta charset="UTF-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-			<script src="//app-ab32.marketo.com/js/forms2/js/forms2.min.js"></script>	
+				<!-- OneTrust Cookies Consent Notice start for smarsh.com -->
+			<script type="text/javascript" src="https://cdn.cookielaw.org/consent/c6b3b512-8c50-4199-8d20-9fb07f002f8b/OtAutoBlock.js" ></script>
+			<script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="c6b3b512-8c50-4199-8d20-9fb07f002f8b" ></script>
+						<script type="text/javascript">
+							// function to pull cookie value
+							function getCookie(name) {
+							    var value = "; " + document.cookie;
+							    var parts = value.split("; " + name + "=");
+							    if (parts.length == 2) return parts.pop().split(";").shift();
+							}
+							function OptanonWrapper() { 
+    
+							    console.log("OptanonWrapper called");
+							    var OABCcookieName = "OptanonAlertBoxClosed";
+							    var bannerAcceptBtn = document.getElementById("onetrust-accept-btn-handler");
+							    var pcAllowAllBtn = document.getElementById("accept-recommended-btn-handler");
+							    var pcSaveBtn = document.getElementsByClassName("save-preference-btn-handler onetrust-close-btn-handler")[0];
+							    var OABCcookie = getCookie(OABCcookieName);
+        
+   
+							    // IF logic needed here because ot-banner-sdk DIV is not injected on page loads if banner is not exposed
+							    // if (!OABCcookie && bannerAcceptBtn) {
+			// 				        bannerAcceptBtn.addEventListener('click', function() {
+			// 				            console.log("Allowed all via Banner");
+			// 				            location.reload();
+			// 				        });
+			// 				    }
+							    if (pcAllowAllBtn)
+							        pcAllowAllBtn.addEventListener('click', function() {
+							            console.log("Allowed all via Preference Center");
+							            location.reload();
+							        });
+							    if(pcSaveBtn){
+							        pcSaveBtn.addEventListener('click', function() {
+							            setTimeout(()=> {
+							            console.log("Set custom settings via Preference Center");
+							            location.reload();
+							        }, 1000) //quick timeout so that the consent receipt can be sent and the cookie can be updated
+							        });
+							    }
+					
+							// Get initial OnetrustActiveGroups ids
+							    if(typeof OptanonWrapperCount == "undefined"){
+							        otGetInitialGrps();
+							    }
+ 
+							    //Delete cookies
+							    otDeleteCookie(otIniGrps);
+ 
+							    // Assign OnetrustActiveGroups to custom variable
+							    function otGetInitialGrps(){
+							        OptanonWrapperCount = '';
+							        otIniGrps =  OnetrustActiveGroups;
+							        // console.log("otGetInitialGrps", otIniGrps)
+							    }
+ 
+							    function otDeleteCookie(iniOptGrpId)
+							    {
+							        var otDomainGrps = JSON.parse(JSON.stringify(Optanon.GetDomainData().Groups));
+							        var otDeletedGrpIds = otGetInactiveId(iniOptGrpId, OnetrustActiveGroups);
+							        if(otDeletedGrpIds.length != 0 && otDomainGrps.length !=0){
+							            for(var i=0; i < otDomainGrps.length; i++){
+							                //Check if CustomGroupId matches
+							               if(otDomainGrps[i]['CustomGroupId'] != '' && otDeletedGrpIds.includes(otDomainGrps[i]['CustomGroupId'])){
+							                    for(var j=0; j < otDomainGrps[i]['Cookies'].length; j++){
+							                        // console.log("otDeleteCookie",otDomainGrps[i]['Cookies'][j]['Name'])
+							                        //Delete cookie
+							                        eraseCookie(otDomainGrps[i]['Cookies'][j]['Name']);
+							                    }
+							                }
+ 
+							                //Check if Hostid matches
+							                if(otDomainGrps[i]['Hosts'].length != 0){
+							                    for(var j=0; j < otDomainGrps[i]['Hosts'].length; j++){
+							                        //Check if HostId presents in the deleted list and cookie array is not blank
+							                        if(otDeletedGrpIds.includes(otDomainGrps[i]['Hosts'][j]['HostId']) && otDomainGrps[i]['Hosts'][j]['Cookies'].length !=0){
+							                            for(var k=0; k < otDomainGrps[i]['Hosts'][j]['Cookies'].length; k++){
+							                                //Delete cookie
+							                                eraseCookie(otDomainGrps[i]['Hosts'][j]['Cookies'][k]['Name']);
+							                            }
+							                        }
+							                    }
+							                }
+ 
+							            }
+							        }
+							        otGetInitialGrps(); //Reassign new group ids
+							    }
+ 
+							    //Get inactive ids
+							    function otGetInactiveId(customIniId, otActiveGrp){
+							        //Initial OnetrustActiveGroups
+							        // console.log("otGetInactiveId",customIniId)
+							        customIniId = customIniId.split(",");
+							        customIniId = customIniId.filter(Boolean);
+ 
+							        //After action OnetrustActiveGroups
+							        otActiveGrp = otActiveGrp.split(",");
+							        otActiveGrp = otActiveGrp.filter(Boolean);
+ 
+							        var result=[];
+							        for (var i=0; i < customIniId.length; i++){
+							            if ( otActiveGrp.indexOf(customIniId[i]) <= -1 ){
+							                result.push(customIniId[i]);
+							            }
+							        }
+							        return result;
+							    }
+ 
+							    //Delete cookie
+							    function eraseCookie(name) {
+							        //Delete root path cookies
+							        domainName = window.location.hostname;
+							        document.cookie = name+'=; Max-Age=-99999999; Path=/;Domain='+ domainName;
+							        document.cookie = name+'=; Max-Age=-99999999; Path=/;';
+ 
+							        //Delete LSO incase LSO being used, cna be commented out.
+							        localStorage.removeItem(name);
+ 
+							        //Check for the current path of the page
+							        pathArray = window.location.pathname.split('/');
+							        //Loop through path hierarchy and delete potential cookies at each path.
+							        for (var i=0; i < pathArray.length; i++){
+							            if (pathArray[i]){
+							                //Build the path string from the Path Array e.g /site/login
+							                var currentPath = pathArray.slice(0,i+1).join('/');
+							                document.cookie = name+'=; Max-Age=-99999999; Path=' + currentPath + ';Domain='+ domainName;
+							                document.cookie = name+'=; Max-Age=-99999999; Path=' + currentPath + ';';
+							                //Maybe path has a trailing slash!
+							                document.cookie = name+'=; Max-Age=-99999999; Path=' + currentPath + '/;Domain='+ domainName;
+							                document.cookie = name+'=; Max-Age=-99999999; Path=' + currentPath + '/;';
+
+                
+							            }
+							        }
+ 
+							    }
+    
+							}
+
+			
+						</script>
+			<!-- OneTrust Cookies Consent Notice end for smarsh.com -->
+				<script src="//app-ab32.marketo.com/js/forms2/js/forms2.min.js"></script>	
 		<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" /><script type="text/javascript">
 var ajaxurl = "https://www.smarsh.com/wp-admin/admin-ajax.php";
@@ -33,10 +176,10 @@ var ff_template_url = "https://www.smarsh.com/wp-content/themes/ark";
 <link rel="alternate" type="application/rss+xml" title="Smarsh &raquo; Comments Feed" href="https://www.smarsh.com/comments/feed/" />
 			
 			<!-- Mutiny -->
-			<!-- <script>
+			<script>
 			(function(){var a=window.mutiny=window.mutiny||{};if(!window.mutiny.client){a.client={_queue:{}};var b=["identify","trackConversion"];var c=[].concat(b,["defaultOptOut","optOut","optIn"]);var d=function factory(c){return function(){for(var d=arguments.length,e=new Array(d),f=0;f<d;f++){e[f]=arguments[f]}a.client._queue[c]=a.client._queue[c]||[];if(b.includes(c)){return new Promise(function(b,d){a.client._queue[c].push({args:e,resolve:b,reject:d})})}else{a.client._queue[c].push({args:e})}}};c.forEach(function(b){a.client[b]=d(b)})}})();
 			</script>
-			<script data-cfasync="false" src="https://client-registry.mutinycdn.com/personalize/client/b899fec4f672ea0b.js"></script> -->
+			<script data-cfasync="false" src="https://client-registry.mutinycdn.com/personalize/client/b899fec4f672ea0b.js"></script>
 			<!-- End Mutiny -->
 			
 			<!-- Google Tag Manager -->
@@ -48,7 +191,7 @@ var ff_template_url = "https://www.smarsh.com/wp-content/themes/ark";
 			<!-- End Google Tag Manager -->
 			
 		<link rel='stylesheet' id='animate-css' href='https://www.smarsh.com/wp-content/plugins/fresh-framework//framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/extern/animate.css/animate.min.css?ver=1.69.0' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='ff-freshgrid-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/freshGrid-eb3181dcfc54fb3ac58d661525492079.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ff-freshgrid-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/freshGrid-275e0e26acee803d01d9c72dd424527a.css' type='text/css' media='all' />
 <link rel='stylesheet' id='wp-block-library-css' href='https://www.smarsh.com/wp-includes/css/dist/block-library/style.min.css?ver=1265b119abbafe3504e2aa5d57c61a45' type='text/css' media='all' />
 <style id='classic-theme-styles-inline-css' type='text/css'>
 /*! This file is auto-generated */
@@ -62,21 +205,21 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 .wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
 </style>
 <link rel='stylesheet' id='allow-webp-image-css' href='https://www.smarsh.com/wp-content/plugins/allow-webp-image/public/css/allow-webp-image-public.css?ver=1.0.1' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-forms/css/style-5c16dee4dba1ab8463e06bade0624636.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-forms/css/style-289f01e8f072a213a32d5c3785831d45.css' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css' href='https://www.smarsh.com/wp-includes/css/dashicons.min.css?ver=1265b119abbafe3504e2aa5d57c61a45' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='weblator-charts-plugin-styles-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/css/public-f940892e62fbb90321861c4b505975e8.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='weblator-charts-plugin-styles-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/css/public-8203970a3032688d98f9f6504eeb3b89.css' type='text/css' media='all' />
 <link rel='stylesheet' id='bootstrap-css' href='https://www.smarsh.com/wp-content/themes/ark/assets/plugins/bootstrap/css/bootstrap.min.css?ver=3.3.6' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='jquery.mCustomScrollbar-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/scrollbar/jquery.mCustomScrollbar-afac69d718831d6466e513c1790c4d85.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='owl.carousel-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/owl-carousel/assets/owl.carousel-646f5472f8e4fe72c79a7e034ad50d7e.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='magnific-popup-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/magnific-popup/magnific-popup-e87a8f5279431e6f46c9e4420944414e.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='jquery.mCustomScrollbar-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/scrollbar/jquery.mCustomScrollbar-09c1a00f0691d23a77f6d1a4cd097f39.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='owl.carousel-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/owl-carousel/assets/owl.carousel-8da6c1b938696d6fa68064789775e720.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='magnific-popup-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/magnific-popup/magnific-popup-5187469b25b677ba3acd62156ed2f1f9.css' type='text/css' media='all' />
 <link rel='stylesheet' id='cubeportfolio-css' href='https://www.smarsh.com/wp-content/themes/ark/assets/plugins/cubeportfolio/css/cubeportfolio.min.css?ver=3.8.0' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='freshframework-font-awesome4-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-awesome4/ff-font-awesome4-59a393bbd927110e10f2ffc926a19c41.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='freshframework-font-et-line-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-et-line/ff-font-et-line-02acbe2f7d7983a68b9fbc4027658815.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='freshframework-simple-line-icons-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-simple-line-icons/ff-font-simple-line-icons-8b4f74f2f98faf201a728fcd11115af0.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='freshframework-font-awesome4-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-awesome4/ff-font-awesome4-b303783f3b60cc68f1df405ddcc819fa.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='freshframework-font-et-line-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-et-line/ff-font-et-line-695bd82ad85ed259a372d4c0d3671183.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='freshframework-simple-line-icons-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/extern/iconfonts/ff-font-simple-line-icons/ff-font-simple-line-icons-ccdd2cdb242b920a006b985e3dbbc288.css' type='text/css' media='all' />
 <link rel='stylesheet' id='load-fa-css' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css?ver=1265b119abbafe3504e2aa5d57c61a45' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='ark-one-page-business-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/css/one-page-business-da14e1afd245f9e4e42d0bb68151c2d8.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='ark-landing-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/css/landing-3d45ce87f86076303259abb0e2da208e.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='ark-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/style-b5675a65607075ae09fcd615745c9e5d.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ark-one-page-business-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/css/one-page-business-59fcc141af5b96db8e84d5aa7d3685d9.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ark-landing-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/css/landing-b6bfb3aa7442d9f76bbe48df477033b3.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ark-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/style-02484fba23cc91e0b1ffb8c889a73951.css' type='text/css' media='all' />
 <style id='ark-style-inline-css' type='text/css'>
 body,p,.ff-richtext,li,li a,a,h1, h2, h3, h4, h5, h6 ,.progress-box-v1 .progress-title,.progress-box-v2 .progress-title,.team-v5-progress-box .progress-title,.pricing-list-v1 .pricing-list-v1-header-title,.team-v3 .progress-box .progress-title,.rating-container .caption > .label,.theme-portfolio .cbp-l-filters-alignRight,.theme-portfolio .cbp-l-filters-alignLeft,.theme-portfolio .cbp-l-filters-alignCenter,.theme-portfolio .cbp-filter-item,.theme-portfolio .cbp-l-loadMore-button .cbp-l-loadMore-link,.theme-portfolio .cbp-l-loadMore-button .cbp-l-loadMore-button-link,.theme-portfolio .cbp-l-loadMore-text .cbp-l-loadMore-link,.theme-portfolio .cbp-l-loadMore-text .cbp-l-loadMore-button-link,.theme-portfolio-v2 .cbp-l-filters-alignRight .cbp-filter-item,.theme-portfolio-v3 .cbp-l-filters-button .cbp-filter-item,.zeus .tp-bullet-title{font-family:'Ubuntu',Arial,sans-serif}
 
@@ -102,13 +245,13 @@ code, kbd, pre, samp{font-family:'Courier New', Courier, monospace,Arial,sans-se
 
 
 </style>
-<link data-minify="1" rel='stylesheet' id='ark-style-child-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/style-f5c1841c1dc625005735e4fce69b974d.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='smarsh-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/smarsh-e782bb0fc9074f3e54ca8d12d9658208.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='quick-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/quick-smarsh-245cb7df611d0070fa7ad52db8f3606a.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='resource-center-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/resource-center-43af4b9df76a7d019b140b59cc324f31.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ark-style-child-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/style-1f335c4aa8dca754c7f9bda39d1c00eb.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='smarsh-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/smarsh-7c1862e80c28cb23ecfbb06312db7b48.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='quick-style-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/quick-smarsh-9fd444dc9e1aeffa9a07d477882649f3.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='resource-center-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/css/resource-center-34b961e6ab14aa5a6a285dc431d82347.css' type='text/css' media='all' />
 <link rel='stylesheet' id='ark-google-fonts-css' href='//fonts.googleapis.com/css?family=Ubuntu%3A400%2C600%2C700%2C400i%2C600i%2C700i%7COpen+Sans%3A400%2C600%2C700%2C400i%2C600i%2C700i&#038;subset=cyrillic%2Ccyrillic-ext%2Cgreek%2Cgreek-ext%2Clatin%2Clatin-ext%2Cvietnamese&#038;ver=1.69.0' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='ark-colors-css' href='https://www.smarsh.com/wp-content/cache/min/1/media/freshframework/css/colors-b1479a95971a78b4b5bf459be48b83bd.css' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='twentytwenty-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/twentytwenty/css/twentytwenty-5c7d1e2a6e07e2f801a0db2bd10433cd.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='ark-colors-css' href='https://www.smarsh.com/wp-content/cache/min/1/media/freshframework/css/colors-60747d9caca81a4f2e0a4c642a4d3d65.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='twentytwenty-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/twentytwenty/css/twentytwenty-d154fda0bc17fb0949a68f6c638c6c2f.css' type='text/css' media='all' />
 <link rel='stylesheet' id='select2-style-css' href='https://www.smarsh.com/wp-content/themes/smarsh/css/select2.min.css?ver=1265b119abbafe3504e2aa5d57c61a45' type='text/css' media='all' />
 <link rel='stylesheet' id='addtoany-css' href='https://www.smarsh.com/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.16' type='text/css' media='all' />
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/svg-support/vendor/DOMPurify/DOMPurify.min.js?ver=1.0.1" id="bodhi-dompurify-library-js"></script>
@@ -121,20 +264,20 @@ window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overl
 <script type="text/javascript" src="https://www.smarsh.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
 <script type="text/javascript" async src="https://www.smarsh.com/wp-content/plugins/add-to-any/addtoany.min.js?ver=1.1" id="addtoany-jquery-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/allow-webp-image/public/js/allow-webp-image-public-7e4f609a0158d76a57df71d2bede65a0.js" id="allow-webp-image-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-forms/js/jquery.forms-9fa355d5d3b34e13d20c9884a1d1a305.js" id="functions-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/jquery.functions-d498e40fdd274d12909fa91cd7eda171.js" id="jquery-functions-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/js.functions-616304aee350684bb01e7383fface5a3.js" id="js-functions-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/wprocket.functions-783079f4d95e62e462a1b5af7a98d4d0.js" id="wprocket-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/allow-webp-image/public/js/allow-webp-image-public-28c2c70877be0855bd3403d2329bc059.js" id="allow-webp-image-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-forms/js/jquery.forms-18bbc0ed5f11e7a451b6c4a923a62478.js" id="functions-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/jquery.functions-a503a283b1513982fdb8ebee4878e3eb.js" id="jquery-functions-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/js.functions-d32fd28655d88c208200baf5bcda5ab6.js" id="js-functions-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/smarsh-functions/js/wprocket.functions-faee29b80c49def274aa5a986953415c.js" id="wprocket-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/svg-support/js/min/svgs-inline-min.js?ver=1.0.1" id="bodhi_svg_inline-js"></script>
 <script type="text/javascript" id="bodhi_svg_inline-js-after">
 /* <![CDATA[ */
 cssTarget="img.style-svg";ForceInlineSVGActive="false";frontSanitizationEnabled="on";
 /* ]]> */
 </script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/excanvas-7c4153a3d9b699a9ce8ee51fec9167bd.js" id="weblator-charts-canvas-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/chartjs_new-dc8de550308b834ee34fedfc0b3edb35.js" id="weblator-charts-charts-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/legend-d36d78a46e81beae01ccf728ca4cf185.js" id="weblator-charts-legend-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/excanvas-6e04b38ed97484e69b120f880fad8fe7.js" id="weblator-charts-canvas-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/chartjs_new-bd42ea7f0a1dfaaaaf6da2e946e621dd.js" id="weblator-charts-charts-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/legend-cc410ee9803edfbf0576f338900ed7fc.js" id="weblator-charts-legend-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/chart-plugin/public/assets/js/events.min.js?ver=1.7.4" id="weblator-charts-mutate-events-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/chart-plugin/public/assets/js/mutate.min.js?ver=1.7.4" id="weblator-charts-mutate-js"></script>
 <script type="text/javascript" id="weblator-charts-plugin-script-js-extra">
@@ -142,7 +285,7 @@ cssTarget="img.style-svg";ForceInlineSVGActive="false";frontSanitizationEnabled=
 var ajaxurl = "https:\/\/www.smarsh.com\/wp-admin\/admin-ajax.php";
 /* ]]> */
 </script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/public-051220598dccddd79abd150b2bdb8dc7.js" id="weblator-charts-plugin-script-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/js/public-ace48a78ede5932965dbad542be14341.js" id="weblator-charts-plugin-script-js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/html5shiv.js?ver=3.7.3" id="ie_html5shiv-js"></script>
 <![endif]-->
@@ -153,8 +296,7 @@ var ajaxurl = "https:\/\/www.smarsh.com\/wp-admin\/admin-ajax.php";
 <link rel='shortlink' href='https://www.smarsh.com/?p=579875' />
 <link rel="alternate" type="application/json+oembed" href="https://www.smarsh.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.smarsh.com%2Flegal-website-privacy-policy" />
 <link rel="alternate" type="text/xml+oembed" href="https://www.smarsh.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.smarsh.com%2Flegal-website-privacy-policy&#038;format=xml" />
-			<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="cc83731d-86c2-4bf4-b3ab-2eddb67c4fc6" type="text/javascript" async></script>
-		<!-- breadcrumb Schema optimized by Schema Pro --><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/www.smarsh.com\/","name":"Home"}},{"@type":"ListItem","position":2,"item":{"@id":"https:\/\/www.smarsh.com\/legal-doc\/","name":"Legal Docs"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/www.smarsh.com\/legal-website-privacy-policy","name":"Privacy Policy"}}]}</script><!-- / breadcrumb Schema optimized by Schema Pro --><link data-minify="1" rel="stylesheet" href="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/css/notie-2cd7c3e6fa317c71623f6c020e5493cc.css"><meta name="generator" content="Powered by Slider Revolution 6.6.20 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<!-- breadcrumb Schema optimized by Schema Pro --><script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https:\/\/www.smarsh.com\/","name":"Home"}},{"@type":"ListItem","position":2,"item":{"@id":"https:\/\/www.smarsh.com\/legal-doc\/","name":"Legal Docs"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/www.smarsh.com\/legal-website-privacy-policy","name":"Privacy Policy"}}]}</script><!-- / breadcrumb Schema optimized by Schema Pro --><link data-minify="1" rel="stylesheet" href="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/chart-plugin/public/assets/css/notie-f00af415aacd9834fb63e36dd7481eb7.css"><meta name="generator" content="Powered by Slider Revolution 6.6.20 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
 			<style id="wpsp-style-frontend"></style>
 			<link rel="icon" href="https://www.smarsh.com/media/cropped-smarsh-favicon-2-32x32.png" sizes="32x32" />
 <link rel="icon" href="https://www.smarsh.com/media/cropped-smarsh-favicon-2-192x192.png" sizes="192x192" />
@@ -736,13 +878,21 @@ for (i = 0; i < 4; i++) {utm_query=array_L1[i].split("=");utm_param=utm_query[0]
 			><div class="hustle-slidein-content"><div class="hustle-info hustle-info--stacked"><div class="hustle-layout"><div class="hustle-layout-header"><button class="hustle-button-icon hustle-button-close">
 			<span class="hustle-icon-close" aria-hidden="true"></span>
 			<span class="hustle-screen-reader">Close this module</span>
-		</button></div><div class="hustle-layout-body"><div class="hustle-content"><div class="hustle-content-wrap"><div class="hustle-group-content"><ul><li id="watch"><a class="wiw-footer" href="/watch-it-work"><img src="/media/sticky-footer-wiw-icon.png" height="35" />Watch it Work</a></li><li id="contact"><a href="#contact-us" rel="mfp"><img src="/media/sticky-footer-contact-form-icon.png" height="35" />Contact Us</a></li><li id="chat"><a><img src="/media/sticky-footer-chat-Icon.png" height="35" />Chat</a></li></ul><p><script>
-jQuery('#chat').click(function(){
-window.drift.on('ready', function () {
-  window.drift.api.startInteraction({ interactionId: 381924 });
-});
-});
-</script></p></div></div></div></div></div></div></div></div>
+		</button></div><div class="hustle-layout-body"><div class="hustle-content"><div class="hustle-content-wrap"><div class="hustle-group-content"><ul>
+ 	<li id="watch"><a class="wiw-footer" href="/watch-it-work"><img src="/media/sticky-footer-wiw-icon.png" height="35" />Watch it Work</a></li>
+ 	<li id="contact"><a href="#contact-us" rel="mfp"><img src="/media/sticky-footer-contact-form-icon.png" height="35" />Contact Us</a></li>
+ 	<li id="chat"><a><img src="/media/sticky-footer-chat-Icon.png" height="35" />Chat</a></li>
+</ul>
+<script>
+"use strict";
+document.getElementById('chat').onclick = function(e){
+
+	driftPop();
+	window.drift.on('ready', function () {
+	  window.drift.api.startInteraction({ interactionId: 381924 });
+	});
+}
+</script></div></div></div></div></div></div></div></div>
 		<script>
 			window.RS_MODULES = window.RS_MODULES || {};
 			window.RS_MODULES.modules = window.RS_MODULES.modules || {};
@@ -760,7 +910,7 @@ window.drift.on('ready', function () {
 <link rel='stylesheet' id='hustle_global-css' href='https://www.smarsh.com/wp-content/plugins/hustle/assets/hustle-ui/css/hustle-global.min.css?ver=4.4.4' type='text/css' media='all' />
 <link rel='stylesheet' id='hustle_info-css' href='https://www.smarsh.com/wp-content/plugins/hustle/assets/hustle-ui/css/hustle-info.min.css?ver=4.4.4' type='text/css' media='all' />
 <link rel='stylesheet' id='hustle_slidein-css' href='https://www.smarsh.com/wp-content/plugins/hustle/assets/hustle-ui/css/hustle-slidein.min.css?ver=4.4.4' type='text/css' media='all' />
-<link data-minify="1" rel='stylesheet' id='rs-plugin-settings-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/revslider/public/assets/css/rs6-8f48584c23fe24d4f0a733dd7fd07f5a.css' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='rs-plugin-settings-css' href='https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/revslider/public/assets/css/rs6-bab5a8756aa79d6b2586b7ac1e85ba4d.css' type='text/css' media='all' />
 <style id='rs-plugin-settings-inline-css' type='text/css'>
 #rs-demo-id {}
 </style>
@@ -768,8 +918,8 @@ window.drift.on('ready', function () {
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/revslider/public/assets/js/rs6.min.js?ver=6.6.20" defer async id="revmin-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/plugins/fresh-framework//framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/extern/wow.js/wow.min.js?ver=1.69.0" id="jquery.wow-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/jquery.freshGrid-6513437e476defa1bd75fc315a7c8db3.js" id="ff-freshgrid-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/frslib/src/frslib-413491e8529724f6ff21e3a5faf7fbd7.js" id="ff-frslib-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/themes/builder/metaBoxThemeBuilder/assets/freshGrid/jquery.freshGrid-b5a606a758e12a0db441701a35e1a689.js" id="ff-freshgrid-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/plugins/fresh-framework/framework/frslib/src/frslib-1214ece937060a60294849d7107f1ec8.js" id="ff-frslib-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.13.2" id="jquery-ui-datepicker-js"></script>
 <script type="text/javascript" id="jquery-ui-datepicker-js-after">
 /* <![CDATA[ */
@@ -789,21 +939,21 @@ var incOpt = {"is_admin":"","native_share_enpoints":{"facebook":"https:\/\/www.f
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/smarsh/js/libs/slick.min.js?ver=1.8.1" id="slick-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/smarsh/js/libs/select2.full.min.js?ver=1.0" id="select2-script-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/bootstrap/js/bootstrap.min.js?ver=3.3.7" id="bootstrap-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/js/custom-scripts-01c8132bef23afff83e3cf79abaf446e.js" id="custom-scripts-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/js/jquery.functions-aa33fd36bab47e8d119326e32a2c8b37.js" id="function-scripts-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/js/custom-scripts-1988d2da1180a6b30b83138d4e3c742a.js" id="custom-scripts-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/smarsh/js/jquery.functions-bfb30d06b255752f2a627e5445e40129.js" id="function-scripts-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-includes/js/jquery/ui/effect.min.js?ver=1.13.2" id="jquery-effects-core-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/jquery.touchSwipe.min.js?ver=1265b119abbafe3504e2aa5d57c61a45" id="touch-swipe-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/jquery.back-to-top-599b610c4cd589c06f1f6b70e1748c88.js" id="ark-jquery.back-to-top-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/plugins/jquery.back-to-top-c079a3a05277f60ebc83fe7a59ae9ee8.js" id="ark-jquery.back-to-top-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/magnific-popup/jquery.magnific-popup.min.js?ver=1265b119abbafe3504e2aa5d57c61a45" id="jquery.magnific-popup-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/magnific-popup-c38b977b092ccf010bed03fc1214e949.js" id="ark-magnific-popup-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/form-modal-ada58c4ea442a13fc57eb0b9677cb513.js" id="ark-form-modal-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/wow-f7888efb093dd9969a8665b5d61c1051.js" id="ark-wow-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/magnific-popup-050c230db3eb7ed27298eed2b53a617c.js" id="ark-magnific-popup-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/form-modal-1aa4543170b5c467da040f1399daffae.js" id="ark-form-modal-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/wow-6b88254b8d5fbfe68d9059b56eec4e91.js" id="ark-wow-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/jquery.imagesloaded.pkgd.min.js?ver=3.2.0" id="jquery.imagesloaded-js"></script>
 <script type="text/javascript" src="https://www.smarsh.com/wp-content/themes/ark/assets/plugins/owl-carousel/owl.carousel.min.js?ver=1.3.2" id="owl.carousel-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/owl-carousel-77379e331baf443591b15e1a000df438.js" id="ark-carousel-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/auto-hiding-navbar-19044965402ebb047f4b7703b90cca63.js" id="auto-hiding-navbar-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/header-sticky-e5194e5e3b926da506c6e0e551cc95a7.js" id="header-sticky-js"></script>
-<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/app-924ae58f439c39c7c5d36cd88f83423f.js" id="ark-app-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/owl-carousel-82546cfeb693d8862429f3b06063b7ef.js" id="ark-carousel-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/auto-hiding-navbar-9cf79046866d479da34785a306951aa6.js" id="auto-hiding-navbar-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/components/header-sticky-56ff1b2542ffc31b41a29cd7b46b9daa.js" id="header-sticky-js"></script>
+<script data-minify="1" type="text/javascript" src="https://www.smarsh.com/wp-content/cache/min/1/wp-content/themes/ark/assets/scripts/app-c3b67fe339646a529cb9fab4c39eae19.js" id="ark-app-js"></script>
 			<script type="text/javascript" id="wpsp-script-frontend"></script>
 			<style type="text/css" id="hustle-module-2-0-styles" class="hustle-module-styles hustle-module-styles-2">@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-slidein-content .hustle-info {max-width: 800px;}} .hustle-ui.module_id_2 .hustle-layout .hustle-layout-body {padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-layout-body {padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}} .hustle-ui.module_id_2 .hustle-layout .hustle-layout-header {padding: 20px 20px 20px 20px;border-width: 0px 0px 1px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-layout-header {padding: 20px 20px 20px 20px;border-width: 0px 0px 1px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}} .hustle-ui.module_id_2 .hustle-layout .hustle-layout-content {padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-layout-content {padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}}  .hustle-ui.module_id_2 .hustle-layout .hustle-content {margin: 0px 0px 0px 0px;padding: 0 20px 0 20px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}.hustle-ui.module_id_2 .hustle-layout .hustle-content .hustle-content-wrap {padding: 20px 0 20px 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-content {margin: 0px 0px 0px 0px;padding: 0 20px 0 20px;border-width: 0px 0px 0px 0px;border-style: solid;border-radius: 0px 0px 0px 0px;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-content .hustle-content-wrap {padding: 20px 0 20px 0;}} .hustle-ui.module_id_2 .hustle-layout .hustle-group-content {margin: 0px 0px 0px 0px;padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content b,.hustle-ui.module_id_2 .hustle-layout .hustle-group-content strong {font-weight: bold;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content {margin: 0px 0px 0px 0px;padding: 0px 0px 0px 0px;border-width: 0px 0px 0px 0px;border-style: solid;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content {font-size: 14px;line-height: 1.45em;font-family: Open Sans;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content {font-size: 14px;line-height: 1.45em;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content p:not([class*="forminator-"]) {margin: 0 0 10px;font: normal 14px/1.45em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content p:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content p:not([class*="forminator-"]) {margin: 0 0 10px;font: normal 14px/1.45em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content p:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h1:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 28px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h1:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h1:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 28px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h1:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h2:not([class*="forminator-"]) {margin: 0 0 10px;font-size: 22px;line-height: 1.4em;font-weight: 700;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h2:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h2:not([class*="forminator-"]) {margin: 0 0 10px;font-size: 22px;line-height: 1.4em;font-weight: 700;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h2:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h3:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 18px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h3:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h3:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 18px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h3:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h4:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 16px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h4:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h4:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 16px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h4:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h5:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 14px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h5:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h5:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 14px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h5:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h6:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 12px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: uppercase;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content h6:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h6:not([class*="forminator-"]) {margin: 0 0 10px;font: 700 12px/1.4em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: uppercase;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content h6:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ol:not([class*="forminator-"]),.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ul:not([class*="forminator-"]) {margin: 0 0 10px;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ol:not([class*="forminator-"]):last-child,.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ul:not([class*="forminator-"]):last-child {margin-bottom: 0;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content li:not([class*="forminator-"]) {margin: 0 0 5px;font: normal 14px/1.45em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content li:not([class*="forminator-"]):last-child {margin-bottom: 0;}@media screen and (min-width: 783px) {.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ol:not([class*="forminator-"]),.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ul:not([class*="forminator-"]) {margin: 0 0 20px;}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ol:not([class*="forminator-"]):last-child,.hustle-ui.module_id_2 .hustle-layout .hustle-group-content ul:not([class*="forminator-"]):last-child {margin: 0;}}@media screen and (min-width: 783px) {.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content li:not([class*="forminator-"]) {margin: 0 0 5px;font: normal 14px/1.45em Open Sans;font-style: normal;letter-spacing: 0px;text-transform: none;text-decoration: none;}.hustle-ui:not(.hustle-size--small).module_id_2 .hustle-layout .hustle-group-content li:not([class*="forminator-"]):last-child {margin-bottom: 0;}}.hustle-ui.module_id_2 .hustle-layout .hustle-group-content blockquote {margin-right: 0;margin-left: 0;} .hustle-ui.module_id_2 .hustle-layout .hustle-group-content blockquote {border-left-color: #78B5D1;}</style><script>window.lazyLoadOptions={elements_selector:"iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){return}
 if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){return}
