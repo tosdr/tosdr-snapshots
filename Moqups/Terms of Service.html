@@ -7,7 +7,8 @@
 		<meta property="og:title" content="Terms of Service" />
 		
 
-		
+		<meta name="twitter:image" content="https://moqups.com">
+		<meta name="og:image" content="https://moqups.com">
 
 		
 
@@ -892,26 +893,34 @@
 </template>
 
 <script>
-	function init_analytics() {
-		const el = document.createElement('script');
-		el.async = true;
-		el.src = 'https://www.googletagmanager.com/gtag/js?id=G-GRH5K9KLPT';
-		document.head.appendChild(el);
-	}
 
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){
-		dataLayer.push(arguments);
+	// List from https://github.com/segmentio/in-eu/
+	const COUNTRY_CODES = ["BE", "EL", "LT", "PT", "BG", "ES", "LU", "RO", "CZ", "FR", "RE", "GP", "MQ", "GF", "YT", "BL", "MF", "PM", "WF", "PF", "NC", "HU", "SI", "DK", "FO", "GL", "HR", "MT", "SK", "DE", "IT", "NL", "AW", "CW", "SX", "FI", "AX", "EE", "CY", "AT", "SE", "IE", "LV", "PL", "UK", "GB", "AI", "BM", "IO", "VG", "KY", "FK", "GI", "MS", "PN", "SH", "TC", "GG", "JE", "IM"];
+	const STATUS_ACCEPTED = 'accepted';
+	const STATUS_DENIED = 'denied';
+
+	function inEU() {
+		try { 
+			if (/^Europe\//.test(Intl.DateTimeFormat().resolvedOptions().timeZone)) {
+				return true;
+			}
+		} catch(err) {}
+		if (navigator && navigator.languages && navigator.languages[0]) {
+			return COUNTRY_CODES.includes(
+				navigator.languages[0].split('-').pop().toUpperCase()
+			);
+		}
+		return false;
 	}
-	gtag('js', new Date());
-	gtag('config', 'G-GRH5K9KLPT');
 	
-
 	function getStatus() {
+		if (!inEU()) { 
+			return STATUS_ACCEPTED; 
+		}
 		try {
 			return localStorage.getItem('gdpr.status');
 		} catch (err) {
-			return 'denied';
+			return STATUS_DENIED;
 		}
 	}
 
@@ -919,22 +928,6 @@
 		try {
 			localStorage.setItem('gdpr.status', status);
 		} catch (err) {}
-	}
-
-	switch (getStatus()) {
-		case 'accepted':
-			init_analytics();
-			break;
-		case 'denied':
-			// no-op
-			break;
-		default:
-			consent(status => {
-				setStatus(status);
-				if (status === 'accepted') {
-					init_analytics();
-				}
-			});
 	}
 
 	function consent(resolve) {
@@ -953,20 +946,63 @@
 		container
 			.querySelector('.consent-accept')
 			.addEventListener('click', e => {
-				resolve('accepted');
+				resolve(STATUS_ACCEPTED);
 				close_consent();
 			});
 
 		container
 			.querySelector('.consent-deny')
 			.addEventListener('click', e => {
-				resolve('denied');
+				resolve(STATUS_DENIED);
 				close_consent();
 			});
 
 		function close_consent() {
 			document.body.removeChild(container);
 		}
+	}
+
+	function init_analytics() {
+		gtag('consent', 'update', {
+			ad_user_data: 'granted',
+			ad_personalization: 'granted',
+			ad_storage: 'granted',
+			analytics_storage: 'granted'
+		});
+		const el = document.createElement('script');
+		el.async = true;
+		el.src = 'https://www.googletagmanager.com/gtag/js?id=G-GRH5K9KLPT';
+		document.head.appendChild(el);
+	}
+
+	window.dataLayer = window.dataLayer || [];
+	function gtag() { 
+		dataLayer.push(arguments); 
+	}
+	gtag('consent', 'default', {
+		'ad_user_data': 'denied',
+		'ad_personalization': 'denied',
+		'ad_storage': 'denied',
+		'analytics_storage': 'denied',
+		'wait_for_update': 500,
+	});
+	gtag('js', new Date());
+	gtag('config', 'G-GRH5K9KLPT');
+
+	switch (getStatus()) {
+		case STATUS_ACCEPTED:
+			init_analytics();
+			break;
+		case STATUS_DENIED:
+			// no-op
+			break;
+		default:
+			consent(status => {
+				setStatus(status);
+				if (status === STATUS_ACCEPTED) {
+					init_analytics();
+				}
+			});
 	}
 </script>
 
