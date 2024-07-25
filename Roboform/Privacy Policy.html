@@ -497,6 +497,18 @@ Google Analytics here: <a href='https://www.google.com/intl/en/analytics/privacy
   </div>
 </div>
   </div>
+<script>
+  var rfCookie = document.cookie.split("; ").find((item) => item === "rf=rf-cookie");
+  var cookieContainer = document.querySelector(".cookies-notification-container");
+  var cookieButton = document.querySelector(".got-it")
+  if(!rfCookie) cookieContainer.style.display = "block";
+  cookieButton.addEventListener("click", function () {
+    var date = new Date;
+    date.setDate(date.getDate() + 365);
+    cookieContainer.style.display = "none";
+    document.cookie = "rf=rf-cookie; path=/; expires=" + date.toUTCString();
+  });
+</script>
   <script src="https://www.roboform.com/javascripts/jquery.min.js"></script>
   <script src="https://www.roboform.com/javascripts/bootstrap.min.js"></script>
 <script>
@@ -533,16 +545,6 @@ langList.forEach(link => {
 })
 </script>
 <script>
-var rfCookie = document.cookie.split("; ").find((item) => item === "rf=rf-cookie");
-var cookieContainer = document.querySelector(".cookies-notification-container");
-var cookieButton = document.querySelector(".got-it")
-if(!rfCookie) cookieContainer.style.display = "block";
-cookieButton.addEventListener("click", function () {
-  var date = new Date;
-  date.setDate(date.getDate() + 365);
-  cookieContainer.style.display = "none";
-  document.cookie = "rf=rf-cookie; path=/; expires=" + date.toUTCString();
-});
 window.addEventListener("load", function() {
   var langContainer = document.querySelector("#stickylang-container");
   var html = document.querySelector("html");
