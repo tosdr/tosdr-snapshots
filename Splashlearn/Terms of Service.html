@@ -34,15 +34,16 @@ window.onerror = null
 try {
     window.eventsPipeline = "";
     window.trackerProperties = window.trackerProperties || {}
-    window.trackerProperties.passwordType = "";
+    window.trackerProperties = {"passwordType":null,"subdomain":"www","createdAt":"2024-07-25T06:54:16Z","analyticsEnabled":true,"userType":"guest","analyticsId":"81EEB1494BD244E9AFE29C0CFDBDECBA","firstTimeVisitForAnalyticsEvent":true,"is_europe_ip":true,"user_session_id":"DF2B85248E3346B4823ED434FE342574","meta_session_id":null,"utmProperties":"{}","existingClientId":"","set_user_type_for_google_analytics":true,"set_product_type_for_google_analytics":true,"set_product_subscription_for_google_analytics":true};
     window.trackerProperties.userId = "";
+
     let analytics_event = {"name":"Terms of Use"};
     if(analytics_event && analytics_event !== '') {
         window.trackerProperties.analyticsEvent = analytics_event
     }
 
     if(true) {
-        let superProps = {"Preferred Language":"en","Unique User ID":"7AAE31F4876A41539D8962AA3BAB3770"};
+        let superProps = {"Preferred Language":"en","Unique User ID":"81EEB1494BD244E9AFE29C0CFDBDECBA"};
         if(superProps) {
             window.trackerProperties.superProperties = superProps;
         }
@@ -50,7 +51,7 @@ try {
 }
 catch (err) {
     console.error(err);
-}
+}   
 
 // Functions ending with 'core' are defined on window object by web-core-ui after the script is rendered.
 // Creating these window functions using inline JS, to make sure they are available at all times
@@ -89,16 +90,16 @@ window.trackPageLoadEvents = () => {
         console.error(e);
     }
 };
-window.trackToGtm = (a,b,c,d) => {
+window.trackToGtm = (dataLayer, eventName, category, properties) => {
     try {
         if (typeof window.trackToGtmCore === "undefined") {
             window.bufferedEvents = window.bufferedEvents || [];
             window.bufferedEvents.gtmEvents = window.bufferedEvents.gtmEvents || [];
-            window.bufferedEvents.gtmEvents.push({a,b,c,d});
+            window.bufferedEvents.gtmEvents.push({dataLayer, eventName, category, properties});
             // Commented out log intentionally due to error in JSON.stringify
             // console.log("Buffered gtmEvents: " + JSON.stringify(window.bufferedEvents.gtmEvents));
         } else {
-            window.trackToGtmCore(a,b,c,d);
+            window.trackToGtmCore(dataLayer, eventName, category, properties);
         }
     }
     catch(e) {
@@ -106,35 +107,10 @@ window.trackToGtm = (a,b,c,d) => {
     }
 };
 window.trackEventOnGA = (a,b,c,d,e) => {
-    try {
-        if (typeof window.trackEventOnGACore === "undefined") {
-            window.bufferedEvents = window.bufferedEvents || [];
-            window.bufferedEvents.gaEvents = window.bufferedEvents.gaEvents || [];
-            window.bufferedEvents.gaEvents.push({a,b,c,d,e});
-            console.log("Buffered gaEvents: " + JSON.stringify(window.bufferedEvents.gaEvents));
-        } else {
-            window.trackEventOnGACore(a,b,c,d,e);
-        }
-    }
-    catch(e) {
-        console.error(e);
-    }
+    console.warn("trackEventOnGA: This method is now deprecated.")
 };
 window.trackPageViewOnGa = (a,b) => {
-    try {
-        if (typeof window.trackPageViewOnGaCore === "undefined") {
-            window.bufferedEvents = window.bufferedEvents || [];
-            window.bufferedEvents.gaPageViewEvents = window.bufferedEvents.gaPageViewEvents || [];
-            window.bufferedEvents.gaPageViewEvents.push({a,b});
-            console.log("Buffered gaPageViewEvents: " + JSON.stringify(window.bufferedEvents.gaPageViewEvents));
-        }
-        else {
-            window.trackPageViewOnGaCore(a,b);
-        }
-    }
-    catch(e) {
-        console.error(e);
-    }
+    console.warn("trackPageViewOnGa: This method is now deprecated.")
 };
 window.trackTransactionEventToGtm = (a) => {
     try {
@@ -184,7 +160,7 @@ function initialiseCustomTrackers() {
 
     // use id in script element to avoid duplication of script.
     script.id = custom_trackers_script_id;
-    script.src = "https://cdn.splashmath.com/web-core-ui/customTrackers@2.0.21.js";
+    script.src = "https://cdn.splashmath.com/web-core-ui/customTrackers@2.0.22.js";
     script.defer = 'defer' // sets it to true
 
     // Append the script element to the document's head
@@ -217,7 +193,7 @@ else {
 <link rel="canonical" href="https://www.splashlearn.com/terms-of-use" />
 <link href="https://au.splashlearn.com/terms-of-use" hreflang="en-au" rel="alternate" /><link href="https://www.splashlearn.com/terms-of-use" hreflang="x-default" rel="alternate" /><link href="https://uk.splashlearn.com/terms-of-use" hreflang="en-gb" rel="alternate" />
 <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="gMqj/XXCgKrGnPyAL+Hd0geWyHLHHB2Yz1TYPyevw7HcKrpWF+q/PemWRJj7s9xzZ2tU6F50wYuMSsjmjET0wg==" /><link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<meta name="csrf-token" content="xVLJErwWMkDMrOCeZzZC++q7VFI0YJiRdWV5E9Dvh9Tb5/9Yj/gCYjgfgL5Ar2RYhZrLLCDGb9SNIVMEpAXpsg==" /><link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 <script>if (window.location != window.top.location) {
   $('<div class="ajax_spinner">').appendTo('body').css('background-color', 'white').show()
   setTimeout(function() { window.top.location = window.location; }, 0)
