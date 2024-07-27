@@ -894,10 +894,29 @@
 
 <script>
 
+	
+
+	
+	window.dataLayer = window.dataLayer || [];
+	function gtag() { 
+		dataLayer.push(arguments); 
+	}
+	gtag('consent', 'default', {
+		'ad_user_data': 'denied',
+		'ad_personalization': 'denied',
+		'ad_storage': 'denied',
+		'analytics_storage': 'denied',
+		'wait_for_update': 500,
+	});
+	gtag('js', new Date());
+	gtag('config', 'G-GRH5K9KLPT');
+
 	// List from https://github.com/segmentio/in-eu/
 	const COUNTRY_CODES = ["BE", "EL", "LT", "PT", "BG", "ES", "LU", "RO", "CZ", "FR", "RE", "GP", "MQ", "GF", "YT", "BL", "MF", "PM", "WF", "PF", "NC", "HU", "SI", "DK", "FO", "GL", "HR", "MT", "SK", "DE", "IT", "NL", "AW", "CW", "SX", "FI", "AX", "EE", "CY", "AT", "SE", "IE", "LV", "PL", "UK", "GB", "AI", "BM", "IO", "VG", "KY", "FK", "GI", "MS", "PN", "SH", "TC", "GG", "JE", "IM"];
-	const STATUS_ACCEPTED = 'accepted';
-	const STATUS_DENIED = 'denied';
+	const CONSENT_STATUS_ACCEPTED = 'accepted';
+	const CONSENT_STATUS_DENIED = 'denied';
+	const CONSENT_STATUS_PROMPT = 'prompt';
+	const CONSENT_LS_KEY = 'gdpr.status';
 
 	function inEU() {
 		try { 
@@ -915,22 +934,22 @@
 	
 	function getStatus() {
 		if (!inEU()) { 
-			return STATUS_ACCEPTED; 
+			return CONSENT_STATUS_ACCEPTED; 
 		}
 		try {
-			return localStorage.getItem('gdpr.status');
+			return localStorage.getItem(CONSENT_LS_KEY);
 		} catch (err) {
-			return STATUS_DENIED;
+			return CONSENT_STATUS_DENIED;
 		}
 	}
 
 	function setStatus(status) {
 		try {
-			localStorage.setItem('gdpr.status', status);
+			localStorage.setItem(CONSENT_LS_KEY, status);
 		} catch (err) {}
 	}
 
-	function consent(resolve) {
+	function promptConsent(resolve) {
 		let container = document.createElement('div');
 		let template = document.querySelector('#gdpr-consent-template');
 		let content = document.importNode(template.content, true);
@@ -939,30 +958,30 @@
 		container
 			.querySelector('.consent-close')
 			.addEventListener('click', e => {
-				resolve('prompt');
-				close_consent();
+				resolve(CONSENT_STATUS_PROMPT);
+				unmount();
 			});
 
 		container
 			.querySelector('.consent-accept')
 			.addEventListener('click', e => {
-				resolve(STATUS_ACCEPTED);
-				close_consent();
+				resolve(CONSENT_STATUS_ACCEPTED);
+				unmount();
 			});
 
 		container
 			.querySelector('.consent-deny')
 			.addEventListener('click', e => {
-				resolve(STATUS_DENIED);
-				close_consent();
+				resolve(CONSENT_STATUS_DENIED);
+				unmount();
 			});
 
-		function close_consent() {
+		function unmount() {
 			document.body.removeChild(container);
 		}
 	}
 
-	function init_analytics() {
+	function loadGtagWithConsent() {
 		gtag('consent', 'update', {
 			ad_user_data: 'granted',
 			ad_personalization: 'granted',
@@ -975,32 +994,18 @@
 		document.head.appendChild(el);
 	}
 
-	window.dataLayer = window.dataLayer || [];
-	function gtag() { 
-		dataLayer.push(arguments); 
-	}
-	gtag('consent', 'default', {
-		'ad_user_data': 'denied',
-		'ad_personalization': 'denied',
-		'ad_storage': 'denied',
-		'analytics_storage': 'denied',
-		'wait_for_update': 500,
-	});
-	gtag('js', new Date());
-	gtag('config', 'G-GRH5K9KLPT');
-
 	switch (getStatus()) {
-		case STATUS_ACCEPTED:
-			init_analytics();
+		case CONSENT_STATUS_ACCEPTED:
+			loadGtagWithConsent();
 			break;
-		case STATUS_DENIED:
+		case CONSENT_STATUS_DENIED:
 			// no-op
 			break;
 		default:
-			consent(status => {
+			promptConsent(status => {
 				setStatus(status);
-				if (status === STATUS_ACCEPTED) {
-					init_analytics();
+				if (status === CONSENT_STATUS_ACCEPTED) {
+					loadGtagWithConsent();
 				}
 			});
 	}
