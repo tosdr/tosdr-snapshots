@@ -31,8 +31,8 @@
                         <span class="lang_btn_mobile">English</span>
         </div>
     </a>
-    <a href="/"><img id="logo" src="/images/logo_top_text.svg"/></a>
-    <a href="/"><img id="logo_mobile" src="/images/logo_top.svg"/></a>
+    <a href="/en"><img id="logo" src="/images/logo_top_text.svg"/></a>
+    <a href="/en"><img id="logo_mobile" src="/images/logo_top.svg"/></a>
     <a class="header_get border-box" href="#" onclick="show_window ('window_get_app');"></a>
 </div>
     <div class="content border-box" id="content">
@@ -90,7 +90,7 @@
 <!-- FOOTER -->
 <br clear="all"/>
 <div class="footer border-box">
-    <div class="left">
+    <div class="left" style="direction: ltr">
         NumBuster! © 2013—2024<br/>
         support@numbuster.com<br/>
         For inquiries regarding compliance with GDPR provisions: support@numbuster.com<br/>
@@ -133,7 +133,7 @@
     <div class="window_card border-box">
         <h3>Change language</h3>
         <div id="lang_select">
-                            <a href="/as/purchase_policy" dir="rtl">
+                            <a href="/ar/purchase_policy" dir="rtl">
                     <img class="langImage" src="/images/flag/flag_saudi_arabia.png" onclick="show_window ('window_lang');"/>
                     <span class="country_btn_mobile"></span>
                     العربية
@@ -819,6 +819,7 @@
     body[dir="rtl"] #page_cookie_menu {
         direction: rtl;
     }
+
     body[dir="rtl"] #page_cookie_menu button.btn_manage {
         right: 16px;
         left: auto;
@@ -827,24 +828,41 @@
         left: 16px;
         right: auto;
     }
+    @media screen and (min-width: 541px){
+        body[dir="rtl"] #page_cookie_menu button.btn_reject {
+            right: 16px;
+            left: auto;
+        }
+        body[dir="rtl"] #page_cookie_menu div.btn_r {
+            left: 16px;
+            right: auto;
+        }
+    }
 
     body[dir="rtl"] #page_cookie_menu > div.text.page_cookie_menu_btn_manage_back > ul > li:nth-child(2) > label.switch {
         left: 0;
         right: auto;
     }
 
-    body[dir="rtl"] #page_cookie_menu button.btn_reject {
-        right: 16px;
-        left: auto;
+    body[dir="rtl"] .page_text {
+        text-align: right;
     }
-    body[dir="rtl"] #page_cookie_menu div.btn_r {
-        left: 16px;
-        right: auto;
-    }
-    body[dir="rtl"] #page_cookie_menu button.btn_accept {}
-    body[dir="rtl"] #page_cookie_menu button.btn_accept_all {}
 </style>
 <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var userLang = navigator.language || navigator.userLanguage;
+        var langMap = {
+            'ru-RU': 'ru_RU',
+        };
+
+        var defaultLang = 'en';
+        var targetLang = langMap[userLang] || userLang.slice(0,2);
+
+        console.log({userLang, targetLang, defaultLang});
+        if (defaultLang === '' && targetLang !== defaultLang) {
+            window.location.href = "/TARGET_LANG/purchase_policy".replace('TARGET_LANG', targetLang);
+        }
+    });
     /*! jquery.cookie v1.4.1 | MIT */
     !function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof exports?a(require("jquery")):a(jQuery)}(function(a){function b(a){return h.raw?a:encodeURIComponent(a)}function c(a){return h.raw?a:decodeURIComponent(a)}function d(a){return b(h.json?JSON.stringify(a):String(a))}function e(a){0===a.indexOf('"')&&(a=a.slice(1,-1).replace(/\\"/g,'"').replace(/\\\\/g,"\\"));try{return a=decodeURIComponent(a.replace(g," ")),h.json?JSON.parse(a):a}catch(b){}}function f(b,c){var d=h.raw?b:e(b);return a.isFunction(c)?c(d):d}var g=/\+/g,h=a.cookie=function(e,g,i){if(void 0!==g&&!a.isFunction(g)){if(i=a.extend({},h.defaults,i),"number"==typeof i.expires){var j=i.expires,k=i.expires=new Date;k.setTime(+k+864e5*j)}return document.cookie=[b(e),"=",d(g),i.expires?"; expires="+i.expires.toUTCString():"",i.path?"; path="+i.path:"",i.domain?"; domain="+i.domain:"",i.secure?"; secure":""].join("")}for(var l=e?void 0:{},m=document.cookie?document.cookie.split("; "):[],n=0,o=m.length;o>n;n++){var p=m[n].split("="),q=c(p.shift()),r=p.join("=");if(e&&e===q){l=f(r,g);break}e||void 0===(r=f(r))||(l[q]=r)}return l};h.defaults={},a.removeCookie=function(b,c){return void 0===a.cookie(b)?!1:(a.cookie(b,"",a.extend({},c,{expires:-1})),!a.cookie(b))}});
     jQuery(function () {
