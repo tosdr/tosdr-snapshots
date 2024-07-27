@@ -4,174 +4,6 @@
 <head>
 <meta charset="utf-8" />
 
-<script>
-    var blmr_cc = "b4dc6198-316c-11ee-9f59-ae4149610082";
-var blmr_pl = "Web";
-
-if (document.location.hostname === "www.newyorkpizza.nl") blmr_cc = "ecec85a4-316c-11ee-9f59-ae4149610082";
-if (document.location.hostname === "pre-www.newyorkpizza.nl") blmr_cc = "b4dc6198-316c-11ee-9f59-ae4149610082";
-if (document.location.hostname === "www.newyorkpizza.be") blmr_cc = "6c879178-316d-11ee-b876-9e1c09d403d3";
-if (document.location.hostname === "www.newyorkpizza.de") blmr_cc = "3a72ab0a-316d-11ee-850f-3aefacf2d001";
-if (document.location.hostname === "app.newyorkpizza.nl") {
-	blmr_cc = "ecec85a4-316c-11ee-9f59-ae4149610082";
-	blmr_pl = "App";
-}
-
-function getCookie(name) {
-	return document.cookie.split("; ").reduce((r, v) => {
-		const parts = v.split("=");
-		return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-	}, "");
-}
-
-if (getCookie("AcceptNonFunctionalCookies") === "true") {
-	loadExponea(blmr_cc, blmr_pl);
-}
-
-function loadExponea(projectToken, platform) {
-	!(function (e, n, t, i, r, o) {
-		function s(e) {
-			if ("number" != typeof e) return e;
-			var n = new Date();
-			return new Date(n.getTime() + 1e3 * e);
-		}
-		var a = 4e3,
-			c = "xnpe_async_hide";
-		function p(e) {
-			return e.reduce(
-				function (e, n) {
-					return (
-						(e[n] = function () {
-							e._.push([n.toString(), arguments]);
-						}),
-						e
-					);
-				},
-				{ _: [] }
-			);
-		}
-		function m(e, n, t) {
-			var i = t.createElement(n);
-			i.src = e;
-			var r = t.getElementsByTagName(n)[0];
-			return r.parentNode.insertBefore(i, r), i;
-		}
-		function u(e) {
-			return "[object Date]" === Object.prototype.toString.call(e);
-		}
-		(o.target = o.target || "https://api.exponea.com"),
-			(o.file_path = o.file_path || o.target + "/js/exponea.min.js"),
-			(r[n] = p([
-				"anonymize",
-				"initialize",
-				"identify",
-				"getSegments",
-				"update",
-				"track",
-				"trackLink",
-				"trackEnhancedEcommerce",
-				"getHtml",
-				"showHtml",
-				"showBanner",
-				"showWebLayer",
-				"ping",
-				"getAbTest",
-				"loadDependency",
-				"getRecommendation",
-				"reloadWebLayers",
-				"_preInitialize",
-				"_initializeConfig",
-			])),
-			(r[n].notifications = p(["isAvailable", "isSubscribed", "subscribe", "unsubscribe"])),
-			(r[n].segments = p(["subscribe"])),
-			(r[n]["snippetVersion"] = "v2.7.0"),
-			(function (e, n, t) {
-				(e[n]["_" + t] = {}), (e[n]["_" + t].nowFn = Date.now), (e[n]["_" + t].snippetStartTime = e[n]["_" + t].nowFn());
-			})(r, n, "performance"),
-			(function (e, n, t, i, r, o) {
-				e[r] = { sdk: e[i], sdkObjectName: i, skipExperiments: !!t.new_experiments, sign: t.token + "/" + (o.exec(n.cookie) || ["", "new"])[1], path: t.target };
-			})(r, e, o, n, i, RegExp("__exponea_etc__" + "=([\\w-]+)")),
-			(function (e, n, t) {
-				m(e.file_path, n, t);
-			})(o, t, e),
-			(function (e, n, t, i, r, o, p) {
-				if (e.new_experiments) {
-					!0 === e.new_experiments && (e.new_experiments = {});
-					var l,
-						f = e.new_experiments.hide_class || c,
-						_ = e.new_experiments.timeout || a,
-						g = encodeURIComponent(o.location.href.split("#")[0]);
-					e.cookies &&
-						e.cookies.expires &&
-						("number" == typeof e.cookies.expires || u(e.cookies.expires)
-							? (l = s(e.cookies.expires))
-							: e.cookies.expires.tracking && ("number" == typeof e.cookies.expires.tracking || u(e.cookies.expires.tracking)) && (l = s(e.cookies.expires.tracking))),
-						l && l < new Date() && (l = void 0);
-					var d =
-						e.target +
-						"/webxp/" +
-						n +
-						"/" +
-						o[t].sign +
-						"/modifications.min.js?http-referer=" +
-						g +
-						"&timeout=" +
-						_ +
-						"ms" +
-						(l ? "&cookie-expires=" + Math.floor(l.getTime() / 1e3) : "");
-					"sync" === e.new_experiments.mode && o.localStorage.getItem("__exponea__sync_modifications__")
-						? (function (e, n, t, i, r) {
-								(t[r][n] = "<" + n + ' src="' + e + '"></' + n + ">"),
-									i.writeln(t[r][n]),
-									i.writeln("<" + n + ">!" + r + ".init && document.writeln(" + r + "." + n + '.replace("/' + n + '/", "/' + n + '-async/").replace("><", " async><"))</' + n + ">");
-						  })(d, n, o, p, t)
-						: (function (e, n, t, i, r, o, s, a) {
-								o.documentElement.classList.add(e);
-								var c = m(t, i, o);
-								function p() {
-									r[a].init || m(t.replace("/" + i + "/", "/" + i + "-async/"), i, o);
-								}
-								function u() {
-									o.documentElement.classList.remove(e);
-								}
-								(c.onload = p), (c.onerror = p), r.setTimeout(u, n), (r[s]._revealPage = u);
-						  })(f, _, d, n, o, p, r, t);
-				}
-			})(o, t, i, 0, n, r, e),
-			(function (e, n, t) {
-				var i;
-				e[n]._initializeConfig(t),
-					(null === (i = t.experimental) || void 0 === i ? void 0 : i.non_personalized_weblayers) && e[n]._preInitialize(t),
-					(e[n].start = function (i) {
-						i &&
-							Object.keys(i).forEach(function (e) {
-								return (t[e] = i[e]);
-							}),
-							e[n].initialize(t);
-					});
-			})(r, n, o);
-	})(document, "exponea", "script", "webxpClient", window, {
-		target: "https://api.eu1.exponea.com",
-		token: projectToken,
-		experimental: {
-			non_personalized_weblayers: true,
-		},
-		// replace with current customer ID or leave commented out for an anonymous customer
-		// customer: window.currentUserId,
-		new_experiments: {
-			mode: "sync",
-		},
-		service_worker_path: "/scripts/service-worker.js",
-		track: {
-			google_analytics: false,
-			visits_query_params: [],
-			default_properties: { platform: platform },
-		},
-	});
-	exponea.start();
-}
-
-</script>
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Cookiestatement - New York Pizza - New York Pizza</title><meta name="keywords" content="Pizza, pizzas, pizzas, pizza bestellen, pizza bezorgen, pizza online bestellen, pizza online afhalen, pizzeria, eten bestellen, pizza met korting, pizza deal, pizza kortingscode, New York Pizza, franchise New York Pizza, Werken bij New York Pizza"><meta name="description" content="Bij New York Pizza willen we u zo goed mogelijk van dienst zijn. Hierom gebruiken we cookies. Lees hierover in het cookiestatement.">
@@ -215,173 +47,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TQGND38');</script>
 <script src="https://splitwise.clickvalue.nl/nyp/sw_min.js"></script>
-<script>
-    var blmr_cc = "b4dc6198-316c-11ee-9f59-ae4149610082";
-var blmr_pl = "Web";
-
-if (document.location.hostname === "www.newyorkpizza.nl") blmr_cc = "ecec85a4-316c-11ee-9f59-ae4149610082";
-if (document.location.hostname === "pre-www.newyorkpizza.nl") blmr_cc = "b4dc6198-316c-11ee-9f59-ae4149610082";
-if (document.location.hostname === "www.newyorkpizza.be") blmr_cc = "6c879178-316d-11ee-b876-9e1c09d403d3";
-if (document.location.hostname === "www.newyorkpizza.de") blmr_cc = "3a72ab0a-316d-11ee-850f-3aefacf2d001";
-if (document.location.hostname === "app.newyorkpizza.nl") {
-	blmr_cc = "ecec85a4-316c-11ee-9f59-ae4149610082";
-	blmr_pl = "App";
-}
-
-function getCookie(name) {
-	return document.cookie.split("; ").reduce((r, v) => {
-		const parts = v.split("=");
-		return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-	}, "");
-}
-
-if (getCookie("AcceptNonFunctionalCookies") === "true") {
-	loadExponea(blmr_cc, blmr_pl);
-}
-
-function loadExponea(projectToken, platform) {
-	!(function (e, n, t, i, r, o) {
-		function s(e) {
-			if ("number" != typeof e) return e;
-			var n = new Date();
-			return new Date(n.getTime() + 1e3 * e);
-		}
-		var a = 4e3,
-			c = "xnpe_async_hide";
-		function p(e) {
-			return e.reduce(
-				function (e, n) {
-					return (
-						(e[n] = function () {
-							e._.push([n.toString(), arguments]);
-						}),
-						e
-					);
-				},
-				{ _: [] }
-			);
-		}
-		function m(e, n, t) {
-			var i = t.createElement(n);
-			i.src = e;
-			var r = t.getElementsByTagName(n)[0];
-			return r.parentNode.insertBefore(i, r), i;
-		}
-		function u(e) {
-			return "[object Date]" === Object.prototype.toString.call(e);
-		}
-		(o.target = o.target || "https://api.exponea.com"),
-			(o.file_path = o.file_path || o.target + "/js/exponea.min.js"),
-			(r[n] = p([
-				"anonymize",
-				"initialize",
-				"identify",
-				"getSegments",
-				"update",
-				"track",
-				"trackLink",
-				"trackEnhancedEcommerce",
-				"getHtml",
-				"showHtml",
-				"showBanner",
-				"showWebLayer",
-				"ping",
-				"getAbTest",
-				"loadDependency",
-				"getRecommendation",
-				"reloadWebLayers",
-				"_preInitialize",
-				"_initializeConfig",
-			])),
-			(r[n].notifications = p(["isAvailable", "isSubscribed", "subscribe", "unsubscribe"])),
-			(r[n].segments = p(["subscribe"])),
-			(r[n]["snippetVersion"] = "v2.7.0"),
-			(function (e, n, t) {
-				(e[n]["_" + t] = {}), (e[n]["_" + t].nowFn = Date.now), (e[n]["_" + t].snippetStartTime = e[n]["_" + t].nowFn());
-			})(r, n, "performance"),
-			(function (e, n, t, i, r, o) {
-				e[r] = { sdk: e[i], sdkObjectName: i, skipExperiments: !!t.new_experiments, sign: t.token + "/" + (o.exec(n.cookie) || ["", "new"])[1], path: t.target };
-			})(r, e, o, n, i, RegExp("__exponea_etc__" + "=([\\w-]+)")),
-			(function (e, n, t) {
-				m(e.file_path, n, t);
-			})(o, t, e),
-			(function (e, n, t, i, r, o, p) {
-				if (e.new_experiments) {
-					!0 === e.new_experiments && (e.new_experiments = {});
-					var l,
-						f = e.new_experiments.hide_class || c,
-						_ = e.new_experiments.timeout || a,
-						g = encodeURIComponent(o.location.href.split("#")[0]);
-					e.cookies &&
-						e.cookies.expires &&
-						("number" == typeof e.cookies.expires || u(e.cookies.expires)
-							? (l = s(e.cookies.expires))
-							: e.cookies.expires.tracking && ("number" == typeof e.cookies.expires.tracking || u(e.cookies.expires.tracking)) && (l = s(e.cookies.expires.tracking))),
-						l && l < new Date() && (l = void 0);
-					var d =
-						e.target +
-						"/webxp/" +
-						n +
-						"/" +
-						o[t].sign +
-						"/modifications.min.js?http-referer=" +
-						g +
-						"&timeout=" +
-						_ +
-						"ms" +
-						(l ? "&cookie-expires=" + Math.floor(l.getTime() / 1e3) : "");
-					"sync" === e.new_experiments.mode && o.localStorage.getItem("__exponea__sync_modifications__")
-						? (function (e, n, t, i, r) {
-								(t[r][n] = "<" + n + ' src="' + e + '"></' + n + ">"),
-									i.writeln(t[r][n]),
-									i.writeln("<" + n + ">!" + r + ".init && document.writeln(" + r + "." + n + '.replace("/' + n + '/", "/' + n + '-async/").replace("><", " async><"))</' + n + ">");
-						  })(d, n, o, p, t)
-						: (function (e, n, t, i, r, o, s, a) {
-								o.documentElement.classList.add(e);
-								var c = m(t, i, o);
-								function p() {
-									r[a].init || m(t.replace("/" + i + "/", "/" + i + "-async/"), i, o);
-								}
-								function u() {
-									o.documentElement.classList.remove(e);
-								}
-								(c.onload = p), (c.onerror = p), r.setTimeout(u, n), (r[s]._revealPage = u);
-						  })(f, _, d, n, o, p, r, t);
-				}
-			})(o, t, i, 0, n, r, e),
-			(function (e, n, t) {
-				var i;
-				e[n]._initializeConfig(t),
-					(null === (i = t.experimental) || void 0 === i ? void 0 : i.non_personalized_weblayers) && e[n]._preInitialize(t),
-					(e[n].start = function (i) {
-						i &&
-							Object.keys(i).forEach(function (e) {
-								return (t[e] = i[e]);
-							}),
-							e[n].initialize(t);
-					});
-			})(r, n, o);
-	})(document, "exponea", "script", "webxpClient", window, {
-		target: "https://api.eu1.exponea.com",
-		token: projectToken,
-		experimental: {
-			non_personalized_weblayers: true,
-		},
-		// replace with current customer ID or leave commented out for an anonymous customer
-		// customer: window.currentUserId,
-		new_experiments: {
-			mode: "sync",
-		},
-		service_worker_path: "/scripts/service-worker.js",
-		track: {
-			google_analytics: false,
-			visits_query_params: [],
-			default_properties: { platform: platform },
-		},
-	});
-	exponea.start();
-}
-</script>
 <div class="navbar s4d-navigation s4d-quick-menu-desktop s4d-quick-menu-desktop-new-receipt">
 <div class="container loyalty-container">
 <div class="links-container">
@@ -1084,7 +749,7 @@ Als je besluit om cookies te blokkeren, betekent dat wel dat onze NYP Devices da
 <p>Smederij 15<br/>
 1185 ZR Amstelveen</p>
 <p><strong>T</strong>: 020 347 3880</p>
-<p><strong>E</strong>: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abc6cad9c0cedfc2c5ccebc5cedcd2c4d9c0dbc2d1d1ca85c5c7">[email&#160;protected]</a></p>
+<p><strong>E</strong>: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="107d71627b7564797e77507e7567697f627b60796a6a713e7e7c">[email&#160;protected]</a></p>
 </div>
 </div>
 </div>
@@ -1157,7 +822,7 @@ Sign up for the newsletter to receive promotions
 <p id="footer-newsletter-message-success" class="alert alert-success footer-newsletter-message" style="display: none;">
 Thank you for your subscription!
 </p>
-<form action="/Account/AddNewsletterSubscriptionFromForm" class="navbar-form" data-ajax="true" data-ajax-begin="validateNewsletterSubscriptionEmail" data-ajax-complete="addNewsletterSubscriptionOnComplete" data-ajax-method="Post" id="form0" method="post"><input name="__RequestVerificationToken" type="hidden" value="N9PeXzdwgA1TcyJivVZrcW2dV3H9sX5_p-tVEqhlwFbhXSyeazCyAwZLO9rtWq3dxizp1WP2DosIhQCL5-cIbYsNFWzGpaMSPQNILirOHQs1" /> <div id="newsletter" class="form-group">
+<form action="/Account/AddNewsletterSubscriptionFromForm" class="navbar-form" data-ajax="true" data-ajax-begin="validateNewsletterSubscriptionEmail" data-ajax-complete="addNewsletterSubscriptionOnComplete" data-ajax-method="Post" id="form0" method="post"><input name="__RequestVerificationToken" type="hidden" value="6C68tAQhUTgENgPt3V0OOJvFftzTM1AS6c7KUqyX3qlySKsHY5yPKQInIei9gJvhiaNaehfD9JVFEoZjUEHwvIYXXV_GMii0MW2zMFk6Hrs1" /> <div id="newsletter" class="form-group">
 <div class="input-group">
 <input id="origin" name="origin" type="hidden" value="WWW - Newsletter_optin_bottom" />
 <input class="form-control" id="emailAddress" name="emailAddress" placeholder="E-mailadres" type="text" value />
@@ -1201,7 +866,7 @@ Login
 Check your benefits! Log in with your New York Pizza account
 </p>
 <div class="login-form-content">
-<form action="/inloggen" class="form-horizontal" data-ajax="true" data-ajax-begin="Account.loginOnAjaxPostBegin(this)" data-ajax-complete="Account.loginOnAjaxPostComplete(xhr)" data-ajax-method="Post" id="login-form" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="YcVMTgfeXB_jna_Zgw49JQoJUdz0GwFeQd3d-niMQb-S1UEBcRf46COnUZWj-c48z6wE3bw8Mi1BrirnFHBc9AT41xjWn8TBoC2Hwn6qsYE1" />
+<form action="/inloggen" class="form-horizontal" data-ajax="true" data-ajax-begin="Account.loginOnAjaxPostBegin(this)" data-ajax-complete="Account.loginOnAjaxPostComplete(xhr)" data-ajax-method="Post" id="login-form" method="post" role="form"><input name="__RequestVerificationToken" type="hidden" value="vhnePax0i7TBu0J8bMPx4W_Z0r0OenmULsyZttTyGF8Zr_gfLHErvxKC2mvQhhSrw7moLb6przR0ea1xJvVWEg1TOt7GTTpPdckg0zmR1js1" />
 <input data-val="true" data-val-required="The IsCompanyLogin field is required." id="IsCompanyLogin" name="IsCompanyLogin" type="hidden" value="False" />
 <input data-val="true" data-val-required="The UseRecaptcha field is required." id="UseRecaptcha" name="UseRecaptcha" type="hidden" value="False" />
 <div class="form-group">
@@ -1278,7 +943,7 @@ Registeren
 Register now
 </p>
 <form action="/registreren" class="form-horizontal" data-ajax="true" data-ajax-begin="Account.registerOnAjaxPostBegin(this)" data-ajax-complete="Account.registerOnAjaxPostComplete(this,xhr)" data-ajax-method="Post" id="register-form" method="post" role="form"> <div id="register-form-content">
-<input name="__RequestVerificationToken" type="hidden" value="HQr1LwsTs_zLf_K5z63FepxTPJgbEKHi87M_5llNl1R1YzjjXSoQK_WQBne1jDUaRo1LDKLOJfxCQo1d-W6BEQR46Q3nb_OhPOH2QVDlJlw1" /> <div class="form-group">
+<input name="__RequestVerificationToken" type="hidden" value="RgPGV4sKNsp4UrFXUMOy2noOkAuGZjZgn08Cs-p6_jo_fAG3AaaLE9OuL1rAIdo-OHkXYBsI0y8NYLOn6fz4RiBEX7kPZPWCRlabz9YdV-01" /> <div class="form-group">
 <div class="col-md-12 register__info-block">
 <label for="RegisterUserName">E-mailadres</label>
 <input class="form-control" data-val="true" data-val-email="De opgegeven waarde is geen geldig e-mailadres" data-val-regex="De opgegeven waarde is geen geldig e-mailadres" data-val-regex-pattern="^[A-Za-z0-9,!#\$%&amp;&#39;\*\+/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&amp;&#39;\*\+/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$" data-val-required="This field is mandatory " id="RegisterUserName" name="RegisterUserName" placeholder="E-mailadres" type="text" value />
@@ -2143,8 +1808,8 @@ const _useLocalizationV2='true';
 const _forceCustomizationModalForMandatoryEditProducts='false';;
     </script>
 <script src="/DynamicJavascript/GlobalTextResources?v=20240213" defer></script>
-<script src="/bundles/simple-page?v=vUvgEblbFmWxZUP0d_oSuVkz50NyEoEya40npStJJyQ1" defer></script>
-<input type="hidden" id="completeAntiForgeryToken" value="lcXUEk39XO5r80qjsEFiJPw_y5mgbR5F0KKUa1xoDZndfpc73VGZ-yldPamWhGZE2wTRZG_TVTWUIlirVyo_vu9sS0sAXggU17RR02-aW001:u9PezehPVezl1mFO372sTB5Hhe-KRWnySbfHzrTiRT5Lv0_0Ip_6W62gofMkl_xDc1ugQ0cvFbldAdqE2m2s8Wgz-j0WFrRCVlBUAVPvLi81" />
+<script src="/bundles/simple-page?v=12glFnWEEbNvjJ_S-Y7QiXodQtCWQe6pprkfMhfASco1" defer></script>
+<input type="hidden" id="completeAntiForgeryToken" value="LSPHkFigRSpl7RFeabf64QzqXIM1AxOWE745gZ3ZSdsW_xBswCkj5OBxAbb1mFjpztPTPpMFNgtLoDYsciQjiRBQhR5f7C6INHLIRFEDkw41:ULoHoY6KPDg4u4vkYw0jPesM_E9cbpMOANhIPfCdCWVX1OUInADwS05D9iOuJc_IHvvNgIY4ZrvL3QZFZjoNMBEs7ZX-UyEFILRm-7uvj6w1" />
 <script type="text/javascript">
         var _googleApiKey = 'AIzaSyCM3rDpT6jKykmtXptuQN_HXYN8cApB5zo';
         var _oneClickEnabled = false;
