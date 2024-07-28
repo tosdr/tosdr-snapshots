@@ -1,1052 +1,4 @@
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-<style>
-		html, body {height: 100vh;  /* standard definition (as fallback) */
-    	height: 100dvh; /* dynamic vh will make the trick on iOS */}
-		body.overflow-hidden {overflow:hidden;}
-		.header__container.desktop {display:none;}
-		.header {position: fixed;width:100%;top: 0;z-index:9999;background:white;border-bottom:1px solid #EBEBEB;}
-		.header__overlay {display:none;position:fixed;width:100%;height:100%;top:0;z-index:9998;background:black;opacity:0.25;}
-		.header__overlay.active {display:block;}
-		.header ul { list-style: none; }
-		.header a { text-decoration: none; color: #757A7E;}
-
-		
-		#header__menu-container, #header__menu-inner {width:100%;display:flex;align-items:center;grid-column-gap:8px;}
-		.header__container.mobile #header__menu-inner {cursor:pointer;width:auto;justify-content:flex-end;padding: 8px; margin-right:-8px;}
-		.header__container.mobile #header__menu-inner:hover {background: #F5F5F5;border-radius: 6px;}
-		#header__menu-container {padding: 20px;justify-content:space-between;}
-		#header__menu-container h4 {font-family:'Inter';color:#757A7E;font-weight:600;font-size:13px;padding-bottom:0;}
-		.accordion-toggle, .accordion__content li {cursor: pointer;position: relative;}
-		.header__container {max-width:1300px;margin: 0 auto;}
-		#header__menu-container h1 {padding-bottom:0;}
-		#header__menu-container h1 a {display:flex;align-items:center;height:36px;}
-		.header .header__logo {max-width:100px;height:100%;object-fit:contain;margin:0;}
-		.header__logo.wide {display:none;}
-		
-		/* Hamburger Icon */
-			#header__menu-container #hamburger-menu {position: relative;width: 25px;height: 20px;cursor: pointer;}
-			#header__menu-container #hamburger-menu span {opacity: 1;left: 0;display: block;width: 100%;height: 2.5px;border-radius: 10px;color: black;background-color: black;position: absolute;transform: rotate(0deg);}
-			#header__menu-container #hamburger-menu span:nth-child(1) {top: 1px;}
-			#header__menu-container #hamburger-menu span:nth-child(2) {top: 9px;}
-			#header__menu-container #hamburger-menu span:nth-child(3) {top: 17px;}
-
-			/* Active state orientation */
-				#header__menu-container #hamburger-menu.open span:nth-child(1) {transform: translateY(9px) rotate(135deg);top:0;}
-				#header__menu-container #hamburger-menu.open span:nth-child(2) {opacity: 0;}
-				#header__menu-container #hamburger-menu.open span:nth-child(3) {transform: translateY(-9px) rotate(-135deg);top:18px;}
-
-		/* Mobile Dropdown List */
-			#menu-list-wrapper {padding-left: 0;display: none;position: relative;width: 100%;background: white;z-index: 999;max-height: calc(100dvh - 76px);}
-			#menu-list-wrapper.active {display:block;border-top:1px solid #EBEBEB}
-			.header__menu-list.accordion {padding: 20px 8px;display:grid;grid-row-gap:8px;}
-			.header__container.mobile .header__menu-list.accordion {max-height:calc(100dvh - 154px);overflow-y:scroll;}
-			/* .header__menu-list-container {} */
-		
-
-		
-
-		/* Menu Toggle */
-			.accordion-toggle, .primary-link a {display:grid;grid-row-gap:4px;padding: 12px;font-family: 'Inter';}
-			.accordion-toggle:hover, .primary-link a:hover {background:#F5F5F5;border-radius:6px;}
-			/* #header .menu-list li.accordion-toggle {padding: 12px 0;} */
-			.accordion__header {display: flex; align-items: center;grid-column-gap: 8px;}
-			.accordion__title {line-height:1.2;font-size:17px;color:#757A7E;font-weight:600;font-family:'Inter'}
-			.accordion__subtitle {line-height:1.5;font-size:15px;color:#757A7E;font-family:'Nunito Sans',Helvetica,Arial,Lucida,sans-serif;}
-			.toggle.accordion-toggle.active .accordion__subtitle, .accordion__subtitle.hidden {display:none;}
-
-			/* Arrow direction */
-				.accordion-toggle.active svg {transform: rotate(180deg);}
-
-		/* Sub-menu Items */
-			.accordion__content {display: none;}
-			.header__submenu.accordion__content.open, .header__submenu.accordion__content.active {border-left:1px solid #EBEBEB;display:flex;flex-direction:column;grid-row-gap:8px;margin:12px 8px 12px 12px;}
-			.header__container.mobile .header__submenu.accordion__content.open, .header__container.mobile .header__submenu.accordion__content.active {border-left:0;margin:12px 0px;}
-			.header__submenu.accordion__content li {margin-left: 16px;padding: 12px;}
-			.header__container.mobile .header__submenu.accordion__content li {margin-left:0;}
-			.header__submenu.accordion__content li:hover {background:#F5F5F5;border-radius:6px;}
-			.accordion__content li a {display:grid;grid-template-columns:35px 1fr;grid-column-gap:12px;align-items:flex-start;}
-			.accordion__content li .header__submenu-icon {width:35px;height:30px;display:flex;justify-content:flex-start;}
-			.accordion__content li .header__submenu-icon img {width:fit-content;height:fit-content;max-width:35px;max-height:30px;object-fit:contain;margin:0;}
-			.header__submenu-copy {display:grid;grid-row-gap:4px;}
-			.header__submenu-title {font-family:'Inter';color:#36AF89;font-weight:700;font-size:15px;line-height:1.2;}
-			.header__submenu-subtitle {font-family:'Nunito Sans',Helvetica,Arial,Lucida,sans-serif; font-size:14px;color:#757A7E;font-weight:400;line-height:1.3;max-width:600px;}
-
-			/* Section Titles */
-				.header__submenu.accordion__content li.header__submenu-section-title {color:#757A7E;font-size:13px;font-weight:700;font-family: 'Inter';text-transform:uppercase;line-height:1.2;cursor:auto;}
-				.header__submenu.accordion__content li.header__submenu-section-title:hover {background:none;}
-
-
-		/* Nav Footer */
-			.header__menu-footer {display:flex;flex-wrap:wrap;align-items:center;justify-content: flex-end;grid-column-gap:4px;grid-row-gap:20px;padding: 20px;border-top:1px solid #EBEBEB;}
-			.header__menu-footer li {display:grid;line-height:1;font-size:12px;}
-			.header__menu-footer .plainLink, .header__container.desktop .primary-link {font-family:'Inter';font-weight:600;color:#757A7E;padding: 8px;}
-			.header__menu-footer .plainLink:hover, .header__container.desktop .primary-link:hover {background:#F5F5F5;border-radius:4px;}
-			.header__menu-footer .primary-CTA {font-family:'Inter';background:#F6E067;color:#333333;font-weight:700;padding:12px;border-radius:4px;margin-left:8px;}
-			.header__menu-footer .primary-CTA span {display:none;}
-			/* .header__menu-footer .primary-CTA:hover {background:#F5F5F5;} */
-
-		#page-container, .et-tb #page-container, .et-tb-has-header #page-container {padding-top:76px !important;}
-
-		
-
-		@media screen and (max-width: 1001px) {
-			.et-waypoint:not(.et_pb_counters) {opacity: 1 !important;}
-		}
-
-		@media screen and (min-width:350px) {
-			.header__menu-footer li {font-size:14px;}
-		}
-
-		@media screen and (min-width: 375px) {
-			#header__menu-inner {grid-column-gap:12px;}
-			.header__logo.mobile {max-width:140px}
-			#header__menu-container h4 {font-size:15px;}
-		}
-
-		@media screen and (min-width: 410px) {
-			.header__container.mobile .header__menu-list.accordion {max-height:calc(100dvh - 155px);}
-			.header__menu-footer .primary-CTA span {display:inline-block;}
-		}
-
-		@media screen and (min-width: 450px) {
-			.header__logo.mobile {display:none;}
-			.header__logo.wide {display:inline-block;max-width:200px;}
-		}
-
-		@media screen and (min-width:1050px) {
-			#page-container, .et-tb #page-container, .et-tb-has-header #page-container {padding-top:78px !important;}
-			.header {padding: 0 20px;border-bottom:none;}
-			.header__menu-container-desktop {display:block !important;}
-			.header__container-divider {position:absolute;width:100%;height:1px;background:#EBEBEB;top:78px; z-index: 1;left:0;}
-
-			/* Mobile Nav */
-				.header__container.mobile {display:none;}
-
-			/* Desktop Nav */
-				.header__container.desktop {display:block !important;padding:0px;}
-
-			/* Main nav layout */
-				.header__container {padding:20px 16px;position:relative;}
-				#menu-list-wrapper {display:block;align-items:center;justify-content:space-between;position:unset;top: unset;width:auto;overflow:visible;max-height:unset;}
-				.header__menu-list-primary-nav {display:flex;justify-content:space-between;padding: 20px 0;}
-				.header__menu-footer {padding:0;border-top:none;margin:0;grid-column-gap:8px;}
-				.header__menu-list-container {display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:0 auto;}
-
-			/* Logo */
-				.desktop-logo {padding:0;display:flex;align-items:center;height:36px;}
-				.desktop-logo a {display:flex;}
-				.desktop-logo .header__logo {width:100%;max-width:120px;}
-				.header__logo.mobile {display:block;}
-				.header__logo.wide {display:none;}
-
-			/* Accordion Toggles */
-				.header__menu-list.accordion {display:flex;grid-column-gap:8px;padding:0;align-items:center;}
-				.accordion__title {line-height:1;}
-				.accordion__title, .header__menu-footer .plainLink, .header__menu-footer .primary-CTA, .primary-link  {font-size:14px;}
-				.accordion-toggle {padding:8px;position:unset;line-height:1;}
-				.accordion__header a {display: flex; align-items: center; grid-column-gap: 8px;}
-
-				/* Subtitle Display */
-					.accordion__subtitle {display:none;}
-			
-			/* Mega Dropdown */
-				.header.open {background:white;}
-				.header__mega-dropdown {display:none;padding:28px 0;}
-				.header__mega-dropdown.open {display:flex;background:white;grid-column-gap:20px;}
-
-				/* Accordion Promo */
-					.header__mega-dropdown-promo {display:none;min-width:250px;width:250px;flex-direction:column;grid-row-gap:12px;}
-					.header__mega-dropdown-promo.open {display:flex;}
-					.header__mega-dropdown-promo-title {font-size:18px;color:#36AF89;font-weight:700;font-family:'Inter';line-height: 1.4;}
-					.header__mega-dropdown-promo-description {font-family: 'Nunito Sans',Helvetica,Arial,Lucida,sans-serif; font-size: 16px; color: #757A7E; font-weight: 400;line-height: 1.5;}
-					.header__mega-dropdown-promo-CTA {padding-top:4px;}
-					.header__mega-dropdown-promo-CTA a {background:#36AF89;color:white;padding: 12px;display:inline-block;border-radius:6px;font-family: 'Nunito Sans',Helvetica,Arial,Lucida,sans-serif;font-weight:700;line-height: 1;width:fit-content;transition: all .2s;position:relative;}
-					.header__mega-dropdown-promo-CTA a span {line-height:1;}
-					.header__mega-dropdown-promo-CTA a:hover {padding-right:32px;}
-					.header__mega-dropdown-promo-CTA a svg {width:8px;height:12px;opacity:0;transition: all .2s;position:absolute;right:12px;}
-					.header__mega-dropdown-promo-CTA a svg path {fill:white}
-					.header__mega-dropdown-promo-CTA a:hover svg {opacity:1;}
-
-				/* Submenus */
-					.header__mega-dropdown .accordion__content li {margin-left:20px;}
-					.header__mega-dropdown .header__submenu.accordion__content.open, .header__mega-dropdown .header__submenu.accordion__content.active {position:unset;margin:0;}
-					.header__mega-dropdown .header__submenu.accordion__content.single-column.open {width:100%;}
-					.header__mega-dropdown .header__submenu.accordion__content.double-column.open {display:grid;grid-template-columns:repeat(2, 1fr);grid-column-gap:20px;width:100%;}
-					.header__mega-dropdown .header__submenu.accordion__content.double-column.open li {height:fit-content;}
-					.header__mega-dropdown .header__submenu.accordion__content.double-column li:nth-child(even) {margin-left:0;}
-				
-		}
-
-		@media screen and (min-width:1170px) {
-			body.overflow-hidden {overflow:auto;}
-			.header__logo.mobile {display:none;}
-			.header__logo.wide {display:block;max-width:250px;}
-		}
-		
-		
-	</style>
-<header class="header" id="header">
-<div class="header__container-divider"></div>
-<div class="header__container mobile">
-<div class="header__menu-container-mobile" id="header__menu-container">
-<h1 class="mobile-logo"><a href="/">
-<img class="header__logo mobile" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.png">
-<img class="header__logo wide" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.webp">
-</a></h1>
-<div id="header__menu-inner">
-<h4>AI Voice Generator</h4>
-<div role="button" tabindex="0" id="hamburger-menu"><span></span><span></span><span></span></div>
-</div>
-</div>
-<nav class="header__menu-list-container" id="menu-list-wrapper">
-<ul class="header__menu-list accordion">
-<li role="button" tabindex="0" id="nav1" class="toggle accordion-toggle">
-<div class="accordion__header">
-<div class="accordion__title">AI Voice Generator</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</div>
-<div class="accordion__subtitle">Voice Cloning, Text to Speech, Speech to Speech...</div>
-</li>
-<ul class="header__submenu accordion__content" id="submenu1">
-<li class="header__submenu-section-title">Product</li>
-<li>
-<a href="/voice-cloning/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Mic.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Voice Cloning</div>
-<div class="header__submenu-subtitle">Record or Upload your voice to create your AI Voice</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/text-to-speech-converter/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Text to Speech</div>
-<div class="header__submenu-subtitle">High quality, human-like text-to-speech</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/speech-to-speech/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Speech to Speech</div>
-<div class="header__submenu-subtitle">Realtime speech-to-speech voice conversion</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/languages/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Multilingual</div>
-<div class="header__submenu-subtitle">Build your synthetic voices in 60+ Langauges</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/fill/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Neural Audio Editing</div>
-<div class="header__submenu-subtitle">Audio Editing made simple with synthetic voices</div>
-</div>
-</a>
-</li>
-</ul>
-<ul class="header__submenu accordion__content" id="submenu1">
-<li class="header__submenu-section-title">Case Studies</li>
-<li>
-<a href="/how-zomato-amp-truefan-used-ai-to-give-354000-mothers-a-reason-to-smile-this-mothers-day/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Personalization with Zomato and TrueFan</div>
-<div class="header__submenu-subtitle">Learn how Zomato scaled to over 350,000 AI messages</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/how-red-games-used-realtime-dynamic-interactive-ai-voices-in-crayola-adventures/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Crayola Adventures with Red Games</div>
-<div class="header__submenu-subtitle">2024 Apple Design Award Winning Game</div>
-</div>
-</a>
-</li>
-</ul>
-<li role="button" tabindex="0" id="nav2" class="toggle accordion-toggle">
-<div class="accordion__header">
-<div class="accordion__title">Detect</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</div>
-<div class="accordion__subtitle">Deepfake detection, AI Watermarker...</div>
-</li>
-<ul class="header__submenu accordion__content" id="submenu2">
-<li class="header__submenu-section-title">Product</li>
-<li>
-<a href="/deepfake-detection/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Deepfake Detection</div>
-<div class="header__submenu-subtitle">Realtime Audio Deepfake Detector</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/watermarker/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">AI Watermarker</div>
-<div class="header__submenu-subtitle">AI Watermarker to Protect your IP</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/identity" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Identity</div>
-<div class="header__submenu-subtitle">Voice Enrollment for Identity Protection</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/deepfake-incident-report/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Reports</div>
-<div class="header__submenu-subtitle">In-depth incident reports for the latest deepfakes</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/audio-intelligence/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Brain.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Audio Intelligence</div>
-<div class="header__submenu-subtitle">Explainable AI with audio enabled language model</div>
-</div>
-</a>
-</li>
-</ul>
-<ul class="header__submenu accordion__content" id="submenu2">
-<li class="header__submenu-section-title">Research</li>
-<li>
-<a href="/detect2b/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">DETECT-2B</div>
-<div class="header__submenu-subtitle">Groundbreaking approach to deepfake detection combines efficient architecture with unparalleled accuracy across diverse languages and generation methods</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/neural-speech-watermarker/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">PerTH Watermarker</div>
-<div class="header__submenu-subtitle">Invisible watermark to tackle malicious use and stop misinformation</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://github.com/resemble-ai/Resemblyzer" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Resemblyzer</div>
-<div class="header__submenu-subtitle">Deep Learning model that derives a high-level representation of a voice.</div>
-</div>
-</a>
-</li>
-</ul>
-<li role="button" tabindex="0" id="nav3" class="toggle accordion-toggle">
-<div class="accordion__header">
-<div class="accordion__title">Resources</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</div>
-<div class="accordion__subtitle">On-Prem, API Docs, Status</div>
-</li>
-<ul class="header__submenu accordion__content" id="submenu3">
-<li>
-<a href="/on-prem/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/On-Prem-Icon.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">On Prem</div>
-<div class="header__submenu-subtitle">Run our models on your own infrastructure</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://docs.app.resemble.ai/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/API-Icon.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">API Docs</div>
-<div class="header__submenu-subtitle">Programmatically build content with your synthetic voices</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://status.resemble.ai/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Status</div>
-<div class="header__submenu-subtitle">API and Service Status</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/ethics/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Ethics</div>
-<div class="header__submenu-subtitle">Our ethical statement and guidelines for usage.</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/blog/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Blog</div>
-<div class="header__submenu-subtitle">Case Studies and Development Thoughts from our team.</div>
-</div>
-</a>
-</li>
-</ul>
-</ul>
-<ul class="header__menu-footer">
-<li><a class="plainLink" href="/government/" target="_self">Government</a></li>
-<li><a class="plainLink" href="/pricing/" target="_self">Pricing</a></li>
-<li><a class="plainLink" href="https://app.resemble.ai/" target="_self">Sign In</a></li>
-<li><a class="primary-CTA" href="/schedule-a-demo/" target="_self">Request Demo</a></li>
-</ul>
-</nav>
-</div>
-<div class="header__container desktop">
-<nav class="header__menu-list-container" id="menu-list-wrapper">
-<div class="header__menu-list-primary-nav">
-<h1 class="desktop-logo">
-<a href="/">
-<img class="header__logo mobile" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.png">
-<img class="header__logo wide" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.webp">
-</a>
-</h1>
-<ul class="header__menu-list accordion">
-<li role="button" tabindex="0" id="nav1" class="toggle accordion-toggle">
-<div class="accordion__header">
-<div class="accordion__title">AI Voice Generator</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</div>
-</li>
-<li role="button" tabindex="0" id="nav2" class="toggle accordion-toggle">
-<div class="accordion__header">
-<a href="/detect-solution/">
-<div class="accordion__title">Detect</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</a>
-</div>
-</li>
-<li role="button" tabindex="0" id="nav3" class="toggle accordion-toggle">
-<div class="accordion__header">
-<div class="accordion__title">Resources</div>
-<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
-</svg>
-</div>
-</li>
-</ul>
-<ul class="header__menu-footer">
-<li><a class="plainLink" href="/government/" target="_self">Government</a></li>
-<li><a class="plainLink" href="/pricing/" target="_self">Pricing</a></li>
-<li><a class="plainLink" href="https://app.resemble.ai/" target="_self">Sign In</a></li>
-<li><a class="primary-CTA" href="/schedule-a-demo/" target="_self">Request Demo</a></li>
-</ul>
-</div>
-<div class="header__mega-dropdown">
-<div id="promo" class="header__mega-dropdown-promo desktop-promo-1">
-<div class="header__mega-dropdown-promo-title">Create your own AI Voice</div>
-<div class="header__mega-dropdown-promo-description">Use our Generative Voice AI models that are indistinguishable from humans</div>
-<div class="header__mega-dropdown-promo-CTA">
-<a href="https://app.resemble.ai/users/sign_up" target="_self">
-<span>Clone your AI Voice</span>
-<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
-</svg>
-</a>
-</div>
-</div>
-<ul class="header__submenu accordion__content" id="submenu1">
-<li class="header__submenu-section-title">Product</li>
-<li>
-<a href="/voice-cloning/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Mic.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Voice Cloning</div>
-<div class="header__submenu-subtitle">Record or Upload your voice to create your AI Voice</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/text-to-speech-converter/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Text to Speech</div>
-<div class="header__submenu-subtitle">High quality, human-like text-to-speech</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/speech-to-speech/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Speech to Speech</div>
-<div class="header__submenu-subtitle">Realtime speech-to-speech voice conversion</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/languages/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Multilingual</div>
-<div class="header__submenu-subtitle">Build your synthetic voices in 60+ Langauges</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/fill/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Neural Audio Editing</div>
-<div class="header__submenu-subtitle">Audio Editing made simple with synthetic voices</div>
-</div>
-</a>
-</li>
-</ul>
-<ul class="header__submenu accordion__content" id="submenu1">
-<li class="header__submenu-section-title">Case Studies</li>
-<li>
-<a href="/how-zomato-amp-truefan-used-ai-to-give-354000-mothers-a-reason-to-smile-this-mothers-day/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Personalization with Zomato and TrueFan</div>
-<div class="header__submenu-subtitle">Learn how Zomato scaled to over 350,000 AI messages</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/how-red-games-used-realtime-dynamic-interactive-ai-voices-in-crayola-adventures/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Crayola Adventures with Red Games</div>
-<div class="header__submenu-subtitle">2024 Apple Design Award Winning Game</div>
-</div>
-</a>
-</li>
-</ul>
-<div id="promo" class="header__mega-dropdown-promo desktop-promo-2">
-<div class="header__mega-dropdown-promo-title">State of the Art Detection Models</div>
-<div class="header__mega-dropdown-promo-description">We’ve dedicated years towards building AI models that aid in the safe deployment of Generative Voice AI. Now you can use them too.</div>
-<div class="header__mega-dropdown-promo-CTA">
-<a href="/detect-solution/" target="_self">
-<span>Learn More</span>
-<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
-</svg>
-</a>
-</div>
-</div>
-<ul class="header__submenu accordion__content" id="submenu2">
-<li class="header__submenu-section-title">Product</li>
-<li>
-<a href="/deepfake-detection/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Deepfake Detection</div>
-<div class="header__submenu-subtitle">Realtime Audio Deepfake Detector</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/watermarker/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">AI Watermarker</div>
-<div class="header__submenu-subtitle">AI Watermarker to Protect your IP</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/identity" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Identity</div>
-<div class="header__submenu-subtitle">Voice Enrollment for Identity Protection</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/deepfake-incident-report/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Reports</div>
-<div class="header__submenu-subtitle">In-depth incident reports for the latest deepfakes</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/audio-intelligence/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Brain.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Audio Intelligence</div>
-<div class="header__submenu-subtitle">Explainable AI with audio enabled language model</div>
-</div>
-</a>
-</li>
-</ul>
-<ul class="header__submenu accordion__content" id="submenu2">
-<li class="header__submenu-section-title">Research</li>
-<li>
-<a href="/detect2b/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">DETECT-2B</div>
-<div class="header__submenu-subtitle">Groundbreaking approach to deepfake detection combines efficient architecture with unparalleled accuracy across diverse languages and generation methods</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/neural-speech-watermarker/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">PerTH Watermarker</div>
-<div class="header__submenu-subtitle">Invisible watermark to tackle malicious use and stop misinformation</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://github.com/resemble-ai/Resemblyzer" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Resemblyzer</div>
-<div class="header__submenu-subtitle">Deep Learning model that derives a high-level representation of a voice.</div>
-</div>
-</a>
-</li>
-</ul>
-<div id="promo" class="header__mega-dropdown-promo desktop-promo-3">
-<div class="header__mega-dropdown-promo-title">Latest from the Vault</div>
-<div class="header__mega-dropdown-promo-description">Read about the latest product and research advancements on Generative Voice.</div>
-<div class="header__mega-dropdown-promo-CTA">
-<a href="/blog/" target="_self">
-<span>Read the Blog</span>
-<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
-</svg>
-</a>
-</div>
-</div>
-<ul class="header__submenu accordion__content" id="submenu3">
-<li>
-<a href="/on-prem/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/On-Prem-Icon.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">On Prem</div>
-<div class="header__submenu-subtitle">Run our models on your own infrastructure</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://docs.app.resemble.ai/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/API-Icon.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">API Docs</div>
-<div class="header__submenu-subtitle">Programmatically build content with your synthetic voices</div>
-</div>
-</a>
-</li>
-<li>
-<a href="https://status.resemble.ai/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Status</div>
-<div class="header__submenu-subtitle">API and Service Status</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/ethics/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Ethics</div>
-<div class="header__submenu-subtitle">Our ethical statement and guidelines for usage.</div>
-</div>
-</a>
-</li>
-<li>
-<a href="/blog/" target="_self">
-<div class="header__submenu-icon">
-<img role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
-</div>
-<div class="header__submenu-copy">
-<div class="header__submenu-title">Blog</div>
-<div class="header__submenu-subtitle">Case Studies and Development Thoughts from our team.</div>
-</div>
-</a>
-</li>
-</ul>
-</div>
-</nav>
-</div>
-</header>
-<div class="header__overlay"></div>
-<script>
-		(function($) {
-	
-			// Mobile
-
-				// Hamburger Menu Activation
-					$(".header__container.mobile #header__menu-inner").click(function(event) {
-						event.stopPropagation();
-						$("#hamburger-menu").toggleClass("open");
-						$("#menu-list-wrapper").toggleClass("active");
-						$('.header__overlay').toggleClass('active');
-
-						$("body").toggleClass("overflow-hidden");
-
-						if (!$('#menu-list-wrapper').hasClass("active")) {
-							$('.header__mega-dropdown').removeClass("open");
-							$('.header').removeClass("open");
-							$('.header__overlay').removeClass('active');
-							$('.header__container.mobile .header__menu-list-container').removeClass('active');
-							$("#hamburger-menu").removeClass("open");
-							$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-							$(".accordion__content").removeClass("open");
-							$("body").removeClass("overflow-hidden");
-							$('.accordion__subtitle').removeClass("hidden");
-
-						}
-					});
-
-				// Accordion Toggle
-					
-					
-							
-								$(".header__container.mobile .header__menu-list-container .accordion-toggle#nav1").click(function() {
-									$('.header__container.mobile .header__menu-list').find('ul#submenu1').toggleClass("open");
-									$(this).toggleClass("active-tab").toggleClass("active");
-									$('#nav1 .accordion__subtitle').toggleClass("hidden");
-									console.log('clicked nav 1');
-								});
-										
-							
-						
-							
-								$(".header__container.mobile .header__menu-list-container .accordion-toggle#nav2").click(function() {
-									$('.header__container.mobile .header__menu-list').find('ul#submenu2').toggleClass("open");
-									$(this).toggleClass("active-tab").toggleClass("active");
-									$('#nav2 .accordion__subtitle').toggleClass("hidden");
-									console.log('clicked nav 2');
-								});
-										
-							
-						
-							
-								$(".header__container.mobile .header__menu-list-container .accordion-toggle#nav3").click(function() {
-									$('.header__container.mobile .header__menu-list').find('ul#submenu3').toggleClass("open");
-									$(this).toggleClass("active-tab").toggleClass("active");
-									$('#nav3 .accordion__subtitle').toggleClass("hidden");
-									console.log('clicked nav 3');
-								});
-										
-							
-											
-
-			// Desktop Toggle
-				$(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle").hover(function() {
-					$('.header__mega-dropdown').addClass("open");
-					$('.header').addClass("open");
-					$('.header__overlay').addClass('active');
-					$("body").addClass("overflow-hidden");
-					if (!$(this).hasClass("active-tab")) {
-						$(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
-						$('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
-					}
-				});
-
-				
-						
-							$(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav1").hover(function() {
-								$('.header__mega-dropdown').find('ul#submenu1').addClass("open");
-								$('.header__mega-dropdown').find('.desktop-promo-1').addClass("open");
-								$(this).addClass("active-tab").addClass("active");
-								$(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
-								if (!$(this).hasClass("active-tab")) {
-									$('.header__mega-dropdown').removeClass("open");
-									$('.header').removeClass("open");
-									$('.header__overlay').removeClass('active');
-									$("body").removeClass("overflow-hidden");
-									$(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
-									$('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
-								}
-							});
-
-							if ($('.header__container.desktop #submenu1').length > 1) {
-								$('.header__container.desktop #submenu1').addClass('single-column');
-							} else {
-								if ($('.header__container.desktop #submenu1 li').length > 3) {
-									$('.header__container.desktop #submenu1').addClass('double-column');
-								}
-							}
-									
-						
-					
-						
-							$(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav2").hover(function() {
-								$('.header__mega-dropdown').find('ul#submenu2').addClass("open");
-								$('.header__mega-dropdown').find('.desktop-promo-2').addClass("open");
-								$(this).addClass("active-tab").addClass("active");
-								$(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
-								if (!$(this).hasClass("active-tab")) {
-									$('.header__mega-dropdown').removeClass("open");
-									$('.header').removeClass("open");
-									$('.header__overlay').removeClass('active');
-									$("body").removeClass("overflow-hidden");
-									$(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
-									$('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
-								}
-							});
-
-							if ($('.header__container.desktop #submenu2').length > 1) {
-								$('.header__container.desktop #submenu2').addClass('single-column');
-							} else {
-								if ($('.header__container.desktop #submenu2 li').length > 3) {
-									$('.header__container.desktop #submenu2').addClass('double-column');
-								}
-							}
-									
-						
-					
-						
-							$(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav3").hover(function() {
-								$('.header__mega-dropdown').find('ul#submenu3').addClass("open");
-								$('.header__mega-dropdown').find('.desktop-promo-3').addClass("open");
-								$(this).addClass("active-tab").addClass("active");
-								$(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
-								if (!$(this).hasClass("active-tab")) {
-									$('.header__mega-dropdown').removeClass("open");
-									$('.header').removeClass("open");
-									$('.header__overlay').removeClass('active');
-									$("body").removeClass("overflow-hidden");
-									$(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
-									$('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
-								}
-							});
-
-							if ($('.header__container.desktop #submenu3').length > 1) {
-								$('.header__container.desktop #submenu3').addClass('single-column');
-							} else {
-								if ($('.header__container.desktop #submenu3 li').length > 3) {
-									$('.header__container.desktop #submenu3').addClass('double-column');
-								}
-							}
-									
-						
-					
-				
-
-
-				// If users mouse leaves the dropdown sections or hovers over plainlink or secondary links
-					$('.header__container.desktop .primary-link').hover(function(){
-						$('.header__mega-dropdown').removeClass("open");
-						$('.header').removeClass("open");
-						$('.header__overlay').removeClass('active');
-						$(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle").removeClass('active').removeClass('active-tab');;
-						$(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
-						$("body").removeClass("overflow-hidden");
-					});
-
-					$('.header__container.desktop .header__menu-footer li').hover(function(){
-						$('.header__mega-dropdown').removeClass("open");
-						$('.header').removeClass("open");
-						$('.header__overlay').removeClass('active');
-						$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-						$("#hamburger-menu").removeClass("open");
-						$(".accordion__content").removeClass("open");
-						$("body").removeClass("overflow-hidden");
-					});
-
-
-				// If user clicks only on desktop, outside of the primary dropdown navs & the mega dropdown
-					var menuListContainer = $('.header__container.desktop .header__menu-list');
-					var megaDropdownContainer = $('.header__container.desktop .header__mega-dropdown');
-
-					// Click event for the document
-					$(document).hover(function(event) {
-						// Check if the click is outside of the specified containers
-						if (!menuListContainer.is(event.target) && menuListContainer.has(event.target).length === 0 && 
-							!megaDropdownContainer.is(event.target) && megaDropdownContainer.has(event.target).length === 0) {
-
-								if ($('.header__container.desktop').is(':visible')) {
-									$('.header__mega-dropdown').removeClass("open");
-									$('.header').removeClass("open");
-									$('.header__overlay').removeClass('active');
-									$('.header__container.mobile .header__menu-list-container').removeClass('active');
-									$("#hamburger-menu").removeClass("open");
-									$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-									$(".accordion__content").removeClass("open");
-									$("body").removeClass("overflow-hidden");
-									$('.accordion__subtitle').removeClass("hidden");
-								}
-						}
-					});
-				
-
-				// If user clicks anywhere on the darkened page screen then close all menu items and remove overlay
-					$('.header__overlay').hover(function(){
-						$('.header__mega-dropdown').removeClass("open");
-						$('.header').removeClass("open");
-						$('.header__overlay').removeClass('active');
-						$('.header__container.mobile .header__menu-list-container').removeClass('active');
-						$("#hamburger-menu").removeClass("open");
-						$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-						$(".accordion__content").removeClass("open");
-						$("body").removeClass("overflow-hidden");
-						$('.accordion__subtitle').removeClass("hidden");
-					});
-					$('.header__overlay').click(function(){
-						$('.header__mega-dropdown').removeClass("open");
-						$('.header').removeClass("open");
-						$('.header__overlay').removeClass('active');
-						$('.header__container.mobile .header__menu-list-container').removeClass('active');
-						$("#hamburger-menu").removeClass("open");
-						$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-						$(".accordion__content").removeClass("open");
-						$("body").removeClass("overflow-hidden");
-						$('.accordion__subtitle').removeClass("hidden");
-					});
-
-				// Esc button to close windows for mobile menu
-					$(document).keyup(function(e) {
-						if (e.keyCode == 27) {
-							$('.header__mega-dropdown').removeClass("open");
-							$('.header').removeClass("open");
-							$('.header__overlay').removeClass('active');
-							$('.header__container.mobile .header__menu-list-container').removeClass('active');
-							$("#hamburger-menu").removeClass("open");
-							$(".accordion-toggle").removeClass('active').removeClass('active-tab');
-							$(".accordion__content").removeClass("open");
-							$("body").removeClass("overflow-hidden");
-							$('.accordion__subtitle').removeClass("hidden");
-						}
-					});
-
-			$('.header__menu-footer .primary-CTA').each(function() {
-				var $this = $(this);
-				var text = $this.text();
-				var firstWord = text.split(' ')[0];
-				var restOfText = text.substring(firstWord.length);
-				$this.html('<span>' + firstWord + '</span>' + restOfText);
-			});
-
-		})(jQuery);
-
-	</script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 <head>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -1123,6 +75,7 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <link rel="stylesheet" id="divi-modules-table-maker-styles-css" href="https://www.resemble.ai/wp-content/plugins/divi-modules-table-maker/styles/style.min.css?ver=3.0.3" type="text/css" media="all" />
 <link rel="stylesheet" id="supreme-mega-menu-styles-css" href="https://www.resemble.ai/wp-content/plugins/supreme-mega-menu/styles/style.min.css?ver=1.0.0" type="text/css" media="all" />
 <link rel="stylesheet" id="supreme-modules-pro-for-divi-styles-css" href="https://www.resemble.ai/wp-content/plugins/supreme-modules-pro-for-divi/styles/style.min.css?ver=4.9.85" type="text/css" media="all" />
+<link rel="stylesheet" id="et-builder-googlefonts-cached-css" href="https://fonts.googleapis.com/css?family=Heebo:100,200,300,regular,500,600,700,800,900&#038;subset=hebrew,latin&#038;display=swap" type="text/css" media="all" />
 <link rel="stylesheet" id="wpforms-choicesjs-css" href="https://www.resemble.ai/wp-content/plugins/wpforms-lite/assets/css/integrations/divi/choices.min.css?ver=9.0.1" type="text/css" media="all" />
 <link rel="stylesheet" id="supreme_mega_menu-styles-css" href="https://www.resemble.ai/wp-content/plugins/supreme-mega-menu/styles/style.min.css?ver=1.2.8" type="text/css" media="all" />
 <link rel="stylesheet" id="dsm-magnific-popup-css" href="https://www.resemble.ai/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/css/magnific_popup.css?ver=4.9.85" type="text/css" media="all" />
@@ -1270,7 +223,7 @@ body.custom-background { background-color: #ffffff; }
 <link rel="icon" href="https://www.resemble.ai/wp-content/uploads/2022/02/cropped-abSldYYi_400x400-192x192.jpeg" sizes="192x192" />
 <link rel="apple-touch-icon" href="https://www.resemble.ai/wp-content/uploads/2022/02/cropped-abSldYYi_400x400-180x180.jpeg" />
 <meta name="msapplication-TileImage" content="https://www.resemble.ai/wp-content/uploads/2022/02/cropped-abSldYYi_400x400-270x270.jpeg" />
-<link rel="stylesheet" id="et-core-unified-351-cached-inline-styles" href="https://www.resemble.ai/wp-content/et-cache/351/et-core-unified-351.min.css?ver=1721866228" /><style id="et-core-unified-tb-232139-tb-232181-351-cached-inline-styles">#main-header,#main-header .nav li ul,.et-search-form,#main-header .et_mobile_menu{background-color:rgba(255,181,181,0)}#main-header .nav li ul{background-color:#0a0500}.nav li ul{border-color:#7ce02a}.et_header_style_centered .mobile_nav .select_page,.et_header_style_split .mobile_nav .select_page,.et_nav_text_color_light #top-menu>li>a,.et_nav_text_color_dark #top-menu>li>a,#top-menu a,.et_mobile_menu li a,.et_nav_text_color_light .et_mobile_menu li a,.et_nav_text_color_dark .et_mobile_menu li a,#et_search_icon:before,.et_search_form_container input,span.et_close_search_field:after,#et-top-navigation .et-cart-info{color:#81ba7c}.et_search_form_container input::-moz-placeholder{color:#81ba7c}.et_search_form_container input::-webkit-input-placeholder{color:#81ba7c}.et_search_form_container input:-ms-input-placeholder{color:#81ba7c}#main-header .nav li ul a{color:#f4f4f4}#top-menu li a{font-size:16px}body.et_vertical_nav .container.et_search_form_container .et-search-form input{font-size:16px!important}#top-menu li a,.et_search_form_container input{font-weight:bold;font-style:normal;text-transform:uppercase;text-decoration:none}.et_search_form_container input::-moz-placeholder{font-weight:bold;font-style:normal;text-transform:uppercase;text-decoration:none}.et_search_form_container input::-webkit-input-placeholder{font-weight:bold;font-style:normal;text-transform:uppercase;text-decoration:none}.et_search_form_container input:-ms-input-placeholder{font-weight:bold;font-style:normal;text-transform:uppercase;text-decoration:none}#top-menu li.current-menu-ancestor>a,#top-menu li.current-menu-item>a,#top-menu li.current_page_item>a{color:#22b529}#main-header{box-shadow:none}@media only screen and (min-width:981px){.et_header_style_left #et-top-navigation,.et_header_style_split #et-top-navigation{padding:26px 0 0 0}.et_header_style_left #et-top-navigation nav>ul>li>a,.et_header_style_split #et-top-navigation nav>ul>li>a{padding-bottom:26px}.et_header_style_split .centered-inline-logo-wrap{width:52px;margin:-52px 0}.et_header_style_split .centered-inline-logo-wrap #logo{max-height:52px}.et_pb_svg_logo.et_header_style_split .centered-inline-logo-wrap #logo{height:52px}.et_header_style_centered #top-menu>li>a{padding-bottom:9px}.et_header_style_slide #et-top-navigation,.et_header_style_fullscreen #et-top-navigation{padding:17px 0 17px 0!important}.et_header_style_centered #main-header .logo_container{height:52px}#logo{max-height:44%}.et_pb_svg_logo #logo{height:44%}.et_header_style_centered.et_hide_primary_logo #main-header:not(.et-fixed-header) .logo_container,.et_header_style_centered.et_hide_fixed_logo #main-header.et-fixed-header .logo_container{height:9.36px}.et_fixed_nav #page-container .et-fixed-header#top-header{background-color:#1fad42!important}.et_fixed_nav #page-container .et-fixed-header#top-header #et-secondary-nav li ul{background-color:#1fad42}.et-fixed-header#main-header,.et-fixed-header#main-header .nav li ul,.et-fixed-header .et-search-form{background-color:#030a00}.et-fixed-header #top-menu a,.et-fixed-header #et_search_icon:before,.et-fixed-header #et_top_search .et-search-form input,.et-fixed-header .et_search_form_container input,.et-fixed-header .et_close_search_field:after,.et-fixed-header #et-top-navigation .et-cart-info{color:#81ba7c!important}.et-fixed-header .et_search_form_container input::-moz-placeholder{color:#81ba7c!important}.et-fixed-header .et_search_form_container input::-webkit-input-placeholder{color:#81ba7c!important}.et-fixed-header .et_search_form_container input:-ms-input-placeholder{color:#81ba7c!important}.et-fixed-header #top-menu li.current-menu-ancestor>a,.et-fixed-header #top-menu li.current-menu-item>a,.et-fixed-header #top-menu li.current_page_item>a{color:#0d7a35!important}.et-fixed-header#top-header a{color:#a0a0a0}}@media only screen and (min-width:1350px){.et_pb_row{padding:27px 0}.et_pb_section{padding:54px 0}.single.et_pb_pagebuilder_layout.et_full_width_page .et_post_meta_wrapper{padding-top:81px}.et_pb_fullwidth_section{padding:0}}	#main-header,#et-top-navigation{font-family:'Heebo',Helvetica,Arial,Lucida,sans-serif}</style><style id="wpforms-css-vars-root">
+<link rel="stylesheet" id="et-core-unified-tb-232139-tb-232181-351-cached-inline-styles" href="https://www.resemble.ai/wp-content/et-cache/351/et-core-unified-tb-232139-tb-232181-351.min.css?ver=1722058052" /><link rel="stylesheet" id="et-core-unified-351-cached-inline-styles" href="https://www.resemble.ai/wp-content/et-cache/351/et-core-unified-351.min.css?ver=1722058052" /><style id="wpforms-css-vars-root">
 				:root {
 					--wpforms-field-border-radius: 3px;
 --wpforms-field-border-style: solid;
@@ -1334,7 +287,1077 @@ body.custom-background { background-color: #ffffff; }
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="page-container">
-<div id="et-boc" class="et-boc">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<style>
+    html, body {height: 100vh;  /* standard definition (as fallback) */
+    height: 100dvh; /* dynamic vh will make the trick on iOS */}
+    body.overflow-hidden {overflow:hidden;}
+    .header__container.desktop {display:none;}
+    .header {position: fixed;width:100%;top: 0;z-index:9999;background:white;border-bottom:1px solid #EBEBEB;}
+    .header__overlay {display:none;position:fixed;width:100%;height:100%;top:0;z-index:9998;background:black;opacity:0.25;}
+    .header__overlay.active {display:block;}
+    .header ul { list-style: none; }
+    .header a { text-decoration: none; color: #757A7E;}
+
+    
+    #header__menu-container, #header__menu-inner {width:100%;display:flex;align-items:center;grid-column-gap:8px;}
+    .header__container.mobile #header__menu-inner {cursor:pointer;width:auto;justify-content:flex-end;padding: 8px; margin-right:-8px;}
+    .header__container.mobile #header__menu-inner:hover {background: #F5F5F5;border-radius: 6px;}
+    #header__menu-container {padding: 20px;justify-content:space-between;}
+    #header__menu-container h4 {font-family:'Inter';color:#757A7E;font-weight:600;font-size:13px;padding-bottom:0;}
+    .accordion-toggle, .accordion__content li {cursor: pointer;position: relative;}
+    .header__container {max-width:1300px;margin: 0 auto;}
+    #header__menu-container h1 {padding-bottom:0;}
+    #header__menu-container h1 a {display:flex;align-items:center;height:36px;}
+    .header .header__logo {max-width:100px;height:100%;object-fit:contain;margin:0;}
+    .header__logo.wide {display:none;}
+    
+    /* Hamburger Icon */
+        #header__menu-container #hamburger-menu {position: relative;width: 25px;height: 20px;cursor: pointer;}
+        #header__menu-container #hamburger-menu span {opacity: 1;left: 0;display: block;width: 100%;height: 2.5px;border-radius: 10px;color: black;background-color: black;position: absolute;transform: rotate(0deg);}
+        #header__menu-container #hamburger-menu span:nth-child(1) {top: 1px;}
+        #header__menu-container #hamburger-menu span:nth-child(2) {top: 9px;}
+        #header__menu-container #hamburger-menu span:nth-child(3) {top: 17px;}
+
+        /* Active state orientation */
+            #header__menu-container #hamburger-menu.open span:nth-child(1) {transform: translateY(9px) rotate(135deg);top:0;}
+            #header__menu-container #hamburger-menu.open span:nth-child(2) {opacity: 0;}
+            #header__menu-container #hamburger-menu.open span:nth-child(3) {transform: translateY(-9px) rotate(-135deg);top:18px;}
+
+    /* Mobile Dropdown List */
+        #menu-list-wrapper {padding-left: 0;display: none;position: relative;width: 100%;background: white;z-index: 999;max-height: calc(100dvh - 76px);}
+        #menu-list-wrapper.active {display:block;border-top:1px solid #EBEBEB}
+        .header__menu-list.accordion {padding: 20px 8px;display:grid;grid-row-gap:8px;}
+        .header__container.mobile .header__menu-list.accordion {max-height:calc(100dvh - 154px);overflow-y:scroll;}
+        /* .header__menu-list-container {} */
+    
+
+    
+
+    /* Menu Toggle */
+        .accordion-toggle, .primary-link a {display:grid;grid-row-gap:4px;padding: 12px;font-family: 'Inter';}
+        .accordion-toggle:hover, .primary-link a:hover {background:#F5F5F5;border-radius:6px;}
+        /* #header .menu-list li.accordion-toggle {padding: 12px 0;} */
+        .accordion__header {display: flex; align-items: center;grid-column-gap: 8px;}
+        .accordion__title {line-height:1.2;font-size:17px;color:#757A7E;font-weight:600;font-family:'Inter'}
+        .accordion__subtitle {line-height:1.5;font-size:15px;color:#757A7E;font-family:'Nunito Sans',Helvetica,Arial,Lucida,sans-serif;}
+        .toggle.accordion-toggle.active .accordion__subtitle, .accordion__subtitle.hidden {display:none;}
+
+        /* Arrow direction */
+            .accordion-toggle.active svg {transform: rotate(180deg);}
+
+    /* Sub-menu Items */
+        .accordion__content {display: none;}
+        .header__submenu.accordion__content.open, .header__submenu.accordion__content.active {border-left:1px solid #EBEBEB;display:flex;flex-direction:column;grid-row-gap:8px;margin:12px 8px 12px 12px;}
+        .header__container.mobile .header__submenu.accordion__content.open, .header__container.mobile .header__submenu.accordion__content.active {border-left:0;margin:12px 0px;}
+        .header__submenu.accordion__content li {margin-left: 16px;padding: 12px;}
+        .header__container.mobile .header__submenu.accordion__content li {margin-left:0;}
+        .header__submenu.accordion__content li:hover {background:#F5F5F5;border-radius:6px;}
+        .accordion__content li a {display:grid;grid-template-columns:35px 1fr;grid-column-gap:12px;align-items:flex-start;}
+        .accordion__content li .header__submenu-icon {width:35px;height:30px;display:flex;justify-content:flex-start;}
+        .accordion__content li .header__submenu-icon img {width:fit-content;height:fit-content;max-width:35px;max-height:30px;object-fit:contain;margin:0;}
+        .header__submenu-copy {display:grid;grid-row-gap:4px;}
+        .header__submenu-title {font-family:'Inter';color:#36AF89;font-weight:700;font-size:15px;line-height:1.2;}
+        .header__submenu-subtitle {font-family:'Nunito Sans',Helvetica,Arial,Lucida,sans-serif; font-size:14px;color:#757A7E;font-weight:400;line-height:1.3;max-width:600px;}
+
+        /* Section Titles */
+            .header__submenu.accordion__content li.header__submenu-section-title {color:#757A7E;font-size:13px;font-weight:700;font-family: 'Inter';text-transform:uppercase;line-height:1.2;cursor:auto;}
+            .header__submenu.accordion__content li.header__submenu-section-title:hover {background:none;}
+
+
+    /* Nav Footer */
+        .header__menu-footer {display:flex;flex-wrap:wrap;align-items:center;justify-content: flex-end;grid-column-gap:4px;grid-row-gap:20px;padding: 20px;border-top:1px solid #EBEBEB;}
+        .header__menu-footer li {display:grid;line-height:1;font-size:12px;}
+        .header__menu-footer .plainLink, .header__container.desktop .primary-link {font-family:'Inter';font-weight:600;color:#757A7E;padding: 8px;}
+        .header__menu-footer .plainLink:hover, .header__container.desktop .primary-link:hover {background:#F5F5F5;border-radius:4px;}
+        .header__menu-footer .primary-CTA {font-family:'Inter';background:#F6E067;color:#333333;font-weight:700;padding:12px;border-radius:4px;margin-left:8px;}
+        .header__menu-footer .primary-CTA span {display:none;}
+        /* .header__menu-footer .primary-CTA:hover {background:#F5F5F5;} */
+
+    #page-container, .et-tb #page-container, .et-tb-has-header #page-container {padding-top:76px !important;}
+
+    
+
+    @media screen and (max-width: 1001px) {
+        .et-waypoint:not(.et_pb_counters) {opacity: 1 !important;}
+    }
+
+    @media screen and (min-width:350px) {
+        .header__menu-footer li {font-size:14px;}
+    }
+
+    @media screen and (min-width: 375px) {
+        #header__menu-inner {grid-column-gap:12px;}
+        .header__logo.mobile {max-width:140px}
+        #header__menu-container h4 {font-size:15px;}
+    }
+
+    @media screen and (min-width: 410px) {
+        .header__container.mobile .header__menu-list.accordion {max-height:calc(100dvh - 155px);}
+        .header__menu-footer .primary-CTA span {display:inline-block;}
+    }
+
+    @media screen and (min-width: 450px) {
+        .header__logo.mobile {display:none;}
+        .header__logo.wide {display:inline-block;max-width:200px;}
+    }
+
+    @media screen and (min-width:1050px) {
+        #page-container, .et-tb #page-container, .et-tb-has-header #page-container {padding-top:78px !important;}
+        .header {padding: 0 20px;border-bottom:none;}
+        .header__menu-container-desktop {display:block !important;}
+        .header__container-divider {position:absolute;width:100%;height:1px;background:#EBEBEB;top:78px; z-index: 1;left:0;}
+
+        /* Mobile Nav */
+            .header__container.mobile {display:none;}
+
+        /* Desktop Nav */
+            .header__container.desktop {display:block !important;padding:0px;}
+
+        /* Main nav layout */
+            .header__container {padding:20px 16px;position:relative;}
+            #menu-list-wrapper {display:block;align-items:center;justify-content:space-between;position:unset;top: unset;width:auto;overflow:visible;max-height:unset;}
+            .header__menu-list-primary-nav {display:flex;justify-content:space-between;padding: 20px 0;}
+            .header__menu-footer {padding:0;border-top:none;margin:0;grid-column-gap:8px;}
+            .header__menu-list-container {display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:0 auto;}
+
+        /* Logo */
+            .desktop-logo {padding:0;display:flex;align-items:center;height:36px;}
+            .desktop-logo a {display:flex;}
+            .desktop-logo .header__logo {width:100%;max-width:120px;}
+            .header__logo.mobile {display:block;}
+            .header__logo.wide {display:none;}
+
+        /* Accordion Toggles */
+            .header__menu-list.accordion {display:flex;grid-column-gap:8px;padding:0;align-items:center;}
+            .accordion__title {line-height:1;}
+            .accordion__title, .header__menu-footer .plainLink, .header__menu-footer .primary-CTA, .primary-link  {font-size:14px;}
+            .accordion-toggle {padding:8px;position:unset;line-height:1;}
+            .accordion__header a {display: flex; align-items: center; grid-column-gap: 8px;}
+
+            /* Subtitle Display */
+                .accordion__subtitle {display:none;}
+        
+        /* Mega Dropdown */
+            .header.open {background:white;}
+            .header__mega-dropdown {display:none;padding:28px 0;}
+            .header__mega-dropdown.open {display:flex;background:white;grid-column-gap:20px;}
+
+            /* Accordion Promo */
+                .header__mega-dropdown-promo {display:none;min-width:250px;width:250px;flex-direction:column;grid-row-gap:12px;}
+                .header__mega-dropdown-promo.open {display:flex;}
+                .header__mega-dropdown-promo-title {font-size:18px;color:#36AF89;font-weight:700;font-family:'Inter';line-height: 1.4;}
+                .header__mega-dropdown-promo-description {font-family: 'Nunito Sans',Helvetica,Arial,Lucida,sans-serif; font-size: 16px; color: #757A7E; font-weight: 400;line-height: 1.5;}
+                .header__mega-dropdown-promo-CTA {padding-top:4px;}
+                .header__mega-dropdown-promo-CTA a {background:#36AF89;color:white;padding: 12px;display:inline-block;border-radius:6px;font-family: 'Nunito Sans',Helvetica,Arial,Lucida,sans-serif;font-weight:700;line-height: 1;width:fit-content;transition: all .2s;position:relative;}
+                .header__mega-dropdown-promo-CTA a span {line-height:1;}
+                .header__mega-dropdown-promo-CTA a:hover {padding-right:32px;}
+                .header__mega-dropdown-promo-CTA a svg {width:8px;height:12px;opacity:0;transition: all .2s;position:absolute;right:12px;}
+                .header__mega-dropdown-promo-CTA a svg path {fill:white}
+                .header__mega-dropdown-promo-CTA a:hover svg {opacity:1;}
+
+            /* Submenus */
+                .header__mega-dropdown .accordion__content li {margin-left:20px;}
+                .header__mega-dropdown .header__submenu.accordion__content.open, .header__mega-dropdown .header__submenu.accordion__content.active {position:unset;margin:0;}
+                .header__mega-dropdown .header__submenu.accordion__content.single-column.open {width:100%;}
+                .header__mega-dropdown .header__submenu.accordion__content.double-column.open {display:grid;grid-template-columns:repeat(2, 1fr);grid-column-gap:20px;width:100%;}
+                .header__mega-dropdown .header__submenu.accordion__content.double-column.open li {height:fit-content;}
+                .header__mega-dropdown .header__submenu.accordion__content.double-column li:nth-child(even) {margin-left:0;}
+            
+    }
+
+    @media screen and (min-width:1170px) {
+        body.overflow-hidden {overflow:auto;}
+        .header__logo.mobile {display:none;}
+        .header__logo.wide {display:block;max-width:250px;}
+    }
+    
+    
+</style>
+<header class="header" id="header">
+<div class="header__container-divider"></div>
+<div class="header__container mobile">
+<div class="header__menu-container-mobile" id="header__menu-container">
+<h1 class="mobile-logo"><a href="/">
+<img width="724" height="99" class="header__logo mobile" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.png">
+<img width="1280" height="269" class="header__logo wide" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.webp">
+</a></h1>
+<div id="header__menu-inner">
+<h4>AI Voice Generator</h4>
+<div role="button" tabindex="0" id="hamburger-menu"><span></span><span></span><span></span></div>
+</div>
+</div>
+<nav class="header__menu-list-container" id="menu-list-wrapper">
+<ul class="header__menu-list accordion">
+<li role="button" tabindex="0" id="nav1" class="toggle accordion-toggle">
+<div class="accordion__header">
+<div class="accordion__title">AI Voice Generator</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</div>
+<div class="accordion__subtitle">Voice Cloning, Text to Speech, Speech to Speech...</div>
+</li>
+<ul class="header__submenu accordion__content" id="submenu1">
+<li class="header__submenu-section-title">Product</li>
+<li>
+<a href="/voice-cloning/" target="_self">
+<div class="header__submenu-icon">
+<img width="44" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Mic.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Voice Cloning</div>
+<div class="header__submenu-subtitle">Record or Upload your voice to create your AI Voice</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/text-to-speech-converter/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Text to Speech</div>
+<div class="header__submenu-subtitle">High quality, human-like text-to-speech</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/speech-to-speech/" target="_self">
+<div class="header__submenu-icon">
+<img width="60" height="50" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Speech to Speech</div>
+<div class="header__submenu-subtitle">Realtime speech-to-speech voice conversion</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/languages/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Multilingual</div>
+<div class="header__submenu-subtitle">Build your synthetic voices in 60+ Langauges</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/fill/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Neural Audio Editing</div>
+<div class="header__submenu-subtitle">Audio Editing made simple with synthetic voices</div>
+</div>
+</a>
+</li>
+</ul>
+<ul class="header__submenu accordion__content" id="submenu1">
+<li class="header__submenu-section-title">Case Studies</li>
+<li>
+<a href="/how-zomato-amp-truefan-used-ai-to-give-354000-mothers-a-reason-to-smile-this-mothers-day/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Personalization with Zomato and TrueFan</div>
+<div class="header__submenu-subtitle">Learn how Zomato scaled to over 350,000 AI messages</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/how-red-games-used-realtime-dynamic-interactive-ai-voices-in-crayola-adventures/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Crayola Adventures with Red Games</div>
+<div class="header__submenu-subtitle">2024 Apple Design Award Winning Game</div>
+</div>
+</a>
+</li>
+<li>
+<a href="http://www.resemble.ai/how-fabler-and-resemble-ai-transformed-bedtime-for-thousands-of-children" target="_self">
+<div class="header__submenu-icon">
+<img width="60" height="50" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Fabler Transformed Bedtime for 1000’s of Children</div>
+<div class="header__submenu-subtitle">AI-powered bedtime stories for kids.</div>
+</div>
+</a>
+</li>
+</ul>
+<li role="button" tabindex="0" id="nav2" class="toggle accordion-toggle">
+<div class="accordion__header">
+<div class="accordion__title">Detect</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</div>
+<div class="accordion__subtitle">Deepfake detection, AI Watermarker...</div>
+</li>
+<ul class="header__submenu accordion__content" id="submenu2">
+<li class="header__submenu-section-title">Product</li>
+<li>
+<a href="/deepfake-detection/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Deepfake Detection</div>
+<div class="header__submenu-subtitle">Realtime Audio Deepfake Detector</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/watermarker/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">AI Watermarker</div>
+<div class="header__submenu-subtitle">AI Watermarker to Protect your IP</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/identity/" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="55" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Identity</div>
+<div class="header__submenu-subtitle">Voice Enrollment for Identity Protection</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/deepfake-incident-report/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="62" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Reports</div>
+<div class="header__submenu-subtitle">In-depth incident reports for the latest deepfakes</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/audio-intelligence/" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="57" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Brain.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Audio Intelligence</div>
+<div class="header__submenu-subtitle">Explainable AI with audio enabled language model</div>
+</div>
+</a>
+</li>
+</ul>
+<ul class="header__submenu accordion__content" id="submenu2">
+<li class="header__submenu-section-title">Research</li>
+<li>
+<a href="/detect2b/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">DETECT-2B</div>
+<div class="header__submenu-subtitle">Groundbreaking approach to deepfake detection combines efficient architecture with unparalleled accuracy across diverse languages and generation methods</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/neural-speech-watermarker/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">PerTH Watermarker</div>
+<div class="header__submenu-subtitle">Invisible watermark to tackle malicious use and stop misinformation</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://github.com/resemble-ai/Resemblyzer" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="55" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Resemblyzer</div>
+<div class="header__submenu-subtitle">Deep Learning model that derives a high-level representation of a voice.</div>
+</div>
+</a>
+</li>
+</ul>
+<li role="button" tabindex="0" id="nav3" class="toggle accordion-toggle">
+<div class="accordion__header">
+<div class="accordion__title">Resources</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</div>
+<div class="accordion__subtitle">On-Prem, API Docs, Status</div>
+</li>
+<ul class="header__submenu accordion__content" id="submenu3">
+<li>
+<a href="/on-prem/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/On-Prem-Icon.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">On Prem</div>
+<div class="header__submenu-subtitle">Run our models on your own infrastructure</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://docs.app.resemble.ai/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/API-Icon.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">API Docs</div>
+<div class="header__submenu-subtitle">Programmatically build content with your synthetic voices</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://status.resemble.ai/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Status</div>
+<div class="header__submenu-subtitle">API and Service Status</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/ethics/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Ethics</div>
+<div class="header__submenu-subtitle">Our ethical statement and guidelines for usage.</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/blog/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="62" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Blog</div>
+<div class="header__submenu-subtitle">Case Studies and Development Thoughts from our team.</div>
+</div>
+</a>
+</li>
+</ul>
+</ul>
+<ul class="header__menu-footer">
+<li><a class="plainLink" href="/government/" target="_self">Government</a></li>
+<li><a class="plainLink" href="/pricing/" target="_self">Pricing</a></li>
+<li><a class="plainLink" href="https://app.resemble.ai/" target="_self">Sign In</a></li>
+<li><a class="primary-CTA" href="/schedule-a-demo/" target="_self">Request Demo</a></li>
+</ul>
+</nav>
+</div>
+<div class="header__container desktop">
+<nav class="header__menu-list-container" id="menu-list-wrapper">
+<div class="header__menu-list-primary-nav">
+<h1 class="desktop-logo">
+<a href="/">
+<img width="724" height="99" class="header__logo mobile" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.png">
+<img width="1280" height="269" class="header__logo wide" alt="Resemble AI - AI Voice Generator" src="https://www.resemble.ai/wp-content/uploads/2024/07/logo.webp">
+</a>
+</h1>
+<ul class="header__menu-list accordion">
+<li role="button" tabindex="0" id="nav1" class="toggle accordion-toggle">
+<div class="accordion__header">
+<div class="accordion__title">AI Voice Generator</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</div>
+</li>
+<li role="button" tabindex="0" id="nav2" class="toggle accordion-toggle">
+<div class="accordion__header">
+<a href="/detect-solution/">
+<div class="accordion__title">Detect</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</a>
+</div>
+</li>
+<li role="button" tabindex="0" id="nav3" class="toggle accordion-toggle">
+<div class="accordion__header">
+<div class="accordion__title">Resources</div>
+<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 1.51351L7 8L7.73506e-08 1.51351L1.63333 4.96314e-07L7 4.97297L12.3667 6.24308e-07L14 1.51351Z" fill="#757A7E" />
+</svg>
+</div>
+</li>
+</ul>
+<ul class="header__menu-footer">
+<li><a class="plainLink" href="/government/" target="_self">Government</a></li>
+<li><a class="plainLink" href="/pricing/" target="_self">Pricing</a></li>
+<li><a class="plainLink" href="https://app.resemble.ai/" target="_self">Sign In</a></li>
+<li><a class="primary-CTA" href="/schedule-a-demo/" target="_self">Request Demo</a></li>
+</ul>
+</div>
+<div class="header__mega-dropdown">
+<div id="promo" class="header__mega-dropdown-promo desktop-promo-1">
+<div class="header__mega-dropdown-promo-title">Create your own AI Voice</div>
+<div class="header__mega-dropdown-promo-description">Use our Generative Voice AI models that are indistinguishable from humans</div>
+<div class="header__mega-dropdown-promo-CTA">
+<a href="https://app.resemble.ai/users/sign_up" target="_self">
+<span>Clone your AI Voice</span>
+<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
+</svg>
+</a>
+</div>
+</div>
+<ul class="header__submenu accordion__content" id="submenu1">
+<li class="header__submenu-section-title">Product</li>
+<li>
+<a href="/voice-cloning/" target="_self">
+<div class="header__submenu-icon">
+<img width="44" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Mic.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Voice Cloning</div>
+<div class="header__submenu-subtitle">Record or Upload your voice to create your AI Voice</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/text-to-speech-converter/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Text to Speech</div>
+<div class="header__submenu-subtitle">High quality, human-like text-to-speech</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/speech-to-speech/" target="_self">
+<div class="header__submenu-icon">
+<img width="60" height="50" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Speech to Speech</div>
+<div class="header__submenu-subtitle">Realtime speech-to-speech voice conversion</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/languages/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Multilingual</div>
+<div class="header__submenu-subtitle">Build your synthetic voices in 60+ Langauges</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/fill/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Neural Audio Editing</div>
+<div class="header__submenu-subtitle">Audio Editing made simple with synthetic voices</div>
+</div>
+</a>
+</li>
+</ul>
+<ul class="header__submenu accordion__content" id="submenu1">
+<li class="header__submenu-section-title">Case Studies</li>
+<li>
+<a href="/how-zomato-amp-truefan-used-ai-to-give-354000-mothers-a-reason-to-smile-this-mothers-day/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Globe.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Personalization with Zomato and TrueFan</div>
+<div class="header__submenu-subtitle">Learn how Zomato scaled to over 350,000 AI messages</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/how-red-games-used-realtime-dynamic-interactive-ai-voices-in-crayola-adventures/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Crayola Adventures with Red Games</div>
+<div class="header__submenu-subtitle">2024 Apple Design Award Winning Game</div>
+</div>
+</a>
+</li>
+<li>
+<a href="http://www.resemble.ai/how-fabler-and-resemble-ai-transformed-bedtime-for-thousands-of-children" target="_self">
+<div class="header__submenu-icon">
+<img width="60" height="50" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Speech-Bubble.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Fabler Transformed Bedtime for 1000’s of Children</div>
+<div class="header__submenu-subtitle">AI-powered bedtime stories for kids.</div>
+</div>
+</a>
+</li>
+</ul>
+<div id="promo" class="header__mega-dropdown-promo desktop-promo-2">
+<div class="header__mega-dropdown-promo-title">State of the Art Detection Models</div>
+<div class="header__mega-dropdown-promo-description">We’ve dedicated years towards building AI models that aid in the safe deployment of Generative Voice AI. Now you can use them too.</div>
+<div class="header__mega-dropdown-promo-CTA">
+<a href="/detect-solution/" target="_self">
+<span>Learn More</span>
+<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
+</svg>
+</a>
+</div>
+</div>
+<ul class="header__submenu accordion__content" id="submenu2">
+<li class="header__submenu-section-title">Product</li>
+<li>
+<a href="/deepfake-detection/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Deepfake Detection</div>
+<div class="header__submenu-subtitle">Realtime Audio Deepfake Detector</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/watermarker/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">AI Watermarker</div>
+<div class="header__submenu-subtitle">AI Watermarker to Protect your IP</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/identity/" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="55" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Identity</div>
+<div class="header__submenu-subtitle">Voice Enrollment for Identity Protection</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/deepfake-incident-report/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="62" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Reports</div>
+<div class="header__submenu-subtitle">In-depth incident reports for the latest deepfakes</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/audio-intelligence/" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="57" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Brain.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Audio Intelligence</div>
+<div class="header__submenu-subtitle">Explainable AI with audio enabled language model</div>
+</div>
+</a>
+</li>
+</ul>
+<ul class="header__submenu accordion__content" id="submenu2">
+<li class="header__submenu-section-title">Research</li>
+<li>
+<a href="/detect2b/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Detect.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">DETECT-2B</div>
+<div class="header__submenu-subtitle">Groundbreaking approach to deepfake detection combines efficient architecture with unparalleled accuracy across diverse languages and generation methods</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/neural-speech-watermarker/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/AI-Watermarker.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">PerTH Watermarker</div>
+<div class="header__submenu-subtitle">Invisible watermark to tackle malicious use and stop misinformation</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://github.com/resemble-ai/Resemblyzer" target="_self">
+<div class="header__submenu-icon">
+<img width="57" height="55" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Magnifying-Glass.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Resemblyzer</div>
+<div class="header__submenu-subtitle">Deep Learning model that derives a high-level representation of a voice.</div>
+</div>
+</a>
+</li>
+</ul>
+<div id="promo" class="header__mega-dropdown-promo desktop-promo-3">
+<div class="header__mega-dropdown-promo-title">Latest from the Vault</div>
+<div class="header__mega-dropdown-promo-description">Read about the latest product and research advancements on Generative Voice.</div>
+<div class="header__mega-dropdown-promo-CTA">
+<a href="/blog/" target="_self">
+<span>Read the Blog</span>
+<svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.13514 5.28374e-07L6 5L1.13513 10L-8.51681e-07 8.83333L3.72973 5L-1.8144e-07 1.16667L1.13514 5.28374e-07Z" fill="white" />
+</svg>
+</a>
+</div>
+</div>
+<ul class="header__submenu accordion__content" id="submenu3">
+<li>
+<a href="/on-prem/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/On-Prem-Icon.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">On Prem</div>
+<div class="header__submenu-subtitle">Run our models on your own infrastructure</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://docs.app.resemble.ai/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="54" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/API-Icon.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">API Docs</div>
+<div class="header__submenu-subtitle">Programmatically build content with your synthetic voices</div>
+</div>
+</a>
+</li>
+<li>
+<a href="https://status.resemble.ai/" target="_self">
+<div class="header__submenu-icon">
+<img width="54" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/equalizer.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Status</div>
+<div class="header__submenu-subtitle">API and Service Status</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/ethics/" target="_self">
+<div class="header__submenu-icon">
+<img width="56" height="56" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Pencil.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Ethics</div>
+<div class="header__submenu-subtitle">Our ethical statement and guidelines for usage.</div>
+</div>
+</a>
+</li>
+<li>
+<a href="/blog/" target="_self">
+<div class="header__submenu-icon">
+<img width="48" height="62" role="presentation" src="https://www.resemble.ai/wp-content/uploads/2024/07/Reports.png">
+</div>
+<div class="header__submenu-copy">
+<div class="header__submenu-title">Blog</div>
+<div class="header__submenu-subtitle">Case Studies and Development Thoughts from our team.</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+</div>
+</header>
+<div class="header__overlay"></div>
+<script>
+    (function($) {
+
+        // Mobile
+
+            // Hamburger Menu Activation
+                $(".header__container.mobile #header__menu-inner").click(function(event) {
+                    event.stopPropagation();
+                    $("#hamburger-menu").toggleClass("open");
+                    $("#menu-list-wrapper").toggleClass("active");
+                    $('.header__overlay').toggleClass('active');
+
+                    $("body").toggleClass("overflow-hidden");
+
+                    if (!$('#menu-list-wrapper').hasClass("active")) {
+                        $('.header__mega-dropdown').removeClass("open");
+                        $('.header').removeClass("open");
+                        $('.header__overlay').removeClass('active');
+                        $('.header__container.mobile .header__menu-list-container').removeClass('active');
+                        $("#hamburger-menu").removeClass("open");
+                        $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                        $(".accordion__content").removeClass("open");
+                        $("body").removeClass("overflow-hidden");
+                        $('.accordion__subtitle').removeClass("hidden");
+
+                    }
+                });
+
+            // Accordion Toggle
+                
+                
+                        
+                            $(".header__container.mobile .header__menu-list-container .accordion-toggle#nav1").click(function() {
+                                $('.header__container.mobile .header__menu-list').find('ul#submenu1').toggleClass("open");
+                                $(this).toggleClass("active-tab").toggleClass("active");
+                                $('#nav1 .accordion__subtitle').toggleClass("hidden");
+                                console.log('clicked nav 1');
+                            });
+                                    
+                        
+                    
+                        
+                            $(".header__container.mobile .header__menu-list-container .accordion-toggle#nav2").click(function() {
+                                $('.header__container.mobile .header__menu-list').find('ul#submenu2').toggleClass("open");
+                                $(this).toggleClass("active-tab").toggleClass("active");
+                                $('#nav2 .accordion__subtitle').toggleClass("hidden");
+                                console.log('clicked nav 2');
+                            });
+                                    
+                        
+                    
+                        
+                            $(".header__container.mobile .header__menu-list-container .accordion-toggle#nav3").click(function() {
+                                $('.header__container.mobile .header__menu-list').find('ul#submenu3').toggleClass("open");
+                                $(this).toggleClass("active-tab").toggleClass("active");
+                                $('#nav3 .accordion__subtitle').toggleClass("hidden");
+                                console.log('clicked nav 3');
+                            });
+                                    
+                        
+                                    
+
+        // Desktop Toggle
+            $(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle").hover(function() {
+                $('.header__mega-dropdown').addClass("open");
+                $('.header').addClass("open");
+                $('.header__overlay').addClass('active');
+                $("body").addClass("overflow-hidden");
+                if (!$(this).hasClass("active-tab")) {
+                    $(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
+                    $('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
+                }
+            });
+
+            
+                    
+                        $(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav1").hover(function() {
+                            $('.header__mega-dropdown').find('ul#submenu1').addClass("open");
+                            $('.header__mega-dropdown').find('.desktop-promo-1').addClass("open");
+                            $(this).addClass("active-tab").addClass("active");
+                            $(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
+                            if (!$(this).hasClass("active-tab")) {
+                                $('.header__mega-dropdown').removeClass("open");
+                                $('.header').removeClass("open");
+                                $('.header__overlay').removeClass('active');
+                                $("body").removeClass("overflow-hidden");
+                                $(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
+                                $('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
+                            }
+                        });
+
+                        if ($('.header__container.desktop #submenu1').length > 1) {
+                            $('.header__container.desktop #submenu1').addClass('single-column');
+                        } else {
+                            if ($('.header__container.desktop #submenu1 li').length > 3) {
+                                $('.header__container.desktop #submenu1').addClass('double-column');
+                            }
+                        }
+                                
+                    
+                
+                    
+                        $(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav2").hover(function() {
+                            $('.header__mega-dropdown').find('ul#submenu2').addClass("open");
+                            $('.header__mega-dropdown').find('.desktop-promo-2').addClass("open");
+                            $(this).addClass("active-tab").addClass("active");
+                            $(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
+                            if (!$(this).hasClass("active-tab")) {
+                                $('.header__mega-dropdown').removeClass("open");
+                                $('.header').removeClass("open");
+                                $('.header__overlay').removeClass('active');
+                                $("body").removeClass("overflow-hidden");
+                                $(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
+                                $('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
+                            }
+                        });
+
+                        if ($('.header__container.desktop #submenu2').length > 1) {
+                            $('.header__container.desktop #submenu2').addClass('single-column');
+                        } else {
+                            if ($('.header__container.desktop #submenu2 li').length > 3) {
+                                $('.header__container.desktop #submenu2').addClass('double-column');
+                            }
+                        }
+                                
+                    
+                
+                    
+                        $(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle#nav3").hover(function() {
+                            $('.header__mega-dropdown').find('ul#submenu3').addClass("open");
+                            $('.header__mega-dropdown').find('.desktop-promo-3').addClass("open");
+                            $(this).addClass("active-tab").addClass("active");
+                            $(".header__menu-list-primary-nav .accordion-toggle").not($(this)).removeClass("active-tab").removeClass("active");
+                            if (!$(this).hasClass("active-tab")) {
+                                $('.header__mega-dropdown').removeClass("open");
+                                $('.header').removeClass("open");
+                                $('.header__overlay').removeClass('active');
+                                $("body").removeClass("overflow-hidden");
+                                $(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
+                                $('.header__mega-dropdown .header__mega-dropdown-promo').removeClass("open");
+                            }
+                        });
+
+                        if ($('.header__container.desktop #submenu3').length > 1) {
+                            $('.header__container.desktop #submenu3').addClass('single-column');
+                        } else {
+                            if ($('.header__container.desktop #submenu3 li').length > 3) {
+                                $('.header__container.desktop #submenu3').addClass('double-column');
+                            }
+                        }
+                                
+                    
+                
+            
+
+
+            // If users mouse leaves the dropdown sections or hovers over plainlink or secondary links
+                $('.header__container.desktop .primary-link').hover(function(){
+                    $('.header__mega-dropdown').removeClass("open");
+                    $('.header').removeClass("open");
+                    $('.header__overlay').removeClass('active');
+                    $(".header__container.desktop .header__menu-list-primary-nav .accordion-toggle").removeClass('active').removeClass('active-tab');;
+                    $(".header__mega-dropdown .header__submenu.accordion__content").removeClass("open");
+                    $("body").removeClass("overflow-hidden");
+                });
+
+                $('.header__container.desktop .header__menu-footer li').hover(function(){
+                    $('.header__mega-dropdown').removeClass("open");
+                    $('.header').removeClass("open");
+                    $('.header__overlay').removeClass('active');
+                    $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                    $("#hamburger-menu").removeClass("open");
+                    $(".accordion__content").removeClass("open");
+                    $("body").removeClass("overflow-hidden");
+                });
+
+
+            // If user clicks only on desktop, outside of the primary dropdown navs & the mega dropdown
+                var menuListContainer = $('.header__container.desktop .header__menu-list');
+                var megaDropdownContainer = $('.header__container.desktop .header__mega-dropdown');
+
+                // Click event for the document
+                $(document).hover(function(event) {
+                    // Check if the click is outside of the specified containers
+                    if (!menuListContainer.is(event.target) && menuListContainer.has(event.target).length === 0 && 
+                        !megaDropdownContainer.is(event.target) && megaDropdownContainer.has(event.target).length === 0) {
+
+                            if ($('.header__container.desktop').is(':visible')) {
+                                $('.header__mega-dropdown').removeClass("open");
+                                $('.header').removeClass("open");
+                                $('.header__overlay').removeClass('active');
+                                $('.header__container.mobile .header__menu-list-container').removeClass('active');
+                                $("#hamburger-menu").removeClass("open");
+                                $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                                $(".accordion__content").removeClass("open");
+                                $("body").removeClass("overflow-hidden");
+                                $('.accordion__subtitle').removeClass("hidden");
+                            }
+                    }
+                });
+            
+
+            // If user clicks anywhere on the darkened page screen then close all menu items and remove overlay
+                $('.header__overlay').hover(function(){
+                    $('.header__mega-dropdown').removeClass("open");
+                    $('.header').removeClass("open");
+                    $('.header__overlay').removeClass('active');
+                    $('.header__container.mobile .header__menu-list-container').removeClass('active');
+                    $("#hamburger-menu").removeClass("open");
+                    $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                    $(".accordion__content").removeClass("open");
+                    $("body").removeClass("overflow-hidden");
+                    $('.accordion__subtitle').removeClass("hidden");
+                });
+                $('.header__overlay').click(function(){
+                    $('.header__mega-dropdown').removeClass("open");
+                    $('.header').removeClass("open");
+                    $('.header__overlay').removeClass('active');
+                    $('.header__container.mobile .header__menu-list-container').removeClass('active');
+                    $("#hamburger-menu").removeClass("open");
+                    $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                    $(".accordion__content").removeClass("open");
+                    $("body").removeClass("overflow-hidden");
+                    $('.accordion__subtitle').removeClass("hidden");
+                });
+
+            // Esc button to close windows for mobile menu
+                $(document).keyup(function(e) {
+                    if (e.keyCode == 27) {
+                        $('.header__mega-dropdown').removeClass("open");
+                        $('.header').removeClass("open");
+                        $('.header__overlay').removeClass('active');
+                        $('.header__container.mobile .header__menu-list-container').removeClass('active');
+                        $("#hamburger-menu").removeClass("open");
+                        $(".accordion-toggle").removeClass('active').removeClass('active-tab');
+                        $(".accordion__content").removeClass("open");
+                        $("body").removeClass("overflow-hidden");
+                        $('.accordion__subtitle').removeClass("hidden");
+                    }
+                });
+
+        $('.header__menu-footer .primary-CTA').each(function() {
+            var $this = $(this);
+            var text = $this.text();
+            var firstWord = text.split(' ')[0];
+            var restOfText = text.substring(firstWord.length);
+            $this.html('<span>' + firstWord + '</span>' + restOfText);
+        });
+
+    })(jQuery);
+
+</script><div id="et-boc" class="et-boc">
 <div id="et-main-area">
 <div id="main-content">
 <article id="post-351" class="post-351 page type-page status-publish hentry">
@@ -1408,7 +1431,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>Zohaib Ahmed &#8211; 233 Mountainberry Road, Brampton, ON, L6R1W3, Canada</p>
 <p></p>
 <p></p>
-<p><strong>Owner contact email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6ccd9ded7dfd4f6c4d3c5d3dbd4dad398d7df">[email&#160;protected]</a></p>
+<p><strong>Owner contact email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1cbded9d0d8d3f1c3d4c2d4dcd3ddd49fd0d8">[email&#160;protected]</a></p>
 <p></p>
 <p></p>
 <p>Since the installation of third-party Cookies and other tracking systems through the services used within Resemble AI cannot be technically controlled by the Owner, any specific references to Cookies and tracking systems installed by third parties are to be considered indicative. In order to obtain complete information, the User is kindly requested to consult the privacy policy for the respective third-party services listed in this document.</p>
@@ -1500,10 +1523,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </article>
 </div>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script nitro-exclude>
-    var heartbeatData = new FormData(); heartbeatData.append('nitroHeartbeat', '1');
-    fetch(location.href, {method: 'POST', body: heartbeatData, credentials: 'omit'});
-</script>
-<script nitro-exclude>
     document.cookie = 'nitroCachedPage=' + (!window.NITROPACK_STATE ? '0' : '1') + '; path=/; SameSite=Lax';
 </script>
 <script nitro-exclude>
@@ -1534,99 +1553,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/privacy-policy/" style="color: #333333;">Privacy Policy</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_6_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/terms-of-service/" style="color: #333333;">Terms of Service</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_7_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><span style="color: #333333;"><a href="https://help.resemble.ai/en/" style="color: #333333;">Helpdesk</a></span></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_8_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/data-breach-policy/" style="color: #333333;">Data Breach Policy</a></span></p></div>
 </div>
 </div><div class="et_pb_column et_pb_column_1_5 et_pb_column_1_tb_footer  et_pb_css_mix_blend_mode_passthrough">
-<div class="et_pb_module et_pb_text et_pb_text_8_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_module et_pb_text et_pb_text_9_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner">platform</div>
-</div><div class="et_pb_module et_pb_text et_pb_text_9_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/marketplace/" style="color: #333333;">AI Voice Marketplace</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_10_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;">AI Watermarker</span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/marketplace/" style="color: #333333;">AI Voice Marketplace</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_11_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/conversational-voice-ai-bots/" style="color: #333333;">Conversational AI Assistants</a></span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/watermarker/"><span style="color: #333333;">AI Watermarker</span></a></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_12_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/digital-characters/" style="color: #333333;">Digital Characters</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/conversational-voice-ai-bots/" style="color: #333333;">Conversational AI Assistants</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_13_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/detect/"><span style="color: #333333;">Resemble Detect</span></a></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/digital-characters/" style="color: #333333;">Digital Characters</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_14_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/fill/" style="color: #333333;">Resemble Fill</a></span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/detect/"><span style="color: #333333;">Resemble Detect</span></a></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_15_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/assistant/" style="color: #333333;">Smart Assistants</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/fill/" style="color: #333333;">Resemble Fill</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_16_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/localize/" style="color: #333333;">Speech Localization</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/assistant/" style="color: #333333;">Smart Assistants</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_17_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/speech-to-speech/" style="color: #333333;">Speech to Speech</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/localize/" style="color: #333333;">Speech Localization</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_18_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/gpt-3/" style="color: #333333;">Text Generation</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/speech-to-speech/" style="color: #333333;">Speech to Speech</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_19_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;">AI Voice Cloning</span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/gpt-3/" style="color: #333333;">Text Generation</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_20_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;">Speech Enhancement</span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/voice-cloning/"><span style="color: #333333;">AI Voice Cloning</span></a></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_21_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;">Comparisons</span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/enhance/"><span style="color: #333333;">Speech Enhancement</span></a></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_22_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/compare/"><span style="color: #333333;">Comparisons</span></a></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_23_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><a href="https://www.resemble.ai/free-deepfake-detector/"><span style="color: #333333;">Free Deepfake Detector</span></a></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_24_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><a href="https://www.resemble.ai/use-cases/"><span style="color: #333333;">Use Cases</span></a></div>
 </div>
 </div><div class="et_pb_column et_pb_column_1_5 et_pb_column_2_tb_footer  et_pb_css_mix_blend_mode_passthrough">
-<div class="et_pb_module et_pb_text et_pb_text_22_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_module et_pb_text et_pb_text_25_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner">developers</div>
-</div><div class="et_pb_module et_pb_text et_pb_text_23_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/ai-apps/" style="color: #000000;">AI App Integrations</a></span></p></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_24_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://docs.app.resemble.ai/" style="color: #333333;">API Documentation</a></span></p></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_25_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/deepfake-incident-report/" style="color: #000000;">Deepfake Incident Report</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_26_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/deepfake-detection/"><span style="color: #000000;">Deepfake Detection Integrations</span></a></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/ai-apps/" style="color: #000000;">AI App Integrations</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_27_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/integrations/" style="color: #333333;">Integrations</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://docs.app.resemble.ai/" style="color: #333333;">API Documentation</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_28_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/learn/" style="color: #333333;">Learn</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/deepfake-incident-report/" style="color: #000000;">Deepfake Incident Report</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_29_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/mobile/" style="color: #333333;">Mobile Android and iOS</a></span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/deepfake-detection/"><span style="color: #000000;">Deepfake Detection Integrations</span></a></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_30_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/open-source/"><span style="color: #000000;">Open Source Projects Integrations</span></a></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/integrations/" style="color: #333333;">Integrations</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_31_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://github.com/resemble-ai/Resemblyzer" style="color: #333333;">Resemblyzer</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/learn/" style="color: #333333;">Learn</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_32_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/sdks/" style="color: #333333;">SDKs</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/mobile/" style="color: #333333;">Mobile Android and iOS</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_33_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/text-to-speech-converter/" style="color: #000000;">Text to Speech Converter</a></span></p></div>
+<div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/open-source/"><span style="color: #000000;">Open Source Projects Integrations</span></a></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_34_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/unity-docs/" style="color: #333333;">Unity Documentation</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://github.com/resemble-ai/Resemblyzer" style="color: #333333;">Resemblyzer</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_35_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/sdks/" style="color: #333333;">SDKs</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_36_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://www.resemble.ai/text-to-speech-converter/" style="color: #000000;">Text to Speech Converter</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_37_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/unity-docs/" style="color: #333333;">Unity Documentation</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_38_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner"><p><a href="https://www.resemble.ai/voice-changer/"><span style="color: #000000;">Voice Changer</span></a></p></div>
 </div>
 </div><div class="et_pb_column et_pb_column_1_5 et_pb_column_3_tb_footer  et_pb_css_mix_blend_mode_passthrough">
-<div class="et_pb_module et_pb_text et_pb_text_36_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_module et_pb_text et_pb_text_39_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner">LANGUAGES</div>
-</div><div class="et_pb_module et_pb_text et_pb_text_37_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-spanish/" style="color: #333333;">Spanish</a></span></p></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_38_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-french/" style="color: #333333;">French</a></span></p></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_39_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-chinese/" style="color: #333333;">Chinese</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_40_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-italian/" style="color: #333333;">Italian</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-spanish/" style="color: #333333;">Spanish</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_41_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-german/" style="color: #333333;">German</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-french/" style="color: #333333;">French</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_42_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/hindi-tts/" style="color: #333333;">Hindi</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-chinese/" style="color: #333333;">Chinese</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_43_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-italian/" style="color: #333333;">Italian</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_44_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/custom-voices-in-german/" style="color: #333333;">German</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_45_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/hindi-tts/" style="color: #333333;">Hindi</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_46_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/languages/" style="color: #333333;">Languages</a></span></p></div>
 </div>
 </div><div class="et_pb_column et_pb_column_1_5 et_pb_column_4_tb_footer  et_pb_css_mix_blend_mode_passthrough et-last-child">
-<div class="et_pb_module et_pb_text et_pb_text_44_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_module et_pb_text et_pb_text_47_tb_footer  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner">company</div>
-</div><div class="et_pb_module et_pb_text et_pb_text_45_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/blog/" style="color: #333333;">Blog</a></span></p></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_46_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><span style="color: #333333;"><a href="https://www.resemble.ai/news/" style="color: #333333;">News</a></span></div>
-</div><div class="et_pb_module et_pb_text et_pb_text_47_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://app.dover.io/dover/careers/64b57c81-9467-4ad2-9c8c-128f553157b5" style="color: #000000;" target="_blank" rel="noopener">Careers</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_48_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/ethics/" style="color: #333333;">Ethics</a></span></p></div>
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/blog/" style="color: #333333;">Blog</a></span></p></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_49_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
-<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/team/" style="color: #333333;">Team</a></span></p></div>
+<div class="et_pb_text_inner"><span style="color: #333333;"><a href="https://www.resemble.ai/news/" style="color: #333333;">News</a></span></div>
 </div><div class="et_pb_module et_pb_text et_pb_text_50_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #000000;"><a href="https://app.dover.io/dover/careers/64b57c81-9467-4ad2-9c8c-128f553157b5" style="color: #000000;" target="_blank" rel="noopener">Careers</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_51_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/ethics/" style="color: #333333;">Ethics</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_52_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
+<div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/team/" style="color: #333333;">Team</a></span></p></div>
+</div><div class="et_pb_module et_pb_text et_pb_text_53_tb_footer et_clickable  et_pb_text_align_left et_pb_bg_layout_light">
 <div class="et_pb_text_inner"><p><span style="color: #333333;"><a href="https://www.resemble.ai/schedule-a-demo/?UTM_Source=Resemble&amp;UTM_Medium=footer" style="color: #333333;">Schedule a Demo</a></span></p></div>
 </div>
 </div>
@@ -1636,7 +1663,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="et_pb_column et_pb_column_4_4 et_pb_column_5_tb_footer  et_pb_css_mix_blend_mode_passthrough et-last-child">
 <ul class="et_pb_module et_pb_social_media_follow et_pb_social_media_follow_0_tb_footer clearfix  et_pb_text_align_center et_pb_bg_layout_light">
 <li class="et_pb_social_media_follow_network_0_tb_footer et_pb_social_icon et_pb_social_network_link  et-social-twitter"><a href="https://twitter.com/resembleai" class="icon et_pb_with_border" title="Follow on X" target="_blank"><span class="et_pb_social_media_follow_network_name" aria-hidden="true">Follow</span></a></li><li class="et_pb_social_media_follow_network_1_tb_footer et_pb_social_icon et_pb_social_network_link  et-social-linkedin"><a href="https://www.linkedin.com/company/resembleai/" class="icon et_pb_with_border" title="Follow on LinkedIn" target="_blank"><span class="et_pb_social_media_follow_network_name" aria-hidden="true">Follow</span></a></li><li class="et_pb_social_media_follow_network_2_tb_footer et_pb_social_icon et_pb_social_network_link  et-social-youtube"><a href="https://www.youtube.com/ResembleAI" class="icon et_pb_with_border" title="Follow on Youtube" target="_blank"><span class="et_pb_social_media_follow_network_name" aria-hidden="true">Follow</span></a></li>
-</ul><div class="et_pb_module et_pb_text et_pb_text_51_tb_footer  et_pb_text_align_center et_pb_bg_layout_light">
+</ul><div class="et_pb_module et_pb_text et_pb_text_54_tb_footer  et_pb_text_align_center et_pb_bg_layout_light">
 <div class="et_pb_text_inner"><p>Made with ❤️ and a Voice in Toronto, Canada and all over the World. 2023.</p></div>
 </div>
 </div>
@@ -1707,9 +1734,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </script>
 <script type="text/javascript">
-				var et_link_options_data = [{"class":"et_pb_text_1_tb_footer","url":"https:\/\/status.resemble.ai\/","target":"_self"},{"class":"et_pb_text_2_tb_footer","url":"https:\/\/knowledge.resemble.ai\/","target":"_self"},{"class":"et_pb_text_3_tb_footer","url":"https:\/\/www.resemble.ai\/faq\/","target":"_self"},{"class":"et_pb_text_4_tb_footer","url":"https:\/\/www.resemble.ai\/cookie-policy\/","target":"_self"},{"class":"et_pb_text_5_tb_footer","url":"https:\/\/www.resemble.ai\/privacy-policy\/","target":"_self"},{"class":"et_pb_text_6_tb_footer","url":"https:\/\/www.resemble.ai\/terms-of-service\/","target":"_self"},{"class":"et_pb_text_9_tb_footer","url":"https:\/\/www.resemble.ai\/marketplace\/","target":"_self"},{"class":"et_pb_text_10_tb_footer","url":"https:\/\/www.resemble.ai\/watermarker\/","target":"_self"},{"class":"et_pb_text_11_tb_footer","url":"https:\/\/www.resemble.ai\/digital-characters\/","target":"_self"},{"class":"et_pb_text_12_tb_footer","url":"https:\/\/www.resemble.ai\/digital-characters\/","target":"_self"},{"class":"et_pb_text_13_tb_footer","url":"https:\/\/www.resemble.ai\/detect\/","target":"_self"},{"class":"et_pb_text_14_tb_footer","url":"https:\/\/www.resemble.ai\/fill\/","target":"_self"},{"class":"et_pb_text_15_tb_footer","url":"https:\/\/www.resemble.ai\/assistant\/","target":"_self"},{"class":"et_pb_text_16_tb_footer","url":"https:\/\/www.resemble.ai\/localize\/","target":"_self"},{"class":"et_pb_text_17_tb_footer","url":"https:\/\/www.resemble.ai\/speech-to-speech\/","target":"_self"},{"class":"et_pb_text_18_tb_footer","url":"https:\/\/www.resemble.ai\/gpt-3\/","target":"_self"},{"class":"et_pb_text_19_tb_footer","url":"https:\/\/www.resemble.ai\/voice-cloning\/","target":"_self"},{"class":"et_pb_text_20_tb_footer","url":"https:\/\/www.resemble.ai\/enhance\/","target":"_self"},{"class":"et_pb_text_21_tb_footer","url":"https:\/\/www.resemble.ai\/compare\/","target":"_self"},{"class":"et_pb_text_23_tb_footer","url":"https:\/\/www.resemble.ai\/ai-apps\/","target":"_self"},{"class":"et_pb_text_24_tb_footer","url":"https:\/\/docs.app.resemble.ai\/","target":"_self"},{"class":"et_pb_text_25_tb_footer","url":"https:\/\/www.resemble.ai\/deepfake-incident-report\/","target":"_self"},{"class":"et_pb_text_26_tb_footer","url":"https:\/\/www.resemble.ai\/deepfake-detection\/","target":"_self"},{"class":"et_pb_text_27_tb_footer","url":"https:\/\/www.resemble.ai\/integrations\/","target":"_self"},{"class":"et_pb_text_28_tb_footer","url":"https:\/\/www.resemble.ai\/learn","target":"_self"},{"class":"et_pb_text_29_tb_footer","url":"https:\/\/www.resemble.ai\/mobile\/","target":"_self"},{"class":"et_pb_text_30_tb_footer","url":"https:\/\/www.resemble.ai\/open-source\/","target":"_self"},{"class":"et_pb_text_31_tb_footer","url":"https:\/\/github.com\/resemble-ai\/Resemblyzer","target":"_self"},{"class":"et_pb_text_32_tb_footer","url":"https:\/\/www.resemble.ai\/sdks\/","target":"_self"},{"class":"et_pb_text_33_tb_footer","url":"https:\/\/www.resemble.ai\/text-to-speech-converter\/","target":"_self"},{"class":"et_pb_text_34_tb_footer","url":"https:\/\/www.resemble.ai\/unity-docs\/","target":"_self"},{"class":"et_pb_text_35_tb_footer","url":"https:\/\/www.resemble.ai\/voice-changer\/","target":"_self"},{"class":"et_pb_text_37_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-spanish\/","target":"_self"},{"class":"et_pb_text_38_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-french\/","target":"_self"},{"class":"et_pb_text_39_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-chinese\/","target":"_self"},{"class":"et_pb_text_40_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-italian\/","target":"_self"},{"class":"et_pb_text_41_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-german\/","target":"_self"},{"class":"et_pb_text_42_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-german\/","target":"_self"},{"class":"et_pb_text_43_tb_footer","url":"https:\/\/www.resemble.ai\/localize\/","target":"_self"},{"class":"et_pb_text_45_tb_footer","url":"https:\/\/www.resemble.ai\/blog\/","target":"_self"},{"class":"et_pb_text_46_tb_footer","url":"https:\/\/www.resemble.ai\/blog\/","target":"_self"},{"class":"et_pb_text_47_tb_footer","url":"https:\/\/app.dover.io\/dover\/careers\/64b57c81-9467-4ad2-9c8c-128f553157b5","target":"_blank"},{"class":"et_pb_text_48_tb_footer","url":"https:\/\/www.resemble.ai\/ethics\/","target":"_self"},{"class":"et_pb_text_49_tb_footer","url":"https:\/\/www.resemble.ai\/team\/","target":"_self"},{"class":"et_pb_text_50_tb_footer","url":"https:\/\/calendly.com\/resemble-ai\/demo?utm_source=Resemble&utm_medium=footer","target":"_self"}];
+				var et_link_options_data = [{"class":"et_pb_text_1_tb_footer","url":"https:\/\/status.resemble.ai\/","target":"_self"},{"class":"et_pb_text_2_tb_footer","url":"https:\/\/knowledge.resemble.ai\/","target":"_self"},{"class":"et_pb_text_3_tb_footer","url":"https:\/\/www.resemble.ai\/faq\/","target":"_self"},{"class":"et_pb_text_4_tb_footer","url":"https:\/\/www.resemble.ai\/cookie-policy\/","target":"_self"},{"class":"et_pb_text_5_tb_footer","url":"https:\/\/www.resemble.ai\/privacy-policy\/","target":"_self"},{"class":"et_pb_text_6_tb_footer","url":"https:\/\/www.resemble.ai\/terms-of-service\/","target":"_self"},{"class":"et_pb_text_7_tb_footer","url":"https:\/\/www.resemble.ai\/terms-of-service\/","target":"_self"},{"class":"et_pb_text_8_tb_footer","url":"https:\/\/www.resemble.ai\/terms-of-service\/","target":"_self"},{"class":"et_pb_text_10_tb_footer","url":"https:\/\/www.resemble.ai\/marketplace\/","target":"_self"},{"class":"et_pb_text_11_tb_footer","url":"https:\/\/www.resemble.ai\/watermarker\/","target":"_self"},{"class":"et_pb_text_12_tb_footer","url":"https:\/\/www.resemble.ai\/digital-characters\/","target":"_self"},{"class":"et_pb_text_13_tb_footer","url":"https:\/\/www.resemble.ai\/digital-characters\/","target":"_self"},{"class":"et_pb_text_14_tb_footer","url":"https:\/\/www.resemble.ai\/detect\/","target":"_self"},{"class":"et_pb_text_15_tb_footer","url":"https:\/\/www.resemble.ai\/fill\/","target":"_self"},{"class":"et_pb_text_16_tb_footer","url":"https:\/\/www.resemble.ai\/assistant\/","target":"_self"},{"class":"et_pb_text_17_tb_footer","url":"https:\/\/www.resemble.ai\/localize\/","target":"_self"},{"class":"et_pb_text_18_tb_footer","url":"https:\/\/www.resemble.ai\/speech-to-speech\/","target":"_self"},{"class":"et_pb_text_19_tb_footer","url":"https:\/\/www.resemble.ai\/gpt-3\/","target":"_self"},{"class":"et_pb_text_20_tb_footer","url":"https:\/\/www.resemble.ai\/voice-cloning\/","target":"_self"},{"class":"et_pb_text_21_tb_footer","url":"https:\/\/www.resemble.ai\/enhance\/","target":"_self"},{"class":"et_pb_text_22_tb_footer","url":"https:\/\/www.resemble.ai\/compare\/","target":"_self"},{"class":"et_pb_text_23_tb_footer","url":"https:\/\/www.resemble.ai\/free-deepfake-detector\/","target":"_self"},{"class":"et_pb_text_24_tb_footer","url":"https:\/\/www.resemble.ai\/use-cases\/","target":"_self"},{"class":"et_pb_text_26_tb_footer","url":"https:\/\/www.resemble.ai\/ai-apps\/","target":"_self"},{"class":"et_pb_text_27_tb_footer","url":"https:\/\/docs.app.resemble.ai\/","target":"_self"},{"class":"et_pb_text_28_tb_footer","url":"https:\/\/www.resemble.ai\/deepfake-incident-report\/","target":"_self"},{"class":"et_pb_text_29_tb_footer","url":"https:\/\/www.resemble.ai\/deepfake-detection\/","target":"_self"},{"class":"et_pb_text_30_tb_footer","url":"https:\/\/www.resemble.ai\/integrations\/","target":"_self"},{"class":"et_pb_text_31_tb_footer","url":"https:\/\/www.resemble.ai\/learn","target":"_self"},{"class":"et_pb_text_32_tb_footer","url":"https:\/\/www.resemble.ai\/mobile\/","target":"_self"},{"class":"et_pb_text_33_tb_footer","url":"https:\/\/www.resemble.ai\/open-source\/","target":"_self"},{"class":"et_pb_text_34_tb_footer","url":"https:\/\/github.com\/resemble-ai\/Resemblyzer","target":"_self"},{"class":"et_pb_text_35_tb_footer","url":"https:\/\/www.resemble.ai\/sdks\/","target":"_self"},{"class":"et_pb_text_36_tb_footer","url":"https:\/\/www.resemble.ai\/text-to-speech-converter\/","target":"_self"},{"class":"et_pb_text_37_tb_footer","url":"https:\/\/www.resemble.ai\/unity-docs\/","target":"_self"},{"class":"et_pb_text_38_tb_footer","url":"https:\/\/www.resemble.ai\/voice-changer\/","target":"_self"},{"class":"et_pb_text_40_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-spanish\/","target":"_self"},{"class":"et_pb_text_41_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-french\/","target":"_self"},{"class":"et_pb_text_42_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-chinese\/","target":"_self"},{"class":"et_pb_text_43_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-italian\/","target":"_self"},{"class":"et_pb_text_44_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-german\/","target":"_self"},{"class":"et_pb_text_45_tb_footer","url":"https:\/\/www.resemble.ai\/custom-voices-in-german\/","target":"_self"},{"class":"et_pb_text_46_tb_footer","url":"https:\/\/www.resemble.ai\/localize\/","target":"_self"},{"class":"et_pb_text_48_tb_footer","url":"https:\/\/www.resemble.ai\/blog\/","target":"_self"},{"class":"et_pb_text_49_tb_footer","url":"https:\/\/www.resemble.ai\/blog\/","target":"_self"},{"class":"et_pb_text_50_tb_footer","url":"https:\/\/app.dover.io\/dover\/careers\/64b57c81-9467-4ad2-9c8c-128f553157b5","target":"_blank"},{"class":"et_pb_text_51_tb_footer","url":"https:\/\/www.resemble.ai\/ethics\/","target":"_self"},{"class":"et_pb_text_52_tb_footer","url":"https:\/\/www.resemble.ai\/team\/","target":"_self"},{"class":"et_pb_text_53_tb_footer","url":"https:\/\/calendly.com\/resemble-ai\/demo?utm_source=Resemble&utm_medium=footer","target":"_self"}];
 			</script>
-<link rel="stylesheet" id="et-builder-googlefonts-css" href="https://fonts.googleapis.com/css?family=Heebo:100,200,300,regular,500,600,700,800,900&#038;subset=hebrew,latin&#038;display=swap" type="text/css" media="all" />
 <script type="text/javascript" id="leadin-script-loader-js-js-extra">
 /* <![CDATA[ */
 var leadin_wordpress = {"userRole":"visitor","pageType":"page","leadinPluginVersion":"11.1.34"};
@@ -1774,6 +1800,5 @@ var et_pb_sticky_elements = [];
 /* ]]> */
 </script>
 <script type="text/javascript" src="https://www.resemble.ai/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/sticky-elements.js?ver=4.23.1" id="et-builder-modules-script-sticky-js"></script>
-<style id="et-core-unified-tb-232139-tb-232181-351-cached-inline-styles-2">.et_pb_section_0_tb_footer.et_pb_section{padding-top:65px;padding-bottom:4px;background-color:#f5f5f5!important}.et_pb_row_0_tb_footer,.et_pb_row_1_tb_footer{border-radius:10px 10px 10px 10px;overflow:hidden}.et_pb_row_0_tb_footer.et_pb_row,.et_pb_row_1_tb_footer.et_pb_row{padding-top:0%!important;padding-right:20px!important;padding-bottom:30px!important;padding-left:20px!important;padding-top:0%;padding-right:20px;padding-bottom:30px;padding-left:20px}.et_pb_text_0_tb_footer.et_pb_text,.et_pb_text_8_tb_footer.et_pb_text,.et_pb_text_22_tb_footer.et_pb_text,.et_pb_text_23_tb_footer.et_pb_text,.et_pb_text_26_tb_footer.et_pb_text,.et_pb_text_30_tb_footer.et_pb_text,.et_pb_text_36_tb_footer.et_pb_text,.et_pb_text_44_tb_footer.et_pb_text{color:#000000!important}.et_pb_text_0_tb_footer,.et_pb_text_8_tb_footer,.et_pb_text_22_tb_footer,.et_pb_text_36_tb_footer,.et_pb_text_44_tb_footer{font-weight:800;text-transform:uppercase}.et_pb_section_1_tb_footer.et_pb_section{padding-top:0px;margin-top:0px}ul.et_pb_social_media_follow_0_tb_footer a.icon{border-radius:35px 35px 35px 35px}.et_pb_social_media_follow_0_tb_footer li a.icon:before{font-size:25px;line-height:50px;height:50px;width:50px}.et_pb_social_media_follow_0_tb_footer li a.icon{height:50px;width:50px}.et_pb_text_51_tb_footer.et_pb_text{color:#b7b7b7!important}.et_pb_social_media_follow_network_0_tb_footer a.icon{background-color:#000000!important}.et_pb_social_media_follow_network_1_tb_footer a.icon{background-color:#007bb6!important}.et_pb_social_media_follow_network_2_tb_footer a.icon{background-color:#a82400!important}.et_pb_row_0{border-radius:10px 10px 10px 10px;overflow:hidden}.ba_logo_grid_child_0 .dtq-logo-grid__item,.ba_logo_grid_child_1 .dtq-logo-grid__item,.ba_logo_grid_child_2 .dtq-logo-grid__item,.ba_logo_grid_child_3 .dtq-logo-grid__item,.ba_logo_grid_child_4 .dtq-logo-grid__item,.ba_logo_grid_child_5 .dtq-logo-grid__item,.ba_logo_grid_child_6 .dtq-logo-grid__item,.ba_logo_grid_child_7 .dtq-logo-grid__item,.ba_logo_grid_child_8 .dtq-logo-grid__item{background-color:#e2e5ed!important;padding-top:50px!important;padding-right:50px!important;padding-bottom:50px!important;padding-left:50px!important}</style>
 </body>
 </html>
