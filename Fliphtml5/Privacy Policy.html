@@ -91,7 +91,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.defer= true;j.s
     
 </script>
 
-    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?20a3586a0bca096601a957ea5c9c299a"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
+    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?f48b0496db748c535c68de5cf6a2d9bb"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
 <aside class="flip-side-bar">
   <div class='sidebar-toTop-container'>
     <a href="//fliphtml5.com/app/" class='ios' title='iOS & Android App' target="_blank"
@@ -218,17 +218,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   (function ($){
     fh5.maintenanceConfig = {
       version: '2024-7-29', // 停服日期
-      startTime: '2024-7-29 06:00:00',
-      endTime: '2024-7-29 08:00:00',
+      startTime: [2024,6,29,6,0,0], //UTC 2024-7-29 06:00:00,
+      endTime: [2024,6,29,8,0,0], //UTC 2024-7-29 08:00:00,
     }
     const localMaintenanceConfig = JSON.parse(localStorage.getItem('localMaintenanceConfig') || '{}');
-    const isInVersion = localMaintenanceConfig.version === fh5.maintenanceConfig.version
-    const isDeadline = new Date().getTime() > new Date(fh5.maintenanceConfig.endTime).getTime()
-    const dateRange = utils.formatDateRange(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig.endTime);
+    const formatDateInfo = utils.formatMaintainedDate(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig.endTime);
+    const isInVersion = localMaintenanceConfig.version === fh5.maintenanceConfig.version;
+    const isDeadline = new Date().getTime() > formatDateInfo.utcEndTime.getTime();
     if (!isInVersion && !isDeadline) {
       const maintenancePanel = new MaintenancePanel({
-        timeStr: dateRange.time,
-        space: dateRange.space
+        formatDateInfo: formatDateInfo,
       });
       maintenancePanel.show();
     }
@@ -2501,7 +2500,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h2>4. Transfer data to third countries including the United States</h2>
 <p>4.1 All the collected data is transferred to the United States for processing, we don't back up our data outside of the United States.&nbsp;</p>
 <p>4.2 We undertake the transfer to the United State on the legal basis of fulfilling our contractual obligation towards you. The transfer of your personal data is necessary for us to perform our contractual obligations to you as a User under the Terms of Service and to deliver the services we have agreed with you as a User to provide.</p>
-<p>4.3 We and our Suppliers have, as required by the General Data Protection Regulation, implemented appropriate technical and organizational measures to keep your personal data safe. Please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="03707673736c717743656f6a736b776e6f362d606c6e">[email&#160;protected]</a>&nbsp; if you would like to learn more about how we keep your personal data safe. If you are located in the European Union you can confidently contact our appointed representative: BONDOC SI SCA with an office at 44 Londra Street, Sector 2, 011764 Bucharest Romania. Or you can raise a concern with your local supervisory authority.</p>
+<p>4.3 We and our Suppliers have, as required by the General Data Protection Regulation, implemented appropriate technical and organizational measures to keep your personal data safe. Please contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ef9c9a9f9f809d9baf8983869f879b8283dac18c8082">[email&#160;protected]</a>&nbsp; if you would like to learn more about how we keep your personal data safe. If you are located in the European Union you can confidently contact our appointed representative: BONDOC SI SCA with an office at 44 Londra Street, Sector 2, 011764 Bucharest Romania. Or you can raise a concern with your local supervisory authority.</p>
 <h2>5. Who gets access to your data and why</h2>
 <p>All data collected on the Services are safe and secure. We will not make public any private information or content published privately on our site. We may, however, disclose your private personal data to a few, reliable 3rd party service providers ("Suppliers" ), solely for the purpose of operating our services: to help us provide, analyze, and improve the service, including data storage, maintenance services, database management, web analytics, payment processing, and improvement of the site's functionality. These third parties have access to your information only for the purpose of performing these tasks on our behalf and under obligations similar to those in this Privacy Policy. If you are an EU resident, you need to be aware that the personal data that we collect about you may be transferred to and processed by recipients that are located outside the European Economic Area. We have taken all necessary measures to ensure that transfers out of the EEA are adequately protected as required by applicable data protection law. All these 3rd party apps that have access to your data have a privacy policy that is GDPR compliant, and they will only use your data on our behalf and pursuant to our instructions.</p>
 <p>We collect and share as little personal data as possible to function. Whenever you delete your account we will initiate a process that will remove your data from all these processors, if possible. In some cases, it is physically impossible to distinctly identify specific users, when data is used collectively for research and statistical purposes, or it may be needed for accounting purposes.</p>
@@ -2527,7 +2526,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>6.1.5 Object to the processing of your data for marketing purposes by withdrawing your personal consent.</p>
 <p>6.1.6 You can at any time withdraw your consent by deleting your profile.</p>
 <p>6.1.7 You have the right of portability of the personal data you have submitted to us. We will deliver your personal data in a structured, commonly used and machine-readable format.&nbsp;</p>
-<p>When we receive a request to access, rectify, erase or port data, we may ask you for additional information in order to confirm your identity and ensure data security. You can send a request via <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a696f6a6a75686e5a7c76736a726e77762f34797577">[email&#160;protected]</a>.</p>
+<p>When we receive a request to access, rectify, erase or port data, we may ask you for additional information in order to confirm your identity and ensure data security. You can send a request via <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ae9efeaeaf5e8eedafcf6f3eaf2eef7f6afb4f9f5f7">[email&#160;protected]</a>.</p>
 <p>Please remember that we may only port your original User Submission, the Proprietary Formats could not be ported as it is part of our Service, and should be taken as your personal data.&nbsp;&nbsp;</p>
 <p>6.2 You have the right to complain regarding the processing of personal data concerning you to the local supervisory authority.</p>
 <h2>7. Data retention and account deletion</h2>
