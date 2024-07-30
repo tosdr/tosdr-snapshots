@@ -2,7 +2,7 @@
 <!--[if IE 7 ]>		 <html class="no-js ie ie7 lte7 lte8 lte9" lang="ru"> <![endif]-->
 <!--[if IE 8 ]>		 <html class="no-js ie ie8 lte8 lte9" lang="ru"> <![endif]-->
 <!--[if IE 9 ]>		 <html class="no-js ie ie9 lte9>" lang="ru"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js ab2" lang="ru"> <!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js ab8" lang="ru"> <!--<![endif]-->
 <head prefix="fb: http://ogp.me/ns/fb#">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Политика конфиденциальности | отзывы</title>
@@ -200,25 +200,6 @@ var Drupal = Drupal || {};Drupal.settings = {"basePath":"\/","fivestar":{"titleU
 </script>
 <link rel="icon" type="image/png" href="/themes/irecommend_new/images/favicon.png?v=1"/>
 
-<!-- Google tag (gtag.js) GA4 -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag("js", new Date());
-  gtag("config", "G-LT44G078WK", {"allow_google_signals": true, "allow_ad_personalization_signals": true });
-
-  window.addEventListener("error", function(event) {
-            if (event.target.tagName === "SCRIPT") {
-                // console.log("Отправка события ошибки загрузки скрипта в GA4: " + event.target.src);
-                gtag("event", "script_load_error", {
-                    "event_category": "Script Error",
-                    "event_label": event.target.src,
-                    "non_interaction": true
-                });
-            }
-        }, true);
-</script>
-
 <script>
     window.adfox_load_from_file = true
 </script>
@@ -294,22 +275,121 @@ try{
     Drupal.settings.cookies_ec = [];
     Drupal.settings.cookies_ec['cc'] = 888;
 }catch(e){}
-try{
-    if(Drupal.settings.site.uid==0){
-        if( [1,2,3,4,5,6].includes(window.ab_var) ){
-            window.ab_test = 888000;
-        } else if( [7,8,9,10,11,12].includes(window.ab_var) ){
-            window.ab_test = 888001;
-        }
-    }
-}catch(e){}
-
-
-window.yaContextCb = window.yaContextCb || []
-
 </script>
 
+
+
+<script>
+window.yaContextCb = window.yaContextCb || []
+</script>
 <script src="/injector/reklamko.js" async></script>
+
+
+
+<script>
+    function botbot_check () {
+        try{
+            var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+            const chrome = raw ? parseInt(raw[2], 10) : false;
+            const old_chrome = chrome>0 && chrome<89;
+    
+            var raw = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+            const ff = raw ? parseInt(raw[1], 10) : false;
+            const old_ff = ff>0 && ff<60;
+    
+            const wd_ok = (window.navigator.webdriver===false) || ((old_chrome || old_ff) && (window.navigator.webdriver!==true));
+            const wd_fake = !!Object.getOwnPropertyDescriptor(window.navigator, 'webdriver');
+    
+            const is_bot = ( !wd_ok || wd_fake );
+    
+            return is_bot;
+        }catch(e){};
+    };
+    
+    window.botbot = botbot_check();
+</script>
+
+
+<script>
+    if(!window.dataLayer){
+  
+      // counters init
+  
+      // GA4
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LT44G078WK', {'allow_google_signals': true, 'allow_ad_personalization_signals': true });
+  
+      window.addEventListener('error', function(event) {
+                if (event.target.tagName === 'SCRIPT') {
+                    // Отправка события ошибки в GA4
+                    gtag('event', 'script_load_error', {
+                        'event_category': 'Script Error',
+                        'event_label': event.target.src,
+                        'non_interaction': true
+                    });
+                }
+            }, true);
+  
+  
+      jqw(function ($) {
+        $(function () {
+            setTimeout(function () {
+              requirejs(["https://www.googletagmanager.com/gtag/js?id=G-LT44G078WK"], function () { });            
+            }, 900);
+        });
+      });
+  
+  
+  
+  
+      
+  
+      // Yandex.Metrika counter init + deleayed loading
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+  
+        jqw(function ($) {
+          $(function () {
+            setTimeout(function () {
+              requirejs([r], function () { });
+            }, 500);
+          });
+        });
+  
+      })
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");       
+  
+  
+      jqw(function ($) {
+          $(function () {
+                requirejs(["/injector/metrika-config.js"], function () { });
+          });
+        });
+        
+  
+  
+        
+      // LiveInternet counter
+      jqw(function ($) {
+        $(function () {
+          setTimeout(function () {
+              new Image().src = "https://counter.yadro.ru/hit?r"+
+              escape(document.referrer)+((typeof(screen)=="undefined")?"":
+              ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+              screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+              ";h"+escape(document.title.substring(0,150))+
+              ";"+Math.random();
+          }, 1000);
+        });
+      });
+  
+  
+  
+    }
+</script>
 </head>
 
 <body class="not-front not-logged-in page-node node-type-page no-sidebars feast not-logged-in not-front full-node node-type-page layout-main" >
@@ -466,39 +546,7 @@ window.yaContextCb = window.yaContextCb || []
     
     
 <!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<!-- Google tag (gtag.js) GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-LT44G078WK"></script>
-<!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<a class="headerLoginButton" href="/user/login?destination=node%2F1236389"><button type="button" class="Button" style="min-width: auto; padding: 4px 18px;">Войти</button></a><!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<script>
-
-function botbot_check () {
-    try{
-        var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-        const chrome = raw ? parseInt(raw[2], 10) : false;
-        const old_chrome = chrome>0 && chrome<89;
-
-        var raw = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-        const ff = raw ? parseInt(raw[1], 10) : false;
-        const old_ff = ff>0 && ff<60;
-
-        const wd_ok = (window.navigator.webdriver===false) || ((old_chrome || old_ff) && (window.navigator.webdriver!==true));
-        const wd_fake = !!Object.getOwnPropertyDescriptor(window.navigator, 'webdriver');
-
-        const is_bot = ( !wd_ok || wd_fake );
-
-        return is_bot;
-
-    }catch(e){};
-};
-
-try{
-    window.botbot = botbot_check();
-    // ym(8092381,'params',{'botbot':window.botbot});
-}catch(e){};
-
-</script>
-<!-- /end block.tpl.php -->    </div> <!-- logoline end -->
+<a class="headerLoginButton" href="/user/login?destination=node%2F1236389"><button type="button" class="Button" style="min-width: auto; padding: 4px 18px;">Войти</button></a><!-- /end block.tpl.php -->    </div> <!-- logoline end -->
 
     <div class="IrecUiNavbarWrapper desktopWrap">
       <div class="IrecUiNavbar desktopStuff">
@@ -1082,291 +1130,6 @@ try{
 <br /><a href="https://irecommend.ru/sites/default/files/public/mediakit_4.0.pdf" target="_blank" style="text-decoration:underline">Реклама на сайте</a> 
 <br /><a href="https://vk.com/irecommend_ru" target=_blank style="text-decoration:underline">Новости в VK</a> 
 </div><!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<div class="statistics">
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-      var YamcJS = "https://mc.yandex.ru/metrika/tag.js";
-    
-       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-       (window, document, "script", YamcJS, "ym");
-    
-        try {
-            var loggedont = 'no_drupal_settings';
-            try{
-              loggedont = '0';
-              if (Drupal.settings.site.uid!==0){ loggedont = '1'; }
-            }catch(e){}
-    
-            var yaParams = { loggedont: loggedont };
-    
-            try{
-              if(!!document.getElementsByClassName("node-type-myreview").length){
-                yaParams.obzorka = !!document.querySelector('span.free-sample');
-              }
-            }catch(e){}
-
-            try{
-                yaParams.devicePixelRatio = Math.round(window.devicePixelRatio*10)/10;
-            }catch(e){}
-    
-            try{
-                yaParams.ab_var = window.ab_var;
-            }catch(e){}
-    
-            try{
-                yaParams.captcha_check = document.cookie.includes('captcha_check=')?1:0;
-                yaParams.captcha_t = (new Date().getTime()/1000 - (document.cookie.match('(^|;) *captcha_check=1_([^_]*)')||[])[2])/3600||-1;
-            }catch(e){}
-    
-            try{
-                yaParams.ab_test = window.ab_test;
-            }catch(e){}
-    
-            try{
-                yaParams.native_lazy_support = 'loading' in HTMLImageElement.prototype;
-            }catch(e){}
-
-    
-            try{
-                yaParams.breadcrumb = Object.values(Drupal.settings.site.breadcrumb).map(obj => obj.name);
-            }catch(e){}
-    
-            try{
-                yaParams.author = Drupal.settings.site.author_uid;
-            }catch(e){}
-        
-            try{
-                yaParams.uid = Drupal.settings.site.uid;
-            }catch(e){}
-    
-            try{
-                yaParams.ss_uid = (document.cookie.match('(^|;) *ss_uid=([^;]*)')||[])[2] || 0;
-            }catch(e){}
-    
-            try{
-                var ym_product = document.getElementsByClassName("node-is-product");
-                if(ym_product.length>0){
-                    yaParams.product_reviews = ym_product[0].getElementsByClassName("reviews-list-item").length;
-                }else{
-                    var ym_review = document.getElementsByClassName("node-type-myreview");
-                    if(ym_review.length>0){
-                        yaParams.reviews_other_reviews = ym_review[0].getElementsByClassName("reviews-list-item").length;
-                    }
-                }
-            }catch(e){}
-    
-            try{
-                yaParams.tags = window.page_tag_info.tags || window.page_tag_info.category_tids;
-            }catch(e){}
-    
-            try{
-                yaParams.prod_id = window.page_tag_info.prod_id;
-                yaParams.brand_id = window.page_tag_info.brand_id;
-                yaParams.category_tid = window.page_tag_info.category_tid;
-                yaParams.type_id = window.page_tag_info.type_id;
-            }catch(e){}
-
-		    try{
-		        yaParams.botbot2 = {};
-		        yaParams.botbot2[window.botbot] = fp;
-		    }catch(e){}
-
-		    try{
-		        yaParams.geoip = {};
-		        yaParams.geoip[window.geoip.c] = window.geoip.r;
-		    }catch(e){}
-
-		    try{
-				yaParams.navigator = {};
-				yaParams.navigator.has_userAgentData = !!navigator.userAgentData;
-				yaParams.navigator.vendor = navigator.vendor ? navigator.vendor : false;
-				yaParams.navigator.platform = navigator.platform ? navigator.platform : false;
-		    }catch(e){}
-
-		    try{
-		        let rawchrome = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-		        yaParams.navigator.chrome = rawchrome ? parseInt(rawchrome[2], 10) : 0;
-
-		        let rawff = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-		        yaParams.navigator.ff = rawff ? parseInt(rawff[1], 10) : 0;
-
-		        let rawver = navigator.userAgent.match(/Version\/([0-9]+)\./); // Safari and ...
-		        yaParams.navigator.version = rawver ? parseInt(rawver[1], 10) : 0;
-		    }catch(e){}
-
-		    try{
-		        let d = Object.getOwnPropertyDescriptor(Navigator.prototype, 'webdriver');
-		        yaParams.navigator.webdriver = window.navigator.webdriver;
-		        yaParams.navigator.wd_nfake = !!Object.getOwnPropertyDescriptor(window.navigator, 'webdriver');
-		        yaParams.navigator.wd_pfake = (((typeof d) == "undefined") || !d.get || (d.get.toString().indexOf('webdriver')===-1) );
-		        yaParams.navigator.wd_pget = (!!d && !!d.get) ? d.get.toString() : "nothing";
-		    }catch(e){}
-
-
-        } catch(e) { }
-    
-    
-       ym(8092381, "init", {
-            id:8092381,
-            params: yaParams||{},
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-       });
-    
-    
-
-    
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/8092381" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    
-    
-    <!--LiveInternet counter--><script type="text/javascript"><!--
-    document.write("<img src='https://counter.yadro.ru/hit?t25.3;r"+
-    escape(document.referrer)+((typeof(screen)=="undefined")?"":
-    ";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
-    screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-    ";h"+escape(document.title.substring(0,80))+";"+Math.random()+
-    "' alt='' title='LiveInternet: показано число посетителей за"+
-    " сегодня' "+
-    "border=0 width=1 height=1>")//--></script><!--/LiveInternet-->
-    
-    
-    
-    </div><!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<script>
-jqw(function ($) {
-  $(function () {
-    $('div.product-filters-icon').click(function () {
-    	try{
-      		ym(8092381,'reachGoal','allfilters'); 
-      	}catch(e){}
-    });
-    $('input.pros-expand').click(function () {
-    	try{
-    		ym(8092381,'reachGoal','pros_expand'); 
-      	}catch(e){}
-    });
-    $('input.cons-expand').click(function () {
-    	try{
-	    	ym(8092381,'reachGoal','cons_expand'); 
-      	}catch(e){}
-    });
-    $('input.filter-expand').click(function () {
-    	try{
-	    	ym(8092381,'reachGoal','filter_expand'); 
-      	}catch(e){}
-    });
-
-
-
-    $('.other a').click(function () {
-    	try{
-    		ym(8092381,'reachGoal','see_also_other_reviews'); 
-      	}catch(e){}
-    });
-    $('.similar-items').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','see_also_other_products'); 
-      	}catch(e){}
-    });
-    $('.seealso-block-content').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','see_also_lenta'); 
-      	}catch(e){}
-    });
-
-$('.seealso-block-content .load-more').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','see_also_lenta_more'); 
-      	}catch(e){}
-    });
-
-
-
-	
-
-    $('.productHeaderContent .mainpic').click(function () {
-    	try{
-    		ym(8092381,'reachGoal','prod_pic_open'); 
-      	}catch(e){}
-    });
-    $('.inline-image a.photo').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','photo_open'); 
-      	}catch(e){}
-    });
-
-
-
-    $('.top6 .smTeaser').click(function () {
-    	try{
-    		ym(8092381,'reachGoal','top6_click'); 
-      	}catch(e){}
-    });
-    $('.top24 .smTeaser').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','top24_click'); 
-      	}catch(e){}
-    });
-    $('#tabs-list .main-page-best-reviews .teaser-item').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','homepage_best_click'); 
-      	}catch(e){}
-    });
-
-
-
-
-    $('.top6 .load-more-reviews').click(function () {
-    	try{
-    		ym(8092381,'reachGoal','top6_more'); 
-      	}catch(e){}
-    });
-    $('.top24 .load-more-reviews').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','top24_more'); 
-      	}catch(e){}
-    });
-
-    $('#tabs-list .main-page-best-reviews').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','homepage_new_click'); 
-      	}catch(e){}
-    });
-
-
-    $('.IrecUiNavbar a').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','orange_menu_click');
-      	}catch(e){}
-    });
-
-
-
-  })
-});
-
-
-(function (window, Drupal) {
-  Drupal.behaviors = Drupal.behaviors || {};
-  Drupal.behaviors.metrica_goals_set = function (context) {
-  // console.log('metrica_goals_set');
-  try{
-    $('#tabs-list .main-page-best-reviews .load-more-reviews').click(function () {
-    	try{
-	   		ym(8092381,'reachGoal','homepage_best_more'); 
-      	}catch(e){}
-    });
-  }catch(e){}
-  }
-})(window, Drupal)
-
-</script><!-- /end block.tpl.php --><!-- start block.tpl.php -->
 <!--mfeed-->
 <script>
 
@@ -1431,267 +1194,6 @@ $('.seealso-block-content .load-more').click(function () {
     
     
     </script><!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<script>
-    (function() {
-        try{
-        const ongoingTouches = {};
-        let touchEndCounter = 0;
-        let aggregatedData = {
-            screenX: [],
-            screenY: [],
-            screenXspeed: [],
-            screenYspeed: [],
-            forces: [],
-            radiusX: [],
-            radiusY: []
-        };
-        
-        function addSpeedData(touchData, newValue, timeStamp) {
-            try{
-            const lastIndex = touchData.length - 1;
-            if (lastIndex >= 0) {
-                const lastValue = touchData[lastIndex].value;
-                const lastTime = touchData[lastIndex].time;
-                const timeDiff = timeStamp - lastTime; // Time difference in milliseconds
-                if (timeDiff > 0) { // Prevent division by zero
-                    const speed = Math.abs(newValue - lastValue) / timeDiff; // Speed unit per millisecond
-                    touchData.push({ value: newValue, time: timeStamp, speed });
-                }
-            } else {
-                // Initial touch event, no speed calculation possible
-                touchData.push({ value: newValue, time: timeStamp, speed: 0 });
-            }
-            }catch(e){}
-        }
-        
-        function calculateAngles(speedX, speedY) {
-            try{
-                let angles = [];
-                for (let i = 0; i < speedX.length; i++) {
-                    let angleRadians = Math.atan2(speedY[i], speedX[i]);
-                    angles.push(angleRadians);
-                }
-                return angles;
-            }catch(e){}
-        }
-    
-        function calculateSpeeds(speedX, speedY) {
-            try{
-                let speeds = [];
-                for (let i = 0; i < speedX.length; i++) {
-                    speeds.push(Math.sqrt(speedX[i] ** 2 + speedY[i] ** 2));
-                }
-                return speeds;
-            }catch(e){}
-        }
-    
-        function calculateMeanAndVariance(speeds, fixed_digits=2) {
-            try{
-            if (speeds.length <= 1) {
-                // return { mean: 0, variance: 0 }; // Not enough data to calculate
-                return { mean: -1, variance: -1 };
-            }
-            const mean = speeds.reduce((acc, val) => acc + val, 0) / speeds.length;
-            const variance = speeds.reduce((acc, val) => acc + ((val - mean) ** 2), 0) / (speeds.length - 1); // Sample variance
-            const max = Math.max(...speeds) ;
-            const count = speeds.length;
-            const uniq = new Set(speeds).size;
-            const values = speeds.map(number => number.toFixed(fixed_digits)).join(",");
-            return { mean, variance, max, count, uniq, values };
-            }catch(e){}
-        }
-        
-        function logAndResetaggregatedData() {
-            try{
-            // Remove event listeners after logging
-            document.removeEventListener('touchstart', handleTouchStart);
-            document.removeEventListener('touchmove', handleTouchMove);
-            document.removeEventListener('touchend', handleTouchEnd);
-            document.removeEventListener('touchcancel', handleTouchCancel);
-    
-            // Calculate and log the statistics for aggregated data
-            const screenXStats = calculateMeanAndVariance(aggregatedData.screenX,0);
-            const screenYStats = calculateMeanAndVariance(aggregatedData.screenY,0);
-            const screenXspeedStats = calculateMeanAndVariance(aggregatedData.screenXspeed);
-            const screenYspeedStats = calculateMeanAndVariance(aggregatedData.screenYspeed);
-            const forceStats = calculateMeanAndVariance(aggregatedData.forces);
-            const radiusXStats = calculateMeanAndVariance(aggregatedData.radiusX);
-            const radiusYStats = calculateMeanAndVariance(aggregatedData.radiusY);
-            const anglesStats = calculateMeanAndVariance(calculateAngles(aggregatedData.screenXspeed, aggregatedData.screenYspeed));
-            const speedsStats = calculateMeanAndVariance(calculateSpeeds(aggregatedData.screenXspeed, aggregatedData.screenYspeed));
-
-            const combinedStats = Math.sign(forceStats.variance)+'_'+Math.sign(radiusXStats.variance)+'_'+Math.sign(radiusYStats.variance)+'_'+Math.sign(screenXspeedStats.variance)+'_'+Math.sign(screenYspeedStats.variance); 
-            
-            const bhvr = {
-                screenX_Mean: screenXStats.mean,
-                screenX_Variance: screenXStats.variance,
-    
-                screenY_Mean: screenYStats.mean,
-                screenY_Variance: screenYStats.variance,
-    
-                force_Mean: forceStats.mean,
-                force_Variance: forceStats.variance,
-    
-                force_zero_Variance: !forceStats.variance,
-                radiusX_zero_Variance: !radiusXStats.variance,
-                radiusY_zero_Variance: !radiusYStats.variance,
-    
-                angles_uniq_per_touch: Math.floor((anglesStats.uniq-1) / touchEndCounter),
-                angles_uniq_per_touch_f: ((anglesStats.uniq-1) / touchEndCounter),
-    
-                speeds_uniq_per_touch: Math.floor((speedsStats.uniq-1) / touchEndCounter),
-                speeds_uniq_per_touch_f: ((speedsStats.uniq-1) / touchEndCounter),
-    
-                // speeds_values: speedsStats.values,
-                // angles_values: anglesStats.values,
-                angles_speeds_values: anglesStats.values+':'+speedsStats.values,
-                touches_values: screenXStats.values+':'+screenYStats.values,
-    
-    
-                points_count: screenYStats.count,
-                touches_count: touchEndCounter,
-                combined:  combinedStats,
-                count_combined: touchEndCounter+'_'+screenYStats.count+'_'+combinedStats ,
-    
-                time: performance && performance.timing && performance.timing.domContentLoadedEventStart ? Math.round((Date.now() - performance.timing.domContentLoadedEventStart)/1000) : 0,
-    
-                radiusX_Mean: radiusXStats.mean,
-                radiusX_Variance: radiusXStats.variance,
-                radiusY_Mean: radiusYStats.mean,
-                radiusY_Variance: radiusYStats.variance
-            };
-    
-            if(!!window.debug){console.log(aggregatedData);};
-            if(!!window.debug){console.log(bhvr);};
-    
-            try{ if(typeof window['sstevent'] == 'function'){ sstevent("behavior_combined", combinedStats); } }catch(e){}
-
-            ym(8092381, 'params', {'behavior9':bhvr});
-        
-            }catch(e){}
-        }
-        
-        // Named functions for event listeners
-        function handleTouchStart(event) {
-            try{
-            for (let i = 0; i < event.touches.length; i++) {
-                const touch = event.touches[i];
-                ongoingTouches[touch.identifier] = {
-                    screenX: [],
-                    screenY: [],
-                    forces: [],
-                    radiusX: [],
-                    radiusY: []
-                };
-                // Initialize data with the first touch point
-                addSpeedData(ongoingTouches[touch.identifier].screenX, touch.screenX, event.timeStamp);
-                addSpeedData(ongoingTouches[touch.identifier].screenY, touch.screenY, event.timeStamp);
-                addSpeedData(ongoingTouches[touch.identifier].forces, touch.force, event.timeStamp);
-                addSpeedData(ongoingTouches[touch.identifier].radiusX, touch.radiusX || 0, event.timeStamp);
-                addSpeedData(ongoingTouches[touch.identifier].radiusY, touch.radiusY || 0, event.timeStamp);
-            }
-            }catch(e){}
-        }
-        
-        function handleTouchMove(event) {
-            try{
-            for (let i = 0; i < event.touches.length; i++) {
-                const touch = event.touches[i];
-                const touchData = ongoingTouches[touch.identifier];
-                if (touchData) {
-                    addSpeedData(touchData.screenX, touch.screenX, event.timeStamp);
-                    addSpeedData(touchData.screenY, touch.screenY, event.timeStamp);
-                    addSpeedData(touchData.forces, touch.force, event.timeStamp);
-                    addSpeedData(touchData.radiusX, touch.radiusX || 0, event.timeStamp);
-                    addSpeedData(touchData.radiusY, touch.radiusY || 0, event.timeStamp);
-                }
-            }
-            }catch(e){}
-        }
-        
-        function handleTouchEnd(event) {
-            try{
-            touchEndCounter++;
-            for (let i = 0; i < event.changedTouches.length; i++) {
-                const touch = event.changedTouches[i];
-                const touchData = ongoingTouches[touch.identifier];
-                if (touchData) {
-                    aggregatedData.screenXspeed.push(...touchData.screenX.map(item => item.speed));
-                    aggregatedData.screenYspeed.push(...touchData.screenY.map(item => item.speed));
-                    aggregatedData.screenX.push(...touchData.screenX.map(item => item.value));
-                    aggregatedData.screenY.push(...touchData.screenY.map(item => item.value));
-                    aggregatedData.forces.push(...touchData.forces.map(item => item.value));
-                    aggregatedData.radiusX.push(...touchData.radiusX.map(item => item.value));
-                    aggregatedData.radiusY.push(...touchData.radiusY.map(item => item.value));
-                    //.filter(speed => speed !== 0));
-    
-                    delete ongoingTouches[touch.identifier];
-                }
-            }
-            if (touchEndCounter >= 5 && aggregatedData.screenY.length >= 30) {
-                logAndResetaggregatedData();
-            }
-            }catch(e){}
-        }
-        
-        function handleTouchCancel(event) {
-            try{
-            for (let i = 0; i < event.changedTouches.length; i++) {
-                const touch = event.changedTouches[i];
-                delete ongoingTouches[touch.identifier];
-            }
-            }catch(e){}
-        }
-        
-        // Attach event listeners
-        document.addEventListener('touchstart', handleTouchStart);
-        document.addEventListener('touchmove', handleTouchMove);
-        document.addEventListener('touchend', handleTouchEnd);
-        document.addEventListener('touchcancel', handleTouchCancel);
-        }catch(e){}
-    })();
-    </script>
-    <!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<script>
-
-setTimeout(
-    function(){
-        try{
-
-            let cls = 0;
-            let cls_01 = false;
-            let cls_025 = false;
-
-            new PerformanceObserver((entryList) => {
-            for (const entry of entryList.getEntries()) {
-                if (!entry.hadRecentInput) {
-                cls += entry.value;
-                //console.log('Current CLS value:', cls, entry);
-
-                if(!cls_01 && cls>0.1){
-                    ym(8092381,'reachGoal','CLS_0.1');
-                    cls_01 = true;
-                    console.log('CLS_0.1');
-                    }
-
-                if(!cls_025 && cls>0.25){
-                    ym(8092381,'reachGoal','CLS_0.25');
-                    cls_025 = true;
-                    console.log('CLS_0.25');
-                    }
-                                    
-                }
-            }
-            }).observe({type: 'layout-shift', buffered: true});
-
-
-
-
-        }catch(e){}
-    }
-, 15000);
-
-</script><!-- /end block.tpl.php --><!-- start block.tpl.php -->
 <script type="text/javascript" >
 
   try{
@@ -1705,94 +1207,6 @@ setTimeout(
   
 </script>
  <!-- /end block.tpl.php --><!-- start block.tpl.php -->
-<script>
-rqw(function (r) {
-    r(["https://openfpcdn.io/botd/v1/iife.min.js"], 
-    function (m) {
-        try{
-            var botdPromise = BotD.load({ monitoring: false })
-
-            botdPromise
-                .then((botd) => botd.detect())
-                .then((result) => botd2ym(result))
-                .catch((error) => ym(8092381,'params',{'botd7':'err_detecting'}))
-        }catch(e){}
-    }, 
-    function (e){
-        ym(8092381,'params',{'botd7':{'err_loading':''+runBotDetection()}})
-    });
-});
-
-
-function botd2ym(r){
-    let botname = r.bot?r.botKind:'humanoid'; 
-    let params = {'botd7':{}};
-    params['botd7'][botname] = ''+runBotDetection();
-    try{ym(8092381,'params',params);}catch(e){};
-    // console.log( params );
-}
-
-runBotDetection = function () {
-    try{
-        var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-        const chrome = raw ? parseInt(raw[2], 10) : false;
-        const old_chrome = chrome>0 && chrome<89;
-
-        var raw = navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-        const ff = raw ? parseInt(raw[1], 10) : false;
-        const old_ff = ff>0 && ff<60;
-
-        const fake_old_chrome = !!navigator.userAgentData && old_chrome;
-        const fake_old_ff = !!navigator.credentials && old_ff;
-
-
-        let chromium = false;
-        try{ chromium = navigator.userAgentData.brands.find(x=>x.brand=='Chromium').version; }catch(e){ }
-
-        // const old = !navigator.userAgentData;
-        const wd_ok = (window.navigator.webdriver===false) || (old_chrome && (window.navigator.webdriver!==true) );
-        const wd_nfake = !!Object.getOwnPropertyDescriptor(window.navigator, 'webdriver');
-
-        let wd_pfake = 'XZ';
-        let d = Object.getOwnPropertyDescriptor(Navigator.prototype, 'webdriver');
-        try{ wd_pfake = (((typeof d) == "undefined") || !d.get || (d.get.toString().indexOf('webdriver')===-1) ); }catch(e){};
-
-        let uafake = 'XZ';
-        let ua = Object.getOwnPropertyDescriptor(Navigator.prototype, 'userAgent');
-        try{ uafake = (((typeof ua) == "undefined") || !ua.get || (ua.get.toString().indexOf('userAgent')===-1) ); }catch(e){};
-
-        const is_bot = ( !wd_ok || wd_nfake || fake_old_chrome || fake_old_ff);
-
-        let wd = 'webdriver_'+window.navigator.webdriver
-                +' nfake_'+wd_nfake
-                +' pfake_'+wd_pfake
-                +' twd_'+(typeof navigator.webdriver) 
-                +' tpwd_'+(typeof d)
-                +' uafake_'+uafake
-                // +' tua_'+(typeof navigator.userAgent) 
-                // +' tpua_'+(typeof ua)
-                +' old_'+(old_chrome||old_ff)
-                +' cr_'+chrome
-                +' crmm_'+chromium
-                +' cce_'+(chrome==chromium)
-                +' ccl_'+(chrome<chromium)
-                +' foc_'+fake_old_chrome
-                +' ff_'+ff
-                +' fof_'+fake_old_ff
-                +' bot_'+is_bot
-                +' botbot_'+window.botbot
-                ;
-        return wd;
-    }catch(e){};
-};
-
-
-</script>
-
-
-
-
-<!-- /end block.tpl.php --><!-- start block.tpl.php -->
 <script async src="https://cdn.skcrtxr.com/roxot-wrapper/js/roxot-manager.js?pid=c4635dfa-1e67-4f39-946c-8fdaa8b865d0"></script>
 
 <script>
@@ -1897,7 +1311,7 @@ define('jquery', ['jqw!'], function($){ return $; });
 
 //--><!]]>
 </script>
-<script type="text/javascript" src="/ss_t/superstat2_e3ac637992a174f5945aa4baff5b0995.js"></script><script type="text/javascript">(function(){superstat2_init({"ids":[["7396176805466738690"]],"timeout":"2000","timeout_max_escape":"15","url":"/ss_t/collect","url_cross":"https://sst-irec.r-99.com/collect"});})();</script><script>
+<script type="text/javascript" src="/ss_t/superstat2_e3ac637992a174f5945aa4baff5b0995.js"></script><script type="text/javascript">(function(){superstat2_init({"ids":[["7397492809899581698"]],"timeout":"2000","timeout_max_escape":"15","url":"/ss_t/collect","url_cross":"https://sst-irec.r-99.com/collect"});})();</script><script>
 <!--//--><![CDATA[//><!--
 
 
