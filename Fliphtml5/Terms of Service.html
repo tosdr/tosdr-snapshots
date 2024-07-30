@@ -89,7 +89,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.defer= true;j.s
     
 </script>
 
-    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?20a3586a0bca096601a957ea5c9c299a"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
+    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?f48b0496db748c535c68de5cf6a2d9bb"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
 <aside class="flip-side-bar">
   <div class='sidebar-toTop-container'>
     <a href="//fliphtml5.com/app/" class='ios' title='iOS & Android App' target="_blank"
@@ -216,17 +216,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   (function ($){
     fh5.maintenanceConfig = {
       version: '2024-7-29', // 停服日期
-      startTime: '2024-7-29 06:00:00',
-      endTime: '2024-7-29 08:00:00',
+      startTime: [2024,6,29,6,0,0], //UTC 2024-7-29 06:00:00,
+      endTime: [2024,6,29,8,0,0], //UTC 2024-7-29 08:00:00,
     }
     const localMaintenanceConfig = JSON.parse(localStorage.getItem('localMaintenanceConfig') || '{}');
-    const isInVersion = localMaintenanceConfig.version === fh5.maintenanceConfig.version
-    const isDeadline = new Date().getTime() > new Date(fh5.maintenanceConfig.endTime).getTime()
-    const dateRange = utils.formatDateRange(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig.endTime);
+    const formatDateInfo = utils.formatMaintainedDate(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig.endTime);
+    const isInVersion = localMaintenanceConfig.version === fh5.maintenanceConfig.version;
+    const isDeadline = new Date().getTime() > formatDateInfo.utcEndTime.getTime();
     if (!isInVersion && !isDeadline) {
       const maintenancePanel = new MaintenancePanel({
-        timeStr: dateRange.time,
-        space: dateRange.space
+        formatDateInfo: formatDateInfo,
       });
       maintenancePanel.show();
     }
