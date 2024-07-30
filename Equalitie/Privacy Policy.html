@@ -239,7 +239,7 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
 <script type="text/javascript" id="wp-api-fetch-js-after">
 /* <![CDATA[ */
 wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "https://equalit.ie/wp-json/" ) );
-wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "5c913a3a00" );
+wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "7d02a546ec" );
 wp.apiFetch.use( wp.apiFetch.nonceMiddleware );
 wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );
 wp.apiFetch.nonceEndpoint = "https://equalit.ie/wp-admin/admin-ajax.php?action=rest-nonce";
@@ -393,7 +393,7 @@ var params = {"clearLogRestUrl":"https:\/\/equalit.ie\/wp-json\/nf-file-uploads\
 <script type="text/javascript" src="https://equalit.ie/wp-content/plugins/simple-social-buttons/assets/js/frontend-blocks.js?ver=5.2.0" id="ssb-blocks-front-js-js"></script>
 <script type="text/javascript" id="ssb-front-js-js-extra">
 /* <![CDATA[ */
-var SSB = {"ajax_url":"https:\/\/equalit.ie\/wp-admin\/admin-ajax.php","fb_share_nonce":"b6a1045fdc"};
+var SSB = {"ajax_url":"https:\/\/equalit.ie\/wp-admin\/admin-ajax.php","fb_share_nonce":"494f8d0b8b"};
 /* ]]> */
 </script>
 <script type="text/javascript" src="https://equalit.ie/wp-content/plugins/simple-social-buttons/assets/js/front.js?ver=5.2.0" id="ssb-front-js-js"></script>
@@ -1019,6 +1019,41 @@ var complianz = {"prefix":"cmplz_","user_banner_id":"1","set_cookies":[],"block_
     
 /* ]]> */
 </script>
+<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			var if_ssb_exist = document.getElementsByClassName( "simplesocialbuttons" ).length > 0;
+			if (if_ssb_exist) {
+				var ssb_admin_ajax = 'https://equalit.ie/wp-admin/admin-ajax.php';
+				var ssb_post_id = 33510 ;
+				var ssb_post_url = 'https://equalit.ie/privacy-policy/';
+				var ssb_alternate_post_url = 'https://equalit.ie/privacy-policy/';
+				jQuery( document ).ready(function(){
+				var is_ssb_used = jQuery('.simplesocialbuttons');
+				if( is_ssb_used ) {
 
+					var data = {
+					'action': 'ssb_fetch_data',
+					'postID': ssb_post_id
+				};
+					jQuery.post(ssb_admin_ajax, data, function(data, textStatus, xhr) {
+						var array = JSON.parse(data);
+						jQuery.each( array, function( index, value ){
+
+							if( index == 'total' ){
+								jQuery('.ssb_'+ index +'_counter').html(value + '<span>Shares</span>');
+							}else{
+								jQuery('.ssb_'+ index +'_counter').html(value);
+							}
+						});
+
+					});
+				}
+				})
+
+			//ssbPlugin.fetchFacebookShares();
+			}
+		});
+
+		</script>
 </body>
 </html>
