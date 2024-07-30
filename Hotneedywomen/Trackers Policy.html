@@ -8,7 +8,7 @@
     <script>
         window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
-            'userID' : '8cf10fda-4127-47ba-8945-f1ea411c7f42',
+            'userID' : 'f39a327c-61fa-4ee7-85f3-e14bb8333423',
             'uuid': '' ?? '',
             'mainID' : 'hotneedywomen',
             'countryID' : 'us',
@@ -84,14 +84,14 @@
     window.bootstrap = {
         onReady : new Promise(function(resolve, reject) {
             var s = document.createElement('script');
-            s.src = "/dist/js/general/app.general.min.js?av=v20240718114055_90f2199d";
+            s.src = "/dist/js/general/app.general.min.js?av=v20240730115112_ceefd5e6";
             s.onload = resolve;
             s.onerror = reject;
             document.head.appendChild(s);
         }),
         onCollectConsentReady: new Promise(function (resolve, reject) {
             var s = document.createElement('script');
-            s.src = "https://agreementcadence.com/cc.js?wId=3LbE5yYp8RRX6aF6Wt4Rwr&domain=hotneedywomen.com&sessionId=3J8KSQpfsbVPa1lbxJHPCN&languageCode=en&languageTerritory=US";
+            s.src = "https://agreementcadence.com/cc.js?wId=3LbE5yYp8RRX6aF6Wt4Rwr&domain=hotneedywomen.com&sessionId=1hZUxJueUQHlTGWXGOl3T2&languageCode=en&languageTerritory=US";
             s.onload = resolve;
             s.onerror = reject;
             document.head.appendChild(s);
@@ -220,6 +220,7 @@
                 });
             };
             window.addEventListener('load', function () {
+                handleCollectConsent();
                 if (true === isAuthenticated && false === CollectConsent.getCore().hasUser()) {
                     CollectConsent.getCore().createUser().then(function(collectConsentUserId) {
                         window.application.callAjax('auth', 'setCollectConsentUserId', {collectConsentUserId : collectConsentUserId}).then(function() {
@@ -235,9 +236,67 @@
         } catch (err) {
             console.error('Failed to execute required CollectConsent implementation code!', err);
         }
+        function handleCollectConsent() {
+            CollectConsent.getCore().getConsentCollectors().then(
+                function(consentCollectors) {
+                    const consentStates = CollectConsent.getCore().getConsentStates();
+                    consentCollectors.forEach(collector => {
+                        const consentGiven = consentKeyStateGiven(collector.consentKey, consentStates);
+                        if (!consentGiven) {
+                            let domain = 'hotneedywomen.com';
+                            if (domain === 'localizadordechicas.com') {
+                                showCollectConsentElement(collector.consentKey);
+                            }
+                        }
+                    });
+                    collectConsentClickEvents();
+                    $(`.cc-segment-key-cookieMoreOptions`).hide();
+                }
+            );
+        }
+        function consentKeyStateGiven(consentKey, consentStates) {
+            const consentKeyStates = consentStates.filter(state => state.key === consentKey);
+            return consentKeyStates.length > 0;
+        }
+        function showCollectConsentElement(elementID) {
+            $(`#${elementID}Wrapper`).show();
+            if (elementID === 'cookieBanner') {
+                $(`.cc-segment-key-cookieMoreOptions`).hide();
+            }
+        }
+        function collectConsentClickEvents() {
+            cookiesBannerEvents();
+        }
+        function cookiesBannerEvents() {
+            $('body').on('click', '[data-cc-cookies-confirm]', function(e) {
+                CollectConsent.getCore().confirmConsent('cookieBanner');
+                $(`#cookieBannerWrapper`).hide();
+            });
+            $('body').on('click', '[data-cc-cookies-more-options]', function(e) {
+                $(`.cc-segment-key-cookieMoreOptions`).show();
+                $(`[data-cc-cookies-decline]`).show();
+                $(`[data-cc-cookies-more-options]`).hide();
+            });
+            $('body').on('click', '[data-cc-cookies-decline]', function(e) {
+                CollectConsent.getCore().refuteConsent('cookieBanner');
+                $(`#cookieBannerWrapper`).hide();
+            });
+        }
     });
 </script>
-<script type="text/javascript">
+<div id="cookieBannerWrapper" class="cc-popup-cookies" style="display: none; z-index: 2000;">
+    <div class="cc-cookies-content container">
+        <div class="cc-static-cookie-area">
+            <div class="cc-static-cookie-banner">
+            </div>
+            <a data-cc-cookies-decline class="link pt-2" id="cookies-decline">Decline Cookies</a>
+        </div>
+        <div class="cc-cookies-buttons">
+            <button data-cc-cookies-more-options class="more-options" id="cookies-more-options">More Options</button>
+            <button data-cc-cookies-confirm>Accept Cookies</button>
+        </div>
+    </div>
+</div><script type="text/javascript">
     bootstrap.onReady.then(function() {
         var sessionId   = parseInt('') || null,
             refreshRate = 15000;
@@ -883,12 +942,12 @@
         var guestHeaderDependencies = new Promise(function(resolve) {
             bootstrap.onReady.then(function () {
                 bootstrap.loadScripts([
-                    "/dist/js/guests/registerValidation.js?av=v20240718114055_90f2199d",
-                    "/dist/js/guests/register.js?av=v20240718114055_90f2199d"
+                    "/dist/js/guests/registerValidation.js?av=v20240730115112_ceefd5e6",
+                    "/dist/js/guests/register.js?av=v20240730115112_ceefd5e6"
                 ]).then(function() {
                     //prevent race condition
                     bootstrap.loadScripts([
-                        "/dist/js/guests/login.js?av=v20240718114055_90f2199d"
+                        "/dist/js/guests/login.js?av=v20240730115112_ceefd5e6"
                     ]).then(resolve);
                 });
             });
