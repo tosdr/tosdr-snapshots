@@ -9,8 +9,8 @@
 <html lang="en-US">
 <!--<![endif]-->
 
-<head>
-    <meta charset="UTF-8">
+<head><meta charset="UTF-8"><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(){this.v="1.2.3",this.triggerEvents=["keydown","mousedown","mousemove","touchmove","touchstart","touchend","wheel"],this.userEventHandler=this._triggerListener.bind(this),this.touchStartHandler=this._onTouchStart.bind(this),this.touchMoveHandler=this._onTouchMove.bind(this),this.touchEndHandler=this._onTouchEnd.bind(this),this.clickHandler=this._onClick.bind(this),this.interceptedClicks=[],window.addEventListener("pageshow",t=>{this.persisted=t.persisted}),window.addEventListener("DOMContentLoaded",()=>{this._preconnect3rdParties()}),this.delayedScripts={normal:[],async:[],defer:[]},this.trash=[],this.allJQueries=[]}_addUserInteractionListener(t){if(document.hidden){t._triggerListener();return}this.triggerEvents.forEach(e=>window.addEventListener(e,t.userEventHandler,{passive:!0})),window.addEventListener("touchstart",t.touchStartHandler,{passive:!0}),window.addEventListener("mousedown",t.touchStartHandler),document.addEventListener("visibilitychange",t.userEventHandler)}_removeUserInteractionListener(){this.triggerEvents.forEach(t=>window.removeEventListener(t,this.userEventHandler,{passive:!0})),document.removeEventListener("visibilitychange",this.userEventHandler)}_onTouchStart(t){"HTML"!==t.target.tagName&&(window.addEventListener("touchend",this.touchEndHandler),window.addEventListener("mouseup",this.touchEndHandler),window.addEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.addEventListener("mousemove",this.touchMoveHandler),t.target.addEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"onclick","rocket-onclick"),this._pendingClickStarted())}_onTouchMove(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler),t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this._pendingClickFinished()}_onTouchEnd(t){window.removeEventListener("touchend",this.touchEndHandler),window.removeEventListener("mouseup",this.touchEndHandler),window.removeEventListener("touchmove",this.touchMoveHandler,{passive:!0}),window.removeEventListener("mousemove",this.touchMoveHandler)}_onClick(t){t.target.removeEventListener("click",this.clickHandler),this._renameDOMAttribute(t.target,"rocket-onclick","onclick"),this.interceptedClicks.push(t),t.preventDefault(),t.stopPropagation(),t.stopImmediatePropagation(),this._pendingClickFinished()}_replayClicks(){window.removeEventListener("touchstart",this.touchStartHandler,{passive:!0}),window.removeEventListener("mousedown",this.touchStartHandler),this.interceptedClicks.forEach(t=>{t.target.dispatchEvent(new MouseEvent("click",{view:t.view,bubbles:!0,cancelable:!0}))})}_waitForPendingClicks(){return new Promise(t=>{this._isClickPending?this._pendingClickFinished=t:t()})}_pendingClickStarted(){this._isClickPending=!0}_pendingClickFinished(){this._isClickPending=!1}_renameDOMAttribute(t,e,r){t.hasAttribute&&t.hasAttribute(e)&&(event.target.setAttribute(r,event.target.getAttribute(e)),event.target.removeAttribute(e))}_triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}_preconnect3rdParties(){let t=[];document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(e=>{if(e.hasAttribute("src")){let r=new URL(e.src).origin;r!==location.origin&&t.push({src:r,crossOrigin:e.crossOrigin||"module"===e.getAttribute("data-rocket-type")})}}),t=[...new Map(t.map(t=>[JSON.stringify(t),t])).values()],this._batchInjectResourceHints(t,"preconnect")}async _loadEverythingNow(){this.lastBreath=Date.now(),this._delayEventListeners(this),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async);try{await this._triggerDOMContentLoaded(),await this._triggerWindowLoad()}catch(t){console.error(t)}window.dispatchEvent(new Event("rocket-allScriptsLoaded")),this._waitForPendingClicks().then(()=>{this._replayClicks()}),this._emptyTrash()}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach(t=>{t.hasAttribute("data-rocket-src")?t.hasAttribute("async")&&!1!==t.async?this.delayedScripts.async.push(t):t.hasAttribute("defer")&&!1!==t.defer||"module"===t.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(t):this.delayedScripts.normal.push(t):this.delayedScripts.normal.push(t)})}async _transformScript(t){return new Promise((await this._littleBreath(),navigator.userAgent.indexOf("Firefox/")>0||""===navigator.vendor)?e=>{let r=document.createElement("script");[...t.attributes].forEach(t=>{let e=t.nodeName;"type"!==e&&("data-rocket-type"===e&&(e="type"),"data-rocket-src"===e&&(e="src"),r.setAttribute(e,t.nodeValue))}),t.text&&(r.text=t.text),r.hasAttribute("src")?(r.addEventListener("load",e),r.addEventListener("error",e)):(r.text=t.text,e());try{t.parentNode.replaceChild(r,t)}catch(i){e()}}:async e=>{function r(){t.setAttribute("data-rocket-status","failed"),e()}try{let i=t.getAttribute("data-rocket-type"),n=t.getAttribute("data-rocket-src");t.text,i?(t.type=i,t.removeAttribute("data-rocket-type")):t.removeAttribute("type"),t.addEventListener("load",function r(){t.setAttribute("data-rocket-status","executed"),e()}),t.addEventListener("error",r),n?(t.removeAttribute("data-rocket-src"),t.src=n):t.src="data:text/javascript;base64,"+window.btoa(unescape(encodeURIComponent(t.text)))}catch(s){r()}})}async _loadScriptsFromList(t){let e=t.shift();return e&&e.isConnected?(await this._transformScript(e),this._loadScriptsFromList(t)):Promise.resolve()}_preloadAllScripts(){this._batchInjectResourceHints([...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async],"preload")}_batchInjectResourceHints(t,e){var r=document.createDocumentFragment();t.forEach(t=>{let i=t.getAttribute&&t.getAttribute("data-rocket-src")||t.src;if(i){let n=document.createElement("link");n.href=i,n.rel=e,"preconnect"!==e&&(n.as="script"),t.getAttribute&&"module"===t.getAttribute("data-rocket-type")&&(n.crossOrigin=!0),t.crossOrigin&&(n.crossOrigin=t.crossOrigin),t.integrity&&(n.integrity=t.integrity),r.appendChild(n),this.trash.push(n)}}),document.head.appendChild(r)}_delayEventListeners(t){let e={};function r(t,r){!function t(r){!e[r]&&(e[r]={originalFunctions:{add:r.addEventListener,remove:r.removeEventListener},eventsToRewrite:[]},r.addEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.add.apply(r,arguments)},r.removeEventListener=function(){arguments[0]=i(arguments[0]),e[r].originalFunctions.remove.apply(r,arguments)});function i(t){return e[r].eventsToRewrite.indexOf(t)>=0?"rocket-"+t:t}}(t),e[t].eventsToRewrite.push(r)}function i(t,e){let r=t[e];Object.defineProperty(t,e,{get:()=>r||function(){},set(i){t["rocket"+e]=r=i}})}r(document,"DOMContentLoaded"),r(window,"DOMContentLoaded"),r(window,"load"),r(window,"pageshow"),r(document,"readystatechange"),i(document,"onreadystatechange"),i(window,"onload"),i(window,"onpageshow")}_delayJQueryReady(t){let e;function r(r){if(r&&r.fn&&!t.allJQueries.includes(r)){r.fn.ready=r.fn.init.prototype.ready=function(e){return t.domReadyFired?e.bind(document)(r):document.addEventListener("rocket-DOMContentLoaded",()=>e.bind(document)(r)),r([])};let i=r.fn.on;r.fn.on=r.fn.init.prototype.on=function(){if(this[0]===window){function t(t){return t.split(" ").map(t=>"load"===t||0===t.indexOf("load.")?"rocket-jquery-load":t).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=t(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach(e=>{let r=arguments[0][e];delete arguments[0][e],arguments[0][t(e)]=r})}return i.apply(this,arguments),this},t.allJQueries.push(r)}e=r}r(window.jQuery),Object.defineProperty(window,"jQuery",{get:()=>e,set(t){r(t)}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._littleBreath(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._littleBreath(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._littleBreath(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._littleBreath(),window.dispatchEvent(new Event("rocket-load")),await this._littleBreath(),window.rocketonload&&window.rocketonload(),await this._littleBreath(),this.allJQueries.forEach(t=>t(window).trigger("rocket-jquery-load")),await this._littleBreath();let t=new Event("rocket-pageshow");t.persisted=this.persisted,window.dispatchEvent(t),await this._littleBreath(),window.rocketonpageshow&&window.rocketonpageshow({persisted:this.persisted})}_handleDocumentWrite(){let t=new Map;document.write=document.writeln=function(e){let r=document.currentScript;r||console.error("WPRocket unable to document.write this: "+e);let i=document.createRange(),n=r.parentElement,s=t.get(r);void 0===s&&(s=r.nextSibling,t.set(r,s));let a=document.createDocumentFragment();i.setStart(a,0),a.appendChild(i.createContextualFragment(e)),n.insertBefore(a,s)}}async _littleBreath(){Date.now()-this.lastBreath>45&&(await this._requestAnimFrame(),this.lastBreath=Date.now())}async _requestAnimFrame(){return document.hidden?new Promise(t=>setTimeout(t)):new Promise(t=>requestAnimationFrame(t))}_emptyTrash(){this.trash.forEach(t=>t.remove())}static run(){let t=new RocketLazyLoadScripts;t._addUserInteractionListener(t)}}RocketLazyLoadScripts.run();</script>
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://connect.facebook.net">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     <!-- Google Tag Manager -->
-    <script>
+    <script type="rocketlazyloadscript">
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -38,8 +38,8 @@
     <!-- End Google Tag Manager -->
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0NQ2DPN8JC"></script>
-    <script>
+    <script type="rocketlazyloadscript" async data-rocket-src="https://www.googletagmanager.com/gtag/js?id=G-0NQ2DPN8JC"></script>
+    <script type="rocketlazyloadscript">
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
@@ -64,6 +64,10 @@
 
 	<!-- This site is optimized with the Yoast SEO plugin v20.8 - https://yoast.com/wordpress/plugins/seo/ -->
 	<title>Privacy Policy | Urban VPN</title>
+<link rel="preload" as="font" href="https://www.urban-vpn.com/wp-content/themes/urbanvpn/font/DMSans-Regular.ttf" crossorigin>
+<link rel="preload" as="font" href="https://www.urban-vpn.com/wp-content/themes/urbanvpn/font/DMSans-Bold.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.urban-vpn.com/wp-content/themes/urbanvpn/font/DMSans-Medium.woff2" crossorigin>
+<link rel="preload" as="font" href="https://www.urban-vpn.com/wp-content/themes/urbanvpn/font/Aileron-Regular.woff2" crossorigin>
 	<meta name="description" content="Check out UrbanVPN&#039;s privacy policy to learn all the ways our revolutionary IP-sharing platform protects your privacy &amp; identity. Read more by clicking here!" />
 	<link rel="canonical" href="https://www.urban-vpn.com/about-us/privacy/" />
 	<meta property="og:locale" content="en_US" />
@@ -80,7 +84,7 @@
 	<!-- / Yoast SEO plugin. -->
 
 
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+
 <link rel="alternate" type="application/rss+xml" title="| Urban VPN &raquo; Feed" href="https://www.urban-vpn.com/feed/" />
 <style id='wp-emoji-styles-inline-css' type='text/css'>
 
@@ -106,22 +110,22 @@
 :where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
 :root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
 </style>
-<link rel='stylesheet' id='wpml-blocks-css' href='https://www.urban-vpn.com/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css?ver=4.6.3' type='text/css' media='all' />
-<link rel='stylesheet' id='cms-navigation-style-base-css' href='https://www.urban-vpn.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css?ver=1.5.5' type='text/css' media='screen' />
-<link rel='stylesheet' id='cms-navigation-style-css' href='https://www.urban-vpn.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css?ver=1.5.5' type='text/css' media='screen' />
-<link rel='stylesheet' id='bootstrap-css' href='https://www.urban-vpn.com/wp-content/themes/urbanvpn/css/bootstrap-grid.css?ver=4.6' type='text/css' media='all' />
-<link rel='stylesheet' id='slickcss-css' href='https://www.urban-vpn.com/wp-content/themes/urbanvpn/css/slick.css?ver=4.6' type='text/css' media='all' />
-<link rel='stylesheet' id='maincss-css' href='https://www.urban-vpn.com/wp-content/themes/urbanvpn/css/main.css?ver=4.6' type='text/css' media='all' />
-<link rel='stylesheet' id='style-css' href='https://www.urban-vpn.com/wp-content/themes/urbanvpn/style.css?ver=4.6' type='text/css' media='all' />
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<link data-minify="1" rel='stylesheet' id='wpml-blocks-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/plugins/sitepress-multilingual-cms/dist/css/blocks/styles.css?ver=1722437065' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='cms-navigation-style-base-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css?ver=1722437065' type='text/css' media='screen' />
+<link data-minify="1" rel='stylesheet' id='cms-navigation-style-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css?ver=1722437065' type='text/css' media='screen' />
+<link data-minify="1" rel='stylesheet' id='bootstrap-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/css/bootstrap-grid.css?ver=1722437065' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='slickcss-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/css/slick.css?ver=1722437065' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='maincss-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/css/main.css?ver=1722437065' type='text/css' media='all' />
+<link data-minify="1" rel='stylesheet' id='style-css' href='https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/style.css?ver=1722437065' type='text/css' media='all' />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js" defer></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js" defer></script>
 <script type="text/javascript" id="wpml-cookie-js-extra">
 /* <![CDATA[ */
 var wpml_cookies = {"wp-wpml_current_language":{"value":"en","expires":1,"path":"\/"}};
 var wpml_cookies = {"wp-wpml_current_language":{"value":"en","expires":1,"path":"\/"}};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/plugins/sitepress-multilingual-cms/res/js/cookies/language-cookie.js?ver=4.6.3" id="wpml-cookie-js"></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/plugins/sitepress-multilingual-cms/res/js/cookies/language-cookie.js?ver=1722437065" id="wpml-cookie-js" defer></script>
 <link rel="https://api.w.org/" href="https://www.urban-vpn.com/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://www.urban-vpn.com/wp-json/wp/v2/pages/7582" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.urban-vpn.com/xmlrpc.php?rsd" />
 <meta name="generator" content="WordPress 6.6.1" />
 <link rel='shortlink' href='https://www.urban-vpn.com/?p=7582' />
@@ -1576,10 +1580,10 @@ with Urban VPN</h2>
 	</div>
 </footer>
 </div>
-<script>
+<script type="rocketlazyloadscript">
 </script>
 
-	<script>
+	<script type="rocketlazyloadscript">
 		const triggerClass = 'js_trigger_download';
 
 		window.addEventListener("load", (event) => {
@@ -1615,7 +1619,7 @@ with Urban VPN</h2>
 			});
 		});
 	</script>
-	<script type="text/javascript" id="rocket-browser-checker-js-after">
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-browser-checker-js-after">
 /* <![CDATA[ */
 "use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
 /* ]]> */
@@ -1625,31 +1629,31 @@ with Urban VPN</h2>
 var RocketPreloadLinksConfig = {"excludeUris":"\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index.php\/)?(.*)wp-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm","siteUrl":"https:\/\/www.urban-vpn.com","onHoverDelay":"100","rateThrottle":"3"};
 /* ]]> */
 </script>
-<script type="text/javascript" id="rocket-preload-links-js-after">
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="rocket-preload-links-js-after">
 /* <![CDATA[ */
 (function() {
 "use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
 }());
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/slick.min.js?ver=4.6" id="slickjs-js"></script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/main.js?ver=4.6" id="mainjs-js"></script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/slick.min.js?ver=4.6" id="slickjs-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/main.js?ver=1722437065" id="mainjs-js" defer></script>
 <script type="text/javascript" id="scriptjs-js-extra">
 /* <![CDATA[ */
 var ajax_object = {"ajaxurl":"https:\/\/www.urban-vpn.com\/wp-admin\/admin-ajax.php"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/scripts.js?ver=4.6" id="scriptjs-js"></script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/random-password-generator.js?ver=4.6" id="randompassword-js"></script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/urban-analytics.js?ver=4.6" id="urbananalytics-js"></script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/google-analytics.js?ver=4.6" id="googlealytics-js"></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/scripts.js?ver=1722437065" id="scriptjs-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/random-password-generator.js?ver=1722437065" id="randompassword-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/urban-analytics.js?ver=1722437065" id="urbananalytics-js" defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript" data-rocket-src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/google-analytics.js?ver=1722437065" id="googlealytics-js" defer></script>
 <script type="text/javascript" id="ext_urls_handler-js-extra">
 /* <![CDATA[ */
 var ext_obj = {"extajaxurl":"https:\/\/www.urban-vpn.com\/wp-admin\/admin-ajax.php","mac_app":"https:\/\/apps.apple.com\/us\/app\/urban-vpn-desktop\/id1517772049","urban_vpn_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/urban-vpn\/","urban_vpn_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/urban-vpn-proxy\/eppiocemhmnlbhjplcgkofciiegomcon","urban_vpn_extension_edge":"https:\/\/microsoftedge.microsoft.com\/addons\/detail\/urban-vpn-proxy\/nimlmejbmnecnaghgmbahmbaddhjbecg","urban_shield_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/urban-shield\/","urban_shield_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/urban-shield\/almalgbpmcfpdaopimbdchdliminoign","urban_shield_extension_edge":"https:\/\/microsoftedge.microsoft.com\/addons\/detail\/urban-shield\/jckkfbfmofganecnnpfndfjifnimpcel","urban_adblocker_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/urban-free-ad-blocker\/","urban_adblocker_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/urban-ad-blocker\/feflcgofneboehfdeebcfglbodaceghj","urban_adblocker_extension_edge":"https:\/\/microsoftedge.microsoft.com\/addons\/detail\/urban-ad-blocker\/gcogpdjkkamgkakkjgeefgpcheonclca","urban_antimalware_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/urban-safe-browsing\/","urban_antimalware_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/urban-anti-malware-safe-b\/efbobpikdmjaaklfkdlgfopochnjadab","urban_antimalware_extension_edge":"https:\/\/microsoftedge.microsoft.com\/addons\/detail\/urban-antimalware-safe\/gemndobjhbcgnpbennkdglahpppmieea","urban_youtube_adblocker_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/urban-youtube-ad-blocker\/","urban_youtube_adblocker_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/urban-youtube-ad-blocker\/ghfdpgldgpllmddmfpjknjmmjlnpnkcl","urban_youtube_adblocker_extension_edge":"https:\/\/microsoftedge.microsoft.com\/addons\/detail\/urban-youtube%E2%84%A2-ad-blocker\/pgkoofcljmnboiagfabbfooohgbjanhm","sugar_extension_chrome":"https:\/\/chrome.google.com\/webstore\/detail\/sugar\/pgapfmffencbcimgokjghhlkolckkomb","sugar_extension_firefox":"https:\/\/addons.mozilla.org\/en-US\/firefox\/addon\/sugar\/","urban_vpn_android_app":"https:\/\/play.google.com\/store\/apps\/details?id=com.urbanvpn.android","urban_vpn_ios_app":"https:\/\/apps.apple.com\/app\/id1517016374","domain":"https:\/\/www.urban-vpn.com"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://www.urban-vpn.com/wp-content/themes/urbanvpn/js/ext_urls_handler.js?ver=4.6" id="ext_urls_handler-js"></script>
-	<script>
+<script data-minify="1" type="text/javascript" src="https://www.urban-vpn.com/wp-content/cache/min/1/wp-content/themes/urbanvpn/js/ext_urls_handler.js?ver=1722437065" id="ext_urls_handler-js" defer></script>
+	<script type="rocketlazyloadscript">
 		const isGtag = gtag && typeof gtag === 'function';
 
 		/**
@@ -1960,5 +1964,7 @@ var ext_obj = {"extajaxurl":"https:\/\/www.urban-vpn.com\/wp-admin\/admin-ajax.p
 <!--
 Performance optimized by Redis Object Cache. Learn more: https://wprediscache.com
 
-Retrieved 22373 objects (5 MB) from Redis using PhpRedis (v5.3.5).
+Retrieved 22363 objects (5 MB) from Redis using PhpRedis (v5.3.5).
 -->
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
