@@ -5,7 +5,7 @@
 <script>
     var BASE_URL = 'https://www.thegreatcoursesplus.com/';
     var require = {
-        "baseUrl": "https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US"
+        "baseUrl": "https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US"
     };
 </script>
         <meta charset="utf-8"/>
@@ -15,12 +15,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
 <meta name="format-detection" content="telephone=no"/>
 <title>Terms of Use |  Wondrium | Plus</title>
-<link  rel="stylesheet" type="text/css"  media="all" href="https://www.thegreatcoursesplus.com/static/version1721744801/_cache/merged/72e83bd01feee114d798ab0e3e260330.css" />
+<link  rel="stylesheet" type="text/css"  media="all" href="https://www.thegreatcoursesplus.com/static/version1722443246/_cache/merged/557a46436864d20d312c2520aa59a99c.css" />
+<link  rel="stylesheet" type="text/css"  media="all" href="//fonts.googleapis.com/css?family=Montserrat:light,medium,regular,semi-bold,bold,italic,regular|Zilla+Slab:medium,semi-bold&display=swap" />
 <link  rel="stylesheet" type="text/css"  media="all" href="//use.typekit.net/lde2ycq.css" />
-<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/requirejs/require.js"></script>
-<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/mage/requirejs/mixins.js"></script>
-<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/requirejs-config.js"></script>
-<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/js/main.js"></script>
+<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/requirejs/require.js"></script>
+<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/mage/requirejs/mixins.js"></script>
+<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/requirejs-config.js"></script>
+<script  type="text/javascript"  src="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/js/main.js"></script>
 <link  rel="icon" type="image/x-icon" href="https://www.thegreatcoursesplus.com/media/favicon/stores/2/favicon.ico" />
 <link  rel="shortcut icon" type="image/x-icon" href="https://www.thegreatcoursesplus.com/media/favicon/stores/2/favicon.ico" />
 
@@ -51,7 +52,7 @@
  </style>
 
   <!-- Load Mobile or Desktop css -->
-        <link rel="stylesheet" type="text/css" href="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/css/styles-l.css">
+        <link rel="stylesheet" type="text/css" href="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/css/styles-l.css">
    
 
 <!-- Load Landing page css -->
@@ -80,7 +81,7 @@
 
     </head>
     <body data-container="body"
-          data-mage-init='{"loaderAjax": {}, "loader": { "icon": "https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/images/loader-2.gif"}}'
+          data-mage-init='{"loaderAjax": {}, "loader": { "icon": "https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/images/loader-2.gif"}}'
         id="html-body" class="cms-tos cms-page-view page-layout-1column">
         <div id="globalBannerMessages">
 <div id="offer-banner-plus" class="OfferBanner">
@@ -264,7 +265,9 @@
     require.config({"config":{"Rb_ToaLectureProgress\/js\/model\/progress-provider":{"cacheLifeTime":10800}}});
 </script>
 
-    <script type="text/javascript">
+    <script>
+        "use strict";
+
         var utag_data = {
             page_name: "Terms of Use |  Wondrium",
             page_type: "cms-tos",
@@ -281,17 +284,38 @@
             country_id: "FR|EU"
                     };
 
-        require(['jquery'], function ($) {
-            $.get('/tealium/ajax/utagdata', function(data){
-                $.extend(utag_data, data);
-            }).always(function(){
-                (function(a,b,c,d){
-                    a='//tags.tiqcdn.com/utag/teachingcompany/tgc-plus/prod/utag.js';
-                    b=document;c='script';d=b.createElement(c);d.src=a;d.type='text/java'+c;d.async=true;
-                    a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a);
-                })();
-            });
-        });
+        function initTealiumUtag() {
+            return {
+                 init() {
+                    let self = this;
+                    self.fetchUtagData(self);
+                },
+
+                fetchUtagData: async function(self) {
+                  const response = await fetch(window.BASE_URL + '/tealium/ajax/utagdata', { method: 'get' }).then((e) => e.json()).then((json) => self.extend(utag_data, json));
+                  if(response) {
+                    self.insertUtag();
+                  }
+                },
+
+                insertUtag: function() {
+                  const polyfill = document.createElement('script');
+                  polyfill.src = '//tags.tiqcdn.com/utag/teachingcompany/tgc-plus/prod/utag.js';
+                  polyfill.async = 'async';
+                  const firstScriptTag = document.getElementsByTagName('script')[0];
+                  firstScriptTag.parentNode.insertBefore(polyfill, firstScriptTag);
+                },
+
+                extend: function(a, b) {
+                  for(var key in b)
+                      if(b.hasOwnProperty(key))
+                          a[key] = b[key];
+                  return a;
+                },
+            };
+        }
+
+        initTealiumUtag().init();
     </script>
 
 
@@ -829,14 +853,14 @@
     </div>
 </div>
 </div></div><div class="wondrium-main-content"><a id="contentarea" tabindex="-1"></a>
-<div class="columns"><div class="container-fluid"><input name="form_key" type="hidden" value="GHWlTDSGwzeOYiRt" /><script type="text/x-magento-init">
+<div class="columns"><div class="container-fluid"><input name="form_key" type="hidden" value="dWh1zDIT0YgIK7Wp" /><script type="text/x-magento-init">
     {
         "*": {
             "Magento_Customer/js/section-config": {
-                "sections": {"stores\/store\/switch":["*"],"stores\/store\/switchrequest":["*"],"directory\/currency\/switch":["*"],"*":["messages","content_restriction"],"customer\/account\/logout":["*","recently_viewed_product","recently_compared_product","persistent"],"customer\/account\/loginpost":["*"],"customer\/account\/createpost":["*"],"customer\/account\/editpost":["*"],"customer\/ajax\/login":["checkout-data","cart","captcha"],"catalog\/product_compare\/add":["compare-products"],"catalog\/product_compare\/remove":["compare-products"],"catalog\/product_compare\/clear":["compare-products"],"sales\/guest\/reorder":["cart"],"sales\/order\/reorder":["cart"],"checkout\/cart\/add":["cart","directory-data"],"checkout\/cart\/delete":["cart"],"checkout\/cart\/updatepost":["cart"],"checkout\/cart\/updateitemoptions":["cart"],"checkout\/cart\/couponpost":["cart"],"checkout\/cart\/estimatepost":["cart"],"checkout\/cart\/estimateupdatepost":["cart"],"checkout\/onepage\/saveorder":["cart","checkout-data","last-ordered-items"],"checkout\/sidebar\/removeitem":["cart"],"checkout\/sidebar\/updateitemqty":["cart"],"rest\/*\/v1\/carts\/*\/payment-information":["cart","last-ordered-items","captcha","instant-purchase"],"rest\/*\/v1\/guest-carts\/*\/payment-information":["cart","captcha"],"rest\/*\/v1\/guest-carts\/*\/selected-payment-method":["cart","checkout-data"],"rest\/*\/v1\/carts\/*\/selected-payment-method":["cart","checkout-data","instant-purchase"],"wishlist\/index\/add":["wishlist"],"wishlist\/index\/remove":["wishlist"],"wishlist\/index\/updateitemoptions":["wishlist"],"wishlist\/index\/update":["wishlist"],"wishlist\/index\/cart":["wishlist","cart"],"wishlist\/index\/fromcart":["wishlist","cart"],"wishlist\/index\/allcart":["wishlist","cart"],"wishlist\/shared\/allcart":["wishlist","cart"],"wishlist\/shared\/cart":["cart"],"giftregistry\/index\/cart":["cart"],"giftregistry\/view\/addtocart":["cart"],"customer_order\/cart\/updatefaileditemoptions":["cart"],"checkout\/cart\/updatefaileditemoptions":["cart"],"customer_order\/cart\/advancedadd":["cart"],"checkout\/cart\/advancedadd":["cart"],"checkout\/cart\/removeallfailed":["cart"],"checkout\/cart\/removefailed":["cart"],"customer_order\/cart\/addfaileditems":["cart"],"checkout\/cart\/addfaileditems":["cart"],"customer_order\/sku\/uploadfile":["cart"],"customer\/address\/*":["instant-purchase"],"customer\/account\/*":["instant-purchase"],"vault\/cards\/deleteaction":["instant-purchase"],"multishipping\/checkout\/overviewpost":["cart"],"wishlist\/index\/copyitem":["wishlist"],"wishlist\/index\/copyitems":["wishlist"],"wishlist\/index\/deletewishlist":["wishlist","multiplewishlist"],"wishlist\/index\/createwishlist":["multiplewishlist"],"wishlist\/index\/editwishlist":["multiplewishlist"],"wishlist\/index\/moveitem":["wishlist"],"wishlist\/index\/moveitems":["wishlist"],"wishlist\/search\/addtocart":["cart","wishlist"],"paypal\/express\/placeorder":["cart","checkout-data"],"paypal\/payflowexpress\/placeorder":["cart","checkout-data"],"paypal\/express\/onauthorization":["cart","checkout-data"],"persistent\/index\/unsetcookie":["persistent"],"review\/product\/post":["review"],"gift\/cart\/removeitem":["cart"],"gift\/customer\/accountlogin":["cart"],"gift\/message\/ajax":["cart"],"gift\/email\/ajax":["cart"],"gift\/checkout\/ajaxone":["cart"],"gift\/checkout\/ajaxtwo":["cart"],"gift\/thankyou":["cart"],"customer\/ajax\/videoautoplay":["customer"],"od_auth\/auth\/login":["*"],"pause_subscription\/pause\/post":["customer"],"rb_auth\/auth\/login":["*"]},
+                "sections": {"stores\/store\/switch":["*"],"stores\/store\/switchrequest":["*"],"directory\/currency\/switch":["*"],"*":["messages","content_restriction"],"customer\/account\/logout":["*","recently_viewed_product","recently_compared_product","persistent"],"customer\/account\/loginpost":["*"],"customer\/account\/createpost":["*"],"customer\/account\/editpost":["*"],"customer\/ajax\/login":["checkout-data","cart","captcha"],"catalog\/product_compare\/add":["compare-products"],"catalog\/product_compare\/remove":["compare-products"],"catalog\/product_compare\/clear":["compare-products"],"sales\/guest\/reorder":["cart"],"sales\/order\/reorder":["cart"],"checkout\/cart\/add":["cart","directory-data"],"checkout\/cart\/delete":["cart"],"checkout\/cart\/updatepost":["cart"],"checkout\/cart\/updateitemoptions":["cart"],"checkout\/cart\/couponpost":["cart"],"checkout\/cart\/estimatepost":["cart"],"checkout\/cart\/estimateupdatepost":["cart"],"checkout\/onepage\/saveorder":["cart","checkout-data","last-ordered-items"],"checkout\/sidebar\/removeitem":["cart"],"checkout\/sidebar\/updateitemqty":["cart"],"rest\/*\/v1\/carts\/*\/payment-information":["cart","last-ordered-items","captcha","instant-purchase"],"rest\/*\/v1\/guest-carts\/*\/payment-information":["cart","captcha"],"rest\/*\/v1\/guest-carts\/*\/selected-payment-method":["cart","checkout-data"],"rest\/*\/v1\/carts\/*\/selected-payment-method":["cart","checkout-data","instant-purchase"],"wishlist\/index\/add":["wishlist"],"wishlist\/index\/remove":["wishlist"],"wishlist\/index\/updateitemoptions":["wishlist"],"wishlist\/index\/update":["wishlist"],"wishlist\/index\/cart":["wishlist","cart"],"wishlist\/index\/fromcart":["wishlist","cart"],"wishlist\/index\/allcart":["wishlist","cart"],"wishlist\/shared\/allcart":["wishlist","cart"],"wishlist\/shared\/cart":["cart"],"giftregistry\/index\/cart":["cart"],"giftregistry\/view\/addtocart":["cart"],"customer_order\/cart\/updatefaileditemoptions":["cart"],"checkout\/cart\/updatefaileditemoptions":["cart"],"customer_order\/cart\/advancedadd":["cart"],"checkout\/cart\/advancedadd":["cart"],"checkout\/cart\/removeallfailed":["cart"],"checkout\/cart\/removefailed":["cart"],"customer_order\/cart\/addfaileditems":["cart"],"checkout\/cart\/addfaileditems":["cart"],"customer_order\/sku\/uploadfile":["cart"],"customer\/address\/*":["instant-purchase"],"customer\/account\/*":["instant-purchase"],"vault\/cards\/deleteaction":["instant-purchase"],"multishipping\/checkout\/overviewpost":["cart"],"wishlist\/index\/copyitem":["wishlist"],"wishlist\/index\/copyitems":["wishlist"],"wishlist\/index\/deletewishlist":["wishlist","multiplewishlist"],"wishlist\/index\/createwishlist":["multiplewishlist"],"wishlist\/index\/editwishlist":["multiplewishlist"],"wishlist\/index\/moveitem":["wishlist"],"wishlist\/index\/moveitems":["wishlist"],"wishlist\/search\/addtocart":["cart","wishlist"],"paypal\/express\/placeorder":["cart","checkout-data"],"paypal\/payflowexpress\/placeorder":["cart","checkout-data"],"paypal\/express\/onauthorization":["cart","checkout-data"],"persistent\/index\/unsetcookie":["persistent"],"review\/product\/post":["review"],"gift\/cart\/removeitem":["cart"],"gift\/customer\/accountlogin":["cart"],"gift\/message\/ajax":["cart"],"gift\/email\/ajax":["cart"],"gift\/checkout\/ajaxone":["cart"],"gift\/checkout\/ajaxtwo":["cart"],"gift\/thankyou":["cart"],"rest\/*\/v1\/watchlist\/mine\/items":["watchlist"],"customer\/ajax\/videoautoplay":["customer"],"od_auth\/auth\/login":["*"],"pause_subscription\/pause\/post":["customer"],"rb_auth\/auth\/login":["*"]},
                 "clientSideSections": ["checkout-data","cart-data"],
                 "baseUrls": ["https:\/\/www.thegreatcoursesplus.com\/"],
-                "sectionNames": ["messages","customer","compare-products","last-ordered-items","cart","directory-data","captcha","wishlist","instant-purchase","loggedAsCustomer","multiplewishlist","persistent","review","content_restriction","recently_viewed_product","recently_compared_product","product_data_storage","paypal-billing-agreement"]            }
+                "sectionNames": ["messages","customer","compare-products","last-ordered-items","cart","directory-data","captcha","wishlist","instant-purchase","loggedAsCustomer","multiplewishlist","persistent","review","watchlist","content_restriction","recently_viewed_product","recently_compared_product","product_data_storage","paypal-billing-agreement"]            }
         }
     }
 </script>
@@ -875,7 +899,7 @@
     {
         "*": {
             "Magento_Theme/js/sectionFix": {
-                "sectionNames": ["messages","customer","compare-products","last-ordered-items","cart","directory-data","captcha","wishlist","instant-purchase","loggedAsCustomer","multiplewishlist","persistent","review","content_restriction","recently_viewed_product","recently_compared_product","product_data_storage","paypal-billing-agreement"]            }
+                "sectionNames": ["messages","customer","compare-products","last-ordered-items","cart","directory-data","captcha","wishlist","instant-purchase","loggedAsCustomer","multiplewishlist","persistent","review","watchlist","content_restriction","recently_viewed_product","recently_compared_product","product_data_storage","paypal-billing-agreement"]            }
         }
     }
 </script>
@@ -1903,7 +1927,7 @@ h1.cond,h2.cond,h3.cond,h4.cond,h5.cond,h6.cond,.h1.cond,.h2.cond,.h3.cond,.h4.c
         <div class="modal-content">
             <div class="modal-body text-center container">
                 <div class="buffer">
-                    <img loading="lazy" src="https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/images/logo.svg" alt="The Great Courses Plus" width="350" />
+                    <img loading="lazy" src="https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/images/logo.svg" alt="The Great Courses Plus" width="350" />
                 </div>
                 <div class="h2 buffer">New Password Required</div>
                 <div class="h4 buffer">We've updated our website and apps to improve your Great Courses Plus experience.</div>
@@ -1929,8 +1953,8 @@ h1.cond,h2.cond,h3.cond,h4.cond,h5.cond,h6.cond,.h1.cond,.h2.cond,.h3.cond,.h4.c
     {
         "*": {
             "rbBitPlayerTrailer": {
-              "customUiCss": "https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/player/custombitmovinplayer-ui.css",
-              "castUiCss": "https://www.thegreatcoursesplus.com/static/version1721744801/frontend/Wondrium/default/en_US/player/cast-ui.css",
+              "customUiCss": "https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/player/custombitmovinplayer-ui.css",
+              "castUiCss": "https://www.thegreatcoursesplus.com/static/version1722443246/frontend/Wondrium/default/en_US/player/cast-ui.css",
               "baseUrl": "https://link.theplatform.com/s/jESqeC/media/guid/2661884195/",
               "manifestParam": "manifest",
               "manifest": "m3u",
@@ -2101,7 +2125,7 @@ h1.cond,h2.cond,h3.cond,h4.cond,h5.cond,h6.cond,.h1.cond,.h2.cond,.h3.cond,.h4.c
               autocomplete="off"
               onsubmit="return false;"
               data-hasrequired="&#x2A;&#x20;Required&#x20;Fields">
-                        <input name="form_key" type="hidden" value="GHWlTDSGwzeOYiRt" />
+                        <input name="form_key" type="hidden" value="dWh1zDIT0YgIK7Wp" />
             
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc79fIUAAAAADgnoUG46xV0c0ItpTI7XhZcD6X1"></script>
 
@@ -2435,5 +2459,5 @@ h1.cond,h2.cond,h3.cond,h4.cond,h5.cond,h6.cond,.h1.cond,.h2.cond,.h3.cond,.h4.c
         color: ;
     }
 </style>
-    <script type="text/javascript"  src="/LJ46_qKPW6B0_/-gJchfp8FoSFU/A/7z3u4pfm6fchEc/WSo8YwE/Clhlc/GFxOW4"></script></body>
+    <script type="text/javascript"  src="/wlkO/rfNs/hV/XVWj/vQ6w/3wJ1wScGS6cJiDGY/An5oVQE/JXMCA3l/UExQ"></script></body>
 </html>
