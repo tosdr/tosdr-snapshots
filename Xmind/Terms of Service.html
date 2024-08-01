@@ -189,7 +189,12 @@
                 $('.section-list .gift-card').on('click', function() {
                     localStorage.setItem('giftCardFrom', 'global footer')
                 })
-            })</script><div class="cookies-prompt shadow-sm cookies-prompt--hidden"><div class=cookies-prompt__container><div class=cookies-prompt__content>We use cookies to provide, improve, and promote our service. We do not leak or sell the collected data to third parties. By continuing, you consent to our <a href=/privacy/ >Privacy Policy</a>.</div><div class=cookies-prompt__close><span class=icon-cross></span></div></div></div><script>$(function(){var o="isHideCookiesPrompt",e="cookies-prompt--hidden",t=$(".cookies-prompt");Cookies.get(o)||localStorage.getItem(o)?t.remove():(t.removeClass(e),t.find(".cookies-prompt__close").on("click",function(){t.addClass(e),setTimeout(function(){t.remove()},500),Cookies.set(o,"1",{expires:3650,path:"/"}),localStorage.setItem(o,"1")}))})</script><script src=https://assets.xmind.net/www/assets/vendor/js/polyfill-45b9836beb.min.js></script><script src=https://assets.xmind.net/www/assets/vendor/js/js-cookie-a978ac7394.js></script><script src=https://assets.xmind.net/www/javascripts/base.f7c34986d9.js></script><script>const url = new URL(window.location.href)
+            })</script><div class="cookies-prompt shadow-sm cookies-prompt--hidden"><div class=cookies-prompt__container><div class=cookies-prompt__content>We use cookies to provide, improve, and promote our service. We do not leak or sell the collected data to third parties. By continuing, you consent to our <a href=/privacy/ >Privacy Policy</a>.</div><div class=cookies-prompt__close><span class=icon-cross></span></div></div></div><script>$(function(){var o="isHideCookiesPrompt",e="cookies-prompt--hidden",t=$(".cookies-prompt");Cookies.get(o)||localStorage.getItem(o)?t.remove():(t.removeClass(e),t.find(".cookies-prompt__close").on("click",function(){t.addClass(e),setTimeout(function(){t.remove()},500),Cookies.set(o,"1",{expires:3650,path:"/"}),localStorage.setItem(o,"1")}))})</script><script src=https://assets.xmind.net/www/assets/vendor/js/polyfill-45b9836beb.min.js></script><script src=https://assets.xmind.net/www/assets/vendor/js/js-cookie-a978ac7394.js></script><script src=https://assets.xmind.net/www/javascripts/base.6417fd8025.js></script><script>window.plausible = function (...args) {
+                    window.plausible.q.push(args)
+                }
+                window.plausible.q = []
+
+                const url = new URL(window.location.href)
                 const hostname = url.hostname
                 const origin = url.origin
                 script = document.createElement('script')
@@ -219,4 +224,36 @@
                     }
                 })
             })
-        })</script></body></html>
+        })</script><script>const siteMode = window.siteMode
+        const pathname = window.location.pathname
+
+        const homePageList = ['/', '/cn/', '/de/', '/jp/', '/fr/']
+        const pricingPageList = ['/pricing/', '/cn/pricing/', '/de/pricing/', '/jp/pricing/', '/fr/pricing/']
+        const xmindThankYouList = ['/xmind/thankyou/', '/cn/xmind/thankyou/', '/de/xmind/thankyou/', '/jp/xmind/thankyou/', '/fr/xmind/thankyou/'] 
+
+        if (
+            siteMode === 'en'
+            &&
+            (
+            homePageList.includes(pathname)
+            || 
+            pricingPageList.includes(pathname)
+            )
+        ) {
+            if (window.$acc._account) {
+                window.api.getUserInfo().then(res => {
+                    try {
+                        const isPro = res.sub.bundle.status === 'sub'
+                        Cookies.set('IS_PRO', isPro)
+                    } catch {
+                        Cookies.set('IS_PRO', false)
+                    }
+                })
+            } else {
+                Cookies.set('IS_PRO', false)
+            }
+        }
+
+        if (xmindThankYouList.includes(pathname)) {
+            Cookies.remove('IS_PRO')
+        }</script></body></html>
