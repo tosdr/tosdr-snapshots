@@ -40,14 +40,22 @@
         </script>
 
         <script>
+            setTimeout(function() {
+                window.__gpp_addFrame=function(e){if(!window.frames[e])if(document.body){var t=document.createElement("iframe");t.style.cssText="display:none",t.name=e,document.body.appendChild(t)}else window.setTimeout(window.__gpp_addFrame,10,e)},window.__gpp_stub=function(){var e=arguments;if(__gpp.queue=__gpp.queue||[],__gpp.events=__gpp.events||[],!e.length||1==e.length&&"queue"==e[0])return __gpp.queue;if(1==e.length&&"events"==e[0])return __gpp.events;var t=e[0],p=e.length>1?e[1]:null,s=e.length>2?e[2]:null;if("ping"===t)p({gppVersion:"1.1",cmpStatus:"stub",cmpDisplayStatus:"hidden",signalStatus:"not ready",supportedAPIs:["2:tcfeuv2","5:tcfcav1","6:uspv1","7:usnatv1","8:uscav1","9:usvav1","10:uscov1","11:usutv1","12:usctv1"],cmpId:0,sectionList:[],applicableSections:[],gppString:"",parsedSections:{}},!0);else if("addEventListener"===t){"lastId"in __gpp||(__gpp.lastId=0),__gpp.lastId++;var n=__gpp.lastId;__gpp.events.push({id:n,callback:p,parameter:s}),p({eventName:"listenerRegistered",listenerId:n,data:!0,pingData:{gppVersion:"1.1",cmpStatus:"stub",cmpDisplayStatus:"hidden",signalStatus:"not ready",supportedAPIs:["2:tcfeuv2","5:tcfcav1","6:uspv1","7:usnatv1","8:uscav1","9:usvav1","10:uscov1","11:usutv1","12:usctv1"],cmpId:0,sectionList:[],applicableSections:[],gppString:"",parsedSections:{}}},!0)}else if("removeEventListener"===t){for(var a=!1,i=0;i<__gpp.events.length;i++)if(__gpp.events[i].id==s){__gpp.events.splice(i,1),a=!0;break}p({eventName:"listenerRemoved",listenerId:s,data:a,pingData:{gppVersion:"1.1",cmpStatus:"stub",cmpDisplayStatus:"hidden",signalStatus:"not ready",supportedAPIs:["2:tcfeuv2","5:tcfcav1","6:uspv1","7:usnatv1","8:uscav1","9:usvav1","10:uscov1","11:usutv1","12:usctv1"],cmpId:0,sectionList:[],applicableSections:[],gppString:"",parsedSections:{}}},!0)}else"hasSection"===t?p(!1,!0):"getSection"===t||"getField"===t?p(null,!0):__gpp.queue.push([].slice.apply(e))},window.__gpp_msghandler=function(e){var t="string"==typeof e.data;try{var p=t?JSON.parse(e.data):e.data}catch(e){p=null}if("object"==typeof p&&null!==p&&"__gppCall"in p){var s=p.__gppCall;window.__gpp(s.command,(function(p,n){var a={__gppReturn:{returnValue:p,success:n,callId:s.callId}};e.source.postMessage(t?JSON.stringify(a):a,"*")}),"parameter"in s?s.parameter:null,"version"in s?s.version:"1.1")}},"__gpp"in window&&"function"==typeof window.__gpp||(window.__gpp=window.__gpp_stub,window.addEventListener("message",window.__gpp_msghandler,!1),window.__gpp_addFrame("__gppLocator"));
+            }, 0);
+        </script>
+
+        <script>
         setTimeout(function() {
-            /*
+            
             window._sp_queue = [];
             window._sp_ = {
                 config: {
                     accountId: 1247,
                     baseEndpoint: 'https://cdn.privacy-mgmt.com',
-                    ccpa: { },
+                    usnat: { 
+                        includeUspApi: true
+                    },
                     custom: { },
                     gdpr: { },
                     events: {
@@ -81,27 +89,7 @@
                     }
                 }
             }
-            */
             
-            /*
-            window._sp_queue = [];
-            window._sp_ = {
-                config: {
-                    accountId: 1247,
-                    baseEndpoint: 'https://cdn.privacy-mgmt.com',
-                    ccpa: { },
-                    custom: { },
-                    
-                    gdpr: { },
-                    events: {
-                        onConsentReady: function (consentUUID, euconsent) {
-                            console.log('[event] onConsentReady', arguments);
-                        },
-                    }
-                }
-            }
-            */
-
             __uspapi('getUSPData',1,function(uspData,success){console.log('uspData: ' + JSON.stringify(uspData)+ 'success: ' + success);
                 if(JSON.stringify(uspData).indexOf("---")===-1){
                     document.getElementById("ccpa_link").style.display = "block";
@@ -144,7 +132,7 @@
                                 
                     <link rel="stylesheet" type="text/css" href="/style/themes.sp.css?v=24a29b0a3b54203438bb9ee8048a6705" />
                     <link rel="stylesheet" type="text/css" href="/style/main.css?v=130290" />
-                    <link rel="stylesheet" type="text/css" href="/style/main_desktop.sp.css?v=4358944773c118ed7fdca1cb4b907db3" />
+                    <link rel="stylesheet" type="text/css" href="/style/main_desktop.sp.css?v=b866241b0ec87bce70eb5a97934e76e8" />
                     <link rel="stylesheet" type="text/css" href="/style/games/showdown/desktop.sp.css?v=14490a9bd0dcc946041e40ed52207147" />
                     <link rel="stylesheet" type="text/css" href="/style/privacy/desktop.sp.css?v=5a98fd0a467594e872865ec420bbdbb4" />
                         
@@ -306,9 +294,11 @@
                                     <li class="extra-group">
                         <ol>
                                                             <li class="extra-section ea-quiz-categories has-items">
-                                                                            <a href="/categories/" class="section-name">
+                                                                            <a href="/categories/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Quiz Categories</span>
+                                             
                                         </a>
                                     
                                                                             <ol class="section-items" id="section-items-quiz-categories">
@@ -401,9 +391,11 @@
                                     <li class="extra-group">
                         <ol>
                                                             <li class="extra-section ea-quiz-lab has-items">
-                                                                            <a href="/contributed/" class="section-name">
+                                                                            <a href="/contributed/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Quiz Lab</span>
+                                             
                                         </a>
                                     
                                                                             <ol class="section-items" id="section-items-quiz-lab">
@@ -436,9 +428,11 @@
                                                                                     </ol>
                                                                     </li>
                                                             <li class="extra-section ea-quizzes-by has-items">
-                                                                            <a href="/quiz/" class="section-name">
+                                                                            <a href="/quiz/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Quizzes by...</span>
+                                             
                                         </a>
                                     
                                                                             <ol class="section-items" id="section-items-quizzes-by">
@@ -476,9 +470,11 @@
                                                                                     </ol>
                                                                     </li>
                                                             <li class="extra-section ea-community has-items">
-                                                                            <a href="/groups/" class="section-name">
+                                                                            <a href="/groups/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Community</span>
+                                             
                                         </a>
                                     
                                                                             <ol class="section-items" id="section-items-community">
@@ -507,79 +503,113 @@
                                     <li class="extra-group">
                         <ol>
                                                             <li class="extra-section ea-badges ">
-                                                                            <a href="/achievements/newest/" class="section-name">
+                                                                            <a href="/achievements/newest/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Badges</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-playlists ">
-                                                                            <a href="/playlists/" class="section-name">
+                                                                            <a href="/playlists/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Playlists</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-quests ">
-                                                                            <a href="/quests/" class="section-name">
+                                                                            <a href="/quests/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Quests</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-create ">
-                                                                            <a href="/create/" class="section-name">
+                                                                            <a href="/create/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Create</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-leaderboards ">
-                                                                            <a href="/leaderboard/topplayers/mostplayed/last30days" class="section-name">
+                                                                            <a href="/leaderboard/topplayers/mostplayed/last30days" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Leaderboards</span>
-                                        </a>
-                                    
-                                                                    </li>
-                                                            <li class="extra-section ea-showdown ">
-                                                                            <a href="/showdown/" class="section-name">
-                                            <span class="item-icon"></span>
-                                            <span class="item-name">Showdown</span>
-                                        </a>
-                                    
-                                                                    </li>
-                                                            <li class="extra-section ea-live-five ">
-                                                                            <a href="/livefive/" class="section-name">
-                                            <span class="item-icon"></span>
-                                            <span class="item-name">Live 5</span>
-                                        </a>
-                                    
-                                                                    </li>
-                                                            <li class="extra-section ea-trivia-bingo ">
-                                                                            <a href="/bingo/" class="section-name">
-                                            <span class="item-icon"></span>
-                                            <span class="item-name">Trivia Bingo</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-activity ">
-                                                                            <a href="/activity/" class="section-name">
+                                                                            <a href="/activity/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Activity</span>
-                                        </a>
-                                    
-                                                                    </li>
-                                                            <li class="extra-section ea-math-test ">
-                                                                            <a href="/math-test/" class="section-name">
-                                            <span class="item-icon"></span>
-                                            <span class="item-name">Math Test</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-reference ">
-                                                                            <a href="/reference/" class="section-name">
+                                                                            <a href="/reference/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Puzzle Library</span>
+                                             
+                                        </a>
+                                    
+                                                                    </li>
+                                                            <li class="extra-section ea-showdown ">
+                                                                            <a href="/showdown/" class="section-name" 
+                                             >
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Showdown</span>
+                                             
+                                        </a>
+                                    
+                                                                    </li>
+                                                            <li class="extra-section ea-live-five ">
+                                                                            <a href="/livefive/" class="section-name" 
+                                             >
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Live 5</span>
+                                             
+                                        </a>
+                                    
+                                                                    </li>
+                                                            <li class="extra-section ea-trivia-bingo ">
+                                                                            <a href="/bingo/" class="section-name" 
+                                             >
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Trivia Bingo</span>
+                                             
+                                        </a>
+                                    
+                                                                    </li>
+                                                            <li class="extra-section ea-math-test ">
+                                                                            <a href="/math-test/" class="section-name" 
+                                             >
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Math Test</span>
+                                             
+                                        </a>
+                                    
+                                                                    </li>
+                                                            <li class="extra-section ea-typing-test ">
+                                                                            <a href="https://www.typingtest.com/" class="section-name" 
+                                             
+                                                target="_blank"
+                                             >
+                                            <span class="item-icon"></span>
+                                            <span class="item-name">Typing Test</span>
+                                                                                            <span class="leave-site-icon"></span>
+                                             
                                         </a>
                                     
                                                                     </li>
@@ -589,9 +619,11 @@
                                     <li class="extra-group">
                         <ol>
                                                             <li class="extra-section ea-sporcle-events has-items">
-                                                                            <a href="/events/" class="section-name">
+                                                                            <a href="/events/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Sporcle Events</span>
+                                             
                                         </a>
                                     
                                                                             <ol class="section-items" id="section-items-sporcle-events">
@@ -654,44 +686,56 @@
                                     <li class="extra-group">
                         <ol>
                                                             <li class="extra-section ea-video ">
-                                                                            <a href="/videos/" class="section-name">
+                                                                            <a href="/videos/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Videos</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-blog ">
-                                                                            <a href="/blog/" class="section-name">
+                                                                            <a href="/blog/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Blog</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-mobile-apps ">
-                                                                            <a href="/apps/" class="section-name">
+                                                                            <a href="/apps/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Mobile Apps</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-partnerships ">
-                                                                            <a href="/partnerships/" class="section-name">
+                                                                            <a href="/partnerships/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Partnerships</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-go-orange ">
-                                                                            <a href="/memberships/?rp=hamburger_menu_remove_ads" class="section-name">
+                                                                            <a href="/memberships/?rp=hamburger_menu_remove_ads" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Remove Ads and Go Orange</span>
+                                             
                                         </a>
                                     
                                                                     </li>
                                                             <li class="extra-section ea-feedback ">
-                                                                            <a href="/feedback/" class="section-name">
+                                                                            <a href="/feedback/" class="section-name" 
+                                             >
                                             <span class="item-icon"></span>
                                             <span class="item-name">Feedback</span>
+                                             
                                         </a>
                                     
                                                                     </li>
@@ -1035,7 +1079,7 @@
             </div>
             <span class="pageFooter-slogan">mentally stimulating diversions</span>
         </a>
-        <p class="pageFooter-playCounter">5,696,518,039 quizzes played</p>
+        <p class="pageFooter-playCounter">5,701,555,729 quizzes played</p>
 	</div>
     <div class="pageFooter-group pageFooter-group--links">
      
@@ -1290,7 +1334,7 @@
 
 				var s = document.createElement('script');
 				s.type = 'text/javascript';
-				s.src = "\/js\/showdown\/game\/index.sp.js?v=682662e84a2f59a5e3569891531940f6";
+				s.src = "\/js\/showdown\/game\/index.sp.js?v=5d42c433b5922600f8a23043e4709ef5";
 				document.getElementsByTagName('body')[0].appendChild(s);
 
 				var s = document.createElement('script');
