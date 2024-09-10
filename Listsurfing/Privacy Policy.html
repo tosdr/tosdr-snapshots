@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ListSurfing.com</title>
+    <!--<link rel="shortcut icon" type="image/x-icon" href="/color/blue/favicon.ico" />-->
+
+    <!-- Stylesheets -->
+    <link href="https://www.listsurfing.com/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.listsurfing.com/css/jcarousel.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.listsurfing.com/css/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.listsurfing.com/css/nivo-slider.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.listsurfing.com/css/tipsy.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <!--[if IE]>
+    <link href="css/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://www.listsurfing.com/js/jquery-1.4.4.js"></script>
+    <script type="text/javascript" src="https://www.listsurfing.com/js/cufon-yui.js"></script>
+    <script type="text/javascript" src="https://www.listsurfing.com/js/eurostile.font.js"></script>
+    <script type="text/javascript" src="https://www.listsurfing.com/js/jquery.nivo.slider.pack.js"></script>
+
+    <!-- jCarousel - jquery.jcarousel.min.js -->
+    <script type="text/javascript" src="https://www.listsurfing.com/js/jquery.jcarousel.min.js"></script>
+
+    <!-- Fancybox - fancybox-1.3.4.js -->
+    <script type="text/javascript" src="https://www.listsurfing.com/js/jquery.fancybox-1.3.4.js"></script>
+
+    <!-- TipTip - jquery.tipsy.js -->
+    <script type="text/javascript" src="https://www.listsurfing.com/js/jquery.tipsy.js"></script>
+
+    <script type="text/javascript" src="https://www.listsurfing.com/js/custom.js"></script>
+
+    <script type="text/javascript" src="https://www.listsurfing.com/members/scripts/membercard/sexy-tooltips.v1.1.jquery.js"></script>
+    <link rel="stylesheet" href="https://www.listsurfing.com/members/styles/membercard/vista.css" type="text/css" media="all" id="theme" />
+    <link rel="stylesheet" href="https://www.listsurfing.com/members/styles/membercard/membercard.css" type="text/css" media="all" />
+    <script language="text/javascript">
+        function forgotpass_new(t) {
+            alert(' m called hurrah')
+        }
+
+        function forgotpass(frmId) {
+            $("#proc_img_div").show();
+            $("#forgpass_form").hide();
+
+            $.ajax({
+                type: "POST",
+                url: "resend.php",
+                data: $("#" + frmId).serialize(),
+                async: false,
+                success: function(html) {
+                    var arrHtml = html.split('::');
+
+                    $("#proc_img_div").hide();
+                    $("#forgpass_form").show();
+
+                    if (arrHtml[0] == 0) {
+                        $('#forgpass_err_div').html(arrHtml[1]);
+                        $('#forgpass_err_div').show('fade');
+                        $('#forgpass_succ_div').hide();
+                    } else {
+                        $('#forgpass_succ_div').html('');
+                        $('#forgpass_succ_div').show('fade');
+                        $('#forgpass_succ_div').html(arrHtml[1]);
+                        $('#forgpass_form').hide();
+                        //setTimeout("$('#forpass').hide('fade');", 3000);
+                    }
+                }
+            });
+        }
+    </script>
+    <script language="text/javascript">
+        function reset_forgpassform() {
+            $("#forgpass_err_div").html('');
+            $("#forgpass_err_div").hide();
+            $("#forgpass_succ_div").html('');
+            $("#forgpass_succ_div").hide();
+            $("#proc_img_div").hide();
+            $("#forgpass_form").show();
+        }
+    </script>
+    <script language="text/javascript">
+        function get_mem_card_info(link_id, member_id) {
+            var member_link = "#member_" + link_id;
+            $.ajax({
+                type: "POST",
+                url: "https://www.listsurfing.com/members/ajax_mem_card_info.php",
+                data: "member_id=" + member_id,
+                async: false,
+                success: function(html) {
+                    alert(html);
+                    $(member_link).tooltip(html, {
+                        width: 325,
+                        sticky: 1
+                    });
+
+                    $(member_link).bind('tooltipshow', function() {
+                        setTimeout(function() {
+                            $(member_link).tooltip_hide();
+                        }, 8000);
+                    });
+                }
+            });
+
+        }
+    </script>
+    <!-- Google analytics start -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24906167-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- Google analytics end -->
+</head>
+
+<body>
+    <div id="parent">
+        <div id="top">
+            <div id="top-inner">
+                                <h1 class="logo"><a href="https://www.listsurfing.com/index.php?rid=14359"><img src="https://www.listsurfing.com/images/logo.png" width="249" height="56" alt="Listsurfing.com" /></a></h1>
+                                    <ul id="social" style="width: 140px;">
+                        <li><a title="Community" class="tipsy" href="www.marketingcheckpoint.com/groups/listsurfing/" target="_new"><img src="https://www.listsurfing.com/members/img/Marketing-Checkpoint-share.png" alt="Community" width="24px" height="24px" style="height: 24px !important" /></a></li>
+                        <li><a title="Blog" class="tipsy" href="https://www.listsurfing.com/blog/" target="_new"><img src="https://www.listsurfing.com/members/img/rss.png" alt="Blog" width="24px" height="24px" /></a></li>
+                        <li><a title="Twitter" class="tipsy" href="https://twitter.com/listsurfing" target="_new"><img src="https://www.listsurfing.com/images/ic-twitter.png" alt="Twitter" width="24px" height="24px" /></a></li>
+                        <li><a title="Facebook" class="tipsy" href="https://www.facebook.com/listsurfing" target="_new"><img src="https://www.listsurfing.com/images/ic-facebook.png" alt="Facebook" width="24px" height="24px" /></a></li>
+                    </ul><!-- End "social" -->
+
+                    <a name="login_frm"></a>
+                    <div class="login-box">
+                        <!-- <form method="post" action="" name="forma">
+                       <input type="hidden" name="ffrma" value="sentsa">
+                      <input type="hidden" name="aweber" value="">
+                      <input name="loginid" type="text" class="login-fld" id="loginid" value="Username" onfocus="if (this.value=='Username')this.value='';" onblur="if (this.value=='')this.value='Username';"  />
+                      <input name="pwdid" type="password" class="login-fld" id="pwdid" value="Password" onfocus="if (this.value=='Password')this.value='';" onblur="if (this.value=='')this.value='Password';"  />
+                      <button type="submit" class="btn btn-small" name="submit">Login</button>
+                      </form> -->
+                        <button type="submit" class="btn btn-small" name="submit" style="float: right;" onclick="document.location='https://www.listsurfing.com/login.php?rid=14359'">Login</button>
+                        <span class="forgotpass" style="clear:both">
+                            <span style="float:left; width:350px; color:#FFF; display:inline-block; height:15px;">
+                                                            </span>
+                            <span style="float:right; display:inline-block; height:15px;">
+                                <a href="#forpass" class="text" onclick="javascript: reset_forgpassform();">Forgot Password</a>
+                                <!-- <a href="" class="text">Forgot Password</a> -->
+                                <!-- <a class="text btn btn-2" href="#forgotbox" rel="textboxes">Forgot Passord</a>-->
+                            </span>
+                        </span>
+                        <div style="display:none">
+                            <div id="forpass" style="width:400px;">
+                                <div>
+                                    <h2>Lost Your Password<!-- or Activation Email-->?</h2>
+                                    <div align="center" id="proc_img_div" style="display:none; margin-bottom:10px;"><img src="https://www.listsurfing.com/images/loading30.gif" /></div>
+                                    <div id="forgpass_form">
+                                        <div id="forgpass_err_div" style="display:none;"></div>
+                                        <!--<p>Enter your e-mail address or username in the field below and press 'Send My Details'.</p>-->
+                                        <form method="post" name="ps" id="ps">
+                                            <p align="center">Email or Username:
+                                                <input type="text" name="sfor" size="30" /> <br />
+                                                <input type="button" name="submit" value="Send My Details" class="reg-but" onclick="javascript: forgotpass('ps');" />
+                                            </p>
+                                        </form>
+                                    </div>
+                                    <div id="forgpass_succ_div" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div><!-- End "top-inner" -->
+
+        </div><!-- End "top" -->
+        <!-- <div id="maincontent">-->
+<div id="maincontent"><div id="content-inner">
+    <!--<h2>PRIVACY POLICY</h2>-->
+        <h2 class="pageheading">Privacy Policy</h2>
+    <p>ListSurfing.com is committed to protecting your privacy.</p>
+    <p>We allow third-party companies to collect certain information when you visit our web site. These companies may utilize cookies, pixels or other technologies to collect and use non-personally identifiable information (e.g., hashed data, click stream information, browser type, time and date, subject of advertisements clicked or scrolled over) during your visits to this and other web sites in order to provide advertisements about goods and services likely to be of greater interest to you.  To learn more about this behavioral advertising practice or to opt-out of this type of advertising, you can visit the websites of the Digital Advertising Alliance at www.aboutads.info and Networking Advertising Initiative at www.networkadvertising.org/choices/.
+    </p>
+    <p>
+        California Civil Code Section 1798.83 permits customers of Shrawk LLC who are California residents to request certain information regarding its disclosure of their personally identifiable information to third parties for their direct marketing purposes. You may request a list of all of the third parties with whom we share your PII by submitting a support request and place California Third Party Disclosure in the subject line. Please allow up to thirty days for a response.
+    </p>
+    <p>ListSurfing.com
+        reserves the right to investigate using any and all means necessary, should 
+        there be reason to believe unauthorized transactions are processed in your name. 
+        We will then take every precaution possible to protect our members from identify 
+        theft both here at List Surfing and elsewhere.
+    </p>
+    <br /><br />
+</div></div>
+	<!--</div>--><!-- End "maincontent" -->
+
+	</div><!-- End "parent" -->
+
+
+
+	<div id="footer">
+
+
+
+		<div id="copyright">
+
+
+
+			<p>Copyright &copy; DarrenOlander.com LLC - All Rights Reserved.</p>
+
+			<ul>
+
+				
+					<li><a href="https://www.listsurfing.com?rid=14359">Home</a></li>
+
+				
+				<li><a href="faq.html?rid=14359">FAQ</a></li>
+
+				<li><a href="about.html?rid=14359">About</a></li>
+
+				<li><a href="terms.html?rid=14359">Terms</a></li>
+
+				<li><a href="privacy.html?rid=14359">Privacy Policy</a></li>
+
+				<li><a href="https://mymembersupport.com/support/" target="_blank">Contact Support</a></li>
+
+				<li><a href="https://www.darrenolander.com/my-businesses/" title="Our Sites" target="_blank">Our Sites</a></li>
+
+			</ul>
+
+
+
+		</div><!-- End "copyright" -->
+
+
+
+		<div align="right" style="padding:0px;">
+
+			<a href="https://www.honesteonline.com/members/consumerpage.php?company=4775&link=4830" onclick="NewWindow(this.href,'','650','450','yes','default');return false" target="_blank">
+
+				<img src="https://www.honesteonline.com/images/HEO_LogoRct5.jpg" alt="HONESTe Online Member Seal Click to verify - Before you buy!" border="0">
+
+			</a>
+
+		</div>
+
+
+
+		<div style="clear: both;"></div>
+
+
+
+	</div><!-- End "footer" -->
+
+
+
+	<script type="text/javascript">
+		Cufon.now();
+
+// 		function forgotpass_new(t) {
+// 			alert(' m called hurrah')
+// 		}
+
+		function forgotpass(frmId) {
+
+			$("#proc_img_div").show();
+			$("#forgpass_form").hide();
+
+			$.ajax({
+				type: "POST",
+				url: "resend.php",
+				data: $("#" + frmId).serialize(),
+				async: false,
+				success: function(html) {
+					var arrHtml = html.split('::');
+
+					$("#proc_img_div").hide();
+					$("#forgpass_form").show();
+
+					if (arrHtml[0] == 0) {
+						$('#forgpass_err_div').html(arrHtml[1]);
+						$('#forgpass_err_div').show('fade');
+						$('#forgpass_succ_div').hide();
+					} else {
+						$('#forgpass_succ_div').html('');
+						$('#forgpass_succ_div').show('fade');
+						$('#forgpass_succ_div').html(arrHtml[1]);
+						$('#forgpass_form').hide();
+						//setTimeout("$('#forpass').hide('fade');", 3000);
+					}
+				}
+			});
+		}
+	</script>
+	<script language="text/javascript">
+		function reset_forgpassform() {
+			$("#forgpass_err_div").html('');
+			$("#forgpass_err_div").hide();
+			$("#forgpass_succ_div").html('');
+			$("#forgpass_succ_div").hide();
+			$("#proc_img_div").hide();
+			$("#forgpass_form").show();
+		}
+	</script>
+	<script language="text/javascript">
+		function get_mem_card_info(link_id, member_id) {
+			var member_link = "#member_" + link_id;
+			$.ajax({
+				type: "POST",
+				url: "https://www.listsurfing.com/members/ajax_mem_card_info.php",
+				data: "member_id=" + member_id,
+				async: false,
+				success: function(html) {
+
+					$(member_link).tooltip(html, {
+						width: 325,
+						sticky: 1
+					});
+
+					$(member_link).bind('tooltipshow', function() {
+						setTimeout(function() {
+							$(member_link).tooltip_hide();
+						}, 8000);
+					});
+				}
+			});
+
+		}
+	</script>
+
+
+
+	</body>
+
+
+
+	</html>
