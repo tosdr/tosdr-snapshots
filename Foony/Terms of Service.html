@@ -10,6 +10,27 @@
   <meta name="color-scheme" content="dark" />
   <meta name="fb:app_id" content="474829766716546" />
   <meta name="google-adsense-account" content="ca-pub-5784225441995351" />
+
+  <!-- Enable to add YouTube Playables support. Otherwise disabled for performance. Turning this on BREAKS localhost's localStorage. -->
+  <script>
+    // Add YouTube Playables support if the platform is YouTube.
+    if (window.location.search.includes('platform=youtube')) {
+      // Backup the original indexedDB object. The YouTube Playables SDK overwrites it.
+      Object.defineProperty(window, '_indexedDB', {value: window.indexedDB, writable: false});
+      // const _indexedDB = window.indexedDB;
+      // Try a delayed setting of indexedDB?
+      let s = document.createElement('script');
+      s.src = 'https://www.youtube.com/game_api/v1';
+      s.async = false;
+
+      // Insert the script at the very beginning of the document's head
+      const f = document.getElementsByTagName('script')[0];
+      f.parentNode.insertBefore(s, f);
+      // Used by client/src/override.ts to wrap the Google APIs to support YouTube.
+      window.enableYouTubeSdk = true;
+    }
+  </script>
+
   <link rel="preconnect" href="https://s.foony.com">
   <link rel="preconnect" href="https://s2.foony.com">
   <link rel="preconnect" href="https://o4505948758867968.ingest.sentry.io">
@@ -121,8 +142,8 @@
       });
     }
   </script>
-  <script type="module" crossorigin src="/assets/index-CbRbaHDh.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-Dm-Xs6gq.css">
+  <script type="module" crossorigin src="/assets/index-CR1j1SND.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BnL1FNL4.css">
 <link rel="manifest" href="/manifest.webmanifest"></head>
 <body>
 <noscript>
