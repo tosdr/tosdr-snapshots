@@ -70,7 +70,7 @@
             <link rel="preload" href="/frontend/static/media/inter-v12-latin-regular.1eb0efb3.woff" as="font" type="font/woff" crossorigin />
             <link rel="preload" href="/frontend/static/media/inter-v12-latin-regular.68c477c4.woff2" as="font" type="font/woff2" crossorigin />
             <script type="text/javascript" src="/frontend/static/js/runtime-styles.modern.65eb00f3.js"></script>
-            <link rel="stylesheet" type="text/css" href="/frontend/static/css/styles.modern.c756fd31.chunk.css" />
+            <link rel="stylesheet" type="text/css" href="/frontend/static/css/styles.modern.6ec0a6e0.chunk.css" />
             <link rel="modulepreload" href="/frontend/static/js/runtime-main.modern.907d39f6.js" />
             <link rel="modulepreload" href="/frontend/static/js/4.modern.21d52497.chunk.js" />
             <link rel="modulepreload" href="/frontend/static/js/main.modern.9ff9c1b7.chunk.js" />
@@ -132,6 +132,11 @@
 <script>
     const { computePosition, arrow, offset, shift, limitShift, autoPlacement, flip } = window.FloatingUIDOM;
     function handleClick(value) {
+
+        //testing to not offset menu while working on new nav
+        console.log("not handling click");
+        return;
+
         const button = document.querySelector('#nav-' + value);
         const buttonBounds = button.getBoundingClientRect()
         const tooltip = document.querySelector('#nav-panel-' + value);
@@ -172,6 +177,8 @@
     .nav-panel__arrow {
         display: none;
     }
+
+
     @media only screen and (max-width: 79.99em) {
         .nav-wrapper .nav-panel {
     left: 0 !important;
@@ -181,8 +188,8 @@
             gap: 10px;
         }
         .nav-panel__card__graphic {
-            height: 40px;
-            width: 40px;
+            height: 30px;
+            width: 30px;
             flex-shrink: 0;
         }
 
@@ -194,30 +201,98 @@
             pointer-events: none;
             font-weight: 600;
         }
+
+        /* updated mobile styles */
+
+        
+        #nav-panel-0 .column a, #nav-panel-1 .column a, #nav-panel-4 .column a {
+            color: #202124;
+            text-decoration: none;
+        }
+
+        #nav-panel-1 div.column.subnav-right-column a p.headline, #nav-panel-4 div.column.subnav-right-column a p.headline {
+            color: #202124;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-wrapper #nav-panel-0 .column a .headline, .nav-wrapper #nav-panel-1 .column a .headline, .nav-wrapper #nav-panel-2 .column a .headline, .nav-wrapper #nav-panel-4 .column a .headline {
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .nav-wrapper #nav-panel-0 .column a .headline:hover, .nav-wrapper #nav-panel-1 .column a .headline:hover, .nav-wrapper #nav-panel-2 .column a .headline:hover, .nav-wrapper #nav-panel-4 .column a .headline:hover {
+            background: #F2F2F2;
+            border-radius: 10px;
+            text-decoration: underline;
+            text-underline-offset: 0.5rem;
+        }
+
+        .nav-wrapper #nav-panel-0 .nav-panel__grid ul li a:hover, .nav-wrapper #nav-panel-1 .nav-panel__grid ul li a:hover, .nav-wrapper #nav-panel-2 .nav-panel__grid ul li a:hover, .nav-wrapper #nav-panel-4 .nav-panel__grid ul li a:hover {
+            text-decoration: underline;
+            text-underline-offset: 0.5rem;
+        }
+
+        .nav-wrapper #nav-panel-1 .column .headline, .nav-wrapper #nav-panel-2 .column .headline, .nav-wrapper #nav-panel-4 .column .headline {
+            color: #0D4CD3;
+        }
+
+        #nav-panel-2 div.column:first-of-type p.headline, #nav-panel-4 div.column:first-of-type p.headline {
+            margin-top: unset;
+        }
+
+        #nav-panel-2 div.column:not(:first-of-type) p.headline, #nav-panel-4 div.column:not(:first-of-type) p.headline {
+            margin-top: 1.6rem;
+        }
+        
+        #nav-panel-4 .nav-panel__card__description {
+            display: none;
+        }
+
+        #nav-panel-4 .subnav-right-column img {
+            display: none;
+        }
+
+        .headline-arrow::after{            
+            content:'\2192';
+        }
+
+        .nav-wrapper .service-menu-mobile li a {
+            min-width: 4.4rem;
+            min-height: 4.4rem;
+        }
+
+        /* updated mobile styles */
+
+
     }
     @media only screen and (min-width: 79.99em) {
         .nav-wrapper .nav-panel {
-            transform: scaleY(0);
-            top: 6rem;
+            transform: scaleY(0) translateY(100%);
+            /* top: 6rem; */
+            bottom:0;
             left: 0;
         }
         .nav-wrapper .nav-panel.open {
-            transform: scaleY(1);
+            transform: scaleY(1) translateY(100%);
         }
         .nav-panel__container {
             background: #fff;
             box-shadow: none;
             border-radius: 1.6rem;
-            padding: 3rem 4rem;
+            /* padding: 3rem 4rem; */
+            padding: 0;
             text-align: left;
             transition: box-shadow 0.3s;
         }
         .nav-wrapper .nav-panel__grid .headline {
-            text-transform: uppercase;
             padding-left: 12px;
             font-family: "Geologica Bold";
             font-size: 1.4rem;
             font-weight: 500;
+            color: #0D4CD3;
+            border-bottom: 1px solid #20212470;
+            padding-bottom: 1rem;
         }
         .nav-wrapper .nav-panel.open .nav-panel__container {
             box-shadow: 0 5px 40px -5px rgba(20, 17, 85, .1), 0 3px 60px -8px rgba(20, 17, 85, .05);
@@ -328,16 +403,16 @@
         }
         .nav-panel__grid {
             display: flex;
-            gap: 12px;
         }
         .nav-wrapper .nav-panel__grid .column {
-            padding: 0;
+            padding: 3rem 4rem;
         }
         .nav-main__item {
             margin-right: 35px;
         }
         .nav-item__text {
             position: absolute;
+            height: 4.4rem;
         }
         .nav-item__hidden-text {
             height: 0;
@@ -346,17 +421,51 @@
             user-select: none;
             pointer-events: none;
             font-weight: 600;
+            display: inline-block;
+            height: 4.4rem;
         }
         .nav-wrapper .nav-main__items .nav-main__item button.nav-item {
             padding: 0;
+            min-width: 4.4rem;
+            min-height: 4.4rem;
         }
+
+        .nav-wrapper .nav-main__items .nav-main__item a {
+            min-width: 4.4rem;
+            min-height: 4.4rem;
+        }
+
         .nav-wrapper .nav-main__items .nav-main__item .nav-item.open {
             background-color: transparent;
             color: unset;
             font-weight: 600;
-            border-bottom: 2px solid #0d4cd3;
+            border-bottom: unset !important;
             border-radius: 0;
+            position:relative;
         }
+
+        .nav-wrapper .nav-main__items .nav-main__item .nav-item .bottom-bar {
+            display:none;
+            left: 0;
+            right: 0;
+            bottom: -36px;
+            height:6px;
+            background-color:#0d4cd3;
+            position:absolute;
+        }
+        .nav-wrapper .nav-main__items .nav-main__item .nav-item.open .bottom-bar {
+            display:block;
+            
+        }
+
+        .nav-wrapper .nav-main__items .nav-main__item .nav-item:focus .bottom-bar {
+            display:block;
+        }
+        .header-main__wrap
+        {
+            border-bottom:1px solid #7F7F7F25;
+        }
+
         .nav-wrapper .nav-main__items .nav-main__item button.nav-item.open::after {
             background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23141155" xmlns="http://www.w3.org/2000/svg"><path d="M12,14.1l-3.8-3.8c-0.4-0.4-1.1-0.4-1.5,0l0,0c-0.4,0.4-0.4,1.1,0,1.5l4.6,4.6c0.4,0.4,1,0.4,1.4,0l4.6-4.6 c0.4-0.4,0.4-1.1,0-1.5l0,0c-0.4-0.4-1.1-0.4-1.5,0L12,14.1z"/></svg>');
         }
@@ -367,25 +476,172 @@
         .nav-wrapper .nav-main__items .nav-main__item .nav-item:hover {
             box-shadow: none;
         }
-        .nav-wrapper .nav-panel__grid ul li a.nav-panel__card {
-            border-radius: 12px;
-            padding: 10px 12px 11px 12px;
-            display: flex;
-            gap: 12px;
+
+        .nav-wrapper .nav-panel__grid .column
+        {
+            max-width:25%;
         }
-        .nav-wrapper .nav-panel__grid ul li a.nav-panel__card:hover {
-            background-color: #eaf3f7;
+
+        #nav-panel-1 .column {
+                max-width: 32%;
+            }
+
+        #nav-panel-4 .column {
+            max-width: 33%;
+        }
+
+        #nav-panel-4 .subnav-right-column img {
+            margin-top: 2rem;
+        }
+
+        .subnav-right-column
+        {
+            margin-left:auto;
+        }
+        .nav-wrapper .nav-main__items .nav-main__item .nav-item
+        {
+            padding:0;
+        }
+
+        /*to get arrow clickable on main nav */
+        .main-nav-dd-arrow{
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 1.2rem;
+            display: inline-block;
+            width: 2rem;
+            height: 3.6rem;
+            /* pointer-events: none; */
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23141155" xmlns="http://www.w3.org/2000/svg"><path d="M12,14.1l-3.8-3.8c-0.4-0.4-1.1-0.4-1.5,0l0,0c-0.4,0.4-0.4,1.1,0,1.5l4.6,4.6c0.4,0.4,1,0.4,1.4,0l4.6-4.6 c0.4-0.4,0.4-1.1,0-1.5l0,0c-0.4-0.4-1.1-0.4-1.5,0L12,14.1z"/></svg>');
+        }
+        .nav-wrapper .nav-main__items .nav-main__item button.nav-item.open .main-nav-dd-arrow {
+            transform: rotate(-180deg);
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M12,14.1l-3.8-3.8c-0.4-0.4-1.1-0.4-1.5,0l0,0c-0.4,0.4-0.4,1.1,0,1.5l4.6,4.6c0.4,0.4,1,0.4,1.4,0l4.6-4.6 c0.4-0.4,0.4-1.1,0-1.5l0,0c-0.4-0.4-1.1-0.4-1.5,0L12,14.1z"/></svg>');
+        }
+        @media only screen and (min-width: 79.99em) {
+            .nav-wrapper .nav-main__items .nav-main__item button.nav-item.open .main-nav-dd-arrow {
+                background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23141155" xmlns="http://www.w3.org/2000/svg"><path d="M12,14.1l-3.8-3.8c-0.4-0.4-1.1-0.4-1.5,0l0,0c-0.4,0.4-0.4,1.1,0,1.5l4.6,4.6c0.4,0.4,1,0.4,1.4,0l4.6-4.6 c0.4-0.4,0.4-1.1,0-1.5l0,0c-0.4-0.4-1.1-0.4-1.5,0L12,14.1z"/></svg>');
+            }
+            .nav-wrapper .nav-main__items .nav-main__item button.nav-item .main-nav-dd-arrow {
+                right: unset;
+            }
+        }
+
+        .nav-wrapper .nav-main__items .nav-main__item button.nav-item::after
+        {
+            display:none;
+        }
+        .nav-no-dd
+        {
+            margin-right:17.5px;
+        }
+
+        .headline-arrow::after{            
+            content:'\2192';
+        }
+
+        #nav-panel-0 .column a, #nav-panel-1 .column a, #nav-panel-2 .column a, #nav-panel-4 .column a {
             text-decoration: none;
         }
+
+        #nav-panel-0 .column a:hover, #nav-panel-1 .column a:hover, #nav-panel-2 .column a:hover, #nav-panel-4 .column a:hover  {
+            text-decoration: underline;
+            text-underline-offset: 0.5rem;
+        }
+        
+
+
+        .nav-panel__container .subnav-right-column {
+            background: #0D4CD320;
+        }
+
+       
+        .nav-wrapper .nav-main__items .nav-main__item .nav-item{
+            border-radius: 0;
+            transition: padding .2s;
+        }
+        .nav-wrapper .nav-main__items .nav-main__item, .nav-wrapper .nav-main__items{
+            position:unset;
+        }
+        .main-nav{
+            position:relative;
+        }
+        .header-main .main-nav .nav-wrapper .nav-panel{
+            width:100%;
+            top: unset;
+            bottom:0;
+            /* transform: translateY(100%) scaleY(1); */
+            transform-origin: bottom; /* Ensures scaling starts from the bottom */
+        }
+        .nav-wrapper .nav-panel__grid, .nav-wrapper .nav-panel__grid.columns-2{
+            width:auto;
+        }
+        
+        @media only screen and (min-width: 79.99em) {
+            .nav-panel__container 
+            {
+                border-radius: 0;
+            }
+
+            .nav-wrapper .nav-panel__grid .headline 
+            {
+                font-size: 1.6rem;
+            }
+
+            .nav-panel__title__link:hover {
+                background-color: unset;
+            }
+
+            .nav-panel__title h4 {
+                color: #0d4cd3;
+                font-size: 1.6rem;
+            }
+
+            .nav-panel__title__border {
+                width: 20%;
+            }
+
+            .nav-panel__title__link {
+                padding-bottom: 0;
+            }
+
+        }
+
+
+
+
+        .nav-wrapper .nav-panel__grid ul li a.nav-panel__card {
+            display: flex;
+            text-decoration: none;
+            color: #202124;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: nowrap;
+            padding: 0.5rem 1rem !important;
+            font-family: var(--geologica-regular);
+        }
+            .nav-wrapper .nav-panel__grid ul li a.nav-panel__card:hover {
+                background: #F2F2F2;
+                text-decoration: underline;
+                text-underline-offset: 0.5rem;
+                color: #202124;
+                border-radius: 10px;
+            }
         .nav-panel__card__content {
             display: flex;
             flex-direction: column;
             align-items: start;
             gap: 5px;
         }
+
+        
         .nav-panel__card__graphic {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             flex-shrink: 0;
         }
@@ -422,48 +678,18 @@
                         <button id="nav-0" class="nav-item" aria-expanded="false" onclick="handleClick('0');">
                             <span class="nav-item__text">Why Siteimprove</span>
                             <span class="nav-item__hidden-text">Why Siteimprove</span>
+                            <div class="main-nav-dd-arrow" onclick="handleClick('0');"></div>
+                            <div class="bottom-bar"></div>
                         </button>
                         <section class="nav-panel" role="navigation" aria-labelledby="nav-0" id="nav-panel-0">
-                            <div class="nav-panel__arrow" id="nav-arrow-0"></div>
+                            <!-- <div class="nav-panel__arrow" id="nav-arrow-0"></div> -->
 
                             <div class="nav-panel__container">
-                                    <div class="nav-panel__title__wrapper">
-                                        <div class="nav-panel__title">
-                                                <a class="nav-panel__title__link" href="/why-siteimprove/">
-                                                    <div class="nav-panel__title__text">
-                                                        <h4>Why Siteimprove</h4>
-                                                            <p class="nav-panel__title__subtitle">
-                                                                A solution for every kind of marketer 
-                                                            </p>
-                                                    </div>
-                                                    <div class="nav-panel__title__actions">
-                                                        <div class="nav-panel__title__button" href="#">
-                                                            <span class="hidden-text">Why Siteimprove</span><div class="nav-panel__title__button-arrow">
-                                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M13.2328 16.4569C12.9328 16.7426 12.9212 17.2173 13.2069 17.5172C13.4926 17.8172 13.9673 17.8288 14.2672 17.5431L13.2328 16.4569ZM19.5172 12.5431C19.8172 12.2574 19.8288 11.7827 19.5431 11.4828C19.2574 11.1828 18.7827 11.1712 18.4828 11.4569L19.5172 12.5431ZM18.4828 12.5431C18.7827 12.8288 19.2574 12.8172 19.5431 12.5172C19.8288 12.2173 19.8172 11.7426 19.5172 11.4569L18.4828 12.5431ZM14.2672 6.4569C13.9673 6.17123 13.4926 6.18281 13.2069 6.48276C12.9212 6.78271 12.9328 7.25744 13.2328 7.5431L14.2672 6.4569ZM19 12.75C19.4142 12.75 19.75 12.4142 19.75 12C19.75 11.5858 19.4142 11.25 19 11.25V12.75ZM5 11.25C4.58579 11.25 4.25 11.5858 4.25 12C4.25 12.4142 4.58579 12.75 5 12.75V11.25ZM14.2672 17.5431L19.5172 12.5431L18.4828 11.4569L13.2328 16.4569L14.2672 17.5431ZM19.5172 11.4569L14.2672 6.4569L13.2328 7.5431L18.4828 12.5431L19.5172 11.4569ZM19 11.25L5 11.25V12.75L19 12.75V11.25Z" fill="#ffffff" />
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                        </div>
-                                        <div class="nav-panel__title__border"></div>
-                                    </div>
                                 <div class="nav-panel__grid columns-1 clear">
                                         <div class="column">
-                                                        <ul>
-                                                            <li class="nav-panel__card__wrapper nav-main-item-mobile">
-                                                                <a href="/why-siteimprove/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                        <img width="40" height="40" alt="Overview" src="/globalassets/media/rebrand2023/nav/why_si_overview4x.png">
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Why Siteimprove</div>
-                                                                        <p class="nav-panel__card__description">A solution for every kind of marketer </p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
+                                                        <a href="/link/7287a26b67ce4c90b526db98dc9d7eb6.aspx"><p class="headline" role="heading" aria-level="3">Why Siteimprove 
+                                                        <span class="headline-arrow"></span>
+                                                        </p></a>
                                                 <ul>
 
 
@@ -471,26 +697,19 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/why-siteimprove/how-it-works/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="How It Works" src="/globalassets/media/rebrand2023/nav/why_si_how_we_work.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">How It Works</div>
-                                                                            <p class="nav-panel__card__description">Learn how our platform is purpose-built for success</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/why-siteimprove/how-we-rank/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="How We Rank" src="/globalassets/media/rebrand2023/nav/why_si_how_we_rank.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">How We Rank</div>
-                                                                            <p class="nav-panel__card__description">Find out what makes us an industry leader</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/why-siteimprove/how-it-works/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="How It Works" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_how_it_works-22.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">How It Works</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
@@ -500,51 +719,18 @@
                 </li>
                 <li class="nav-main__item">
                         <button id="nav-1" class="nav-item" aria-expanded="false" onclick="handleClick('1');">
-                            <span class="nav-item__text">Product</span>
-                            <span class="nav-item__hidden-text">Product</span>
+                            <span class="nav-item__text">Platform</span>
+                            <span class="nav-item__hidden-text">Platform</span>
+                            <div class="main-nav-dd-arrow" onclick="handleClick('1');"></div>
+                            <div class="bottom-bar"></div>
                         </button>
                         <section class="nav-panel" role="navigation" aria-labelledby="nav-1" id="nav-panel-1">
-                            <div class="nav-panel__arrow" id="nav-arrow-1"></div>
+                            <!-- <div class="nav-panel__arrow" id="nav-arrow-1"></div> -->
 
                             <div class="nav-panel__container">
-                                    <div class="nav-panel__title__wrapper">
-                                        <div class="nav-panel__title">
-                                                <a class="nav-panel__title__link" href="/product/">
-                                                    <div class="nav-panel__title__text">
-                                                        <h4>Product</h4>
-                                                            <p class="nav-panel__title__subtitle">
-                                                                Intuitive tools to eliminate UX friction and deliver digital experiences that delight 
-                                                            </p>
-                                                    </div>
-                                                    <div class="nav-panel__title__actions">
-                                                        <div class="nav-panel__title__button" href="#">
-                                                            <span class="hidden-text">Product</span><div class="nav-panel__title__button-arrow">
-                                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M13.2328 16.4569C12.9328 16.7426 12.9212 17.2173 13.2069 17.5172C13.4926 17.8172 13.9673 17.8288 14.2672 17.5431L13.2328 16.4569ZM19.5172 12.5431C19.8172 12.2574 19.8288 11.7827 19.5431 11.4828C19.2574 11.1828 18.7827 11.1712 18.4828 11.4569L19.5172 12.5431ZM18.4828 12.5431C18.7827 12.8288 19.2574 12.8172 19.5431 12.5172C19.8288 12.2173 19.8172 11.7426 19.5172 11.4569L18.4828 12.5431ZM14.2672 6.4569C13.9673 6.17123 13.4926 6.18281 13.2069 6.48276C12.9212 6.78271 12.9328 7.25744 13.2328 7.5431L14.2672 6.4569ZM19 12.75C19.4142 12.75 19.75 12.4142 19.75 12C19.75 11.5858 19.4142 11.25 19 11.25V12.75ZM5 11.25C4.58579 11.25 4.25 11.5858 4.25 12C4.25 12.4142 4.58579 12.75 5 12.75V11.25ZM14.2672 17.5431L19.5172 12.5431L18.4828 11.4569L13.2328 16.4569L14.2672 17.5431ZM19.5172 11.4569L14.2672 6.4569L13.2328 7.5431L18.4828 12.5431L19.5172 11.4569ZM19 11.25L5 11.25V12.75L19 12.75V11.25Z" fill="#ffffff" />
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                        </div>
-                                        <div class="nav-panel__title__border"></div>
-                                    </div>
-                                <div class="nav-panel__grid columns-2 clear">
+                                <div class="nav-panel__grid columns-1 clear">
                                         <div class="column">
-                                                        <ul>
-                                                            <li class="nav-panel__card__wrapper nav-main-item-mobile">
-                                                                <a href="/product/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                        <img width="40" height="40" alt="Overview" src="/globalassets/media/rebrand2023/nav/product_overview4x.png">
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Product</div>
-                                                                        <p class="nav-panel__card__description">Intuitive tools to eliminate UX friction and deliver digital experiences that delight </p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    <p class="headline" role="heading" aria-level="3">Solutions Packages</p>
+                                                        <p class="headline" role="heading" aria-level="3">Core Strengths</p>
                                                 <ul>
 
 
@@ -552,42 +738,71 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/inclusivity/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Accessibility &amp; QA" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solution_inclusivity.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Accessibility &amp; QA</div>
-                                                                            <p class="nav-panel__card__description">The gold standard for accessible, immersive digital content </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/platform/accessibility-digital-governance/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Digital Accessibility &amp; Governance" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_core_a11y_digital_governance-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Digital Accessibility &amp; Governance</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/content-experience/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Content Experience" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solution_content_experience.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Content Experience</div>
-                                                                            <p class="nav-panel__card__description">Produce relevant content that drives results </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/platform/digital-experience-analytics/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Digital Experience Analytics" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_core_digital_experience_analytics-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Digital Experience Analytics</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/marketing-performance/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="SEO &amp;&#160;Campaign&#160;Optimization" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solution_marketing_performance.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">SEO &amp;&#160;Campaign&#160;Optimization</div>
-                                                                            <p class="nav-panel__card__description">Unparalleled, actionable insights at your fingertips</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/platform/search-engine-marketing/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Search &amp; Performance Marketing" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_core_search_engine_marketing-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Search &amp; Performance Marketing</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/platform/cross-channel-ad-management/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Cross-Channel Campaign Management" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_core_cross-channel_ad_management-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Cross-Channel Campaign Management</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
-                                        <div class="column">
-                                                    <p class="headline" role="heading" aria-level="3">Key Features </p>
+                                        <div class="column subnav-right-column">
+                                                        <a href="/link/77bfbf08bd754f21ba0959a506d7eea5.aspx"><p class="headline" role="heading" aria-level="3">Platform Overview 
+                                                        <span class="headline-arrow"></span>
+                                                        </p></a>
                                                 <ul>
 
 
@@ -595,48 +810,64 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/content-analytics/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Content Analytics " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_feature_content_analytics.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Content Analytics </div>
-                                                                            <p class="nav-panel__card__description">Insights that empower you to turn content into revenue  </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/platform/ai-at-siteimprove/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="AI at Siteimprove" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_ai2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">AI at Siteimprove</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/marketing-analytics/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Marketing Analytics " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_feature_marketing_analytics.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Marketing Analytics </div>
-                                                                            <p class="nav-panel__card__description">Our most powerful analytics tools for complete end-to-end tracking   </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/platform/professional-services/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Professional Services" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_professional_services2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Professional Services</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/integrations/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Integrations " src="/globalassets/media/rebrand2023/nav/group-39663.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Integrations </div>
-                                                                            <p class="nav-panel__card__description">See how Siteimprove plays nice with your MarTech stack </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/frontier/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Frontier" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_frontier2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Frontier</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/product/all-in-one-solution/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="All-in-one solution" src="/globalassets/media/rebrand2023/nav/group-39662.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">All-in-one solution</div>
-                                                                            <p class="nav-panel__card__description">Designed to drive value for the whole team  </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/integrations/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Integrations" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_integrations2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Integrations</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
@@ -648,14 +879,16 @@
                         <button id="nav-2" class="nav-item" aria-expanded="false" onclick="handleClick('2');">
                             <span class="nav-item__text">Solutions</span>
                             <span class="nav-item__hidden-text">Solutions</span>
+                            <div class="main-nav-dd-arrow" onclick="handleClick('2');"></div>
+                            <div class="bottom-bar"></div>
                         </button>
                         <section class="nav-panel" role="navigation" aria-labelledby="nav-2" id="nav-panel-2">
-                            <div class="nav-panel__arrow" id="nav-arrow-2"></div>
+                            <!-- <div class="nav-panel__arrow" id="nav-arrow-2"></div> -->
 
                             <div class="nav-panel__container">
                                 <div class="nav-panel__grid columns-2 clear">
                                         <div class="column">
-                                                    <p class="headline" role="heading" aria-level="3">By industry </p>
+                                                        <p class="headline" role="heading" aria-level="3">By Industry </p>
                                                 <ul>
 
 
@@ -663,64 +896,99 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/manufacturing/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Manufacturing" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_industry_manufacturing.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Manufacturing</div>
-                                                                            <p class="nav-panel__card__description">Tools to transform attention into profit </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/industries/financial-services/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Finance" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_finance2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Finance</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/financial-services/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Financial Services" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_industry_financial_services.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Financial Services</div>
-                                                                            <p class="nav-panel__card__description">Attract and retain the right customers </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/industries/healthcare/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Healthcare" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_healthcare2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Healthcare</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/healthcare/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Healthcare" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_industry_healthcare.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Healthcare</div>
-                                                                            <p class="nav-panel__card__description">Become inclusive, digitally optimized, and people-first </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/industries/higher-education/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Higher Education" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_high_education2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Higher Education</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/higher-education/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Higher Education" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_industry_higher_education.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Higher Education</div>
-                                                                            <p class="nav-panel__card__description">Boost visibility, engagement, and enrollment </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/industries/government/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Government" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_government2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Government</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/government/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Government" src="/globalassets/media/rebrand2023/nav/gov.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Government</div>
-                                                                            <p class="nav-panel__card__description">Elevate your constituents&#39; digital experience</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/industries/manufacturing/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Manufacturing" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_manufacturing2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Manufacturing</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/industries/retail/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Retail" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_retail2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Retail</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
                                         <div class="column">
-                                                    <p class="headline" role="heading" aria-level="3">By teams </p>
+                                                        <p class="headline" role="heading" aria-level="3">By Role</p>
                                                 <ul>
 
 
@@ -728,48 +996,219 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/content-marketers/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Content Marketers " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_team_content_marketers.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Content Marketers </div>
-                                                                            <p class="nav-panel__card__description">Effortlessly deliver optimized content users want</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/accessibility-leaders/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Accessibility Leaders" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_a11y_leaders.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Accessibility Leaders</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/performance-marketers/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Performance Marketers " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_team_performance_marketers.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Performance Marketers </div>
-                                                                            <p class="nav-panel__card__description">Uncover, track, and visualize data – and watch results soar  </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/marketing-leaders/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Marketing Leaders " src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_marketing_leaders2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Marketing Leaders </div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/marketing-leaders/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Marketing Leaders " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_team_marketing_leaders.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Marketing Leaders </div>
-                                                                            <p class="nav-panel__card__description">Drive 20% higher productivity across your organization </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/content-marketers/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Content Marketers " src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_content_marketers2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Content Marketers </div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/solutions/operations-and-it/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Operations and IT" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_solutions_team_operations_it.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Operations and IT</div>
-                                                                            <p class="nav-panel__card__description">Build seamless, compliant, and inclusive digital experiences</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/performance-marketers/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Performance Marketers " src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_performance_marketers2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Performance Marketers </div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/development-and-design-ux/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Development &amp; Design" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_dev_design2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Development &amp; Design</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/webops/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="WebOps" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_teams_webops2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">WebOps</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                </ul>
+                                        </div>
+                                        <div class="column">
+                                                        <p class="headline" role="heading" aria-level="3">By Goal</p>
+                                                <ul>
+
+
+
+
+
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/enhance-reputation/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Enhance Reputation" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_goal_enhance_reputation2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Enhance Reputation</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/increase-reach/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Increase Reach" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_goal_increase_reach2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Increase Reach</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/generate-revenue/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Generate Revenue" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_goal_generate_revenue2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Generate Revenue</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/solutions/optimize-roi/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Optimize ROI" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_goal_optimize_roi2-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Optimize ROI</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                </ul>
+                                        </div>
+                                        <div class="column subnav-right-column">
+                                                        <p class="headline" role="heading" aria-level="3">Partnerships</p>
+                                                <ul>
+
+
+
+
+
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/partners/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Our Partners" src="/globalassets/media/redesign2024/icons/outlined__icon_nav_our_partners2-12.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Our Partners</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/partners/become-a-partner/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Become a Partner" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_become_a_partner2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Become a Partner</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="https://partners.siteimprove.com/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Partner Portal" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_partner_portal2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Partner Portal</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
@@ -777,148 +1216,25 @@
                             </div>
                         </section>
                 </li>
-                <li class="nav-main__item">
-                        <button id="nav-3" class="nav-item" aria-expanded="false" onclick="handleClick('3');">
-                            <span class="nav-item__text">Resources</span>
-                            <span class="nav-item__hidden-text">Resources</span>
-                        </button>
-                        <section class="nav-panel" role="navigation" aria-labelledby="nav-3" id="nav-panel-3">
-                            <div class="nav-panel__arrow" id="nav-arrow-3"></div>
-
-                            <div class="nav-panel__container">
-                                <div class="nav-panel__grid columns-2 clear">
-                                        <div class="column">
-                                                <ul>
-
-
-
-
-
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/blog/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Blog" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_blog.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Blog</div>
-                                                                            <p class="nav-panel__card__description">Get the latest on MarTech, accessibility, and more</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/on-demand-webinars/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="On-demand webinars" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_webinars_events.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">On-demand webinars</div>
-                                                                            <p class="nav-panel__card__description">Deep-dive expert sessions at your own pace</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/events/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Events" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_events.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Events</div>
-                                                                            <p class="nav-panel__card__description">Meet us online or in person</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/press/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Press and news" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_press_news.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Press and news</div>
-                                                                            <p class="nav-panel__card__description">See what’s new with Siteimprove</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                </ul>
-                                        </div>
-                                        <div class="column">
-                                                <ul>
-
-
-
-
-
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/success-plans/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Success plans" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_success_plans.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Success plans</div>
-                                                                            <p class="nav-panel__card__description">Your checklist for high performance</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/toolkit/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Siteimprove toolkit" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_toolkit.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Siteimprove toolkit</div>
-                                                                            <p class="nav-panel__card__description">Everything you need to evaluate and protect your brand</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/digital-insights-report/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Digital Insights Report" src="/globalassets/media/rebrand2023/nav/dir.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Digital Insights Report</div>
-                                                                            <p class="nav-panel__card__description">Get your free personalized audit now</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="/glossary/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Glossary " src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_glossary.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Glossary </div>
-                                                                            <p class="nav-panel__card__description">QA? SaaS? No idea? No worries. We’ve got you covered</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                            <li class="nav-panel__card__wrapper">
-                                                                <a href="https://www.siteimprove.com/web-accessibility-compliance/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Web accessibility compliance" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_resources_success_plans.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Web accessibility compliance</div>
-                                                                            <p class="nav-panel__card__description">Your guide to current legislation and best practices worldwide</p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                </ul>
-                                        </div>
-                                </div>
-                            </div>
-                        </section>
+                <li class="nav-main__item nav-no-dd">
+                        <a href="/case-studies/" class="nav-item">Case Studies
+                        <div class="bottom-bar"></div>
+                        </a>
                 </li>
                 <li class="nav-main__item">
                         <button id="nav-4" class="nav-item" aria-expanded="false" onclick="handleClick('4');">
-                            <span class="nav-item__text">Customers</span>
-                            <span class="nav-item__hidden-text">Customers</span>
+                            <span class="nav-item__text">Resources</span>
+                            <span class="nav-item__hidden-text">Resources</span>
+                            <div class="main-nav-dd-arrow" onclick="handleClick('4');"></div>
+                            <div class="bottom-bar"></div>
                         </button>
                         <section class="nav-panel" role="navigation" aria-labelledby="nav-4" id="nav-panel-4">
-                            <div class="nav-panel__arrow" id="nav-arrow-4"></div>
+                            <!-- <div class="nav-panel__arrow" id="nav-arrow-4"></div> -->
 
                             <div class="nav-panel__container">
-                                <div class="nav-panel__grid columns-1 clear">
+                                <div class="nav-panel__grid columns-2 clear">
                                         <div class="column">
+                                                        <p class="headline" role="heading" aria-level="3">Learn</p>
                                                 <ul>
 
 
@@ -926,79 +1242,84 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/customers/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Customer stories" src="/globalassets/media/rebrand2023/nav/customer_stories.png" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Customer stories</div>
-                                                                            <p class="nav-panel__card__description">See what’s possible with Siteimprove </p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/siteimprove-101/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Siteimprove 101" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_siteimprove_1012.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Siteimprove 101</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/frontier/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Frontier" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_customers_frontier.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Frontier</div>
-                                                                            <p class="nav-panel__card__description">Empower your team with industry-leading learning resources</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/toolkit/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Siteimprove Toolkit" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_toolkit2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Siteimprove Toolkit</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/web-accessibility-compliance/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Compliance" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_compliance2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Compliance</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/glossary/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Glossary" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_glossary2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Glossary</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                    <a href="/blog/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Blog" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_blog_v22.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Blog</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                 </ul>
                                         </div>
-                                </div>
-                            </div>
-                        </section>
-                </li>
-                <li class="nav-main__item">
-                        <button id="nav-5" class="nav-item" aria-expanded="false" onclick="handleClick('5');">
-                            <span class="nav-item__text">Partners</span>
-                            <span class="nav-item__hidden-text">Partners</span>
-                        </button>
-                        <section class="nav-panel" role="navigation" aria-labelledby="nav-5" id="nav-panel-5">
-                            <div class="nav-panel__arrow" id="nav-arrow-5"></div>
-
-                            <div class="nav-panel__container">
-                                    <div class="nav-panel__title__wrapper">
-                                        <div class="nav-panel__title">
-                                                <a class="nav-panel__title__link" href="/partners/">
-                                                    <div class="nav-panel__title__text">
-                                                        <h4>Partners</h4>
-                                                            <p class="nav-panel__title__subtitle">
-                                                                Help your clients break through with flawless digital experiences 
-                                                            </p>
-                                                    </div>
-                                                    <div class="nav-panel__title__actions">
-                                                        <div class="nav-panel__title__button" href="#">
-                                                            <span class="hidden-text">Partners</span><div class="nav-panel__title__button-arrow">
-                                                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M13.2328 16.4569C12.9328 16.7426 12.9212 17.2173 13.2069 17.5172C13.4926 17.8172 13.9673 17.8288 14.2672 17.5431L13.2328 16.4569ZM19.5172 12.5431C19.8172 12.2574 19.8288 11.7827 19.5431 11.4828C19.2574 11.1828 18.7827 11.1712 18.4828 11.4569L19.5172 12.5431ZM18.4828 12.5431C18.7827 12.8288 19.2574 12.8172 19.5431 12.5172C19.8288 12.2173 19.8172 11.7426 19.5172 11.4569L18.4828 12.5431ZM14.2672 6.4569C13.9673 6.17123 13.4926 6.18281 13.2069 6.48276C12.9212 6.78271 12.9328 7.25744 13.2328 7.5431L14.2672 6.4569ZM19 12.75C19.4142 12.75 19.75 12.4142 19.75 12C19.75 11.5858 19.4142 11.25 19 11.25V12.75ZM5 11.25C4.58579 11.25 4.25 11.5858 4.25 12C4.25 12.4142 4.58579 12.75 5 12.75V11.25ZM14.2672 17.5431L19.5172 12.5431L18.4828 11.4569L13.2328 16.4569L14.2672 17.5431ZM19.5172 11.4569L14.2672 6.4569L13.2328 7.5431L18.4828 12.5431L19.5172 11.4569ZM19 11.25L5 11.25V12.75L19 12.75V11.25Z" fill="#ffffff" />
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                        </div>
-                                        <div class="nav-panel__title__border"></div>
-                                    </div>
-                                <div class="nav-panel__grid columns-1 clear">
                                         <div class="column">
-                                                        <ul>
-                                                            <li class="nav-panel__card__wrapper nav-main-item-mobile">
-                                                                <a href="/partners/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                        <img width="40" height="40" alt="Overview" src="">
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Partners</div>
-                                                                        <p class="nav-panel__card__description">Help your clients break through with flawless digital experiences </p>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
+                                                        <p class="headline" role="heading" aria-level="3">Connect</p>
                                                 <ul>
 
 
@@ -1006,26 +1327,58 @@
 
 
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="/partners/partner-with-us/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Partner with us" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_partners_partner_with_us.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Partner with us</div>
-                                                                            <p class="nav-panel__card__description">Join the Siteimprove Partnership Program</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/calendar/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Calendar" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_calendar2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Calendar</div>
+                                                                        </div>
+                                                                    </a>
                                                             </li>
                                                             <li class="nav-panel__card__wrapper">
-                                                                <a href="https://partners.siteimprove.com/" class="nav-panel__card">
-                                                                    <div class="nav-panel__card__graphic">
-                                                                            <img width="40" height="40" alt="Partner Portal" src="/globalassets/media/rebrand2023/nav/webopti_nav_icon_partners_partner_portal.svg" />
-                                                                    </div>
-                                                                    <div class="nav-panel__card__content">
-                                                                        <div class="nav-panel__card__title">Partner Portal</div>
-                                                                            <p class="nav-panel__card__description">Already a partner? Here’s everything you need to succeed</p>
-                                                                    </div>
-                                                                </a>
+
+
+
+                                                            
+
+                                                                    <a href="/press/" class="nav-panel__card">
+                                                                        <div class="nav-panel__card__graphic">
+                                                                                <img width="30" height="30" alt="Press" src="/globalassets/media/redesign2024/icons/outlined_icon_nav_press2.png" />
+                                                                        </div>
+                                                                        <div class="nav-panel__card__content">
+                                                                            <div class="nav-panel__card__title">Press</div>
+                                                                        </div>
+                                                                    </a>
+                                                            </li>
+                                                </ul>
+                                        </div>
+                                        <div class="column subnav-right-column">
+                                                        <a href="/link/28773694da1e41338e0b1026ec5307fc.aspx"><p class="headline" role="heading" aria-level="3">Digital Insights Report 
+                                                        <span class="headline-arrow"></span>
+                                                        </p></a>
+                                                <ul>
+
+
+
+
+
+                                                            <li class="nav-panel__card__wrapper">
+
+
+
+                                                            
+
+                                                                <div class="nav-panel__card__content">
+                                                                    <div class="nav-panel__card__title"></div>
+                                                                        <p class="nav-panel__card__description">Curious where your site performance stands today? Get a comprehensive, fully customized report detailing both strengths and actionable opportunities to improve.</p>
+                                                                </div>
+                                                                <img src="/globalassets/media/redesign2024/digital_insights_report.png">
                                                             </li>
                                                 </ul>
                                         </div>
@@ -1072,7 +1425,9 @@
                             </span>
                         </button>
                     </div>
+                    
                 </div>
+
             </div>
         </header>
         <main id="main" class="content-main">
@@ -1090,7 +1445,7 @@
 <p>Siteimprove respects your privacy and is committed to protecting it. The purpose of this Notice is to in a transparent way describe what data we collect, for what purpose it is collected, the legal basis for our processing, in what way you can control your data and how you can get in contact with us.</p>
 <p>This Notice describes how we process the data of individuals who:</p>
 <ul>
-<li>register as users to access the Siteimprove Intelligence Platform and make use of the <a href="/product/">services</a> (hereinafter the &ldquo;Service(s)&rdquo;) which are available for subscription</li>
+<li>register as users to access the Siteimprove Intelligence Platform and make use of the <a href="/platform/">services</a> (hereinafter the &ldquo;Service(s)&rdquo;) which are available for subscription</li>
 </ul>
 <h2><strong>2. When is this notice not applicable?</strong></h2>
 <p>This Notice is not applicable to our practices in connection with collecting Crawl- and Analytics based data from customers websites (&ldquo;Subscription Data&rdquo;). &nbsp;When collecting Subscription Data, Siteimprove&rsquo;s security and privacy practices is governed by our <a href="/legal/master-subscription-agreement/">Master Subscription Agreement</a> together with belonging <a href="/privacy/dpa/">Data Processing Agreement</a>, or other equivalent agreement that grants the customer's organization access to the Services.</p>
@@ -1169,84 +1524,94 @@
         </main>
         <footer class="footer-main">
 <div><div>
-<div class="grid">
-<div class="col col-4 col-md-12 footer-main__social">
-        <p class="l b" role="heading" aria-level="2">Follow</p>
-    <ul>
-    <li>
-        <a href="https://twitter.com/siteimprove" class="btn btn-s btn-icon">
-                <svg viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19.7827 4.49275C19.7827 4.69565 19.7827 4.89855 19.7827 5.07246C19.7827 11.0725 15.233 18 6.93979 18C4.37696 18 2.01571 17.2464 0 15.971C0.34555 16 0.719895 16.029 1.06544 16.029C3.16754 16.029 5.12565 15.3043 6.68063 14.087C4.69372 14.058 3.02356 12.7246 2.47644 10.9275C2.7644 10.9855 3.02356 11.0145 3.34031 11.0145C3.74346 11.0145 4.1466 10.9565 4.52094 10.8406C2.44764 10.4348 0.89267 8.6087 0.89267 6.4058C0.89267 6.37681 0.89267 6.37681 0.89267 6.34783C1.49738 6.69565 2.18848 6.89855 2.93717 6.92754C1.72775 6.11594 0.921466 4.72464 0.921466 3.13043C0.921466 2.28986 1.15183 1.50725 1.52618 0.84058C3.74346 3.5942 7.08377 5.3913 10.8272 5.5942C10.7408 5.27536 10.712 4.89855 10.712 4.55072C10.712 2.02899 12.7277 0 15.233 0C16.5288 0 17.7094 0.550725 18.5157 1.42029C19.5524 1.21739 20.5026 0.84058 21.3953 0.318841C21.0497 1.3913 20.3298 2.26087 19.4084 2.84058C20.3298 2.72464 21.1937 2.49275 22 2.11594C21.4241 3.04348 20.6754 3.85507 19.7827 4.49275Z" />
-                </svg>
-            <span class="vh">Twitter</span>
-        </a>
-    </li>
-    <li>
-        <a href="https://www.facebook.com/Siteimprove" class="btn btn-s btn-icon">
-                <svg viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.4908 19.9999V10.8769H9.43911L9.88051 7.32157H6.4908V5.05157C6.4908 4.02223 6.76604 3.32068 8.18733 3.32068L10 3.31981V0.139943C9.68636 0.0967723 8.61042 0 7.35864 0C4.74517 0 2.95593 1.65682 2.95593 4.69964V7.32167H0V10.877H2.95584V20L6.4908 19.9999Z" />
-                </svg>
-            <span class="vh">Facebook</span>
-        </a>
-    </li>
-    <li>
-        <a href="https://www.linkedin.com/company/siteimprove" class="btn btn-s btn-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.58 19">
-                    <path d="M20.24,19c-1.33,0-2.63,0-3.95,0-.29,0-.35-.06-.35-.34v-7a5.12,5.12,0,0,0-.19-1.57A2.3,2.3,0,0,0,12,9a2.7,2.7,0,0,0-1,2.29v6.59a8.6,8.6,0,0,0,0,.88c0,.25-.1.31-.32.28h-4c-.25,0-.32-.06-.32-.31,0-2,0-4,0-6,0-2.45,0-4.9,0-7.32,0-.28.07-.34.32-.34h4c.26,0,.32.06.32.31V7l.16-.16a4.72,4.72,0,0,1,5-2,5,5,0,0,1,4.27,4.52,11.88,11.88,0,0,1,.12,1.79v7.5C20.58,18.9,20.52,19,20.24,19Z" style="fill:#fff" /><path d="M4.69,12.67v6c0,.25-.07.34-.35.34-1.34,0-2.68,0-4,0C.06,19,0,18.94,0,18.71V6.62c0-.2.06-.29.32-.29H4.43c.29,0,.32.09.32.32C4.69,8.64,4.69,10.64,4.69,12.67Z" style="fill:#fff" /><path d="M4.68,3A2.31,2.31,0,0,1,1.87,4.7,2.38,2.38,0,0,1,.16,1.45,2.21,2.21,0,0,1,2.39,0,2.32,2.32,0,0,1,4.68,3Z" />
-                </svg>   
-            <span class="vh">LinkedIn</span>
-        </a>
-    </li>
-    <li>
-        <a href="https://www.youtube.com/channel/UCVost3tZNte0o4V2motH2IA" class="btn btn-s btn-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 16.1">
-                    <path d="M22.53,2.52a2.91,2.91,0,0,0-2-2C18.7,0,11.5,0,11.5,0S4.3,0,2.5.47a3,3,0,0,0-2,2.05A30.58,30.58,0,0,0,0,8.05a30.46,30.46,0,0,0,.47,5.53,2.89,2.89,0,0,0,2,2c1.82.49,9,.49,9,.49s7.2,0,9-.47a2.91,2.91,0,0,0,2-2A30.58,30.58,0,0,0,23,8.07,28.94,28.94,0,0,0,22.53,2.52ZM9.2,11.88V5l6,3.44Z" />
-                </svg>   
-            <span class="vh">Youtube</span>
-        </a>
-    </li>
 
-    </ul>
-</div>
-            <div class="col col-8 col-md-12 col-nest footer-main__links">
+<div class="grid">
+        <div class="col col-8 col-md-12 col-nest footer-main__links">
     <div class="col col-3 col-sm-6">
-            <p class="l b" role="heading" aria-level="2">Products</p>
+            <p class="l b" role="heading" aria-level="2">Platform</p>
         <ul>
+                <li><a href="/platform/">Overview</a></li>
                 <li><a href="/integrations/">Integrations</a></li>
-                <li><a href="/pricing/">Pricing</a></li>
+                <li><a href="/platform/professional-services/">Services &amp; Support</a></li>
+                <li><a href="/partners/">Partners</a></li>
         </ul>
     </div>
     <div class="col col-3 col-sm-6">
             <p class="l b" role="heading" aria-level="2">Company</p>
         <ul>
-                <li><a href="/about-us/">About us</a></li>
                 <li><a href="/leadership/">Leadership</a></li>
-                <li><a href="/board-of-directors/">Board of directors</a></li>
+                <li><a href="/press/">Press</a></li>
                 <li><a href="/contact/">Contact</a></li>
-                <li><a href="/press/">Press &amp; news</a></li>
-                <li><a href="/csr/">CSR</a></li>
         </ul>
     </div>
     <div class="col col-3 col-sm-6">
             <p class="l b" role="heading" aria-level="2">Careers</p>
         <ul>
-                <li><a href="https://careers.siteimprove.com/open-positions/">Open positions</a></li>
                 <li><a href="https://careers.siteimprove.com/our-culture/">Culture</a></li>
-                <li><a href="https://careers.siteimprove.com/our-teams/">Teams</a></li>
-                <li><a href="https://careers.siteimprove.com/locations/">Locations</a></li>
+                <li><a href="https://careers.siteimprove.com/our-locations/">Offices</a></li>
+                <li><a href="https://careers.siteimprove.com/open-positions/">Open Roles</a></li>
         </ul>
     </div>
     <div class="col col-3 col-sm-6">
             <p class="l b" role="heading" aria-level="2">Support</p>
         <ul>
-                <li><a href="https://support.siteimprove.com/hc/en-gb/categories/200848193-Getting-Started">Getting started</a></li>
-                <li><a href="https://support.siteimprove.com/hc/en-gb/categories/200848163-Support-FAQs">Guides and FAQs</a></li>
-                <li><a href="https://support.siteimprove.com/hc/en-gb/community/topics">Community</a></li>
-                <li><a href="https://status.siteimprove.com/">System status</a></li>
-                <li><a href="https://developer.siteimprove.com/">For developers</a></li>
+                <li><a href="https://help.siteimprove.com/support/solutions/80000220153">Getting started</a></li>
+                <li><a href="https://help.siteimprove.com/support/solutions/80000220156">Guides &amp; FAQs</a></li>
+                <li><a href="/success-plans/">Success Plans</a></li>
+                <li><a href="https://developer.siteimprove.com/">Developer Center</a></li>
+                <li><a href="https://status.siteimprove.com/">System Status</a></li>
         </ul>
     </div>
         </div>
+    <div class="col col-4 col-md-12 footer-main__social grid">
+    <ul class="col-12">
+    <li>
+        <a href="https://www.linkedin.com/company/siteimprove" class="btn btn-s btn-icon">
+
+        
+        <img src="/globalassets/media/shared/social/linkedin.svg">
+
+
+            <span class="vh">LinkedIn</span>
+        </a>
+    </li>
+    <li>
+        <a href="https://twitter.com/siteimprove" class="btn btn-s btn-icon">
+
+        
+        <img src="/globalassets/media/shared/social/twitter.svg">
+
+
+            <span class="vh">Twitter</span>
+        </a>
+    </li>
+    <li>
+        <a href="https://www.facebook.com/Siteimprove" class="btn btn-s btn-icon">
+
+        
+        <img src="/globalassets/media/shared/social/facebook.svg">
+
+
+            <span class="vh">Facebook</span>
+        </a>
+    </li>
+    <li>
+        <a href="https://www.youtube.com/channel/UCVost3tZNte0o4V2motH2IA" class="btn btn-s btn-icon">
+
+        
+        <img src="/globalassets/media/shared/social/youtube.svg">
+
+
+            <span class="vh">Youtube</span>
+        </a>
+    </li>
+
+    </ul>
+    <div class="col-12 shadow-l mt32">
+        <img src="/globalassets/media/redesign2024/leader_2024.png" alt="Leadership 2024">
+        <p class="footer-social-img-desc">Siteimprove is a leader in Digital Governance, Digital Analytics, and SEO Tools.</p>
+    </div>
+</div>
     
 
 <div class="col col-12 col-nest footer-main__end">
@@ -1295,8 +1660,12 @@
         </footer>
     </div>
     <script>var host = "https://www.siteimprove.com";</script>
-    <script src="/bundle/mainjs?v=HqKY-xRnNpQiPcgrmzLiBI60s9XOJbHZKpL-5DKElAE1"></script>
+    <script src="/bundle/mainjs?v=xNehMWOeu-QesozpIhDYp33KFaQ1U353qZ_Jv4Gf7ao1"></script>
+
+    <link href="/bundle/customcss?v=Znq7mbSh_RJQTrUwfsvthl743WeRuZ41SOPN5PJETK01" rel="stylesheet"/>
 
     
+
+
 </body>
 </html>
