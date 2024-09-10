@@ -19,13 +19,860 @@
     
 
 
-    <!-- Google Tag Manager -->
+<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NKCH7SXG');</script>
- <!-- End Google Tag Manager -->
+<!-- End Google Tag Manager -->
+    <script>  
+  (function() {
+      class Upgrowth_DataLayer {
+        constructor() {
+          window.dataLayer = window.dataLayer || []; 
+          
+          // use a prefix of events name
+          this.eventPrefix = '';
+
+          //Keep the value false to get non-formatted product ID
+          this.formattedItemId = true; 
+
+          // data schema
+          this.dataSchema = {
+            ecommerce: {
+                show: true
+            },
+            dynamicRemarketing: {
+                show: false,
+                business_vertical: 'retail'
+            }
+          }
+
+          // add to wishlist selectors
+          this.addToWishListSelectors = {
+            'addWishListIcon': '',
+            'gridItemSelector': '',
+            'productLinkSelector': 'a[href*="/products/"]'
+          }
+
+          // quick view selectors
+          this.quickViewSelector = {
+            'quickViewElement': '',
+            'gridItemSelector': '',
+            'productLinkSelector': 'a[href*="/products/"]'
+          }
+
+          // mini cart button selector
+          this.miniCartButton = [
+            'a[href="/cart"]', 
+          ];
+          this.miniCartAppersOn = 'click';
+
+
+          // begin checkout buttons/links selectors
+          this.beginCheckoutButtons = [
+            'input[name="checkout"]',
+            'button[name="checkout"]',
+            'a[href="/checkout"]',
+            '.additional-checkout-buttons',
+          ];
+
+          // direct checkout button selector
+          this.shopifyDirectCheckoutButton = [
+            '.shopify-payment-button'
+          ]
+
+          //Keep the value true if Add to Cart redirects to the cart page
+          this.isAddToCartRedirect = false;
+          
+          // keep the value false if cart items increment/decrement/remove refresh page 
+          this.isAjaxCartIncrementDecrement = true;
+          
+
+          // Caution: Do not modify anything below this line, as it may result in it not functioning correctly.
+          this.cart = {"note":null,"attributes":{},"original_total_price":0,"total_price":0,"total_discount":0,"total_weight":0.0,"item_count":0,"items":[],"requires_shipping":false,"currency":"USD","items_subtotal_price":0,"cart_level_discount_applications":[],"checkout_charge_amount":0}
+          this.countryCode = "US";
+          this.collectData();  
+          this.storeURL = "https://www.soapboxsoaps.com";
+          localStorage.setItem('shopCountryCode', this.countryCode);
+        }
+
+        updateCart() {
+          fetch("/cart.js")
+          .then((response) => response.json())
+          .then((data) => {
+            this.cart = data;
+          });
+        }
+
+       debounce(delay) {         
+          let timeoutId;
+          return function(func) {
+            const context = this;
+            const args = arguments;
+            
+            clearTimeout(timeoutId);
+            
+            timeoutId = setTimeout(function() {
+              func.apply(context, args);
+            }, delay);
+          };
+        }
+
+        collectData() { 
+            this.customerData();
+            this.ajaxRequestData();
+            this.searchPageData();
+            this.miniCartData();
+            this.beginCheckoutData();
+  
+            
+  
+            
+  
+            
+            
+            this.addToWishListData();
+            this.quickViewData();
+            this.formData();
+            this.phoneClickData();
+            this.emailClickData();
+        }        
+
+        //logged in customer data 
+        customerData() {
+            const currentUser = {};
+            
+
+            if (currentUser.email) {
+              currentUser.hash_email = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+
+            if (currentUser.phone) {
+              currentUser.hash_phone = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            }
+
+            window.dataLayer = window.dataLayer || [];
+            dataLayer.push({
+              customer: currentUser
+            });
+        }
+
+        // add_to_cart, remove_from_cart, search
+        ajaxRequestData() {
+          const self = this;
+          
+          // handle non-ajax add to cart
+          if(this.isAddToCartRedirect) {
+            document.addEventListener('submit', function(event) {
+              const addToCartForm = event.target.closest('form[action="/cart/add"]');
+              if(addToCartForm) {
+                event.preventDefault();
+                
+                const formData = new FormData(addToCartForm);
+            
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                  method: 'POST',
+                  body: formData
+                })
+                .then(response => {
+                    window.location.href = "/cart";
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+              }
+            });
+          }
+          
+          // fetch
+          let originalFetch = window.fetch;
+          let debounce = this.debounce(800);
+          
+          window.fetch = function () {
+            return originalFetch.apply(this, arguments).then((response) => {
+              if (response.ok) {
+                let cloneResponse = response.clone();
+                let requestURL = arguments[0];
+                
+                if(/.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {   
+                  const queryString = requestURL.split('?')[1];
+                  const urlParams = new URLSearchParams(queryString);
+                  const search_term = urlParams.get("q");
+
+                  debounce(function() {
+                    fetch(`${self.storeURL}/search/suggest.json?q=${search_term}&resources[type]=product&requestFrom=uldt`)
+                      .then(res => res.json())
+                      .then(function(data) {
+                            const products = data.resources.results.products;
+                            if(products.length) {
+                              const fetchRequests = products.map(product =>
+                                fetch(`${self.storeURL}/${product.url.split('?')[0]}.js`)
+                                  .then(response => response.json())
+                                  .catch(error => console.error('Error fetching:', error))
+                              );
+
+                              Promise.all(fetchRequests)
+                                .then(products => {
+                                    const items = products.map((product) => {
+                                      return {
+                                        product_id: product.id,
+                                        product_title: product.title,
+                                        variant_id: product.variants[0].id,
+                                        variant_title: product.variants[0].title,
+                                        vendor: product.vendor,
+                                        total_discount: 0,
+                                        final_price: product.price_min,
+                                        product_type: product.type, 
+                                        quantity: 1
+                                      }
+                                    });
+
+                                    self.ecommerceDataLayer('search', {search_term, items});
+                                })
+                            }else {
+                              self.ecommerceDataLayer('search', {search_term, items: []});
+                            }
+                      });
+                  });
+                }
+                else if (requestURL.includes("/cart/add")) {
+                  cloneResponse.text().then((text) => {
+                    let data = JSON.parse(text);
+
+                    if(data.items && Array.isArray(data.items)) {
+                      data.items.forEach(function(item) {
+                         self.ecommerceDataLayer('add_to_cart', {items: [item]});
+                      })
+                    } else {
+                      self.ecommerceDataLayer('add_to_cart', {items: [data]});
+                    }
+                    self.updateCart();
+                  });
+                }else if(requestURL.includes("/cart/change") || requestURL.includes("/cart/update")) {
+                  
+                   cloneResponse.text().then((text) => {
+                     
+                    let newCart = JSON.parse(text);
+                    let newCartItems = newCart.items;
+                    let oldCartItems = self.cart.items;
+
+                    for(let i = 0; i < oldCartItems.length; i++) {
+                      let item = oldCartItems[i];
+                      let newItem = newCartItems.find(newItems => newItems.id === item.id);
+
+
+                      if(newItem) {
+
+                        if(newItem.quantity > item.quantity) {
+                          // cart item increment
+                          let quantity = (newItem.quantity - item.quantity);
+                          let updatedItem = {...item, quantity}
+                          self.ecommerceDataLayer('add_to_cart', {items: [updatedItem]});
+                          self.updateCart(); 
+
+                        }else if(newItem.quantity < item.quantity) {
+                          // cart item decrement
+                          let quantity = (item.quantity - newItem.quantity);
+                          let updatedItem = {...item, quantity}
+                          self.ecommerceDataLayer('remove_from_cart', {items: [updatedItem]});
+                          self.updateCart(); 
+                        }
+                        
+
+                      }else {
+                        self.ecommerceDataLayer('remove_from_cart', {items: [item]});
+                        self.updateCart(); 
+                      }
+                    }
+                     
+                  });
+                }
+              }
+              return response;
+            });
+          }
+          // end fetch 
+
+
+          //xhr
+          var origXMLHttpRequest = XMLHttpRequest;
+          XMLHttpRequest = function() {
+            var requestURL;
+    
+            var xhr = new origXMLHttpRequest();
+            var origOpen = xhr.open;
+            var origSend = xhr.send;
+            
+            // Override the `open` function.
+            xhr.open = function(method, url) {
+                requestURL = url;
+                return origOpen.apply(this, arguments);
+            };
+    
+    
+            xhr.send = function() {
+    
+                // Only proceed if the request URL matches what we're looking for.
+                if (requestURL.includes("/cart/add") || requestURL.includes("/cart/change") || /.*\/search\/?.*\?.*q=.+/.test(requestURL)) {
+        
+                    xhr.addEventListener('load', function() {
+                        if (xhr.readyState === 4) {
+                            if (xhr.status >= 200 && xhr.status < 400) { 
+
+                              if(/.*\/search\/?.*\?.*q=.+/.test(requestURL) && !requestURL.includes('&requestFrom=uldt')) {
+                                const queryString = requestURL.split('?')[1];
+                                const urlParams = new URLSearchParams(queryString);
+                                const search_term = urlParams.get("q");
+
+                                debounce(function() {
+                                    fetch(`${self.storeURL}/search/suggest.json?q=${search_term}&resources[type]=product&requestFrom=uldt`)
+                                      .then(res => res.json())
+                                      .then(function(data) {
+                                            const products = data.resources.results.products;
+                                            if(products.length) {
+                                              const fetchRequests = products.map(product =>
+                                                fetch(`${self.storeURL}/${product.url.split('?')[0]}.js`)
+                                                  .then(response => response.json())
+                                                  .catch(error => console.error('Error fetching:', error))
+                                              );
+                
+                                              Promise.all(fetchRequests)
+                                                .then(products => {
+                                                    const items = products.map((product) => {
+                                                      return {
+                                                        product_id: product.id,
+                                                        product_title: product.title,
+                                                        variant_id: product.variants[0].id,
+                                                        variant_title: product.variants[0].title,
+                                                        vendor: product.vendor,
+                                                        total_discount: 0,
+                                                        final_price: product.price_min,
+                                                        product_type: product.type, 
+                                                        quantity: 1
+                                                      }
+                                                    });
+                
+                                                    self.ecommerceDataLayer('search', {search_term, items});
+                                                })
+                                            }else {
+                                              self.ecommerceDataLayer('search', {search_term, items: []});
+                                            }
+                                      });
+                                  });
+
+                              }
+
+                              else if(requestURL.includes("/cart/add")) {
+                                  const data = JSON.parse(xhr.responseText);
+
+                                  if(data.items && Array.isArray(data.items)) {
+                                    data.items.forEach(function(item) {
+                                        self.ecommerceDataLayer('add_to_cart', {items: [item]});
+                                      })
+                                  } else {
+                                    self.ecommerceDataLayer('add_to_cart', {items: [data]});
+                                  }
+                                  self.updateCart();
+                                 
+                               }else if(requestURL.includes("/cart/change")) {
+                                 
+                                  const newCart = JSON.parse(xhr.responseText);
+                                  const newCartItems = newCart.items;
+                                  let oldCartItems = self.cart.items;
+              
+                                  for(let i = 0; i < oldCartItems.length; i++) {
+                                    let item = oldCartItems[i];
+                                    let newItem = newCartItems.find(newItems => newItems.id === item.id);
+              
+              
+                                    if(newItem) {
+                                      if(newItem.quantity > item.quantity) {
+                                        // cart item increment
+                                        let quantity = (newItem.quantity - item.quantity);
+                                        let updatedItem = {...item, quantity}
+                                        self.ecommerceDataLayer('add_to_cart', {items: [updatedItem]});
+                                        self.updateCart(); 
+              
+                                      }else if(newItem.quantity < item.quantity) {
+                                        // cart item decrement
+                                        let quantity = (item.quantity - newItem.quantity);
+                                        let updatedItem = {...item, quantity}
+                                        self.ecommerceDataLayer('remove_from_cart', {items: [updatedItem]});
+                                        self.updateCart(); 
+                                      }
+                                      
+              
+                                    }else {
+                                      self.ecommerceDataLayer('remove_from_cart', {items: [item]});
+                                      self.updateCart(); 
+                                    }
+                                  }
+                               }          
+                            }
+                        }
+                    });
+                }
+    
+                return origSend.apply(this, arguments);
+            };
+    
+            return xhr;
+          }; 
+          //end xhr
+        }
+
+        // search event from search page
+        searchPageData() {
+          const self = this;
+          let pageUrl = window.location.href;
+          
+          if(/.+\/search\?.*\&?q=.+/.test(pageUrl)) {   
+            const queryString = pageUrl.split('?')[1];
+            const urlParams = new URLSearchParams(queryString);
+            const search_term = urlParams.get("q");
+                
+            fetch(`https://www.soapboxsoaps.com/search/suggest.json?q=${search_term}&resources[type]=product&requestFrom=uldt`)
+            .then(res => res.json())
+            .then(function(data) {
+                  const products = data.resources.results.products;
+                  if(products.length) {
+                    const fetchRequests = products.map(product =>
+                      fetch(`${self.storeURL}/${product.url.split('?')[0]}.js`)
+                        .then(response => response.json())
+                        .catch(error => console.error('Error fetching:', error))
+                    );
+                    Promise.all(fetchRequests)
+                    .then(products => {
+                        const items = products.map((product) => {
+                            return {
+                            product_id: product.id,
+                            product_title: product.title,
+                            variant_id: product.variants[0].id,
+                            variant_title: product.variants[0].title,
+                            vendor: product.vendor,
+                            total_discount: 0,
+                            final_price: product.price_min,
+                            product_type: product.type, 
+                            quantity: 1
+                            }
+                        });
+
+                        self.ecommerceDataLayer('search', {search_term, items});
+                    });
+                  }else {
+                    self.ecommerceDataLayer('search', {search_term, items: []});
+                  }
+            });
+          }
+        }
+
+        // view_cart
+        miniCartData() {
+          if(this.miniCartButton.length) {
+            let self = this;
+            if(this.miniCartAppersOn === 'hover') {
+              this.miniCartAppersOn = 'mouseenter';
+            }
+            this.miniCartButton.forEach((selector) => {
+              let miniCartButtons = document.querySelectorAll(selector);
+              miniCartButtons.forEach((miniCartButton) => {
+                  miniCartButton.addEventListener(self.miniCartAppersOn, () => {
+                    self.ecommerceDataLayer('view_cart', self.cart);
+                  });
+              })
+            });
+          }
+        }
+
+        // begin_checkout
+        beginCheckoutData() {
+          let self = this;
+          document.addEventListener('pointerdown', () => {
+            let targetElement = event.target.closest(self.beginCheckoutButtons.join(', '));
+            if(targetElement) {
+              self.ecommerceDataLayer('begin_checkout', self.cart);
+            }
+          });
+        }
+
+        // view_cart, add_to_cart, remove_from_cart
+        viewCartPageData() {
+          
+          this.ecommerceDataLayer('view_cart', this.cart);
+
+          //if cart quantity chagne reload page 
+          if(!this.isAjaxCartIncrementDecrement) {
+            const self = this;
+            document.addEventListener('pointerdown', (event) => {
+              const target = event.target.closest('a[href*="/cart/change?"]');
+              if(target) {
+                const linkUrl = target.getAttribute('href');
+                const queryString = linkUrl.split("?")[1];
+                const urlParams = new URLSearchParams(queryString);
+                const newQuantity = urlParams.get("quantity");
+                const line = urlParams.get("line");
+                const cart_id = urlParams.get("id");
+        
+                
+                if(newQuantity && (line || cart_id)) {
+                  let item = line ? {...self.cart.items[line - 1]} : self.cart.items.find(item => item.key === cart_id);
+        
+                  let event = 'add_to_cart';
+                  if(newQuantity < item.quantity) {
+                    event = 'remove_from_cart';
+                  }
+        
+                  let quantity = Math.abs(newQuantity - item.quantity);
+                  item['quantity'] = quantity;
+        
+                  self.ecommerceDataLayer(event, {items: [item]});
+                }
+              }
+            });
+          }
+        }
+
+        productSinglePage() {
+        
+        }
+
+        collectionsPageData() {
+          var ecommerce = {
+            'items': [
+              
+              ]
+          };
+
+          ecommerce['item_list_id'] = null
+          ecommerce['item_list_name'] = null
+
+          this.ecommerceDataLayer('view_item_list', ecommerce);
+        }
+        
+        
+        // add to wishlist
+        addToWishListData() {
+          if(this.addToWishListSelectors && this.addToWishListSelectors.addWishListIcon) {
+            const self = this;
+            document.addEventListener('pointerdown', (event) => {
+              let target = event.target;
+              
+              if(target.closest(self.addToWishListSelectors.addWishListIcon)) {
+                let pageULR = window.location.href.replace(/\?.+/, '');
+                let requestURL = undefined;
+          
+                if(/\/products\/[^/]+$/.test(pageULR)) {
+                  requestURL = pageULR;
+                } else if(self.addToWishListSelectors.gridItemSelector && self.addToWishListSelectors.productLinkSelector) {
+                  let itemElement = target.closest(self.addToWishListSelectors.gridItemSelector);
+                  if(itemElement) {
+                    let linkElement = itemElement.querySelector(self.addToWishListSelectors.productLinkSelector); 
+                    if(linkElement) {
+                      let link = linkElement.getAttribute('href').replace(/\?.+/g, '');
+                      if(link && /\/products\/[^/]+$/.test(link)) {
+                        requestURL = link;
+                      }
+                    }
+                  }
+                }
+
+                if(requestURL) {
+                  fetch(requestURL + '.json')
+                    .then(res => res.json())
+                    .then(result => {
+                      let data = result.product;                    
+                      if(data) {
+                        let dataLayerData = {
+                          product_id: data.id,
+                            variant_id: data.variants[0].id,
+                            product_title: data.title,
+                          quantity: 1,
+                          final_price: parseFloat(data.variants[0].price) * 100,
+                          total_discount: 0,
+                          product_type: data.product_type,
+                          vendor: data.vendor,
+                          variant_title: (data.variants[0].title !== 'Default Title') ? data.variants[0].title : undefined,
+                          sku: data.variants[0].sku,
+                        }
+
+                        self.ecommerceDataLayer('add_to_wishlist', {items: [dataLayerData]});
+                      }
+                    });
+                }
+              }
+            });
+          }
+        }
+
+        quickViewData() {
+          if(this.quickViewSelector.quickViewElement && this.quickViewSelector.gridItemSelector && this.quickViewSelector.productLinkSelector) {
+            const self = this;
+            document.addEventListener('pointerdown', (event) => {
+              let target = event.target;
+              if(target.closest(self.quickViewSelector.quickViewElement)) {
+                let requestURL = undefined;
+                let itemElement = target.closest(this.quickViewSelector.gridItemSelector );
+                
+                if(itemElement) {
+                  let linkElement = itemElement.querySelector(self.quickViewSelector.productLinkSelector); 
+                  if(linkElement) {
+                    let link = linkElement.getAttribute('href').replace(/\?.+/g, '');
+                    if(link && /\/products\/[^/]+$/.test(link)) {
+                      requestURL = link;
+                    }
+                  }
+                }   
+                
+                if(requestURL) {
+                    fetch(requestURL + '.json')
+                      .then(res => res.json())
+                      .then(result => {
+                        let data = result.product;                    
+                        if(data) {
+                          let dataLayerData = {
+                            product_id: data.id,
+                            variant_id: data.variants[0].id,
+                            product_title: data.title,
+                            quantity: 1,
+                            final_price: parseFloat(data.variants[0].price) * 100,
+                            total_discount: 0,
+                            product_type: data.product_type,
+                            vendor: data.vendor,
+                            variant_title: (data.variants[0].title !== 'Default Title') ? data.variants[0].title : undefined,
+                            sku: data.variants[0].sku,
+                          }
+  
+                          self.ecommerceDataLayer('view_item', {items: [dataLayerData]});
+                          self.quickViewVariants = data.variants;
+                          self.quickViewedItem = dataLayerData;
+                        }
+                      });
+                  }
+              }
+            });
+
+            
+              if(this.shopifyDirectCheckoutButton.length) {
+                let self = this;
+                document.addEventListener('pointerdown', (event) => {
+                  let target = event.target;
+                  let checkoutButton = event.target.closest(this.shopifyDirectCheckoutButton.join(', '));
+                  
+                  if(self.quickViewVariants && self.quickViewedItem && self.quickViewVariants.length && checkoutButton) {
+
+                    let checkoutForm = checkoutButton.closest('form[action*="/cart/add"]');
+                    if(checkoutForm) {
+                        let quantity = 1;
+                        let varientInput = checkoutForm.querySelector('input[name="id"]');
+                        let quantitySelector = checkoutForm.getAttribute('id');
+
+                        if(quantitySelector) {
+                          let quentityInput = document.querySelector('input[name="quantity"][form="'+quantitySelector+'"]');
+                          if(quentityInput) {
+                              quantity = +quentityInput.value;
+                          }
+                        }
+
+                        if(varientInput) {
+                            let variant_id = parseInt(varientInput.value);
+
+                            if(variant_id) {
+                                const variant = self.quickViewVariants.find(item => item.id === +variant_id);
+                                if(variant && self.quickViewedItem) {
+                                    self.quickViewedItem['variant_id'] = variant_id;
+                                    self.quickViewedItem['variant_title'] = variant.title;
+                                    self.quickViewedItem['final_price'] = parseFloat(variant.price) * 100;
+                                    self.quickViewedItem['quantity'] = quantity; 
+    
+                                    self.ecommerceDataLayer('add_to_cart', {items: [self.quickViewedItem]});
+                                    self.ecommerceDataLayer('begin_checkout', {items: [self.quickViewedItem]});
+                                }
+                            }
+                        }
+                    }
+
+                  }
+                }); 
+            }
+            
+          }
+        }
+
+        // all ecommerce events
+        ecommerceDataLayer(event, data) {
+          const self = this;
+          dataLayer.push({ 'ecommerce': null });
+          const dataLayerData = {
+            "event": this.eventPrefix + event,
+            'ecommerce': {
+               'currency': this.cart.currency,
+               'items': data.items.map((item, index) => {
+                 const dataLayerItem = {
+                    'index': index,
+                    'item_id': this.formattedItemId  ? `shopify_${this.countryCode}_${item.product_id}_${item.variant_id}` : item.product_id.toString(),
+                    'product_id': item.product_id.toString(),
+                    'variant_id': item.variant_id.toString(),
+                    'item_name': item.product_title,
+                    'quantity': item.quantity,
+                    'price': +((item.final_price / 100).toFixed(2)),
+                    'discount': item.total_discount ? +((item.total_discount / 100).toFixed(2)) : 0 
+                }
+
+                if(item.product_type) {
+                  dataLayerItem['item_category'] = item.product_type;
+                }
+                
+                if(item.vendor) {
+                  dataLayerItem['item_brand'] = item.vendor;
+                }
+               
+                if(item.variant_title && item.variant_title !== 'Default Title') {
+                  dataLayerItem['item_variant'] = item.variant_title;
+                }
+              
+                if(item.sku) {
+                  dataLayerItem['sku'] = item.sku;
+                }
+
+                if(item.item_list_name) {
+                  dataLayerItem['item_list_name'] = item.item_list_name;
+                }
+
+                if(item.item_list_id) {
+                  dataLayerItem['item_list_id'] = item.item_list_id.toString()
+                }
+
+                return dataLayerItem;
+              })
+            }
+          }
+
+          if(data.total_price !== undefined) {
+            dataLayerData['ecommerce']['value'] =  +((data.total_price / 100).toFixed(2));
+          } else {
+            dataLayerData['ecommerce']['value'] = +(dataLayerData['ecommerce']['items'].reduce((total, item) => total + (item.price * item.quantity), 0)).toFixed(2);
+          }
+          
+          if(data.item_list_id) {
+            dataLayerData['ecommerce']['item_list_id'] = data.item_list_id;
+          }
+          
+          if(data.item_list_name) {
+            dataLayerData['ecommerce']['item_list_name'] = data.item_list_name;
+          }
+
+          if(data.search_term) {
+            dataLayerData['search_term'] = data.search_term;
+          }
+
+          if(self.dataSchema.dynamicRemarketing && self.dataSchema.dynamicRemarketing.show) {
+            dataLayer.push({ 'dynamicRemarketing': null });
+            dataLayerData['dynamicRemarketing'] = {
+                value: dataLayerData.ecommerce.value,
+                items: dataLayerData.ecommerce.items.map(item => ({id: item.item_id, google_business_vertical: self.dataSchema.dynamicRemarketing.business_vertical}))
+            }
+          }
+
+          if(!self.dataSchema.ecommerce ||  !self.dataSchema.ecommerce.show) {
+            delete dataLayerData['ecommerce'];
+          }
+
+          dataLayer.push(dataLayerData);
+        }
+
+        
+        // contact form submit & newsletters signup
+        formData() {
+          const self = this;
+          document.addEventListener('submit', function(event) {
+
+            let targetForm = event.target.closest('form[action^="/contact"]');
+
+
+            if(targetForm) {
+              const formData = {
+                form_location: window.location.href,
+                form_id: targetForm.getAttribute('id'),
+                form_classes: targetForm.getAttribute('class')
+              };
+                            
+              let formType = targetForm.querySelector('input[name="form_type"]');
+              let inputs = targetForm.querySelectorAll("input:not([type=hidden]):not([type=submit]), textarea, select");
+              
+              inputs.forEach(function(input) {
+                var inputName = input.name;
+                var inputValue = input.value;
+                
+                if (inputName && inputValue) {
+                  var matches = inputName.match(/\[(.*?)\]/);
+                  if (matches && matches.length > 1) {
+                     var fieldName = matches[1];
+                     formData[fieldName] = input.value;
+                  }
+                }
+              });
+              
+              if(formType && formType.value === 'customer') {
+                dataLayer.push({ event: self.eventPrefix + 'newsletter_signup', ...formData});
+              } else if(formType && formType.value === 'contact') {
+                dataLayer.push({ event: self.eventPrefix + 'contact_form_submit', ...formData});
+              }
+            }
+          });
+
+        }
+
+        // phone_number_click event
+        phoneClickData() {
+          const self = this; 
+          document.addEventListener('click', function(event) {
+            let target = event.target.closest('a[href^="tel:"]');
+            if(target) {
+              let phone_number = target.getAttribute('href').replace('tel:', '');
+              dataLayer.push({
+                event: self.eventPrefix + 'phone_number_click',
+                page_location: window.location.href,
+                link_classes: target.getAttribute('class'),
+                link_id: target.getAttribute('id'),
+                phone_number
+              })
+            }
+          });
+        }
+  
+        // email_click event
+        emailClickData() {
+          const self = this; 
+          document.addEventListener('click', function(event) {
+            let target = event.target.closest('a[href^="mailto:"]');
+            if(target) {
+              let email_address = target.getAttribute('href').replace('mailto:', '');
+              dataLayer.push({
+                event: self.eventPrefix + 'email_click',
+                page_location: window.location.href,
+                link_classes: target.getAttribute('class'),
+                link_id: target.getAttribute('id'),
+                email_address
+              })
+            }
+          });
+        }
+      } 
+      // end Upgrowth_DataLayer
+
+      document.addEventListener('DOMContentLoaded', function() {
+        try{
+          new Upgrowth_DataLayer();
+        }catch(error) {
+          console.log(error);
+        }
+      });
+    
+  })();
+</script>
+
 
     <!-- BEGIN Merchantverse Code -->
 <script id='merchantverseScript'
@@ -78,7 +925,7 @@ position: 'LEFT_BOTTOM'
 <meta property="og:url" content="https://www.soapboxsoaps.com/policies/terms-of-service">
 <meta property="og:title" content="Terms of service">
 <meta property="og:type" content="website">
-<meta property="og:description" content="Shea butter infused hair &amp; personal care that gives back. Save 10% on your first order! Make soap=hope with donations made on each order.">
+<meta property="og:description" content="Vitamin-boosted, antioxidant-rich hair and body care products made from real ingredients for real results. We donate a bar of soap to communities in need for each product purchased so you can feel good about looking good!">
 
 
 
@@ -91,13 +938,13 @@ position: 'LEFT_BOTTOM'
     
     <meta
       property="og:image"
-      content="https://www.soapboxsoaps.com/cdn/shop/files/SBS_LUXE_LOGO-01_1204x630.png?v=1613671571"
+      content="https://www.soapboxsoaps.com/cdn/shop/files/SB_Logo_2024_rectangle_1260x630.png?v=1725649449"
     />
     <meta
       property="og:image:secure_url"
-      content="https://www.soapboxsoaps.com/cdn/shop/files/SBS_LUXE_LOGO-01_1204x630.png?v=1613671571"
+      content="https://www.soapboxsoaps.com/cdn/shop/files/SB_Logo_2024_rectangle_1260x630.png?v=1725649449"
     />
-    <meta property="og:image:width" content="1204" />
+    <meta property="og:image:width" content="1260" />
     <meta property="og:image:height" content="630" />
     
     
@@ -122,7 +969,7 @@ position: 'LEFT_BOTTOM'
 
 
 <meta name="twitter:title" content="Terms of service">
-<meta name="twitter:description" content="Shea butter infused hair &amp; personal care that gives back. Save 10% on your first order! Make soap=hope with donations made on each order.">
+<meta name="twitter:description" content="Vitamin-boosted, antioxidant-rich hair and body care products made from real ingredients for real results. We donate a bar of soap to communities in need for each product purchased so you can feel good about looking good!">
 
 
     
@@ -135,7 +982,7 @@ position: 'LEFT_BOTTOM'
     
     <meta
       property="twitter:image"
-      content="https://www.soapboxsoaps.com/cdn/shop/files/SBS_LUXE_LOGO-01_1200x600_crop_center.png?v=1613671571"
+      content="https://www.soapboxsoaps.com/cdn/shop/files/SB_Logo_2024_rectangle_1200x600_crop_center.png?v=1725649449"
     />
     <meta property="twitter:image:width" content="1200" />
     <meta property="twitter:image:height" content="600" />
@@ -184,16 +1031,16 @@ Shopify.routes.root = "/";</script>
 <script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
 <script>window.ShopifyPay = window.ShopifyPay || {};
 window.ShopifyPay.apiHost = "shop.app\/pay";</script>
-<script id="shop-js-features" type="application/json">{"compact":true,"defer_modal_on_autofill":true}</script>
+<script id="shop-js-features" type="application/json">{"compact":true}</script>
 <script id="shop-js-analytics" type="application/json">{"pageType":"policy"}</script>
 <script>
   window.Shopify = window.Shopify || {};
   if (!window.Shopify.featureAssets) window.Shopify.featureAssets = {};
-  window.Shopify.featureAssets['shop-js'] = {"pay-button":["modules/client.pay-button_3HN6VTii.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"init-shop-email-lookup-coordinator":["modules/client.init-shop-email-lookup-coordinator_CitGWk9v.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"init-customer-accounts":["modules/client.init-customer-accounts_BtxvtwWG.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"init-shop-for-new-customer-accounts":["modules/client.init-shop-for-new-customer-accounts_CLxyiKx7.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"init-customer-accounts-sign-up":["modules/client.init-customer-accounts-sign-up_R3-6Vby6.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"shop-pay-checkout-sheet":["modules/client.shop-pay-checkout-sheet_C7tnROor.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"avatar":["modules/client.avatar_BTnouDA3.en.esm.js"],"shop-pay-payment-request":["modules/client.shop-pay-payment-request_BKlSCWb_.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js","modules/chunk.shop-pay_x9MUymw1.esm.js"],"login-button":["modules/client.login-button_CPJDkJYf.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"discount-app":["modules/client.discount-app_Cwv7holL.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"],"payment-terms":["modules/client.payment-terms_XOPjSqDO.en.esm.js","modules/chunk.common_L2pY0ngv.esm.js"]};
+  window.Shopify.featureAssets['shop-js'] = {"pay-button":["modules/client.pay-button_AKujiPUY.en.esm.js","modules/chunk.common_DY2puq6P.esm.js"],"init-shop-email-lookup-coordinator":["modules/client.init-shop-email-lookup-coordinator_DGOnCAAd.en.esm.js","modules/chunk.common_DY2puq6P.esm.js"],"init-customer-accounts-sign-up":["modules/client.init-customer-accounts-sign-up_Bvt9MjYg.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js"],"init-customer-accounts":["modules/client.init-customer-accounts_C3vKaVjb.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js"],"avatar":["modules/client.avatar_BTnouDA3.en.esm.js"],"init-shop-for-new-customer-accounts":["modules/client.init-shop-for-new-customer-accounts_DYudOq9K.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js"],"shop-pay-checkout-sheet":["modules/client.shop-pay-checkout-sheet_D0s0yLcn.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js"],"shop-pay-payment-request":["modules/client.shop-pay-payment-request_C9rgsNgq.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js","modules/chunk.shop-pay_CipWoOSv.esm.js"],"discount-app":["modules/client.discount-app_D1_z2nAu.en.esm.js","modules/chunk.common_DY2puq6P.esm.js"],"payment-terms":["modules/client.payment-terms_DZJnuDeh.en.esm.js","modules/chunk.common_DY2puq6P.esm.js","modules/client.login-button_VbRwdR3E.en.esm.js"],"login-button":["modules/client.login-button_VbRwdR3E.en.esm.js","modules/chunk.common_DY2puq6P.esm.js"]};
 </script>
 <script>(function() {
   function asyncLoad() {
-    var urls = ["\/\/dynamic.criteo.com\/js\/ld\/ld.js?a=87038\u0026shop=soapboxsoap.myshopify.com","https:\/\/instafeed.nfcube.com\/cdn\/0d7a551c8ae990dc4246170d02be22cf.js?shop=soapboxsoap.myshopify.com","https:\/\/accessibly.app\/public\/widget\/run.js?shop=soapboxsoap.myshopify.com","\/\/secure.apps.shappify.com\/apps\/csp\/customer_pricing.php?shop=soapboxsoap.myshopify.com","https:\/\/apps.bazaarvoice.com\/deployments\/soapboxsoaps\/main_site\/production\/en_US\/bv.js?shop=soapboxsoap.myshopify.com","https:\/\/reconvert-cdn.com\/assets\/js\/store_reconvert_node.js?v=2\u0026scid=MTI4ODg4ZTM1MDhhMGZkYzYxZjcyYWNhMTBhYWQ2ZmQuMDc5OGU3MGNmNTUyZjk5MzE4YmFhY2I5ZjkyNmU4Njg=\u0026shop=soapboxsoap.myshopify.com","https:\/\/static.shareasale.com\/json\/shopify\/deduplication.js?shop=soapboxsoap.myshopify.com","\/\/cdn.shopify.com\/proxy\/c97e47fef7bdfa981cffff312dbf84344dcf468c5972523f03215eb63a53005b\/product-labels-pro.bsscommerce.com\/js\/product_label_log.js?shop=soapboxsoap.myshopify.com\u0026sp-cache-control=cHVibGljLCBtYXgtYWdlPTkwMA","https:\/\/api.socialsnowball.io\/js\/referral.js?shop=soapboxsoap.myshopify.com"];
+    var urls = ["https:\/\/accessibly.app\/public\/widget\/run.js?shop=soapboxsoap.myshopify.com","\/\/secure.apps.shappify.com\/apps\/csp\/customer_pricing.php?shop=soapboxsoap.myshopify.com","https:\/\/reconvert-cdn.com\/assets\/js\/store_reconvert_node.js?v=2\u0026scid=MTI4ODg4ZTM1MDhhMGZkYzYxZjcyYWNhMTBhYWQ2ZmQuMDc5OGU3MGNmNTUyZjk5MzE4YmFhY2I5ZjkyNmU4Njg=\u0026shop=soapboxsoap.myshopify.com","https:\/\/static.shareasale.com\/json\/shopify\/deduplication.js?shop=soapboxsoap.myshopify.com","https:\/\/api.socialsnowball.io\/js\/referral.js?shop=soapboxsoap.myshopify.com","\/\/cdn.shopify.com\/proxy\/c85890ce63006773fe42d061e064fd51cf7ddbff25964ce4108d661d9918ee8b\/apps.bazaarvoice.com\/deployments\/soapboxsoaps\/main_site\/production\/en_US\/bv.js?shop=soapboxsoap.myshopify.com\u0026sp-cache-control=cHVibGljLCBtYXgtYWdlPTkwMA"];
     for (var i = 0; i < urls.length; i++) {
       var s = document.createElement('script');
       s.type = 'text/javascript';
@@ -209,9 +1056,10 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
     window.addEventListener('load', asyncLoad, false);
   }
 })();</script>
-<script id="__st">var __st={"a":12938895,"offset":-14400,"reqid":"4e841058-0dcd-4eaf-9b56-c554988da732-1722482441","pageurl":"www.soapboxsoaps.com\/policies\/terms-of-service","u":"1175b7c5d60b"};</script>
+<script id="__st">var __st={"a":12938895,"offset":-14400,"reqid":"7e21f4bf-7ec3-4a23-bfbb-507a3f633b68-1726011595","pageurl":"www.soapboxsoaps.com\/policies\/terms-of-service","u":"9bf128f55f2d"};</script>
 <script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
-<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(',');function c(t,e){try{const n=window.sessionStorage;for(const[o,c]of Object.entries(JSON.parse(n.getItem(e))))t.elements[o]&&(t.elements[o].value=c);n.removeItem(e)}catch{}}const r='form_type',s='cptcha';function a(t){t.dataset[s]=!0}((i,m,f,u,d,p,l)=>{if(0)return;let E=!1;const _=(t,e,n)=>{const o=i[f][u],c=o.bindForm,r='6LeHG2ApAAAAAO4rPaDW-qVpPKPOBfjbCpzJB9ey',s={infoText:'',privacyText:'',termsText:''};if(c)return c(t,r,e,s).then(n);o.q.push([[t,r,e,s],n]),E||(m.body.append(Object.assign(m.createElement('script'),{id:'captcha-provider',async:!0,src:'https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_recaptcha.v1.3.0.iife.js'})),E=!0)};i[f]=i[f]||{},i[f][u]=i[f][u]||{},i[f][u].q=[],i[f][d]=i[f][d]||{},i[f][d].protect=function(t,e){_(t,void 0,e),a(t)},Object.freeze(i[f][d]),function(i,m,f,u,d,p){const[l,E,_]=function(c,r,s){const a=r?[[t,t],['blogs',n],['comments',n],[t,'customer']]:[],i=c?[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']]:[],m=[...a,...i],f=o(m),u=o(a),d=s&&o(m.filter((([t,e])=>s.includes(e)))),p=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];return[p(f),p(u),p(d)]}(!0,!0,['guest_login']),T=t=>{const e=t.target,n=e instanceof HTMLFormElement?e:e&&e.form;return n&&l().find((t=>n===t))};i.addEventListener('submit',(t=>{T(t)&&t.preventDefault()}));const h=(t,e)=>{t&&!t.dataset[s]&&(f(t,e.some((e=>e===t))),a(t))};for(const t of['focusin','change'])i.addEventListener(t,(t=>h(T(t),E())));const v=m.get('form_key'),g=m.get(r),y=v&&g;i.addEventListener('DOMContentLoaded',(()=>{const t=E();if(y)for(const e of t)e.elements[r].value===g&&c(e,v);[...new Set([..._(),...l().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>h(e,t)))}))}(m,new URLSearchParams(i.location.search),_)})(window,document,'Shopify','ce_forms','captcha')}();</script>
+<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(',');function s(t,e,n=!1){try{const o=window.sessionStorage;for(const[n,c]of Object.entries(JSON.parse(o.getItem(e))))t.elements[n]&&(t.elements[n].value=c);n&&o.removeItem(e)}catch{}}const a='form_key',i=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response','password'],u=()=>{try{return window.sessionStorage}catch{return}},m=t=>t.elements[a],f='form_type',d='cptcha';function p(t){t.dataset[d]=!0}const l=window,h=l.document,_='Shopify',y='ce_forms',E='captcha';let v=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe','https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.4.0.iife.js',T={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=l[_][y],c=o.bindForm;if(c)return c(t,g,e,T).then(n);o.q.push([[t,g,e,T],n]),v||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:'https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.4.0.iife.js'})),v=!0)});var g,T;l[_]=l[_]||{},l[_][y]=l[_][y]||{},l[_][y].q=[],l[_][E]=l[_][E]||{},l[_][E].protect=function(t,e){n(t,void 0,e),p(t)},Object.freeze(l[_][E]),function(t,e,n,l,h,_){const[y,E,v,g]=function(t,e,n){const s=e?o:[],a=t?c:[],i=[...s,...a],u=[...o],m=r(i),f=r(s),d=n&&r(i.filter((([t,e])=>n.includes(e)))),p=r(u),l=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];return[l(m),l(f),l(d),l(p)]}(l,h,_),T=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},S=t=>y().includes(t);t.addEventListener('submit',(t=>{const e=T(t);if(!e)return;const n=S(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=m(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!u())return;!function(t){const e=u();if(!e)return;const n=m(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){m(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:a})),t.elements[a].value=e}(t,e),function(t,e){const n=u();if(!n)return;const o=[...t.querySelectorAll('input[type="password"]')].map((({name:t})=>t)),c=[...i,...o],r={};for(const[s,a]of new FormData(t).entries())c.includes(s)||(r[s]=a);n.setItem(e,JSON.stringify(r))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const w=(t,e)=>{t&&!t.dataset[d]&&(n(t,e.some((e=>e===t))),p(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=T(t);S(e)&&w(e,E())}));const A=e.get('form_key'),b=e.get(f),I=A&&b;t.addEventListener('DOMContentLoaded',(()=>{const t=E();if(I)for(const e of t)e.elements[f].value===b&&s(e,A);[...new Set([...v(),...y().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>w(e,t)))}))}(h,new URLSearchParams(l.location.search),n,!0,!0,['guest_login'])})()}();</script>
+<script id="captcha-terms">!function(){'use strict';const e=/recaptcha|reCATPCHA|google|Googl/gi,t=o=>{let c=o.firstChild;for(;c;)c.nodeType===Node.TEXT_NODE?c.textContent=c.textContent.replace(e,'hCaptcha'):c.nodeType===Node.ELEMENT_NODE&&t(c),c=c.nextSibling};document.addEventListener('DOMContentLoaded',(()=>{(e=>{const o=document.querySelector('p[data-spam-detection-disclaimer]');if(o){for(const e of['terms','privacy']){const t=o.querySelector(`a[href*='https://policies.google.com/${e}']`);t&&(t.href=`https://hcaptcha.com/${e}`)}t(o)}})()}))}();</script>
 <script integrity="sha256-n5Uet9jVOXPHGd4hH4B9Y6+BxkTluaaucmYaxAjUcvY=" data-source-attribution="shopify.loadfeatures" defer="defer" src="//www.soapboxsoaps.com/cdn/shopifycloud/shopify/assets/storefront/load_feature-9f951eb7d8d53973c719de211f807d63af81c644e5b9a6ae72661ac408d472f6.js" crossorigin="anonymous"></script>
 <script crossorigin="anonymous" defer="defer" src="//www.soapboxsoaps.com/cdn/shopifycloud/shopify/assets/shopify_pay/storefront-80e528be853eac23af2454534897ca9536b1d3d04aa043b042f34879a3c111c8.js?v=20220906"></script>
 <script integrity="sha256-HAs5a9TQVLlKuuHrahvWuke+s1UlxXohfHeoYv8G2D8=" data-source-attribution="shopify.dynamic-checkout" defer="defer" src="//www.soapboxsoaps.com/cdn/shopifycloud/shopify/assets/storefront/features-1c0b396bd4d054b94abae1eb6a1bd6ba47beb35525c57a217c77a862ff06d83f.js" crossorigin="anonymous"></script>
@@ -407,8 +1255,6 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 <meta name="robots" content="max-image-preview:large">
 
 <meta name="google-site-verification" content="9eDy5HB5ZbUEmWt_qJw5YexVgkUq_fJGiEKbv-qHkOw" />
-
-<!-- <script async src="https://onsite.optimonk.com/script.js?account=225259&origin=shopify-app-embed-block"></script>  -->
   
                       <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-file-configdata.js?v=109620359775551636191718048159" type="text/javascript"></script> <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-file-configdata-banner.js?v=151034973688681356691718048159" type="text/javascript"></script> <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-file-configdata-popup.js?v=173992696638277510541718048159" type="text/javascript"></script><script>
                 if (typeof BSS_PL == 'undefined') {
@@ -485,94 +1331,106 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 		"cart": "5",
 		"": "7",
 	}
-	function loadScripts(src, callback) {
+	function bssLoadScripts(src, callback, isDefer = false) {
 		const scriptTag = document.createElement("script");
-		document.head.appendChild(scriptTag)
-		scriptTag.defer = true;
-		scriptTag.src = src
-		if(callback) {
+		document.head.appendChild(scriptTag);
+		scriptTag.src = src;
+		if (isDefer) {
+			scriptTag.defer = true;
+		} else {
+			scriptTag.async = true;
+		}
+		if (callback) {
 			scriptTag.addEventListener('load', function() {
 				callback();
 			});
 		}
 	}
-
-	let scriptUrls = [
-		"https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-helper.js", 
-		"https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-config-run-scripts.js",
+	const scriptUrls = [
+		"https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-helper.js", 
+		"https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-config-run-scripts.js",
 	];
-	Promise.all(scriptUrls.map(script => new Promise(resolve => loadScripts(script, resolve))))
+	Promise.all(scriptUrls.map(script => new Promise(resolve => bssLoadScripts(script, resolve))))
 		.then((res) => {
 			console.log("BSS scripts loaded");
 			window.bssScriptsLoaded = true;
 		})
 
-	let validConfigs = BSS_PL.configData;
-	let currentPath = window.location.pathname.replace(Shopify.routes.root, "").split('/');
-	const currentPage = currentPath.length > 1 ? currentPath[currentPath.length - 2] : currentPath[0];
-	if (currentPage && typeof PAGES[currentPage] !== "undefined") {
-		validConfigs =validConfigs.filter(item => item.pages && item.pages.split(",").includes(PAGES[currentPage]));
-	}
-
-	(function(){
-		if (!validConfigs.length) return;
-		// if (BSS_PL.currentPlan !== "free") {
-		// 	validConfigs =validConfigs.filter(({ name }) => !name.includes("[") || Shopify.locale === name.split("[")[1].split("]")[0]);
-		// }
-		BSS_PL.configs = {
-			label:validConfigs.filter(item => item.label_type == 1 || item.label_type == null),
-			badgeName:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 0),
-			badgeProductImage:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 1),
-			badgeCustomSelector:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 2),
-			badgePrice:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 3),
-			badgeAddToCart:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 4),
-			badgeQuantityBox:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 5),
-			badgeBuyItNow:validConfigs.filter(item => item.label_type == 2 && item.badge_type == 6)
-		};
-
-		const enabledFeature = [
-			!!BSS_PL.configs.label.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-label.js",
-			!!BSS_PL.configs.badgeName.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-product-name.js",
-			!!BSS_PL.configs.badgeProductImage.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-product-image.js",
-			!!BSS_PL.configs.badgeCustomSelector.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-custom-selector.js",
-			!!BSS_PL.configs.badgePrice.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-price.js",
-			!!BSS_PL.configs.badgeAddToCart.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-add-to-cart-btn.js",
-			!!BSS_PL.configs.badgeQuantityBox.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-quantity-box.js",
-			!!BSS_PL.configs.badgeBuyItNow.length && "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-init-for-badge-buy-it-now-btn.js",
-		].filter((src) => !!src);
-		enabledFeature.forEach((src) => loadScripts(src));
-
-		if (enabledFeature?.length) {
-			const src = "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-product-label-js.js";
-			loadScripts(src);
+	function bssInitScripts() {
+		let validConfigs = BSS_PL.configData;
+		let currentPath = typeof Shopify !== "undefined" ? window.location.pathname.replace(Shopify.routes.root, "").split('/') :  window.location.pathname.split('/');
+		const currentPage = currentPath.length > 1 ? currentPath[currentPath.length - 2] : currentPath[0];
+		if (currentPage && typeof PAGES[currentPage] !== "undefined") {
+			validConfigs = validConfigs.filter(item => item.pages && item.pages.split(",").includes(PAGES[currentPage]));
 		}
 
+		if (validConfigs.length) {
+			BSS_PL.configs = {
+				label: validConfigs.filter(item => item.label_type == 1 || item.label_type == null),
+				badgeName: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 0),
+				badgeProductImage: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 1),
+				badgeCustomSelector: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 2),
+				badgePrice: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 3),
+				badgeAddToCart: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 4),
+				badgeQuantityBox: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 5),
+				badgeBuyItNow: validConfigs.filter(item => item.label_type == 2 && item.badge_type == 6)
+			};
+
+			const enabledFeature = [
+				!!BSS_PL.configs.label.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-label.js",
+				!!BSS_PL.configs.badgeName.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-product-name.js",
+				!!BSS_PL.configs.badgeProductImage.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-product-image.js",
+				!!BSS_PL.configs.badgeCustomSelector.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-custom-selector.js",
+				!!BSS_PL.configs.badgePrice.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-price.js",
+				!!BSS_PL.configs.badgeAddToCart.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-add-to-cart-btn.js",
+				!!BSS_PL.configs.badgeQuantityBox.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-quantity-box.js",
+				!!BSS_PL.configs.badgeBuyItNow.length && "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-init-for-badge-buy-it-now-btn.js",
+			].filter((src) => !!src);
+
+			enabledFeature.forEach((src) => bssLoadScripts(src));
+
+			if (enabledFeature?.length) {
+				const src = "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-product-label-js.js";
+				bssLoadScripts(src);
+			}
+		}
+
+
 		if (BSS_PL.configDataBanner?.length) {
-			const src = "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-product-label-banner.js";
-			loadScripts(src);
+			const src = "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-product-label-banner.js";
+			bssLoadScripts(src);
 		}
 
 		if (BSS_PL.configDataPopup?.length) {
-			const src = "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-product-label-popup.js";
-			loadScripts(src);
+			const src = "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-product-label-popup.js";
+			bssLoadScripts(src);
 		}
 
 		if (window.location.search.includes('bss-pl-custom-selector')) {
-			const src = "https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-product-label-custom-position.js";
-			loadScripts(src);
+			const src = "https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-product-label-custom-position.js";
+			bssLoadScripts(src, null, true);
 		}
-	})();
+	}
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', function() {
+			bssInitScripts();
+		});
+	} else {
+		bssInitScripts();
+	}
+	
 </script>
 
 
 <!-- END app app block --><!-- BEGIN app block: shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a --><script>
 /* >> TriplePixel :: start*/
-window.TriplePixelData={TripleName:"soapboxsoap.myshopify.com",ver:"2.16",plat:"SHOPIFY",isHeadless:false,src:'SHOPIFY_EXT',product:{id:"",name:``,price:"",variant:""},search:""},function(W,H,A,L,E,_,B,N){function O(U,T,P,H,R){void 0===R&&(R=!1),H=new XMLHttpRequest,P?(H.open("POST",U,!0),H.setRequestHeader("Content-Type","text/plain")):H.open("GET",U,!0),H.send(JSON.stringify(P||{})),H.onreadystatechange=function(){4===H.readyState&&200===H.status?(R=H.responseText,U.includes("/first")||U.includes(".txt")?eval(R):P||(N[B]=R)):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(U,T-1,P))}}if(N=window,!N[H+"sn"]){N[H+"sn"]=1,L=function(){return Date.now().toString(36)+"_"+Math.random().toString(36)};try{A.setItem(H,1+(0|A.getItem(H)||0)),(E=JSON.parse(A.getItem(H+"U")||"[]")).push({u:location.href,r:document.referrer,t:Date.now(),id:L()}),A.setItem(H+"U",JSON.stringify(E))}catch(e){}var i,m,p;A.getItem('"!nC`')||(_=A,A=N,A[H]||(E=A[H]=function(t,e,i){return void 0===i&&(i=[]),"State"==t?E.s:(W=L(),(E._q=E._q||[]).push([W,t,e].concat(i)),W)},E.s="Installed",E._q=[],E.ch=W,B="configSecurityConfModel",N[B]=1,O("https://conf.config-security.com/model",5),i=L(),m=A[atob("c2NyZWVu")],_.setItem("di_pmt_wt",i),p={id:i,action:"profile",avatar:_.getItem("auth-security_rand_salt_"),time:m[atob("d2lkdGg=")]+":"+m[atob("aGVpZ2h0")],host:A.TriplePixelData.TripleName,plat:A.TriplePixelData.plat,url:window.location.href,ref:document.referrer,ver:A.TriplePixelData.ver},O("https://api.config-security.com/event",5,p),"17a175-4.myshopify.com"===p.host?O("https://whale.camera/live/dot.txt",5):O("https://api.config-security.com/first?host=".concat(p.host,"&plat=").concat(p.plat),5)))}}("","TriplePixel",localStorage);
+window.TriplePixelData={TripleName:"soapboxsoap.myshopify.com",ver:"2.16",plat:"SHOPIFY",isHeadless:false,src:'SHOPIFY_EXT',product:{id:"",name:``,price:"",variant:""},search:"",collection:"",cart:"",template:""},function(W,H,A,L,E,_,B,N){function O(U,T,P,H,R){void 0===R&&(R=!1),H=new XMLHttpRequest,P?(H.open("POST",U,!0),H.setRequestHeader("Content-Type","text/plain")):H.open("GET",U,!0),H.send(JSON.stringify(P||{})),H.onreadystatechange=function(){4===H.readyState&&200===H.status?(R=H.responseText,U.includes("/first")?eval(R):P||(N[B]=R)):(299<H.status||H.status<200)&&T&&!R&&(R=!0,O(U,T-1,P))}}if(N=window,!N[H+"sn"]){N[H+"sn"]=1,L=function(){return Date.now().toString(36)+"_"+Math.random().toString(36)};try{A.setItem(H,1+(0|A.getItem(H)||0)),(E=JSON.parse(A.getItem(H+"U")||"[]")).push({u:location.href,r:document.referrer,t:Date.now(),id:L()}),A.setItem(H+"U",JSON.stringify(E))}catch(e){}var i,m,p;A.getItem('"!nC`')||(_=A,A=N,A[H]||(E=A[H]=function(t,e,i){return void 0===i&&(i=[]),"State"==t?E.s:(W=L(),(E._q=E._q||[]).push([W,t,e].concat(i)),W)},E.s="Installed",E._q=[],E.ch=W,B="configSecurityConfModel",N[B]=1,O("https://conf.config-security.com/model",5),i=L(),m=A[atob("c2NyZWVu")],_.setItem("di_pmt_wt",i),p={id:i,action:"profile",avatar:_.getItem("auth-security_rand_salt_"),time:m[atob("d2lkdGg=")]+":"+m[atob("aGVpZ2h0")],host:A.TriplePixelData.TripleName,plat:A.TriplePixelData.plat,url:window.location.href,ref:document.referrer,ver:A.TriplePixelData.ver},O("https://api.config-security.com/event",5,p),O("https://api.config-security.com/first?host=".concat(p.host,"&plat=").concat(p.plat),5)))}}("","TriplePixel",localStorage);
 /* << TriplePixel :: end*/
-
 </script>
 
 
+
+<!-- END app app block --><!-- BEGIN app block: shopify://apps/ground/blocks/ground_script/33606432-4610-4a99-a33b-7bec990f60ef --><script type="text/javascript" async src="https://onsite.joinground.com/ground.js"></script>
 
 <!-- END app app block --><!-- BEGIN app block: shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507 -->
 
@@ -587,7 +1445,7 @@ window.TriplePixelData={TripleName:"soapboxsoap.myshopify.com",ver:"2.16",plat:"
 
 
 
-  <script async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Ny6b8s"></script>
+  <script async src="https://static.klaviyo.com/onsite/js/Ny6b8s/klaviyo.js?company_id=Ny6b8s"></script>
   <script>!function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();</script>
 
   
@@ -601,11 +1459,12 @@ window.TriplePixelData={TripleName:"soapboxsoap.myshopify.com",ver:"2.16",plat:"
 
 
 
-<!-- END app app block --><script src="https://cdn.shopify.com/extensions/f5b3a9b6-4320-412b-9400-5a883d6013c0/upcart-cart-drawer-51/assets/upcart-bundle.js" type="text/javascript" defer="defer"></script>
-<link href="https://cdn.shopify.com/extensions/2f3d5b7b-6678-4a19-8063-e66cff77b6f6/bss-labels-badges-109/assets/bss-pl-style.min.css" rel="stylesheet" type="text/css" media="all">
+<!-- END app app block --><link href="https://cdn.shopify.com/extensions/2cf2e10a-3bd6-417e-9224-ce0ec52fad99/bss-labels-badges-158/assets/bss-pl-style.min.css" rel="stylesheet" type="text/css" media="all">
+<script src="https://cdn.shopify.com/extensions/3dca9c59-9401-4013-ac92-7c0f8fc75a7b/upcart-cart-drawer-61/assets/upcart-bundle.js" type="text/javascript" defer="defer"></script>
+<script src="https://cdn.shopify.com/extensions/78e627ff-d595-4a0a-a5b6-f84514d21739/accessibly-12/assets/acc-main.js" type="text/javascript" defer="defer"></script>
 <link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
 <script>(function(){if ("sendBeacon" in navigator && "performance" in window) {var session_token = document.cookie.match(/_shopify_s=([^;]*)/);function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 12938895,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token: session_token && session_token.length === 2 ? session_token[1] : "",page_type: "policy"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
-<script id="web-pixels-manager-setup">(function e(e,n,a,t,r){var o="function"==typeof BigInt&&-1!==BigInt.toString().indexOf("[native code]")?"modern":"legacy";window.Shopify=window.Shopify||{};var i=window.Shopify;i.analytics=i.analytics||{};var s=i.analytics;s.replayQueue=[],s.publish=function(e,n,a){return s.replayQueue.push([e,n,a]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l=[a,"/wpm","/b",r,o.substring(0,1),".js"].join("");!function(e){var n=e.src,a=e.async,t=void 0===a||a,r=e.onload,o=e.onerror,i=document.createElement("script"),s=document.head,l=document.body;i.async=t,i.src=n,r&&i.addEventListener("load",r),o&&i.addEventListener("error",o),s?s.appendChild(i):l?l.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:l,async:!0,onload:function(){var a=window.webPixelsManager.init(e);n(a);var t=window.Shopify.analytics;t.replayQueue.forEach((function(e){var n=e[0],t=e[1],r=e[2];a.publishCustomEvent(n,t,r)})),t.replayQueue=[],t.publish=a.publishCustomEvent,t.visitor=a.visitor},onerror:function(){var n=e.storefrontBaseUrl.replace(/\/$/,""),a="".concat(n,"/.well-known/shopify/monorail/unstable/produce_batch"),r=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:t||"latest",bundle_target:o,page_url:self.location.href,status:"failed",surface:e.surface,error_msg:"".concat(l," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(a,r))return!0}catch(e){}var i=new XMLHttpRequest;try{return i.open("POST",a,!0),i.setRequestHeader("Content-Type","text/plain"),i.send(r),!0}catch(e){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 12938895,storefrontBaseUrl: "https://www.soapboxsoaps.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938","4735909c"],webPixelsConfigList: [{"id":"67534923","configuration":"{\"pixel_id\":\"1643746405890208\",\"pixel_type\":\"facebook_pixel\",\"metaapp_system_user_token\":\"-\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"8b3843af2d71780cfb83fdde884ce168","type":"APP","apiClientId":2329312,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"26247243","configuration":"{\"shopId\":\"soapboxsoap.myshopify.com\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"cb3212c9f3867d85b48d65da218365ff","type":"APP","apiClientId":2753413,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0142","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0142","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],initData: {"shop":{"name":"Soapbox","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"soapboxsoap.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/www.soapboxsoaps.com"},"customer":null,"cart":null,"checkout":null,"productVariants":[]},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed", {});},"https://www.soapboxsoaps.com/cdn","3e73862fa4dd5489f1391561add67efdbd82032b","e9c185b8w68f18b69pf5925341m15ab1ea3",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+<script id="web-pixels-manager-setup">(function d(d,e,r,a,n){var o,i,t,s,l=(i=(o={modern:/Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(9{2}|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.\d+|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]\d+|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Android.+Firefox\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|SamsungBrowser\/([2-9]\d|\d{3,})\.\d+/,legacy:/Edge?\/(1[6-9]|[2-9]\d|\d{3,})\.\d+(\.\d+|)|Firefox\/(5[4-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)|Chrom(ium|e)\/(5[1-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$))|(Maci|X1{2}).+ Version\/(10\.\d+|(1[1-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(3[89]|[4-9]\d|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(10[._]\d+|(1[1-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/([89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(5\.\d+|([6-9]|\d{2,})\.\d+)|Android.+MQ{2}Browser\/(14(\.(9|\d{2,})|)|(1[5-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(3\.\d+|([4-9]|\d{2,})\.\d+)(\.\d+|)/}).modern,t=o.legacy,s=navigator.userAgent,i.test(s)?"modern":(t.test(s),"legacy"));window.Shopify=window.Shopify||{};var c=window.Shopify;c.analytics=c.analytics||{};var u=c.analytics;u.replayQueue=[],u.publish=function(d,e,r){return u.replayQueue.push([d,e,r]),!0};try{self.performance.mark("wpm:start")}catch(d){}var h=[r,"/wpm","/b",n,l.substring(0,1),".js"].join("");!function(d){var e=d.src,r=d.async,a=void 0===r||r,n=d.onload,o=d.onerror,i=document.createElement("script"),t=document.head,s=document.body;i.async=a,i.src=e,n&&i.addEventListener("load",n),o&&i.addEventListener("error",o),t?t.appendChild(i):s?s.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:h,async:!0,onload:function(){var r=window.webPixelsManager.init(d);e(r);var a=window.Shopify.analytics;a.replayQueue.forEach((function(d){var e=d[0],a=d[1],n=d[2];r.publishCustomEvent(e,a,n)})),a.replayQueue=[],a.publish=r.publishCustomEvent,a.visitor=r.visitor},onerror:function(){var e=d.storefrontBaseUrl.replace(/\/$/,""),r="".concat(e,"/.well-known/shopify/monorail/unstable/produce_batch"),n=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:a||"latest",bundle_target:l,page_url:self.location.href,status:"failed",surface:d.surface,error_msg:"".concat(h," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(r,n))return!0}catch(d){}var o=new XMLHttpRequest;try{return o.open("POST",r,!0),o.setRequestHeader("Content-Type","text/plain"),o.send(n),!0}catch(d){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 12938895,storefrontBaseUrl: "https://www.soapboxsoaps.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938","d04dc9f4","4735909c"],webPixelsConfigList: [{"id":"216793163","configuration":"{\"accountID\":\"cm0wmjwu00000l803vbe0gq59\",\"popupIds\":\"[]\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"45883376512939794c79fb104f13e20e","type":"APP","apiClientId":59645886465,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"200769611","configuration":"{\"config\":\"{\\\"pixel_id\\\":\\\"G-LPGDM05DYL\\\",\\\"target_country\\\":\\\"US\\\",\\\"gtag_events\\\":[{\\\"type\\\":\\\"search\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/KJ2DCIihl_UCELa78dcD\\\"]},{\\\"type\\\":\\\"begin_checkout\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/u6zwCI2gl_UCELa78dcD\\\"]},{\\\"type\\\":\\\"view_item\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/84i8CIegl_UCELa78dcD\\\",\\\"MC-CEH7L5NE31\\\"]},{\\\"type\\\":\\\"purchase\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/oL3DCISgl_UCELa78dcD\\\",\\\"MC-CEH7L5NE31\\\"]},{\\\"type\\\":\\\"page_view\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/NqmsCIGgl_UCELa78dcD\\\",\\\"MC-CEH7L5NE31\\\"]},{\\\"type\\\":\\\"add_payment_info\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/S4v0CIuhl_UCELa78dcD\\\"]},{\\\"type\\\":\\\"add_to_cart\\\",\\\"action_label\\\":[\\\"G-LPGDM05DYL\\\",\\\"AW-989617590\\\/HGAlCIqgl_UCELa78dcD\\\"]}],\\\"enable_monitoring_mode\\\":true}\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"a46b87f88a4ff97a9490f9aa4799ba7b","type":"APP","apiClientId":1780363,"privacyPurposes":[]},{"id":"148799563","configuration":"{\"masterTagID\":\"19038\",\"merchantID\":\"139299\",\"appPath\":\"https:\/\/daedalus.shareasale.com\",\"storeID\":\"NaN\",\"xTypeMode\":\"NaN\",\"xTypeValue\":\"NaN\",\"channelDedup\":\"NaN\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"f65f2c45de62db1cf04493fa9d02b8af","type":"APP","apiClientId":4929191,"privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"148766795","configuration":"{\"locale\":\"en_US\",\"client\":\"soapboxsoaps\",\"environment\":\"production\",\"deployment_zone\":\"main_site\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"f76c0e93272022a46f61471e2310ba54","type":"APP","apiClientId":1888040,"privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"67534923","configuration":"{\"pixel_id\":\"1643746405890208\",\"pixel_type\":\"facebook_pixel\",\"metaapp_system_user_token\":\"-\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"8b3843af2d71780cfb83fdde884ce168","type":"APP","apiClientId":2329312,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"26247243","configuration":"{\"shopId\":\"soapboxsoap.myshopify.com\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"62ce07334255a696b21d9b9dbcf338b7","type":"APP","apiClientId":2753413,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"28082251","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"gtm_googleads_custompixel"},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0210","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0210","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],initData: {"shop":{"name":"Soapbox","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"soapboxsoap.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/www.soapboxsoaps.com"},"customer":null,"cart":null,"checkout":null,"productVariants":[],"purchasingCompany":null},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed", {});},"https://www.soapboxsoaps.com/cdn","593e066ac6798f9f4e40fb7425e55555e223602d","071c09dbw8537bc04p14e216e1m878d30e2",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
 window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
 window.ShopifyAnalytics.meta.currency = 'USD';
 var meta = {"page":{}};
@@ -729,19 +1588,19 @@ for (var attr in meta) {
       theme_id: 125622288459,
       app_name: "storefront",
       context_url: window.location.href,
-      source_url: "//www.soapboxsoaps.com/cdn/s/trekkie.storefront.72278931d43be9cf54de64f928f82f2eef1fa047.min.js"});
+      source_url: "//www.soapboxsoaps.com/cdn/s/trekkie.storefront.087675655abf13448be004cd601ea54882968a41.min.js"});
 
         };
         scriptFallback.async = true;
-        scriptFallback.src = '//www.soapboxsoaps.com/cdn/s/trekkie.storefront.72278931d43be9cf54de64f928f82f2eef1fa047.min.js';
+        scriptFallback.src = '//www.soapboxsoaps.com/cdn/s/trekkie.storefront.087675655abf13448be004cd601ea54882968a41.min.js';
         first.parentNode.insertBefore(scriptFallback, first);
       };
       script.async = true;
-      script.src = '//www.soapboxsoaps.com/cdn/s/trekkie.storefront.72278931d43be9cf54de64f928f82f2eef1fa047.min.js';
+      script.src = '//www.soapboxsoaps.com/cdn/s/trekkie.storefront.087675655abf13448be004cd601ea54882968a41.min.js';
       first.parentNode.insertBefore(script, first);
     };
     trekkie.load(
-      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":12938895,"isMerchantRequest":null,"themeId":125622288459,"themeCityHash":"4254640614341738810","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"TikTok Pixel":{"pixelId":"CN6IG7JC77UBGB37ONOG"},"Google Gtag Pixel":{"conversionId":"G-LPGDM05DYL","eventLabels":[{"type":"search","action_label":["G-LPGDM05DYL","AW-989617590\/KJ2DCIihl_UCELa78dcD"]},{"type":"begin_checkout","action_label":["G-LPGDM05DYL","AW-989617590\/u6zwCI2gl_UCELa78dcD"]},{"type":"view_item","action_label":["G-LPGDM05DYL","AW-989617590\/84i8CIegl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"purchase","action_label":["G-LPGDM05DYL","AW-989617590\/oL3DCISgl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"page_view","action_label":["G-LPGDM05DYL","AW-989617590\/NqmsCIGgl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"add_payment_info","action_label":["G-LPGDM05DYL","AW-989617590\/S4v0CIuhl_UCELa78dcD"]},{"type":"add_to_cart","action_label":["G-LPGDM05DYL","AW-989617590\/HGAlCIqgl_UCELa78dcD"]}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":true,"facebookAppPixelId":"1643746405890208","source":"trekkie-storefront-renderer"}}
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":12938895,"isMerchantRequest":null,"themeId":125622288459,"themeCityHash":"4088018096983107968","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"TikTok Pixel":{"pixelId":"CN6IG7JC77UBGB37ONOG"},"Google Gtag Pixel":{"conversionId":"G-LPGDM05DYL","eventLabels":[{"type":"search","action_label":["G-LPGDM05DYL","AW-989617590\/KJ2DCIihl_UCELa78dcD"]},{"type":"begin_checkout","action_label":["G-LPGDM05DYL","AW-989617590\/u6zwCI2gl_UCELa78dcD"]},{"type":"view_item","action_label":["G-LPGDM05DYL","AW-989617590\/84i8CIegl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"purchase","action_label":["G-LPGDM05DYL","AW-989617590\/oL3DCISgl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"page_view","action_label":["G-LPGDM05DYL","AW-989617590\/NqmsCIGgl_UCELa78dcD","MC-CEH7L5NE31"]},{"type":"add_payment_info","action_label":["G-LPGDM05DYL","AW-989617590\/S4v0CIuhl_UCELa78dcD"]},{"type":"add_to_cart","action_label":["G-LPGDM05DYL","AW-989617590\/HGAlCIqgl_UCELa78dcD"]}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":true,"source":"trekkie-storefront-renderer","apiClientId":580111}}
     );
 
     var loaded = false;
@@ -788,7 +1647,7 @@ for (var attr in meta) {
   window.BOOMR.themeVersion = "3.1.2";
   window.BOOMR.shopId = 12938895;
   window.BOOMR.themeId = 125622288459;
-  window.BOOMR.renderRegion = "gcp-europe-west1";
+  window.BOOMR.renderRegion = "gcp-us-east1";
   window.BOOMR.url =
     "https://www.soapboxsoaps.com/cdn/shopifycloud/boomerang/shopify-boomerang-1.0.0.min.js";
   var where = document.currentScript || document.getElementsByTagName("script")[0];
@@ -921,10 +1780,10 @@ for (var attr in meta) {
 })();</script>
 <script
   defer
-  src="https://www.soapboxsoaps.com/cdn/shopifycloud/perf-kit/shopify-perf-kit-unstable.min.js"
+  src="https://www.soapboxsoaps.com/cdn/shopifycloud/perf-kit/shopify-perf-kit-1.0.0.min.js"
   data-application="storefront-renderer"
   data-shop-id="12938895"
-  data-render-region="gcp-europe-west1"
+  data-render-region="gcp-us-east1"
   data-page-type="policy"
   data-theme-instance-id="125622288459"
   data-monorail-region="shop_domain"
@@ -1574,6 +2433,24 @@ for (var attr in meta) {
           href="/collections/body-lotion"
         >
           Lotions
+        </a>
+      </li>
+    
+  
+    
+
+    
+    
+
+    
+      <li
+        class="navmenu-item navmenu-id-deodorant"
+      >
+        <a
+          class="navmenu-link "
+          href="/collections/deodorant"
+        >
+          Deodorant
         </a>
       </li>
     
@@ -2600,6 +3477,24 @@ for (var attr in meta) {
 
     
       <li
+        class="navmenu-item navmenu-id-deodorant"
+      >
+        <a
+          class="navmenu-link "
+          href="/collections/deodorant"
+        >
+          Deodorant
+        </a>
+      </li>
+    
+  
+    
+
+    
+    
+
+    
+      <li
         class="navmenu-item navmenu-id-bar-soaps"
       >
         <a
@@ -3462,13 +4357,13 @@ for (var attr in meta) {
 
     
       <li
-        class="navmenu-item navmenu-id-bar-soap"
+        class="navmenu-item navmenu-id-deodorant"
       >
         <a
           class="navmenu-link "
-          href="/collections/bar-soap"
+          href="/collections/deodorant"
         >
-          Bar Soap
+          Deodorant
         </a>
       </li>
     
@@ -4050,7 +4945,7 @@ for (var attr in meta) {
       data-shopify-api-url="//www.soapboxsoaps.com/cdn/shopifycloud/shopify/assets/themes_support/api.jquery-b0af070cfe3f5cf7c92f9e2a5da2665ee07ed2aad63bb408f8d6672f894a5996.js"
       data-shopify-countries="/services/javascripts/countries.js"
       data-shopify-common="//www.soapboxsoaps.com/cdn/shopifycloud/shopify/assets/themes_support/shopify_common-33bb9d312118840468a53f36b59c62c1e8f2b7d1a0a77250db9e300441827470.js"
-      data-shopify-cart="//www.soapboxsoaps.com/cdn/shop/t/66/assets/jquery.cart.js?11233"
+      data-shopify-cart="//www.soapboxsoaps.com/cdn/shop/t/66/assets/jquery.cart.js?11285"
       data-pxu-polyfills="//www.soapboxsoaps.com/cdn/shop/t/66/assets/polyfills.js?v=99600072340004914161718048159"
     >
     </script>
@@ -4176,870 +5071,17 @@ for (var attr in meta) {
     
 
 
-                            <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-product-label-js.js?v=18540173229068241611718048159" type="text/javascript"></script>
-                            <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-product-label-banner.js?v=110045261789225879461718048159" type="text/javascript"></script>
-                            <script src="//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-product-label-popup.js?v=116180737997369527591718048159" type="text/javascript"></script>
-                            <script>
-                            if (window.location.search.includes("bss-pl-custom-selector")) {
-                                const src = "//www.soapboxsoaps.com/cdn/shop/t/66/assets/bss-product-label-custom-position.js?v=54615149888658339241718048159";
-                                const scriptTag = document.createElement("script");
-                                scriptTag.src = src
-                                document.body.appendChild(scriptTag)
-                            }
-                            </script>
-                        <style>
-.bss_pl_tooltip {
-    position: fixed;
-    padding: 8px 15px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 14px;
-    color: #fff;
-    background: #333;
-    max-width: 220px;
-    z-index: 5;
-    word-wrap:break-word;
-}
-.bss_pl_text_hover_link_enable {
-    cursor: pointer;
-}
-.bss_pl_text_hover_link_disable {
-    cursor: default;
-}
-.bss_pl_text_hover_text {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-.bss_pl_img img:hover {
-    border-color: dodgerblue;
-}
-.bss_pl_img {
-    display: block !important;
-}
-.bss_pl_img img,
-.bss_pl_img .bss_pl_label_text {
-    position: absolute !important;
-    margin: auto;
-    z-index: 4;
-    opacity: 1;
-    /*pointer-events: none !important;*/
-}
-.bss_pl_img img.bss-pl-frontend {
-    width: auto !important;
-}
-.bss_pl_img .bss_pl_label_text.bss-pl-frontend {
-    max-width: 100%;
-    max-height: 100%;
-}
+  
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKCH7SXG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <div id="shopify-block-14952540001915115444" class="shopify-block shopify-app-block">
 
-.bss_pl_img .bss-pl-top-left,
-.bss_pl_img .bss-pl-top-center,
-.bss_pl_img .bss-pl-top-right,
-.bss_pl_img .bss-pl-middle-left,
-.bss_pl_img .bss-pl-middle-center,
-.bss_pl_img .bss-pl-middle-right {
-    top: 0 !important;
-}
-.bss_pl_img .bss-pl-top-left,
-.bss_pl_img .bss-pl-top-center,
-.bss_pl_img .bss-pl-middle-left,
-.bss_pl_img .bss-pl-middle-center,
-.bss_pl_img .bss-pl-bottom-left,
-.bss_pl_img .bss-pl-bottom-center {
-    left: 0 !important;
-}
-.bss_pl_img .bss-pl-top-center,
-.bss_pl_img .bss-pl-top-right,
-.bss_pl_img .bss-pl-middle-center,
-.bss_pl_img .bss-pl-middle-right,
-.bss_pl_img .bss-pl-bottom-center,
-.bss_pl_img .bss-pl-bottom-right {
-    right: 0!important;
-}
-.bss_pl_img .bss-pl-middle-left,
-.bss_pl_img .bss-pl-middle-center,
-.bss_pl_img .bss-pl-middle-right,
-.bss_pl_img .bss-pl-bottom-left,
-.bss_pl_img .bss-pl-bottom-center,
-.bss_pl_img .bss-pl-bottom-right {
-    bottom: 0 !important;
-}
-.bss_pl_img .bss-pl-top-right,
-.bss_pl_img .bss-pl-middle-right,
-.bss_pl_img .bss-pl-bottom-right {
-    left: auto !important;
-}
-.bss_pl_img .bss-pl-top-left,
-.bss_pl_img .bss-pl-middle-left,
-.bss_pl_img .bss-pl-bottom-left {
-    right: auto !important;
-}
-.bss_pl_img .bss-pl-bottom-left,
-.bss_pl_img .bss-pl-bottom-center,
-.bss_pl_img .bss-pl-bottom-right {
-    top: auto !important;
-    margin-bottom: 0 !important;
-    margin-top: auto !important;
-}
 
-.bss_pl_img .bss-pl-rectangle, .bss_pl_img .bss-pl-square {
-    -webkit-clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);
-}
 
-.bss_pl_img .bss-pl-parallelogram {
-    -webkit-clip-path:polygon(0% 0%, 100% 0%, 86% 100%, 0% 100%);
-}
 
-.bss_pl_img .bss-pl-parallelogram span {
-    margin-right: 12% !important;
-}
-
-.bss_pl_img .bss-pl-parallelogram span.bss-text-content-child {
-    margin-right: 0% !important;
-}
-
-.bss_pl_img .bss-pl-tag {
-    -webkit-clip-path:polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 50%);
-}
-
-.bss_pl_img .bss-pl-tag span {
-    margin-left: 20%;
-}
-
-.bss_pl_img .bss-pl-tag span.bss-text-content-child {
-    margin-left: 0;
-}
-
-.bss_pl_img .bss-pl-tag:before {
-    content: "";
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background-color: white;
-    border-radius: 50%;
-    left: 15%;
-}
-
-.bss_pl_img .bss-pl-right-chev {
-    -webkit-clip-path:polygon(75% 0%, 100% 0%, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
-}
-
-.bss_pl_img .bss-pl-right-chev span:not(.bss-pl-text-emoji) {
-    margin-left: 25%;
-}
-
-.bss_pl_img .bss-pl-right-chev span.bss-text-content-child {
-    margin-left: 0;
-}
-
-.bss_pl_img .bss-pl-trapezoid {
-    position: relative;
-    -webkit-clip-path:polygon(60% 0%,100% 40%,100% 100%,0% 0%);
-}
-
-.bss_pl_img .bss-pl-trapezoid span:not(.bss-pl-text-emoji) {
-    position: relative;
-    top: -15%;
-    right: -15%;
-}
-
-.bss_pl_img .bss-pl-trapezoid span.bss-text-content-child {
-    position: static;
-}
-
-.bss_pl_img .bss-pl-triangle {
-    -webkit-clip-path: polygon(0% 0%, 100% 100%, 100% 0%);
-    padding: 15% !important;
-}
-
-.bss_pl_img .bss-pl-triangle span:not(.bss-pl-text-emoji) {
-    position: relative;
-    right: -25%;
-    top: -15%;
-}
-
-.bss_pl_img .bss-pl-triangle span.bss-text-content-child {
-    position: static;
-}
-
-.bss_pl_img .bss-pl-circle {
-    -webkit-clip-path:ellipse(50% 50% at 50% 50%);
-}
-
-/* badge */
-/*css for preview admin*/
-.bss_pl_img .bss-pb-bottom-left {
-    right: auto !important;
-}
-.bss_pl_img .bss-pb-bottom-center {
-    left: 0 !important;
-    right: 0 !important;
-}
-.bss_pl_img .bss-pb-bottom-right {
-    right: 0 !important;
-}
-/*end css for admin*/
-
-.bss_pb_img .bss-pb-bottom-left {
-    right: auto !important;
-}
-.bss_pb_img .bss-pb-bottom-center {
-    left: 0 !important;
-    right: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-.bss_pb_img .bss-pb-bottom-right {
-    right: 0 !important;
-}
-
-.bss_pb_img {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-}
-
-.bss_pb_img img {
-    z-index: 5;
-    cursor: pointer;
-    max-width: 240px;
-    max-height: 240px;
-}
-
-.bss_pb_img img.bss-pl-frontend {
-    width: auto !important;
-}
-
-.bss_pb_img .bss-pl-rectangle, .bss_pb_img .bss-pl-square {
-    -webkit-clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);
-}
-
-.bss_pb_img .bss-pl-parallelogram {
-    -webkit-clip-path:polygon(0% 0%, 100% 0%, 86% 100%, 0% 100%);
-}
-
-.bss_pb_img .bss-pl-parallelogram span {
-    margin-right: 12%;
-}
-
-.bss_pb_img .bss-pl-parallelogram span.bss-text-content-child {
-    margin-right: 0;
-}
-
-.bss_pb_img .bss-pl-tag {
-    -webkit-clip-path:polygon(20% 0%, 100% 0%, 100% 100%, 20% 100%, 0% 50%);
-}
-
-.bss_pb_img .bss-pl-tag span {
-    margin-left: 20%;
-}
-
-.bss_pb_img .bss-pl-tag span.bss-text-content-child {
-    margin-left: 0;
-}
-
-.bss_pb_img .bss-pl-tag:before {
-    content: "";
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background-color: white;
-    border-radius: 50%;
-    left: 15%;
-}
-
-.bss_pb_img .bss-pl-right-chev {
-    -webkit-clip-path:polygon(75% 0%, 100% 0%, 100% 100%, 0% 100%, 25% 50%, 0% 0%);
-}
-
-.bss_pb_img .bss-pl-right-chev span:not(.bss-pl-text-emoji) {
-    margin-left: 25%;
-}
-
-.bss_pb_img .bss-pl-right-chev span.bss-text-content-child {
-    margin-left: 0;
-}
-
-.bss_pb_img .bss-pl-trapezoid {
-    position: relative;
-    -webkit-clip-path:polygon(60% 0%,100% 40%,100% 100%,0% 0%);
-}
-
-.bss_pb_img .bss-pl-trapezoid span:not(.bss-pl-text-emoji) {
-    position: absolute;
-    transform: rotate(0deg);
-    top: -15%;
-    right: -15%;
-}
-
-.bss_pb_img .bss-pl-trapezoid span.bss-text-content-child {
-    position: static;
-}
-
-.bss_pb_img .bss-pl-triangle {
-    -webkit-clip-path:polygon(0% 0%, 100% 100%, 100% 0%);
-}
-
-.bss_pb_img .bss-pl-triangle span:not(.bss-pl-text-emoji) {
-    position: absolute;
-    right: -17%;
-    top: -17%;
-}
-
-.bss_pb_img .bss-pl-triangle span.bss-text-content-child {
-    position: static;
-}
-
-.bss_pb_img .bss-pl-circle {
-    -webkit-clip-path:ellipse(50% 50% at 50% 50%);
-}
-
-.flex-end .Polaris-ButtonGroup{
-    justify-content: flex-end !important;
-}
-#config-content .Polaris-FormLayout {
-    position: relative !important;
-}
-.show-emoji {
-    position: absolute !important;
-    top: 39px !important;
-    right: 5px !important;
-    z-index: 200 !important;
-    border: none !important;
-    outline: none !important;
-    background: transparent !important;
-    color: gray !important;
-    opacity: 0.6 !important;
-}
-.bss-hover-element {
-    outline: 2px solid #FFA500;
-    border-radius: 4px;
-}
-.bss-btn-group {
-    position: fixed;
-    display: flex;
-    width: 215px;
-    visibility: hidden;
-    z-index: 9999999999;
-}
-.bss-btn-group button {
-    display: flex;
-    z-index: 20;
-    background: #FFA500;
-    color: white;
-    outline: none;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-    align-items: center;
-    gap: 1px;
-}
-.bss-btn-expand svg {
-    width: 16px;
-    height: 13px;
-    position: relative;
-}
-.bss-btn-group button:focus {
-    outline: none;
-}
-.bss_pb_img_save_preview .icon_save:before{
-  content: '\2714'
-}
-.bss_pb_img_reset .icon_reset:before{
-  content: '\2716'
-}
-.bss_pb_img_save_preview, .bss_pb_img_reset {
-    border: none;
-    color: #fff;
-    border-radius: 2px;
-    display: block;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    padding: 0!important;
-}
-.bss_pb_img_save_preview{
-    background: #02A27A;
-}
-.bss_pb_img_reset {
-    background: #d2d2d2;
-}
-.bss-btn-group-save {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    gap: 4px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 6;
-}
-.bss-btn-group-save button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.bss-button--loading {
-    position: relative;
-}
-.bss-button--loading::after {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  border: 4px solid transparent;
-  border-top-color: #ffffff;
-  border-radius: 50%;
-  animation: bss-button-loading-spinner 1s ease infinite;
-}
-
-.bss-loading-container .bss-button--loading::after {
-    width: 56px;
-    height: 56px;
-    border-width: 4px;
-}
-
-@keyframes bss-button-loading-spinner {
-  from {
-    transform: rotate(0turn);
-  }
-
-  to {
-    transform: rotate(1turn);
-  }
-}
-.bss-message--green {
-    display: flex;
-    position: fixed;
-    width: 20%;
-    color: #000;
-    transition: all 0.2s ease;
-    top: 45%;
-    left: 40%;
-    border-radius: 5px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.bss-message-success {
-    background: #fff;
-    position: fixed;
-    z-index: 10000;
-    line-height: 2;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-.bss-message-icon {
-    width: 60px;
-    height: 60px;
-    background: #006E52;
-    color: #006E52;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-.bss-message-body {
-  font-size: 22px;
-  display: block;
-  margin-top: 10px;
-}
-.bss-message-body span {
-    white-space: nowrap;
-}
-.bss-check {
-    display: inline-block;
-    transform: rotate(45deg);
-    height: 32px;
-    width: 16px;
-    border-bottom: 7px solid #ffffff;
-    border-right: 7px solid #ffffff;
-    border-radius: 4px;
-}
-.bss-btn-group button span {
-    position: relative;
-    top: -2px;
-}
-.bss-link:after {
-    position: unset!important;
-}
-.bss-btn-above:hover,
-.bss-btn-below:hover,
-.bss-btn-expand:hover,
-.bss_pb_img_save_preview:hover,
-.bss_pb_img_reset:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-}
-
-.bss_pb_img .bss-multiple-badge-images {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1px;
-}
-.bss_pb_img .bss-multiple-badge-text {
-  margin: 0;
-}
-.bss_pb_img:has(.bss-multiple-badge) {
-    height: auto!important;
-}
-
-/* label - badge animation */
-
-.bss-animated {
-    animation-duration: 2s;
-    animation-fill-mode: both;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease;
-    transform-origin: center !important;
-}
-
-.bss-animate-pulse {
-    animation-name: pulse;
-}
-
-.bss-animate-bounceIn {
-    animation-name: bounce-in;
-}
-
-.bss-animate-bounceOut {
-    animation-name: bounce-out;
-}
-
-.bss-animate-swing {
-    animation-name: swing;
-}
-
-.bss-animate-hiThere {
-    animation-name: hi-there;
-}
-
-.bss-animate-flash {
-    animation-name: flash;
-    animation-duration: 1.6s;
-}
-
-.bss-animate-rollIn {
-    animation-name: roll-in;
-}
-
-.bss-animate-rollOut {
-    animation-name: roll-out;
-}
-
-@keyframes swing {
-    20% {
-        transform: rotate(15deg);
-    }
-
-    40% {
-        transform: rotate(-10deg);
-    }
-
-    60% {
-        transform: rotate(5deg);
-    }
-
-    80% {
-        transform: rotate(-5deg);
-    }
-
-    100% {
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(0.8);
-    }
-
-    100% {
-        transform: scale(1.1);
-    }
-}
-
-@keyframes bounce-in {
-    0% {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-
-    70% {
-        transform: scale(0.9);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes bounce-out {
-    0% {
-        transform: scale(1);
-    }
-
-    25% {
-        transform: scale(0.95);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-}
-
-@keyframes hi-there {
-    30% {
-        transform: scale(1.2);
-    }
-
-    40%,
-    60% {
-        transform: rotate(-20deg) scale(1.2);
-    }
-
-    50% {
-        transform: rotate(20deg) scale(1.2);
-    }
-
-    70% {
-        transform: rotate(0deg) scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes flash {
-    0%, 40%, 80%, 100% {
-        opacity: 1;
-    }
-
-    20%, 60% {
-        opacity: 0;
-    }
-}
-
-@keyframes roll-in {
-    0% {
-        opacity: 0;
-        transform: translateX(-100%) rotate(-120deg);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0px) rotate(0deg);
-    }
-}
-
-@keyframes roll-out {
-    0% {
-        opacity: 1;
-        transform: translateX(0px) rotate(0deg);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translateX(100%) rotate(120deg);
-    }
-}
-
-/* Popup animation */
-.bss-pl-slide-down-34332 {
-    top: 70px;
-    animation: bss-pl-slide-down-34332 1s ;
-}
-
-@keyframes bss-pl-slide-down-34332 {
-    0% {
-        top: -100px;
-    }
-    100% {
-        top: 70px;
-    }
-}
-
-.bss-pl-slide-up {
-    animation: bss-pl-slide-up 1s ;
-}
-
-.bss-pl-slide-down {
-    animation: bss-pl-slide-down 1s ;
-}
-
-.bss-pl-slide-right {
-  animation: bss-pl-slide-right 1s forwards;
-}
-
-.bss-pl-slide-left {
-  animation: bss-pl-slide-left 1s forwards;
-}
-
-.bss-pl-fade-in {
-  animation: bss-pl-fade-in 2s forwards;
-}
-
-.bss-pl-fade-out {
-  animation: bss-pl-fade-out 2s forwards !important;
-}
-
-@keyframes bss-pl-slide-up {
-    0% {
-        bottom: -100px;
-    }
-    100% {
-        bottom: 20px;
-    }
-}
-
-@keyframes bss-pl-slide-down {
-    0% {
-        top: -100px;
-    }
-    100% {
-        top: 20px;
-    }
-}
-
-@keyframes bss-pl-slide-right {
-  0% {
-        right: -100px;
-    }
-    100% {
-        right: 0px;
-    }
-}
-
-@keyframes bss-pl-slide-left {
-  0% {
-        left: -100px;
-    }
-    100% {
-        left: 0px;
-    }
-}
-
-@keyframes bss-pl-fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes bss-pl-fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.bss-pl-slide-up-26172 {
-    bottom: 70px;
-    animation: bss-pl-slide-up-26172 1s ;
-}
-@keyframes bss-pl-slide-up-26172 {
-    0% {
-        bottom: -100px;
-    }
-    100% {
-        bottom: 70px;
-    }
-}
-
-.bss-btn-expand:active {
-  background-color: #97C662;
-}
-/*badge stock*/
-.bss-pb-stock {
-    padding: 4px 0px;
-    min-width: fit-content;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute !important;
-    height: auto!important;
-}
-.bss-pb-stock-wrapper {
-    position: relative;
-    z-index: 10;
-}
-.bss-pb-stock-inside {
-    border: 2px solid transparent;
-    border-radius: 100px;
-    position: relative;
-    overflow: hidden;
-}
-.bss-pb-stock-inside .bss-pb-stock-progress {
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    z-index: -2;
-}
-.bss-pb-stock-above {
-    flex-direction: column;
-}
-.bss-pb-stock-message {
-    z-index: -1;
-}
-.bss-pb-stock-above .bss-pb-stock-progress {
-    display: block;
-    width: 100%;
-    height: 8px;
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-    background-color: #e8e9ea;
-}
-.bss-pb-stock-above .bss-pb-stock-progress div {
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-}
-.badge-visibility-important {
-    visibility: visible !important;
-}
-</style><style>
-</style><div id="shopify-block-14952540001915115444" class="shopify-block shopify-app-block">
-
-
-
-
-<link id="upcart-stylesheet" rel="preload" href="https://cdn.shopify.com/extensions/f5b3a9b6-4320-412b-9400-5a883d6013c0/upcart-cart-drawer-51/assets/upcart-stylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link id="upcart-stylesheet" rel="preload" href="https://cdn.shopify.com/extensions/3dca9c59-9401-4013-ac92-7c0f8fc75a7b/upcart-cart-drawer-61/assets/upcart-stylesheet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 
 
@@ -5320,6 +5362,11 @@ for (var attr in meta) {
         window.upcartSettings.upcartEditorSettings.recommendedUpsells = b64DecodeUnicode("ZmFsc2U=");
     }
     window.upcartSettings.upcartEditorSettings.recommendedUpsells = JSON.parse(window.upcartSettings.upcartEditorSettings.recommendedUpsells);
+    window.upcartSettings.upcartEditorSettings.smartVariantMatching = b64DecodeUnicode("");
+    if (window.upcartSettings.upcartEditorSettings.smartVariantMatching === '') {
+        window.upcartSettings.upcartEditorSettings.smartVariantMatching = b64DecodeUnicode("ZmFsc2U=");
+    }
+    window.upcartSettings.upcartEditorSettings.smartVariantMatching = JSON.parse(window.upcartSettings.upcartEditorSettings.smartVariantMatching);
     window.upcartSettings.upcartEditorSettings.upsellRecommendationIntent = b64DecodeUnicode("cmVsYXRlZA==");
     if (window.upcartSettings.upcartEditorSettings.upsellRecommendationIntent === '') {
         window.upcartSettings.upcartEditorSettings.upsellRecommendationIntent = b64DecodeUnicode("cmVsYXRlZA==");
@@ -5500,7 +5547,7 @@ for (var attr in meta) {
 
   document.addEventListener("DOMContentLoaded", function() {
     if (UpCartPreviewModeCheckIfActive()) {
-      UpCartloadQRCodeScript("https://cdn.shopify.com/extensions/f5b3a9b6-4320-412b-9400-5a883d6013c0/upcart-cart-drawer-51/assets/qrcode.js", function() {
+      UpCartloadQRCodeScript("https://cdn.shopify.com/extensions/3dca9c59-9401-4013-ac92-7c0f8fc75a7b/upcart-cart-drawer-61/assets/qrcode.js", function() {
           if (typeof QRCode !== 'undefined') {
             window.UpcartQRCode = function(el, options) {
               return new QRCode(el, options);
@@ -5539,44 +5586,6 @@ for (var attr in meta) {
       transition-property: bottom;
       transition-duration: 300ms;
     }
-
-    .alia-iframe.right {
-      right: 0; /** would be 12px, but we move it all the way to the edge to compensate for X button overflow **/
-    }
-    .alia-iframe.left {
-      left: 12px;
-    }
-
-    .alia-product-button {
-      margin-top: 1rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: none;
-    }
-    .alia-product-button:hover:after {
-      box-shadow: none;
-    }
-
-    .alia-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000001;
-    }
-    .alia-popup > iframe {
-      border: none;
-      width: 100%;
-      height: 100%;
-    }
     @keyframes fade-in {
       0% {
         opacity: 0;
@@ -5594,13 +5603,14 @@ for (var attr in meta) {
       }
     }
   </style>
-  <script src="https://cdn.shopify.com/extensions/1a7099e1-6543-4d55-83ee-b18fb845ae09/alia-492/assets/backend.js" defer></script>
-  <script src="https://cdn.shopify.com/extensions/1a7099e1-6543-4d55-83ee-b18fb845ae09/alia-492/assets/messages.js" defer></script>
-  <script src="https://cdn.shopify.com/extensions/1a7099e1-6543-4d55-83ee-b18fb845ae09/alia-492/assets/shared.js" defer></script>
-  <script src="https://cdn.shopify.com/extensions/1a7099e1-6543-4d55-83ee-b18fb845ae09/alia-492/assets/custom.js" defer></script>
-  <script src="https://cdn.shopify.com/extensions/1a7099e1-6543-4d55-83ee-b18fb845ae09/alia-492/assets/cart.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/backend.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/messages.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/popup.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/shared.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/custom.js" defer></script>
+  <script src="https://cdn.shopify.com/extensions/343a80a7-d69e-46e0-834d-73ce232dbfec/alia-564/assets/cart.js" defer></script>
   <script>
-    console.log("Alia Customer App Frame 7/30");
+    console.log("Alia Customer App Frame 09/08.1");
 
     let hasCreatedWidget = false;
     function createAliaWidget(src) {
@@ -5622,75 +5632,20 @@ for (var attr in meta) {
       return iframe;
     }
 
-    let hasCreatedPopup = false; // whether the popup iframe has been created
-    let removePopupListener;
-    let initTime = Date.now();
-    function createAliaPopup(url) {
-      if (hasCreatedPopup) return;
-      hasCreatedPopup = true;
-      const div = document.createElement("div");
-      const iframe = document.createElement("iframe");
-      iframe.src = url;
-      iframe.allow = "clipboard-write";
-      iframe.title = "Alia popup";
-      div.id = "alia-popup";
-      div.className = "alia-popup";
-      div.style.display = "none";
-      div.appendChild(iframe);
-      document.body.appendChild(div);
-    }
-    function showAliaPopup(invokeMethod) {
-      const showDiv = () => {
-        if (window.Shopify.designMode) {
-          console.log("Not showing popup in Shopify theme editor");
-          return; // don't show in shopify theme editor
-        }
-        const div = document.getElementById("alia-popup");
-        if (div) {
-          div.childNodes[0].style.animation = "popup 150ms";
-          div.style.animation = "fade-in 150ms";
-          div.style.opacity = 1;
-          div.style.display = "flex";
-          document.body.style.overflow = "hidden";
-        }
-      }
-      if (invokeMethod.type === "exitIntent") {
-        document.addEventListener("mouseleave", showDiv);
-      } else if (invokeMethod.type === "immediate") {
-        const remainingDelay = invokeMethod.delay 
-          ? Math.max(0, (invokeMethod.delay * 1000) - (Date.now() - initTime)) 
-          : 0;
-        setTimeout(showDiv, remainingDelay);
-      } else if (invokeMethod.type === "addToCart") {
-        removePopupListener = aliaAddAddedToCartListener(() => {
-          console.log("YUP");
-          showDiv();
-          removePopupListener();
-        });
-      } else {
-        throw new Error("Unknown invokeMethod type: " + invokeMethod.type);
-      }
-    }
-    function destroyAliaPopup() {
-      hasCreatedPopup = true; // prevent creation if it hasn't been created yet
-      const div = document.getElementById("alia-popup");
-      if (div) {
-        div.remove();
-        document.body.style.overflow = "auto";
-      }
-      if (removePopupListener) {
-        removePopupListener();
-      }
-    }
-
     async function initAlia() {
       const params = new URLSearchParams(window.location.search);
-      const showByDefault = params.get("alia") === "1";
+      const aliaParam = params.get("alia");
+      if (aliaParam === "0") {
+        console.log("Alia disabled by query param");
+        return;
+      }
+      const showByDefault = aliaParam === "1";
+      const hide = throwIfShouldHide("soapboxsoap.myshopify.com");
       const initResponse = await getAliaInit("soapboxsoap.myshopify.com", "", showByDefault);
       if (initResponse?.enabled) {
-        handleIframeMessages();
+        handleAliaIframeMessages();
         createAliaWidget(initResponse.customerAppUrl);
-        if (initResponse.hasPopup) {
+        if (initResponse.popupUrl) {
           createAliaPopup(initResponse.popupUrl);
         }
         initCustomCode("soapboxsoap.myshopify.com");
@@ -5700,9 +5655,9 @@ for (var attr in meta) {
     }
 
     // to address a weird bug where init was getting called before some scripts loaded
-    async function tryInitAlia(remainingTries = 3) {
+    async function tryInitAlia(remainingTries = 5) {
       if (remainingTries <= 0) {
-        console.log("Alia init failed after 3 tries");
+        console.log("Alia init failed after 5 tries");
         return;
       }
       try {
@@ -5718,10 +5673,15 @@ for (var attr in meta) {
     if (document.readyState !== "loading") {
       tryInitAlia();
     } else {
-      document.addEventListener("DOMContentLoaded", tryInitAlia, { once: true });
+      document.addEventListener("DOMContentLoaded", () => tryInitAlia(), { once: true });
     }
   </script>
 </body>
+
+</div><div id="shopify-block-15885745614559378752" class="shopify-block shopify-app-block"><div id="accessibly-config" style="display:none">
+    {"themeColor":"#574cd5","iconColor":"#574cd5","showLogo":true,"topBottomPosition":10,"rightLeftPosition":10,"iconSize":"small","iconCustomSize":64,"position":"bottom-right"}
+</div>
+
 
 </div></body>
 </html>
