@@ -34,78 +34,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </style>
 <script>
-  function tDay(day) {
-    var day_arr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return day_arr[day];
-  }
-  function tMonth(month) {
-    var month_arr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return month_arr[month];
-  }
-  function t2(num) {
-    return (num < 10 ? "0" + num : num);
-  }
-  function cookieDate(date) {
-    var d = new Date();
-    d.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-    return tDay(d.getDay()) + ", " + t2(d.getDate()) + "-" + tMonth(d.getMonth()) + "-" + t2(d.getFullYear() - 2000) + " " + t2(d.getHours()) + ":" + t2(d.getMinutes()) + ":" + t2(d.getSeconds()) + " GMT";
-  }
-  function affidInit() {
-    var arr, arrp, str, theday, coo, coo1, i;
-    affid = "------";
-    str = document.location.search.slice(1);
-    if (str !== "") {
-      arr = str.split("&");
-      for (i = 0; i < arr.length; i = i + 1) {
-        arrp = arr[i].split("=");
-        if (arrp[0] === "affid") {
-          affid = arrp[1].slice(0,5).toLowerCase();
-          if (affid.match(/^\w{5}$/) && affid!='jimm6' && affid!='shubh' && affid!='cango') { // blacklisted affids
-            theday = new Date();
-            theday.setTime(theday.getTime() + 24 * 60 * 60 * 1000 * 60); // 60 days
-            document.cookie = "affid=" + affid + "; path=/; expires=" + cookieDate(theday);
-            document.cookie = "affid=" + affid + "; domain=.roboform.com; path=/; expires=" + cookieDate(theday);
-          } else {
-            affid = "------";
-          }
-          break;
-        }
+    function getParams(strParams, divider) {
+      const params = {};
+      const queryParams = strParams.split(divider);
+      for (const param of queryParams) {
+        const [key, value] = param.split('=');
+        params[key] = value;
       }
+      return params;
     }
-    if (affid === "------") {
-      affid = "";
-      coo = document.cookie.split("; ");
-      for (i = 0; i < coo.length; i = i + 1) {
-        coo1 = coo[i].split("=");
-        if (coo1[0] === "affid") {
-          affid = coo1[1].slice(0, 5).toLowerCase();
-          if (affid.match(/\W/)) {
-            affid = "";
-          }
+    function getQueryParams() {
+      return getParams(window.location.search.slice(1), '&');
+    }
+    function getCookieParams() {
+      return getParams(document.cookie, '; ');
+    }
+    const queryParams = getQueryParams();
+    const cookieParams = getCookieParams();
+    function cookieString(param, value, max_age_days) {
+        return param + "=" + encodeURIComponent(value) + "; domain=roboform.com; path=/; max-age=" + 60*60*24*max_age_days; // in seconds
+    }
+    function affidInit() {
+        var affid = "";
+        if (queryParams.affid && queryParams.affid.match(/^\w{5}$/)) {
+            affid = queryParams.affid.toLowerCase();
+            document.cookie = cookieString("affid", affid, 60);
+            return affid;
         }
-      }
-    }
-  }
-  function discountInit() {
-    var expDays = 1, dc, arr, arrp, str, theday, i;
-    str = document.location.search.slice(1);
-    if (str !== "") {
-      arr = str.split("&");
-      for (i = 0; i < arr.length; i++) {
-        arrp = arr[i].split("=");
-        if (arrp[0] === "dc") {
-          dc = arrp[1];
-          theday = new Date();
-          theday.setTime(theday.getTime() + 24 * 60 * 60 * 1000 * expDays);
-          theday = cookieDate(theday);
-          document.cookie = "dc=" + dc + "; path=/; expires=" + theday;
-          document.cookie = "dc=" + dc + "; domain=.roboform.com; path=/; expires=" + theday;
-          break;
+        if (cookieParams.affid && cookieParams.affid.match(/^\w{5}$/)) {
+            affid = cookieParams.affid.toLowerCase();
         }
-      }
+        return affid;
     }
-  }
-  affidInit();
+    function discountInit() {
+        if (queryParams.dc && queryParams.dc.match(/^\w+$/)) {
+            document.cookie = cookieString("dc", queryParams.dc, 1);
+        }
+    }
+    affid = affidInit();
+    const uri_affid = queryParams.affid;
+    const uri_gclid = queryParams.gclid;
+    const validAffidValues = ['gnonb', 'gcomp', 'ytads', 'displ', 'pmax1', 'gbiz1'];
+    if (uri_affid && uri_gclid) {
+        if (validAffidValues.includes(uri_affid)) {
+            document.cookie = cookieString("gnid", queryParams.gclid, 90);
+        }
+    }
+        const uri_msclkid = queryParams.msclkid;
+        if (uri_affid && uri_affid=='mnonb' && uri_msclkid && !uri_msclkid.match(/(\<|\=)/)) {
+            document.cookie = cookieString("g_msclkid", uri_msclkid, 90);
+        }
 </script>
 <meta name="apple-itunes-app" content="app-id=331787573">
 </head>
@@ -833,34 +811,5 @@ window.addEventListener("load", function() {
       })
   });
   </script>
-<script>
-  function getQueryParamsGCLID(uri) {
-    const params = {};
-    const search = uri.slice(uri.indexOf('?') + 1);
-    const queryParams = search.split('&');
-    for (const param of queryParams) {
-      const [key, value] = param.split('=');
-      params[key] = value;
-    }
-    return params;
-  }
-  const queryParams = getQueryParamsGCLID(window.location.href);
-  const uri_affid = queryParams.affid;
-  const uri_gclid = queryParams.gclid;
-  const validAffidValues = ['gnonb', 'gcomp', 'ytads', 'displ', 'pmax1'];
-  if (uri_affid && uri_gclid) {
-    if (validAffidValues.includes(uri_affid)) {
-      document.cookie = `gnid=${uri_gclid}; domain=roboform.com`;
-    } else {
-    }
-  } else {
-  }
-    const uri_msclkid = queryParams.msclkid;
-    if (uri_affid && uri_affid=='mnonb' && 
-        uri_msclkid && !uri_msclkid.match(/(\<|\=)/)
-    ) {
-        document.cookie = `g_msclkid=${uri_msclkid}; domain=roboform.com`;
-    }
-</script>
 </body>
 </html>
