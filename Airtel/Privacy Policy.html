@@ -470,739 +470,828 @@
             <main id="topElement">
                 <div ui-view class="content-wrap">
                     <div ui-view="header">
-                        <!-- CSS -->
-<style type="text/css">* {
-   box-sizing: border-box;
-  }
+                        
+	<!-- CSS -->
+	<style type="text/css">
+		* {
+			box-sizing: border-box;
+		}
 
-  img {
-   max-width: 100%;
-   max-height: 100%;
-  }
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-   margin: 0;
-  }
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			margin: 0;
+		}
 
-  a {
-   outline: none;
-   text-decoration: none;
-   color: inherit;
-  }
+		a {
+			outline: none;
+			text-decoration: none;
+			color: inherit;
+		}
 
-  .header-container>ul li {
-   list-style: none;
-  }
+		.header-container>ul li {
+			list-style: none;
+		}
 
-  /* header section */
-  .header-container {
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   height: 94px;
-   background-color: #ffffff;
-   border-bottom: 1px solid #e7e7e7;
-   padding: 0 12px;
-   z-index: 99;
-  }
+		/* header section */
+		.header-container {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 94px;
+			background-color: #ffffff;
+			border-bottom: 1px solid #e7e7e7;
+			padding: 0 12px;
+			z-index: 99;
+		}
 
-  .header-content .header-brand .hamburger-btn {
-   position: relative;
-   display: none;
-   background: url(https://assets.airtel.in/static-assets/new-home/img/nav-menu.svg) no-repeat 50%;
-   background-size: 24px 24px;
-   height: 56px;
-   min-width: 46px;
-   border: none;
-   padding: 0;
-   margin-left: -12px;
-   outline: none;
-   z-index: 2;
-  }
+		.header-content .header-brand .hamburger-btn {
+			position: relative;
+			display: none;
+			background: url(https://assets.airtel.in/static-assets/new-home/img/nav-menu.svg) no-repeat 50%;
+			background-size: 24px 24px;
+			height: 56px;
+			min-width: 46px;
+			border: none;
+			padding: 0;
+			margin-left: -12px;
+			outline: none;
+			z-index: 2;
+		}
 
-  .sticky {
-   position: fixed;
-   top: 0;
-   width: 100%;
-  }
+		.sticky {
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
 
-  .header-content {
-   position: relative;
-   display: flex;
-   /*align-items: center;*/
-   width: 100%;
-   height: 100%;
-   max-width: 1190px;
-   margin: 0 auto;
-   padding: 24px 15px 0px 15px;
-  }
+		.header-content {
+			position: relative;
+			display: flex;
+			/*align-items: center;*/
+			width: 100%;
+			height: 100%;
+			max-width: 1190px;
+			margin: 0 auto;
+			padding: 24px 15px 0px 15px;
+		}
 
-  .header-content::after {
-   content: '';
-   position: fixed;
-   left: 0;
-   top: 0;
-   width: 100vw;
-   height: 24px;
-   background-color: #f5f5f5;
-  }
+		.header-content::after {
+			content: '';
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100vw;
+			height: 24px;
+			background-color: #f5f5f5;
+		}
 
-  .header-content .hamburger-input {
-   position: fixed;
-   left: 10px;
-   top: 10px;
-   height: 24px;
-   width: 24px;
-   margin: 0;
-   z-index: 98;
-   opacity: 0;
-  }
+		.header-content .hamburger-input {
+			position: fixed;
+			left: 10px;
+			top: 10px;
+			height: 24px;
+			width: 24px;
+			margin: 0;
+			z-index: 98;
+			opacity: 0;
+		}
 
-  .header-content .header-brand {
-   display: flex;
-   align-items: center;
-   height: 100%;
-  }
+		.header-content .header-brand {
+			display: flex;
+			align-items: center;
+			height: 100%;
+		}
 
-  /*.header-content .header-brand .hamburger {
+		/*.header-content .header-brand .hamburger {
 display: none;
 width: 24px;
 height: 24px;
 margin-right: 10px;
 }*/
-  .header-content .header-brand .brand {
-   min-width: 92px;
-   max-width: 92px;
-   width: 100%;
-   height: 100%;
-   margin: auto 0;
-  }
-
-  .header-content .business-quick-actions {
-   position: absolute;
-   top: 0;
-   right: 0;
-   display: inline-flex;
-   align-items: center;
-   height: 24px;
-   z-index: 1;
-  }
-
-  .header-content .business-quick-actions .divider {
-   height: 14px;
-   width: 1px;
-   background-color: #979797;
-   margin-left: 16px;
-  }
-
-  .header-content .business-quick-actions .other-services {
-   display: inherit;
-  }
-
-  .header-content .business-quick-actions a {
-   font-size: 10px;
-   color: #393939;
-   margin-left: 16px;
-   /*text-transform: uppercase;*/
-  }
-
-  .header-content .business-quick-actions a.active,
-  .header-content .business-quick-actions a:hover {
-   font-weight: normal;
-   /*color: #e40000;*/
-   color: #000;
-   font-weight: 600;
-  }
-
-  .header-content .header-main {
-   flex: 1;
-   display: flex;
-   padding-left: 50px;
-  }
-
-  .header-content .header-main .header-main-actions-container {
-   display: inline-flex;
-   flex: 1;
-  }
-
-  .header-main-actions-container .actions-list-container {
-   position: relative;
-   display: inline-flex;
-   color: #393939;
-  }
-
-  .airtel-black-heading .actions-list {
-   width: calc(100% + 36px);
-  }
-
-  .header-main-actions-container .actions-list-container:last-child {
-   margin-left: auto;
-  }
-
-  .header-main-actions-container .actions-list-container:last-child:hover {
-   margin-left: auto;
-   color: #393939;
-  }
-
-  .header-main-actions-container .actions-list-container:last-child .actions-heading {
-   margin-right: 0;
-   flex-direction: column;
-   justify-content: center;
-  }
-
-  .header-main-actions-container .actions-list-container input {
-   display: none;
-   position: absolute;
-   left: 0;
-   top: 0;
-   height: 56px;
-   width: 100%;
-   opacity: 0;
-   margin: 0;
-   z-index: 9;
-  }
-
-  .actions-list-container ul {
-   margin: 0 !important;
-  }
-
-  .actions-list-container .actions-heading-new {
-   position: relative;
-   font-size: 14px;
-   cursor: pointer;
-   letter-spacing: 0.2px;
-   font-weight: 800;
-   white-space: nowrap;
-   padding: 10px 12px;
-   margin-right: 12px;
-  }
-
-  .actions-list-container .actions-heading-new span {
-   font-size: 8px;
-   background-color: #e40000;
-   color: #fff;
-   letter-spacing: .04em;
-   margin-left: 4px;
-   padding: 2px 5px;
-   border-radius: 4px;
-   vertical-align: middle;
-  }
-
-  .actions-list-container .actions-heading-new:hover {
-   color: #e40000;
-  }
-
-  .actions-list-container:hover .actions-heading-new::before {
-   content: '';
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   height: 2px;
-   background-color: #e40000;
-  }
-
-  .actions-list-container .actions-heading,
-  .header-right .actions-heading {
-   position: relative;
-   display: inline-flex;
-   flex-direction: row;
-   align-items: center;
-   justify-content: flex-start;
-   font-size: 14px;
-   cursor: pointer;
-   letter-spacing: 0.2px;
-   font-weight: 800;
-   white-space: nowrap;
-   padding: 24px 12px;
-   margin-right: 12px;
-  }
-
-  .header-right a:hover {
-   color: #393939
-  }
-
-  .actions-list-container .actions-heading::after {
-   content: '';
-   position: absolute;
-   right: -4px;
-   top: 27px;
-   height: 10px;
-   width: 10px;
-   background: url('https://assets.airtel.in/static-assets/new-home/img/arrow.svg') no-repeat center center;
-   background-size: contain;
-   transform: rotate(90deg);
-   filter: brightness(0%) contrast(100%);
-   transition: transform 0.2s ease-in;
-  }
-
-  .new-one {
-   font-size: 8px;
-   background-color: #e40000;
-   color: #fff;
-   letter-spacing: .04em;
-   margin-left: 4px;
-   padding: 2px 5px;
-   border-radius: 4px;
-   vertical-align: middle;
-  }
-
-  .actions-list-container .actions-heading.no-arrow,
-  .header-right .actions-heading.no-arrow {
-   padding: 6px 12px 0 12px;
-   font-size: 12px;
-  }
-
-  .actions-heading.no-arrow img {
-   height: 24px;
-   width: 24px;
-  }
-
-  .actions-list-container .actions-list {
-   display: none;
-   position: absolute;
-   transition: all .7s ease 0s;
-   top: 65px;
-   left: -36px;
-   max-width: 350px;
-   width: 225px;
-   border-radius: 4px;
-   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .1);
-   background-color: #fff;
-   padding: 0;
-   z-index: 99;
-  }
-
-  .actions-list-container .actions-list li {
-   display: flex;
-  }
-
-  .actions-list-container .actions-list li:hover {
-   background-color: #f2f2f2;
-   color: #e40000;
-  }
-
-  .actions-list-container .actions-list li a {
-   padding: 12px 36px;
-   font-size: 14px;
-   width: 100%;
-   white-space: nowrap;
-  }
-
-  .actions-list-container .actions-list li a:hover {
-   color: #e40000;
-  }
-
-  .header-content .header-right {
-   display: flex;
-   height: 100%;
-   margin-left: auto;
-
-  }
-
-  .header-right .actions-heading {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-  }
-
-  .header-content .header-right .actions-heading {
-   margin-right: 0;
-  }
-
-  @media (min-width: 270px) and (max-width: 767px) {
-   .header-container {
-    height: 56px;
-   }
-
-   .actions-list-container .actions-heading {
-    pointer-events: auto;
-   }
-
-   .actions-list-container .actions-list {
-    width: auto;
-   }
-
-   .header-content .header-brand a {
-    padding-left: 10px;
-   }
-
-   .actions-list-container .actions-heading-new {
-    padding: 10px 24px;
-   }
-
-   .header-content::after {
-    content: none;
-   }
-
-   .header-content {
-    padding-top: 0;
-    padding: 0;
-   }
-
-   .header-content .header-brand .hamburger-btn {
-    display: inline-block;
-   }
-
-   .header-content .header-main {
-    position: fixed;
-    left: 0;
-    top: 0;
-    flex-direction: column;
-    max-width: 300px;
-    padding: 0;
-    width: 100%;
-    background: #ffffff;
-    height: 100vh;
-    z-index: 99;
-    border-bottom: 6px solid #e40000;
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
-    overflow: auto;
-   }
-
-   .header-content .hamburger-input:not(:checked)~.header-main {
-    transform: translateX(0);
-   }
-
-   .header-brand::before {
-    content: '';
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
-    z-index: 97;
-   }
-
-   @keyframes drawer-in-out-backdrop {
-    100% {
-     transform: scale(0);
-    }
-   }
-
-   .header-content .hamburger-input:checked~.header-brand::before {
-    animation: drawer-in-out-backdrop 0s ease-in-out forwards 0.5s;
-   }
-
-   .header-content .hamburger-input:not(:checked)~.header-brand::before {
-    opacity: 1;
-   }
-
-   .header-content .hamburger-input:not(:checked) {
-    height: 100vh;
-    width: 100vw;
-    left: 0;
-    top: 0;
-   }
-
-   .header-content .header-main .header-main-actions-container {
-    flex-direction: column;
-    align-items: flex-start;
-   }
-
-   .header-content .business-quick-actions {
-    position: relative;
-    height: auto;
-    justify-content: center;
-   }
-
-   .header-content .header-main .header-main-actions-container .actions-list-container {
-    width: 100%;
-    flex-direction: column;
-    overflow: hidden;
-   }
-
-   .header-main-actions-container .actions-list-container input {
-    display: block;
-   }
-
-   .actions-list-container .actions-list {
-    display: block;
-    position: relative;
-    top: 0;
-    left: 0;
-    box-shadow: none;
-    max-height: 0;
-    transition: max-height 0.2s ease-in-out;
-   }
-
-   .actions-list-container input:not(:checked)~.actions-list {
-    max-height: 500px;
-   }
-
-   .actions-list-container input:not(:checked)~.actions-heading {
-    color: #e40000;
-   }
-
-   .actions-list-container input:not(:checked)~.actions-heading::after {
-    transform: rotate(-90deg);
-    filter: none;
-   }
-
-   .actions-list-container .actions-heading {
-    width: 100%;
-    align-items: center;
-    border-bottom: 1px solid #f2f2f2;
-    margin-right: 0;
-    height: 56px;
-    padding: 0 20px;
-   }
-
-   .actions-list-container .actions-heading::after {
-    right: 24px;
-    top: 22px;
-   }
-
-   .header-main-actions-container .actions-list-container:last-child {
-    margin-top: auto;
-   }
-
-   .header-main-actions-container .actions-list-container:last-child .actions-heading {
-    flex-direction: row;
-    background-color: #ededed;
-    margin: 20px;
-    border-radius: 4px;
-    height: 48px;
-    width: auto;
-    padding: 0;
-    align-items: center;
-    text-transform: uppercase;
-    padding: 12px;
-   }
-
-   .header-main-actions-container .actions-list-container:last-child .actions-heading::after {
-    display: none;
-   }
-
-   .header-content .business-quick-actions a {
-    font-size: 12px;
-    margin-bottom: 20px;
-   }
-
-   .header-content .business-quick-actions .other-services,
-   .header-content .business-quick-actions .divider {
-    display: none
-   }
-
-   .header-right .actions-heading.no-arrow {
-    padding-top: 0;
-   }
-  }
-
-  @media(min-width: 768px) and (max-width: 920px) {
-
-   .actions-list-container .actions-heading,
-   .header-right .actions-heading {
-    font-size: 10px;
-   }
-
-   .actions-list-container .actions-heading.no-arrow,
-   .header-right .actions-heading.no-arrow {
-    padding: 6px 0px 0 12px;
-    font-size: 10px;
-   }
-  }
-
-  @media (min-width: 768px) {
-   .header-content .header-right {
-    /* margin-left: 24px;*/
-   }
-
-   .actions-list-container:hover .actions-list {
-    display: block;
-    animation: header-actions-enter .2s ease-in;
-   }
-
-   .actions-list-container:hover .actions-heading {
-    color: #e40000;
-   }
-
-   .actions-list-container:hover .actions-heading::after {
-    transform: rotate(-90deg);
-    filter: none;
-   }
-
-   .actions-list-container .actions-heading.no-arrow::after,
-   .actions-list-container:hover .actions-heading.no-arrow::before,
-   .actions-list-container:hover .actions-heading.no-arrow {
-    content: none;
-    color: #393939;
-   }
-
-   .actions-list-container:hover .actions-heading::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #e40000;
-   }
-
-   @keyframes header-actions-enter {
-    0% {
-     transform: translateY(20px);
-     opacity: 0;
-    }
-
-    100% {
-     transform: translateY(0);
-     opacity: 1;
-    }
-   }
-  }
-</style>
-<header class="header-container" id="myHeader">
-<div class="header-content"><input checked="checked" class="hamburger-input" type="checkbox" />
-<div class="header-brand">
-<div class="hamburger-btn hamburger">&nbsp;</div>
-<a href="https://www.airtel.in/" target="_blank"><img alt="airtel" class="brand" src="https://assets.airtel.in/static-assets/new-home/img/airtel-red.svg" /></a></div>
-
-<div class="header-main">
-<div class="header-main-actions-container">
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">PREPAID</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|PREPAID-Recharge" href="https://www.airtel.in/prepaid-recharge/?icid=header">Recharge</a></li>
-	<li><a data-analytics="header|PREPAID-New Prepaid SIM" href="https://www.airtel.in/prepaid-4g-sim/?icid=header">New Prepaid SIM</a></li>
-	<li><a data-analytics="header|PREPAID-View Plans" href="https://www.airtel.in/recharge-online?icid=header">View Plans</a></li>
-	<li><a data-analytics="header|PREPAID-International Roaming" href="https://www.airtel.in/ir-packs/?icid=header">International Roaming</a></li>
-	<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?requirement=P2P&amp;icid=header" data-analytics="header|PREPAID-Switch Prepaid to Postpaid" href="https://www.airtel.in/myplan-infinity/?requirement=P2P&amp;icid=header">Switch Prepaid to Postpaid</a></li>
-	<li><a data-analytics="header|PREPAID-Port to Airtel Prepaid" href="https://www.airtel.in/prepaid-4g-sim/?icid=header">Port to Airtel Prepaid</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">POSTPAID</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|POSTPAID-Pay Bill" href="https://www.airtel.in/postpaid-bill-pay?icid=header">Pay Bill</a></li>
-	<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?icid=header" data-analytics="header|POSTPAID-Buy New Connection" href="https://www.airtel.in/myplan-infinity/?icid=header">Buy New Connection</a></li>
-	<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?icid=header" data-analytics="header|POSTPAID-View Plans" href="https://www.airtel.in/myplan-infinity/?icid=header">View Plans</a></li>
-	<li><a data-analytics="header|POSTPAID-Switch Prepaid to Postpaid" href="https://www.airtel.in/postpaid/prepaid-to-postpaid/?icid=header">Switch Prepaid to Postpaid</a></li>
-	<li><a data-analytics="header|POSTPAID-Port to Airtel" href="https://www.airtel.in/mnp/?icid=header">Port to Airtel</a></li>
-	<li><a data-analytics="header|POSTPAID-Free Sim Delivery" href="https://www.airtel.in/free-sim-home-delivery?icid=header">Free Sim Delivery</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">Wi-Fi</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|BROADBAND-Bill" href="https://www.airtel.in/broadband-bill-pay?icid=header">Pay Bill</a></li>
-	<li><a data-analytics="header|BROADBAND-Buy New Connection" href="https://www.airtel.in/broadband/?icid=header">Buy New Connection</a></li>
-	<li><a data-analytics="header|BROADBAND-View Plans" href="https://www.airtel.in/wifi-plans/?icid=header">View Plans</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">DTH</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|DTH-Recharge" href="https://www.airtel.in/dth-recharge?icid=header">Recharge</a></li>
-	<li><a data-ab-dth="https://www.airtel.in/cat/dth/?icid=header" data-analytics="header|DTH-Buy New DTH Connection" href="https://www.airtel.in/dth/?icid=header">Buy New DTH Connection</a></li>
-	<li><a data-analytics="header|DTH-View Plans" href="https://www.airtel.in/digitaltv/basepack/delhi?icid=header">View Plans</a></li>
-	<li><a data-analytics="header|DTH-Upgrade Box" href="https://www.airtel.in/digital-tv/upgrade-box?icid=header">Upgrade Box</a></li>
-	<li><a data-analytics="header|DTH-Xstream" href="https://www.airtel.in/xstream/box?icid=header">Xstream</a></li>
-	<li><a data-analytics="header|Buy Second DTH connection" href="https://www.airtel.in/digital-tv/multiple-tv-connection?icid=header">Buy Second DTH connection</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">BANK</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|BANK-View Account" href="https://www.airtel.in/bank/login?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">View Account</a></li>
-	<li><a data-analytics="header|BANK-Get New Account" href="https://www.airtel.in/bank/register?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Get New Account</a></li>
-	<li><a data-analytics="header|BANK-Add Money" href="https://www.airtel.in/bank/login?path=addMoney&amp;utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Add Money</a></li>
-	<li><a data-analytics="header|BANK-Know More" href="https://www.airtel.in/bank/products/consumer-products?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Know More</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container airtel-black-heading"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">AIRTEL BLACK</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|AIRTEL BLACK-Pay Bill" href="https://www.airtel.in/recharge-and-billpay/airtel-black/?icid=header&amp;utm_source=navigation_bar">Pay Bill</a></li>
-	<li><a data-analytics="header|AIRTEL BLACK-View Plan" href="https://www.airtel.in/airtel-black/?icid=header&amp;utm_source=navigation_bar">View Plans</a></li>
-</ul>
-</div>
-
-<div class="actions-list-container"><input checked="checked" type="checkbox" />
-<h3 class="actions-heading">AIRTEL FINANCE</h3>
-
-<ul class="actions-list">
-	<li><a data-analytics="header|AIRTEL FINANCE-Credit Card" href="https://www.airtel.in/finance/credit-card/?icid=header">Credit Card</a></li>
-	<li><a data-analytics="header|AIRTEL FINANCE-Get Loans" href="https://www.airtel.in/finance/personal-loan/?icid=header">Personal Loans</a></li>
-	<li><a data-analytics="header|AIRTEL FINANCE" href="https://www.airtel.in/finance/?icid=header">Know More</a></li>
-</ul>
-</div>
-<!-- <div class="actions-list-container"><input checked="checked" type="checkbox" />
-                   <h3 class="actions-heading">HELP</h3>
-
-                   <ul class="actions-list">
-                        
-                         <li><a data-analytics="header|HELP-Contact Us"
-                                     href="https://www.airtel.in/contact-us?icid=header">Contact Us</a>
-                         </li>
-                   </ul>
-             </div> -->
-
-<div class="actions-list-container"><a class="actions-heading no-arrow" href="https://i.airtel.in/Get_Thanks_App" target="_blank"><img alt="get app" src="https://assets.airtel.in/static-assets/new-home/img/get-app.svg" /> Get App </a></div>
-</div>
-
-<div class="business-quick-actions">
-<div class="other-services"><a href="https://www.airtelxstream.in?icid=header">Xstream</a> <a href="https://www.airtel.in/bank?icid=header">Airtel Payments Bank</a> <a href="https://wynk.in/music?icid=header">Wynk</a></div>
-<a class="active">Personal</a> <a href="https://careers.airtel.com/?icid=header">Career</a> <a href="https://www.airtel.in/business?icid=header">Business</a> <a href="https://www.airtel.in/about-bharti/equity?icid=header">Investor</a></div>
-</div>
-
-<div class="header-right"><a class="actions-heading no-arrow" href="https://www.airtel.in/store?icid=header"><img alt="airtel store" draggable="false" src="https://assets.airtel.in/static-assets/new-home/img/airtel-store.svg" />Store </a> <a class="actions-heading no-arrow" href="https://www.airtel.in/s/selfcare?icid=header"> <img alt="login" draggable="false" src="https://assets.airtel.in/static-assets/new-home/img/login-user.svg" /> Login </a></div>
-</div>
-</header>
-<script type="text/javascript">
-  window.onscroll = function () { myFunction() };
-  var header = document.getElementById("myHeader");
-  var sticky = header.offsetTop;
-  function myFunction() {
-   if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-   } else {
-    header.classList.remove("sticky");
-   }
-  }
-
-
-
- </script><script type="text/javascript">
-  var dataset;
-  [].forEach.call(document.querySelectorAll("a[data-analytics]"), function (el) {
-   el.addEventListener("click", function () {
-    var dataset = this.getAttribute("data-analytics");
-    console.log("You clicked on ", dataset);
-    ClickHeader(dataset)
-   });
-  });
-
-
-  function ClickHeader(data) {
-   var clicklist = {
-    "eVar1": '' + data
-   }
-   if (typeof ClickStream !== "undefined") ClickStream.trackEvent(clicklist);
-  }
-
- </script>
+		.header-content .header-brand .brand {
+			min-width: 92px;
+			max-width: 92px;
+			width: 100%;
+			height: 100%;
+			margin: auto 0;
+		}
+
+		.header-content .business-quick-actions {
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: inline-flex;
+			align-items: center;
+			height: 24px;
+			z-index: 1;
+		}
+
+		.header-content .business-quick-actions .divider {
+			height: 14px;
+			width: 1px;
+			background-color: #979797;
+			margin-left: 16px;
+		}
+
+		.header-content .business-quick-actions .other-services {
+			display: inherit;
+		}
+
+		.header-content .business-quick-actions a {
+			font-size: 10px;
+			color: #393939;
+			margin-left: 16px;
+			/*text-transform: uppercase;*/
+		}
+
+		.header-content .business-quick-actions a.active,
+		.header-content .business-quick-actions a:hover {
+			font-weight: normal;
+			/*color: #e40000;*/
+			color: #000;
+			font-weight: 600;
+		}
+
+		.header-content .header-main {
+			flex: 1;
+			display: flex;
+			padding-left: 50px;
+		}
+
+		.header-content .header-main .header-main-actions-container {
+			display: inline-flex;
+			flex: 1;
+		}
+
+		.header-main-actions-container .actions-list-container {
+			position: relative;
+			display: inline-flex;
+			color: #393939;
+		}
+
+		.airtel-black-heading .actions-list {
+			width: calc(100% + 36px);
+		}
+
+		.header-main-actions-container .actions-list-container:last-child {
+			margin-left: auto;
+		}
+
+		.header-main-actions-container .actions-list-container:last-child:hover {
+			margin-left: auto;
+			color: #393939;
+		}
+
+		.header-main-actions-container .actions-list-container:last-child .actions-heading {
+			margin-right: 0;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.header-main-actions-container .actions-list-container input {
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 56px;
+			width: 100%;
+			opacity: 0;
+			margin: 0;
+			z-index: 9;
+		}
+
+		.actions-list-container ul {
+			margin: 0 !important;
+		}
+
+		.actions-list-container .actions-heading-new {
+			position: relative;
+			font-size: 14px;
+			cursor: pointer;
+			letter-spacing: 0.2px;
+			font-weight: 800;
+			white-space: nowrap;
+			padding: 10px 12px;
+			margin-right: 12px;
+		}
+
+		.actions-list-container .actions-heading-new span {
+			font-size: 8px;
+			background-color: #e40000;
+			color: #fff;
+			letter-spacing: .04em;
+			margin-left: 4px;
+			padding: 2px 5px;
+			border-radius: 4px;
+			vertical-align: middle;
+		}
+
+		.actions-list-container .actions-heading-new:hover {
+			color: #e40000;
+		}
+
+		.actions-list-container:hover .actions-heading-new::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: 2px;
+			background-color: #e40000;
+		}
+
+		.actions-list-container .actions-heading,
+		.header-right .actions-heading {
+			position: relative;
+			display: inline-flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			font-size: 14px;
+			cursor: pointer;
+			letter-spacing: 0.2px;
+			font-weight: 800;
+			white-space: nowrap;
+			padding: 24px 12px;
+			margin-right: 12px;
+		}
+
+		.header-right a:hover {
+			color: #393939
+		}
+
+		.actions-list-container .actions-heading::after {
+			content: '';
+			position: absolute;
+			right: -4px;
+			top: 27px;
+			height: 10px;
+			width: 10px;
+			background: url('https://assets.airtel.in/static-assets/new-home/img/arrow.svg') no-repeat center center;
+			background-size: contain;
+			transform: rotate(90deg);
+			filter: brightness(0%) contrast(100%);
+			transition: transform 0.2s ease-in;
+		}
+
+		.new-one {
+			font-size: 8px;
+			background-color: #e40000;
+			color: #fff;
+			letter-spacing: .04em;
+			margin-left: 4px;
+			padding: 2px 5px;
+			border-radius: 4px;
+			vertical-align: middle;
+		}
+
+		.actions-list-container .actions-heading.no-arrow,
+		.header-right .actions-heading.no-arrow {
+			padding: 6px 12px 0 12px;
+			font-size: 12px;
+		}
+
+		.actions-heading.no-arrow img {
+			height: 24px;
+			width: 24px;
+		}
+
+		.actions-list-container .actions-list {
+			display: none;
+			position: absolute;
+			transition: all .7s ease 0s;
+			top: 65px;
+			left: -36px;
+			max-width: 350px;
+			width: 225px;
+			border-radius: 4px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .1);
+			background-color: #fff;
+			padding: 0;
+			z-index: 99;
+		}
+
+		.actions-list-container .actions-list li {
+			display: flex;
+		}
+
+		.actions-list-container .actions-list li:hover {
+			background-color: #f2f2f2;
+			color: #e40000;
+		}
+
+		.actions-list-container .actions-list li a {
+			padding: 12px 36px;
+			font-size: 14px;
+			width: 100%;
+			white-space: nowrap;
+		}
+
+		.actions-list-container .actions-list li a:hover {
+			color: #e40000;
+		}
+
+		.header-content .header-right {
+			display: flex;
+			height: 100%;
+			margin-left: auto;
+
+		}
+
+		.header-right .actions-heading {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.header-content .header-right .actions-heading {
+			margin-right: 0;
+		}
+
+		@media (min-width: 270px) and (max-width: 767px) {
+			.header-container {
+				height: 56px;
+			}
+
+			.actions-list-container .actions-heading {
+				pointer-events: auto;
+			}
+
+			.actions-list-container .actions-list {
+				width: auto;
+			}
+
+			.header-content .header-brand a {
+				padding-left: 10px;
+			}
+
+			.actions-list-container .actions-heading-new {
+				padding: 10px 24px;
+			}
+
+			.header-content::after {
+				content: none;
+			}
+
+			.header-content {
+				padding-top: 0;
+				padding: 0;
+			}
+
+			.header-content .header-brand .hamburger-btn {
+				display: inline-block;
+			}
+
+			.header-content .header-main {
+				position: fixed;
+				left: 0;
+				top: 0;
+				flex-direction: column;
+				max-width: 300px;
+				padding: 0;
+				width: 100%;
+				background: #ffffff;
+				height: 100vh;
+				z-index: 99;
+				border-bottom: 6px solid #e40000;
+				transform: translateX(-100%);
+				transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+				overflow: auto;
+			}
+
+			.header-content .hamburger-input:not(:checked)~.header-main {
+				transform: translateX(0);
+			}
+
+			.header-brand::before {
+				content: '';
+				position: fixed;
+				left: 0;
+				top: 0;
+				height: 100vh;
+				width: 100vw;
+				background-color: rgba(0, 0, 0, 0.5);
+				opacity: 0;
+				transition: opacity 0.3s cubic-bezier(.4, 0, .2, 1);
+				z-index: 97;
+			}
+
+			@keyframes drawer-in-out-backdrop {
+				100% {
+					transform: scale(0);
+				}
+			}
+
+			.header-content .hamburger-input:checked~.header-brand::before {
+				animation: drawer-in-out-backdrop 0s ease-in-out forwards 0.5s;
+			}
+
+			.header-content .hamburger-input:not(:checked)~.header-brand::before {
+				opacity: 1;
+			}
+
+			.header-content .hamburger-input:not(:checked) {
+				height: 100vh;
+				width: 100vw;
+				left: 0;
+				top: 0;
+			}
+
+			.header-content .header-main .header-main-actions-container {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			.header-content .business-quick-actions {
+				position: relative;
+				height: auto;
+				justify-content: center;
+			}
+
+			.header-content .header-main .header-main-actions-container .actions-list-container {
+				width: 100%;
+				flex-direction: column;
+				overflow: hidden;
+			}
+
+			.header-main-actions-container .actions-list-container input {
+				display: block;
+			}
+
+			.actions-list-container .actions-list {
+				display: block;
+				position: relative;
+				top: 0;
+				left: 0;
+				box-shadow: none;
+				max-height: 0;
+				transition: max-height 0.2s ease-in-out;
+			}
+
+			.actions-list-container input:not(:checked)~.actions-list {
+				max-height: 500px;
+			}
+
+			.actions-list-container input:not(:checked)~.actions-heading {
+				color: #e40000;
+			}
+
+			.actions-list-container input:not(:checked)~.actions-heading::after {
+				transform: rotate(-90deg);
+				filter: none;
+			}
+
+			.actions-list-container .actions-heading {
+				width: 100%;
+				align-items: center;
+				border-bottom: 1px solid #f2f2f2;
+				margin-right: 0;
+				height: 56px;
+				padding: 0 20px;
+			}
+
+			.actions-list-container .actions-heading::after {
+				right: 24px;
+				top: 22px;
+			}
+
+			.header-main-actions-container .actions-list-container:last-child {
+				margin-top: auto;
+			}
+
+			.header-main-actions-container .actions-list-container:last-child .actions-heading {
+				flex-direction: row;
+				background-color: #ededed;
+				margin: 20px;
+				border-radius: 4px;
+				height: 48px;
+				width: auto;
+				padding: 0;
+				align-items: center;
+				text-transform: uppercase;
+				padding: 12px;
+			}
+
+			.header-main-actions-container .actions-list-container:last-child .actions-heading::after {
+				display: none;
+			}
+
+			.header-content .business-quick-actions a {
+				font-size: 12px;
+				margin-bottom: 20px;
+			}
+
+			.header-content .business-quick-actions .other-services,
+			.header-content .business-quick-actions .divider {
+				display: none
+			}
+
+			.header-right .actions-heading.no-arrow {
+				padding-top: 0;
+			}
+		}
+
+		@media(min-width: 768px) and (max-width: 920px) {
+
+			.actions-list-container .actions-heading,
+			.header-right .actions-heading {
+				font-size: 10px;
+			}
+
+			.actions-list-container .actions-heading.no-arrow,
+			.header-right .actions-heading.no-arrow {
+				padding: 6px 0px 0 12px;
+				font-size: 10px;
+			}
+		}
+
+		@media (min-width: 768px) {
+			.header-content .header-right {
+				/* margin-left: 24px;*/
+			}
+
+			.actions-list-container:hover .actions-list {
+				display: block;
+				animation: header-actions-enter .2s ease-in;
+			}
+
+			.actions-list-container:hover .actions-heading {
+				color: #e40000;
+			}
+
+			.actions-list-container:hover .actions-heading::after {
+				transform: rotate(-90deg);
+				filter: none;
+			}
+
+			.actions-list-container .actions-heading.no-arrow::after,
+			.actions-list-container:hover .actions-heading.no-arrow::before,
+			.actions-list-container:hover .actions-heading.no-arrow {
+				content: none;
+				color: #393939;
+			}
+
+			.actions-list-container:hover .actions-heading::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 2px;
+				background-color: #e40000;
+			}
+
+			@keyframes header-actions-enter {
+				0% {
+					transform: translateY(20px);
+					opacity: 0;
+				}
+
+				100% {
+					transform: translateY(0);
+					opacity: 1;
+				}
+			}
+		}
+	</style>
+	<header class="header-container" id="myHeader">
+		<div class="header-content"><input checked="checked" class="hamburger-input" type="checkbox" />
+			<div class="header-brand">
+				<div class="hamburger-btn hamburger">&nbsp;</div>
+				<a href="https://www.airtel.in/" target="_blank"><img alt="airtel" class="brand"
+						src="https://assets.airtel.in/static-assets/new-home/img/airtel-red.svg" /></a>
+			</div>
+
+			<div class="header-main">
+				<div class="header-main-actions-container">
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">PREPAID</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|PREPAID-Recharge"
+									href="https://www.airtel.in/prepaid-recharge/?icid=header">Recharge</a></li>
+							<li><a data-analytics="header|PREPAID-New Prepaid SIM"
+									href="https://www.airtel.in/prepaid-4g-sim/?icid=header">New Prepaid SIM</a></li>
+							<li><a data-analytics="header|PREPAID-View Plans"
+									href="https://www.airtel.in/recharge-online?icid=header">View Plans</a></li>
+							<li><a data-analytics="header|PREPAID-International Roaming"
+									href="https://www.airtel.in/ir-packs/?icid=header">International Roaming</a></li>
+							<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?requirement=P2P&amp;icid=header"
+									data-analytics="header|PREPAID-Switch Prepaid to Postpaid"
+									href="https://www.airtel.in/myplan-infinity/?requirement=P2P&amp;icid=header">Switch
+									Prepaid to Postpaid</a></li>
+							<li><a data-analytics="header|PREPAID-Port to Airtel Prepaid"
+									href="https://www.airtel.in/prepaid-4g-sim/?icid=header">Port to Airtel Prepaid</a>
+							</li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">POSTPAID</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|POSTPAID-Pay Bill"
+									href="https://www.airtel.in/postpaid-bill-pay?icid=header">Pay Bill</a></li>
+							<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?icid=header"
+									data-analytics="header|POSTPAID-Buy New Connection"
+									href="https://www.airtel.in/myplan-infinity/?icid=header">Buy New Connection</a>
+							</li>
+							<li><a data-ab-myplan-infinity="https://www.airtel.in/cat/myplan-infinity/?icid=header"
+									data-analytics="header|POSTPAID-View Plans"
+									href="https://www.airtel.in/myplan-infinity/?icid=header">View Plans</a></li>
+							<li><a data-analytics="header|POSTPAID-Switch Prepaid to Postpaid"
+									href="https://www.airtel.in/postpaid/prepaid-to-postpaid/?icid=header">Switch
+									Prepaid to Postpaid</a></li>
+							<li><a data-analytics="header|POSTPAID-Port to Airtel"
+									href="https://www.airtel.in/mnp/?icid=header">Port to Airtel</a></li>
+							<li><a data-analytics="header|POSTPAID-Free Sim Delivery"
+									href="https://www.airtel.in/free-sim-home-delivery?icid=header">Free Sim
+									Delivery</a></li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">Wi-Fi</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|BROADBAND-Bill"
+									href="https://www.airtel.in/broadband-bill-pay?icid=header">Pay Bill</a></li>
+							<li><a data-analytics="header|BROADBAND-Buy New Connection"
+									href="https://www.airtel.in/broadband/?icid=header">Buy New Connection</a></li>
+							<li><a data-analytics="header|BROADBAND-View Plans"
+									href="https://www.airtel.in/wifi-plans/?icid=header">View Plans</a></li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">DTH</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|DTH-Recharge"
+									href="https://www.airtel.in/dth-recharge?icid=header">Recharge</a></li>
+							<li><a data-ab-dth="https://www.airtel.in/cat/dth/?icid=header"
+									data-analytics="header|DTH-Buy New DTH Connection"
+									href="https://www.airtel.in/dth/?icid=header">Buy New DTH Connection</a></li>
+							<li><a data-analytics="header|DTH-View Plans"
+									href="https://www.airtel.in/digitaltv/basepack/delhi?icid=header">View Plans</a>
+							</li>
+							<li><a data-analytics="header|DTH-Upgrade Box"
+									href="https://www.airtel.in/digital-tv/upgrade-box?icid=header">Upgrade Box</a></li>
+							<li><a data-analytics="header|DTH-Xstream"
+									href="https://www.airtel.in/xstream/box?icid=header">Xstream</a></li>
+							<li><a data-analytics="header|Buy Second DTH connection"
+									href="https://www.airtel.in/digital-tv/multiple-tv-connection?icid=header">Buy
+									Second DTH connection</a></li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">BANK</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|BANK-View Account"
+									href="https://www.airtel.in/bank/login?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">View
+									Account</a></li>
+							<li><a data-analytics="header|BANK-Get New Account"
+									href="https://www.airtel.in/bank/register?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Get
+									New Account</a></li>
+							<li><a data-analytics="header|BANK-Add Money"
+									href="https://www.airtel.in/bank/login?path=addMoney&amp;utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Add
+									Money</a></li>
+							<li><a data-analytics="header|BANK-Know More"
+									href="https://www.airtel.in/bank/products/consumer-products?utm_source=Internal&amp;utm_medium=Header&amp;utm_campaign=Airtel&amp;icid=header">Know
+									More</a></li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container airtel-black-heading"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">AIRTEL BLACK</h3>
+
+						<ul class="actions-list">
+							<li><a data-analytics="header|AIRTEL BLACK-Pay Bill"
+									href="https://www.airtel.in/recharge-and-billpay/airtel-black/?icid=header&amp;utm_source=navigation_bar">Pay
+									Bill</a></li>
+							<li><a data-analytics="header|AIRTEL BLACK-View Plan"
+									href="https://www.airtel.in/airtel-black/?icid=header&amp;utm_source=navigation_bar">View
+									Plans</a></li>
+						</ul>
+					</div>
+
+					<div class="actions-list-container"><input checked="checked" type="checkbox" />
+						<h3 class="actions-heading">AIRTEL FINANCE</h3>
+
+						<ul class="actions-list">
+							<li>
+								<a href="https://www.airtel.in/finance/credit-card/?icid=header">Credit Card</a>
+							</li>
+
+							<li>
+								<a href="https://www.airtel.in/finance/personal-loan/?icid=header">Personal Loan</a>
+							</li>
+
+							<li>
+								<a href="https://www.airtel.in/finance/gold-loan/?icid=header">Gold Loan</a>
+							</li>
+
+							<li>
+								<a
+									href="https://www.airtel.in/finance/airtel-bajaj-finserv-insta-emi-card/?icid=header">EMI
+									Card</a>
+							</li>
+
+							<li>
+								<a href="https://www.airtel.in/finance/fixed-deposit/?icid=header">Fixed Deposits</a>
+							</li>
+
+							<li>
+								<a href="https://www.airtel.in/finance/check-credit-score/?icid=header">Free Credit
+									Report</a>
+							</li>
+
+							<li>
+								<a href="https://www.airtel.in/finance/?icid=header">Know More</a>
+							</li>
+
+					</div>
+					<!-- <div class="actions-list-container"><input checked="checked" type="checkbox" />
+													<h3 class="actions-heading">HELP</h3>
+
+													<ul class="actions-list">
+																		
+																			<li><a data-analytics="header|HELP-Contact Us"
+																															href="https://www.airtel.in/contact-us?icid=header">Contact Us</a>
+																			</li>
+													</ul>
+							</div> -->
+
+					<div class="actions-list-container"><a class="actions-heading no-arrow"
+							href="https://i.airtel.in/Get_Thanks_App" target="_blank"><img alt="get app"
+								src="https://assets.airtel.in/static-assets/new-home/img/get-app.svg" /> Get App </a>
+					</div>
+				</div>
+
+				<div class="business-quick-actions">
+					<div class="other-services"><a href="https://www.airtelxstream.in?icid=header">Xstream</a> <a
+							href="https://www.airtel.in/bank?icid=header">Airtel Payments Bank</a> <a
+							href="https://wynk.in/music?icid=header">Wynk</a></div>
+					<a class="active">Personal</a> <a href="https://careers.airtel.com/?icid=header">Career</a> <a
+						href="https://www.airtel.in/business?icid=header">Business</a> <a
+						href="https://www.airtel.in/about-bharti/equity?icid=header">Investor</a>
+				</div>
+			</div>
+
+			<div class="header-right"><a class="actions-heading no-arrow"
+					href="https://www.airtel.in/store?icid=header"><img alt="airtel store" draggable="false"
+						src="https://assets.airtel.in/static-assets/new-home/img/airtel-store.svg" />Store </a> <a
+					class="actions-heading no-arrow" href="https://www.airtel.in/s/selfcare?icid=header"> <img
+						alt="login" draggable="false"
+						src="https://assets.airtel.in/static-assets/new-home/img/login-user.svg" /> Login </a></div>
+		</div>
+	</header>
+	<script type="text/javascript">
+		window.onscroll = function () { myFunction() };
+		var header = document.getElementById("myHeader");
+		var sticky = header.offsetTop;
+		function myFunction() {
+			if (window.pageYOffset > sticky) {
+				header.classList.add("sticky");
+			} else {
+				header.classList.remove("sticky");
+			}
+		}
+
+
+
+	</script>
+	<script type="text/javascript">
+		var dataset;
+		[].forEach.call(document.querySelectorAll("a[data-analytics]"), function (el) {
+			el.addEventListener("click", function () {
+				var dataset = this.getAttribute("data-analytics");
+				console.log("You clicked on ", dataset);
+				ClickHeader(dataset)
+			});
+		});
+
+
+		function ClickHeader(data) {
+			var clicklist = {
+				"eVar1": '' + data
+			}
+			if (typeof ClickStream !== "undefined") ClickStream.trackEvent(clicklist);
+		}
+
+	</script>
                     </div>  
                     <div ui-view="sidebar"></div>
                     <div ui-view="content">
@@ -1473,7 +1562,7 @@ contact us at <a class="color-red" href="mailto:privacygrievance.officer@airtel.
 </script>
                     </div>
                     <div ui-view="footer">
-                         <style type="text/css">
+                        <style type="text/css">
     footer h3 {
       color: #393939;
       font-weight: 600;
