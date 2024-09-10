@@ -45,7 +45,15 @@
  // G-1V0QKD8LQL
 </script>
 
-<style>
+	<!-- Criteo Loader File -->
+	<script
+	  type="text/javascript"
+	  src="//dynamic.criteo.com/js/ld/ld.js?a=114421"
+	  async="true">
+	</script>
+	<!-- END Criteo Loader File -->
+
+	<style>
 #cookies-eu-banner {box-sizing: border-box;color: #e2e5e5;position: fixed; z-index:99995;bottom:0;left:0;width:100%; background: #272727;display:none;padding: 20px 0;}
 #cookies-eu-banner * {box-sizing: border-box;}
 #cookies-eu-banner-content {width:100%;margin:0 auto;}
@@ -704,8 +712,8 @@ h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
 										<span class="glyphicon glyphicon-plus visible-xs visible-sm" ></span>
 									</div>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="//www.kitco.com/jewelry/" title="Jeweler Resources" target="_blank">Jeweler Resources</a></li>
-										<li><a href="//www.kitco.com/jewelry/" title="Scrap Metal Calculator" target="_blank">Scrap Metal Calculator</a></li>
+										<li><a href="//www.kitco.com/jeweler-resources" title="Jeweler Resources" target="_blank">Jeweler Resources</a></li>
+										<li><a href="//www.kitco.com/jeweler-resources" title="Scrap Metal Calculator" target="_blank">Scrap Metal Calculator</a></li>
 										<li><a href="/refining/gold-silver-.html" title="Refining and Scrap">Refining and Scrap</a></li>
 									</ul>
 								</li>
@@ -1489,13 +1497,21 @@ $(document).ready(function() {
 	          if (readCookie(cookieName) == null || readCookie(cookieName) == "") {
 	            //if user never clicks on close btn of the subscription widget
 	        	$("#subscription-panel").addClass("expanded");
-	        	ga('send', 'event', 'Popup', 'Subscribe', 'Open-auto');
+	        	//ga('send', 'event', 'Popup', 'Subscribe', 'Open-auto');
+	        	gtag('event', 'Subscribe', {
+	                'SubscribeAction': 'Open-auto'
+	               
+	              });
 	        	//if subscription widget form is not in focus, then close the form after 5 seconds
 	      	    setTimeout(
          		    function() {
          		    	if(!$("#subscription-widget-form input").is(":focus") && $("#subscription-panel").hasClass("expanded")) {
          		    		$("#subscription-panel").removeClass("expanded");
-         		    		ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+         		    		//ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+         		    		gtag('event', 'Subscribe', {
+         		                'SubscribeAction': 'Close-auto'
+         		               
+         		              });
          		    		createCookie(cookieName, 1, 15);
          		    	}
          		}, 4000);
@@ -1506,7 +1522,13 @@ $(document).ready(function() {
 	    	e.preventDefault();
 	    	$("#subscription-panel").toggleClass("expanded");
 	    	if($("#subscription-panel").hasClass("expanded")) {
-	    		ga('send', 'event', 'Popup', 'Subscribe', 'Open-user');
+	    		//ga('send', 'event', 'Popup', 'Subscribe', 'Open-user');
+	    		gtag("event", "Subscribe", {
+	    				SubscribeAction: "Open-user",
+		                value: "Open-user",
+		               
+		              });
+	    		
 	    	}else {
 	    		if (are_cookies_enabled()) {
 			        //if cookies are enabled
@@ -1514,7 +1536,12 @@ $(document).ready(function() {
 			        	  createCookie(cookieName, 1, 15);
 			          }
 		    	}
-	    		ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    		//ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    		gtag('event', 'Subscribe', {
+	                'SubscribeAction': 'Close-user'
+	               
+	              });
+	    		
 	    	}
 	    });
 	    $("#subscription-panel-container .img_stick_header_close_btn").click(function(e){
@@ -1525,11 +1552,20 @@ $(document).ready(function() {
 		        	  createCookie(cookieName, 1, 15);
 		          }
 	    	}
-	    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    	//ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    	gtag('event', 'Subscribe', {
+                'SubscribeAction': 'Close-user'
+               
+              });
+	    	
 	    });
 	    $("#subscription-panel #thank_you_close_btn").click(function() {
 	    	$("#subscription-panel").removeClass("expanded");
-	    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    	//ga('send', 'event', 'Popup', 'Subscribe', 'Close-user');
+	    	gtag('event', 'Subscribe', {
+                'SubscribeAction': 'Close-user'
+               
+              });
 	    });
 	    $("#subscription-widget-form form").submit(function(e) {
 	      e.preventDefault();
@@ -1548,13 +1584,22 @@ $(document).ready(function() {
    	          function() {}
    	        );
     	  createCookie(cookieName, 1, 100000);
-	        ga('send', 'event', 'Popup', 'Subscribe', 'Subscribe-click');
+	        //ga('send', 'event', 'Popup', 'Subscribe', 'Subscribe-click');
+	        gtag('event', 'Subscribe', {
+	        	SubscribeAction: 'Subscribe-click'
+               
+              });
+	       
 	        $("#subscription-widget-form").hide();
 	        $("#subscription-panel #thank_you_msg").show();
 	        setTimeout(
      		    function() {
      		    	$("#subscription-panel").removeClass("expanded");
-     		    	ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+     		    	//ga('send', 'event', 'Popup', 'Subscribe', 'Close-auto');
+     		    	 gtag('event', 'Subscribe', {
+     	                'SubscribeAction': 'Close-auto'
+     	               
+     	              });
      		}, 4000);
 	      } else {
 	        grecaptcha.reset();
