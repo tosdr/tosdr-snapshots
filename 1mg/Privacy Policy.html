@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="initial-scale=1, maximum-scale=2, width=device-width height=device-height, viewport-fit=cover"
+		/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="x-dns-prefetch-control" content="on" />
+
+		
+
+		<meta name="theme-color" content="#FFF3E3" />
+		<!-- Windows Phone -->
+		<meta name="msapplication-navbutton-color" content="#FFF3E3" />
+		<!-- iOS Safari -->
+		<meta name="apple-mobile-web-app-status-bar-style" content="#FFF3E3" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+
+		<script nonce="2fb13959633a02727d130a0506106a6e">
+			dataLayer = [];
+		</script>
+
+		<!-- Partytown Integration Scripts -->
+		
+		<script nonce="2fb13959633a02727d130a0506106a6e">
+			var googletag = googletag || {};
+			googletag.cmd = googletag.cmd || [];
+		</script>
+
+		<script nonce="2fb13959633a02727d130a0506106a6e">
+			function getChromeVersion () {
+			    const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+			    return raw ? parseInt(raw[2], 10) : false;
+			}
+			// Fallback function if partytown failed to perform and load scripts without partytown.
+			function loadAnalyticsScripts(failedErrorMessage = '') {
+			        console.log("Partytown fallback -", failedErrorMessage);
+
+			        var rudderanalytics = window.rudderanalytics = [];
+			        var methods = ["load", "page", "track", "reset", "ready", "setAnonymousId"];
+			        var rStack = null;
+			        for (var i = 0; i < methods.length; i++) {
+			            var method = methods[i];
+			            rudderanalytics[method] = function (methodName) {
+			                return function () {
+			                    rudderanalytics.push([methodName, ...arguments]);
+			                }
+			            }(method)
+			        };
+			        rudderanalytics.load("1Xw0r3h5UkJhTd7i4MyWYyjDQFZ", "https://rudderapi.1mg.com", { integrations: { All: true, FULLSTORY: { crossDomainSupport: true, timeout: 1000, }, }, });
+			        rStack && rudderanalytics.setAnonymousId(null, rStack);
+
+			        window.addEventListener('load', () => {
+			            let gtmScript = document.createElement('script');
+			            let rudderScript = document.createElement('script');
+			            let facebookPixelScript=document.createElement("script")
+			            rudderScript.src = "https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js";
+			            gtmScript.src = `https://www.googletagmanager.com/ns.html?id=` + "GTM-KR9MB8";
+			            gtmScript.setAttribute('nonce', "2fb13959633a02727d130a0506106a6e");
+			            setTimeout(function () {
+			                (function (w, d, s, l, i) {
+			                    w[l] = w[l] || []; w[l].push({
+			                        'gtm.start':
+			                            new Date().getTime(), event: 'gtm.js', 'is_pwa': true
+			                    }); var f = d.getElementsByTagName(s)[0],
+			                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.defer = true; j.src =
+			                            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			                    var n = d.querySelector('[nonce]');
+			                    n && j.setAttribute('nonce', n.nonce || n.getAttribute('nonce'));
+			                    f.parentNode.insertBefore(j, f);
+			                })(window, document, 'script', 'dataLayer', "GTM-KR9MB8");
+			                document.body.appendChild(gtmScript);
+			                document.body.appendChild(rudderScript);
+			            }, 0);
+			            facebookPixelScript.setAttribute('nonce', "2fb13959633a02727d130a0506106a6e");
+			            setTimeout(function (){
+			                 !(function (f, b, e, v, n, t, s) {
+			                    if (f.fbq) return
+			                    n = f.fbq = function () {
+			                        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+			                    }
+			                    if (!f._fbq) f._fbq = n
+			                    n.push = n
+			                    n.loaded = !0
+			                    n.version = "2.0"
+			                    n.queue = []
+			                    t = b.createElement(e)
+			                    t.async = !0
+			                    t.src = v
+			                    s = b.getElementsByTagName(e)[0]
+			                    s.parentNode.insertBefore(t, s)
+			                    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js")
+			                    fbq("init", "992039054983996")
+			                    fbq("track", "PageView")
+			            },0)
+			        })
+			}
+
+			try {
+			    if (getChromeVersion() > 96 && true && false) {
+			    if (!('serviceWorker' in navigator)) throw new Error('Service worker not present!');
+			    partytown = {
+			        lib: "/pwa-api/~partytown/",
+			        forward: [
+			            "rudderanalytics.track",
+			            "rudderanalytics.page",
+			            "dataLayer.push",
+			            "dataLayer.splice",
+			        ],
+			        resolveUrl: function (url, location, type) {
+			            if (
+			                type === "script" &&
+			                !url.pathname.includes("proxy") &&
+			                (url.pathname === "/analytics.js" ||
+			                    url.pathname === "/ns.html" ||
+			                    url.pathname === "/singular-gtm-interface/latest/singular-gtm-interface.js" ||
+			                    url.pathname === "/static/amo-conversion-mapper.js" ||
+			                    url.pathname === "/singular-sdk/latest/singular-sdk.js" ||
+			                    url.pathname === "/js/invite-referrals-1.0.js" ||
+			                    url.pathname === "/debug/bootstrap" ||
+			                    url.pathname === "/gtag/js" ||
+			                    url.pathname.includes("/consent/check/") ||
+			                    url.pathname.includes("/signals/config/") ||
+			                    url.pathname.includes("/pixel/") ||
+			                    url.pathname === "/v1.1/rudder-analytics.min.js"
+			                )
+			            ) {
+			                if (url.pathname === "/v1.1/rudder-analytics.min.js") {
+			                    url.host = location.host;
+			                    url.protocol = location.protocol;
+			                    url.pathname = "/pwa-api/eventScripts/rudder-analytics.min.js";
+			                    return url
+			                }
+
+			                url.hostname = location.hostname;
+			                url.protocol = location.protocol;
+			                url.pathname = "/proxy" + url.pathname;
+			                return url
+			            }
+			            return url
+			        },
+			    }
+
+			    // This partytown script has been directly added in order to reduce the time spent in fetching.
+			    /* Partytown 0.7.1 - MIT builder.io */
+			    !(function (t, e, n, i, r, o, a, d, s, c, p, l) {
+			        function u() {
+			            l ||
+			                ((l = 1),
+			                    "/" == (a = (o.lib || "/~partytown/") + (o.debug ? "debug/" : ""))[0] &&
+			                    ((s = e.querySelectorAll('script[type="text/partytown"]')),
+			                        i != t
+			                            ? i.dispatchEvent(new CustomEvent("pt1", { detail: t }))
+			                            : ((d = setTimeout(w, 1e4)),
+			                                e.addEventListener("pt0", f),
+			                                r
+			                                    ? h(1)
+			                                    : n.serviceWorker
+			                                        ? n.serviceWorker
+			                                            .register(a + (o.swPath || "partytown-sw.js"), { scope: a })
+			                                            .then(function (t) {
+			                                                t.active
+			                                                    ? h()
+			                                                    : t.installing &&
+			                                                    t.installing.addEventListener("statechange",
+			                                                        function (t) {
+			                                                            "activated" == t.target.state && h()
+			                                                        })
+			                                            }, (err) => {
+			                                                if (loadAnalyticsScripts) loadAnalyticsScripts('Failed to register partytown service worker');
+			                                                throw new Error('Failed to register partytown service worker');
+			                                            })
+			                                        : w())))
+			        }
+			        function h(t) {
+			            ; (c = e.createElement(t ? "script" : "iframe")),
+			                t ||
+			                (c.setAttribute(
+			                    "style",
+			                    "display:block;width:0;height:0;border:0;visibility:hidden"
+			                ),
+			                    c.setAttribute("aria-hidden", !0)),
+			                (c.src =
+			                    a + "partytown-" + (t ? "atomics.js?v=0.7.1" : "sandbox-sw.html?" + Date.now())),
+			                (c.onerror = function () {
+			                    if (loadAnalyticsScripts) loadAnalyticsScripts('Failed to load partytown sandbox service worker');
+			                    throw new Error('Failed to load partytown sandbox service worker');
+			                }),
+			                e.body.appendChild(c)
+			        }
+			        function w(t, n) { if (loadAnalyticsScripts) loadAnalyticsScripts("Service worker dosen't exist"); }
+			        function f() {
+			            clearTimeout(d)
+			        }
+			        ; (o = t.partytown || {}),
+			            i == t &&
+			            (o.forward || []).map(function (e) {
+			                ; (p = t),
+			                    e.split(".").map(function (e, n, i) {
+			                        p = p[i[n]] =
+			                            n + 1 < i.length
+			                                ? "push" == i[n + 1]
+			                                    ? []
+			                                    : p[i[n]] || {}
+			                                : function () {
+			                                    ; (t._ptf = t._ptf || []).push(i, arguments)
+			                                }
+			                    })
+			            }),
+			            "complete" == e.readyState
+			                ? u()
+			                : (t.addEventListener("DOMContentLoaded", u), t.addEventListener("load", u))
+			    })(window, document, navigator, top, window.crossOriginIsolated)
+			    console.log("Service worker supported - running partytown");
+
+			} else loadAnalyticsScripts("Different browser other than chrome.");
+
+			} catch (err) {
+			    if (loadAnalyticsScripts) loadAnalyticsScripts("Service worker not supported in browser.");
+			}
+		</script>
+
+		<script src="https://accounts.tatadigital.com/v2/tdl-sso-auth.js" async></script>
+		<meta name="tdl-sso-client_id" content="ONEMG-WEB-APP" />
+
+		<!-- Rudder Script -->
+		<!-- <script nonce="2fb13959633a02727d130a0506106a6e">
+            var rudderanalytics = window.rudderanalytics = [];
+            var methods = ["load", "page", "track", "identify", "reset", "ready", "setAnonymousId"];
+            var rStack = null;
+            for (var i = 0; i < methods.length; i++) {
+                var method = methods[i];
+                rudderanalytics[method] = function (methodName) {
+                    return function () {
+                        rudderanalytics.push([methodName, ...arguments]);
+                    }
+                }(method)
+            };
+            rudderanalytics.load("1Xw0r3h5UkJhTd7i4MyWYyjDQFZ", "https://rudderapi.1mg.com", { integrations: { All: true, FULLSTORY: { crossDomainSupport: true, timeout: 1000, }, }, });
+            rStack && rudderanalytics.setAnonymousId(null, rStack);
+
+            window.addEventListener("load", function () {
+                let rudderScript = document.createElement('script');
+                rudderScript.src = "https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js";
+                document.body.appendChild(rudderScript);
+            })
+        </script> -->
+
+		<!-- Google Tag Manager Scripts -->
+		<script type="text/partytown" nonce="2fb13959633a02727d130a0506106a6e">
+			var rudderanalytics = window.rudderanalytics = [];
+			var methods = ["load", "page", "track", "reset", "ready", "setAnonymousId"];
+			var rStack = null;
+			for (var i = 0; i < methods.length; i++) {
+			    var method = methods[i];
+			    rudderanalytics[method] = function (methodName) {
+			        return function () {
+			            rudderanalytics.push([methodName, ...arguments]);
+			        }
+			    }(method)
+			};
+			rudderanalytics.load("1Xw0r3h5UkJhTd7i4MyWYyjDQFZ", "https://rudderapi.1mg.com", { integrations: { All: true, FULLSTORY: { crossDomainSupport: true, timeout: 1000, }, }, });
+			rStack && rudderanalytics.setAnonymousId(null, rStack);
+
+			let gtmScript = document.createElement('script');
+			let rudderScript = document.createElement('script');
+			let facebookPixelScript=document.createElement("script")
+			rudderScript.src = "https://cdn.rudderlabs.com/v1.1/rudder-analytics.min.js";
+			facebookPixelScript.src="https://connect.facebook.net/signals/config/1533315340292439?v=2.9.123&r=stable"
+			gtmScript.src = `https://www.googletagmanager.com/ns.html?id=` + "GTM-KR9MB8";
+			gtmScript.setAttribute('nonce', "2fb13959633a02727d130a0506106a6e");
+			    (function (w, d, s, l, i) {
+			        w[l] = w[l] || []; w[l].push({
+			            'gtm.start':
+			                new Date().getTime(), event: 'gtm.js', 'is_pwa': true
+			        }); var f = d.getElementsByTagName(s)[0],
+			            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.defer = true; j.src =
+			                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			        var n = d.querySelector('[nonce]');
+			        n && j.setAttribute('nonce', n.nonce || n.getAttribute('nonce'));
+			        f.parentNode.insertBefore(j, f);
+			    })(window, document, 'script', 'dataLayer', "GTM-KR9MB8");
+			    document.body.appendChild(gtmScript);
+			    document.body.appendChild(rudderScript);
+		</script>
+
+		<!-- Singular Script -->
+		<script nonce="2fb13959633a02727d130a0506106a6e">
+			var state = { mapper_id: 1 };
+			var s_current_url = new URL(document.URL);
+			var s_urlParams = new URLSearchParams(s_current_url.search);
+			var isOrganicSearch = true;
+			if (s_urlParams.has("utm_source") || s_urlParams.has("wpsrc")) {
+				isOrganicSearch = false;
+			}
+			if (isOrganicSearch) {
+				switch (document.referrer) {
+					case "https://www.google.com/":
+						var wpsrc = "Google Organic Search";
+						break;
+					case "https://search.yahoo.com/":
+						var wpsrc = "Yahoo Organic Search";
+						break;
+					case "https://www.bing.com/":
+						var wpsrc = "Bing Organic Search";
+						break;
+					default:
+						break;
+				}
+				if (wpsrc) {
+					s_urlParams.append("wpsrc", wpsrc);
+					window.history.replaceState(
+						state,
+						document.title,
+						s_current_url.origin +
+							s_current_url.pathname +
+							"?" +
+							s_urlParams.toString()
+					);
+				}
+			}
+		</script>
+		
+
+		
+
+		<!-- Dynamic seo tags -->
+		
+        <title>Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: 1mg.com</title>
+        <meta name="keywords" content="online pharmacy, online medicine, medicine online, online medical store, buy medicine online, online pharmacy India, buy medicine online India, online chemist, online medicine purchase" data-rh="true"/>
+        <meta property="og:title" content="Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: 1mg.com" data-rh="true"/>
+        <meta property="og:description" content="India's best online pharmacy with a wide range of Prescription and OTC medicines. Order medicines online at 1mg's medicine store in 100+ cities like - Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Gurgaon, Noida, Pune etc. with free home delivery and exciting offers. Check Now!" data-rh="true"/>
+        <meta name="description" content="India's best online pharmacy with a wide range of Prescription and OTC medicines. Order medicines online at 1mg's medicine store in 100+ cities like - Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Gurgaon, Noida, Pune etc. with free home delivery and exciting offers. Check Now!" data-rh="true"/>
+        
+        
+        <meta name="msvalidate.01" content="099F7701BE7D0B79C7C51734FDC2A2D9">
+        <meta name="ahrefs-site-verification" content="eb0267c26a6f598370b8474c41fc54fc21b4cd8609ec062ce06f47f413eea869">
+        <meta name="google-adsense-account" content="ca-pub-8841434586234905">
+        
+        <meta property="og:url" content="https://www.1mg.com/PrivacyPolicy" data-rh="true"/>
+        <meta property="fb:app_id" content="212401972496595" data-rh="true"/>
+        <meta property="og:site_name" content="1mg" data-rh="true"/>
+        <meta property="og:image" content="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1mg-logo-large.png" data-rh="true"/>
+        <meta property="twitter:card" content="summary" data-rh="true"/>
+        <meta property="twitter:site" content="@1mgofficial" data-rh="true"/>
+        <meta property="twitter:domain" content="1mg.com" data-rh="true"/>
+        <meta property="twitter:title" content="Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: 1mg.com" data-rh="true"/>
+        <meta property="twitter:description" content="India's best online pharmacy with a wide range of Prescription and OTC medicines. Order medicines online at 1mg's medicine store in 100+ cities like - Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Gurgaon, Noida, Pune etc. with free home delivery and exciting offers. Check Now!" data-rh="true"/>
+        <meta property="twitter:image" content="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1mg-logo-large.png" data-rh="true"/>
+        <link rel="canonical" href="https://www.1mg.com/PrivacyPolicy" data-rh="true"></link>
+        <link rel="publisher" href="https://plus.google.com/+Healthkartplus" />
+        
+        
+    
+
+		<link rel="preconnect" href="https://assets.1mg.com" />
+		<link rel="preconnect" href="https://static.1mg.com" />
+
+		<link rel="dns-prefetch" href="https://assets.1mg.com" />
+		<link rel="dns-prefetch" href="https://static.1mg.com" />
+		<link
+			rel="shortcut icon"
+			type="image/x-icon"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/favicon.ico"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="57x57"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-57x57.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="60x60"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-60x60.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="72x72"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-72x72.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="76x76"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-76x76.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="114x114"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-114x114.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="120x120"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-120x120.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="144x144"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-144x144.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="152x152"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-152x152.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-180x180.png"
+		/>
+		<link
+			rel="apple-touch-icon"
+			sizes="192x192"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-192x192.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="114x114"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-114x114.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="120*120"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-120x120.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="144*144"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-144x144.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="152*152"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-152x152.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="180*180"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-180x180.png"
+		/>
+		<link
+			rel="apple-touch-icon-precomposed"
+			sizes="192*192"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/apple-touch-icon-192x192.png"
+		/>
+
+		<!-- Splash screen for iOS on PWA -->
+
+		<!-- generated -->
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/640*1136.png"
+			media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+			rel="apple-touch-startup-image"
+		/>
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/750*1334.png"
+			media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+			rel="apple-touch-startup-image"
+		/>
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1242*2208.png"
+			media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1125*2436.png"
+			media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+		<link
+			rel="apple-touch-startup-image"
+			media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)"
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1242*2208.png"
+		/>
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/828*1792.png"
+			media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+			rel="apple-touch-startup-image"
+		/>
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1242*2688.png"
+			media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+		<!-- iphone 12 -->
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1170*2532.png"
+			media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+		<!-- iphone13 mini -->
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1080*2340.png"
+			media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+		<!-- iph0one13 pro max -->
+		<link
+			href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/site-icons/1284*2778.png"
+			media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)"
+			rel="apple-touch-startup-image"
+		/>
+
+		
+ <script nonce="2fb13959633a02727d130a0506106a6e" type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"1mg","url":"https://www.1mg.com","sameAs":["https://www.facebook.com/1mgOfficial/","https://twitter.com/1mgofficial","https://plus.google.com/+Healthkartplus","https://www.linkedin.com/company/1mg","https://www.youtube.com/channel/UCNUvsEya-Jq_Pw1t6R47hew"]}</script> 
+		
+		
+		
+		<style>
+			@font-face {
+				font-family: Figtree;
+				font-display: optional;
+				font-weight: 100 800;
+				src: local("Figtree"),
+					url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Figtree-Variable.woff2")
+						format("woff2-variations");
+				unicode-range: U+0020-007F, U+201C, U+201D, U+00A0;
+			}
+			@font-face {
+				font-family: "Cabinet Grotesk";
+				font-display: optional;
+				font-weight: 100 800;
+				src: local("Cabinet Grotesk"), local("CabinetGrotesk"),
+					url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/CabinetGrotesk-Variable.woff2")
+						format("woff2-variations");
+				unicode-range: U+0020-007F, U+201C, U+201D, U+00A0;
+			}
+		</style>
+		
+
+		  
+		  
+
+		<!-- <link rel="manifest" href="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/images/manifest.json" /> -->
+		<link rel="manifest" href="/pwa-api/manifest.json" />
+	</head>
+	<body>
+		<!-- Do not add closing tags here. Closing tags are present in shell-end.html. Document will break if you add closing tags here -->
+<div id="app"><div class="flexColumn App__webFallbackForSafeAreaVar__ioMlO" id="app-page-container"><a id="skip-link" href="/PrivacyPolicy#content">Skip to main content</a><div class="flexColumn ShellHeaderNew__paddingHeaderTop__Chblr "><header id="header" class="ShellHeaderNew__mainHeader__ACwjz ShellHeaderNew__fixedHeader__HjPPF
+                    ShellHeaderNew__opaqueBg__J90wC ShellHeaderNew__borderBottom__Tn257 "><div class="flexColumn ShellHeaderNew__headerHeight__JKqH2"><div class="flex alignCenter container-fluid ShellHeaderNew__flexGrow__PkeF8"><div class="col-6 flex justifyBetween"><div class="flex  alignCenter ShellHeaderNew__justifyStart__Bb0K0"><div class="flex alignCenter ShellHeaderNew__navButton__YCAfe ShellHeaderNew__headerIconBorder__MO1wM"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Frame 1116605351"><g id="Vector"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.61401 3.40234C2.61401 2.91909 3.00576 2.52734 3.48901 2.52734H16.5109C16.9941 2.52734 17.3859 2.91909 17.3859 3.40234C17.3859 3.88559 16.9941 4.27734 16.5109 4.27734H3.48901C3.00576 4.27734 2.61401 3.88559 2.61401 3.40234Z" fill="#121212"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M2.61401 9.99994C2.61401 9.51669 3.00576 9.12494 3.48901 9.12494H16.5109C16.9941 9.12494 17.3859 9.51669 17.3859 9.99994C17.3859 10.4832 16.9941 10.8749 16.5109 10.8749H3.48901C3.00576 10.8749 2.61401 10.4832 2.61401 9.99994Z" fill="#121212"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M2.61401 16.6281C2.61401 16.1449 3.00576 15.7531 3.48901 15.7531H16.5109C16.9941 15.7531 17.3859 16.1449 17.3859 16.6281C17.3859 17.1114 16.9941 17.5031 16.5109 17.5031H3.48901C3.00576 17.5031 2.61401 17.1114 2.61401 16.6281Z" fill="#121212"></path></g></g></svg></div><div itemscope="" itemType="http://schema.org/Organization"><meta itemProp="name" content="1mg.com"/><div class="flex alignCenter ShellHeaderNew__marginLeft8__mxtTN ShellHeaderNew__navButton__YCAfe" data-testid="link"><svg width="78" height="24" viewBox="0 0 78 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M53.1034 6.81541C53.1034 7.12327 53.1034 7.40745 53.1034 7.69162C53.127 7.69162 53.1507 7.69162 53.1507 7.66794C53.5524 7.12327 54.096 6.81541 54.7342 6.64964C55.4196 6.46019 56.0814 6.50756 56.7431 6.74437C57.2395 6.91014 57.6176 7.24168 57.9012 7.66794C57.9249 7.7153 57.9721 7.76267 58.0194 7.85739C58.043 7.81003 58.0667 7.76267 58.0903 7.73898C58.563 7.12327 59.1775 6.72069 59.9338 6.60228C60.6901 6.46019 61.4464 6.53124 62.1318 6.88646C63.0063 7.31272 63.5026 8.02316 63.6444 8.99409C63.6917 9.2309 63.6917 9.4914 63.6917 9.72821C63.6917 11.4806 63.6917 13.233 63.6917 15.0091C63.6917 15.0802 63.6917 15.1512 63.6917 15.2223C62.8645 15.2223 62.0373 15.2223 61.2101 15.2223C61.2101 15.1275 61.2101 15.0565 61.2101 14.9618C61.2101 13.4462 61.2101 11.9543 61.2101 10.4386C61.2101 10.2492 61.1864 10.0834 61.1628 9.89398C61.0446 9.37299 60.7137 9.01777 60.1701 8.92305C59.6738 8.852 59.2011 8.92305 58.8466 9.34931C58.6103 9.63349 58.4921 9.96502 58.4921 10.3439C58.4921 11.007 58.4921 11.6701 58.4921 12.3332C58.4921 13.2094 58.4921 14.1092 58.4921 14.9855C58.4921 15.0565 58.4921 15.1275 58.4921 15.1986C57.6412 15.1986 56.814 15.1986 55.9632 15.1986C55.9632 15.1275 55.9632 15.0565 55.9632 14.9618C55.9632 13.4462 55.9632 11.9306 55.9632 10.415C55.9632 10.1782 55.9395 9.94134 55.8686 9.72821C55.6559 9.18354 55.2778 8.94673 54.7814 8.89937C54.5924 8.87568 54.3797 8.89937 54.1906 8.94673C53.6706 9.1125 53.387 9.4914 53.2688 10.0124C53.2452 10.1308 53.2452 10.2729 53.2452 10.415C53.2452 11.9306 53.2452 13.4462 53.2452 14.9618C53.2452 15.0328 53.2452 15.1039 53.2452 15.1986C52.3943 15.1986 51.5435 15.1986 50.6927 15.1986C50.6927 12.4042 50.6927 9.6098 50.6927 6.81541C51.449 6.81541 52.2762 6.81541 53.1034 6.81541Z" fill="black"></path><path d="M70.7581 7.59614C70.7581 7.33564 70.7581 7.07515 70.7581 6.81465C71.5853 6.81465 72.3889 6.81465 73.2161 6.81465C73.2161 6.86202 73.2161 6.93306 73.2161 6.98042C73.2161 9.49064 73.2161 12.0009 73.2161 14.4874C73.2161 15.4346 72.9798 16.3109 72.5071 17.1397C72.0107 17.9922 71.3017 18.5369 70.3799 18.7974C69.2927 19.1052 68.1819 19.1052 67.0947 18.7737C66.2439 18.5132 65.5585 17.9922 65.0385 17.2581C64.8258 16.9502 64.6603 16.595 64.5894 16.2398C64.5894 16.1924 64.5658 16.1688 64.5658 16.1214C64.5658 16.0977 64.5658 16.0504 64.5422 16.003C65.2985 15.7899 66.0312 15.5767 66.7875 15.3636C66.8111 15.411 66.8347 15.482 66.8347 15.5294C67.0474 16.2161 67.6619 16.7608 68.5128 16.7845C68.82 16.7845 69.1273 16.7608 69.4109 16.6661C70.049 16.4293 70.4272 15.932 70.5926 15.2926C70.6872 14.89 70.7108 14.4637 70.6872 14.0374L70.6636 14.0138H70.6399C70.2854 14.4637 69.8127 14.7005 69.2455 14.7952C68.5128 14.9137 67.7801 14.9137 67.0947 14.6295C65.8657 14.1559 65.0621 13.2796 64.7076 12.0482C64.3767 10.9115 64.4476 9.7985 65.0149 8.75652C65.4876 7.85663 66.1966 7.16987 67.1893 6.83834C67.9456 6.60152 68.7019 6.57784 69.4582 6.76729C69.9781 6.8857 70.4036 7.16987 70.7581 7.59614ZM67.1183 10.7457C67.1183 10.8405 67.1183 10.9115 67.1183 11.0062C67.1893 11.693 67.5438 12.214 68.1819 12.4745C68.4419 12.5929 68.7491 12.6166 69.0328 12.5929C69.8363 12.5455 70.4036 12.0719 70.5926 11.4088C70.6872 11.1246 70.7108 10.8168 70.6872 10.5089C70.5927 9.37223 69.5291 8.59075 68.3237 8.96965C67.5674 9.23015 67.1183 9.89322 67.1183 10.7457Z" fill="black"></path><path d="M50.6448 5.65401C50.6448 4.77781 50.6448 3.9016 50.6448 3.02539C58.1607 3.02539 65.6765 3.02539 73.1923 3.02539C73.2396 3.1438 73.2396 5.2988 73.216 5.63033C73.0742 5.6777 51.0466 5.70138 50.6448 5.65401Z" fill="black"></path><path d="M46.9115 18.963C46.9115 18.0868 46.9115 17.2106 46.9115 16.3344C52.5129 16.3344 58.0907 16.3344 63.6921 16.3344C63.6921 17.2106 63.6921 18.0868 63.6921 18.963C58.1143 18.963 52.5129 18.963 46.9115 18.963Z" fill="black"></path><path d="M49.5344 15.1976C48.6599 15.1976 47.7855 15.1976 46.8873 15.1976C46.8873 14.795 46.8873 14.4161 46.8873 14.0135C46.8873 13.6109 46.8873 13.232 46.8873 12.8294C46.8873 12.4269 46.8873 12.048 46.8873 11.6454C46.8873 11.2428 46.8873 10.8639 46.8873 10.4613C46.8873 10.0587 46.8873 9.67984 46.8873 9.27725C46.8873 8.87467 46.8873 8.49577 46.8873 8.09319C46.8873 7.69061 46.8873 7.31171 46.8873 6.88544C46.0129 6.88544 45.162 6.88544 44.2875 6.88544C44.2875 6.29341 44.2875 5.70138 44.2875 5.08566C44.3584 5.08566 44.4293 5.08566 44.5002 5.08566C45.2566 5.0383 45.9183 4.82517 46.5092 4.32786C46.8873 4.02001 47.1237 3.61742 47.2419 3.1438C47.2419 3.12012 47.2655 3.07275 47.2655 3.04907C48.0218 3.04907 48.7781 3.04907 49.5344 3.04907C49.5344 7.07489 49.5344 11.1244 49.5344 15.1976Z" fill="black"></path><path d="M21.2911 16.0268C21.1256 16.0268 20.9602 16.0268 20.8184 16.0268C19.7548 16.0268 18.6676 16.0268 17.6041 16.0268C17.4386 16.0268 17.3677 15.9795 17.3205 15.8374C16.6823 13.9902 16.0442 12.1668 15.4297 10.3196C15.4061 10.2486 15.3824 10.1776 15.3352 10.0591C15.2642 10.2723 15.1933 10.4144 15.1461 10.5801C14.5552 12.3089 13.9643 14.0613 13.3735 15.79C13.3262 15.9558 13.2553 16.0031 13.0899 16.0031C11.9554 16.0031 10.7973 16.0031 9.66283 16.0031C9.59193 16.0031 9.52102 16.0031 9.42648 16.0031C9.54466 15.719 9.6392 15.4348 9.73373 15.1506C10.8682 12.1668 12.0027 9.18294 13.1135 6.22277C13.1844 6.05701 13.2553 5.98596 13.4444 5.98596C14.697 5.98596 15.926 5.98596 17.1787 5.98596C17.3441 5.98596 17.415 6.03332 17.4859 6.19909C18.7149 9.39607 19.9675 12.6167 21.2202 15.8137C21.2675 15.8847 21.2675 15.9558 21.2911 16.0268Z" fill="black"></path><path d="M40.9548 16.0268C40.8603 16.0268 40.7894 16.0268 40.7185 16.0268C39.5604 16.0268 38.4023 16.0268 37.2442 16.0268C37.0787 16.0268 37.0078 15.9795 36.9606 15.8374C36.3224 13.9902 35.6843 12.1668 35.0698 10.3196C35.0461 10.2486 35.0225 10.1776 34.9752 10.0591C34.928 10.1776 34.9043 10.2723 34.8807 10.3433C34.2662 12.1668 33.6281 13.9666 33.0136 15.79C32.9663 15.9558 32.8954 16.0268 32.7063 16.0268C31.5719 16.0268 30.461 16.0268 29.3266 16.0268C29.2557 16.0268 29.1847 16.0268 29.0902 16.0268C29.1138 15.9321 29.1375 15.8611 29.1611 15.79C30.3665 12.593 31.5955 9.39607 32.8009 6.19909C32.8718 6.03332 32.9427 5.98596 33.1317 5.98596C34.3844 5.98596 35.637 5.98596 36.8897 5.98596C37.0315 5.98596 37.1024 6.03332 37.1733 6.17541C38.4259 9.39607 39.6785 12.6404 40.9312 15.8611C40.9312 15.9084 40.9312 15.9558 40.9548 16.0268Z" fill="black"></path><path d="M30.0833 6.03329C30.0833 7.00423 30.0833 7.97516 30.0833 8.96978C29.1615 8.96978 28.2634 8.96978 27.318 8.96978C27.318 11.3379 27.318 13.6824 27.318 16.0505C25.9709 16.0505 24.6473 16.0505 23.3001 16.0505C23.3001 13.706 23.3001 11.3616 23.3001 8.99346C22.3311 8.99346 21.3857 8.99346 20.4403 8.99346C20.4403 7.99884 20.4403 7.02791 20.4403 6.05698C23.631 6.03329 26.8453 6.03329 30.0833 6.03329Z" fill="black"></path><path d="M0.752411 6.03329C3.96673 6.03329 7.18104 6.03329 10.419 6.03329C10.419 7.00423 10.419 7.97516 10.419 8.96978C9.49724 8.96978 8.59912 8.96978 7.65373 8.96978C7.65373 11.3379 7.65373 13.6824 7.65373 16.0505C6.30656 16.0505 4.95938 16.0505 3.61221 16.0505C3.61221 13.706 3.61221 11.3616 3.61221 8.99346C2.64318 8.99346 1.72143 8.99346 0.752411 8.99346C0.752411 7.97516 0.752411 7.00423 0.752411 6.03329Z" fill="black"></path></svg></div></div></div><div class="flex alignCenter justifyEnd"><div class="flex ShellHeaderNew__marginLeft8__mxtTN ShellHeaderNew__headerIconBorder__MO1wM" data-testid="link"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Frame 1116605302"><g id="Vector"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.32929 4.05747C5.14087 4.05747 3.3668 5.83154 3.3668 8.01997C3.3668 10.2084 5.14087 11.9825 7.32929 11.9825C9.51772 11.9825 11.2918 10.2084 11.2918 8.01997C11.2918 5.83154 9.51772 4.05747 7.32929 4.05747ZM1.9668 8.01997C1.9668 5.05834 4.36767 2.65747 7.32929 2.65747C10.2909 2.65747 12.6918 5.05834 12.6918 8.01997C12.6918 10.9816 10.2909 13.3825 7.32929 13.3825C4.36767 13.3825 1.9668 10.9816 1.9668 8.01997Z" fill="#181A1F"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M10.2041 10.8092C10.4775 10.5358 10.9207 10.5358 11.1941 10.8092L13.1431 12.7582C13.4164 13.0315 13.4164 13.4748 13.1431 13.7481C12.8697 14.0215 12.4265 14.0215 12.1531 13.7481L10.2041 11.7991C9.93076 11.5258 9.93076 11.0826 10.2041 10.8092Z" fill="#181A1F"></path></g></g></svg></div><div class="flex ShellHeaderNew__headerNavIcon__ld6S4 ShellHeaderNew__marginLeft8__mxtTN ShellHeaderNew__headerIconBorder__MO1wM" data-testid="link"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Bag"><g id="Vector"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.0007 3.375C9.2715 3.375 8.6804 3.9661 8.6804 4.69526V9.05116C8.6804 9.53441 8.28865 9.92616 7.8054 9.92616C7.32215 9.92616 6.9304 9.53441 6.9304 9.05116V4.69526C6.9304 2.9996 8.305 1.625 10.0007 1.625C11.6963 1.625 13.0709 2.9996 13.0709 4.69526V9.05116C13.0709 9.53441 12.6792 9.92616 12.1959 9.92616C11.7127 9.92616 11.3209 9.53441 11.3209 9.05116V4.69526C11.3209 3.9661 10.7298 3.375 10.0007 3.375Z" fill="#181A1F"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M4.02077 6.91469C4.07325 6.47464 4.44644 6.14331 4.88961 6.14331H15.1098C15.5529 6.14331 15.9261 6.47464 15.9786 6.91469L16.4809 11.1268C16.6189 12.2834 16.73 13.2155 16.7455 13.9686C16.7614 14.7433 16.6811 15.4314 16.3619 16.0634C16.0333 16.7144 15.541 17.2688 14.9335 17.6723C14.3437 18.064 13.67 18.2253 12.8989 18.3012C12.1492 18.375 11.2105 18.375 10.0458 18.375H9.9536C8.78883 18.375 7.85015 18.375 7.10044 18.3012C6.32935 18.2253 5.65566 18.064 5.06585 17.6723C4.45835 17.2688 3.96612 16.7144 3.63742 16.0634C3.31831 15.4314 3.23793 14.7433 3.25386 13.9686C3.26934 13.2155 3.38051 12.2834 3.51845 11.1268L4.02077 6.91469ZM5.66647 7.89331L5.26159 11.2883C5.11693 12.5014 5.01699 13.3478 5.00349 14.0046C4.99022 14.6499 5.06527 15.0086 5.1996 15.2747C5.39161 15.655 5.67915 15.9788 6.03403 16.2145C6.2823 16.3794 6.62959 16.4964 7.2719 16.5596C7.92574 16.624 8.77803 16.625 9.99969 16.625C11.2213 16.625 12.0736 16.624 12.7275 16.5596C13.3698 16.4964 13.7171 16.3794 13.9653 16.2145C14.3202 15.9788 14.6078 15.655 14.7998 15.2747C14.9341 15.0086 15.0092 14.6499 14.9959 14.0046C14.9824 13.3478 14.8824 12.5014 14.7378 11.2883L14.3329 7.89331H5.66647Z" fill="#181A1F"></path></g></g></svg></div></div></div></div></div></header><div class="OverlaySheet__overlayTransition___x06j OverlaySheet__hidden__qAdyR"></div><div class="flex OverlaySheet__containerHorizontal__XB6AV  OverlaySheet__medium__MQifI OverlaySheet__containerClosedLeft__pIUjO
+                    OverlaySheet__popFromLeft__ZKsqS
+                     " style="top:0"><div class="OverlaySheet__bsContent__h4vqK "><div></div></div></div><div data-testid="overlay" class=""></div><div data-testid="bottomSheet" class="BottomSheet__container__o7FMI BottomSheet__full__WXbBb BottomSheet__fixed__okIz4 BottomSheet__closed__tXgCY"><div class="BottomSheet__closeBtn__qi8Rz"><img src="data:image/svg+xml,%3Csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 20 20&quot;%3E%3C/svg%3E" class=" ImageLoader__transparentImage__KGFat" alt="" width="20" height="20"/></div><div class="BottomSheet__content__CsZ_M"><div class="BottomSheet__header__Ynab0"><div class="flex alignCenter pX-16 pY-16"><div class="titleMediumExtraBold textMain truncateTo1">Choose city</div></div></div><div></div></div></div><div data-testid="overlay" class=""></div><div data-testid="bottomSheet" class="BottomSheet__container__o7FMI BottomSheet__full__WXbBb  BottomSheet__closed__tXgCY"><div class="BottomSheet__closeBtn__qi8Rz"><img src="data:image/svg+xml,%3Csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 20 20&quot;%3E%3C/svg%3E" class=" ImageLoader__transparentImage__KGFat" alt="" width="20" height="20"/></div><div class="BottomSheet__content__CsZ_M"><div class="BottomSheet__header__Ynab0"><div class="flex alignCenter pX-16 pY-16"><div class="titleMediumExtraBold textMain truncateTo1">Change Language</div></div></div><div class="container-fluid"><div class="col-6 paddingBoth-8"></div></div></div></div></div><div data-testid="overlay" class=""></div><div data-testid="bottomSheet" class="BottomSheet__container__o7FMI BottomSheet__medium__UNg5g  BottomSheet__closed__tXgCY"><div class="BottomSheet__closeBtn__qi8Rz"><img src="data:image/svg+xml,%3Csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 20 20&quot;%3E%3C/svg%3E" class=" ImageLoader__transparentImage__KGFat" alt="" width="20" height="20"/></div><div class="BottomSheet__content__CsZ_M"><div class="BottomSheet__header__Ynab0"><div class="flex alignCenter pX-16 pY-16"><div class="titleMediumExtraBold textMain truncateTo1">Sign in to your account</div></div><div><div style="background-color:#DDE2EB;height:1px"></div></div></div><div style="opacity:1;transform:none"><div class="container-fluid widget-container"><div class="marginTop-8 col-6"><div class="flexColumn InputField__inputWrapper__fO_oB"><label class="InputField__inputContainer__AZXWj"><span for="phone" class="bodyMediumRegular truncateTo1 InputField__label__lnj3h">Enter 10 digit mobile number</span><div class="InputField__textField__sP2x8"><span class="bodyMediumRegular textAdditional">+91</span><input id="phone" type="tel" class="bodyMediumRegular textMain" name="phone" maxLength="10" autoComplete="on" placeholder="Enter 10 digit mobile number" value=""/></div></label><div class="flex tagRegular textAdditional mTop-4 justifyEnd InputField__alertContainer__gVU2a"></div></div></div><div class="marginTop-8 col-6"><div class="PrimaryButtonNew__buttonWrapper__iZEFv"><button class="PrimaryButtonNew__buttonContainer__f7Xje PrimaryButtonNew__coral__XgcsL" data-testid="primary-button"><span class="bodyMediumBold PrimaryButtonNew__btnText__LjsK3">Get verification code</span></button></div></div><div class="flex alignCenter marginTop-16"><div class="Auth__customSeperator__E2jGw gutter-only Auth__flexGrow__wXi68"></div><div class="smallRegular gutter-only textSecondary">or</div><div class="Auth__customSeperator__E2jGw gutter-only Auth__flexGrow__wXi68"></div></div><div class="marginTop-16 flex justifyCenter col-6"><div class="PrimaryButtonNew__buttonWrapper__iZEFv"><button class="PrimaryButtonNew__buttonContainer__f7Xje PrimaryButtonNew__coralOutlined__KRzu_" data-testid="primary-button"><span class="bodyMediumBold PrimaryButtonNew__btnText__LjsK3">Sign in with email</span></button></div></div><div class="marginTop-16 flex justifyCenter smallRegular col-6 textSecondary" data-testid="link"><u>Have a referral code?</u></div><div class="marginTop-4 textCenter col-6 xSmallRegular textTertiary">By signing in you agree to our<br/><div class="flex justifyCenter"><div class="textTertiary xSmallRegular" data-testid="link"><u>Terms &amp; conditions</u></div><div> and </div><div class="textTertiary xSmallRegular" data-testid="link"><u>Privacy policy</u></div></div></div></div></div></div></div><main id="content"><div><div><div class="container-fluid widget-container"><div class="col-6 marginTop-8 GeneralDescription__htmlNodeWrapper__h23K3 "></div></div></div></div><div id="bottom-sheet-portal"></div></main><div><div style="min-height:1000px"></div></div></div></div><style>.LoadingContent__loaderWrapper__l7_Ie{background:#fff}.LoadingContent__loaderWrapper__l7_Ie>img{max-width:100%}
+.GeneralDescription__htmlNodeWrapper__h23K3 b,.GeneralDescription__htmlNodeWrapper__h23K3 strong{font-weight:700}.GeneralDescription__htmlNodeWrapper__h23K3 ol,.GeneralDescription__htmlNodeWrapper__h23K3 ul{margin:4px 0 0 0;padding:0 0 0 16px}.GeneralDescription__htmlNodeWrapper__h23K3 li{margin-left:4px;margin-top:8px}.GeneralDescription__htmlNodeWrapper__h23K3 li:first-child{margin-top:0}.GeneralDescription__htmlNodeWrapper__h23K3 h2{margin-top:8px}.GeneralDescription__htmlNodeWrapper__h23K3 h3{margin-top:16px}.GeneralDescription__htmlNodeWrapper__h23K3 a{text-decoration:underline;color:#4e5665}.GeneralDescription__htmlNodeWrapper__h23K3 b{font-size:1rem;font-weight:700}.GeneralDescription__clamp__Ig3Pe{-webkit-line-clamp:17;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden;text-overflow:ellipsis;overflow-wrap:break-word}.GeneralDescription__overflowHidden__EqwZG{max-height:110px;overflow:hidden;position:relative}.GeneralDescription__overflowHidden__EqwZG:after{content:"";position:absolute;z-index:1;bottom:0;left:0;pointer-events:none;background-image:linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(255, 255, 255) 90%);width:100%;height:4em}.GeneralDescription__textUnderline__dLd61{text-decoration:underline}
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10+.
+ */
+
+template {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+
+[hidden] {
+  display: none;
+}
+
+pre{white-space:pre-wrap;background:#f1f1f1;padding:10px}select{border:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;color:#181a1f}select:focus{outline:none}table{border:1px solid #ccc;border-collapse:collapse;margin:0;padding:0;width:100%;table-layout:fixed}table caption{font-size:1.5em;margin:.5em 0 .75em}table tr{background-color:#f8f8f8;border:1px solid #ddd;padding:.35em}table th,table td{padding:.625em;text-align:left}table th{font-size:.85em;letter-spacing:.1em;text-transform:uppercase}button{padding:0}img{max-width:100%;display:inline-block}a{text-decoration:none;color:#ff5443}hr{border:solid 1px #dde2eb;margin:0}input{border:solid;-webkit-appearance:none;color:#181a1f;background-color:#fff;text-align:start}b,strong{font-weight:800}@font-face{font-family:Poppins;font-style:normal;font-weight:300;font-display:optional;src:local("Poppins Light"),local("Poppins-Light"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-Light-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}@font-face{font-family:Poppins;font-style:normal;font-weight:400;font-display:optional;src:local("Poppins Regular"),local("Poppins-Regular"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-Regular-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}@font-face{font-family:Poppins;font-style:italic;font-weight:400;font-display:optional;src:local("Poppins Italic"),local("Poppins-Italic"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-Italic-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}@font-face{font-family:Poppins;font-style:normal;font-weight:500;font-display:optional;src:local("Poppins Medium"),local("Poppins-Medium"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-Medium-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}@font-face{font-family:Poppins;font-style:normal;font-weight:600;font-display:optional;src:local("Poppins SemiBold"),local("Poppins-SemiBold"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-SemiBold-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}@font-face{font-family:Poppins;font-style:normal;font-weight:700;font-display:optional;src:local("Poppins Bold"),local("Poppins-Bold"),url("https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/fonts/Poppins-Bold-Subset.woff2") format("woff2");unicode-range:U+0020-007F,U+201C,U+201D,U+00A}html{font-size:16px;line-height:20px}h1{font-size:1.375rem;font-weight:400;line-height:28px;margin:0}h2{font-size:1.125rem;font-weight:700;line-height:24px;margin:0}h3{font-size:1.125rem;font-weight:500;line-height:24px;margin:0}p{font-size:1rem;line-height:20px;margin:0;word-break:break-word;overflow-wrap:break-word}.heroSemiBold{font-size:3.125rem;font-weight:700;line-height:72px}.heroMedium{font-size:3.125rem;font-weight:500;line-height:72px}.heroRegular{font-size:3.125rem;font-weight:400;line-height:72px}.l1SemiBold{font-size:2rem;font-weight:700;line-height:45px}.l1Medium{font-size:2rem;font-weight:500;line-height:45px}.l1Regular{font-size:2rem;font-weight:400;line-height:45px}.l2SemiBold{font-size:1.625rem;font-weight:700;line-height:36px}.l2Medium{font-size:1.625rem;font-weight:500;line-height:36px}.l2Regular{font-size:1.625rem;font-weight:400;line-height:36px}.l3SemiBold{font-size:1.375rem;font-weight:700;line-height:30px}.l3Medium{font-size:1.375rem;font-weight:500;line-height:30px}.l3Regular{font-size:1.375rem;font-weight:400;line-height:30px}.l4SemiBold{font-size:1.25rem;font-weight:700;line-height:27px}.l4Medium{font-size:1.25rem;font-weight:500;line-height:27px}.l4Regular{font-size:1.25rem;font-weight:400;line-height:27px}.l5SemiBold{font-size:1.125rem;font-weight:700;line-height:24px}.l5Medium{font-size:1.125rem;font-weight:500;line-height:24px}.l5Regular{font-size:1.125rem;font-weight:400;line-height:24px}.bodySemiBold{font-size:1rem;font-weight:700;line-height:21px}.bodyMedium{font-size:1rem;font-weight:500;line-height:21px}.bodyRegular{font-size:1rem;font-weight:400;line-height:21px}.smallSemiBold{font-size:0.875rem;font-weight:700;line-height:18px}.smallMedium{font-size:0.875rem;font-weight:500;line-height:18px}.smallRegular{font-size:0.875rem;font-weight:400;line-height:18px}.xSmallSemiBold{font-size:0.8125rem;font-weight:700;line-height:18px}.xSmallMedium{font-size:0.8125rem;font-weight:500;line-height:18px}.xSmallRegular{font-size:0.8125rem;font-weight:400;line-height:18px}.textPrimary{color:#181a1f}.textSecondary{color:#4e5665}.textTertiary{color:#868e9e}.foregroundPrimary{color:#1f1f1f}.foregroundDisabled{color:#a9a9a9}.backgroundSecondary{background-color:#f0f2f5}.errorColor{background-color:#ffadb3;color:#c50f1f}.cautionColor{background-color:#fff4c0;color:#bf9514}.successColor{background-color:#daffea;color:#156437}.noAnchorColor{color:#181a1f}.breakWord{word-break:break-word}.container-fluid{width:100%;padding-left:12px;padding-right:12px}.container-fluid-padded{width:100%;padding:16px 12px}.container-fluid-padded-xl{width:100%;padding:24px 12px}.gutter-only{margin-left:4px;margin-right:4px}.fullWidth{width:100%}.col-1{width:calc((100vw - 72px)/6);margin-left:4px;margin-right:4px}.col-2{width:calc(calc((100vw - 72px) / 6)*2 + 8px);margin-left:4px;margin-right:4px}.col-3{width:calc(calc((100vw - 72px) / 6)*3 + 16px);margin-left:4px;margin-right:4px}.col-4{width:calc(calc((100vw - 72px) / 6)*4 + 24px);margin-left:4px;margin-right:4px}.col-5{width:calc(calc((100vw - 72px) / 6)*5 + 32px);margin-left:4px;margin-right:4px}.col-6{width:calc(calc((100vw - 72px) / 6)*6 + 40px);margin-left:4px;margin-right:4px}.marginTop-4{margin-top:4px}.marginTop-8{margin-top:8px}.marginTop-16{margin-top:16px}.marginTop-24{margin-top:24px}.marginTop-32{margin-top:40px}.marginTop-40{margin-top:40px}.marginTop-48{margin-top:48px}.marginBottom-24{margin-bottom:24px}.marginTop-96{margin-top:96px}.marginBoth-4{margin-top:4px;margin-bottom:4px}.marginBoth-8{margin-top:8px;margin-bottom:8px}.marginBoth-16{margin-top:16px;margin-bottom:16px}.marginBoth-24{margin-top:24px;margin-bottom:24px}.marginBoth-40{margin-top:40px;margin-bottom:40px}.marginBoth-48{margin-top:48px;margin-bottom:48px}.paddingBoth-8{padding-top:8px;padding-bottom:8px}.paddingBoth-16{padding-top:16px;padding-bottom:16px}.paddingBoth-40{padding-top:40px;padding-bottom:40px}.marginTop-12{margin-top:12px}.marginTop-20{margin-top:20px}.flex{display:flex}.flex1{flex:1}.flexColumn{display:flex;flex-direction:column}.flexWrap{flex-wrap:wrap}.alignStart{align-items:start}.alignCenter{align-items:center}.alignEnd{align-items:end}.alignBase{align-items:baseline}.alignFlexEnd{align-items:flex-end}.justifyCenter{justify-content:center}.justifyBetween{justify-content:space-between}.justifyEnd{justify-content:flex-end}.spaceAround{justify-content:space-around}.middleDivider{margin-left:16px;margin-right:16px}.insetDivider{margin-left:8px;margin-right:8px}.displayNone{display:none}.displayBlock{display:block}.textCenter{text-align:center}.textRight{text-align:right}.textUnderline{text-decoration:underline}.minHeight-100{min-height:100vh}.smallBorderRadius{border-radius:4px}.borderRadius{border-radius:8px}.widget-container{width:100%;padding-top:8px;padding-bottom:16px}html{box-sizing:border-box}html,body{height:100%;background-color:#fff;font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;-webkit-tap-highlight-color:rgba(0,0,0,0);margin:0;color:#181a1f}body.preventYAxisScroll{position:relative;overflow-y:hidden}body.preventXAxisScroll{position:relative;overflow-x:hidden}body.preventScroll{position:relative;overflow:hidden}body.offline input,body.offline button,body.offline a{pointer-events:none}*{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}#app{height:100%;width:100%;margin:0 auto}#loader-portal{position:absolute;z-index:100}*,*::before,*::after{box-sizing:inherit}.select-element-portal{position:fixed;z-index:1300;top:0;left:0;right:0;bottom:0}.bottom-sheet-element{position:fixed;z-index:100;transition:all .2s ease-in;bottom:0;left:0;right:0;height:0;overflow:hidden;transform:translate3d(0, 0, 0)}#bottom-sheet-root{position:relative;z-index:100}#bottom-sheet-root.open{height:100%}#bottom-sheet-root.open .bottom-sheet-backdrop{background:rgba(43,43,43,.48);position:fixed;top:0;left:0;right:0;bottom:0;z-index:99}#bottom-sheet-root.open .bottom-sheet-element.full{height:95vh}#bottom-sheet-root.open .bottom-sheet-element.small{height:40vh}#bottom-sheet-root.open .bottom-sheet-element.medium{height:calc(100% - 72px - 34px)}.bottomsheet-portal{height:100%}.loader{width:30px;aspect-ratio:1;border-radius:50%;background:radial-gradient(farthest-side, #ff5443 94%, rgba(0, 0, 0, 0)) top/4px 4px no-repeat,conic-gradient(rgba(0, 0, 0, 0) 30%, #ff5443);-webkit-mask:radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 4px), #000 0);animation:spin 1s infinite linear;margin:8px auto}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.shimmer{border-radius:4px;background:#f6f7f8;background-image:linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);background-repeat:no-repeat;background-size:200vw 100vh;animation-duration:1s;animation-fill-mode:forwards;animation-iteration-count:infinite;animation-name:shimmer;animation-timing-function:linear;-webkit-animation-duration:1s;-webkit-animation-fill-mode:forwards;-webkit-animation-iteration-count:infinite;-webkit-animation-name:shimmer;-webkit-animation-timing-function:linear}@keyframes shimmer{0%{background-position:-100vw 0}100%{background-position:100vw 0}}#skip-link{position:absolute;top:-30em;width:100%;padding:16px;background-color:rgba(255,255,255,.9);font-weight:700;text-align:center}#skip-link:focus{top:0;z-index:99}.newShimmer{border-radius:4px;background:#dde2eb;background-image:linear-gradient(to right, rgba(221, 226, 235, 0.3294117647) 0%, #edeef1 20%, #f6f7f8 40%, #dde2eb 100%);background-repeat:no-repeat;background-size:108px;animation-duration:1s;animation-fill-mode:forwards;animation-iteration-count:infinite;animation-name:newShimmer;animation-timing-function:linear;-webkit-animation-duration:1s;-webkit-animation-fill-mode:forwards;-webkit-animation-iteration-count:infinite;-webkit-animation-name:newShimmer;-webkit-animation-timing-function:linear}@keyframes newShimmer{0%{background-position:-100vw 0}100%{background-position:100vw 0}}@keyframes fade-in{from{opacity:1}}@keyframes fade-out{to{opacity:1}}@keyframes slide-from-right{from{transform:translateX(100vw)}to{transform:translateX(0vw)}}@keyframes slide-to-left{from{transform:translateX(0vw)}to{transform:translateX(-100vw)}}::view-transition-old(forward-navigation){animation:90ms cubic-bezier(0.4, 0, 1, 1) 90ms both fade-out,300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;mix-blend-mode:normal}::view-transition-new(forward-navigation){animation:90ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;mix-blend-mode:normal}@keyframes slide-from-left{from{transform:translateX(-100vw)}to{transform:translateX(0vw)}}@keyframes slide-to-right{from{transform:translateX(0vw)}to{transform:translateX(100vw)}}::view-transition-old(backward-navigation){animation:90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;mix-blend-mode:normal}::view-transition-new(backward-navigation){animation:90ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;mix-blend-mode:normal}.displayExtraLargeExtraBold{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:3.25rem;font-weight:800;line-height:64px}.displayLargeExtraBold{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:2.8125rem;font-weight:800;line-height:52px}.displayLargeLight{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:2.8125rem;font-weight:300;line-height:52px}.displayMediumExtraBold{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:2.25rem;font-weight:800;line-height:44px}.displayMediumLight{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:2.25rem;font-weight:300;line-height:44px}.displaySmallExtraBold{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:800;line-height:32px}.displaySmallLight{font-family:"Cabinet Grotesk",Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:300;line-height:32px}.headingLargeExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:2rem;font-weight:800;line-height:40px}.headingLargeBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:2rem;font-weight:700;line-height:40px}.headingLargeMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:2rem;font-weight:500;line-height:40px}.headingLargeRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:2rem;font-weight:400;line-height:40px}.headingMediumExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.75rem;font-weight:800;line-height:36px}.headingMediumBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.75rem;font-weight:700;line-height:36px}.headingMediumMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.75rem;font-weight:500;line-height:36px}.headingMediumRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.75rem;font-weight:400;line-height:36px}.headingSmallExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:800;line-height:32px}.headingSmallBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:700;line-height:32px}.headingSmallSemiBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:600;line-height:32px}.headingSmallMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:500;line-height:32px}.headingSmallRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.5rem;font-weight:400;line-height:32px}.headingExtraSmallExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.125rem;font-weight:800;line-height:28px}.headingExtraSmallBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.125rem;font-weight:700;line-height:28px}.headingExtraSmallMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.125rem;font-weight:500;line-height:28px}.headingExtraSmallRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.125rem;font-weight:400;line-height:28px}.headingExtraSmallBoldOld{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.125rem;font-weight:700;line-height:24px}.titleLargeExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.375rem;font-weight:800;line-height:28px}.titleMediumExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1rem;font-weight:800;line-height:24px}.titleSmallExtraBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.875rem;font-weight:800;line-height:20px}.titleMediumBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.25rem;font-weight:700;line-height:28px}.titleMediumMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1.25rem;font-weight:500;line-height:28px}.bodyLargeBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1rem;font-weight:700;line-height:24px}.bodyLargeSemiBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1rem;font-weight:600;line-height:24px}.bodyLargeMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1rem;font-weight:500;line-height:24px}.bodyLargeRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:1rem;font-weight:400;line-height:24px}.bodyMediumBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.875rem;font-weight:700;line-height:20px}.bodyMediumSemiBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.875rem;font-weight:600;line-height:20px}.bodyMediumMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.875rem;font-weight:500;line-height:20px}.bodyMediumRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.875rem;font-weight:400;line-height:20px}.bodySmallBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.75rem;font-weight:700;line-height:16px}.bodySmallMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.75rem;font-weight:500;line-height:16px}.bodySmallRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.75rem;font-weight:400;line-height:16px}.tagBold{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.6875rem;font-weight:700;line-height:16px}.tagMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.6875rem;font-weight:500;line-height:16px}.tagRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.6875rem;font-weight:400;line-height:16px}.tagSmallRegular{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.625rem;font-weight:400;line-height:16px}.tagSmallMedium{font-family:Figtree,Avenir,"Century Gothic",Arial,sans-serif;font-size:0.625rem;font-weight:500;line-height:16px}.textMain{color:#181a1f}.textSupporting{color:#4e5665}.textAdditional{color:#868e9e}.textBrand{color:#ff5443}.textBrandAlt{color:#9d59a8}.textWhite{color:#fff}.noLinkColor{color:#181a1f}.curved-none{border-radius:0}.curved-xs{border-radius:2px}.curved-sm{border-radius:4px}.curved{border-radius:8px}.curved-lg{border-radius:12px}.curved-xl{border-radius:16px}.curved-max{border-radius:999999px}.shadow-none{box-shadow:none}.shadow{box-shadow:0 4px 4px 0 rgba(0,0,0,.08)}.shadow-invert{box-shadow:0 -4px 4px 0 rgba(0,0,0,.08)}.mTop-2{margin-top:2px}.mLeft-2{margin-left:2px}.mX-2{margin-left:2px;margin-right:2px}.mY-2{margin-top:2px;margin-bottom:2px}.pTop-2{padding-top:2px}.pLeft-2{padding-left:2px}.pX-2{padding-left:2px;padding-right:2px}.pY-2{padding-top:2px;padding-bottom:2px}.mTop-4{margin-top:4px}.mLeft-4{margin-left:4px}.mX-4{margin-left:4px;margin-right:4px}.mY-4{margin-top:4px;margin-bottom:4px}.pTop-4{padding-top:4px}.pLeft-4{padding-left:4px}.pX-4{padding-left:4px;padding-right:4px}.pY-4{padding-top:4px;padding-bottom:4px}.mTop-8{margin-top:8px}.mLeft-8{margin-left:8px}.mX-8{margin-left:8px;margin-right:8px}.mY-8{margin-top:8px;margin-bottom:8px}.pTop-8{padding-top:8px}.pLeft-8{padding-left:8px}.pX-8{padding-left:8px;padding-right:8px}.pY-8{padding-top:8px;padding-bottom:8px}.mTop-12{margin-top:12px}.mLeft-12{margin-left:12px}.mX-12{margin-left:12px;margin-right:12px}.mY-12{margin-top:12px;margin-bottom:12px}.pTop-12{padding-top:12px}.pLeft-12{padding-left:12px}.pX-12{padding-left:12px;padding-right:12px}.pY-12{padding-top:12px;padding-bottom:12px}.mTop-16{margin-top:16px}.mLeft-16{margin-left:16px}.mX-16{margin-left:16px;margin-right:16px}.mY-16{margin-top:16px;margin-bottom:16px}.pTop-16{padding-top:16px}.pLeft-16{padding-left:16px}.pX-16{padding-left:16px;padding-right:16px}.pY-16{padding-top:16px;padding-bottom:16px}.mTop-20{margin-top:20px}.mLeft-20{margin-left:20px}.mX-20{margin-left:20px;margin-right:20px}.mY-20{margin-top:20px;margin-bottom:20px}.pTop-20{padding-top:20px}.pLeft-20{padding-left:20px}.pX-20{padding-left:20px;padding-right:20px}.pY-20{padding-top:20px;padding-bottom:20px}.mTop-24{margin-top:24px}.mLeft-24{margin-left:24px}.mX-24{margin-left:24px;margin-right:24px}.mY-24{margin-top:24px;margin-bottom:24px}.pTop-24{padding-top:24px}.pLeft-24{padding-left:24px}.pX-24{padding-left:24px;padding-right:24px}.pY-24{padding-top:24px;padding-bottom:24px}.mTop-28{margin-top:28px}.mLeft-28{margin-left:28px}.mX-28{margin-left:28px;margin-right:28px}.mY-28{margin-top:28px;margin-bottom:28px}.pTop-28{padding-top:28px}.pLeft-28{padding-left:28px}.pX-28{padding-left:28px;padding-right:28px}.pY-28{padding-top:28px;padding-bottom:28px}.mTop-32{margin-top:32px}.mLeft-32{margin-left:32px}.mX-32{margin-left:32px;margin-right:32px}.mY-32{margin-top:32px;margin-bottom:32px}.pTop-32{padding-top:32px}.pLeft-32{padding-left:32px}.pX-32{padding-left:32px;padding-right:32px}.pY-32{padding-top:32px;padding-bottom:32px}.mTop-36{margin-top:36px}.mLeft-36{margin-left:36px}.mX-36{margin-left:36px;margin-right:36px}.mY-36{margin-top:36px;margin-bottom:36px}.pTop-36{padding-top:36px}.pLeft-36{padding-left:36px}.pX-36{padding-left:36px;padding-right:36px}.pY-36{padding-top:36px;padding-bottom:36px}.mTop-40{margin-top:40px}.mLeft-40{margin-left:40px}.mX-40{margin-left:40px;margin-right:40px}.mY-40{margin-top:40px;margin-bottom:40px}.pTop-40{padding-top:40px}.pLeft-40{padding-left:40px}.pX-40{padding-left:40px;padding-right:40px}.pY-40{padding-top:40px;padding-bottom:40px}.mTop-auto{margin-top:auto}.mLeft-auto{margin-left:auto}.truncateTo1{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;line-clamp:1;-webkit-line-clamp:1;-webkit-box-orient:vertical}.truncateTo2{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;line-clamp:2;-webkit-line-clamp:2;-webkit-box-orient:vertical}.truncateTo3{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;line-clamp:3;-webkit-line-clamp:3;-webkit-box-orient:vertical}.shrink{flex-shrink:1}.shrink-0{flex-shrink:0}.grow{flex-grow:1}.grow-0{flex-grow:0}.object-contain{object-fit:contain}.object-cover{object-fit:cover}
+.ShellHeaderNew__cartNotification__uxeIr{background-color:#ff5443;border-radius:50%;color:#fff;height:16px;width:16px;position:absolute;right:-4px;top:0;z-index:2}.ShellHeaderNew__titleContainer__fihyH{align-items:flex-start}.ShellHeaderNew__marginLeft8__mxtTN{margin-left:8px}.ShellHeaderNew__justifyStart__Bb0K0{justify-content:flex-start}.ShellHeaderNew__flexGrow__PkeF8{flex-grow:1}.ShellHeaderNew__navButton__YCAfe{cursor:pointer}.ShellHeaderNew__headerNavIcon__ld6S4{cursor:pointer;transform:translate3d(0, 0, 0)}.ShellHeaderNew__textOverflow__Vquoa{-webkit-box-orient:vertical;display:-webkit-box;text-overflow:ellipsis;overflow:hidden}.ShellHeaderNew__corporateLogoDimensions__f7bgZ{max-width:160px;height:auto;max-height:40px}.ShellHeaderNew__fixedHeader__HjPPF{position:fixed;top:-100px;transform:translateY(100px);z-index:24}.ShellHeaderNew__borderBottom__Tn257{border-bottom:solid 1px #dde2eb}.ShellHeaderNew__headerHeight__JKqH2{height:72px}.ShellHeaderNew__paddingHeaderTop__Chblr{padding-top:72px}.ShellHeaderNew__headerIconBorder__MO1wM{height:40px;width:40px;background-color:#f0f2f5;justify-content:center;display:flex;align-items:center;border-radius:999999px;flex-shrink:0}.ShellHeaderNew__opaqueBg__J90wC{background-color:#fff}.ShellHeaderNew__transparentBg__mjFHp{background-color:rgba(0,0,0,0)}.ShellHeaderNew__mainHeader__ACwjz{view-transition-name:mainHeader}.ShellHeaderNew__safeAreaPaddingTop__MbZbD{padding-top:var(--safe-area-inset-top, 38px)}.ShellHeaderNew__transition__paF6X{transition:transform .4s ease-in-out,top .4s ease-in-out}.ShellHeaderNew__slideInFixedHeader__U831Z{position:fixed;top:0;transform:translateY(-100%);z-index:24}.ShellHeaderNew__slideInShow__HevlD{transform:translateY(0)}.ShellHeaderNew__slideOutHeader__E_lZ_{position:fixed;top:0;transform:translateY(-100%);z-index:24}.ShellHeaderNew__colorTransition__sYVCm{transition:color .5s ease}.ShellHeaderNew__boxShadow__gG7NU{box-shadow:0px 0px 8px 0px rgba(0,0,0,.08),0px 8px 8px 0px rgba(0,0,0,.08)}
+.Radio__radioInputBox__s3miB{-webkit-appearance:none;-moz-appearance:none;appearance:none;width:24px;height:24px;border-radius:999999px;border:1px solid #868e9e;transition:background .25s ease-in-out,box-shadow .25s ease-in-out;flex-shrink:0}.Radio__radioInputBox__s3miB:checked{border:6px solid #ff5443;outline:none}.Radio__radioInputBox__s3miB:disabled{border-color:#dde2eb}.Radio__radioInputBox__s3miB:checked:disabled{border-color:#dde2eb}
+@keyframes ImageLoader__fadeInImg__p2N9S{0%{opacity:0}100%{opacity:1}}.ImageLoader__img-loading__ItdSV{height:auto;animation:ImageLoader__fadeInImg__p2N9S cubic-bezier(0.23, 1, 0.32, 1) 1;opacity:0;animation-fill-mode:forwards;animation-duration:.7s;animation-delay:.1s}.ImageLoader__img-loaded__wfU_q{position:relative;max-height:100%}.ImageLoader__transparentImage__KGFat{opacity:0}.ImageLoader__resizeShimmer__105I_{opacity:1;height:100%}
+.Separator__dashedLine__ZQT8u{border-top:1px dashed #dde2eb}
+.OverlaySheet__overlay__KjGpy{opacity:1;visibility:visible;transition:opacity .5s cubic-bezier(0.3, 0, 0.3, 1)}.OverlaySheet__overlayTransition___x06j{z-index:99;position:fixed;bottom:0;height:100vh;height:100dvh;width:100vw;background:rgba(43,43,43,.48)}.OverlaySheet__hidden__qAdyR{visibility:hidden;opacity:0;transition:visibility .5s,opacity .5s cubic-bezier(0.3, 0, 0.3, 1)}.OverlaySheet__containerVertical__RNQNI{position:fixed;width:100vw;z-index:100;justify-content:center;visibility:hidden;flex-direction:column;overflow-y:hidden;overflow-x:hidden;max-height:75vh;max-height:75dvh;transition-property:all;transition-duration:.5s;transition-timing-function:cubic-bezier(0.3, 0, 0.3, 1);left:0}.OverlaySheet__containerVertical__RNQNI.OverlaySheet__fixed__s25LM{height:75vh;height:75dvh}.OverlaySheet__containerVertical__RNQNI.OverlaySheet__medium__MQifI{max-height:75vh;max-height:75dvh}.OverlaySheet__containerVertical__RNQNI.OverlaySheet__medium__MQifI.OverlaySheet__fixed__s25LM{height:75vh;height:75dvh}.OverlaySheet__containerVertical__RNQNI.OverlaySheet__full__N9EtF{max-height:90vh;max-height:90dvh}.OverlaySheet__containerVertical__RNQNI.OverlaySheet__full__N9EtF.OverlaySheet__fixed__s25LM{height:90vh;height:90dvh}.OverlaySheet__containerHorizontal__XB6AV{position:fixed;max-width:calc(calc((100vw - 72px) / 6)*5 + 32px);z-index:100;justify-content:center;visibility:hidden;overflow-y:hidden;overflow-x:hidden;max-height:100vh;max-height:100dvh;transition-property:transform,visibility;transition-duration:.5s;transition-timing-function:cubic-bezier(0.3, 0, 0.3, 1)}.OverlaySheet__popFromBottom__S2i6K{bottom:0}.OverlaySheet__popFromTop__g4InN{top:0}.OverlaySheet__popFromLeft__ZKsqS{left:0}.OverlaySheet__popFromRight__sbmHP{right:0}.OverlaySheet__bottomNavHeight__mJ27e{margin-bottom:68px}.OverlaySheet__containerClosedBottom__aBoa9{visibility:hidden;transform:translateY(400%)}.OverlaySheet__containerClosedTop__E6UFh{visibility:hidden;transform:translateY(-100%)}.OverlaySheet__containerClosedLeft__pIUjO{visibility:hidden;transform:translateX(-100%)}.OverlaySheet__containerClosedRight__mjJxk{visibility:hidden;transform:translateX(100%)}.OverlaySheet__containerOpen__QMDqA{visibility:visible;transform:translate(0%, 0%)}.OverlaySheet__header__web0y{position:sticky;top:0;z-index:16;background-color:#fff}.OverlaySheet__headerContent__APhQ8{height:48px}.OverlaySheet__closeButton__BmGEy{margin-left:auto;opacity:1}.OverlaySheet__backButton__tiC78{margin-right:16px}.OverlaySheet__bsContent__h4vqK{background-color:#fff;overflow-y:scroll;-ms-overflow-style:none;scrollbar-width:none}.OverlaySheet__bsContent__h4vqK.OverlaySheet__fixedContent__w32mp{height:100%}.OverlaySheet__bsContent__h4vqK::-webkit-scrollbar{display:none;width:0;height:0}.OverlaySheet__bsContent__h4vqK::-webkit-scrollbar-track{background:rgba(0,0,0,0)}.OverlaySheet__reverseFlexFlow__HA3rg{flex-flow:column-reverse}.OverlaySheet__bold__Hwq5K b{font-weight:700}.OverlaySheet__clipText__mCfwm{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.BottomSheet__overlay__wG0ZP{position:fixed;top:0;left:0;z-index:99;height:100vh;width:100vw;background:rgba(0,0,0,.8);transition:opacity 1s linear}.BottomSheet__container__o7FMI{position:fixed;width:100vw;left:0;bottom:0;z-index:100;display:flex;flex-direction:column;gap:16px;transition:all .5s cubic-bezier(0, 1, 0.5, 1)}.BottomSheet__container__o7FMI.BottomSheet__fixed__okIz4{height:75vh;height:75dvh}.BottomSheet__container__o7FMI.BottomSheet__medium__UNg5g{max-height:75vh;max-height:75dvh}.BottomSheet__container__o7FMI.BottomSheet__full__WXbBb{max-height:90vh;max-height:90dvh}.BottomSheet__container__o7FMI.BottomSheet__full__WXbBb.BottomSheet__fixed__okIz4{height:90vh;height:90dvh}.BottomSheet__closed__tXgCY{visibility:hidden;transform:translateY(100%)}.BottomSheet__open__AZakl{visibility:visible;transform:translateY(0%)}.BottomSheet__closeBtn__qi8Rz{width:40px;height:40px;background-color:#fff;border-radius:999999px;display:flex;justify-content:center;align-items:center;align-self:end;flex-shrink:0;margin-right:16px}.BottomSheet__content__CsZ_M{background-color:#fff;overflow-y:scroll;border-top-left-radius:16px;border-top-right-radius:16px;flex:1}.BottomSheet__backButton__CkM1p{margin-right:8px}.BottomSheet__header__Ynab0{position:sticky;top:0;z-index:16;background-color:#fff}
+.Dialog__dialogTitleContainer__ZCVFz{background:#fff;padding:16px 24px;flex:0 0 auto}.Dialog__dialogTitleContainer__ZCVFz>h6{font-weight:500;font-size:1.125rem}.Dialog__scrollableContainer__aWmJ6{flex:1 1 auto;overflow-y:auto}.Dialog__modalContent__iobLc{position:relative;max-height:calc(100% - 96px);max-width:calc(100% - 16px);display:flex;flex-direction:column;overflow:hidden}.Dialog__modalContent__iobLc.Dialog__hasBanner__JpT1r{overflow:initial}.Dialog__modalContent__iobLc.Dialog__hasBanner__JpT1r .Dialog__dialogTitleContainer__ZCVFz,.Dialog__modalContent__iobLc.Dialog__hasBanner__JpT1r .Dialog__scrollableContainer__aWmJ6{text-align:center}.Dialog__modalContent__iobLc.Dialog__showFullScreen__tQHBI{max-width:100%;max-height:100%;height:100%;border-radius:0;width:100%}.Dialog__dialogOpen__LuK48{overflow:hidden}.Dialog__dialogActionsContainer__PCtFK{padding:8px;flex:0 0 auto;display:flex;flex-wrap:wrap}.Dialog__dialogActionsContainer__PCtFK.Dialog__alignLeft__AYR0A{justify-content:flex-start;text-align:left}.Dialog__dialogActionsContainer__PCtFK.Dialog__alignRight__ZqoiB{justify-content:flex-end;text-align:right}.Dialog__dialogActionsContainer__PCtFK.Dialog__alignCenter__DfWh6{justify-content:center;text-align:center}.Dialog__dialogCloseIcon__Fh8SA{position:absolute;color:#fff;right:5px;top:-25px;text-decoration:none;font-weight:bold;line-height:1;width:16px;height:16px;font-size:1.375rem}.Dialog__dialogBannerContent__B3Lqm>img{display:inline-block;width:100%}
+.PrimaryButtonNew__buttonContainer__f7Xje{width:100%;min-width:80px;display:flex;justify-content:center;align-items:center;border:none;outline:none;cursor:pointer;border-radius:8px;padding:12px 16px}.PrimaryButtonNew__buttonContainer__f7Xje[disabled]{background-color:#dde2eb;color:#868e9e;cursor:not-allowed;pointer-events:none}.PrimaryButtonNew__white__EcD8Q{background-color:#fff;color:#181a1f}.PrimaryButtonNew__black__EBbTD{background-color:#181a1f;color:#fff}.PrimaryButtonNew__coral__XgcsL{background-color:#ff5443;color:#fff}.PrimaryButtonNew__coralOutlined__KRzu_{background-color:#fff;color:#ff5443;box-shadow:inset 0 0 0 1px #dde2eb}.PrimaryButtonNew__fitContent__JE8zt{width:fit-content}.PrimaryButtonNew__btnText__LjsK3{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.PrimaryButtonNew__elevatedBorder__RBOp3{box-shadow:inset 0 0 0 1px #dde2eb,0 4px 4px 0 rgba(0,0,0,.08)}.PrimaryButtonNew__spinner__XTqs5{--spin-color: #ff5443;width:20px;aspect-ratio:1;border-radius:50%;background:radial-gradient(farthest-side, var(--spin-color) 94%, rgba(0, 0, 0, 0)) top/2px 2px no-repeat,conic-gradient(rgba(0, 0, 0, 0) 30%, var(--spin-color));-webkit-mask:radial-gradient(farthest-side, rgba(0, 0, 0, 0) calc(100% - 2px), #000 0);animation:PrimaryButtonNew__spin__IdR8Z 1s infinite linear}.PrimaryButtonNew__spinner__XTqs5.PrimaryButtonNew__light__tGFE3{--spin-color: #fff}@keyframes PrimaryButtonNew__spin__IdR8Z{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.PrimaryButtonNew__blendedLine__uDAfC{width:5.342px;height:100%;transform:rotate(30.483deg);flex-shrink:0;background-color:#dde2eb;filter:blur(4px);position:absolute;animation:PrimaryButtonNew__slide__JAanb 3s linear 2;animation-delay:.5s;visibility:hidden;top:0}.PrimaryButtonNew__blendedLine__uDAfC:last-of-type{margin-left:16px}.PrimaryButtonNew__buttonWrapper__iZEFv{width:100%;height:100%;position:relative}@keyframes PrimaryButtonNew__slide__JAanb{0%{left:0;visibility:visible}100%{left:calc(100% - 28px);visibility:hidden}}
+@keyframes LocationSelectorNew__fadeIn__jotS4{0%{opacity:0}100%{opacity:1}}@keyframes LocationSelectorNew__spin__DsHsj{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.LocationSelectorNew__locationTextContainer__dId8G{position:relative;margin:0px 0px 0px 8px;flex:1;max-width:80%}.LocationSelectorNew__locationTextOverflow__ClOlS{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}.LocationSelectorNew__locationText__u7Sh4{margin-right:4px;max-width:60%}.LocationSelectorNew__locationSubtext__O_kxK{font-size:11px;font-weight:500;color:#767676;max-width:80%}.LocationSelectorNew__locationTooltip__b_SRY{position:absolute;left:8px;top:calc(100% + 15px);width:max-content;max-width:80vw;background:#373744;border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:space-between;z-index:18;color:#fff;opacity:0;animation:LocationSelectorNew__fadeIn__jotS4 .2s linear .5s forwards}.LocationSelectorNew__locationTooltip__b_SRY span{font-size:11px;font-weight:500;line-height:18px}.LocationSelectorNew__locationTooltipPointer__bDlSr{position:absolute;left:20px;top:0;width:15px;height:15px;transform:translateY(-50%) rotate(-45deg);background:#373744;border-top-right-radius:4px 4px}.LocationSelectorNew__locationAccessPopup__g1YqZ{position:fixed;top:132px;left:16px;right:16px;width:auto}.LocationSelectorNew__locationAccessPopupContent__bLUSG{background:#fff;border-radius:8px;position:relative}.LocationSelectorNew__locationPermissionPointer__jr9KZ{background:#fff;position:absolute;top:0;left:68px;width:16px;height:16px;border-top-right-radius:4px 4px;transform:translateY(-50%) rotate(-45deg)}.LocationSelectorNew__locationRequestLoading__f1PxC{position:absolute;top:0;left:0;right:0;bottom:0;background:#fff;border-radius:8px;opacity:.8;pointer-events:none}.LocationSelectorNew__locationRequestLoading__f1PxC img{animation:LocationSelectorNew__spin__DsHsj 1s linear infinite}.LocationSelectorNew__locationRequestError__SSK7e{padding:8px;background:#f0f2f5;border-radius:8px;color:#c50f1f}.LocationSelectorNew__buttonWidth__Tr5tl{width:50%}.LocationSelectorNew__buttonWidth__Tr5tl button span{font-size:0.75rem;line-height:1pxrem}.LocationSelectorNew__buttonWidth__Tr5tl button>img{margin-right:4px}.LocationSelectorNew__marginLeft8__m2wbQ{margin-left:8px}
+.TextualButtonNew__btn__YDuss{background-color:rgba(0,0,0,0);display:flex;padding:0;align-items:center;border:none;cursor:pointer;outline:none;flex-shrink:0}.TextualButtonNew__btn__YDuss[disabled]{color:#868e9e;cursor:not-allowed;pointer-events:none}.TextualButtonNew__btn__YDuss[disabled] img{filter:grayscale(1)}.TextualButtonNew__underlined__yEez2{text-decoration:underline}.TextualButtonNew__coral__xLBPD{color:#ff5443}.TextualButtonNew__white__u80WH{color:#fff}.TextualButtonNew__danger__AxUhW{color:#c50f1f}.TextualButtonNew__black__sVcne{color:#181a1f}
+.SnackBar__container__uvVds{position:fixed;bottom:0;left:0;width:100%;z-index:150;padding-bottom:64px}.SnackBar__content__c5wAp{display:flex;justify-content:space-between;background:var(--background);color:#fff;border-radius:8px;padding:12px}
+.Auth__customSeperator__E2jGw{height:1px;background-color:#dde2eb}.Auth__flexGrow__wXi68{flex-grow:1}.Auth__container__nVizI{border:1px solid #868e9e;border-radius:4px;padding:16px 8px}.Auth__selectedContainer__h7dG8{border:1px solid #181a1f}.Auth__unAuthorizedContainerHeight__PgF0X{height:calc(100vh - 72px)}
+.Loader__container__u7b9F{display:flex;align-items:center;justify-content:center;position:fixed;background:rgba(255,255,255,.6);top:0;bottom:0;left:0;right:0;z-index:16}.Loader__smallContainer__ct3Ax{display:block;background:rgba(255,255,255,.6)}.Loader__loaderEllipse1__Pi3rS{animation:Loader__Ellipse_1__POr4m 1.3s infinite;transform:translate(39px, 60px);fill:rgb(var(--loader-color)/30%)}.Loader__loaderEllipse2__xenpj{animation:Loader__Ellipse_2__Z837E 1.3s infinite;transform:translate(53px, 60px);fill:rgb(var(--loader-color)/30%)}.Loader__loaderEllipse3__vDN6p{animation:Loader__Ellipse_3__tEqOK 1.3s infinite;transform:translate(67px, 60px);fill:rgb(var(--loader-color)/30%)}.Loader__loaderEllipse4__WJuUs{animation:Loader__Ellipse_4__CWE5F 1.3s infinite;transform:translate(81px, 60px);fill:rgb(var(--loader-color)/30%)}@keyframes Loader__Ellipse_1__POr4m{0%,to{transform:translate(39px, 60px);fill:rgb(var(--loader-color)/30%)}23.08%{transform:translate(39px, 69px);fill:rgb(var(--loader-color))}46.15%{fill:rgb(var(--loader-color)/30%)}53.85%{transform:translate(39px, 51px)}69.23%{transform:translate(39px, 62px)}76.92%{transform:translate(39px, 60px)}}@keyframes Loader__Ellipse_2__Z837E{0%,7.69%,to{transform:translate(53px, 60px);fill:rgb(var(--loader-color)/30%)}30.77%{transform:translate(53px, 69px);fill:rgb(var(--loader-color))}53.85%{fill:rgb(var(--loader-color)/30%)}61.54%{transform:translate(53px, 51px)}76.92%{transform:translate(53px, 62px)}84.62%{transform:translate(53px, 60px)}}@keyframes Loader__Ellipse_3__tEqOK{0%,15.38%,to{transform:translate(67px, 60px);fill:rgb(var(--loader-color)/30%)}38.46%{transform:translate(67px, 69px);fill:rgb(var(--loader-color))}61.54%{fill:rgb(var(--loader-color)/30%)}69.23%{transform:translate(67px, 51px)}84.62%{transform:translate(67px, 62px)}92.31%{transform:translate(67px, 60px)}}@keyframes Loader__Ellipse_4__CWE5F{0%,23.08%,to{transform:translate(81px, 60px);fill:rgb(var(--loader-color)/30%)}46.15%{transform:translate(81px, 69px);fill:rgb(var(--loader-color))}69.23%{fill:rgb(var(--loader-color)/30%)}76.92%{transform:translate(81px, 51px)}92.31%{transform:translate(81px, 62px)}}
+.InputField__inputContainer__AZXWj{position:relative}.InputField__inputContainer__AZXWj .InputField__label__lnj3h{position:absolute;top:50%;left:12px;transform:translateY(-50%);transition:.3s;padding:0 2px;background-color:#fff;pointer-events:none;max-width:calc(100% - 24px);z-index:1;color:#868e9e}.InputField__inputContainer__AZXWj .InputField__label__lnj3h.InputField__multiLine__jXDm1{top:25%}.InputField__inputContainer__AZXWj .InputField__btn__Ggx2G{background-color:rgba(0,0,0,0);color:#ff5443;border:none}.InputField__inputContainer__AZXWj:not(:focus-within) button{color:#868e9e;pointer-events:none}.InputField__inputContainer__AZXWj:focus-within .InputField__label__lnj3h,.InputField__inputContainer__AZXWj.InputField__hasContent__t7GRH .InputField__label__lnj3h{top:0;left:12px;font-size:0.75rem;line-height:16px}.InputField__inputContainer__AZXWj:focus-within .InputField__postfixIconVisibility__FaWBj,.InputField__inputContainer__AZXWj.InputField__hasContent__t7GRH .InputField__postfixIconVisibility__FaWBj{display:none}.InputField__textField__sP2x8{display:flex;align-items:center;gap:8px;padding:12px;height:46px;border:1px solid #868e9e;border-radius:8px}.InputField__textField__sP2x8:focus-within{border-color:#181a1f}.InputField__textField__sP2x8 input{outline:none;border:none;padding:0;flex-grow:1;width:100%}.InputField__textField__sP2x8 input::placeholder{color:rgba(0,0,0,0)}.InputField__textArea__dgTL9{width:100%;height:88px;border-radius:8px;border:1px solid #868e9e;outline:none;padding:12px 12px 8px;vertical-align:bottom;background-color:#fff}.InputField__textArea__dgTL9:focus{border-color:#181a1f}.InputField__textArea__dgTL9::placeholder{color:rgba(0,0,0,0)}.InputField__alertContainer__gVU2a{min-height:16px}.InputField__inputWrapper__fO_oB{margin-bottom:8px}.InputField__inputWrapper__fO_oB.InputField__error__lPFJn .InputField__label__lnj3h,.InputField__inputWrapper__fO_oB.InputField__error__lPFJn .InputField__alertContainer__gVU2a{color:#c50f1f}.InputField__inputWrapper__fO_oB.InputField__error__lPFJn .InputField__textField__sP2x8,.InputField__inputWrapper__fO_oB.InputField__error__lPFJn .InputField__textArea__dgTL9{border-color:#c50f1f}.InputField__inputWrapper__fO_oB.InputField__caution__bHCIb .InputField__label__lnj3h,.InputField__inputWrapper__fO_oB.InputField__caution__bHCIb .InputField__alertContainer__gVU2a{color:#bf9514}.InputField__inputWrapper__fO_oB.InputField__caution__bHCIb .InputField__textField__sP2x8,.InputField__inputWrapper__fO_oB.InputField__caution__bHCIb .InputField__textArea__dgTL9{border-color:#bf9514}.InputField__inputWrapper__fO_oB.InputField__success__P26hG .InputField__label__lnj3h,.InputField__inputWrapper__fO_oB.InputField__success__P26hG .InputField__alertContainer__gVU2a{color:#308956}.InputField__inputWrapper__fO_oB.InputField__success__P26hG .InputField__textField__sP2x8,.InputField__inputWrapper__fO_oB.InputField__success__P26hG .InputField__textArea__dgTL9{border-color:#308956}.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox .InputField__label__lnj3h,.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox .InputField__alertContainer__gVU2a,.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox button{color:#dde2eb}.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox .InputField__textField__sP2x8,.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox .InputField__textArea__dgTL9{border-color:#dde2eb}.InputField__inputWrapper__fO_oB.InputField__disabled__y7oox.InputField__disabled__y7oox input{color:#868e9e}.InputField__noWrap__tvaUh{white-space:nowrap}
+.OtpInput__otpInput__aZhSo{outline:none;text-align:center;padding:0;width:44px;height:44px;border-radius:8px;border:1px solid #868e9e}.OtpInput__otpInput__aZhSo+.OtpInput__otpInput__aZhSo{margin-left:12px}.OtpInput__otpInput__aZhSo:focus{border-color:#181a1f}.OtpInput__alertText__dywSO{min-height:16px}.OtpInput__error__t5iOY .OtpInput__otpInput__aZhSo{border-color:#c50f1f}.OtpInput__error__t5iOY .OtpInput__alertText__dywSO{color:#c50f1f}
+.StickyBottomButton__container__LUr1D{z-index:4;bottom:0;transition:transform .3s ease-out,-webkit-transform .3s ease-out;transform:translateY(0);background-color:#fff}.StickyBottomButton__sticky__UGHEr{position:sticky;padding-bottom:var(--safe-area-inset-bottom)}.StickyBottomButton__fixed__Q8LYv{position:fixed;padding-bottom:var(--safe-area-inset-bottom)}.StickyBottomButton__shadow__rFJd5{box-shadow:0 0 16px 0 rgba(0,0,0,.08),0 16px 16px 0 rgba(0,0,0,.08)}
+.DialogV2__modalContent__Gu7kC{display:flex;flex-direction:column;max-height:calc(100% - 32px);max-width:calc(100% - 32px);gap:16px;overflow:hidden}.DialogV2__scrollableContainer__Jy2Z_{overflow-y:auto;background-color:#fff;border-radius:16px}.DialogV2__dialogOpen__Q_b7j{overflow:hidden}.DialogV2__dialogCloseIcon__tOewX{width:40px;height:40px;background-color:#fff;border-radius:999999px;display:flex;justify-content:center;align-items:center;align-self:end;flex-shrink:0}
+.ConfirmDialog__content__LrnMs{background-color:#fff;border-radius:16px}
+.TextualNudge__marginLeft__Ct_a5{margin-left:4px}.TextualNudge__htmlNodeWrapper__z3DIo strong,.TextualNudge__htmlNodeWrapper__z3DIo b{font-weight:700}.TextualNudge__marginLeft8__DEgOM{margin-left:8px}
+.HowItWorks__ctaLabel__pnTH1{color:#ff5443}.HowItWorks__ctaIcon__ywAdt{width:18px;height:18px}
+.OtpInput__otpUiInput__Tu37z{outline:none;text-align:center;padding:8px;caret-color:#181a1f;width:100%;border-radius:4px;border-width:1px;border-color:#4e5665}.OtpInput__otpUiInput__Tu37z:focus{border-color:#181a1f}.OtpInput__errorBorder__rYJmv{outline:none;text-align:center;padding:8px;width:100%;border-radius:4px;border-width:1px;border-color:#c50f1f}.OtpInput__labelColor__jNBB8{color:#4e5665}.OtpInput__alertContainer__OHLJ9{min-height:18px;color:#c50f1f}
+.App__iosSafeAreaVarDef__pZ5fy{--safe-area-inset-top: 38px;--safe-area-inset-bottom: 38px}.App__androidSafeAreaVarDef__UEIqG{--safe-area-inset-top: 38px;--safe-area-inset-bottom: 0px}.App__webFallbackForSafeAreaVar__ioMlO{--safe-area-inset-top: 0px;--safe-area-inset-bottom: 0px}
+.ErrorBoundary__headingColor__UubWU{color:#4e5665}
+.ErrorScreen__iconContainer__PaRLn{height:calc(calc((100vw - 72px) / 6)*4 + 24px);width:calc(calc((100vw - 72px) / 6)*4 + 24px)}.ErrorScreen__iconContainerSmall__IlsEz{height:calc(calc((100vw - 72px) / 6)*2 + 8px);width:calc(calc((100vw - 72px) / 6)*2 + 8px)}
+.HealthFeedLeadDetail__container__fk_GQ{min-height:100vh;position:relative}.HealthFeedLeadDetail__fixedBottom__SQbJ5{position:sticky;bottom:0;background:#fff}.HealthFeedLeadDetail__cardImage__ni_q5{border-radius:4px}.HealthFeedLeadDetail__leadDetailContainer__g3z0F .HealthFeedLeadDetail__snackbar__WOFol{padding-bottom:64px}.HealthFeedLeadDetail__alignStart__Eh8CZ{align-items:flex-start}.HealthFeedLeadDetail__marginLeft4__F7m4d{margin-left:4px}.HealthFeedLeadDetail__textOverflow__LLKts{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.HealthFeedLeadDetail__inlineBlock__PgNwp{display:inline-block}.HealthFeedLeadDetail__alignSelfBaseLine__RAhkA{align-self:baseline}.HealthFeedLeadDetail__spacer__Y1ZbS{padding-left:12px}.HealthFeedLeadDetail__verticalAlignBottom__f87us{vertical-align:bottom}.HealthFeedLeadDetail__paddingBottom8__mpGgW{padding-bottom:8px}.HealthFeedLeadDetail__marginLeft8__Lx2uJ{margin-left:8px}.HealthFeedLeadDetail__marginLeftRight16__BOxcv{margin-left:16px;margin-right:16px}.HealthFeedLeadDetail__formContainer__XdW3Y{background-color:#f0f0f0;position:relative;--mask: conic-gradient(from 117.5deg at top, #0000, #000 1deg 124deg, #0000 125deg) 50%/15.37px 100%;-webkit-mask:var(--mask);mask:var(--mask)}.HealthFeedLeadDetail__primaryBackground__CxLlG{background-color:#fff}.HealthFeedLeadDetail__padding16__tUpbN{padding:16px}.HealthFeedLeadDetail__textClamp__ON9nb{width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}.HealthFeedLeadDetail__paddingBottom90__kppOj{padding-bottom:90px}.HealthFeedLeadDetail__divider__yZ_Wg{height:8px;background-color:#f0f0f0}
+.HealthFeed__container__Ovy6Z{min-height:100vh;position:relative}
+.Loader__wrapper__viAyw{width:100vw;height:100vh;z-index:999;background-color:#fff}
+.RoundedStoryWidget__minWidth100Per__e7R41{min-width:100%}.RoundedStoryWidget__width64px__rsCnG{width:64px}.RoundedStoryWidget__storyCard__SrfO9{margin:0px 12px;min-width:64px}
+.SearchResults__chipsContainer__rv9WZ{top:72px;z-index:1;position:sticky;background-color:#fff}.SearchResults__chipsContainerWebview__TM6cB{top:0px;z-index:1;position:sticky;background-color:#fff}.SearchResults__loadingContainer__I08fm{margin-top:calc(50% - 48px)}.SearchResults__borderBottom__Zpzq2{border-bottom:1px solid #dde2eb}.SearchResults__colorPrimary__ytPxp{color:#ff5443}.SearchResults__marginLeft4__q_Cyd{margin-left:4px}.SearchResults__marginLeft24__jb5NK{margin-left:24px}
+.InsightSupplement__insight__VG_6R{height:calc(100vh - 72px);background:rgba(237,255,194,.83);background:-webkit-linear-gradient(119deg, rgba(237, 255, 194, 0.83) 0%, rgba(255, 230, 204, 0.41) 50%, rgba(223, 186, 247, 0.7) 100%);background:linear-gradient(119deg, rgba(237, 255, 194, 0.83) 0%, rgba(255, 230, 204, 0.41) 50%, rgba(223, 186, 247, 0.7) 100%)}
+.OrderPlaced__fixed__OKXJs{top:0;height:100vh;width:100vw;animation:OrderPlaced__changeContainer__pKi_J 0ms linear 1.5s;animation-fill-mode:forwards;z-index:25}.OrderPlaced__orderContainer__gXnHT{background-color:#fff;display:grid;place-items:center;overflow:hidden;position:relative;min-height:148px}.OrderPlaced__animatedOrderContainer__Jylmh{min-height:100vh;animation:OrderPlaced__changeContainerHeight__Zl2vb 600ms cubic-bezier(0.4, 0, 0.2, 1) 1.5s;animation-fill-mode:forwards;z-index:8}.OrderPlaced__coralContainer__sJU0X{background-color:#ff5443;display:grid;place-items:center;height:100%;width:100%}.OrderPlaced__animatedCoralContainer__hQKOS{max-height:1px;max-width:1px;overflow:hidden;border-radius:50%;opacity:0;animation:OrderPlaced__changeOpacity__zTZbZ 200ms linear,OrderPlaced__changePosition__A9YgF 200ms cubic-bezier(0, 0, 0.2, 1),OrderPlaced__changeColor__Z0sIj 400ms cubic-bezier(0, 0, 0.2, 1),OrderPlaced__changeSize__cobnn 0ms cubic-bezier(0, 0, 0.2, 1) 800ms;animation-fill-mode:forwards}.OrderPlaced__containerJigsawImage__SVkJT{position:absolute;bottom:0;object-fit:none;opacity:0;animation:OrderPlaced__changeOpacity__zTZbZ 0ms linear 1.5s;animation-fill-mode:forwards}.OrderPlaced__containerIcon__jrhzs{height:48px;width:48px}.OrderPlaced__animatedContainerIcon__usMVO{opacity:100;animation:OrderPlaced__changeOPacity__GK7A9 .8s linear 500ms,OrderPlaced__scaleUp__onbjd .8s cubic-bezier(0, 0, 0.2, 1) 500ms,OrderPlaced__changePosition__A9YgF .8s cubic-bezier(0, 0, 0.2, 1) 500ms;animation-fill-mode:forwards}.OrderPlaced__whiteText__qgIfe{color:#fff}.OrderPlaced__animatedText__zPKwu{margin-top:8px;opacity:0;animation:OrderPlaced__changeOpacity__zTZbZ 400ms linear .8s,OrderPlaced__changePosition__A9YgF 400ms cubic-bezier(0, 0, 0.2, 1) .8s;animation-fill-mode:forwards}.OrderPlaced__marginLeft4__m6Igl{margin-left:4px}@keyframes OrderPlaced__changeContainerHeight__Zl2vb{100%{min-height:148px;display:block}}@keyframes OrderPlaced__changeColor__Z0sIj{0%{transform:scale(1)}100%{transform:scale(1000)}}@keyframes OrderPlaced__changeSize__cobnn{100%{border-radius:0;transform:scale(1);max-height:100%;max-width:100%;min-height:148px}}@keyframes OrderPlaced__changeOpacity__zTZbZ{0%{opacity:0}100%{opacity:1}}@keyframes OrderPlaced__changePosition__A9YgF{0%{transform:translateY(60px)}100%{transform:translateY(0)}}@keyframes OrderPlaced__scaleUp__onbjd{0%{transform:scale(0.8)}100%{transform:scale(1.6)}}@keyframes OrderPlaced__scaleDown__ckw6f{100%{transform:scale(1)}}@keyframes OrderPlaced__changeContainer__pKi_J{100%{height:auto;width:auto}}
+.Skeleton__newShimmer__opeHv{border-radius:4px;background:#dde2eb;background-image:linear-gradient(to right, rgba(221, 226, 235, 0.3294117647) 0%, #edeef1 20%, #f6f7f8 40%, #dde2eb 100%);background-repeat:no-repeat;background-size:108px;animation-duration:1s;animation-fill-mode:forwards;animation-iteration-count:infinite;animation-name:Skeleton__newShimmer__opeHv;animation-timing-function:linear;-webkit-animation-duration:1s;-webkit-animation-fill-mode:forwards;-webkit-animation-iteration-count:infinite;-webkit-animation-name:Skeleton__newShimmer__opeHv;-webkit-animation-timing-function:linear}@keyframes Skeleton__newShimmer__opeHv{0%{background-position:-100vw 0}100%{background-position:100vw 0}}
+</style>
+
+    
+        <script id="__LOADABLE_REQUIRED_CHUNKS__" type="application/json" nonce="2fb13959633a02727d130a0506106a6e">[10652]</script><script id="__LOADABLE_REQUIRED_CHUNKS___ext" type="application/json" nonce="2fb13959633a02727d130a0506106a6e">{"namedChunks":["pages-StaticPage"]}</script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/runtime.e7cbbad8e9a549155d2d.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.index.js.26cd7467ecc5c938a184.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/commonVendor.59185b3189862ac45c2f.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.index.mjs.6a766339a627562cf87e.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.create-projection-node.mjs.b44c26d63cef71536a76.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.VisualElementDragControls.mjs.99b252a87a8aa280234a.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.eventsource.js.23d1e02ef9983a77ed24.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.purify.js.837959062bbeacf38325.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.react.js.215ff8ed687d13796d32.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/npm.router.js.bf0e9e83ef14e120123d.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/81346.344da10d23c3243f28d9.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="app" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/app.47ebd03277d7ea4d4478.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+<script async data-chunk="pages-StaticPage" src="https://assets.1mg.com/pwa-app/production/mweb/2.0.1/static/pages-StaticPage.dffcaa5ff4e815dcefa1.js" nonce="2fb13959633a02727d130a0506106a6e"></script>
+            
+
+                <script nonce="2fb13959633a02727d130a0506106a6e">
+                    window.__INITIAL_STATE__ = {"loadableConfigReducer":{"SERVER_SIDE_RENDER":true,"CLIENT_ONLY_RENDER":false},"footerReducer":{"data":{},"isFetching":false,"isFetched":false,"error":null},"locationsReducer":{"cities":{"data":[{"name":"Abohar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Adilabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Adoni","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Agar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Agartala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Agra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ahmedabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ahmednagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Aizawl","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ajmer","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Akola","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Alappuzha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Aligarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Alipurduar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Alirajpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Allahabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Almora","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Alwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ambala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ambattur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ambedkar Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Amravati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Amreli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Amritsar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Amroha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Anand","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Anantapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ananthnag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Anantnag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Angamally","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Angul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ankleshwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Annur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Anuppur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Arakkonam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Arambag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Arantangi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Araria","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Arcot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ariyalur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Arwal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Asansol","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ashok Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Assaudh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Attuvampatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Auraiya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Aurangabad Bihar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Aurangabad Maharashtra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Aviyur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ayyangarkulam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Azamgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Badlapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bagalkot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bageshwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baghpat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bagpat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bahadurgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bahraich","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baksa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Balaghat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Balangir","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baleswar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ballia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bally","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Balrampur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Banaskantha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Banda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bangalore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bangalore Rural","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Banka","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bankura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Banswara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barabanki","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baramati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baramulla","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baran","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baraut","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bardhaman","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bareilly","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bargarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barmer","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barnala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barpeta","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barrackpore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Baruipur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Barwani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Basirhat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bastar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Basti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bathinda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Beawar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Beed","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Begumganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Begusarai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Behraghora","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Behrampur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Belgaum","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bellary","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Belur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Betul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Betul Ganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhadrak","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhadravati Karnataka","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhagalpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhandara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bharatpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bharuch","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhatkal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhavani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhavnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhilai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhilwara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhind","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhiwadi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhiwandi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhiwani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhojpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhopal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhubaneshwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhuna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bhusawal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bidar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bijapur Chattisgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bijapur Karnataka","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bijnor","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bikaner","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bilaspur Chattisgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bilaspur Himachal Pradesh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Birbhum","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bishnupur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Boisar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bokaro","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bongaigaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bongaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Botad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Boudh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Budaun","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Budgam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bukkapatnam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bulandshahr","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Buldana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Buldhana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Bundi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Burdwan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Burhanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Buxar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cachar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Calicut","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chamarajanagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chamba","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chamoli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Champawat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Champhai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chandauli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chandel","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chandigarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chandrapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Changanassery","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Changlang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chatra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chennai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chhatarpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chhindwara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chikkaballapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chikkaballapura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chikmagalur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chintamani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chitradurga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chitrakoot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chittoor","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chittorgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Chrompet","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Churachandpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Churu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cochin","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Coimbatore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cooch Behar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cuddalore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cuddapah","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Cuttack","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dadra & Nagar Haveli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dahanu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dahod","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dakshina Kannada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Daman","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Damoh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dantewada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Darbhanga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Darjiling","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Darrang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Datia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dausa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Davangere","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Debagarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dehradun","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Delhi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Deoghar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Deoria","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dera Bassi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Devanahalli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dewas","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhakaoli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhalai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhamtari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhanbad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dharmapuri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dharwad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhemaji","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhenkanal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dholpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhone","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhubri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhule","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dhully","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dibang Valley","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dibrugarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dibrugarh Tamil Nadu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dimapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dindigul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dindori","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dispur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Diu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Doda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dombivli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dombivli Station","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dumka","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Dungarpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Durg","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Durgapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Champaran","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Garo Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Godavari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Kameng","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Khasi Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Midnapore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Nimar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Siang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Sikkim","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"East Singhbhum","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ellanaickenpatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ernakulam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Erode","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Etah","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Etawah","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Faizabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Faridabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Faridkot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Farrukhabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Fatehabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Fatehgarh Sahib","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Fatehpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Fazilka","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Firozabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Firozpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gadag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gadarwara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gadchiroli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gajapati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gandhinagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ganganagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gangtok","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ganjam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Garhwa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gariaband","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gautam Buddha Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gaya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ghaziabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ghazipur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gir Somnath","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Giridh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Goa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Goalpara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gobichettipalayam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Godda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Golaghat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Golaniya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gonda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gondia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gopalganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gorakhpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Greater Noida","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Greater Thane","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gulbarga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gumla","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Guna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Guntur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gurdaspur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gurgaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Guwahati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Gwalior","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hailakandi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Halol","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hamirpur Himachal Pradesh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hamirpur Uttar Pradesh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hansi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hanumangarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Harapanahalli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Harda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hardoi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Haridwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hassan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hathras","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Haveri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hazaribag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hazaribagh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hinauti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hindaun","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hingoli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hisar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hojai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hooghly","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hosakote","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hoshangabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hoshiarpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hoskote","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hospet","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hosur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Howrah","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hubli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Hyderabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ichalkaranji","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Idukki","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Imphal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Imphal East","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Imphal West","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Indore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Itanagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jabalpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jagatsinghapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jaintia Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jaipur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jaisalmer","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jajapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalandhar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalaun","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalgaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jallipatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jalpaiguri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jammu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jamnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jamshedpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jamtara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jamui","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Janjgir-Champa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jashpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jaunpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jayamala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jehanabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhabua","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhajjar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhalawar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhansi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhargram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jharsuguda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jhujhunu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jind","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jodhpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jorhat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Junagadh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Jyotiba Phule Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kachchh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kadamakkudy","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kadapa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kadiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kadthal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kaghaz Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kaimur Bhabua","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kaithal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kakinada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kalahandi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kalipahari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kallakurichi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kalligudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kalyani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kamrup","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanadukathan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanchipuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kandhamal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kandukur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kangra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanker","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kannauj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kannur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanpur Dehat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanpur Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kansapuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kanyakumari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kapurthala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karaikal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karaikudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karatholuvu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karauli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karbi Anglong","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kargil","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karimganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karimnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karnal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karupatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Karwar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kasaragod","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kathua","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Katihar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Katni","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kattupakkam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kaushambi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kavaratti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kawardha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kendrapara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kendujhar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khagaria","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khammam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khandwa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khanna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kharagpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khargone","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kheda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kheri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Khorda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kichha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kinnaur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kiphire","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kishanganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kochi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kodagu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kodaikanal Observatory","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Koderma","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kohima","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kokrajhar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kolar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kolasib","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kolhapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kolkata","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kollam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kooram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Koppal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Koraput","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Korba","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Koriya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kota","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kothakudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kothur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kottayam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kovilpatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Koyilandy","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kozhikode","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Krishna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Krishnagiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kulgam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kullu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kumbakonam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kumburvayal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kundli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kupwara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kurnool","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kurukkalpatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kurukshetra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kurung Kumey","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kushinagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Kutch","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Laddivadi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lahul & Spiti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lakhimpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lakhisarai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lakshadweep","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lalitpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lambakheda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Latehar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Latur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lawngtlai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Leh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lohardaga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lohit","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lonavala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Longleng","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lower Dibang Valley","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lower Subansiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lucknow","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ludhiana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Lunglei","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Machur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Madhepura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Madhubani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Madhupur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Madikeri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Madurai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahabubabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahabubnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahadanapuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Maharajganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahasamund","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahbub Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahe","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahendragarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mahoba","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mainaguri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mainpuri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Majuli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Malappuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Malda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Malkangiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Malout","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mammit","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Manakudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Manapparai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Manawar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mandi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mandi Gobindgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mandla","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mandsaur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mandya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mangalore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Manipal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mannargudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mansa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Margao","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Marigaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mathura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mau","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mayurbhanj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Medak","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Meenkashipuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Meerut","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mehsana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Melaparuthigudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Melpallam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Melpattamkarisalkulam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Melvisharam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Midnapore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mirzapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Moga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mohali","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mohanur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mokokchung","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Moradabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Morena","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Muchipara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mughal Sarai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Muktsar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mumbai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mumbai Extension","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Munger","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Murshidabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Muzaffarnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Muzaffarpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Mysore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nabarangapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nadia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nadiad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Naduvakurichi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nagaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nagapattinam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nagaur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nagpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Naidupuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nainital","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Najibabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nalanda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nalbari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nalgonda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Namakkal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nanded","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nandurbar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Narayanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Narmada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Narnaul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Narsinghpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Narsipatnam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nashik","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Navi Mumbai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Navsari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nawada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nawanshahr","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Naxalbari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nayagarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Neemrana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Neemuch","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nelamangala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nellore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nerur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"New Delhi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nicobar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nilgiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nilgiris","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nizamabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Noida","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North 24 Parganas","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North And Middle Andaman","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North Cachar Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North Dinajpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North Goa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North Sikkim","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"North Tripura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nowda","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nuapada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nuh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Nuvem","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ooty","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Osmanabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pakur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Palakkad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Palamalai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Palamu","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Palani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Palghar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pali","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pambakovil Shandy","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panaji","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panchkula","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panchmahal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panipat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Panvel - Station","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Papanasam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pappankulam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pappinaickenpatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Papum Pare","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Paradip","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Parbhani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pasumpon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Patan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pathanamthitta","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pathankot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Patiala","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Patna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pauri Garhwal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pavitram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Perambalur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Peren","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Phalghat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Phek","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pilani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pilibhit","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pinnathur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pithoragarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pondicherry","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ponga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Poonamalle","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Poonch","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Porbandar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Port Blair","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Prakasam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pratapgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Proddatur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pudukkottai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pulankurichi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pulavadi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Puludipatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pulwama","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pune","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Pungamuthur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Purba Bardhaman","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Purbasthali","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Puri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Purnia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Puruliya","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Puzhal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Quilon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raebareli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raichur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raigad Maharashtra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raigarh Chattisgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raikasba","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raipur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raisen","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajahmundry","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajauri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajgangpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajkot","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajnandgaon","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajpura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rajsamand","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ramanagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ramanathapuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ramgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rampur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ranchi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rangareddi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rangareddy","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ranipet","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ratlam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ratnagiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Raurkela","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rayagada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Reasi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rewa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rewari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ri Bhoi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rishikesh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rohtak","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rohtas","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Roorkee","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ropar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rourkela","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rudraprayag","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rudrapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rupnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Rurka Kalan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"S.A.S. Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sabarkantha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Saharanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Saharsa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sahibganj","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Saiha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Salem","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Samastipur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sambalpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sambhal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sangareddy","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sangli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sangrur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sant Kabir Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sant Ravidas Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Saran","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Satara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Satna","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sawai Madhopur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Secunderabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sehore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Senapati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Seoni","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Seraikela-Kharsawan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Serchhip","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shahapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shaharanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shahdol","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shahjahanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shahpura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shajapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shamshabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sheikhpura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sheohar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sheopur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shikohabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shillong","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shimla","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shimoga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shivpuri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shrawasti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Shyamnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sibmandir","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sibsagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Siddharthnagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sidhi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sihora","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sikar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Siliguri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Silvassa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Simdega","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Simga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sindhudurg","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Singrauli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sirkaali","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sirmaur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sirohi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sirsa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sitamarhi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sitapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sivaganga","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sivakasi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sivasagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Siwan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Solan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Solapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sonapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sonarpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sonbhadra","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sonipat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sonitpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Soro","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South 24 Parganas","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Andaman","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Dinajpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Garo Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Goa","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Sikkim","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"South Tripura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sricity","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Srikakulam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Srinagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Subarnapur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sujangarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sultanpur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Sundergarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Supaul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Surat","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Surendranagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Surguja","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"T Pudupatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tadipatri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Talasari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tamenglong","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tapi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tarn Taran","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tawang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tehri Garhwal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tenkasi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thane","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thanjavur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"The Dangs","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Theni","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thimmarajanpettai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thirukkalukundram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thirukkannamangaikottam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thiruvaiyaru","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thiruvarur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thoothukudi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thoubal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thrissur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Thungavi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tikamgarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Timarni","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tinsukia","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirap","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruchendur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruchirappalli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruklalikundram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirumani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirunelveli","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirupati","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruppur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirupur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tirur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruttani","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruvalla","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruvallur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruvannamalai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tiruvarur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Titilagarh","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tohana","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tonk","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Trimulgherry","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Trivandrum","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tuensang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tumkur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Turaiyur Koitpatti","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Tuticorin","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udaipur Rajasthan","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udaipur Tripura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udayarpalayam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udham Singh Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udhampur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Udupi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ujjain","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Ukhrul","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Umaria","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Una","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Unnao","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Upper Siang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Upper Subansiri","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Uttara Kannada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Uttarkashi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vadagarai","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vadakara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vadodara","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vaishali","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Valsad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vandavasi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vapi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Varanasi","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vattur","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vellore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vidisha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vijayawada","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vikarabad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Villupuram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Virudhunagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Visakhapatnam","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Visalakshi Nagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Vizianagaram","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Warangal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Wardha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Washim","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Wayanad","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Champaran","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Garo Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Godavari","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Kameng","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Khasi Hills","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Midnapore","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Nimar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Siang","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Sikkim","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Singhbhum","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"West Tripura","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Wokha","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Y.S.R.","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Yadgir","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Yamunanagar","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Yavatmal","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"},{"name":"Zunhebotto","icon":"https://onemg.gumlet.io/marketing/pr3tdpziosrtyetsdgyh.png"}],"label":"All cities"},"topCities":{"data":[{"name":"Delhi","icon":"https://onemg.gumlet.io/marketing/wzg6hpdfjvrs5uizpbnf.png"},{"name":"Gurgaon","icon":"https://onemg.gumlet.io/marketing/uoelooauqsxxwvjajipy.png"},{"name":"Pune","icon":"https://onemg.gumlet.io/marketing/kszqrewxlowcj7fypjui.png"},{"name":"Bangalore","icon":"https://onemg.gumlet.io/marketing/gyyj5dq5afkhwihapehn.png"},{"name":"Mumbai","icon":"https://onemg.gumlet.io/marketing/jnyznarmxssdshwerhmt.png"},{"name":"Hyderabad","icon":"https://onemg.gumlet.io/marketing/mwwzsvwwxx5pxucsuecf.png"},{"name":"Kolkata","icon":"https://onemg.gumlet.io/marketing/ys28ennr1ceahp8bafhb.png"}],"label":"Popular cities"},"currentCity":"Gurgaon","currentLocationInfo":{"isRapid":false,"latitude":"28.4433747","longitude":"77.100729","pincode":"","polygonIDs":"[]","addressText":"Gurgaon","addressSubtext":"","tooltipText":""},"currentLocationInfoFetching":false,"currentLocationInfoError":"","isFetching":false,"isFetched":true,"error":null,"cityData":{"serviceable":true,"otc_available":true,"pharma_available":true,"city":"Gurgaon"},"showLocations":false,"fetchingCurrentLocation":false,"coordinates":null,"nativeLocationError":null},"shellReducer":{"showVerifyDetails":false,"footerVisible":false,"available_languages":[],"cartCount":0,"labsSKUCount":0,"cartAmount":0,"itemsInCart":{},"fetchingCart":false,"userData":{},"pageTitle":"","meta_data":{"title":"Online Pharmacy India | Buy Medicines from India's Trusted Medicine Store: 1mg.com","meta_desc":"India's best online pharmacy with a wide range of Prescription and OTC medicines. Order medicines online at 1mg's medicine store in 100+ cities like - Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Gurgaon, Noida, Pune etc. with free home delivery and exciting offers. Check Now!","meta_keyword":"online pharmacy, online medicine, medicine online, online medical store, buy medicine online, online pharmacy India, buy medicine online India, online chemist, online medicine purchase","heading_tag":"","image_alt_tag":"","image_title_tag":"","query":""},"schema":{},"hideHeader":false,"hideFooter":false,"showSearch":true,"shareConfig":{"show":false,"title":"","targetUrl":""},"showCart":true,"speakerInfo":{},"showLanguagePicker":false,"showLocationPicker":true,"navigationDrawerData":{"links":[[{"display_text":"Buy medicines","url":"/buy-medicines","image_url":"https://onemg.gumlet.io/x8cl8swlmwbwajgneq1n.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Buy health products","url":"/health-products","image_url":"https://onemg.gumlet.io/hihikdpmtpsyrviisvpf.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Book lab tests","url":"/labs","image_url":"https://onemg.gumlet.io/uziyifi9cz7iwij4aarh.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Consult a doctor","url":"/online-doctor-consultation","image_url":"https://onemg.gumlet.io/avbm5qhdjaorumioewhq.svg","is_new":false,"is_external":false},{"display_text":"1mg Care Plan","url":"/subscription-plan/myplan","image_url":"https://onemg.gumlet.io/tgjj5p8vy3v1qx2ch77n.svg","is_new":false,"is_external":true,"is_renew":true}],[{"display_text":"Cancer Care","url":"/cancer-care/home","image_url":"https://onemg.gumlet.io/ukiuopevwmjxqj5jcszw.png","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Ayurveda","url":"/ayurveda","image_url":"https://onemg.gumlet.io/djnzkstemhpmhanvzglx.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Partnerships","url":"/corporate","image_url":"https://onemg.gumlet.io/staging/9aeb58e9-a1a5-4a3c-b98a-5c595927d4e4.svg","is_new":true,"is_external":true,"is_renew":false},{"display_text":"Hindi articles","url":"/hi/patanjali","image_url":"https://onemg.gumlet.io/cgbaxeklsnzk7n4ldniy.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Offers","url":"/myoffers","image_url":"https://onemg.gumlet.io/znyg0fevi5iprsag3klx.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"All diseases","url":"/all-diseases","image_url":"https://onemg.gumlet.io/kpgx88tbdxe6ggtj8nsu.svg","is_new":true,"is_external":false,"is_renew":false},{"display_text":"All medicines","url":"/drugs-all-medicines","image_url":"https://onemg.gumlet.io/gb3lu7ypd9tihfmp6ma5.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Medicines by therapeutic class","url":"/drugs-therapeutic-classes","image_url":"https://onemg.gumlet.io/mt5yu9cloowqkkdisck9.svg","is_new":false,"is_external":false,"is_renew":false}],[{"display_text":"Contact us","url":"/contactUs","image_url":"https://onemg.gumlet.io/eupzocfncygca1dstyat.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Need help?","url":"/help","image_url":"https://onemg.gumlet.io/wzxwrfxrrmomet9cksjj.svg","is_new":false,"is_external":true,"is_renew":false},{"display_text":"Privacy policy","url":"/PrivacyPolicy","image_url":"https://onemg.gumlet.io/vn3vlghurldjsrecmceq.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Return policy","url":"/return-policy","image_url":"https://onemg.gumlet.io/h3easqdighsy1g5ddjlp.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Terms and conditions","url":"/TnC","image_url":"https://onemg.gumlet.io/owamzrfynfnpcqptbdhn.svg","is_new":false,"is_external":false,"is_renew":false},{"display_text":"Editorial policy","url":"/editorial-policy-processes","image_url":"https://onemg.gumlet.io/ngyucrhzmdjntoyemnxp.svg","is_new":false,"is_external":true,"is_renew":false}]],"ads":{"app_download":{"header_image":"https://onemg.gumlet.io/phjeiqqq0gln3gzvcjpv.png","header":"Get more features! Download the app now","features":["Medicine Reminders","Monthly/weekly subscriptions","Health records and analysis","24*7 Emergency services"],"google_store":{"image_url":"https://onemg.gumlet.io/ia5sr51i1bnq82p5qsvu.png","link":"https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus"},"apple_store":{"image_url":"https://onemg.gumlet.io/aum26bm3f14wzekuhqa0.png","link":"https://itunes.apple.com/in/app/1mg/id554578419?mt=8"}}}},"isWebview":false,"legacyWebview":false,"isWebviewActive":false,"webviewPlatform":"web","isLabs":false,"loggedIn":false,"showPageTransition":true,"corporateDetails":{},"bottomNavigation":{"city":null,"bottomNavigationData":{"elements":[],"version":"v1"}},"showBottomNavigation":false,"snackBarData":{},"pageName":null,"hideHeaderSeparator":false,"carePlanHeader":{},"showOffers":false,"isBot":false,"hideHamBurger":false,"hideLogo":false,"animation":{"type":null,"config":{"scrollPosition":null,"isHeaderFixed":true}},"isHeaderTransparent":false,"showHomeIcon":false,"appHistory":0,"authConfig":{"showAuth":false,"onClose":null,"onSuccess":null,"onFailure":null,"populateData":null},"cspNonce":"2fb13959633a02727d130a0506106a6e","cartType":"pharmacy","browserPlatform":"Android","deviceId":null,"headerType":"legacy","showPageTransitionWithViewTransitionAPI":false,"cartClickHandler":null,"globalMixPanelData":{},"showTransparentHeader":false,"isEdgeToEdgeVW":false,"pageSubTitle":"","showThreeDots":false,"showSubtitleIcon":false,"headerThreeDotsClickHandler":null,"subTitleOnClickHandler":null,"boxShadow":false,"affiliateConfig":{}},"authReducer":{"optionsList":null,"header":"","description":"","cta":{},"conflictEmail":"","number":"","conflict":false,"requiredDetail":null,"truecallerAuth":{"showTruecallerVerifyDetails":false,"truecallerNumber":null}},"widgetFactoryReducer":{"widgetData":{}},"ABExperimentReducer":{"redirectToCart":false,"feedbackData":null,"feedbackBottomSheet":false},"staticPageReducer":{"data":{},"isFetching":false,"isFetched":false,"error":null}};
+                    window.__STATUS_CODE__ = null;
+                </script>
+                <!-- Intersection Observer Polyfill for Older browsers (iOS Safari 12) -->
+                <script nonce="2fb13959633a02727d130a0506106a6e">
+                    if (!'IntersectionObserver' in window &&
+                        !'IntersectionObserverEntry' in window &&
+                        !'intersectionRatio' in window.IntersectionObserverEntry.prototype) {
+                        // load polyfill now
+                        var s = document.createElement('script');
+                        s.src = "https://polyfill.io/v3/polyfill.min.js?flags=gated&features=IntersectionObserver";
+                        document.body.appendChild(s);
+                    }
+                </script>
+
+                <script nonce="2fb13959633a02727d130a0506106a6e">
+                    // if (typeof window.SERVICE_WORKER_REGISTRATION !== "undefined") {
+                    //     window.SERVICE_WORKER_REGISTRATION.unregister();
+                    // } else {
+                    //     window.SERVICE_WORKER_REGISTRATION = null
+                    // }
+
+                    // navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    //     for(let registration of registrations) {
+                    //         registration.unregister()
+                    //     }
+                    // });
+                    // Service worker disabled due to issues with Cloudflare CDN (sw was not getting new assets from cdn on new deployment)
+                    (async function main() {
+                        const deploymentPlatform = "mweb";
+                        if (deploymentPlatform === "dweb") return;
+                        const env = "production";
+                        if ("serviceWorker" in navigator) {
+                            if (env === "production") {
+                                navigator.serviceWorker
+                                    .register("/pwa-api/service-worker.js", { scope: "/" })
+                                    .then(registration => {
+                                        console.info("Service Worker is registered!");
+                                        window.SERVICE_WORKER_REGISTRATION = registration;
+                                    });
+
+                                //Triggers when user installs the application
+                                window.addEventListener("appinstalled", (e) => {
+                                    if (window.rudderanalytics && window.rudderanalytics.track) {
+                                        window.rudderanalytics.track("Install Event", {
+                                            category: "PWA Installed",
+                                            label: "PWA APP Installed",
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                        else {
+                            console.log(
+                                "Service Worker is not supported in your browser"
+                            );
+                        }
+
+                        //Triggers when the PWA is already installed on system
+                        if ('getInstalledRelatedApps' in navigator) {
+                            const installedApps = await navigator.getInstalledRelatedApps();
+                            const PWAisInstalled = installedApps.length > 0;
+                            console.log("Is PWA already installed on the system?", PWAisInstalled, installedApps)
+                            if (PWAisInstalled) {
+                                if (window.rudderanalytics && window.rudderanalytics.track) {
+                                    window.rudderanalytics.track("PWA Already Installed Event", {
+                                        category: "PWA Installed",
+                                        label: "PWA Already Installed",
+                                    })
+                                }
+                            }
+                        }
+                        //Triggers if PWA is launched in Standalone mode
+                        if (window.matchMedia('(display-mode: standalone)').matches) {
+                            if (window.rudderanalytics && window.rudderanalytics.track) {
+                                window.rudderanalytics.track("Launch Event", {
+                                    category: "PWA Launched",
+                                    label: "PWA Launched Standalone",
+                                })
+                            }
+                        }
+                    })();
+
+
+                </script>
+                <div id="dropdown-root"></div>
+                <div id="portal-root"></div>
+                <div id="bottom-sheet-root">
+                    <div class="bottom-sheet-backdrop"></div>
+                    <div id="bottom-sheet-element" class="bottom-sheet-element"></div>
+                </div>
+                <div id="modal-container"></div>
+                <input type="hidden" id="_csrf" name="_csrf" value="CAjaEVFD-Y2kG5mcs88yhwhEF9Akt359dYgE" />
+                </body>
+
+                </html>
