@@ -4,6 +4,27 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<script src="https://privacy-center.fides.mediavine.com/fides.js?property_id=FDS-EUVRXD"></script>	
+	<script>
+		var areAllKeysUndefined = (obj) => {
+			return Object.values(obj).every((value) => value === undefined);
+		}
+		var deleteAllExceptFidesConsent = () => {
+			const cookies = document.cookie.split(";");
+
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				const eqPos = cookie.indexOf("=");
+				const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+				
+				if (name !== 'fides_consent') {
+					document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+					document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=" + window.location.hostname;
+					document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=." + window.location.hostname;
+				}
+			}
+		}
+	</script>
   <style>@font-face{font-family:'Roboto Slab';font-style:normal;font-weight:400;font-display:fallback;src:url(https://www.mediavine.com/wp-content/mvt-fonts/Roboto-Slab/400-normal/400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD} @font-face{font-family:'Roboto Slab';font-style:normal;font-weight:700;font-display:fallback;src:url(https://www.mediavine.com/wp-content/mvt-fonts/Roboto-Slab/700-normal/700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}</style><meta name='robots' content='max-image-preview:large' />
 
 	<!-- This site is optimized with the Yoast SEO Premium plugin v15.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
@@ -240,44 +261,94 @@ display:none !important;
 
 
 
-  
 	<!-- Google tag (gtag.js) -->
 	<script>
-		const fetchPrivacyInfo = fetch('https://api.grow.me/location-privacy-info');
+		const loadGoogleTags = () => {
+			let gtagScript = document.createElement('script');
+			gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q407KZE5CR';
+			document.head.appendChild(gtagScript);
 
-		fetchPrivacyInfo
-			.then((gdpr_response) => gdpr_response.json())
-			.then((gdpr_json) => {
-				if ( ! gdpr_json.gdprApplies ) {
-					let gtagScript = document.createElement('script');
-					gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q407KZE5CR';
-					document.head.appendChild(gtagScript);
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-Q407KZE5CR');
+		};
+		
+		// On Load
+		if (Fides && Fides.consent.analytics) {
+			loadGoogleTags();
+		}
+		if (Fides && Fides.consent.data_sales_and_sharing) { // US GDPR
+			loadGoogleTags();
+		}
+		if (Fides && ( areAllKeysUndefined(Fides.experience) || Fides.experience.data_sales ) ) { // Rest of US	
+			loadGoogleTags();
+		}
 
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', 'G-Q407KZE5CR');
-				}
+		// On Consent Change
+		window.addEventListener( 'FidesUpdated', (evt) => { 
+			if (Fides && Fides.consent.analytics) {
+				loadGoogleTags();
+			}
+			// Reload page if user has opted out of analytics which should remove the Google Tag Manager script from the window object
+			if (Fides && Fides.consent.analytics === false) {
+				deleteAllExceptFidesConsent();
+				location.reload(); 
+			}
+			if (Fides && Fides.consent.data_sales_and_sharing === false) { // US GDPR
+				deleteAllExceptFidesConsent();
+				location.reload();
+			}
+		});
+	</script>
+
+  
+	<script>
+			const loadMetaPixel = () => {
+					!function(f,b,e,v,n,t,s)
+					{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+							n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+							if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+							n.queue=[];t=b.createElement(e);t.async=!0;
+							t.src=v;s=b.getElementsByTagName(e)[0];
+							s.parentNode.insertBefore(t,s)}(window, document,'script',
+					'https://connect.facebook.net/en_US/fbevents.js');
+					fbq('init', '749523449402124');
+					fbq('track', 'PageView');
+			};
+			
+			// On Load
+			if (Fides && Fides.consent.analytics) {
+					loadMetaPixel();
+			}
+			if (Fides && Fides.consent.data_sales_and_sharing) { // US GDPR
+					loadMetaPixel();
+			}
+			if (Fides && ( areAllKeysUndefined(Fides.experience) || Fides.experience.data_sales ) ) { // Rest of US    
+					loadMetaPixel();
+			}
+
+			// On Consent Change
+			window.addEventListener('FidesUpdated', (evt) => {
+					if (Fides && Fides.consent.analytics) {
+							loadMetaPixel();
+					}
+					// Reload page if user has opted out of analytics, which should remove the Meta Pixel script from the window object
+					if (Fides && Fides.consent.analytics === false) {
+						deleteAllExceptFidesConsent();	
+						location.reload(); 
+					}
+					if (Fides && Fides.consent.data_sales_and_sharing === false) { // US GDPR
+						deleteAllExceptFidesConsent();	
+						location.reload();
+					}
 			});
 	</script>
-  
-    <!-- Meta Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '749523449402124');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=749523449402124&ev=PageView&noscript=1"
-        /></noscript>
-    <!-- End Meta Pixel Code -->
+
+	<noscript><img height="1" width="1" style="display:none"
+								src="https://www.facebook.com/tr?id=749523449402124&ev=PageView&noscript=1"
+			/></noscript>
+
 </head>
 <body class="page-template page-template-templates page-template-landing-page page-template-templateslanding-page-php page page-id-79628 has-grow-sidebar mediavine-corporate mediavine-trellis">
 
@@ -764,16 +835,7 @@ display:none !important;
         <div class="row__col row__col--xs-12 row__col--l-7">
           <ul class="footer__copyright">
             <li>
-              <a href="https://www.mediavine.com/brand-safety-policy/">Brand Safety Policy</a>
-            </li>
-            <li>
-              <a href="https://www.mediavine.com/privacy-policy/">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="https://www.mediavine.com/privacy-notice/">US Privacy Notice</a>
-            </li>
-            <li>
-              <a href="https://www.mediavine.com/terms-of-service/">Terms and Conditions</a>
+              <a href="https://www.mediavine.com/legal-and-privacy-center/">LEGAL AND PRIVACY CENTER</a>
             </li>
             <li>
               &copy; 2024 Mediavine            </li>
@@ -932,8 +994,7 @@ display:none !important;
 		 }
 	 }
  };
-</script>
-<script src="https://faves.grow.me/main.js" data-grow-faves-site-id="8c04bd28-1262-4eb9-bbe2-44f80be4e852" defer></script>		<!-- Global site tag (gtag.js) - Google Analytics -->
+</script>		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<link rel="preconnect" href="https://www.google-analytics.com">
 		<link rel="preconnect" href="https://stats.g.doubleclick.net">
 		<script>
@@ -958,7 +1019,7 @@ display:none !important;
 var wpcf7 = {"api":{"root":"https:\/\/www.mediavine.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":"1"};
 /* ]]> */
 </script>
-<script type="text/javascript" id="contact-form-7-js" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/mvt-js/1/5bc2b1fa970f9cecb3c30c0c92c98271.min.js" defer data-noptimize data-handle="contact-form-7"></script>
+<script type="text/javascript" id="contact-form-7-js" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.8" defer data-noptimize data-handle="contact-form-7"></script>
 <script type='text/javascript' id='dpsp-frontend-js-pro-js-before'>
 		var dpsp_pin_button_data = {"pin_description_source":"image_alt_tag","pinterest_pinnable_images":"post_images","pinterest_button_share_behavior":"all_images","button_position":"top_left","button_shape":"rectangular","minimum_image_width":"200","minimum_image_height":"200","show_button_text_label":"yes","button_text_label":"Save","button_share_behavior":"hover_image"}
 	
@@ -976,10 +1037,54 @@ var wpcf7_recaptcha = {"sitekey":"6Lem66YoAAAAABWzGpkiq7b3FxbKhpfzcg67IEi9","act
 <script type="text/javascript" id="wpcf7-recaptcha-js" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/mvt-js/1/da610e54fa6e947776a5182a42eda940.min.js" defer data-noptimize data-handle="wpcf7-recaptcha"></script>
 <script type='text/javascript' id='mv-trellis-js-extra'>
 /* <![CDATA[ */
-var mvt = {"version":"0.18.1","options":{"register_pwa":true,"require_name_email":true},"rest_url":"https:\/\/www.mediavine.com\/wp-json\/","site_url":"https:\/\/www.mediavine.com","img_host":"www.mediavine.com","theme_directory":"https:\/\/www.mediavine.com\/wp-content\/themes\/mediavine-trellis","pwa_version":"78911","comments":{"order":"asc","per_page":50,"page_comments":false,"enabled":false,"has_comments":"0"},"i18n":{"COMMENTS":"Comments","REPLY":"Reply","COMMENT":"Comment","COMMENT_PLACEHOLDER":"Write your comment...","REPLY_PLACEHOLDER":"Write your reply...","NAME":"Name","EMAIL":"Email","AT":"at","SHOW_MORE":"Show More Comments","LOADING":"Loading...","PLEASE_WAIT":"Please wait...","COMMENT_POSTED":"Comment posted!","FLOOD_MESSAGE":"Please wait before posting another comment.","FLOOD_HEADER":"Slow down, you're commenting too quickly!","DUPLICATE_MESSAGE":"It looks as though you've already said that!","DUPLICATE_HEADER":"Duplicate comment detected","INVALID_PARAM_MESSAGE":"Please check your email address.","INVALID_PARAM_HEADER":"Invalid email address","INVALID_CONTENT_MESSAGE":"Please check your comment before sending it again.","INVALID_CONTENT_HEADER":"Invalid content","AUTHOR_REQUIRED_MESSAGE":"Creating a comment requires valid author name and email values.","AUTHOR_REQUIRED_HEADER":"Missing some fields","GENERIC_ERROR":"Something went wrong."}};
+var mvt = {"version":"0.18.1","options":{"register_pwa":true,"require_name_email":true},"rest_url":"https:\/\/www.mediavine.com\/wp-json\/","site_url":"https:\/\/www.mediavine.com","img_host":"www.mediavine.com","theme_directory":"https:\/\/www.mediavine.com\/wp-content\/themes\/mediavine-trellis","pwa_version":"80452","comments":{"order":"asc","per_page":50,"page_comments":false,"enabled":false,"has_comments":"0"},"i18n":{"COMMENTS":"Comments","REPLY":"Reply","COMMENT":"Comment","COMMENT_PLACEHOLDER":"Write your comment...","REPLY_PLACEHOLDER":"Write your reply...","NAME":"Name","EMAIL":"Email","AT":"at","SHOW_MORE":"Show More Comments","LOADING":"Loading...","PLEASE_WAIT":"Please wait...","COMMENT_POSTED":"Comment posted!","FLOOD_MESSAGE":"Please wait before posting another comment.","FLOOD_HEADER":"Slow down, you're commenting too quickly!","DUPLICATE_MESSAGE":"It looks as though you've already said that!","DUPLICATE_HEADER":"Duplicate comment detected","INVALID_PARAM_MESSAGE":"Please check your email address.","INVALID_PARAM_HEADER":"Invalid email address","INVALID_CONTENT_MESSAGE":"Please check your comment before sending it again.","INVALID_CONTENT_HEADER":"Invalid content","AUTHOR_REQUIRED_MESSAGE":"Creating a comment requires valid author name and email values.","AUTHOR_REQUIRED_HEADER":"Missing some fields","GENERIC_ERROR":"Something went wrong."}};
 /* ]]> */
 </script>
-<script id="mv-trellis-js" type="text/javascript" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/themes/mediavine-trellis/assets/dist/main.0.18.1.js?ver=0.18.1" defer data-noptimize data-handle="mv-trellis"></script><script type="text/javascript" id="mv-trellis-mediavine-corporate-js" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/mvt-js/1/0a792d5d1eb2408eff9cbc4324a6c7ea.min.js" defer data-noptimize data-handle="mv-trellis-mediavine-corporate"></script>
+<script id="mv-trellis-js" type="text/javascript" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/themes/mediavine-trellis/assets/dist/main.0.18.1.js?ver=0.18.1" defer data-noptimize data-handle="mv-trellis"></script><script type="text/javascript" id="mv-trellis-mediavine-corporate-js" class="mv-trellis-script" src="https://www.mediavine.com/wp-content/mvt-js/1/3f40d0828722c195a008fba676c04a4e.min.js" defer data-noptimize data-handle="mv-trellis-mediavine-corporate"></script>
+
+	<script>
+		function loadFidesCustomizations() {
+			if (Fides && !areAllKeysUndefined(Fides.experience)) {
+				if (document.querySelector(".footer-links a.manage-fides")) {
+					return;
+				}
+				let buttonText = "Manage Preferences";
+				if (
+					Fides?.experience?.experience_config?.id ===
+					"pri_22f7052c-e456-4b50-8b81-71ee026ec4e0"
+				) {
+					buttonText = "Do Not Sell or Share My Personal Information";
+				}
+				const managePreferenceLink = document.createElement("a");
+				managePreferenceLink.href = "#";
+				managePreferenceLink.innerHTML = buttonText;
+				managePreferenceLink.classList.add("manage-fides");
+				managePreferenceLink.onclick = () => {
+					Fides.showModal();
+				};
+				document
+					.querySelector(".footer__copyright")
+					.appendChild(managePreferenceLink);
+				if (
+					Fides?.experience?.experience_config?.id ===
+					"pri_22f7052c-e456-4b50-8b81-71ee026ec4e0"
+				) {
+					const style = document.createElement("style");
+					style.textContent = `
+							.fides-notice-toggle-title span[aria-controls='data_sales_and_sharing']:before {
+								display: none !important;
+							}
+							.fides-notice-toggle .fides-notice-toggle-title:hover {
+								background-color: transparent !important;
+								cursor: pointer;
+							}`;
+					document.head.appendChild(style);
+				}
+			}
+		}
+		loadFidesCustomizations();
+	</script>
+
 		<!-- Google Translate Element -->
 					<script>
 					try {
@@ -1006,10 +1111,104 @@ var mvt = {"version":"0.18.1","options":{"register_pwa":true,"require_name_email
 					}
 					catch(e) { console.error(e) }
 			</script>
-		    <script type="text/javascript"> _linkedin_partner_id = "4067916"; window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; window._linkedin_data_partner_ids.push(_linkedin_partner_id); </script><script type="text/javascript"> (function(l) { if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])}; window.lintrk.q=[]} var s = document.getElementsByTagName("script")[0]; var b = document.createElement("script"); b.type = "text/javascript";b.async = true; b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; s.parentNode.insertBefore(b, s);})(window.lintrk); </script> <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=4067916&fmt=gif" /> </noscript>
+		
+		<script>
+				const loadLinkedInScript = () => {
+						_linkedin_partner_id = "4067916";
+						window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+						window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+
+						(function(l) {
+								if (!l) {
+										window.lintrk = function(a, b) {
+												window.lintrk.q.push([a, b])
+										};
+										window.lintrk.q = []
+								}
+								var s = document.getElementsByTagName("script")[0];
+								var b = document.createElement("script");
+								b.type = "text/javascript";
+								b.async = true;
+								b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+								s.parentNode.insertBefore(b, s);
+						})(window.lintrk);
+				};
+
+				// On Load
+				if (Fides && Fides.consent.analytics) {
+						loadLinkedInScript();
+				}
+				if (Fides && Fides.consent.data_sales_and_sharing) { // US GDPR
+						loadLinkedInScript();
+				}
+				if (Fides && ( areAllKeysUndefined(Fides.experience) || Fides.experience.data_sales ) ) { // Rest of US
+						loadLinkedInScript();
+				}
+
+				// On Consent Change
+				window.addEventListener('FidesUpdated', (evt) => {
+						if (Fides && Fides.consent.analytics) {
+								loadLinkedInScript();
+						}
+						// Reload page if user has opted out of analytics, which should remove the LinkedIn script from the window object
+						if (Fides && Fides.consent.analytics === false) {
+							deleteAllExceptFidesConsent();	
+							location.reload(); 
+						}
+						if (Fides && Fides.consent.data_sales_and_sharing === false) { // US GDPR
+							deleteAllExceptFidesConsent();	
+							location.reload();
+						}
+				});
+		</script>
+
+		<noscript>
+				<img height="1" width="1" style="display:none;" alt="" 
+						src="https://px.ads.linkedin.com/collect/?pid=4067916&fmt=gif" />
+		</noscript>
+		<script>
+				const loadGrowMeScript = () => {
+						var s = document.getElementsByTagName("script")[0];
+						var b = document.createElement("script");
+						b.type = "text/javascript";
+						b.async = true;
+						b.defer = true;
+						b.src = "https://faves.grow.me/main.js";
+						b.setAttribute("data-grow-faves-site-id", "8c04bd28-1262-4eb9-bbe2-44f80be4e852");
+						s.parentNode.insertBefore(b, s);
+				};
+
+				// On Load
+				if (Fides && Fides.consent.analytics) {
+						loadGrowMeScript();
+				}
+				if (Fides && Fides.consent.data_sales_and_sharing) { // US GDPR
+						loadGrowMeScript();
+				}
+				if (Fides && ( areAllKeysUndefined(Fides.experience) || Fides.experience.data_sales ) ) { // Rest of US
+						loadGrowMeScript();
+				}
+
+				// On Consent Change
+				window.addEventListener('FidesUpdated', (evt) => {
+						if (Fides && Fides.consent.analytics) {
+								loadGrowMeScript();
+						}
+						// Reload page if user has opted out of analytics, which should remove the Grow.me script from the window object
+						if (Fides && Fides.consent.analytics === false) {
+							deleteAllExceptFidesConsent();	
+							location.reload(); 
+						}
+						if (Fides && Fides.consent.data_sales_and_sharing === false) { // US GDPR
+							deleteAllExceptFidesConsent();	
+							location.reload();
+						}
+				});
+		</script>
+
 </body>
 </html>
-<!-- Dynamic page generated in 0.308 seconds. -->
-<!-- Cached page generated by WP-Super-Cache on 2024-07-30 21:35:32 -->
+<!-- Dynamic page generated in 0.243 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2024-09-10 15:13:41 -->
 
 <!-- super cache -->
