@@ -372,7 +372,7 @@
     
         <div class="actions">
             <a href="https://f1tv.formula1.com" class="btn btn-primary" data-i18n="[href]welcome.F1_TV_Link"><span data-i18n="welcome.F1_TV"></span></a>
-            <a href="https://www.formula1.com" class="btn btn-primary" data-i18n="welcome.F1_Website"></a>        
+            <a href="https://www.formula1.com" class="btn btn-primary" data-i18n="welcome.F1_Website"></a>
             <a href="https://fantasy.formula1.com" class="btn btn-primary" data-i18n="welcome.F1_Fantasy"></a>
         </div>
     </div>
@@ -384,35 +384,28 @@
                 copySelector = isFreeTrial ? "freeTrials.welcome" : "welcome",
                 currencySymbol = selectedData.CurrencyProperties.Symbol,
                 imageUrl = orderDetails.Items[0].Product.ImageUrl,
-                cycle = productReference = "",
                 productName = orderDetails.Items[0].Product.Name,
                 totalAmount = orderDetails.Totals.TotalAmount,
                 introPrice = selectedData.DiscountedAmount,
                 introPriceDuration = selectedData.introPriceDuration,
                 postCharge = selectedData.postOfferChargeText,
-                period = selectedData.ProductProperties.Renewal,
+                period = selectedData.PricingPlanProperties.Renewal,
                 originalPrice = selectedData.Amount,
                 numberOfMonths = selectedData.IntroPricingDiscount?.DiscountPeriod,
-                product = selectedData.ProductName;
+                product = selectedData.ProductName,
+                entitlement = selectedData.ProductProperties.Entitlement.toLowerCase(),
+                renewal = selectedData.PricingPlanProperties.Renewal.toLowerCase();
     
-            orderDetails.Items[0].Product.ExternalReferences.filter(function(item) {
-                if(item.ExternalId === "renewal") {
-                    cycle = item.Value;
-                }
-                if(item.ExternalId === "Product Reference") {
-                    productReference = item.Value;
-                }
-            });
         @>
         <@ if(isFreeTrial) { @>
             <p data-i18n="[html]<@=copySelector @>.subscriptionComplete"></p>
         <@ } else { @>
-            <p><span data-i18n="<@=copySelector @>.subscriptionComplete.text1"></span><strong class="cycle" data-i18n="<@=copySelector @>.subscriptionComplete.<@=productReference@>.cycle"></strong><span data-i18n="<@=copySelector @>.subscriptionComplete.text2"></span><strong class='productName' data-i18n="<@=copySelector @>.subscriptionComplete.<@=productReference@>.plan"></strong>.<span data-i18n="[html]<@=copySelector @>.emailSent"></span></p>
+            <p><span data-i18n="<@=copySelector @>.subscriptionComplete.text1"></span><strong class="cycle" data-i18n="<@=copySelector @>.subscriptionComplete.<@=entitlement @>.<@=renewal @>"></strong><span data-i18n="<@=copySelector @>.subscriptionComplete.text2"></span><strong class='productName' data-i18n="<@=copySelector @>.subscriptionComplete.<@=entitlement@>.plan"></strong>.<span data-i18n="[html]<@=copySelector @>.emailSent"></span></p>
         <@ } @>
         <div class="content">
             <div class="row">
                 <div class="col-sm-8">
-                    <img src="<@= imageUrl @>" class='productImage' data-i18n="[alt]<@=copySelector@>.<@=productReference@>">
+                    <img src="<@= imageUrl @>" class='productImage' data-i18n="[alt]<@=copySelector @>.<@=entitlement @>.label">
                     <@ if(isFreeTrial) { @>
                         <img src="images/transparent.gif" class="free-trial" data-i18n="[src]<@=copySelector @>.freeTrialImage">
                     <@ } @>
@@ -425,7 +418,7 @@
             <@ if(isFreeTrial) { @>
                 <div class="row">
                     <div class="col-xs-12">
-                        <p><span data-i18n="[html]<@=copySelector @>.subscribedToPro.text"></span><span data-i18n="[html]<@=copySelector @>.subscribedToPro.<@=productReference@>"></span></p>
+                        <p><span data-i18n="[html]<@=copySelector @>.subscribedToPro.text"></span><span data-i18n="[html]<@=copySelector @>.subscribedToPro.<@=entitlement @>.<@=renewal @>"></span></p>
                     </div>
                 </div>
     
@@ -492,16 +485,14 @@
                     </div>
                     <div class="row bb-1">
                         <div class="col-sm-6" data-i18n="welcome.renewal_cycle"></div>
-                        <div class="col-sm-6"><b class="cycle" data-i18n="<@=copySelector @>.subscriptionComplete.<@=productReference@>.cycle"></b></div>
+                        <div class="col-sm-6"><b class="cycle" data-i18n="<@=copySelector @>.subscriptionComplete.<@=entitlement @>.<@=renewal @>"></b></div>
                     </div>
                 </div>
             <@ } @>
     
         </div>
         <p><span data-i18n="[html]<@=copySelector @>.F1_TV_Subscription_Text"></span></p>
-    </script>
-    
-</div>
+    </script></div>
 <!-- login Page Section End -->
 
 <!-- subscriptionError Page Section start -->
@@ -978,11 +969,11 @@
 
 <script>
   window.CSG_CONFIG = {
-    iframeUrl: 'https://static.formula1.com/account/2.0.33/react/index.html',
+    iframeUrl: 'https://static.formula1.com/account/2.0.35/react/index.html',
     container: 'csgWidget',
   }
 </script>
-<script src="https://static.formula1.com/account/2.0.33/ascendonController.js"></script>
+<script src="https://static.formula1.com/account/2.0.35/ascendonController.js"></script>
 <script src="https://static.formula1.com/mk-sdk/v1.0.0/main.js"></script>
 
 <script src="./scripts/libs.min.js"></script>
