@@ -22,8 +22,9 @@
         const menuShow = document.querySelector('.js-menu-show');
         const menuHide = document.querySelector('.js-menu-hide');
         const header = document.querySelector('.js-header');
-        const dropdownMenuPolicy = document.querySelector('.js-dropdown-menu-pp');
-        const dropdownMenuCenter = document.querySelector('.js-dropdown-menu-pc');
+        const dropdownMenuPolicy = document.querySelectorAll('.js-dropdown-menu-pp');
+        const dropdownMenuCenter = document.querySelectorAll('.js-dropdown-menu-pc');
+        const dropdownMenuHealthData = document.querySelectorAll('.js-dropdown-menu-health-data');
         const privacyLink = document.querySelectorAll('.js-pp-link');
         
         menuShow.onclick = () => { 
@@ -34,21 +35,35 @@
             header.classList.remove(SHOW_NAV_CLASS);
         };
 
-        dropdownMenuPolicy.onclick = (e) => { 
-            if (window.matchMedia('(max-width: 1099px)').matches) {
-                e.preventDefault();
-            }
+        for (let i=0; i < dropdownMenuPolicy.length; i++) {
+            dropdownMenuPolicy[i].onclick = (e) => { 
+                if (window.matchMedia('(max-width: 1149px)').matches) {
+                    e.preventDefault();
+                }
 
-            dropdownMenuPolicy.parentElement.classList.toggle(SHOW_DROPDOWN_CLASS);
-        };
+                dropdownMenuPolicy[i].parentElement.classList.toggle(SHOW_DROPDOWN_CLASS);
+            };
+        }
 
-        dropdownMenuCenter.onclick = (e) => { 
-            if (window.matchMedia('(max-width: 1099px)').matches) {
-                e.preventDefault();
-            }
+        for (let i=0; i < dropdownMenuCenter.length; i++) {
+            dropdownMenuCenter[i].onclick = (e) => { 
+                if (window.matchMedia('(max-width: 1149px)').matches) {
+                    e.preventDefault();
+                }
 
-            dropdownMenuCenter.parentElement.classList.toggle(SHOW_DROPDOWN_CLASS);
-        };
+                dropdownMenuCenter[i].parentElement.classList.toggle(SHOW_DROPDOWN_CLASS);
+            };
+        }
+
+        for (let i=0; i < dropdownMenuHealthData.length; i++) {
+            dropdownMenuHealthData[i].onclick = (e) => { 
+                if (window.matchMedia('(max-width: 1149px)').matches) {
+                    e.preventDefault();
+                }
+
+                dropdownMenuHealthData[i].parentElement.classList.toggle(SHOW_DROPDOWN_CLASS);
+            };
+        }
 
         for(let i=0; i < privacyLink.length; i++) {
             privacyLink[i].onclick = () => {
@@ -88,14 +103,14 @@
                     <ul class="header__list">
                         <li class="header__item dropdown">
                             <a href="privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw" class="header__link js-dropdown-menu-pp">
-                                <svg class="globalFooter__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <svg class="header__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                     <path d="M12,10a2.994,2.994,0,0,0-2.5,1.347,3.42,3.42,0,0,0-3,0,3.007,3.007,0,1,0,.455,2.106,1.522,1.522,0,0,1,2.092,0A3,3,0,1,0,12,10ZM4,14a1,1,0,1,1,1-1A1,1,0,0,1,4,14Zm8,0a1,1,0,1,1,1-1A1,1,0,0,1,12,14Z"/>
                                     <path d="M12.8,4,12,0H4L3.2,4Z"/>
                                     <path d="M13,5H3L0,8H16Z"/>
                                 </svg>                        
                                 Privacy Policy
                             </a>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown__arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown__arrow js-dropdown-menu-pp">
                                 <g clip-path="url(#clip0_4945_2202)">
                                     <mask id="mask0_4945_2202" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="3" width="16" height="10">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6653 3.66807C16.1116 4.11438 16.1116 4.838 15.6653 5.28431L8 12.9496L0.334735 5.28431C-0.11158 4.838 -0.11158 4.11438 0.334735 3.66807C0.781048 3.22176 1.50467 3.22176 1.95098 3.66807L8 9.71709L14.049 3.66807C14.4953 3.22176 15.219 3.22176 15.6653 3.66807Z" fill="black"/>
@@ -132,7 +147,7 @@
                         </li>
                         <li class="header__item dropdown">
                             <a class="header__link js-dropdown-menu-pc" href="privacy-center.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw">
-                                <svg class="globalFooter__icon" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16">
+                                <svg class="header__icon" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 16 16">
                                     <g>
                                         <path data-color="color-2" d="M3,8.23822V4.5C3,3.12158,4.12109,2,5.5,2S8,3.12158,8,4.5v2.60498L9.05853,7.2226 C9.64032,6.46423,10,5.52753,10,4.5C10,2.01855,7.98145,0,5.5,0S1,2.01855,1,4.5C1,6.0567,1.79529,7.42993,3,8.23822z"></path>
                                         <path d="M13.89996,16l1.0661-3.55365c0.53821-1.79388-0.68073-3.6369-2.54218-3.84369L7,8V4.5 C7,3.67157,6.32843,3,5.5,3S4,3.67157,4,4.5V12H3v-2H2.5C1.67157,10,1,10.67157,1,11.5v1.83331 C1,14.28296,1.28461,15.20221,1.78973,16H13.89996z"></path>
@@ -140,7 +155,7 @@
                                 </svg>                      
                                 <span>Privacy Center</span>
                             </a>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown__arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown__arrow js-dropdown-menu-pc">
                                 <g clip-path="url(#clip0_4945_2202)">
                                     <mask id="mask0_4945_2202" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="3" width="16" height="10">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6653 3.66807C16.1116 4.11438 16.1116 4.838 15.6653 5.28431L8 12.9496L0.334735 5.28431C-0.11158 4.838 -0.11158 4.11438 0.334735 3.66807C0.781048 3.22176 1.50467 3.22176 1.95098 3.66807L8 9.71709L14.049 3.66807C14.4953 3.22176 15.219 3.22176 15.6653 3.66807Z" fill="black"/>
@@ -165,7 +180,7 @@
                         </li>
                         <li class="header__item">
                             <a class="header__link" href="terms-of-use.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw">
-                                <svg class="globalFooter__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="15.998" viewBox="0 0 16 15.998">
+                                <svg class="header__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="15.998" viewBox="0 0 16 15.998">
                                     <g transform="translate(0 0)">
                                         <path d="M16,1a1,1,0,0,0-1-1H10.45A4.47,4.47,0,0,0,7.268,1.318L3.293,5.293a1,1,0,0,0,0,1.414,2.6,2.6,0,0,0,3.437.214l2.687-2.09L13.61,9.024a1.2,1.2,0,0,1-.069,1.761l-.566.483L11.354,9.646a.5.5,0,0,0-.708.708l1.566,1.565-.855.731-1.5-1.5a.5.5,0,1,0-.708.708L10.594,13.3l-.138.118a1.988,1.988,0,0,1-1.824.407,1.981,1.981,0,0,0-.57-1.24L4.477,9a2,2,0,0,0-2.829,2.828l3.586,3.586a2,2,0,0,0,2.542.234,4.017,4.017,0,0,0,1.376.253,3.977,3.977,0,0,0,2.608-.965l3.08-2.63a3.108,3.108,0,0,0,1.16-2.3Z"/>
                                         <path d="M2,7V2H5A1,1,0,1,0,5,0H1A1,1,0,0,0,0,1V7A1,1,0,1,0,2,7Z"/>
@@ -176,11 +191,52 @@
                         </li>
                         <li class="header__item">
                             <a class="header__link js-pp-link" href="privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#cookies-and-technologies">
-                                <svg class="globalFooter__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                <svg class="header__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
                                     <path d="M8,0a8,8,0,1,0,8,8A8.024,8.024,0,0,0,8,0ZM5,11a.945.945,0,0,1-1-1A.945.945,0,0,1,5,9a.945.945,0,0,1,1,1A.945.945,0,0,1,5,11ZM7,6A.945.945,0,0,1,6,5,.945.945,0,0,1,7,4,.945.945,0,0,1,8,5,.945.945,0,0,1,7,6Zm4,4a.945.945,0,0,1-1-1,.945.945,0,0,1,1-1,.945.945,0,0,1,1,1A.945.945,0,0,1,11,10Z"/>
                                 </svg>
                                 <span> Cookies and Other Technologies</span>
                             </a>
+                        </li>
+                        <li class="header__item dropdown">
+                            <a class="header__link js-dropdown-menu-health-data" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw"> 
+                                <svg class="header__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_6786_891)">
+                                    <path d="M4.28936 7.33334L6.09536 4.32334C6.1581 4.21575 6.25015 4.12823 6.36075 4.07098C6.47136 4.01373 6.59596 3.98911 6.72003 4C6.84382 4.00985 6.96239 4.05407 7.0624 4.12769C7.1624 4.20131 7.23985 4.3014 7.28603 4.41667L9.45336 9.836L10.762 7.65467C10.8215 7.55643 10.9054 7.47523 11.0055 7.41893C11.1056 7.36264 11.2185 7.33315 11.3334 7.33334H15.5594C15.8315 6.70058 15.9811 6.02189 16 5.33334C16.0038 4.71944 15.8857 4.11089 15.6526 3.54299C15.4194 2.97508 15.0758 2.45912 14.6417 2.02502C14.2076 1.59092 13.6916 1.24732 13.1237 1.01415C12.5558 0.780971 11.9473 0.662863 11.3334 0.666669C10.0811 0.675273 8.88291 1.17849 8.00003 2.06667C7.11715 1.17849 5.919 0.675273 4.6667 0.666669C4.0528 0.662863 3.44425 0.780971 2.87635 1.01415C2.30844 1.24732 1.79248 1.59092 1.35838 2.02502C0.924278 2.45912 0.580678 2.97508 0.347504 3.54299C0.11433 4.11089 -0.00377816 4.71944 2.81171e-05 5.33334C0.0189883 6.02189 0.168526 6.70058 0.440695 7.33334H4.28936Z" fill="black"/>
+                                    <path d="M11.7107 8.66667L9.90469 11.6767C9.84545 11.7753 9.7617 11.8569 9.66158 11.9135C9.56147 11.9702 9.4484 12 9.33336 12H9.28003C9.15624 11.9902 9.03766 11.9459 8.93766 11.8723C8.83766 11.7987 8.7602 11.6986 8.71403 11.5833L6.54669 6.162L5.23803 8.34334C5.17878 8.44194 5.09503 8.52354 4.99492 8.5802C4.8948 8.63686 4.78173 8.66665 4.66669 8.66667H1.09869C3.14203 12.1927 7.34803 15.6667 7.60003 15.8667C7.65257 15.9173 7.71575 15.9555 7.78495 15.9786C7.85415 16.0016 7.92763 16.009 8.00003 16C8.14168 15.9862 8.2784 15.9406 8.40003 15.8667C8.65203 15.6667 12.858 12.1927 14.9014 8.66667H11.7107Z" fill="black"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_6786_891">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                    </defs>
+                                </svg>
+                                <span> Consumer Health Data Privacy Policy</span>
+                            </a>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" class="dropdown__arrow js-dropdown-menu-health-data">
+                                <g clip-path="url(#clip0_4945_2202)">
+                                    <mask id="mask0_4945_2202" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="3" width="16" height="10">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6653 3.66807C16.1116 4.11438 16.1116 4.838 15.6653 5.28431L8 12.9496L0.334735 5.28431C-0.11158 4.838 -0.11158 4.11438 0.334735 3.66807C0.781048 3.22176 1.50467 3.22176 1.95098 3.66807L8 9.71709L14.049 3.66807C14.4953 3.22176 15.219 3.22176 15.6653 3.66807Z" fill="black"/>
+                                    </mask>
+                                    <g mask="url(#mask0_4945_2202)">
+                                    <rect width="16" height="16" fill="black"/>
+                                    </g>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_4945_2202">
+                                    <rect width="16" height="16" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+
+                                <ul class="dropdown__menu">
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#what-health-data-we-collect">What consumer health data do we collect?</a></li>
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#what-sources-we-collect">From what sources do we collect consumer health data?</a></li>
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#what-purposes-do-we-use">How and for what purposes do we use consumer health data?</a></li>                        
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#when-how-we-share">When and how do we share consumer health data?</a></li>
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#whom-do-we-share">With whom do we share consumer health data?</a></li>
+        <li><a class="dropdown__link js-pp-link" href="health-data-privacy-policy.html?;d2VT3kVf1gGfxYNuKhXs7OIyG53ATfvsyIbkLhTlcNI5Hc1SfAw#your-choices-controls">What are your choices and controls and how to exercise them?</a></li>
+    </ul>
                         </li>
                     </ul>
                 </div>
