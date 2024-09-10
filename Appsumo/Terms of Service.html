@@ -122,8 +122,8 @@
     <!-- django-hijack -->
     
 
-    <link rel="stylesheet" href="https://appsumo2-cdn.appsumo.com/static/dist/css/base.691860677527.css" type="text/css">
-
+    <link href="https://appsumo2-cdn.appsumo.com/static/css/base.css?version=a580ab829a" rel="stylesheet">
+    
     
     
 
@@ -134,8 +134,8 @@
     
 
     <!-- Keep stripe.js on every page -->
-    <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/lazy_load_stripe.9ccc9af9ebdf.js"></script>
-
+    <script src="https://appsumo2-cdn.appsumo.com/static/js/lazyloadstripe.bundle.js?version=a580ab829a"></script>
+    
     
     
     
@@ -865,28 +865,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Le javascript
     ================================================== -->
 
-    <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/base.3f1cf6c8dd3e.js"></script>
-    <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/base_defer.78fabcc42c5c.js" defer></script>
+    <script src="https://appsumo2-cdn.appsumo.com/static/js/basejs.bundle.js"></script>
+    <script src="https://appsumo2-cdn.appsumo.com/static/js/basejsdefer.bundle.js" defer></script>
 
     <!-- Place project specific Javascript in this file -->
     
-      <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/base_defer_not_authed.773a6981fd54.js" defer></script>
+      <script src="https://appsumo2-cdn.appsumo.com/static/js/privy.bundle.js" defer></script>
     
     <!-- Sentry event processing, requires body to be loaded, placed at the end of body -->
     
 
 
+<script
+  src="https://js.sentry-cdn.com/b6dd1e3b824a48dcbf7e7c16e62a8ebd.min.js"
+  crossorigin="anonymous"
+></script>
+<script>
+  Sentry.init({
+    dsn: 'https://b6dd1e3b824a48dcbf7e7c16e62a8ebd@sentry.io/2714354',
+    environment: 'PROD',
+    beforeSend: function (event, hint) {
+      // group deal page exceptions
+      if (document.body.className.indexOf('sumo-product-pg') >= 0) {
+        // not every event will have an originalException set, it's optional
+        if (hint && hint.originalException) {
+          event.fingerprint = ['deal-detail', hint.originalException.toString()];
+        }
+      }
 
-    <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/project.5640bc1dd69d.js"></script>
+      return event;
+    },
+    denyUrls: [
+      // Browser extensions
+      /extensions\//i,
+      /^chrome:\/\//i,
+      /^chrome-extension:\/\//i,
+    ],
+  });
+</script>
 
+
+    <script src="https://appsumo2-cdn.appsumo.com/static/js/project.bundle.js?version=a580ab829a"></script>
+    
     
       <!-- Mobile Navbar -->
-      <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/navbar_defer.cc6b951e8806.js" defer></script>
-      <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/navbar.5abe8b453f9d.js"></script>
+      <script src="https://appsumo2-cdn.appsumo.com/static/js/offcanvas.bundle.js" defer></script>
+      <script src="https://appsumo2-cdn.appsumo.com/static/js/navbar.bundle.js?version=a580ab829a"></script>
     
 
     
-      <script src="https://appsumo2-cdn.appsumo.com/static/dist/js/banner.632242f55408.js"></script>
+      <script src="https://appsumo2-cdn.appsumo.com/static/js/banner.bundle.js"></script>
     
 
     
