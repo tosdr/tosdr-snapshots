@@ -62,16 +62,437 @@
 
 <script type='application/javascript' id='pys-version-script'>console.log('PixelYourSite PRO version 10.0.0.2');</script>
 <link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
 <link rel='dns-prefetch' href='//use.fontawesome.com' />
 <script type="text/javascript">
 /* <![CDATA[ */
-window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/aynrand.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.5.5"}};
-/*! This file is auto-generated */
-!function(i,n){var o,s,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),r=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===r[t]})}function u(e,t,n){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!n(e,"\ud83d\udc26\u200d\u2b1b","\ud83d\udc26\u200b\u2b1b")}return!1}function f(e,t,n){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):i.createElement("canvas"),a=r.getContext("2d",{willReadFrequently:!0}),o=(a.textBaseline="top",a.font="600 32px Arial",{});return e.forEach(function(e){o[e]=t(a,e,n)}),o}function t(e){var t=i.createElement("script");t.src=e,t.defer=!0,i.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",s=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){i.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+f.toString()+"("+[JSON.stringify(s),u.toString(),p.toString()].join(",")+"));",r=new Blob([e],{type:"text/javascript"}),a=new Worker(URL.createObjectURL(r),{name:"wpTestEmojiSupports"});return void(a.onmessage=function(e){c(n=e.data),a.terminate(),t(n)})}catch(e){}c(n=f(s,u,p))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15.0.3\/svg\/","svgExt":".svg","source":{"wpemoji":"https:\/\/aynrand.org\/wp-includes\/js\/wp-emoji.js?ver=6.6.1","twemoji":"https:\/\/aynrand.org\/wp-includes\/js\/twemoji.js?ver=6.6.1"}};
+/**
+ * @output wp-includes/js/wp-emoji-loader.js
+ */
+
+/**
+ * Emoji Settings as exported in PHP via _print_emoji_detection_script().
+ * @typedef WPEmojiSettings
+ * @type {object}
+ * @property {?object} source
+ * @property {?string} source.concatemoji
+ * @property {?string} source.twemoji
+ * @property {?string} source.wpemoji
+ * @property {?boolean} DOMReady
+ * @property {?Function} readyCallback
+ */
+
+/**
+ * Support tests.
+ * @typedef SupportTests
+ * @type {object}
+ * @property {?boolean} flag
+ * @property {?boolean} emoji
+ */
+
+/**
+ * IIFE to detect emoji support and load Twemoji if needed.
+ *
+ * @param {Window} window
+ * @param {Document} document
+ * @param {WPEmojiSettings} settings
+ */
+( function wpEmojiLoader( window, document, settings ) {
+	if ( typeof Promise === 'undefined' ) {
+		return;
+	}
+
+	var sessionStorageKey = 'wpEmojiSettingsSupports';
+	var tests = [ 'flag', 'emoji' ];
+
+	/**
+	 * Checks whether the browser supports offloading to a Worker.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @returns {boolean}
+	 */
+	function supportsWorkerOffloading() {
+		return (
+			typeof Worker !== 'undefined' &&
+			typeof OffscreenCanvas !== 'undefined' &&
+			typeof URL !== 'undefined' &&
+			URL.createObjectURL &&
+			typeof Blob !== 'undefined'
+		);
+	}
+
+	/**
+	 * @typedef SessionSupportTests
+	 * @type {object}
+	 * @property {number} timestamp
+	 * @property {SupportTests} supportTests
+	 */
+
+	/**
+	 * Get support tests from session.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @returns {?SupportTests} Support tests, or null if not set or older than 1 week.
+	 */
+	function getSessionSupportTests() {
+		try {
+			/** @type {SessionSupportTests} */
+			var item = JSON.parse(
+				sessionStorage.getItem( sessionStorageKey )
+			);
+			if (
+				typeof item === 'object' &&
+				typeof item.timestamp === 'number' &&
+				new Date().valueOf() < item.timestamp + 604800 && // Note: Number is a week in seconds.
+				typeof item.supportTests === 'object'
+			) {
+				return item.supportTests;
+			}
+		} catch ( e ) {}
+		return null;
+	}
+
+	/**
+	 * Persist the supports in session storage.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @param {SupportTests} supportTests Support tests.
+	 */
+	function setSessionSupportTests( supportTests ) {
+		try {
+			/** @type {SessionSupportTests} */
+			var item = {
+				supportTests: supportTests,
+				timestamp: new Date().valueOf()
+			};
+
+			sessionStorage.setItem(
+				sessionStorageKey,
+				JSON.stringify( item )
+			);
+		} catch ( e ) {}
+	}
+
+	/**
+	 * Checks if two sets of Emoji characters render the same visually.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @private
+	 *
+	 * @param {CanvasRenderingContext2D} context 2D Context.
+	 * @param {string} set1 Set of Emoji to test.
+	 * @param {string} set2 Set of Emoji to test.
+	 *
+	 * @return {boolean} True if the two sets render the same.
+	 */
+	function emojiSetsRenderIdentically( context, set1, set2 ) {
+		// Cleanup from previous test.
+		context.clearRect( 0, 0, context.canvas.width, context.canvas.height );
+		context.fillText( set1, 0, 0 );
+		var rendered1 = new Uint32Array(
+			context.getImageData(
+				0,
+				0,
+				context.canvas.width,
+				context.canvas.height
+			).data
+		);
+
+		// Cleanup from previous test.
+		context.clearRect( 0, 0, context.canvas.width, context.canvas.height );
+		context.fillText( set2, 0, 0 );
+		var rendered2 = new Uint32Array(
+			context.getImageData(
+				0,
+				0,
+				context.canvas.width,
+				context.canvas.height
+			).data
+		);
+
+		return rendered1.every( function ( rendered2Data, index ) {
+			return rendered2Data === rendered2[ index ];
+		} );
+	}
+
+	/**
+	 * Determines if the browser properly renders Emoji that Twemoji can supplement.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @private
+	 *
+	 * @param {CanvasRenderingContext2D} context 2D Context.
+	 * @param {string} type Whether to test for support of "flag" or "emoji".
+	 * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
+	 *
+	 * @return {boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( context, type, emojiSetsRenderIdentically ) {
+		var isIdentical;
+
+		switch ( type ) {
+			case 'flag':
+				/*
+				 * Test for Transgender flag compatibility. Added in Unicode 13.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly (white flag emoji + transgender symbol).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83C\uDFF3\uFE0F\u200D\u26A7\uFE0F', // as a zero-width joiner sequence
+					'\uD83C\uDFF3\uFE0F\u200B\u26A7\uFE0F' // separated by a zero-width space
+				);
+
+				if ( isIdentical ) {
+					return false;
+				}
+
+				/*
+				 * Test for UN flag compatibility. This is the least supported of the letter locale flags,
+				 * so gives us an easy test for full support.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly ([U] + [N]).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83C\uDDFA\uD83C\uDDF3', // as the sequence of two code points
+					'\uD83C\uDDFA\u200B\uD83C\uDDF3' // as the two code points separated by a zero-width space
+				);
+
+				if ( isIdentical ) {
+					return false;
+				}
+
+				/*
+				 * Test for English flag compatibility. England is a country in the United Kingdom, it
+				 * does not have a two letter locale code but rather a five letter sub-division code.
+				 *
+				 * To test for support, we try to render it, and compare the rendering to how it would look if
+				 * the browser doesn't render it correctly (black flag emoji + [G] + [B] + [E] + [N] + [G]).
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					// as the flag sequence
+					'\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F',
+					// with each code point separated by a zero-width space
+					'\uD83C\uDFF4\u200B\uDB40\uDC67\u200B\uDB40\uDC62\u200B\uDB40\uDC65\u200B\uDB40\uDC6E\u200B\uDB40\uDC67\u200B\uDB40\uDC7F'
+				);
+
+				return ! isIdentical;
+			case 'emoji':
+				/*
+				 * Four and twenty blackbirds baked in a pie.
+				 *
+				 * To test for Emoji 15.0 support, try to render a new emoji: Blackbird.
+				 *
+				 * The Blackbird is a ZWJ sequence combining 🐦 Bird and ⬛ large black square.,
+				 *
+				 * 0x1F426 (\uD83D\uDC26) == Bird
+				 * 0x200D == Zero-Width Joiner (ZWJ) that links the code points for the new emoji or
+				 * 0x200B == Zero-Width Space (ZWS) that is rendered for clients not supporting the new emoji.
+				 * 0x2B1B == Large Black Square
+				 *
+				 * When updating this test for future Emoji releases, ensure that individual emoji that make up the
+				 * sequence come from older emoji standards.
+				 */
+				isIdentical = emojiSetsRenderIdentically(
+					context,
+					'\uD83D\uDC26\u200D\u2B1B', // as the zero-width joiner sequence
+					'\uD83D\uDC26\u200B\u2B1B' // separated by a zero-width space
+				);
+
+				return ! isIdentical;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks emoji support tests.
+	 *
+	 * This function may be serialized to run in a Worker. Therefore, it cannot refer to variables from the containing
+	 * scope. Everything must be passed by parameters.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @private
+	 *
+	 * @param {string[]} tests Tests.
+	 * @param {Function} browserSupportsEmoji Reference to browserSupportsEmoji function, needed due to minification.
+	 * @param {Function} emojiSetsRenderIdentically Reference to emojiSetsRenderIdentically function, needed due to minification.
+	 *
+	 * @return {SupportTests} Support tests.
+	 */
+	function testEmojiSupports( tests, browserSupportsEmoji, emojiSetsRenderIdentically ) {
+		var canvas;
+		if (
+			typeof WorkerGlobalScope !== 'undefined' &&
+			self instanceof WorkerGlobalScope
+		) {
+			canvas = new OffscreenCanvas( 300, 150 ); // Dimensions are default for HTMLCanvasElement.
+		} else {
+			canvas = document.createElement( 'canvas' );
+		}
+
+		var context = canvas.getContext( '2d', { willReadFrequently: true } );
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		var supports = {};
+		tests.forEach( function ( test ) {
+			supports[ test ] = browserSupportsEmoji( context, test, emojiSetsRenderIdentically );
+		} );
+		return supports;
+	}
+
+	/**
+	 * Adds a script to the head of the document.
+	 *
+	 * @ignore
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param {string} src The url where the script is located.
+	 *
+	 * @return {void}
+	 */
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+		script.src = src;
+		script.defer = true;
+		document.head.appendChild( script );
+	}
+
+	settings.supports = {
+		everything: true,
+		everythingExceptFlag: true
+	};
+
+	// Create a promise for DOMContentLoaded since the worker logic may finish after the event has fired.
+	var domReadyPromise = new Promise( function ( resolve ) {
+		document.addEventListener( 'DOMContentLoaded', resolve, {
+			once: true
+		} );
+	} );
+
+	// Obtain the emoji support from the browser, asynchronously when possible.
+	new Promise( function ( resolve ) {
+		var supportTests = getSessionSupportTests();
+		if ( supportTests ) {
+			resolve( supportTests );
+			return;
+		}
+
+		if ( supportsWorkerOffloading() ) {
+			try {
+				// Note that the functions are being passed as arguments due to minification.
+				var workerScript =
+					'postMessage(' +
+					testEmojiSupports.toString() +
+					'(' +
+					[
+						JSON.stringify( tests ),
+						browserSupportsEmoji.toString(),
+						emojiSetsRenderIdentically.toString()
+					].join( ',' ) +
+					'));';
+				var blob = new Blob( [ workerScript ], {
+					type: 'text/javascript'
+				} );
+				var worker = new Worker( URL.createObjectURL( blob ), { name: 'wpTestEmojiSupports' } );
+				worker.onmessage = function ( event ) {
+					supportTests = event.data;
+					setSessionSupportTests( supportTests );
+					worker.terminate();
+					resolve( supportTests );
+				};
+				return;
+			} catch ( e ) {}
+		}
+
+		supportTests = testEmojiSupports( tests, browserSupportsEmoji, emojiSetsRenderIdentically );
+		setSessionSupportTests( supportTests );
+		resolve( supportTests );
+	} )
+		// Once the browser emoji support has been obtained from the session, finalize the settings.
+		.then( function ( supportTests ) {
+			/*
+			 * Tests the browser support for flag emojis and other emojis, and adjusts the
+			 * support settings accordingly.
+			 */
+			for ( var test in supportTests ) {
+				settings.supports[ test ] = supportTests[ test ];
+
+				settings.supports.everything =
+					settings.supports.everything && settings.supports[ test ];
+
+				if ( 'flag' !== test ) {
+					settings.supports.everythingExceptFlag =
+						settings.supports.everythingExceptFlag &&
+						settings.supports[ test ];
+				}
+			}
+
+			settings.supports.everythingExceptFlag =
+				settings.supports.everythingExceptFlag &&
+				! settings.supports.flag;
+
+			// Sets DOMReady to false and assigns a ready function to settings.
+			settings.DOMReady = false;
+			settings.readyCallback = function () {
+				settings.DOMReady = true;
+			};
+		} )
+		.then( function () {
+			return domReadyPromise;
+		} )
+		.then( function () {
+			// When the browser can not render everything we need to load a polyfill.
+			if ( ! settings.supports.everything ) {
+				settings.readyCallback();
+
+				var src = settings.source || {};
+
+				if ( src.concatemoji ) {
+					addScript( src.concatemoji );
+				} else if ( src.wpemoji && src.twemoji ) {
+					addScript( src.twemoji );
+					addScript( src.wpemoji );
+				}
+			}
+		} );
+} )( window, document, window._wpemojiSettings );
+
 /* ]]> */
 </script>
-<!-- WP Fusion --><style type="text/css">.woocommerce .product .variations option:disabled { display: none; } </style><link rel='stylesheet' id='dce-animations-css' href='https://aynrand.org/wp-content/plugins/dynamic-content-for-elementor/assets/css/animations.css?ver=3.0.9' type='text/css' media='all' />
-<link rel='stylesheet' id='premium-addons-css' href='https://aynrand.org/wp-content/plugins/premium-addons-for-elementor/assets/frontend/min-css/premium-addons.min.css?ver=4.10.36' type='text/css' media='all' />
+<!-- WP Fusion --><style type="text/css">.woocommerce .product .variations option:disabled { display: none; } </style><link rel='stylesheet' id='dce-animations-css' href='https://aynrand.org/wp-content/plugins/dynamic-content-for-elementor/assets/css/animations.css?ver=3.0.15' type='text/css' media='all' />
+<link rel='stylesheet' id='premium-addons-css' href='https://aynrand.org/wp-content/plugins/premium-addons-for-elementor/assets/frontend/css/premium-addons.css?ver=4.10.50' type='text/css' media='all' />
 <style id='wp-emoji-styles-inline-css' type='text/css'>
 
 	img.wp-smiley, img.emoji {
@@ -86,12 +507,12 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 		padding: 0 !important;
 	}
 </style>
-<link rel='stylesheet' id='wp-block-library-css' href='https://aynrand.org/wp-includes/css/dist/block-library/style.min.css?ver=6.5.5' type='text/css' media='all' />
-<style id='ari-ari-video-player-style-inline-css' type='text/css'>
+<link rel="preload" href="https://aynrand.org/wp-includes/css/dist/block-library/style.css?ver=6.6.1" as="style" id="wp-block-library" media="all" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel='stylesheet' id='wp-block-library-css' href='https://aynrand.org/wp-includes/css/dist/block-library/style.css?ver=6.6.1' type='text/css' media='all' />
+</noscript><style id='ari-ari-video-player-style-inline-css' type='text/css'>
 .wp-block-ari-video-player-ari-video-player{background-color:#21759b;color:#fff;padding:2px}
 
 </style>
-<link rel='stylesheet' id='gutenberg-pdfjs-css' href='https://aynrand.org/wp-content/plugins/pdfjs-viewer-shortcode/inc/../blocks/dist/style.css?ver=2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='gutenberg-pdfjs-css' href='https://aynrand.org/wp-content/plugins/pdfjs-viewer-shortcode/inc/../blocks/dist/style.css?ver=2.2.2' type='text/css' media='all' />
 <style id='rank-math-toc-block-style-inline-css' type='text/css'>
 .wp-block-rank-math-toc-block nav ol{counter-reset:item}.wp-block-rank-math-toc-block nav ol li{display:block}.wp-block-rank-math-toc-block nav ol li:before{content:counters(item, ".") ". ";counter-increment:item}
 
@@ -99,36 +520,61 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/15
 <link rel='stylesheet' id='ari-media-player-index-css' href='https://aynrand.org/wp-content/plugins/ari-video-player/build/index.css?ver=1721663696' type='text/css' media='all' />
 <link rel='stylesheet' id='ari-media-player-style-index-css' href='https://aynrand.org/wp-content/plugins/ari-video-player/build/style-index.css?ver=1721663696' type='text/css' media='all' />
 <link rel='stylesheet' id='ari-media-player-view-css' href='https://aynrand.org/wp-content/plugins/ari-video-player/build/view.css?ver=1721663696' type='text/css' media='all' />
+<link rel="preload" href="https://aynrand.org/wp-content/plugins/the-plus-addons-for-block-editor/assets/css/extra/fontawesome.min.css?ver=3.3.3" as="style" id="tpgb-fontawesome" media="all" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel='stylesheet' id='tpgb-fontawesome-css' href='https://aynrand.org/wp-content/plugins/the-plus-addons-for-block-editor/assets/css/extra/fontawesome.min.css?ver=3.3.3' type='text/css' media='all' />
+</noscript><link rel='stylesheet' id='tpgb-gfonts-global-css' href='https://fonts.googleapis.com/css?family=Roboto%3A700%2C500%2C400&#038;subset=latin&#038;display=swap&#038;ver=3.3.3' type='text/css' media='all' />
+<link rel='stylesheet' id='plus-global-css' href='http://aynrand.org/wp-content/uploads/theplus_gutenberg/plus-global.css?ver=1725979740' type='text/css' media='all' />
 <style id='classic-theme-styles-inline-css' type='text/css'>
-/*! This file is auto-generated */
-.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/**
+ * These rules are needed for backwards compatibility.
+ * They should match the button element rules in the base theme.json file.
+ */
+.wp-block-button__link {
+	color: #ffffff;
+	background-color: #32373c;
+	border-radius: 9999px; /* 100% causes an oval, but any explicit but really high value retains the pill shape. */
+
+	/* This needs a low specificity so it won't override the rules from the button element if defined in theme.json. */
+	box-shadow: none;
+	text-decoration: none;
+
+	/* The extra 2px are added to size solids the same as the outline versions.*/
+	padding: calc(0.667em + 2px) calc(1.333em + 2px);
+
+	font-size: 1.125em;
+}
+
+.wp-block-file__button {
+	background: #32373c;
+	color: #ffffff;
+	text-decoration: none;
+}
+
 </style>
 <style id='global-styles-inline-css' type='text/css'>
-body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body .is-layout-grid{display: grid;}body .is-layout-grid > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
-.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--font-family--inter: "Inter", sans-serif;--wp--preset--font-family--cardo: Cardo;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 :where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
 :where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
-.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
 </style>
-<link rel='stylesheet' id='woocommerce-layout-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=9.0.2' type='text/css' media='all' />
-<link rel='stylesheet' id='woocommerce-smallscreen-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=9.0.2' type='text/css' media='only screen and (max-width: 768px)' />
-<link rel='stylesheet' id='woocommerce-general-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=9.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-layout-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=9.2.3' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-smallscreen-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=9.2.3' type='text/css' media='only screen and (max-width: 768px)' />
+<link rel='stylesheet' id='woocommerce-general-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=9.2.3' type='text/css' media='all' />
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='wordpress-file-upload-style-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_style.css?ver=6.5.5' type='text/css' media='all' />
-<link rel='stylesheet' id='wordpress-file-upload-style-safe-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_style_safe.css?ver=6.5.5' type='text/css' media='all' />
-<link rel='stylesheet' id='wordpress-file-upload-adminbar-style-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_adminbarstyle.css?ver=6.5.5' type='text/css' media='all' />
-<link rel='stylesheet' id='jquery-ui-css-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui.min.css?ver=6.5.5' type='text/css' media='all' />
-<link rel='stylesheet' id='jquery-ui-timepicker-addon-css-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui-timepicker-addon.min.css?ver=6.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-file-upload-style-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_style.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-file-upload-style-safe-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_style_safe.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wordpress-file-upload-adminbar-style-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/css/wordpress_file_upload_adminbarstyle.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-ui-css-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui.min.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-ui-timepicker-addon-css-css' href='https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui-timepicker-addon.min.css?ver=6.6.1' type='text/css' media='all' />
 <link rel='stylesheet' id='mt-common-css' href='https://aynrand.org/wp-content/plugins/mighty-addons/assets/css/common.css?ver=1.9.3' type='text/css' media='all' />
 <link rel='stylesheet' id='font-awesome-official-css' href='https://use.fontawesome.com/releases/v5.15.4/css/all.css' type='text/css' media='all' integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
-<link rel='stylesheet' id='elementor-frontend-css' href='https://aynrand.org/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.22.3' type='text/css' media='all' />
-<link rel='stylesheet' id='eael-general-css' href='https://aynrand.org/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/css/view/general.min.css?ver=5.9.25' type='text/css' media='all' />
+<link rel='stylesheet' id='elementor-frontend-css' href='https://aynrand.org/wp-content/plugins/elementor/assets/css/frontend.css?ver=3.23.4' type='text/css' media='all' />
+<link rel='stylesheet' id='eael-general-css' href='https://aynrand.org/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/css/view/general.min.css?ver=6.0.3' type='text/css' media='all' />
 <link rel='stylesheet' id='jquery-modal-css' href='https://aynrand.org/wp-content/themes/aro/js/jquery-modal/jquery.modal.min.css' type='text/css' media='all' />
 <link rel='stylesheet' id='owl-css' href='https://aynrand.org/wp-content/themes/aro/js/owl-carousel/assets/owl.carousel.min.css' type='text/css' media='all' />
-<link rel='stylesheet' id='fontawesome-v5-css' href='https://aynrand.org/wp-content/themes/aro/css/fontawesome/css/fontawesome.v5.12.min.css?ver=6.5.5' type='text/css' media='all' />
-<link rel='stylesheet' id='fontawesome-v4-css' href='https://aynrand.org/wp-content/themes/aro/css/fontawesome/css/fontawesome.v4.7.min.css?ver=6.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='fontawesome-v5-css' href='https://aynrand.org/wp-content/themes/aro/css/fontawesome/css/fontawesome.v5.12.min.css?ver=6.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='fontawesome-v4-css' href='https://aynrand.org/wp-content/themes/aro/css/fontawesome/css/fontawesome.v4.7.min.css?ver=6.6.1' type='text/css' media='all' />
 <link rel='stylesheet' id='main-css' href='https://aynrand.org/wp-content/themes/aro/css/style.css' type='text/css' media='all' />
 <link rel='stylesheet' id='archives-style-css' href='https://aynrand.org/wp-content/themes/aro/css/archives-style.css' type='text/css' media='all' />
 <link rel='stylesheet' id='font-awesome-official-v4shim-css' href='https://use.fontawesome.com/releases/v5.15.4/css/v4-shims.css' type='text/css' media='all' integrity="sha384-Vq76wejb3QJM4nDatBa5rUOve+9gkegsjCebvV/9fvXlGWo4HCMR4cJZjjcF6Viv" crossorigin="anonymous" />
@@ -167,47 +613,64 @@ src: url("https://use.fontawesome.com/releases/v5.15.4/webfonts/fa-regular-400.e
 unicode-range: U+F004-F005,U+F007,U+F017,U+F022,U+F024,U+F02E,U+F03E,U+F044,U+F057-F059,U+F06E,U+F070,U+F075,U+F07B-F07C,U+F080,U+F086,U+F089,U+F094,U+F09D,U+F0A0,U+F0A4-F0A7,U+F0C5,U+F0C7-F0C8,U+F0E0,U+F0EB,U+F0F3,U+F0F8,U+F0FE,U+F111,U+F118-F11A,U+F11C,U+F133,U+F144,U+F146,U+F14A,U+F14D-F14E,U+F150-F152,U+F15B-F15C,U+F164-F165,U+F185-F186,U+F191-F192,U+F1AD,U+F1C1-F1C9,U+F1CD,U+F1D8,U+F1E3,U+F1EA,U+F1F6,U+F1F9,U+F20A,U+F247-F249,U+F24D,U+F254-F25B,U+F25D,U+F267,U+F271-F274,U+F279,U+F28B,U+F28D,U+F2B5-F2B6,U+F2B9,U+F2BB,U+F2BD,U+F2C1-F2C2,U+F2D0,U+F2D2,U+F2DC,U+F2ED,U+F328,U+F358-F35B,U+F3A5,U+F3D1,U+F410,U+F4AD;
 }
 </style>
-<link rel='stylesheet' id='wppb_stylesheet-css' href='https://aynrand.org/wp-content/plugins/profile-builder/assets/css/style-front-end.css?ver=3.11.8' type='text/css' media='all' />
+<link rel='stylesheet' id='wppb_stylesheet-css' href='https://aynrand.org/wp-content/plugins/profile-builder/assets/css/style-front-end.css?ver=3.12.3' type='text/css' media='all' />
         <script>
             /* <![CDATA[ */
             var rcewpp = {
                 "ajax_url":"https://aynrand.org/wp-admin/admin-ajax.php",
-                "nonce": "1d5a3b8329",
+                "nonce": "822fc03078",
                 "home_url": "https://aynrand.org/",
                 "settings_icon": 'https://aynrand.org/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings.png',
                 "settings_hover_icon": 'https://aynrand.org/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings_hover.png'
             };
             /* ]]\> */
         </script>
-        <script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+        <script type="text/javascript" id="nelio-ab-testing-main-js-before" data-cfasync="false">
+/* <![CDATA[ */
+window.nabSettings={"api":{"mode":"native","url":"https:\/\/api.nelioabtesting.com\/v1"},"cookieTesting":false,"excludeBots":true,"experiments":[{"active":false,"id":109778,"type":"nab\/page","alternatives":[11624,0,0,0],"goals":[{"id":0,"conversionActions":[{"type":"nab\/click","attributes":{"mode":"css","value":"#wsf-1-field-1620"},"active":true},{"type":"nab\/click","attributes":{"mode":"css","value":"#wsf-1-field-1590"},"active":true},{"type":"nab\/click","attributes":{"mode":"css","value":"#wsf-1-field-118"},"active":true}]}],"segments":[],"segmentEvaluation":"tested-page"}],"gdprCookie":{"name":"","value":""},"heatmaps":[],"hideQueryArgs":false,"ignoreTrailingSlash":true,"isStagingSite":false,"isTestedPostRequest":false,"maxCombinations":24,"numOfAlternatives":0,"optimizeXPath":true,"participationChance":100,"postId":746,"postUrls":[{"postId":746,"url":"https:\/\/aynrand.org\/terms-and-conditions\/"}],"preloadQueryArgUrls":[{"type":"alt-urls","altUrls":["https:\/\/aynrand.org\/students\/free-books\/","https:\/\/aynrand.org\/students\/free-books-b1\/","https:\/\/aynrand.org\/students\/free-books-b2\/","https:\/\/aynrand.org\/students\/free-books-b3\/"],"altCount":4}],"referrerParam":"utm_referrer","segmentMatching":"all","site":"64ffabf1-6131-4c3d-8869-5e691785f829","throttle":{"global":0,"woocommerce":5},"timezone":"+00:00","useSendBeacon":true,"ajaxUrl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/nelio-ab-testing/assets/dist/js/public.js?ver=b78214281cc0618660db" id="nelio-ab-testing-main-js" data-cfasync="false"></script>
+<script type="text/javascript" id="jquery-core-js-extra">
+/* <![CDATA[ */
+var smoothAllowedBrowsers = [];
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/jquery.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/jquery-migrate.js?ver=3.4.1" id="jquery-migrate-js"></script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/mighty-addons/assets/js/custom-css.js?ver=1.9.3" id="mt-customcssjs-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.7.0-wc.9.0.2" id="jquery-blockui-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" id="dlm-public-js-extra">
+/* <![CDATA[ */
+var dlmVars = {"logStatus":"enabled","jsErrorLogging":{"status":"","url":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","nonce":"52bee05fab","action":"log_js_errors"}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/debug-log-manager/assets/js/public.js?ver=2.3.3" id="dlm-public-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.js?ver=2.7.0-wc.9.2.3" id="jquery-blockui-js" defer="defer" data-wp-strategy="defer"></script>
 <script type="text/javascript" id="wc-add-to-cart-js-extra">
 /* <![CDATA[ */
 var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/aynrand.org\/?page_id=9427","is_cart":"","cart_redirect_after_add":"no"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=9.0.2" id="wc-add-to-cart-js" defer="defer" data-wp-strategy="defer"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4-wc.9.0.2" id="js-cookie-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.js?ver=9.2.3" id="wc-add-to-cart-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.js?ver=2.1.4-wc.9.2.3" id="js-cookie-js" defer="defer" data-wp-strategy="defer"></script>
 <script type="text/javascript" id="woocommerce-js-extra">
 /* <![CDATA[ */
 var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=9.0.2" id="woocommerce-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.js?ver=9.2.3" id="woocommerce-js" defer="defer" data-wp-strategy="defer"></script>
 <!--[if lt IE 8]>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/json2.min.js?ver=2015-05-03" id="json2-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/json2.js?ver=2015-05-03" id="json2-js"></script>
 <![endif]-->
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/wp-file-upload/js/wordpress_file_upload_functions.js?ver=6.5.5" id="wordpress_file_upload_script-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2" id="jquery-ui-core-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.13.2" id="jquery-ui-datepicker-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/wp-file-upload/js/wordpress_file_upload_functions.js?ver=6.6.1" id="wordpress_file_upload_script-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/core.js?ver=1.13.3" id="jquery-ui-core-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/datepicker.js?ver=1.13.3" id="jquery-ui-datepicker-js"></script>
 <script type="text/javascript" id="jquery-ui-datepicker-js-after">
 /* <![CDATA[ */
 jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui-timepicker-addon.min.js?ver=6.5.5" id="jquery-ui-timepicker-addon-js-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/wp-file-upload/vendor/jquery/jquery-ui-timepicker-addon.min.js?ver=6.6.1" id="jquery-ui-timepicker-addon-js-js"></script>
 <script type="text/javascript" id="WCPAY_ASSETS-js-extra">
 /* <![CDATA[ */
 var wcpayAssets = {"url":"https:\/\/aynrand.org\/wp-content\/plugins\/woocommerce-payments\/dist\/"};
@@ -215,11 +678,11 @@ var wcpayAssets = {"url":"https:\/\/aynrand.org\/wp-content\/plugins\/woocommerc
 </script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-super-pack/dist/scripts/public.js?ver=5.0.4" id="pys_sp_public_js-js"></script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/js.cookie-2.1.3.min.js?ver=2.1.3" id="js-cookie-pys-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/jquery.bind-first-0.2.3.min.js?ver=6.5.5" id="jquery-bind-first-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/vimeo.min.js?ver=6.5.5" id="vimeo-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/jquery.bind-first-0.2.3.min.js?ver=6.6.1" id="jquery-bind-first-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/vimeo.min.js?ver=6.6.1" id="vimeo-js"></script>
 <script type="text/javascript" id="pys-js-extra">
 /* <![CDATA[ */
-var pysOptions = {"staticEvents":{"facebook":{"init_event":[{"delay":0,"type":"static","name":"PageView","eventID":"79d01b94-3862-48fb-8283-738ead5c2b3e","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"init_event","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""}]}},"dynamicEvents":{"automatic_event_internal_link":{"facebook":{"delay":0,"type":"dyn","name":"InternalClick","eventID":"67b28220-ef20-42f7-8717-b670595f4d34","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"InternalClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"InternalClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_outbound_link":{"facebook":{"delay":0,"type":"dyn","name":"OutboundClick","eventID":"d12d1d9b-31c2-41f4-b323-b19adec4a784","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"OutboundClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"OutboundClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_video":{"facebook":{"delay":0,"type":"dyn","name":"WatchVideo","eventID":"aa4320f3-4fba-43c5-9c33-d5ba151ea9dc","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"WatchVideo","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"youtube_disabled":false,"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"WatchVideo","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_tel_link":{"facebook":{"delay":0,"type":"dyn","name":"TelClick","eventID":"e3cbfb13-98a1-49cb-82d3-c886187f328f","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"TelClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"TelClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_email_link":{"facebook":{"delay":0,"type":"dyn","name":"EmailClick","eventID":"08a19822-2751-4911-a24d-80ad9d3c58a8","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"EmailClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"EmailClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_form":{"facebook":{"delay":0,"type":"dyn","name":"Form","eventID":"c6f84a28-4cda-4b5a-919a-bae6323a6491","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Form","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Form","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_download":{"facebook":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"eventID":"90a72211-a6e4-478a-88bd-cb1876759ef8","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_comment":{"facebook":{"delay":0,"type":"dyn","name":"Comment","eventID":"7c23c3a1-bf55-4495-a45e-03994d39ca12","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Comment","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Comment","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_adsense":{"facebook":{"delay":0,"type":"dyn","name":"AdSense","eventID":"ef3cf785-2312-46c5-8e01-16f3ecf0dd0f","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"AdSense","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"AdSense","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_scroll":{"facebook":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"eventID":"fd6f945f-f96f-4329-9ce0-15f7a48f139b","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_time_on_page":{"facebook":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"eventID":"51d09074-be4b-40ce-b238-a6f4ba572c0a","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}}},"triggerEvents":[],"triggerEventTypes":[],"facebook":{"pixelIds":["166841928455126"],"advancedMatchingEnabled":false,"advancedMatching":[],"removeMetadata":false,"wooVariableAsSimple":false,"serverApiEnabled":true,"wooCRSendFromServer":false,"send_external_id":true,"hide_pixels":[]},"ga":{"trackingIds":["G-25C698W490"],"retargetingLogic":"ecomm","crossDomainEnabled":false,"crossDomainAcceptIncoming":false,"crossDomainDomains":[],"wooVariableAsSimple":false,"isDebugEnabled":["index_0"],"disableAdvertisingFeatures":false,"disableAdvertisingPersonalization":false,"hide_pixels":[]},"google_ads":{"conversion_ids":["AW-995823919"],"enhanced_conversion":["index_0"],"woo_purchase_conversion_track":"conversion","woo_initiate_checkout_conversion_track":"conversion","woo_add_to_cart_conversion_track":"conversion","woo_view_content_conversion_track":"conversion","woo_view_category_conversion_track":"conversion","edd_purchase_conversion_track":"conversion","edd_initiate_checkout_conversion_track":"conversion","edd_add_to_cart_conversion_track":"conversion","edd_view_content_conversion_track":"conversion","edd_view_category_conversion_track":"conversion","wooVariableAsSimple":false,"crossDomainEnabled":false,"crossDomainAcceptIncoming":false,"crossDomainDomains":[],"user_data":[],"hide_pixels":[]},"debug":"1","siteUrl":"https:\/\/aynrand.org","ajaxUrl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","ajax_event":"3e64dafb0e","trackUTMs":"1","trackTrafficSource":"1","user_id":"0","enable_lading_page_param":"1","cookie_duration":"7","enable_event_day_param":"1","enable_event_month_param":"1","enable_event_time_param":"1","enable_remove_target_url_param":"1","enable_remove_download_url_param":"1","visit_data_model":"first_visit","last_visit_duration":"60","enable_auto_save_advance_matching":"1","advance_matching_fn_names":["first_name","first-name","first name","name"],"advance_matching_ln_names":["last_name","last-name","last name"],"advance_matching_tel_names":["phone","tel"],"enable_success_send_form":"","enable_automatic_events":"1","enable_event_video":"1","ajaxForServerEvent":"1","send_external_id":"1","external_id_expire":"180","google_consent_mode":"1","gdpr":{"ajax_enabled":false,"all_disabled_by_api":false,"facebook_disabled_by_api":false,"tiktok_disabled_by_api":false,"analytics_disabled_by_api":false,"google_ads_disabled_by_api":false,"pinterest_disabled_by_api":false,"bing_disabled_by_api":false,"externalID_disabled_by_api":false,"facebook_prior_consent_enabled":true,"tiktok_prior_consent_enabled":true,"analytics_prior_consent_enabled":true,"google_ads_prior_consent_enabled":true,"pinterest_prior_consent_enabled":true,"bing_prior_consent_enabled":true,"cookiebot_integration_enabled":false,"cookiebot_facebook_consent_category":"marketing","cookiebot_tiktok_consent_category":"marketing","cookiebot_analytics_consent_category":"statistics","cookiebot_google_ads_consent_category":"marketing","cookiebot_pinterest_consent_category":"marketing","cookiebot_bing_consent_category":"marketing","cookie_notice_integration_enabled":false,"cookie_law_info_integration_enabled":false,"real_cookie_banner_integration_enabled":false,"consent_magic_integration_enabled":false,"analytics_storage":{"enabled":true,"value":"granted","filter":false},"ad_storage":{"enabled":true,"value":"granted","filter":false},"ad_user_data":{"enabled":true,"value":"granted","filter":false},"ad_personalization":{"enabled":true,"value":"granted","filter":false}},"cookie":{"disabled_all_cookie":false,"disabled_start_session_cookie":false,"disabled_advanced_form_data_cookie":false,"disabled_landing_page_cookie":false,"disabled_first_visit_cookie":false,"disabled_trafficsource_cookie":false,"disabled_utmTerms_cookie":false,"disabled_utmId_cookie":false},"tracking_analytics":{"TrafficSource":"direct","TrafficLanding":"https:\/\/aynrand.org\/privacy-policy","TrafficUtms":[],"TrafficUtmsId":[]},"automatic":{"enable_youtube":true,"enable_vimeo":true,"enable_video":true},"woo":{"enabled":true,"enabled_save_data_to_orders":true,"addToCartOnButtonEnabled":true,"addToCartOnButtonValueEnabled":true,"addToCartOnButtonValueOption":"price","woo_purchase_on_transaction":true,"singleProductId":null,"affiliateEnabled":false,"removeFromCartSelector":"form.woocommerce-cart-form .remove","addToCartCatchMethod":"add_cart_hook","is_order_received_page":false,"containOrderId":false,"affiliateEventName":"Lead"},"edd":{"enabled":false}};
+var pysOptions = {"staticEvents":{"facebook":{"init_event":[{"delay":0,"type":"static","name":"PageView","eventID":"a1b0fcc5-6be7-4dbe-aaa7-9ca957f9d18e","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"init_event","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""}]}},"dynamicEvents":{"automatic_event_internal_link":{"facebook":{"delay":0,"type":"dyn","name":"InternalClick","eventID":"a23dd6ad-99b3-4314-b246-73304d2db413","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"InternalClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"InternalClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_internal_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_outbound_link":{"facebook":{"delay":0,"type":"dyn","name":"OutboundClick","eventID":"44e232fd-80f1-442b-bfd3-84968ca0979e","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"OutboundClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"OutboundClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_outbound_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_video":{"facebook":{"delay":0,"type":"dyn","name":"WatchVideo","eventID":"fde4e983-a15d-48d0-8230-2087f6af5a0b","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"WatchVideo","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"youtube_disabled":false,"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"WatchVideo","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_video","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_tel_link":{"facebook":{"delay":0,"type":"dyn","name":"TelClick","eventID":"68e2d830-37b7-4e69-9a41-00e92f6a640d","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"TelClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"TelClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_tel_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_email_link":{"facebook":{"delay":0,"type":"dyn","name":"EmailClick","eventID":"560017dd-d407-4a1f-ac4d-4c382f6e258d","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"EmailClick","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"EmailClick","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_email_link","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_form":{"facebook":{"delay":0,"type":"dyn","name":"Form","eventID":"f80fead2-131b-4d7b-b476-db87461ffc8e","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Form","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Form","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_form","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_download":{"facebook":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"eventID":"32ac0490-a9a9-4c73-a159-58758f956db7","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Download","extensions":["","doc","exe","js","pdf","ppt","tgz","zip","xls"],"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_download","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_comment":{"facebook":{"delay":0,"type":"dyn","name":"Comment","eventID":"a0df52a5-24c7-4796-a605-4dc83fe08e1f","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"Comment","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"Comment","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_comment","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_adsense":{"facebook":{"delay":0,"type":"dyn","name":"AdSense","eventID":"703e12ca-e362-488e-8741-7f912327b08b","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"AdSense","unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"AdSense","conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_adsense","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_scroll":{"facebook":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"eventID":"6d191bf8-d686-4960-8fc0-b5418f85649a","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"PageScroll","scroll_percent":30,"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_scroll","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}},"automatic_event_time_on_page":{"facebook":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"eventID":"82e7ea00-d31a-4ff2-b20d-28905fa47019","pixelIds":["166841928455126"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"woo_order":"","edd_order":""},"ga":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"unify":true,"trackingIds":["G-25C698W490","AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""},"google_ads":{"delay":0,"type":"dyn","name":"TimeOnPage","time_on_page":30,"conversion_ids":["AW-995823919"],"params":{"page_title":"Terms of Conditions and Service","post_type":"page","post_id":746,"plugin":"PixelYourSite","event_url":"aynrand.org\/terms-and-conditions\/","user_role":"guest"},"e_id":"automatic_event_time_on_page","ids":[],"hasTimeWindow":false,"timeWindow":0,"eventID":"","woo_order":"","edd_order":""}}},"triggerEvents":[],"triggerEventTypes":[],"facebook":{"pixelIds":["166841928455126"],"advancedMatchingEnabled":false,"advancedMatching":[],"removeMetadata":false,"wooVariableAsSimple":false,"serverApiEnabled":true,"wooCRSendFromServer":false,"send_external_id":true,"hide_pixels":[]},"ga":{"trackingIds":["G-25C698W490"],"retargetingLogic":"ecomm","crossDomainEnabled":false,"crossDomainAcceptIncoming":false,"crossDomainDomains":[],"wooVariableAsSimple":false,"isDebugEnabled":["index_0"],"disableAdvertisingFeatures":false,"disableAdvertisingPersonalization":false,"hide_pixels":[]},"google_ads":{"conversion_ids":["AW-995823919"],"enhanced_conversion":["index_0"],"woo_purchase_conversion_track":"conversion","woo_initiate_checkout_conversion_track":"conversion","woo_add_to_cart_conversion_track":"conversion","woo_view_content_conversion_track":"conversion","woo_view_category_conversion_track":"conversion","edd_purchase_conversion_track":"conversion","edd_initiate_checkout_conversion_track":"conversion","edd_add_to_cart_conversion_track":"conversion","edd_view_content_conversion_track":"conversion","edd_view_category_conversion_track":"conversion","wooVariableAsSimple":false,"crossDomainEnabled":false,"crossDomainAcceptIncoming":false,"crossDomainDomains":[],"user_data":[],"hide_pixels":[]},"debug":"1","siteUrl":"https:\/\/aynrand.org","ajaxUrl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","ajax_event":"d6fdff177b","trackUTMs":"1","trackTrafficSource":"1","user_id":"0","enable_lading_page_param":"1","cookie_duration":"7","enable_event_day_param":"1","enable_event_month_param":"1","enable_event_time_param":"1","enable_remove_target_url_param":"1","enable_remove_download_url_param":"1","visit_data_model":"first_visit","last_visit_duration":"60","enable_auto_save_advance_matching":"1","advance_matching_fn_names":["first_name","first-name","first name","name"],"advance_matching_ln_names":["last_name","last-name","last name"],"advance_matching_tel_names":["phone","tel"],"enable_success_send_form":"","enable_automatic_events":"1","enable_event_video":"1","ajaxForServerEvent":"1","send_external_id":"1","external_id_expire":"180","google_consent_mode":"1","gdpr":{"ajax_enabled":false,"all_disabled_by_api":false,"facebook_disabled_by_api":false,"tiktok_disabled_by_api":false,"analytics_disabled_by_api":false,"google_ads_disabled_by_api":false,"pinterest_disabled_by_api":false,"bing_disabled_by_api":false,"externalID_disabled_by_api":false,"facebook_prior_consent_enabled":true,"tiktok_prior_consent_enabled":true,"analytics_prior_consent_enabled":true,"google_ads_prior_consent_enabled":true,"pinterest_prior_consent_enabled":true,"bing_prior_consent_enabled":true,"cookiebot_integration_enabled":false,"cookiebot_facebook_consent_category":"marketing","cookiebot_tiktok_consent_category":"marketing","cookiebot_analytics_consent_category":"statistics","cookiebot_google_ads_consent_category":"marketing","cookiebot_pinterest_consent_category":"marketing","cookiebot_bing_consent_category":"marketing","cookie_notice_integration_enabled":false,"cookie_law_info_integration_enabled":false,"real_cookie_banner_integration_enabled":false,"consent_magic_integration_enabled":false,"analytics_storage":{"enabled":true,"value":"granted","filter":false},"ad_storage":{"enabled":true,"value":"granted","filter":false},"ad_user_data":{"enabled":true,"value":"granted","filter":false},"ad_personalization":{"enabled":true,"value":"granted","filter":false}},"cookie":{"disabled_all_cookie":false,"disabled_start_session_cookie":false,"disabled_advanced_form_data_cookie":false,"disabled_landing_page_cookie":false,"disabled_first_visit_cookie":false,"disabled_trafficsource_cookie":false,"disabled_utmTerms_cookie":false,"disabled_utmId_cookie":false},"tracking_analytics":{"TrafficSource":"direct","TrafficLanding":"https:\/\/aynrand.org\/terms-and-conditions\/","TrafficUtms":[],"TrafficUtmsId":[]},"automatic":{"enable_youtube":true,"enable_vimeo":true,"enable_video":true},"woo":{"enabled":true,"enabled_save_data_to_orders":true,"addToCartOnButtonEnabled":true,"addToCartOnButtonValueEnabled":true,"addToCartOnButtonValueOption":"price","woo_purchase_on_transaction":true,"singleProductId":null,"affiliateEnabled":false,"removeFromCartSelector":"form.woocommerce-cart-form .remove","addToCartCatchMethod":"add_cart_hook","is_order_received_page":false,"containOrderId":false,"affiliateEventName":"Lead"},"edd":{"enabled":false}};
 /* ]]> */
 </script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/pixelyoursite-pro/dist/scripts/public.js?ver=10.0.0.2" id="pys-js"></script>
@@ -239,12 +702,12 @@ gtag("config", "GT-5MCCFK6");
 </script>
 
 <!-- End Google tag (gtag.js) snippet added by Site Kit -->
-<link rel="https://api.w.org/" href="https://aynrand.org/wp-json/" /><link rel="alternate" type="application/json" href="https://aynrand.org/wp-json/wp/v2/pages/746" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://aynrand.org/xmlrpc.php?rsd" />
-<meta name="generator" content="WordPress 6.5.5" />
+<link rel="https://api.w.org/" href="https://aynrand.org/wp-json/" /><link rel="alternate" title="JSON" type="application/json" href="https://aynrand.org/wp-json/wp/v2/pages/746" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://aynrand.org/xmlrpc.php?rsd" />
+<meta name="generator" content="WordPress 6.6.1" />
 <link rel='shortlink' href='https://aynrand.org/?p=746' />
-<link rel="alternate" type="application/json+oembed" href="https://aynrand.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faynrand.org%2Fterms-and-conditions%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://aynrand.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faynrand.org%2Fterms-and-conditions%2F&#038;format=xml" />
-<meta name="generator" content="Site Kit by Google 1.131.0" /><!-- HFCM by 99 Robots - Snippet # 4: Hubspot -->
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://aynrand.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faynrand.org%2Fterms-and-conditions%2F" />
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://aynrand.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Faynrand.org%2Fterms-and-conditions%2F&#038;format=xml" />
+<meta name="generator" content="Site Kit by Google 1.135.0" /><!-- HFCM by 99 Robots - Snippet # 4: Hubspot -->
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/19886644.js"></script>
 <!-- End of HubSpot Embed Code -->
@@ -328,7 +791,7 @@ input[disabled] {
 <meta name="google-adsense-platform-account" content="ca-host-pub-2644536267352236">
 <meta name="google-adsense-platform-domain" content="sitekit.withgoogle.com">
 <!-- End Google AdSense meta tags added by Site Kit -->
-<meta name="generator" content="Elementor 3.22.3; features: e_optimized_assets_loading, e_optimized_css_loading, e_font_icon_svg, e_lazyload; settings: css_print_method-internal, google_font-enabled, font_display-auto">
+<meta name="generator" content="Elementor 3.23.4; features: e_optimized_css_loading, e_font_icon_svg, e_lazyload; settings: css_print_method-internal, google_font-enabled, font_display-auto">
 <!-- Start of HubSpot Embed Code via WP Fusion --><script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/19886644.js"></script><!-- End of HubSpot Embed Code via WP Fusion -->			<style>
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload),
 				.e-con.e-parent:nth-of-type(n+4):not(.e-lazyloaded):not(.e-no-lazyload) * {
@@ -353,6 +816,10 @@ input[disabled] {
 window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-4RTMPRXRV1', {} );
 /* ]]> */
 </script>
+<style id='wp-fonts-local' type='text/css'>
+@font-face{font-family:Inter;font-style:normal;font-weight:300 900;font-display:fallback;src:url('https://aynrand.org/wp-content/plugins/woocommerce/assets/fonts/Inter-VariableFont_slnt,wght.woff2') format('woff2');font-stretch:normal;}
+@font-face{font-family:Cardo;font-style:normal;font-weight:400;font-display:fallback;src:url('https://aynrand.org/wp-content/plugins/woocommerce/assets/fonts/cardo_normal_400.woff2') format('woff2');}
+</style>
 <link rel="icon" href="https://aynrand.org/wp-content/uploads/2020/08/cropped-apple-icon-152x152-1-32x32.png" sizes="32x32" />
 <link rel="icon" href="https://aynrand.org/wp-content/uploads/2020/08/cropped-apple-icon-152x152-1-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="https://aynrand.org/wp-content/uploads/2020/08/cropped-apple-icon-152x152-1-180x180.png" />
@@ -1324,7 +1791,18 @@ Email: <a href="mailto:gagnier@gamallp.com">gagnier@gamallp.com</a></p>
 		</div>
 	</div><!-- .siteFooter -->
 
-<div id='pys_ajax_events'></div>        <script>
+<script> 
+jQuery( document ).ready(function() {
+	var urlHash = window.location.hash;
+	 console.log( "urlHash", urlHash ); 		
+	if( urlHash  == null || urlHash === '' ) {
+	 console.log(" empty hash");
+	} else{
+		jQuery(urlHash).parent().trigger("click");
+	 	console.log( "modalOpen" );
+	} 	
+});
+</script> <div id='pys_ajax_events'></div>        <script>
             var node = document.getElementsByClassName('woocommerce-message')[0];
             if(node && document.getElementById('pys_late_event')) {
                 var messageText = node.textContent.trim();
@@ -1370,13 +1848,13 @@ Email: <a href="mailto:gagnier@gamallp.com">gagnier@gamallp.com</a></p>
                 document.cookie = name + "=" + value + ";path=/;expires=" + d.toGMTString();
             }
             var name = 'pbid';
-            var pbidHash = "c76c08f29635dd38b114c547e78b80cb0201e4796774d1959971f5a536c83f24";
+            var pbidHash = "5ca11e73a442c54b9eade96369cf6145b73007092f1cde78e4af6babf2d09d76";
 
             if(pys_get_pbid(name) != pbidHash || pys_get_pbid(name) == '') { // prevent re send event if user update page
                 pys_set_pbid(name,pbidHash,180)
             }
         </script>
-	    <noscript><img height="1" width="1" style="display: none;" src="https://www.facebook.com/tr?id=166841928455126&ev=PageView&noscript=1&eid=16684192845512679d01b94-3862-48fb-8283-738ead5c2b3e&cd%5Bpage_title%5D=Terms+of+Conditions+and+Service&cd%5Bpost_type%5D=page&cd%5Bpost_id%5D=746&cd%5Bplugin%5D=PixelYourSite&cd%5Bevent_url%5D=aynrand.org%2Fterms-and-conditions%2F&cd%5Buser_role%5D=guest" alt=""></noscript>
+	    <noscript><img height="1" width="1" style="display: none;" src="https://www.facebook.com/tr?id=166841928455126&ev=PageView&noscript=1&eid=166841928455126a1b0fcc5-6be7-4dbe-aaa7-9ca957f9d18e&cd%5Bpage_title%5D=Terms+of+Conditions+and+Service&cd%5Bpost_type%5D=page&cd%5Bpost_id%5D=746&cd%5Bplugin%5D=PixelYourSite&cd%5Bevent_url%5D=aynrand.org%2Fterms-and-conditions%2F&cd%5Buser_role%5D=guest" alt=""></noscript>
 	<script type='text/javascript'>
 		(function () {
 			var c = document.body.className;
@@ -1384,44 +1862,50 @@ Email: <a href="mailto:gagnier@gamallp.com">gagnier@gamallp.com</a></p>
 			document.body.className = c;
 		})();
 	</script>
-	<link rel='stylesheet' id='wc-blocks-style-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/client/blocks/wc-blocks.css?ver=wc-9.0.2' type='text/css' media='all' />
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/dynamicconditions/Public/js/dynamic-conditions-public.js?ver=1.6.3" id="dynamic-conditions-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/sourcebuster/sourcebuster.min.js?ver=9.0.2" id="sourcebuster-js-js"></script>
+	<link rel='stylesheet' id='wc-blocks-style-css' href='https://aynrand.org/wp-content/plugins/woocommerce/assets/client/blocks/wc-blocks.css?ver=1724790632' type='text/css' media='all' />
+<style id='core-block-supports-inline-css' type='text/css'>
+/**
+ * Core styles: block-supports
+ */
+
+</style>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/dynamicconditions/Public/js/dynamic-conditions-public.js?ver=1.7.4" id="dynamic-conditions-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/mouse.js?ver=1.13.3" id="jquery-ui-mouse-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/slider.js?ver=1.13.3" id="jquery-ui-slider-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/mighty-addons/assets/js/rpb.js?ver=1.9.3" id="mt-rpbjs-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/mighty-addons/assets/js/wrapper-link.js?ver=1.9.3" id="mt-wrapperlinkjs-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/sourcebuster/sourcebuster.js?ver=9.2.3" id="sourcebuster-js-js"></script>
 <script type="text/javascript" id="wc-order-attribution-js-extra">
 /* <![CDATA[ */
 var wc_order_attribution = {"params":{"lifetime":1.0000000000000000818030539140313095458623138256371021270751953125e-5,"session":30,"base64":false,"ajaxurl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","prefix":"wc_order_attribution_","allowTracking":true},"fields":{"source_type":"current.typ","referrer":"current_add.rf","utm_campaign":"current.cmp","utm_source":"current.src","utm_medium":"current.mdm","utm_content":"current.cnt","utm_id":"current.id","utm_term":"current.trm","utm_source_platform":"current.plt","utm_creative_format":"current.fmt","utm_marketing_tactic":"current.tct","session_entry":"current_add.ep","session_start_time":"current_add.fd","session_pages":"session.pgs","session_count":"udata.vst","user_agent":"udata.uag"}};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/order-attribution.min.js?ver=9.0.2" id="wc-order-attribution-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/mouse.min.js?ver=1.13.2" id="jquery-ui-mouse-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/slider.min.js?ver=1.13.2" id="jquery-ui-slider-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/mighty-addons/assets/js/rpb.js?ver=1.9.3" id="mt-rpbjs-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/mighty-addons/assets/js/wrapper-link.js?ver=1.9.3" id="mt-wrapperlinkjs-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/woocommerce/assets/js/frontend/order-attribution.js?ver=9.2.3" id="wc-order-attribution-js"></script>
 <script type="text/javascript" id="eael-general-js-extra">
 /* <![CDATA[ */
-var localize = {"ajaxurl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","nonce":"c902c9f9ef","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"eael_translate_text":{"required_text":"is a required field","invalid_text":"Invalid","billing_text":"Billing","shipping_text":"Shipping","fg_mfp_counter_text":"of"},"page_permalink":"https:\/\/aynrand.org\/terms-and-conditions\/","cart_redirectition":"no","cart_page_url":"https:\/\/aynrand.org\/?page_id=9427","el_breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"ParticleThemesData":{"default":"{\"particles\":{\"number\":{\"value\":160,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":true,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"repulse\"},\"onclick\":{\"enable\":true,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nasa":"{\"particles\":{\"number\":{\"value\":250,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":1,\"random\":true,\"anim\":{\"enable\":true,\"speed\":1,\"opacity_min\":0,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":4,\"size_min\":0.3,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":1,\"direction\":\"none\",\"random\":true,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":600}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":250,\"size\":0,\"duration\":2,\"opacity\":0,\"speed\":3},\"repulse\":{\"distance\":400,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","bubble":"{\"particles\":{\"number\":{\"value\":15,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#1b1e34\"},\"shape\":{\"type\":\"polygon\",\"stroke\":{\"width\":0,\"color\":\"#000\"},\"polygon\":{\"nb_sides\":6},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":50,\"random\":false,\"anim\":{\"enable\":true,\"speed\":10,\"size_min\":40,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":200,\"color\":\"#ffffff\",\"opacity\":1,\"width\":2},\"move\":{\"enable\":true,\"speed\":8,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":false,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","snow":"{\"particles\":{\"number\":{\"value\":450,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#fff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":500,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":2},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"bottom\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":0.5}},\"bubble\":{\"distance\":400,\"size\":4,\"duration\":0.3,\"opacity\":1,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nyan_cat":"{\"particles\":{\"number\":{\"value\":150,\"density\":{\"enable\":false,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"star\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"http:\/\/wiki.lexisnexis.com\/academic\/images\/f\/fb\/Itunes_podcast_icon_300.jpg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":4,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":14,\"direction\":\"left\",\"random\":false,\"straight\":true,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":200,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}"},"eael_login_nonce":"24b39a9d02","eael_register_nonce":"ab9360fc9f","eael_lostpassword_nonce":"f63410df51","eael_resetpassword_nonce":"58c319b0ca"};
+var localize = {"ajaxurl":"https:\/\/aynrand.org\/wp-admin\/admin-ajax.php","nonce":"bfcb7024db","i18n":{"added":"Added ","compare":"Compare","loading":"Loading..."},"eael_translate_text":{"required_text":"is a required field","invalid_text":"Invalid","billing_text":"Billing","shipping_text":"Shipping","fg_mfp_counter_text":"of"},"page_permalink":"https:\/\/aynrand.org\/terms-and-conditions\/","cart_redirectition":"no","cart_page_url":"https:\/\/aynrand.org\/?page_id=9427","el_breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}},"ParticleThemesData":{"default":"{\"particles\":{\"number\":{\"value\":160,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":true,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"repulse\"},\"onclick\":{\"enable\":true,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nasa":"{\"particles\":{\"number\":{\"value\":250,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":1,\"random\":true,\"anim\":{\"enable\":true,\"speed\":1,\"opacity_min\":0,\"sync\":false}},\"size\":{\"value\":3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":4,\"size_min\":0.3,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":1,\"direction\":\"none\",\"random\":true,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":600}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":250,\"size\":0,\"duration\":2,\"opacity\":0,\"speed\":3},\"repulse\":{\"distance\":400,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","bubble":"{\"particles\":{\"number\":{\"value\":15,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#1b1e34\"},\"shape\":{\"type\":\"polygon\",\"stroke\":{\"width\":0,\"color\":\"#000\"},\"polygon\":{\"nb_sides\":6},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.3,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":50,\"random\":false,\"anim\":{\"enable\":true,\"speed\":10,\"size_min\":40,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":200,\"color\":\"#ffffff\",\"opacity\":1,\"width\":2},\"move\":{\"enable\":true,\"speed\":8,\"direction\":\"none\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":false,\"mode\":\"push\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","snow":"{\"particles\":{\"number\":{\"value\":450,\"density\":{\"enable\":true,\"value_area\":800}},\"color\":{\"value\":\"#fff\"},\"shape\":{\"type\":\"circle\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"img\/github.svg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":5,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":500,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":2},\"move\":{\"enable\":true,\"speed\":6,\"direction\":\"bottom\",\"random\":false,\"straight\":false,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":true,\"mode\":\"bubble\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":400,\"line_linked\":{\"opacity\":0.5}},\"bubble\":{\"distance\":400,\"size\":4,\"duration\":0.3,\"opacity\":1,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}","nyan_cat":"{\"particles\":{\"number\":{\"value\":150,\"density\":{\"enable\":false,\"value_area\":800}},\"color\":{\"value\":\"#ffffff\"},\"shape\":{\"type\":\"star\",\"stroke\":{\"width\":0,\"color\":\"#000000\"},\"polygon\":{\"nb_sides\":5},\"image\":{\"src\":\"http:\/\/wiki.lexisnexis.com\/academic\/images\/f\/fb\/Itunes_podcast_icon_300.jpg\",\"width\":100,\"height\":100}},\"opacity\":{\"value\":0.5,\"random\":false,\"anim\":{\"enable\":false,\"speed\":1,\"opacity_min\":0.1,\"sync\":false}},\"size\":{\"value\":4,\"random\":true,\"anim\":{\"enable\":false,\"speed\":40,\"size_min\":0.1,\"sync\":false}},\"line_linked\":{\"enable\":false,\"distance\":150,\"color\":\"#ffffff\",\"opacity\":0.4,\"width\":1},\"move\":{\"enable\":true,\"speed\":14,\"direction\":\"left\",\"random\":false,\"straight\":true,\"out_mode\":\"out\",\"bounce\":false,\"attract\":{\"enable\":false,\"rotateX\":600,\"rotateY\":1200}}},\"interactivity\":{\"detect_on\":\"canvas\",\"events\":{\"onhover\":{\"enable\":false,\"mode\":\"grab\"},\"onclick\":{\"enable\":true,\"mode\":\"repulse\"},\"resize\":true},\"modes\":{\"grab\":{\"distance\":200,\"line_linked\":{\"opacity\":1}},\"bubble\":{\"distance\":400,\"size\":40,\"duration\":2,\"opacity\":8,\"speed\":3},\"repulse\":{\"distance\":200,\"duration\":0.4},\"push\":{\"particles_nb\":4},\"remove\":{\"particles_nb\":2}}},\"retina_detect\":true}"},"eael_login_nonce":"5109483b70","eael_register_nonce":"60041b9390","eael_lostpassword_nonce":"97b8378bc5","eael_resetpassword_nonce":"d682958d4e"};
 /* ]]> */
 </script>
-<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/js/view/general.min.js?ver=5.9.25" id="eael-general-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-content/plugins/essential-addons-for-elementor-lite/assets/front-end/js/view/general.min.js?ver=6.0.3" id="eael-general-js"></script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/themes/aro/js/jquery-modal/jquery.modal.min.js" id="jquery-modal-js"></script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/themes/aro/js/owl-carousel/owl.carousel.min.js" id="owl-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/tabs.min.js?ver=1.13.2" id="jquery-ui-tabs-js"></script>
-<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/accordion.min.js?ver=1.13.2" id="jquery-ui-accordion-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/tabs.js?ver=1.13.3" id="jquery-ui-tabs-js"></script>
+<script type="text/javascript" src="https://aynrand.org/wp-includes/js/jquery/ui/accordion.js?ver=1.13.3" id="jquery-ui-accordion-js"></script>
 <script type="text/javascript" src="https://aynrand.org/wp-content/themes/aro/js/main.js?ver=3.1.2" id="main-js"></script>
         <script>
             /* <![CDATA[ */
             var rcewpp = {
                 "ajax_url":"https://aynrand.org/wp-admin/admin-ajax.php",
-                "nonce": "1d5a3b8329",
+                "nonce": "822fc03078",
                 "home_url": "https://aynrand.org/",
                 "settings_icon": 'https://aynrand.org/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings.png',
                 "settings_hover_icon": 'https://aynrand.org/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings_hover.png'
             };
             /* ]]\> */
         </script>
-        <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/profile-builder-pro/features/elementor-pro/assets/js/elementor-popup.js?ver=3.11.8" id="wppb_elementor_popup_script-js"></script>
+        <script type="text/javascript" src="https://aynrand.org/wp-content/plugins/profile-builder-pro/features/elementor-pro/assets/js/elementor-popup.js?ver=3.12.3" id="wppb_elementor_popup_script-js"></script>
 
 </body>
 </html>
 
-<!-- Page cached by LiteSpeed Cache 6.2.0.1 on 2024-07-29 10:45:24 -->
+<!-- Page cached by LiteSpeed Cache 6.5.0.2 on 2024-09-10 15:57:49 -->
