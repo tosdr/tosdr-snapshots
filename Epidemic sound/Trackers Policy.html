@@ -136,7 +136,7 @@
     <!-- CDN -->
     <script type="text/javascript">
       document.cookie = "django_language=en-us;path=/";
-      window.__FRONTEND_RELEASE_VERSION = "v2024.07.29\u002Drel3";
+      window.__FRONTEND_RELEASE_VERSION = "v2024.09.10\u002Drel6";
       window.__PRODUCTS = [];
       window.__ENTITLEMENTS = [];
       window.__FEATURES = {};
@@ -160,10 +160,10 @@
     <script
       defer
       id="bundle"
-      src="https://www.epidemicsound.com/staticfiles/player/v2024.07.29-rel2/mainapp.bundle.js"
+      src="https://www.epidemicsound.com/staticfiles/player/v2024.09.10-rel7/mainapp.bundle.js"
     ></script>
 
-    <link href="https://www.epidemicsound.com/staticfiles/player/v2024.07.29-rel2/mainapp.css" rel="stylesheet" />
+    <link href="https://www.epidemicsound.com/staticfiles/player/v2024.09.10-rel7/mainapp.css" rel="stylesheet" />
 
     <link
       rel="icon"
@@ -210,10 +210,25 @@
         // retries the function after 1 second if not found
         let _module_loaded_retry = 0;
         function trackCookieConsentChanged() {
+            const scopeMap = {
+                C0001: 'necessary',
+                C0007: 'statistics',
+                C0008: 'marketing',
+            };
+
+            const consentScopes = OnetrustActiveGroups.replace(/,/g, ' ')
+                .trim()
+                .split(' ')
+                .map(group => scopeMap[group]);
+
             const legacy = window.__LEGACY_TRACKING;
             if (legacy && legacy.userContext) {
-              legacy.tracking.ctaClicked({
-                    action: OnetrustActiveGroups,
+                legacy.tracking.cookieConsentGranted({
+                    consent_scopes: consentScopes,
+                    permission_mode: consentScopes.length === Object.keys(scopeMap).length ? 'allow_all' : 'allow_selected',
+                    consent_version: '1',
+                    domains_applied: ['https://www.epidemicsound.com'],
+                    consent_url: 'https://www.epidemicsound.com',
                     context: legacy.CONTEXTS.COOKIE_CONSENT_BANNER,
                 });
             } else {
@@ -352,7 +367,7 @@
 
     </script>
     <!-- CookiePro Cookies Consent Notice end for epidemicsound.com -->
- 
+
 
     <script>
       // This is a function to redirect old hash urls to without hash
