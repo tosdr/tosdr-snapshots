@@ -10,7 +10,7 @@
 <link rel="icon" href="//fliphtml5.com/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" language="javascript" src="/js/jquery-3.5.1.min.js"></script>
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Language" content="en" /><meta name="viewport" content="width=device-width, initial-scale=1"><link type="text/css" rel="stylesheet" href="/css/build/build.min.css?12cda0cb3c703bfb0c985edbf0ddee499"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Language" content="en" /><meta name="viewport" content="width=device-width, initial-scale=1"><link type="text/css" rel="stylesheet" href="/css/build/build.min.css?1afe94a97e9d22a7d09a8cf61f31f7d75"/>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -88,10 +88,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.defer= true;j.s
         isDomainHttps: parseInt("0"),
         editorTime: '2022-06-16 01:00:35'
     };
-    
-</script>
+    </script>
 
-    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?f48b0496db748c535c68de5cf6a2d9bb"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
+    <script type="text/javascript" src="/js/i18n/md5/md5.min.js?2f577924085ebbe12e29f3ff706397d0"></script><script type="text/javascript" src="/js/i18n/hf_i18n.js?23870d5933c01c9ee8350888fdffc742"></script><script type="text/javascript" src="/js/build/build.min.js?3ac8172f90e38860458e1e7ba2728fb7"></script><link type="text/css" rel="stylesheet" href="//fliphtml5.com/css/sidebar.css"/>
 <aside class="flip-side-bar">
   <div class='sidebar-toTop-container'>
     <a href="//fliphtml5.com/app/" class='ios' title='iOS & Android App' target="_blank"
@@ -214,27 +213,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 <script type="text/javascript">
-  // Suspension and Maintenance Announcement
-  (function ($){
-    fh5.maintenanceConfig = {
-      version: '2024-7-29', // 停服日期
-      startTime: [2024,6,29,6,0,0], //UTC 2024-7-29 06:00:00,
-      endTime: [2024,6,29,8,0,0], //UTC 2024-7-29 08:00:00,
-    }
+(function($) {
+  /** 停服公告
+   * 1.维护前，网站和工作台弹，允许关闭
+   * 2.维护中，网站弹，允许关闭；登录页一直显示
+   */
+  fh5.maintenanceConfig = {
+    version: '2024-7-29', // 停服日期
+    startTime: [2024, 6, 29, 6, 0, 0], //UTC 2024-7-29 06:00:00,
+    endTime: [2024, 6, 29, 8, 0, 0], //UTC 2024-7-29 08:00:00,
+  }
+
+  const isWorking = true; // 是否开启停服公告，如果提前结束将这个值改成false
+  const isNotLoadMt = "0";
+
+  initMaintenance();
+
+  function initMaintenance() {
+    if (!isWorking || Number(isNotLoadMt)) return
+
+    const formatDateInfo = utils.formatMaintainedDate(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig
+      .endTime);
     const localMaintenanceConfig = JSON.parse(localStorage.getItem('localMaintenanceConfig') || '{}');
-    const formatDateInfo = utils.formatMaintainedDate(fh5.maintenanceConfig.startTime, fh5.maintenanceConfig.endTime);
     const isInVersion = localMaintenanceConfig.version === fh5.maintenanceConfig.version;
-    const isDeadline = new Date().getTime() > formatDateInfo.utcEndTime.getTime();
-    if (!isInVersion && !isDeadline) {
-      const maintenancePanel = new MaintenancePanel({
-        formatDateInfo: formatDateInfo,
-      });
-      maintenancePanel.show();
+    const isInLoginPage = window.location.href.includes("login.php");
+    const isInDashbord = window.location.href.includes("/dashboard/") || window.location.href.includes(
+      "/center/");
+    const curTime = new Date().getTime();
+    const isBeforeMt = curTime < formatDateInfo.utcStartTime.getTime(); // 停服前
+    const isDuringMt = curTime >= formatDateInfo.utcStartTime.getTime() && curTime <= formatDateInfo.utcEndTime
+      .getTime() // 停服中
+    const isDeadline = curTime > formatDateInfo.utcEndTime.getTime(); // 停服后
+
+    if (isBeforeMt && !isInVersion) {
+      showMaintenancePanel(formatDateInfo);
     }
-  })(window.jQuery)
+
+    if (isDuringMt) {
+      if (isInLoginPage) {
+        showMaintenancePanel(formatDateInfo, true);
+      }
+      if (!isInLoginPage && !isInDashbord && (!isInVersion || (isInVersion && !localMaintenanceConfig.isKnow))) {
+        showMaintenancePanel(formatDateInfo);
+      }
+    }
+  }
+
+  function showMaintenancePanel(dateInfo, hideClose) {
+    hideClose = hideClose || false;
+    const maintenancePanel = new MaintenancePanel({
+      formatDateInfo: dateInfo,
+      hideClose: hideClose
+    });
+    maintenancePanel.show();
+  }
+})(window.jQuery)
 </script>
-
-
 <div id="trial_banner">
   <!-- <img id="trial_banner_close_btn" class="trial_banner_close_btn" src="/images/closeIcon.png" title="Close"></img> -->
   <div id="trial_banner_close_btn" class='trial_close_btn' title="Close"></div>
@@ -2458,7 +2492,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h2>DMCA Policy</h2>
           <h3><strong>Zero Tolerance For Copyright Infringement</strong></h3>
           <p>FlipHTML5 respects the intellectual property rights of others just as it expects third parties to respect its rights. Pursuant to the Digital Millennium Copyright Act (DMCA) (17 U.S.C. &sect; 512), FlipHTML5 has implemented procedures for receiving written notification of claimed infringements as set forth herein. <strong>It is </strong>FlipHTML5's <strong>policy to promptly respond to clear notices of alleged copyright infringement that comply with the Digital Millennium Copyright Act. In addition, we will promptly terminate without notice the accounts of those determined by us to be "repeat infringers";</strong></p>
-          <p>If you have come across content hosted on our website that infringes your copyright, please let us know by sending us an email at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a1d2d4d1d1ced3d5e1c7cdc8d1c9d5cccd948fc2cecc">[email&#160;protected]</a>.</p>
+          <p>If you have come across content hosted on our website that infringes your copyright, please let us know by sending us an email at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f1828481819e8385b1979d988199859c9dc4df929e9c">[email&#160;protected]</a>.</p>
           <p>To submit a good faith infringement claim to us, you must submit notice to us that sets forth the following information:</p>
           <p>1) The URL of the offending publication hosted on our web;</p>
           <p>2) A description of the copyrighted work that you claim has been infringed;</p>
@@ -2592,8 +2626,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              target="_blank">Whiteboard Animation Software</a>,
           <a href="https://mangoanimate.com/products/cm"
              target="_blank">Character Animation Maker</a>,
-          <a href="https://mangoanimate.com/products/vm"
-             target="_blank">Business Video Maker</a>,
+          <a href="https://mangoanimate.com/products/video-maker"
+             target="_blank">Video Maker</a>,
           <a href="https://mangoanimate.com/products/presentation-maker"
              target="_blank">Presentation Maker</a>,
           <a href="https://www.flipbuilder.com/" target="_blank">Flipbook Software</a>
