@@ -107,7 +107,7 @@ n.cssHooks[b]=Ua(l.pixelPosition,function(a,c){return c?(c=Sa(a,b),Oa.test(c)?n(
     var WIDGET = '';
     var CONTENT_TYPE = '';
     var ENT_DATA_URL = (new Date().getTime() % 2) ? ENT_DATA_URL1 : ENT_DATA_URL2;
-    var SERVER_TIME = "2024-07-30 19:30:56";
+    var SERVER_TIME = "2024-09-11 02:26:55";
     var DFP_KEYWORDS = "GMA Network Entertainment,GMA Kapuso,GMA entertainment,Kapuso entertainment,philippine entertainment,GMA news entertainment";
     var META_KEYWORDS = "GMA Network Entertainment,GMA Kapuso,GMA entertainment,Kapuso entertainment,philippine entertainment,GMA news entertainment";
     var DFP_CODE = "344684475";
@@ -122,7 +122,7 @@ n.cssHooks[b]=Ua(l.pixelPosition,function(a,c){return c?(c=Sa(a,b),Oa.test(c)?n(
     var GOOGLE_ANALYTICS_ENT = 'UA-242242-18';
     var GA4_ID_ENT = 'G-B4FW0S5GFB';
     var GOOGLE_ANALYTIC_DOMAIN = '.gmanetwork.com';
-    var COUNTRY = "GB";
+    var COUNTRY = "US";
     var ENABLE_SSO = "";
     var IS_AMP = '';
 
@@ -214,7 +214,18 @@ n.cssHooks[b]=Ua(l.pixelPosition,function(a,c){return c?(c=Sa(a,b),Oa.test(c)?n(
                         }
                                     }
 
-                wtads.src = 'https://scripts.jixie.media/onescript/'+ ent_ ;
+
+                var url = document.location.href,
+                    _url = url.split('/');
+
+                    console.log(_url);
+
+                if (_url[4] == 'celebritylife' || _url[4] == 'showbiznews' && (_url[4] == 'celebritylife' || _url[4] == 'celebritylife' && _url[8] !== ' ' || _url[8] !== 'undefined')) {
+                    wtads.src = 'https://scripts.jixie.media/onescript/'+ ent_ ;
+                } else {
+                    wtads.src = '';
+                }
+
                 var node = document.getElementsByTagName('script')[0];
                 node.parentNode.insertBefore(wtads, node);
             })();
