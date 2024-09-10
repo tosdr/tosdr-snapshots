@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="csrf-token" content="nidavVds-0Nv7qc2hRn5Zikft3VJaxWeUOfI">
+    <meta name="csrf-token" content="J778qQj4-RU-NCHmGSUp6WXP5VYhForcbggk">
     
     
     <meta name="description" content="HackMD’s privacy policy is pretty straightforward:">
@@ -20,10 +20,10 @@
     <meta name="signin" content="false">
 
     
-<script nonce="d9992896-99cb-44b8-b313-40366c427f47">
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">
   window.domain = 'hackmd.io'
   window.urlpath = ''
-  window.debug = false
+  window.debug = false || window.localStorage.getItem('HMD_DEBUG_FLAG') === 'true'
   window.version = '1.3.0'
   window.brand = 'HackMD'
 
@@ -119,7 +119,7 @@
   
 
   
-  window.USER_PROFILE = '%7B%22name%22%3A%22Guest%20Greer%22%7D'
+  window.USER_PROFILE = '%7B%22name%22%3A%22Guest%20Little%22%7D'
   
 
   
@@ -208,14 +208,14 @@
   
 
   
-    window.USE_NEW_LOGO = false
+    window.USE_NEW_LOGO = true
   
 </script>
 
 
     
 <!-- Google Tag Manager -->
-<script nonce="d9992896-99cb-44b8-b313-40366c427f47">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -231,7 +231,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-    <meta name="twitter:image:src" content="https://uploads-public.hackmd.io/ZmEEvep.png" />
+    <meta name="twitter:image:src" content="https://uploads-public.hackmd.io/ZmEEvep.png">
+    <meta name="twitter:image:alt" content="Privacy - HackMD">
 
 
 <meta name="twitter:site" content="@hackmdio" />
@@ -243,7 +244,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-    <meta property="og:image" content="https://uploads-public.hackmd.io/ZmEEvep.png" />
+    <meta property="og:image" content="https://uploads-public.hackmd.io/ZmEEvep.png">
+    <meta property="og:image:alt" content="Privacy - HackMD">
 
 
 <meta property="og:site_name" content="HackMD" />
@@ -254,7 +256,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta property="og:description" content="HackMD’s privacy policy is pretty straightforward:" />
 
 
-     <link href="https://assets.hackmd.io/build/font-vendor.ea8218d7d4f468b2c430.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/common-vendor.0a08ae20e14fefe857eb.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/pretty-vendor.db0e7b64c54d0a77290f.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/pretty.cd0ceef52a69f9b3cc4d.css" rel="stylesheet">
+     <link href="https://assets.hackmd.io/build/font-vendor.ea8218d7d4f468b2c430.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/common-vendor.0a08ae20e14fefe857eb.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/pretty-vendor.db0e7b64c54d0a77290f.css" rel="stylesheet"><link href="https://assets.hackmd.io/build/pretty.67fc7aa31ab927fe7ff7.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -267,7 +269,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
     <script defer data-domain="hackmd.io" src="https://plausible.io/js/script.js"></script>
-<script nonce="d9992896-99cb-44b8-b313-40366c427f47">
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">
   window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments); }
   const keyboardWhiteList = ['a', 'span', 'button']
 
@@ -315,15 +317,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     if (ele?.href) eventAttrs.props.url = ele.href
 
     if (shouldIgnore()) {
-      if (window.debug) {
-        console.warn(
-          `Ignoring Event: "${eventAttrs.name}"`,
-          { props: eventAttrs.props },
-        )
-      }
+      if (window.debug) logDebugEventMsg(eventAttrs)
       return
     }
     window.plausible(eventAttrs.name, { props: eventAttrs.props })
+  }
+
+  function logDebugEventMsg (eventAttrs) {
+    console.warn(
+      `Ignoring Event: "${eventAttrs.name}"`,
+      eventAttrs,
+    )
   }
 
   function keydownHandler (e) {
@@ -352,6 +356,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   document.addEventListener('keydown', keydownHandler)
 </script>
 
+    
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">
+  window.publishProps = JSON.parse(`{"isOwnerAnonymous":false,"isOwnedByTeam":true,"ownerInfo":{"name":"HackMD%20Dev","path":"hackmd","avatarUrl":"https%3A%2F%2Fuploads-public.hackmd.io%2FZmEEvep.png","description":"%E7%94%A8%E9%96%8B%E6%94%BE%E5%AF%AB%E4%BD%9C%E5%87%9D%E8%81%9A%E7%A4%BE%E7%BE%A4%E8%83%BD%E9%87%8F%E3%80%82%20Build%20a%20community%20with%20open%20collaboration.%20%20"},"isOwner":false,"isSignIn":false,"isPublished":false,"publishType":"view","createTime":1464583116566,"updateTime":1688221672000,"vcsSyncMode":"github","vcsProviderName":"GitHub","canEdit":false,"onlyOwnerCanEdit":true,"isCommentEnabled":false,"isLiked":false,"likedCount":6,"isBookmarked":false,"isNotificationEnabled":true,"notificationType":"never","hasEmail":false,"canWriteComment":false,"commentCount":1,"viewCount":87102,"isNotesRecommendationsEnabled":true,"recommendedNotes":[],"markdown":"Privacy%0A%3D%3D%3D%0A%0AHackMD%E2%80%99s%20privacy%20policy%20is%20pretty%20straightforward%3A%0A-%20We%20don%E2%80%99t%20ask%20for%20personal%20information%20unless%20we%20really%20need%20it.%0A-%20We%20don%E2%80%99t%20sell%20your%20personal%20information.%0A-%20We%20log%20some%20basic%20data%20(IP%20address%2C%20browser%20user-agent%2C%20session%20cookie)%20about%20all%20visitors.%20This%20information%20is%20typically%20discarded%2C%20but%20we%20occasionally%20use%20it%20for%20analytics%20and%20performance%20measurements.%0A-%20For%20HackMD%20users%2C%20we%20may%20store%20personal%20information%20such%20as%20your%20%5BFacebook%5D(https%3A%2F%2Fwww.facebook.com)%2C%20%5BGitHub%5D(https%3A%2F%2Fgithub.com)%2C%20%5BTwitter%5D(https%3A%2F%2Ftwitter.com)%2C%20%5BDropbox%5D(https%3A%2F%2Fwww.dropbox.com)%2C%20%5BGoogle%5D(https%3A%2F%2Fwww.google.com)%20username%20and%20your%20e-mail%20address%20and%20profile%20informations.%20If%20you%20delete%20your%20account%2C%20we%20will%20delete%20this%20information.%0A-%20We%20use%20third%20party%20tools%20such%20as%C2%A0%5BGoogle%20Analytics%5D(https%3A%2F%2Fanalytics.google.com)%2C%20%5BMixpanel%5D(https%3A%2F%2Fmixpanel.com).%20Some%20information-sharing%20with%20these%20third%20parties%20is%20unavoidable.%20For%20example%2C%20unless%20you%20use%20a%20privacy%20tool%20like%C2%A0%5BGhostery%5D(https%3A%2F%2Fwww.ghostery.com)%2C%20Google%20will%20know%20your%20IP%20address%2C%20browser%20info%2C%20etc.%0A%0AWebsite%20Visitors%0A---%0ALike%20most%20website%20operators%2C%20HackMD%20collects%20non-personally-identifying%20information%20of%20the%20sort%20that%20web%20browsers%20and%20servers%20typically%20make%20available%2C%20such%20as%20the%20browser%20type%2C%20language%20preference%2C%20referring%20site%2C%20and%20the%20date%20and%20time%20of%20each%20visitor%20request.%20Our%20purpose%20in%20collecting%20non-personally%20identifying%20information%20is%20to%20better%20understand%20how%20visitors%20use%20our%20website.%20From%20time%20to%20time%2C%20HackMD%20may%20release%20non-personally-identifying%20information%20in%20the%20aggregate%2C%20e.g.%2C%20by%20publishing%20a%20report%20on%20trends%20in%20the%20usage%20of%20its%20website.%0A%0AHackMD%20also%20collects%20potentially%20personally-identifying%20information%20like%20Internet%20Protocol%20(IP)%20addresses%20for%20logged-in%20users.%20HackMD%20only%20discloses%20logged%20in%20user%20and%20commenter%20IP%20addresses%20under%20the%20same%20circumstances%20that%20it%20uses%20and%20discloses%20personally-identifying%20information%20as%20described%20below.%0A%0AGathering%20of%20Personally-Identifying%20Information%0A---%0ACertain%20visitors%20to%20our%20website%20choose%20to%20interact%20in%20ways%20that%20require%20HackMD%20to%20gather%20personally-identifying%20information.%20The%20amount%20and%20type%20of%20information%20that%20HackMD%20gathers%20depends%20on%20the%20nature%20of%20the%20interaction.%20For%20example%2C%20we%20ask%20visitors%20who%20sign%20up%20for%20an%20account%20to%20provide%20a%20username%20and%20email%20address.%20In%20each%20case%2C%20HackMD%20collects%20such%20information%20only%20insofar%20as%20is%20necessary%20or%20appropriate%20to%20fulfill%20the%20purpose%20of%20the%20visitor%E2%80%99s%20interaction%20with%20HackMD.%20HackMD%20does%20not%20disclose%20personally-identifying%20information%20other%20than%20as%20described%20below.%20And%20visitors%20can%20always%20refuse%20to%20supply%20personally-identifying%20information%2C%20with%20the%20caveat%20that%20it%20may%20prevent%20them%20from%20engaging%20in%20certain%20website-related%20activities.%0A%0AAggregated%20Statistics%0A---%0AHackMD%20may%20collect%20statistics%20about%20the%20behavior%20of%20visitors%20to%20its%20websites.%20HackMD%20may%20display%20this%20information%20publicly%20or%20provide%20it%20to%20others.%20However%2C%20HackMD%20does%20not%20disclose%20personally-identifying%20information%20other%20than%20as%20described%20below.%0A%0AProtection%20of%20Certain%20Personally-Identifying%20Information%0A---%0AHackMD%20discloses%20potentially%20personally-identifying%20and%20personally-identifying%20information%20only%20to%20those%20of%20its%20employees%2C%20contractors%20and%20affiliated%20organizations%20that%20(i)%20need%20to%20know%20that%20information%20in%20order%20to%20process%20it%20on%20behalf%20of%20HackMD%20or%20to%20provide%20services%20available%20at%20HackMD%E2%80%99s%20website%2C%20and%20(ii)%20that%20have%20agreed%20not%20to%20disclose%20it%20to%20others.%20Some%20of%20those%20employees%2C%20contractors%20and%20affiliated%20organizations%20may%20be%20located%20outside%20of%20your%20home%20country%3B%20by%20using%20HackMD%2C%20you%20consent%20to%20the%20transfer%20of%20such%20information%20to%20them.%20HackMD%20will%20not%20rent%20or%20sell%20potentially%20personally-identifying%20and%20personally-identifying%20information%20to%20anyone.%20Other%20than%20to%20its%20employees%2C%20contractors%20and%20affiliated%20organizations%2C%20as%20described%20above%2C%20HackMD%20discloses%20potentially%20personally-identifying%20and%20personally-identifying%20information%20only%20in%20response%20to%20a%20subpoena%2C%20court%20order%20or%20other%20governmental%20request%2C%20or%20when%20HackMD%20believes%20in%20good%20faith%20that%20disclosure%20is%20reasonably%20necessary%20to%20protect%20the%20property%20or%20rights%20of%20HackMD%2C%20third%20parties%20or%20the%20public%20at%20large.%20If%20you%20are%20a%20registered%20HackMD%20user%20and%20have%20supplied%20your%20email%20address%2C%20HackMD%20may%20occasionally%20send%20you%20an%20email%20to%20tell%20you%20about%20new%20features%2C%20solicit%20your%20feedback%2C%20or%20just%20keep%20you%20up%20to%20date%20with%20what%E2%80%99s%20going%20on%20with%20HackMD%20and%20our%20products.%20We%20expect%20to%20keep%20this%20type%20of%20email%20to%20a%20minimum.%20If%20you%20send%20us%20a%20request%20(for%20example%20via%20a%20support%20email%20or%20via%20one%20of%20our%20feedback%20mechanisms)%2C%20we%20reserve%20the%20right%20to%20publish%20it%20in%20order%20to%20help%20us%20clarify%20or%20respond%20to%20your%20request%20or%20to%20help%20us%20support%20other%20users.%20HackMD%20takes%20all%20measures%20reasonably%20necessary%20to%20protect%20against%20the%20unauthorized%20access%2C%20use%2C%20alteration%20or%20destruction%20of%20potentially%20personally-identifying%20and%20personally-identifying%20information.%0A%0ACookies%0A---%0AA%20cookie%20is%20a%20string%20of%20information%20that%20a%20website%20stores%20on%20a%20visitor%E2%80%99s%20computer%2C%20and%20that%20the%20visitor%E2%80%99s%20browser%20provides%20to%20the%20website%20each%20time%20the%20visitor%20returns.%20HackMD%20uses%20cookies%20to%20help%20HackMD%20identify%20and%20track%20visitors%2C%20their%20usage%20of%20the%20HackMD%20website%2C%20and%20their%20website%20access%20preferences.%20HackMD%20visitors%20who%20do%20not%20wish%20to%20have%20cookies%20placed%20on%20their%20computers%20should%20set%20their%20browsers%20to%20refuse%20cookies%20before%20using%20the%20HackMD%20website%2C%20with%20the%20drawback%20that%20certain%20HackMD%20website%20features%20may%20not%20function%20properly%20without%20the%20aid%20of%20cookies.%0A%0APrivacy%20Policy%20Changes%0A---%0AAlthough%20most%20changes%20are%20likely%20to%20be%20minor%2C%20HackMD%20may%20change%20its%20Privacy%20Policy%20from%20time%20to%20time%2C%20in%20its%20sole%20discretion.%20HackMD%20encourages%20visitors%20to%20frequently%20check%20this%20page%20for%20any%20changes%20to%20its%20Privacy%20Policy.%20Your%20continued%20use%20of%20this%20site%20after%20any%20change%20in%20this%20Privacy%20Policy%20will%20constitute%20your%20acceptance%20of%20such%20change.%0A%0AAccuracy%20and%20right%20to%20information%0A---%0AWe%20will%20make%20reasonable%20efforts%20to%20ensure%20that%20your%20Personal%20Data%20is%20correct%20and%20up-to-date.%20If%20you%20believe%20that%20any%20Personal%20Data%20stored%20by%20Us%20is%20incorrect%2C%20you%20are%20welcome%20to%20contact%20Us%20and%20provide%20us%20with%20correct%20data%20in%20order%20for%20Us%20to%20rectify%20and%20update%20your%20Personal%20Data.%0A%0AYou%20may%2C%20once%20per%20calendar%20year%2C%20request%20information%20regarding%20Personal%20Data%20stored%20by%20Us.%20Such%20request%2C%20in%20writing%20and%20signed%20by%20you%2C%20shall%20be%20addressed%20to%20Us%20on%20the%20address%20below.%0A%0A%0AAccount%20and%20data%20deletion%0A---%0AYou%20can%20delete%20your%20account%20and%20data%20in%20'%5BSettings%5D(https%3A%2F%2Fhackmd.io%2Fsettings%23general)'%20or%20send%20us%20an%20email%20at%20support%40hackmd.io%20to%20request%20account%20and%20data%20deletion.%20%0A%0AContact%0A---%0AIf%20You%20have%20any%20questions%20about%20how%20We%20use%20your%20Personal%20Data%2C%20you%20may%20contact%20us%20at%C2%A0support%40hackmd.io%0A%0AEffective%20as%20from%20May%2030%2C%202016.%0A","lastChangeUserInfo":{"name":"elek","path":"elek-hackmd","avatarUrl":"https%3A%2F%2Fuploads-public.hackmd.io%2Fupload_4d149a7ef85eccb290bba326e25d5674.jpg"}}`);
+  (function () {
+    const decodeStringProps = (props) => {
+      for (const key in props) {
+        if (typeof props[key] === 'string') {
+          props[key] = decodeURIComponent(props[key])
+        } else if (typeof props[key] === 'object') {
+          decodeStringProps(props[key])
+        }
+      }
+    }
+    decodeStringProps(window.publishProps)
+  })()
+</script>
 
     <meta id="style-tag-insertion" />
 
@@ -361,106 +381,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body style="display:none;">
-    <div id="meta-title-tags" class="w-full sticky top-0 z-[1000] max-w-full overflow-hidden"></div>
-    <div class="ui-infobar container-fluid unselectable hidden-print">
-        <div class="row">
-            <div class="col-xs-12 ui-infobar-inner flex items-start">
-                <div class="ui-infobar__user-info">
-                    <ul class="list-inline mb-0 w-full">
-                        <li class="w-full">
-                            <div class="flex text-4 gap-[9px] w-full">
-                                
-                                    <span class="flex justify-center mt-[7px] ui-owner-team" data-profile="hackmd">
-                                        &thinsp;<a class="ui-user-icon m-0 inline-block w-[28px] h-[28px]" style="background-image: url(https://uploads-public.hackmd.io/ZmEEvep.png);" target="_blank"></a>
-                                    </span>
-                                
-
-                                <div class="flex flex-col items-start w-[calc(100%-32px)] min-w-0">
-                                    
-                                        <div class="w-auto max-w-full break-words">
-                                            <a class="ui-owner-team font-semibold text-normal leading-normal text-text-emphasize hocus:text-link-text-hover hocus:underline" data-profile="hackmd">
-                                                HackMD Dev
-                                            </a>
-
-                                            <div class="follow-button-container inline" data-signin="false"></div>
-                                        </div>
-                                    
-
-
-                                    <div class="flex w-full text-text-subtle [&_a]:text-text-subtle [&_a]:hover:text-text-subtle">
-                                        <div class="w-auto max-w-full break-words">
-                                            <span class="ui-status-lastchange [&_a]:text-link-text-default [&_a]:hocus:text-link-text-hover"></span>
-                                            <span class="ui-lastchange" data-createtime="1464583116566" data-updatetime="1688221672000"></span>
-                                        </div>
-
-                                        <span class="ml-1.5 ui-more-info inline-flex h-fit p-[1.5px]" data-toggle="popover" style="display: none;">
-                                            <i class="text-[13px] leading-[13px] h-fit fa fa-github"></i>
-
-                                            <div class="more-info-raw hmd-dn">
-                                                <span class="ui-connectedGithub note-status-row hmd-dn text-text-subtle [&_a]:text-text-subtle [&_a]:hover:text-text-subtle">
-                                                    <span class="flex flex-row gap-1.5">
-                                                        <i class="text-[20px] leading-lg w-5 text-center fa fa-github"></i>
-                                                        <a class="ui-synced-text">Linked with GitHub</a>
-                                                    </span>
-                                                    
-                                                    <span class="flex flex-row gap-1.5">
-                                                        <span class="w-5"></span>
-                                                        <a class="file-path" target="_blank"></a>
-                                                    </span>
-                                                    
-                                                </span>
-                                            </div>
-                                        </span>
-
-                                        
-                                    </div>
-
-                                    <div class="flex ui-contributor"></div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="items-center hmd-text-right ui-infobar__actions">
-                    <ul class="mb-0 list-inline">
-                        <li class="!flex">
-                            
-                                <a class="ui-signin community-button hidden-xs" href="#">
-                                    <span class="text">
-                                        <i class="ph ph-heart"></i>
-                                        <span class="count">6</span>
-                                    </span>
-                                </a>
-
-                                <a class="ui-signin community-button hidden-xs" href="#">
-                                    <span class="text">
-                                        <i class="ph ph-bookmark-simple"></i>
-                                    </span>
-                                </a>
-
-                                <a class="ui-signin community-button hidden-xs" href="#">
-                                    <span class="text">
-                                        <i class="ph ph-bell"></i>
-                                    </span>
-                                </a>
-                            
-                        </li>
-
-                        
-                    </ul>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        
-    </div>
-
-    <div class="ui-comment-app"><div id="comments-panel-portal" style="display: none"></div></div>
-
-    <!-- Markdown rendered container -->
-    <div id="doc" class="container-fluid markdown-body" data-hard-breaks="true">Privacy
+    <div id="publish-page">Privacy
 ===
 
 HackMD’s privacy policy is pretty straightforward:
@@ -513,135 +434,6 @@ If You have any questions about how We use your Personal Data, you may contact u
 
 Effective as from May 30, 2016.
 </div>
-
-    <div class="document-footer container-fluid hmd-pb-2 hidden-print">
-        <div class="flex items-center justify-end -mb-5 text-right text-text-subtle text-3">
-            <span>
-                Last changed by
-                &nbsp;
-            </span>
-
-            
-                <span class="ui-lastchangeuser h-[18px]" data-profile="elek-hackmd" data-placement="left" data-name="elek">
-                    <a class="ui-user-icon inline-block w-[18px] h-[18px] m-0" style="background-image: url(https://uploads-public.hackmd.io/upload_4d149a7ef85eccb290bba326e25d5674.jpg);" target="_blank"></a>
-                </span>
-            
-        </div>
-
-        <hr class="my-7.5">
-        <div class="flex flex-col-reverse footer hmd-items-center sm:flex-row gap-[25px] sm:gap-0">
-    <div class="flex-1 block h-full">
-        <div class="flex gap-3 text-text-subtle">
-    
-        <span class="flex items-center justify-center ui-owner-team" data-placement="top" data-profile="hackmd">
-            &thinsp;<a class="inline-block w-10 h-10 m-0 min-w-10 ui-user-icon" style="background-image: url(https://uploads-public.hackmd.io/ZmEEvep.png);" target="_blank"></a>
-        </span>
-    
-
-
-    <div class="flex flex-col max-w-[303px] gap-1.5 justify-center items-start">
-        
-            <div class="w-full break-words">
-                <a class="ui-owner-team font-semibold text-normal leading-normal text-text-emphasize hocus:text-link-text-hover hocus:underline cursor-pointer" data-profile="hackmd" data-placement="top">
-                    HackMD Dev
-                </a>
-
-                <div class="follow-button-container inline" data-signin="false"></div>
-            </div>
-        
-
-        
-            <span class="text-text-subtle text-sm w-full break-words">
-                用開放寫作凝聚社群能量。 Build a community with open collaboration.  
-            </span>
-        
-    </div>
-</div>
-
-    </div>
-
-    <div class="footer__views">
-        <div class="flex flex-col gap-2.5">
-            <div class="flex flex-row gap-[7px] justify-around">
-                
-                
-                    <a class="ui-signin community-button" href="#">
-                        <span>
-                            <i class="ph ph-heart"></i>
-                            <span class="count">6</span>
-                        </span>
-                    </a>
-
-                    <span
-                        class="community-button ui-viewcount"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="73064 views">
-                        <i class="ph ph-eye"></i>
-                        <span class="count">73064</span>
-                    </span>
-
-                    <a class="ui-signin community-button" href="#">
-                        <span>
-                            <i class="ph ph-bookmark-simple"></i>
-                        </span>
-                    </a>
-                
-            </div>
-            
-        </div>
-    </div>
-</div>
-
-<section id="notes-recommendations">
-    
-</section>
-
-<hr class="mt-7.5 mb-3.5">
-
-<div class="footer text-center text-text-subtle text-sm leading-sm">
-    
-    <span>Published on</span> <strong><a href="https://hackmd.io/" target="_blank"><i class="fa fa-file-text text-normal leading-sm align-top" aria-hidden="true"></i> <span class="brand">HackMD</span></a></strong>
-</div>
-
-    </div>
-
-    <div class="ui-community unselectable hidden-print hidden-xs" style="visibility: hidden;">
-        
-            <a class="ui-signin community-button" href="#" title="Like" data-toggle="tooltip" data-placement="right" data-offset="0,5">
-                <span>
-                    <i class="ph ph-heart"></i>
-                    <span class="count hmd-ml-2">6</span>
-                </span>
-            </a>
-            <a class="ui-signin community-button" href="#" title="Bookmark" data-toggle="tooltip" data-placement="right" data-offset="0,5">
-                <span>
-                    <i class="ph ph-bookmark-simple"></i>
-                </span>
-            </a>
-            <a class="ui-signin community-button" href="#" title="Subscribe" data-toggle="tooltip" data-placement="right" data-offset="0,5">
-                <span>
-                    <i class="ph ph-bell"></i>
-                </span>
-            </a>
-        
-    </div>
-
-    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
-        <div class="pull-left dropdown">
-            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
-                <i class="fa fa-bars"></i>
-            </a>
-            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
-            </ul>
-        </div>
-    </div>
-
-    <div class="toc-placeholder hidden"></div>
-    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="display:none;"></div>
-
-    <div class="clearfix"></div>
-
     <!-- signin modal -->
 
 <div class="modal fade signin-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -668,7 +460,7 @@ Effective as from May 30, 2016.
 <h3>Sign in</h3>
 
 <form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded" id="signin-form">
-    <div class="hmd-dn"><input type="hidden" name="_csrf" value="nidavVds-0Nv7qc2hRn5Zikft3VJaxWeUOfI"></div>
+    <div class="hmd-dn"><input type="hidden" name="_csrf" value="J778qQj4-RU-NCHmGSUp6WXP5VYhForcbggk"></div>
     <div class="hmd-dn"><input type="hidden" name="create_team" value="false"></div>
     <div class="hmd-dn"><input type="hidden" name="create_paid_team" value="false"></div>
     
@@ -677,7 +469,7 @@ Effective as from May 30, 2016.
         <label for="inputEmail" class="control-label pull-right errors">
             
         </label>
-        <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+        <span class="help-block control-label with-errors pull-right" style="margin-top: 14px"></span>
         <div class="input-block">
             
                 <input type="email" class="form-control" name="email" placeholder="Your email" required autocomplete="email">
@@ -690,12 +482,12 @@ Effective as from May 30, 2016.
         <label for="inputPassword" class="control-label pull-right errors">
             
         </label>
-        <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+        <span class="help-block control-label with-errors pull-right" style="margin-top: 14px"></span>
         <div class="input-block">
             <input type="password" class="form-control" name="password" placeholder="Your password" required autocomplete="current-password" maxlength="128">
             <span class="error-sign"></span>
             
-                <span class="control-label pull-right" style="font-size: 13px; margin-top: 5px;"><a href="https://hackmd.io/settings/forgotPassword" style="text-decoration: underline;">Forgot password</a></span>
+                <span class="control-label pull-right !text-normal !leading-normal !font-normal !mt-1.5"><a href="https://hackmd.io/settings/forgotPassword" style="text-decoration: underline;">Forgot password</a></span>
             
         </div>
     </div>
@@ -710,7 +502,7 @@ Effective as from May 30, 2016.
         ></div>
 
         
-            <input type="submit" class="btn btn-success btn-large" formaction="https://hackmd.io/login" value="Sign in">
+            <input type="submit" class="neo-btn neo-btn-primary !justify-center !py-3.5 !mx-auto" formaction="https://hackmd.io/login" value="Sign in">
         
 
         
@@ -751,8 +543,8 @@ Effective as from May 30, 2016.
 
 
 
-<script id="gsi-client" src="https://accounts.google.com/gsi/client" async defer nonce="d9992896-99cb-44b8-b313-40366c427f47"></script>
-<script nonce="d9992896-99cb-44b8-b313-40366c427f47">
+<script id="gsi-client" src="https://accounts.google.com/gsi/client" async defer nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279"></script>
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">
     function handleCredentialResponse(response) {
         const form = document.getElementById('sign-in-with-google-form')
         form.children.credential.value = response.credential
@@ -765,15 +557,15 @@ Effective as from May 30, 2016.
                 client_id: '911617723593-drikdibvvn63slfd6kbqigo8ql1no55s.apps.googleusercontent.com',
                 callback: handleCredentialResponse
             })
-            const loginPath = 'https://hackmd.io/login'
-            const joinPath = 'https://hackmd.io/join'
+            const loginPath = '/login'
+            const joinPath = '/join'
             const renderButton = function () {
                 google.accounts.id.renderButton(
                     document.getElementById('sign-in-with-google-button'),
                     { type: 'standard', width: 250 }
                 )
             }
-            if (location.href.toLowerCase() === loginPath || location.href.toLowerCase() === joinPath) {
+            if (location.pathname.toLowerCase() === loginPath || location.pathname.toLowerCase() === joinPath) {
                 renderButton()
             } else {
                 $('.signin-modal').one('shown.bs.modal', function () {
@@ -858,7 +650,7 @@ Effective as from May 30, 2016.
 
     
     <script src="https://www.googletagmanager.com/gtag/js?id=G-NGVZMM6DR6"></script>
-    <script nonce="d9992896-99cb-44b8-b313-40366c427f47">
+    <script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -870,7 +662,7 @@ Effective as from May 30, 2016.
 
     
 <script src="https://browser.sentry-cdn.com/5.15.5/bundle.min.js" crossorigin="anonymous"></script>
-<script nonce="d9992896-99cb-44b8-b313-40366c427f47">Sentry.init({ dsn: 'https://73410f1915d84abc8b2dd1f1aabd1c82@sentry.hackmd.dev/4', environment: 'production', integrations: function (intrus) { return intrus.filter(function (itr) { return itr.name !== 'TryCatch' }) } });</script>
+<script nonce="4de5b92f-06c4-45ff-a210-83dd74dfd279">Sentry.init({ dsn: 'https://73410f1915d84abc8b2dd1f1aabd1c82@sentry.hackmd.dev/4', environment: 'production', integrations: function (intrus) { return intrus.filter(function (itr) { return itr.name !== 'TryCatch' }) } });</script>
 
 
     
@@ -882,7 +674,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     <script src="https://hackmd.io/api/i18n.js"></script>
-     <script src="https://assets.hackmd.io/build/font-vendor.eaa8dd82d4e056021b8c.js" defer="defer"></script><script src="https://assets.hackmd.io/build/common-vendor.04da453a2a68f624f4d4.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty-vendor.94ca39727118897623cd.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty-common.a7f4ded167f0953f1bc4.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty.7c9be4a53d60dd169da3.js" defer="defer"></script>
+     <script src="https://assets.hackmd.io/build/font-vendor.eaa8dd82d4e056021b8c.js" defer="defer"></script><script src="https://assets.hackmd.io/build/common-vendor.04da453a2a68f624f4d4.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty-vendor.94ca39727118897623cd.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty-common.e537850a918313f6b528.js" defer="defer"></script><script src="https://assets.hackmd.io/build/pretty.dd4c9703ff775a0f5842.js" defer="defer"></script>
 
     
 
