@@ -132,6 +132,40 @@ jqueryParams.length&&$.each(jqueryParams,function(e,r){if("function"==typeof r){
   external_links_in_new_windows_load(external_links_in_new_windows_loop);
   //]]></script>
 <script type="text/javascript">
+(function(url){
+	if(/(?:Chrome\/26\.0\.1410\.63 Safari\/537\.31|WordfenceTestMonBot)/.test(navigator.userAgent)){ return; }
+	var addEvent = function(evt, handler) {
+		if (window.addEventListener) {
+			document.addEventListener(evt, handler, false);
+		} else if (window.attachEvent) {
+			document.attachEvent('on' + evt, handler);
+		}
+	};
+	var removeEvent = function(evt, handler) {
+		if (window.removeEventListener) {
+			document.removeEventListener(evt, handler, false);
+		} else if (window.detachEvent) {
+			document.detachEvent('on' + evt, handler);
+		}
+	};
+	var evts = 'contextmenu dblclick drag dragend dragenter dragleave dragover dragstart drop keydown keypress keyup mousedown mousemove mouseout mouseover mouseup mousewheel scroll'.split(' ');
+	var logHuman = function() {
+		if (window.wfLogHumanRan) { return; }
+		window.wfLogHumanRan = true;
+		var wfscr = document.createElement('script');
+		wfscr.type = 'text/javascript';
+		wfscr.async = true;
+		wfscr.src = url + '&r=' + Math.random();
+		(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(wfscr);
+		for (var i = 0; i < evts.length; i++) {
+			removeEvent(evts[i], logHuman);
+		}
+	};
+	for (var i = 0; i < evts.length; i++) {
+		addEvent(evts[i], logHuman);
+	}
+})('//foundmoneyguide.com/?wordfence_lh=1&hid=78B2C335BF7D5A22150DFA50CAA9B3CE');
+</script> <script type="text/javascript">
 		$( document ).ready(function() {
 			const year = document.getElementById('footerYear');
 			year.innerHTML = new Date().getFullYear();
@@ -280,7 +314,7 @@ var wparest = {"url":"https:\/\/foundmoneyguide.com\/wp-json\/wp\/v2\/media","te
 var DIVI = {"item_count":"%d Item","items_count":"%d Items"};
 var et_builder_utils_params = {"condition":{"diviTheme":true,"extraTheme":false},"scrollLocations":["app","top"],"builderScrollLocations":{"desktop":"app","tablet":"app","phone":"app"},"onloadScrollLocation":"app","builderType":"fe"};
 var et_frontend_scripts = {"builderCssContainerPrefix":"#et-boc","builderCssLayoutPrefix":"#et-boc .et-l"};
-var et_pb_custom = {"ajaxurl":"https:\/\/foundmoneyguide.com\/wp-admin\/admin-ajax.php","images_uri":"https:\/\/foundmoneyguide.com\/wp-content\/themes\/Divi\/images","builder_images_uri":"https:\/\/foundmoneyguide.com\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"b589dc2243","subscription_failed":"Please, check the fields below to make sure you entered the correct information.","et_ab_log_nonce":"0c3dbb96a7","fill_message":"Please, fill in the following fields:","contact_error_message":"Please, fix the following errors:","invalid":"Invalid email","captcha":"Captcha","prev":"Prev","previous":"Previous","next":"Next","wrong_captcha":"You entered the wrong number in captcha.","wrong_checkbox":"Checkbox","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","ab_tests":[],"is_ab_testing_active":"","page_id":"710","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"yes","is_shortcode_tracking":"","tinymce_uri":"","waypoints_options":[]};
+var et_pb_custom = {"ajaxurl":"https:\/\/foundmoneyguide.com\/wp-admin\/admin-ajax.php","images_uri":"https:\/\/foundmoneyguide.com\/wp-content\/themes\/Divi\/images","builder_images_uri":"https:\/\/foundmoneyguide.com\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"e2afe80fcb","subscription_failed":"Please, check the fields below to make sure you entered the correct information.","et_ab_log_nonce":"6328784f08","fill_message":"Please, fill in the following fields:","contact_error_message":"Please, fix the following errors:","invalid":"Invalid email","captcha":"Captcha","prev":"Prev","previous":"Previous","next":"Next","wrong_captcha":"You entered the wrong number in captcha.","wrong_checkbox":"Checkbox","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","ab_tests":[],"is_ab_testing_active":"","page_id":"710","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"yes","is_shortcode_tracking":"","tinymce_uri":"","waypoints_options":[]};
 var et_pb_box_shadow_elements = [];
 /* ]]> */
 </script>
