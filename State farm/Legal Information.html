@@ -76,7 +76,7 @@
     
 <link rel="stylesheet" href="/etc.clientlibs/StateFarmAEM/clientlibs/clientlib-dependencies.min.d41d8cd98f00b204e9800998ecf8427e.css" type="text/css">
 <link rel="stylesheet" href="/etc.clientlibs/StateFarmAEM/clientlibs/clientlib-sf-custom.min.ef4aa9f9ed05cfebc3e7ccf9fd4c365f.css" type="text/css">
-<link rel="stylesheet" href="/etc.clientlibs/StateFarmAEM/clientlibs/clientlib-site.min.d5b4a2f0ceac581f4a2407843ea56039.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/StateFarmAEM/clientlibs/clientlib-site.min.ba079452d809941fed1970aa5858b769.css" type="text/css">
 
 
 
@@ -99,7 +99,7 @@
 	<script src="https://static1.st8fm.com/en_US/dxl/js/min/breadcrumbs.min.js"></script>
     <meta name="sf-user-origin" content="internal"/>
     
-        <script type="text/javascript" src="https://invocation.deel.c1.statefarm/deel.js?optIn=optimizely" async></script>
+        <script type="text/javascript" async src="https://invocation.deel.c1.statefarm/deel.js?prop=ext" referrerpolicy="no-referrer-when-downgrade"></script>
     
     <!--script type="text/javascript" src="https://static1.st8fm.com/en_US/dxl/js/min/bootstrap-4.5.0.min.js"></script-->
     <!--link rel="stylesheet" href="https://static1.st8fm.com/en_US/dxl/css/min/bootstrap-4.5.0.min.css" /-->
@@ -313,6 +313,24 @@ $( document ).ready(function() {
 					else{
 					headerContainer.innerHTML = '<header id="b2c-header" data-type="1x-header-unauth" data-language-url="'+languageToggle+'"></header>';
 					} 
+           $(".authentication-container").each(function() {
+						if ($(this).attr('data-show-for') == 'unauthenticatedUser') {
+							
+							if(!isUserAuthenticated){
+								$(this).removeClass('-oneX-d-none');
+							}
+						}
+						if ($(this).attr('data-show-for') == 'authenticatedUser')
+						{
+							if(isUserAuthenticated){
+								$(this).removeClass('-oneX-d-none');
+							}
+						}
+						if ($(this).attr('data-show-for') == 'allUsers')
+						{
+							$(this).removeClass('-oneX-d-none');
+						}						
+					});
 });					
 </script> 
 
@@ -601,6 +619,7 @@ $( document ).ready(function() {
 <li>offer you other insurance and financial services products.</li>
 <li>develop and offer new products and services.</li>
 <li>develop either anonymized data or de-identified data by making reasonable efforts to remove personally identifiable information so the information is no longer customer information. We develop this data for certain purposes, such as analysis to understand more about our customers and our industry, or for other commercial purposes as permitted by law. We share and use this data within our State Farm family of companies, with third party service providers, or with other unaffiliated entities.</li>
+<li>test business processes and procedures to analyze performance.</li>
 <li>perform other activities as required or permitted by law.</li>
 </ul>
 
@@ -627,10 +646,11 @@ $( document ).ready(function() {
 
  
 <div class='-oneX-body--primary '>
-<h2>To Limit the Sharing of Customer Information Within the State Farm Family of Companies</h2>
+<h2>To Limit the Sharing of Customer Information Within the<br />
+State Farm Family of Companies</h2>
 <p>We share customer information within our State Farm family of companies so, for example, we do not have to ask you for the same information again. If you prefer to limit sharing information such as your driving record, claim history with other companies, and credit information, call your State Farm agent or 1-800-865-6035. Please note, your choice:</p>
 <ul>
-<li>will apply to joint policyholders or account holders on shared policies and accounts.</li>
+<li>may apply to joint policyholders or account holders on shared policies and accounts.</li>
 <li>does not limit State Farm from sharing certain customer information about your transactions or experiences with us for our everyday business purposes or for public policy purposes.</li>
 <li>does not limit State Farm from sharing customer information in the event of a transfer, between State Farm companies, of all or a portion of a line of business.</li>
 </ul>
@@ -681,7 +701,7 @@ $( document ).ready(function() {
 <p>If you click on links to a third party sites, you will be taken to websites we do not control. This Notice does not apply to the privacy practices of those websites. Read the privacy policy of other websites carefully. We are not responsible for these third party sites.</p>
 <p>Some operating system developers, such as Apple, allow mobile application users to request deletion of accounts created within an application. If you request deletion of your account, State Farm may still retain your information for legal, auditing, regulatory and business purposes. Retention periods vary according to specific legal, auditing, regulatory and business needs.</p>
 <p>A request to delete an account within the mobile application only applies to the credentials and account you created within the Application and not to any other accounts you may have with State Farm.</p>
-<p>If you participate in Drive Safe &amp; Save® or Steer Clear®, State Farm collects precise location information from you in order to accurately record trip information. For additional information on how State Farm collects, uses and shares your precise location information, please refer to the End User License Agreement (EULA) available in the Drive Safe &amp; Save and Steer Clear mobile applications. All information, including precise location information, is handled in accordance with this Notice of Privacy Policy.</p>
+<p>If you participate in and grant permissions for Drive Safe &amp; Save® or Steer Clear® or have installed the State Farm mobile application, precise location data is used to accurately record trip information. In addition, the State Farm mobile application utilizes precise location to provide services such as requesting roadside assistance, filing a claim, searching for agents and repair shops. For more information on how State Farm collects, uses and shares your precise location information, please refer to the End User License Agreement (EULA) available in the State Farm mobile application, Drive Safe &amp; Save application, and in the Steer Clear application. All information, including precise location information, is handled in accordance with this Notice of Privacy Policy.</p>
 
 </div>
 </div>
@@ -704,7 +724,8 @@ Bloomington, IL 61704-2322</p>
 </ul>
 <p>If a material change is made to this Notice, a revised version of the Notice of Privacy Policy will be made available to you.<br />
 </p>
-<p><i><b>Residents of California:</b></i> We may collect customer information from persons other than the individual or individuals applying for coverage. Such customer information as well as other personal or privileged information subsequently collected may, in certain circumstances, be disclosed to third parties without your authorization as permitted by law. If you would like additional information about the collection and disclosure of customer information, please contact your State Farm agent. You may also act upon your right to see and correct any customer information in your State Farm files by writing your State Farm agent to request this access.</p>
+<p><i><b>Residents of California:</b></i> We may collect customer information from persons other than the individual or individuals applying for coverage. Such customer information as well as other personal or privileged information subsequently collected may, in certain circumstances, be disclosed to third parties without your authorization as permitted by law. If you would like additional information about the collection and disclosure of customer information, please contact your<br />
+ State Farm agent. You may also act upon your right to see and correct any customer information in your State Farm files by writing your State Farm agent to request this access.</p>
 <p><i><b>Residents of Nevada:</b></i> Nevada law requires us to disclose that you may elect to be placed on our internal “do not call” list should you wish not to receive marketing calls from State Farm.  If you have already been placed on our internal “do not call” list please disregard this notice. You may request to be placed on State Farm’s internal “do not call” list by:</p>
 <ul>
 <li>contacting your State Farm agent, OR</li>
@@ -730,7 +751,7 @@ Las Vegas, NV 89101</p>
  
 <div class='-oneX-body--primary '>
 <p> </p>
-<p>Last updated 12/21/2023</p>
+<p>Last updated 08/06/2024</p>
 
 </div>
 </div>
