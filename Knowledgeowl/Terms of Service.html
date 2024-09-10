@@ -10,7 +10,7 @@
     <link rel="icon" href="https://dyzz9obi78pm5.cloudfront.net/app/image/id/645fb38bc5c6d209573b68de/n/knowledgeowl-favicon.ico">
 		<link rel="stylesheet" href="https://d3s179bfexmwfe.cloudfront.net/min/css/koFontawesome-3c612f865d.css" type="text/css">
             <!--[if IE 7]>
-              <link rel="stylesheet" type="text/css" href="240730211206/css/ie7.css">
+              <link rel="stylesheet" type="text/css" href="240906213730/css/ie7.css">
             <![endif]-->
             <link rel="stylesheet" href="https://d3s179bfexmwfe.cloudfront.net/min/css/ko-7810f76fae.css" type="text/css">
 		<link href="https://d1whm9yla4elqy.cloudfront.net/lato/lato.css" rel="stylesheet" type="text/css">
@@ -429,6 +429,26 @@ z-index: 2;
 color: #1d284f;
 }
 
+/* Change "See more" links in article lists, Support KB-specific */
+/* Make look like a button */
+.hg-minimalist-theme .hg-home-page .list-action, 
+.hg-home-page .list-action {
+  font-style: initial;
+  text-align: center;
+  background-color: #1D284F;
+  border: 1px solid #1D284F;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+/* Change font color */
+.hg-minimalist-theme .hg-home-page .list-action a:not(.btn):visited,
+.hg-minimalist-theme .hg-home-page .list-action a:not(.btn),
+.hg-home-page .list-action a:not(.btn):visited,
+.hg-home-page .list-action a:not(.btn) {
+  color: white;
+}
+/* End Support KB-specific See more link treatment */
+
 /******************************************************** Content Lists */
 /* tweak padding and line heights */
 .hg-minimalist-theme .stat-list {
@@ -443,16 +463,43 @@ padding: 4px 0;
 .hg-minimalist-theme .page-header {
 border-bottom: none;
 }
-/* remove border above "see more..." */
+/* remove border above "see more..." and align on bottom */
 .hg-minimalist-theme .list-action {
 border-top: none;
+margin-top: auto;
 }
 /* correct margin and padding for content lists on homepage */
 .hg-minimalist-theme .homepage-widgets {
 margin: 2em -15px;
+display: flex;
+justify-content: space-between;
 }
 .hg-minimalist-theme .homepage-widgets .col-md-4.col-sm-6 {
 padding-left: 15px;
+flex: 1;
+display: flex;
+flex-direction: column;
+}
+.homepage-widgets .stat-list {
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+.stat-list li:nth-last-child(2) {
+margin-bottom: 10px; 
+}
+/* Mobile responsive  */
+@media (max-width: 768px) {
+  .hg-minimalist-theme .homepage-widgets {
+    flex-direction: column;
+  }
+
+  .hg-minimalist-theme .homepage-widgets .col-md-4.col-sm-6 {
+    margin: 10px 0;
+  }
 }
 /* Make stat list hyperlinks a dark blue instead of bright blue default -- Support KB-specific! */
 .stat-list a:not(.btn) {
@@ -829,6 +876,14 @@ text-decoration: none;
 .hg-minimalist-theme .fr-inner a:hover {
 color: #F8B88B;
 text-decoration: underline;
+}
+/* Give images a shadow -- Support KB-specific!*/
+.documentation-article span.fr-img-caption {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* Handle case where there's no image caption -- Support KB-specific! */
+.documentation-article :not(span.fr-img-caption) img.img-responsive {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /********************************************* Back to top snippet styling */
@@ -1346,7 +1401,7 @@ $(function(){
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="5afb57e66e121c517c7b6a6d"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="/help/import-content">Import content<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
-					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="5e25f5e78e121c0c47dded10" class="article-container"><a href="/help/import-best-practices" class="article-link">Import best practices</a></li><li data-type="article" data-id="5afb5b336e121cca7c7b6a66" class="article-container"><a href="/help/import-from-zendesk" class="article-link">Import from Zendesk</a></li><li data-type="article" data-id="5afb5b49ec161cf51118461c" class="article-container"><a href="/help/import-from-freshdesk" class="article-link">Import from Freshdesk</a></li><li data-type="article" data-id="5afb5987ad121c1b23841e5b" class="article-container"><a href="/help/api-import" class="article-link">Import with the API</a></li><li data-type="article" data-id="5afb68a4ec161c4c18184608" class="article-container"><a href="/help/test-imports" class="article-link">Testing imports</a></li></ul>
+					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="66d881553fc66a77780305f0" class="article-container"><a href="/help/import-from-confluence" class="article-link">Import from Confluence</a><span class="badge badge-new">New</span></li><li data-type="article" data-id="5afb5b336e121cca7c7b6a66" class="article-container"><a href="/help/import-from-zendesk" class="article-link">Import from Zendesk</a><span class="badge badge-updated">Updated</span></li><li data-type="article" data-id="5afb5b49ec161cf51118461c" class="article-container"><a href="/help/import-from-freshdesk" class="article-link">Import from Freshdesk</a><span class="badge badge-updated">Updated</span></li><li data-type="article" data-id="5afb5987ad121c1b23841e5b" class="article-container"><a href="/help/api-import" class="article-link">Import with the API</a></li><li data-type="article" data-id="5afb68a4ec161c4c18184608" class="article-container"><a href="/help/test-imports" class="article-link">Testing imports</a></li><li data-type="article" data-id="5e25f5e78e121c0c47dded10" class="article-container"><a href="/help/import-best-practices" class="article-link">Import best practices</a></li></ul>
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="614c5568b12626257d7b27de"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="/help/create-api-documentation">Create REST API documentation<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
@@ -1362,14 +1417,14 @@ $(function(){
 						<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="5db758478e121cc57ff23a37"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Homepage look and feel<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
-					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="559f118fed121c95258b459f" class="article-container"><a href="/help/homepage-overview" class="article-link">Homepage overview</a></li><li data-type="article" data-id="62aa1e7c52184a047a1ce0a4" class="article-container"><a href="/help/change-the-welcome-text-on-my-home-page" class="article-link">Change the homepage welcome text</a></li><li data-type="article" data-id="64b84f7e17b85423e31de47b" class="article-container"><a href="/help/add-homepage-background" class="article-link">Add a background image to my homepage</a></li><li data-type="article" data-id="5998b529ec161c3e1746b6aa" class="article-container"><a href="/help/change-the-background-image-on-my-home-page" class="article-link">Change the background image on my homepage</a></li><li data-type="article" data-id="559f118fed121c95258b45a1" class="article-container"><a href="/help/remove-home-page-title" class="article-link">Remove the homepage welcome text</a></li><li data-type="article" data-id="5db86aebec161cb37381b328" class="article-container"><a href="/help/change-the-color-of-the-homepage-title" class="article-link">Change the color of the homepage welcome text</a></li><li data-type="article" data-id="621e78f411380dc1747b248b" class="article-container"><a href="/help/add-category-icons-to-homepage" class="article-link">Add category icons to your homepage category panels</a></li><li data-type="article" data-id="559f1195ed121c95258b45d4" class="article-container"><a href="/help/article-lists" class="article-link">Article Lists</a></li><li data-type="article" data-id="559f118fed121c95258b4599" class="article-container"><a href="/help/new-articles-list" class="article-link">New Articles list</a></li><li data-type="article" data-id="559f118eed121c95258b4598" class="article-container"><a href="/help/updated-articles-list" class="article-link">Updated Articles list</a></li><li data-type="article" data-id="559f118fed121c95258b459a" class="article-container"><a href="/help/popular-articles-list" class="article-link">Popular Articles list</a></li><li data-type="article" data-id="5f0c8d1a8e121c8f27dfa3ed" class="article-container"><a href="/help/recent-articles-list" class="article-link">Recent Articles list</a></li><li data-type="article" data-id="5cacbb3d6e121cf639223e42" class="article-container"><a href="/help/create-a-custom-homepage-articles-list" class="article-link">Create a custom homepage articles list</a></li><li data-type="article" data-id="5e73d4228e121c522b22fdc9" class="article-container"><a href="/help/add-a-custom-banner-div-styles" class="article-link">Add a custom banner with built-in div styles</a></li><li data-type="article" data-id="5e73d8a36e121cb67ff044b1" class="article-container"><a href="/help/add-a-custom-icon-and-header-link" class="article-link">Add a custom icon and header link on your homepage</a></li></ul>
+					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="559f118fed121c95258b459f" class="article-container"><a href="/help/homepage-overview" class="article-link">Homepage overview</a></li><li data-type="article" data-id="62aa1e7c52184a047a1ce0a4" class="article-container"><a href="/help/change-the-welcome-text-on-my-home-page" class="article-link">Change the homepage welcome text</a></li><li data-type="article" data-id="64b84f7e17b85423e31de47b" class="article-container"><a href="/help/add-homepage-background" class="article-link">Add a background image to my homepage</a></li><li data-type="article" data-id="5998b529ec161c3e1746b6aa" class="article-container"><a href="/help/change-the-background-image-on-my-home-page" class="article-link">Change the background image on my homepage</a></li><li data-type="article" data-id="559f118fed121c95258b45a1" class="article-container"><a href="/help/remove-home-page-title" class="article-link">Remove the homepage welcome text</a></li><li data-type="article" data-id="5db86aebec161cb37381b328" class="article-container"><a href="/help/change-the-color-of-the-homepage-title" class="article-link">Change the color of the homepage welcome text</a></li><li data-type="article" data-id="621e78f411380dc1747b248b" class="article-container"><a href="/help/add-category-icons-to-homepage" class="article-link">Add category icons to your homepage category panels</a></li><li data-type="article" data-id="559f1195ed121c95258b45d4" class="article-container"><a href="/help/article-lists" class="article-link">Article Lists</a></li><li data-type="article" data-id="559f118fed121c95258b4599" class="article-container"><a href="/help/new-articles-list" class="article-link">New Articles list</a></li><li data-type="article" data-id="559f118eed121c95258b4598" class="article-container"><a href="/help/updated-articles-list" class="article-link">Updated Articles list</a></li><li data-type="article" data-id="559f118fed121c95258b459a" class="article-container"><a href="/help/popular-articles-list" class="article-link">Popular Articles list</a></li><li data-type="article" data-id="5f0c8d1a8e121c8f27dfa3ed" class="article-container"><a href="/help/recent-articles-list" class="article-link">Recent Articles list</a></li><li data-type="article" data-id="66b3e2cad83b84260d09f4e6" class="article-container"><a href="/help/remove-article-lists-from-your-homepage" class="article-link">Remove article lists from your homepage</a><span class="badge badge-new">New</span></li><li data-type="article" data-id="5cacbb3d6e121cf639223e42" class="article-container"><a href="/help/create-a-custom-homepage-articles-list" class="article-link">Create a custom homepage articles list</a></li><li data-type="article" data-id="5e73d4228e121c522b22fdc9" class="article-container"><a href="/help/add-a-custom-banner-div-styles" class="article-link">Add a custom banner with built-in div styles</a></li><li data-type="article" data-id="5e73d8a36e121cb67ff044b1" class="article-container"><a href="/help/add-a-custom-icon-and-header-link" class="article-link">Add a custom icon and header link on your homepage</a></li></ul>
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="5db75876ad121c7a61e3c5b8"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Overall look and feel<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
 					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="629f9ab67ffb6f611218be60"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Style your overall theme<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
-					<ul class="list-unstyled documentation-articles level-2" style="display:none;"><li data-type="article" data-id="55a2021632131c382cccb48a" class="article-container"><a href="/help/theme-builder" class="article-link">Access the theme builder</a></li><li data-type="article" data-id="55a1fef832131c5d25ccb524" class="article-container"><a href="/help/theme-colors" class="article-link">Choose your colors</a></li><li data-type="article" data-id="629f8277bfb1684466621973" class="article-container"><a href="/help/color-picker-sections" class="article-link">Color picker: Which colors control which parts of my theme?</a></li><li data-type="article" data-id="63ecf62ed91eb074212500b6" class="article-container"><a href="/help/choose-your-font" class="article-link">Choose your font</a></li><li data-type="article" data-id="55a1ff9932131c212cccb48d" class="article-container"><a href="/help/custom-fonts" class="article-link">Custom fonts</a></li><li data-type="article" data-id="55a1fecd32131c1c2cccb48c" class="article-container"><a href="/help/logos" class="article-link">Choose your logo</a></li><li data-type="article" data-id="55a2014732131ca727ccb4f0" class="article-container"><a href="/help/themes" class="article-link">Choose your theme</a></li><li data-type="article" data-id="639a43e8ce45dd1aa76e8cb6" class="article-container"><a href="/help/use-the-new-support-theme" class="article-link">Use the new Support theme</a></li><li data-type="article" data-id="55a2016c32131c212cccb48f" class="article-container"><a href="/help/layouts" class="article-link">Choose your layout</a></li><li data-type="article" data-id="55a1fd6432131c2f2cccb497" class="article-container"><a href="/help/favicons" class="article-link">Change your favicon</a></li><li data-type="article" data-id="656f7a0613e60931d8304b48" class="article-container"><a href="/help/choose-your-table-of-contents-behavior" class="article-link">Choose your table of contents behavior</a></li><li data-type="article" data-id="55a1f76d32131c132cccb48b" class="article-container"><a href="/help/localization-timezones" class="article-link">Set your knowledge base time zone, date, and language</a></li><li data-type="article" data-id="594188a28e121c331c9ceb4e" class="article-container"><a href="/help/using-html-css" class="article-link">Customize style or layout with HTML/CSS</a></li><li data-type="article" data-id="5e976ba08e121cae5c341f30" class="article-container"><a href="/help/top-navigation-links" class="article-link">Add a link to the upper right (top navigation)</a></li><li data-type="article" data-id="5ec548196e121ceb6e11f403" class="article-container"><a href="/help/undo-changes-to-settings-style" class="article-link">Undo changes to Settings &gt; Style</a></li><li data-type="article" data-id="559f1189ed121c95258b456a" class="article-container"><a href="/help/breadcrumbs" class="article-link">Breadcrumbs</a></li><li data-type="article" data-id="559f118aed121c95258b4571" class="article-container"><a href="/help/append-head" class="article-link">Access to the header via Custom Head</a></li></ul>
+					<ul class="list-unstyled documentation-articles level-2" style="display:none;"><li data-type="article" data-id="55a2021632131c382cccb48a" class="article-container"><a href="/help/theme-builder" class="article-link">Access the theme builder</a></li><li data-type="article" data-id="55a1fef832131c5d25ccb524" class="article-container"><a href="/help/theme-colors" class="article-link">Choose your colors</a></li><li data-type="article" data-id="629f8277bfb1684466621973" class="article-container"><a href="/help/color-picker-sections" class="article-link">Color picker: Which colors control which parts of my theme?</a></li><li data-type="article" data-id="63ecf62ed91eb074212500b6" class="article-container"><a href="/help/choose-your-font" class="article-link">Choose your font</a></li><li data-type="article" data-id="55a1ff9932131c212cccb48d" class="article-container"><a href="/help/custom-fonts" class="article-link">Custom fonts</a></li><li data-type="article" data-id="55a1fecd32131c1c2cccb48c" class="article-container"><a href="/help/logos" class="article-link">Choose your logo</a></li><li data-type="article" data-id="55a2014732131ca727ccb4f0" class="article-container"><a href="/help/themes" class="article-link">Choose your theme</a></li><li data-type="article" data-id="639a43e8ce45dd1aa76e8cb6" class="article-container"><a href="/help/use-the-new-support-theme" class="article-link">Use the new Support theme</a></li><li data-type="article" data-id="55a2016c32131c212cccb48f" class="article-container"><a href="/help/layouts" class="article-link">Choose your layout</a></li><li data-type="article" data-id="55a1fd6432131c2f2cccb497" class="article-container"><a href="/help/favicons" class="article-link">Change your favicon</a></li><li data-type="article" data-id="656f7a0613e60931d8304b48" class="article-container"><a href="/help/choose-your-table-of-contents-behavior" class="article-link">Choose your table of contents behavior</a></li><li data-type="article" data-id="55a1f76d32131c132cccb48b" class="article-container"><a href="/help/localization-timezones" class="article-link">Set your knowledge base time zone, date, and language</a></li><li data-type="article" data-id="594188a28e121c331c9ceb4e" class="article-container"><a href="/help/using-html-css" class="article-link">Customize style or layout with HTML/CSS</a></li><li data-type="article" data-id="5e976ba08e121cae5c341f30" class="article-container"><a href="/help/top-navigation-links" class="article-link">Add a link to the upper right (top navigation)</a></li><li data-type="article" data-id="5ec548196e121ceb6e11f403" class="article-container"><a href="/help/undo-changes-to-settings-style" class="article-link">Undo changes to Settings &gt; Style</a></li><li data-type="article" data-id="559f1189ed121c95258b456a" class="article-container"><a href="/help/breadcrumbs" class="article-link">Breadcrumbs</a></li><li data-type="article" data-id="559f118aed121c95258b4571" class="article-container"><a href="/help/append-head" class="article-link">Access to the header via Custom Head</a></li><li data-type="article" data-id="66cf7554222b9f35800e35c2" class="article-container"><a href="/help/reset-your-theme" class="article-link">Reset your theme</a><span class="badge badge-new">New</span></li><li data-type="article" data-id="66cf7590baacd7d8eb0bca86" class="article-container"><a href="/help/copy-a-theme" class="article-link">Copy a knowledge base&#039;s theme</a><span class="badge badge-new">New</span></li></ul>
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="630e727e6485fb214c4d6b06"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Basic Settings<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
@@ -1385,7 +1440,7 @@ $(function(){
 					<div class="category-link-container" data-id="65f32669857a4853ff7c88cd"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Add Fancybox to click to zoom/enlarge images<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
 					<ul class="list-unstyled documentation-articles level-3" style="display:none;"><li data-type="article" data-id="65f326e25927bc744b1d350a" class="article-container"><a href="/help/about-fancybox" class="article-link">About Fancybox</a></li><li data-type="article" data-id="65f327f678d94439c949d17d" class="article-container"><a href="/help/installation" class="article-link">Installation</a></li><li data-type="article" data-id="65f329bda7344136022b9615" class="article-container"><a href="/help/style-fancybox" class="article-link">Style images</a></li><li data-type="article" data-id="65f33bcbab40ff4d8e1d15d4" class="article-container"><a href="/help/customize-fancybox" class="article-link">Change toolbar</a></li><li data-type="article" data-id="661596d39e4d214e3a6af646" class="article-container"><a href="/help/apply-to-specific-images" class="article-link">Specific images only</a></li><li data-type="article" data-id="65f33bf57f418c53c55eb332" class="article-container"><a href="/help/exclude-specific-images" class="article-link">Skip images</a></li><li data-type="article" data-id="65f33fc27ddf19583a53fa7a" class="article-container"><a href="/help/upgrade-fancybox" class="article-link">Upgrade</a></li></ul>
-				</li><li data-type="article" data-id="65d61676b63e610714243fea" class="article-container"><a href="/help/remove-made-with-ko-footer" class="article-link">Remove &quot;Made with KnowledgeOwl&quot; statement from footer</a></li><li data-type="article" data-id="65a701db41059b0a913c4c0b" class="article-container"><a href="/help/change-alert-div-icon" class="article-link">Change Alert div icon</a></li><li data-type="article" data-id="59a76bd18e121c430a671148" class="article-container"><a href="/help/display-a-back-to-top-icon-when-scrolling" class="article-link">Display a back to top icon when scrolling</a></li><li data-type="article" data-id="593018c7ad121c404a790938" class="article-container"><a href="/help/only-play-gifs-while-hovering" class="article-link">Only play GIFs while hovering</a></li><li data-type="article" data-id="559f118ced121c95258b4581" class="article-container"><a href="/help/different-logos-for-different-reader-groups" class="article-link">Use different logos for different reader groups</a></li><li data-type="article" data-id="5bf46d4d8e121cac53ec42c5" class="article-container"><a href="/help/automatic-copyright-year" class="article-link">Set your footer copyright to automatically update</a></li><li data-type="article" data-id="58c34f4491121c0a38997735" class="article-container"><a href="/help/fix-anchor-links-hidden-by-top-navigation" class="article-link">Fix anchor links hidden by top navigation</a></li></ul>
+				</li><li data-type="article" data-id="65d61676b63e610714243fea" class="article-container"><a href="/help/remove-made-with-ko-footer" class="article-link">Remove &quot;Made with KnowledgeOwl&quot; statement from footer</a></li><li data-type="article" data-id="65a701db41059b0a913c4c0b" class="article-container"><a href="/help/change-alert-div-icon" class="article-link">Change Alert div icon</a></li><li data-type="article" data-id="59a76bd18e121c430a671148" class="article-container"><a href="/help/display-a-back-to-top-icon-when-scrolling" class="article-link">Display a back to top icon when scrolling</a></li><li data-type="article" data-id="593018c7ad121c404a790938" class="article-container"><a href="/help/only-play-gifs-while-hovering" class="article-link">Only play GIFs while hovering</a></li><li data-type="article" data-id="559f118ced121c95258b4581" class="article-container"><a href="/help/different-logos-for-different-reader-groups" class="article-link">Use different logos for different reader groups</a></li><li data-type="article" data-id="5bf46d4d8e121cac53ec42c5" class="article-container"><a href="/help/automatic-copyright-year" class="article-link">Set your footer copyright year to automatically update</a></li><li data-type="article" data-id="58c34f4491121c0a38997735" class="article-container"><a href="/help/fix-anchor-links-hidden-by-top-navigation" class="article-link">Fix anchor links hidden by top navigation</a></li></ul>
 				</li></ul>
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="5db758946e121c48453f3d50"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">Article look and feel<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
@@ -1596,9 +1651,13 @@ $(function(){
 						<div class="category-link-container" data-id="5973c9b66e121cd31ca97f45"><i class="cat-icon fa fa-chevron-right"></i><a class="documentation-category" href="/help/security-permissions">Security and permissions<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 						</div>
 						<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="category" class="category-container nav-header nav-header-sub">
-					<div class="category-link-container" data-id="5ddeb173ad121c1551cf25ad"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="/help/general-security-options">General security options<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
+					<div class="category-link-container" data-id="66b3c08ec534e9ddc80fd3b8"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="javascript:void(0);">KB visibility and access<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
-					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="5973cd268e121c0c52999daf" class="article-container"><a href="/help/create-a-public-knowledge-base" class="article-link">Create a public knowledge base</a></li><li data-type="article" data-id="5973ef816e121c2828a97f6c" class="article-container"><a href="/help/create-a-public-knowledge-base-with-some-private-content" class="article-link">Create a public knowledge base with some private content</a></li><li data-type="article" data-id="5973cfeaad121c6357d50bee" class="article-container"><a href="/help/create-a-private-knowledge-base" class="article-link">Create a private knowledge base</a></li><li data-type="article" data-id="5973f31d6e121c962aa97ed1" class="article-container"><a href="/help/create-a-private-knowledge-base-with-different-content-for-different-readers" class="article-link">Create a private knowledge base with different content for different readers</a></li><li data-type="article" data-id="559f118ded121c95258b4588" class="article-container"><a href="/help/security" class="article-link">Restrict by IP address, shared passwords, reader logins, or a combination</a></li><li data-type="article" data-id="55a1f3e332131c8025ccb4ff" class="article-container"><a href="/help/restrict-content-to-logged-in-readers" class="article-link">Restrict Content to Logged In Readers</a></li><li data-type="article" data-id="62a78b26e0d69404e713f2ce" class="article-container"><a href="/help/basic-authentication" class="article-link">Basic authentication</a></li><li data-type="article" data-id="60defc19e4b7825a277b23ea" class="article-container"><a href="/help/http-response-headers" class="article-link">HTTP response headers</a></li><li data-type="article" data-id="559f118ded121c95258b4589" class="article-container"><a href="/help/private-knowledge-bases-file-sharing" class="article-link">Requiring login to view files/images</a></li><li data-type="article" data-id="6537df1a765369367900711f" class="article-container"><a href="/help/spam-protection" class="article-link">Spam protection</a></li></ul>
+					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="5973cd268e121c0c52999daf" class="article-container"><a href="/help/create-a-public-knowledge-base" class="article-link">Create a public knowledge base</a></li><li data-type="article" data-id="5973ef816e121c2828a97f6c" class="article-container"><a href="/help/create-a-public-knowledge-base-with-some-private-content" class="article-link">Create a public knowledge base with some private content</a></li><li data-type="article" data-id="5973cfeaad121c6357d50bee" class="article-container"><a href="/help/create-a-private-knowledge-base" class="article-link">Create a private knowledge base</a></li><li data-type="article" data-id="5973f31d6e121c962aa97ed1" class="article-container"><a href="/help/create-a-private-knowledge-base-with-different-content-for-different-readers" class="article-link">Create a private knowledge base with different content for different readers</a></li><li data-type="article" data-id="55a1f3e332131c8025ccb4ff" class="article-container"><a href="/help/restrict-content-to-logged-in-readers" class="article-link">Restrict content to logged in readers</a></li><li data-type="article" data-id="559f118ded121c95258b4588" class="article-container"><a href="/help/security" class="article-link">Restrict by IP address, shared passwords, reader logins, or a combination</a></li><li data-type="article" data-id="66a1667d8f4cdfac75079bb5" class="article-container"><a href="/help/convert-a-private-knowledge-base-to-mixed" class="article-link">Convert a private knowledge base to mixed public and private</a><span class="badge badge-new">New</span></li></ul>
+				</li><li data-type="category" class="category-container nav-header nav-header-sub">
+					<div class="category-link-container" data-id="5ddeb173ad121c1551cf25ad"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="/help/advanced-security-options">Advanced security options<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
+					</div>
+					<ul class="list-unstyled documentation-articles level-1" style="display:none;"><li data-type="article" data-id="559f118ded121c95258b4589" class="article-container"><a href="/help/secure-file-library" class="article-link">Requiring login to view files/images</a></li><li data-type="article" data-id="6537df1a765369367900711f" class="article-container"><a href="/help/spam-protection" class="article-link">Spam protection</a></li><li data-type="article" data-id="60defc19e4b7825a277b23ea" class="article-container"><a href="/help/http-response-headers" class="article-link">HTTP response headers</a></li><li data-type="article" data-id="62a78b26e0d69404e713f2ce" class="article-container"><a href="/help/basic-authentication" class="article-link">Basic authentication</a></li></ul>
 				</li><li data-type="category" class="category-container nav-header nav-header-sub">
 					<div class="category-link-container" data-id="5973ae716e121c1b0fa9809d"><i class="cat-icon fa fa-chevron-right"></i> <a class="documentation-category" href="/help/manage-authors">Author management<span class="badge badge-new pull-right"></span><span class="badge badge-updated pull-right"></span></a>
 					</div>
@@ -2161,11 +2220,11 @@ $(function () {
             <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge">Knowledge 1</label>
         <input type="text" value=""  name="knowledge"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
-            <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_1722374238">Knowledge 2</label>
-        <input type="text" value=""  name="knowledge_1722374238"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
+            <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_1725997271">Knowledge 2</label>
+        <input type="text" value=""  name="knowledge_1725997271"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
             <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_from">Knowledge From</label>
-        <input type="text" value="def50200f8cf6be252a66adc7c992b330201f2138956d8aab72232db77de998c1a415d896b003c49c0b7418c752394cda3d8208314ace8c970a58d22632682bc150366a52f76a0f56f9b8b1f65fbc8aab345efe5525b8f5ef8d6774cd1f5"  name="knowledge_from"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
+        <input type="text" value="def50200041207896ab54650067803914021236a6af24a9a8ca00717a498af552a5b7383046da8bc4e8948e4621316a2fe1e78aa834f6f81361772d997593c57311c21264ecc88d8fa88d3e0835edc7ea29f628a0e939557a17988e82a56"  name="knowledge_from"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
          
 </div>
@@ -2397,7 +2456,7 @@ $(function(){
     //only run on category pages
     if( $('.hg-category-page') && $('.hg-category-page').length > 0){
     	//first page of results API call
-        var query = '/help/ko-api/mid/a1b984c95b765785a70374516473dd3c/uuid/50082d49ac20a8ff057a2666';
+        var query = '/help/ko-api/mid/d6ce7561ddc70251d978f7e50e09120b/uuid/271a697477e6073b36660b8b';
 
         //function to get multiple pages of results from API
         var getCatConfig = function(curUrl) {
@@ -2446,9 +2505,11 @@ $(function(){
 <!--statuspage.io embed script follows; to change colors or config, change in statuspage-->
 <script async defer src="https://knowledgeowl.statuspage.io/embed/script.js"></script>
 
-<!-- Start of HubSpot Embed Code -->
+<!-- Start of HubSpot Embed Code
+Commented Out - Zach 8/15/2024 
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/40688826.js"></script>
-<!-- End of HubSpot Embed Code -->
+ End of HubSpot Embed Code -->
+
 	</div>
 </div>
 <div class="modal fade" id="subscription-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
@@ -2473,11 +2534,11 @@ $(function(){
             <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge">Knowledge 1</label>
         <input type="text" value=""  name="knowledge"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
-            <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_1722374238">Knowledge 2</label>
-        <input type="text" value=""  name="knowledge_1722374238"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
+            <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_1725997271">Knowledge 2</label>
+        <input type="text" value=""  name="knowledge_1725997271"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
             <label class="col-lg-3 col-sm-4 control-label not-here" for="knowledge_from">Knowledge From</label>
-        <input type="text" value="def50200243bd9364657c41d986238c14a36d42fbbabbf292ae1dc90a773160a40507143f3a95975cdcdb1bfa198a8928d91e1853397decb973e65ea274ae3ed0f1313d5fa4e997d26429393b786312c05a5c6c22660a7a16781225f4bb4"  name="knowledge_from"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
+        <input type="text" value="def5020038f053fa3879b5b027abf3cc676fe6eda5a467b9491a0cc26955791cd21dfc698bfa95e60533f5871971652d2f8fbfb2f8cdd971b92ed796cb78074ff5302f63369f0d92ded4a8bfa25cb6477a789f358804de0bcbf90559c3a7"  name="knowledge_from"  class="not-here" aria-hidden="true"  autocomplete="nothanks"
     tabindex="-1"/>
          
 </div>
