@@ -62,8 +62,8 @@
 	if(!pageInfo) var pageInfo = {};
 	pageInfo['lang'] = "en";
 	pageInfo['locale'] = "en_US";
-	pageInfo['country_code'] = "GB";
-	pageInfo['country_area'] = "eu";
+	pageInfo['country_code'] = "US";
+	pageInfo['country_area'] = "us";
 	pageInfo['country_coppa_exempt'] = null;
 	pageInfo['show_cookie_policy'] = true;
 	pageInfo['browser'] = false;
@@ -114,21 +114,28 @@
 <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadRecaptchaCallback&render=explicit&hl=en" async defer></script>
 
 <script>
-  var globalData = {"lang":"en","corpUrl":"https:\/\/www.arcgames.com","accountArcUrl":"https:\/\/www.arcgames.com","apiBaseUrl":"https:\/\/api.arcgames.com","scrubbedUserData":null,"isLoggedIn":false,"userip":868455900,"isOnClient":false,"isOnArcClientApp":false,"isMobile":false};
+  var globalData = {"lang":"en","corpUrl":"https:\/\/www.arcgames.com","accountArcUrl":"https:\/\/www.arcgames.com","apiBaseUrl":"https:\/\/api.arcgames.com","paymentBaseUrl":"https:\/\/payment.arcgames.com","scrubbedUserData":null,"isLoggedIn":false,"userip":3461415120,"isOnClient":false,"isOnArcClientApp":false,"isMobile":false};
 </script>
 
 
-	</head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/lfx1fam.css"></head>
 
-	<body >
-
-<!-- style="background: #001b48 url() 50%, 0;" -->
-<div id="fb-root"></div>
-<div class="alert alert-danger fade" role="alert" id="js_facebookError" style="text-align: center; display:none;">
-  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-  <p></p>
-</div>
 <script>
+$(document).ready(function() {
+	init_global_sign();
+});
+</script>
+<body >
+
+	<!-- style="background: #001b48 url() 50%, 0;" -->
+		<div id="fb-root"></div>
+	<div class="alert alert-danger fade" role="alert" id="js_facebookError" style="text-align: center; display:none;">
+	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<p></p>
+	</div>
+	<script>
 var notAuthorized = "We're sorry, you must accept permission from our Facebook app to continue with login";
 var showFBError = function(msg) {
 	var js_facebookError = $('#js_facebookError');
@@ -242,181 +249,55 @@ FBLogin.init({
 </script>
 
 
-<script type="application/json" id="json-flash-actions">[]</script>
+	<script type="application/json" id="json-flash-actions">[]</script>
 
+		
+	
+			<script>
+			// Some default data for generic pages
+			const specificGameData = typeof localGameData === "undefined" ? {} : localGameData;
+			const gameData = {
+				...{
+					gameName: "Arc Games",
+					brandLogo: "https://pwimages-a.akamaihd.net/arcportal_static/images/header_logo/arc_games.webp",
+					links: [
+						{
+							url: "/en/storefront",
+							caption: "Store",
+							props: {
+								"className": "js-track-generic-interaction-link-internal",
+								"data-track-interaction-category": "info",
+								"data-track-interaction-action": "info_header_link_about"
+							}
+						}, {
+							url: "https://support.arcgames.com/hc/en/",
+							caption: "Support",
+							target: "_blank"
+						}
+					],
+					userComponents: {
+						"user": {
+														signInAction: { type: "url", action: `/en/pwe-oauth/login?src=${encodeURI(window.location.href)}` },
+							signOutAction: { type: "url", action: `/en/sign/out?src=${encodeURI(window.location.href)}` }
+						},
+						"languages": ["en", "de", "fr", "it", "ru", "es"]
+					},
+					ctaComponent: {
+						secondary: {
+							caption: "Download Client",
+							props: {
+								as: "link",
+								href: `${window.location.origin}/download`,
+							}
+						}
+					}
+				},
+				...specificGameData
+			}
+		</script>
 
-<div class="push-down-message" id="js_pushDownBrowserMessage">
-	<div class="container">You're using an unsupported web browser. Some features may not work correctly. Please check out our <a href="https://www.arcgames.com/en/about/supported-browsers">list of supported browsers</a> for the best experience.		<span class="ico-line-vertical"></span>
-		<a href="#~" class="dismiss-push-down-message">Dismiss</a>
-	</div>
-</div>
-<header class="header"  id="header-arcgames">
-	<div class="user-bar">
-		<div class="user-bar-inner clearfix">
-			<ul>
-									<li class="shopping-cart" id="js_shopping_cart_icon" style="display: none;"><a href="https://payment.arcgames.com/en/bodega/cart"><span><b></b></span></a></li>
-										<li class="email js_unreadMessageNumBlock" style="display: none">
-						<a href=""><span><b class="js_unreadMessageNum">0</b></span></a>
-					</li>
-								<li class="welcome dropdown">
-					<div id="fb-load-container"><div id="fb-load-info"></div></div>
-					<span id="js_user_login" class="user-login " data-toggle="">
-						<a 
-															href="https://www.arcgames.com/en/sign/in"
-								aria-label="user info"
-								class="un_logined"
-													>
-							<i class="ico-user"></i>
-							<span>Sign in</span>
-						</a>
-						or						<a
-															href="https://www.arcgames.com/en/sign/up"
-								aria-label="user info"
-								class="un_logined"
-													>Register</a>
-					</span>
-
-					<div class="user-infos dropdown-menu" id="user-info-dropdown">
-													<div style="display:none;"> 
-	<div id="js_verifyCredentials"> 
-		<section class="web-defender-wrap">
-	<div class="web-defender">
-    	<h2 class="defender-title">Verify Your Credentials</h2>
-        <div class="defender-line"></div>
-        <div class="defender-content">
-        	<div class="arc-defender">
-                <img src="https://pwimages-a.akamaihd.net/arcportal_static/images/web-defender/arc-defender.png" />
-                <h3>Arc Defender</h3>
-            </div>
-            <p class="overview">Looks like you are logging in with a new computer or browser. For your security, please verify your account prior to logging in. We have emailed you a pin to verify you are the owner of this account.</p>
-            <p class="error"></p>
-            <input class="search-text" type="text" name="pin" value="" maxlength="5" data-error="The PIN must be 5 characters long, and contain only letters or numbers." />
-            <p class="overview overview-pin">Please enter the pin we emailed you above</p>
-            <p class="error"></p>
-            <a class="btn-common btn-submit-pin" href="#~" data-url="/en/web-defender/validate-pin" ><span>Submit My Pin</span></a>
-            <p class="error"></p>
-            <a class="bg-btn btn-where-pin" href="#~" data-url="/en/web-defender/resend-pin"><span>Where is My Pin?</span></a>
-            <p class="email-link"><a href="https://support.arcgames.com/hc/en-us/articles/360017620234">What is this and why am I seeing it?</a></p>
-            <div class="defender-line"></div>
-            <a class="bg-btn btn-cancel" href="#~"><span>Cancel</span></a>
-        </div>
-    </div>
-</section>
-	</div> 
-	<div id="js_verifyCredentialsSuccess"> 
-		<section class="web-defender-wrap">
-	<div class="web-defender">
-    	<h2 class="defender-title">Account Verification Successful</h2>
-        <div class="defender-line"></div>
-        <div class="defender-content">
-        	<div class="arc-defender">
-                <img src="https://pwimages-a.akamaihd.net/arcportal_static/images/web-defender/arc-defender.png" />
-                <h3>Arc Defender</h3>
-            </div>
-            <p class="overview">Great! We have verified that you have appropriate access to this account.</p>
-            <p class="error"></p>
-            <a class="btn-common btn-continue-arc" href="#~" data-url="/en/web-defender/continue"><span>Continue to Arcgames</span></a>
-            <p class="email-link"><a href="https://support.arcgames.com/hc/en-us/articles/360017620234">What is this and why am I seeing it?</a></p>
-        </div>
-    </div>
-</section>
-	</div>
-	</div>
-											</div>
-				</li>
-				<li class="languages dropdown"><div class="current-language" data-toggle="dropdown">
-	<a href="#" class="ico-language ico-en" id="languageSelection1">
-		<span>English</span>
-		<i>down</i>
-	</a>
-</div>
-<dl class="dropdown-menu">
-			<dd >
-			<a class='ico-language ico-en ' lang='en' href='/en/about/privacy' >
-				<span class="language-text">English</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-de ' lang='de' href='/de/about/privacy' >
-				<span class="language-text">Deutsch</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-fr ' lang='fr' href='/fr/about/privacy' >
-				<span class="language-text">Fran&ccedil;ais</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-ru ' lang='ru' href='/ru/about/privacy' >
-				<span class="language-text">Pусский</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-it ' lang='it' href='/it/about/privacy' >
-				<span class="language-text">Italiano</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-es ' lang='es' href='/es/about/privacy' >
-				<span class="language-text">Espa&ntilde;ol</span>
-			</a>
-		</dd>
-	</dl>
-</li>
-								<li class="arc-download">
-					<a href="/en/about/client" class="install-arc btn-install-disabled" style="display: none" data-ga-event-options='{"eventLabel": "install arc", "eventValue": 1}'>
-						<em class="icon-install"></em>
-						<span>Install Arc </span>
-					</a>
-				</li>
-							</ul>
-		</div>
-	</div>
-	<script>
-	$(document).ready(function() {
-		init_global_sign();
-	});
-	</script>
-	<div class="nav-bar">
-	<div class="nav-bar-inner clearfix">
-		<a id="ArcHeaderLogo" class="logo" href="https://www.arcgames.com/en/games">arc logo</a>
-		<nav class="dropdown">
-			<a class="btn-nav-bar" href="#">
-				<span class="ico-bar"></span>
-				<span class="ico-bar"></span>
-				<span class="ico-bar"></span>
-			</a>
-			<ul class="dropdown-content">
-				<li><a id="gameNavLink" href="https://www.arcgames.com/en/games"> GAMES </a></li>
-				<li>
-									<a href="https://www.arcgames.com/en/social/forum" target="_blank"> FORUMS </a>
-				</li>
-				<li><a href="https://www.arcgames.com/en/arc-news"> ARC NEWS </a></li>
-				<li><a href="https://www.arcgames.com/en/supportredirect/app/home/"> SUPPORT </a></li>
-			</ul>
-		</nav>
-		<!--
-		<dl class="install-arc-client" style="display:block">
-			<dt>
-			
-			<a href="https://www.arcgames.com/en/about/client" id="js_whatIsArc" class="highlight">What is Arc?</a>
-			
-				
-			</dt>
-			<dd>
-				<a href="https://www.arcgames.com/download" class="btn-all btn-install-disabled js-gaEventTracking" style="display: none" data-ga-event-options='{"eventLabel": "install arc", "eventValue": 1}'>
-					<span>Install Arc </span>
-				</a>
-			</dd>
-		</dl> -->
-	</div>
-</div>
-		<div class="notification" id="js_emailkey_notification" style="display: none">
-		Your Torchlight product key has been emailed to your Arc registered email address, you can redeem this key in game.		<span class="ico-line-vertical"></span>
-		<a href="#~" class="dismiss-push-down-message">Dismiss</a>
-	</div>
-</header>
-
+		<div id="microsite-header" style="position: sticky; top: 0; z-index:5000"></div>
+		<script defer="defer" src="/wwwarc_assets/dist/MicrositeComponents/Header.js"></script>			
 <div class="misc-module">
         <div class="biscuit-header"></div>
     	<div class="container">
@@ -425,17 +306,13 @@ FBLogin.init({
         <h1 class="policy-header">Privacy Policy</h1>
         <p><strong>PLEASE READ THIS PRIVACY POLICY CAREFULLY. IT DESCRIBES DETAILS ABOUT HOW WE COLLECT, USE AND DISCLOSE YOUR PERSONAL INFORMATION. </strong></p>
 <br type="_moz" />
-<p>Thank you for reading our Privacy Policy and visiting our websites located at <a href="https://www.arcgames.com">www.arcgames.com</a>, <a href="https://www.torchlight1.com">www.torchlight1.com</a>, <a href="https://www.torchlight2.com">www.torchlight2.com</a>, <a href="https://www.torchlight3.com">www.torchlight3.com</a>, <a href="https://www.haveanicedeath.com">www.haveanicedeath.com</a>, <a href="https://www.hyperlightbreaker.com">www.hyperlightbreaker.com</a>, <a href="https://www.iplayufogame.com">www.iplayufogame.com</a>, <a href="https://www.playstartrekonline.com">www.playstartrekonline.com</a>, <a href="https://www.playneverwinter.com">www.playneverwinter.com</a><u>,</u> <a href="https://www.playchampionsonline.com">www.playchampionsonline.com</a><u>,</u> <a href="https://www.playpwi.com">www.playpwi.com</a><u>,</u> <a href="https://www.gogigantic.com">www.gogigantic.com</a>, and <a href="http://www.remnantgame.com/">www.remnantgame.com</a> (or any&nbsp;subsequent URL which may replace them), and all officially associated micro-sites, mobile sites, subdomains, directories and subdirectories of such sites (collectively, the &ldquo;Website&rdquo;). Arc Games Inc. and Gearbox Publishing Amsterdam B.V. (collectively &ldquo;Arc Games&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) use and maintain this Privacy Policy (&ldquo;Privacy Policy&rdquo;) that summarizes when and how your Personal Information is collected, used, safeguarded and disclosed in connection with your use of the Websites, and any games and game platforms, clients software, downloaded software or servers operated by Arc Games through the Website or otherwise supported by Arc Games on the Website (each, the &ldquo;Game&rdquo;, and collectively, the &ldquo;Games&rdquo;), and all features, functions, software and services offered through this Website. The Website, the Games and the features, functions, software and services offered through this Website collectively constitute the &ldquo;Service.&rdquo; This Privacy Policy also describes the choices available to you regarding the use of, your access to, and how to update and correct your Personal Information. We reserve the right to change this Privacy Policy at any time. If we make any material changes to this Privacy Policy, we will notify you by email, when required by applicable law (sent to the email address specified in your account), and we will provide a notice on this Website prior to the change becoming effective. We encourage you to periodically review this page for the latest information on our privacy practices.</p>
+<p>Thank you for reading our Privacy Policy and visiting our websites located at <a href="https://www.arcgames.com">www.arcgames.com</a>, <a href="https://www.torchlight1.com">www.torchlight1.com</a>, <a href="https://www.torchlight2.com">www.torchlight2.com</a>, <a href="https://www.torchlight3.com">www.torchlight3.com</a>, <a href="https://www.haveanicedeath.com">www.haveanicedeath.com</a>, <a href="https://www.hyperlightbreaker.com">www.hyperlightbreaker.com</a>, <a href="https://www.iplayufogame.com">www.iplayufogame.com</a>, <a href="https://www.playstartrekonline.com">www.playstartrekonline.com</a>, <a href="https://www.playneverwinter.com">www.playneverwinter.com</a><u>,</u> <a href="https://www.playchampionsonline.com">www.playchampionsonline.com</a><u>,</u> <a href="https://www.playpwi.com">www.playpwi.com</a><u>,</u> <a href="https://www.gogigantic.com">www.gogigantic.com</a>, <a href="http://www.remnantgame.com/">www.remnantgame.com</a>, and <a href="http://www.playfellowship.com/">www.playfellowship.com</a> (or any&nbsp;subsequent URL which may replace them), and all officially associated micro-sites, mobile sites, subdomains, directories and subdirectories of such sites (collectively, the &ldquo;Website&rdquo;). Arc Games Inc. and Arc Games B.V. (collectively &ldquo;Arc Games&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) use and maintain this Privacy Policy (&ldquo;Privacy Policy&rdquo;) that summarizes when and how your Personal Information is collected, used, safeguarded and disclosed in connection with your use of the Websites, and any games and game platforms, clients software, downloaded software or servers operated by Arc Games through the Website or otherwise supported by Arc Games on the Website (each, the &ldquo;Game&rdquo;, and collectively, the &ldquo;Games&rdquo;), and all features, functions, software and services offered through this Website. The Website, the Games and the features, functions, software and services offered through this Website collectively constitute the &ldquo;Service.&rdquo; This Privacy Policy also describes the choices available to you regarding the use of, your access to, and how to update and correct your Personal Information. We reserve the right to change this Privacy Policy at any time. If we make any material changes to this Privacy Policy, we will notify you by email, when required by applicable law (sent to the email address specified in your account), and we will provide a notice on this Website prior to the change becoming effective. We encourage you to periodically review this page for the latest information on our privacy practices.</p>
 
-<ol>
-	<li><strong>What is Personal Information?</strong></li>
-</ol>
+<p><strong>1. What is Personal Information?</strong></p>
 
 <p>As used herein, the term &ldquo;Personal Information&rdquo; means information is linked or reasonably linkable to an identified or identifiable individual (such as a name, address, telephone number, mobile number, email address, or other account number), and information about that individual&rsquo;s location or activities, such as information about his or her use of the Service, IP addresses or mobile device identifiers. Personal Information also includes demographic information such as date of birth, gender, geographic area and preferences. Personal Information does not include &ldquo;aggregate&rdquo; information, which is data we collect about the use of the Service or about a group or category of products, services or users, from which individual identities or other Personal Information has been removed. Aggregate data helps us understand trends and our users&rsquo; needs so that we can better consider new features or otherwise tailor our Service. This Privacy Policy in no way restricts or limits our collection and use of aggregate information.</p>
 
-<ol>
-	<li value="2"><strong>What Information Do We Collect and For Which Purposes?</strong></li>
-</ol>
+<p><strong>2. What Information Do We Collect and For Which Purposes?</strong></p>
 
 <p><strong><u>Active Collection</u></strong></p>
 
@@ -503,17 +380,15 @@ FBLogin.init({
 
 <p>We do not request or intend to collect any &ldquo;special categories of information&rdquo; as defined in art. 9 of the GDPR, such as any information on health, race, religion, political opinions or philosophical beliefs, sexual preferences or orientation. We also want to kindly remind you to be cautious when sharing this information about yourself (or others) in our forums.</p>
 
-<ol>
-	<li value="3"><strong>For What Other Purposes Do We Use Personal Information?</strong></li>
-</ol>
+<p><strong>3. For What Other Purposes Do We Use Personal Information?</strong></p>
 
 <p>In general, we use Personal Information we collect to process your requests or transactions, to provide you with information or Services you request, to inform you about other information, events, promotions, products or Services we think will be of interest to you, to facilitate your use of, and our administration and operation of, the Service, to better understand the needs of our visitors, and for the purpose for which the information was provided.</p>
 
 <ul>
-	<li>Some processing activities are necessary for the performance of our Service, in line with art. 6.1.(b) of the GDPR (if, and to the extent that, it applies), for example: to provide the Services, products or information you request and to process any transactions in connection therewith;</li>
-	<li>to permit you to interact with other members of the Service on our forum, chat, social media or other similar features;</li>
-	<li>to provide technical support, customer service and ensure the continued smooth operation of our Service; or</li>
-	<li>to respond to your emails, submissions, comments, requests or complaints.</li>
+    <li>Some processing activities are necessary for the performance of our Service, in line with art. 6.1.(b) of the GDPR (if, and to the extent that, it applies), for example: to provide the Services, products or information you request and to process any transactions in connection therewith;</li>
+    <li>to permit you to interact with other members of the Service on our forum, chat, social media or other similar features;</li>
+    <li>to provide technical support, customer service and ensure the continued smooth operation of our Service; or</li>
+    <li>to respond to your emails, submissions, comments, requests or complaints.</li>
 </ul>
 
 <p>Also, your information will be shared with us by Console Platform, including PSN Online ID, country, gender, age, "Friends" and block list in Console Platform. We will use such information to deliver the console games and Service to you. This processing is necessary for the performance of our Service in line with art. 6.1(b) of the GDPR (if, and to the extent that, it applies).</p>
@@ -521,11 +396,11 @@ FBLogin.init({
 <p>Other processing activities are necessary for the purposes of the legitimate interests pursued by us or a third party, for example:</p>
 
 <ul>
-	<li>to send you a welcoming email and to contact you about your use of the Service;</li>
-	<li>to analyze user characteristics and usage patterns in order to better understand how our products and Service are used and market them more effectively;</li>
-	<li>to send you newsletters, surveys, contest and sweepstakes announcements and to notify contest and sweepstakes winners;</li>
-	<li>to request feedback, perform research and analysis and to enable us to operate, develop, customize and improve the Service, our publications; or</li>
-	<li>to prevent or investigate actual or suspected fraud, hacking, infringement, or other misconduct involving the Service or any of our products and services.</li>
+    <li>to send you a welcoming email and to contact you about your use of the Service;</li>
+    <li>to analyze user characteristics and usage patterns in order to better understand how our products and Service are used and market them more effectively;</li>
+    <li>to send you newsletters, surveys, contest and sweepstakes announcements and to notify contest and sweepstakes winners;</li>
+    <li>to request feedback, perform research and analysis and to enable us to operate, develop, customize and improve the Service, our publications; or</li>
+    <li>to prevent or investigate actual or suspected fraud, hacking, infringement, or other misconduct involving the Service or any of our products and services.</li>
 </ul>
 
 <p>In particular, in console games, we use your Personal Information to communicate with you, to improve our Services, and for other purposes including those set out below. We collect Internet Protocol (IP) address, log data (time and period), in-game items and behaviors, achievements you have completed in the game and other users you referred through your use of the Services. We will use such information to keep the record of your account and to improve the functionality of our Games and Services.</p>
@@ -539,16 +414,14 @@ FBLogin.init({
 <p>Insofar as the GDPR applies, we process Personal Information based on your consent, for example:</p>
 
 <ul>
-	<li>to enable third parties to display advertising that is customized to your interests and preferences of the Service;</li>
-	<li>to display content and advertising that are customized to your interests and preferences; or</li>
-	<li>to contact you about our or a third party&rsquo;s Services, products, activities, promotions, special events or offers and for other marketing, informational, product development and promotional purposes.</li>
+    <li>to enable third parties to display advertising that is customized to your interests and preferences of the Service;</li>
+    <li>to display content and advertising that are customized to your interests and preferences; or</li>
+    <li>to contact you about our or a third party&rsquo;s Services, products, activities, promotions, special events or offers and for other marketing, informational, product development and promotional purposes.</li>
 </ul>
 
 <p>If you provide us Personal Information about others, you should make sure you have obtained their consent or have lawful basis to do this. In such case, or if others give us your information, we will only use that information for the specific reason for which it was provided to us.</p>
 
-<ol>
-	<li value="4"><strong>Do We Share Personal Information?</strong>&nbsp;<strong>If So, How Do We Share Your Information?</strong></li>
-</ol>
+<p><strong>4. Do We Share Personal Information?</strong>&nbsp;<strong>If So, How Do We Share Your Information?</strong></p>
 
 <p>We will share your Personal Information with third parties only in the ways that are described in this Privacy Policy.</p>
 
@@ -580,37 +453,27 @@ FBLogin.init({
 
 <p>Please note that nothing herein restricts the sharing of aggregate information, which may be shared with third parties without your consent.</p>
 
-<ol>
-	<li value="5"><strong>International Transfers of Personal Information</strong></li>
-</ol>
+<p><strong>5. International Transfers of Personal Information</strong></p>
 
-<p>In order to be able to also use your account on our Website and in our Service and to be able to choose a server located in the United States or in Europe for gaming, the information relating to your account and use of our games is transferred between Arc Games Inc. located in the United States and Gearbox Publishing Amsterdam B.V. located in The Netherlands. We also transfer data outside Europe where our third-party Service Providers or partners are located.</p>
+<p>In order to be able to also use your account on our Website and in our Service and to be able to choose a server located in the United States or in Europe for gaming, the information relating to your account and use of our games is transferred between Arc Games Inc. located in the United States and Arc Games B.V. located in The Netherlands. We also transfer data outside Europe where our third-party Service Providers or partners are located.</p>
 
 <p>If and insofar as the GDPR applies, in case such recipients are located in a third country for which the European Commission has not yet decided that it ensures an adequate level of protection and where derogations for specific situations do not apply, we shall implement appropriate safeguards with regard to the processing of your Personal Information. Where we rely on such appropriate safeguards for the transfer of your Personal Information, we will assess whether these safeguards can sufficiently protect your Personal Information so that the level of protection guaranteed in the European Union is not undermined by the transfer. If this is not the case, we will take the additional measures necessary to provide appropriate protection for your Personal Information. If it is not possible to provide for appropriate protection of your Personal Information, we will not transfer your Personal Information to the recipient in a third country, or will transfer your Personal Information only if and to the extent that another mechanism justifies the transfer of your Personal Information in accordance with applicable data protection law. To obtain a copy of these data protection safeguards or to obtain information about their applicability, please send a request via email to <a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>.</p>
 
-<ol>
-	<li value="6"><strong>Links to Third Party Sites</strong></li>
-</ol>
+<p><strong>6. Links to Third Party Sites</strong></p>
 
 <p>Our Service contains links to other websites. Third party social media sites may log information about you, for example, if you click an &ldquo;Add This&rdquo; or &ldquo;Like&rdquo; button for a social media site while on our Website or Service. We do not control such sites or their activities. Any Personal Information you provide on the linked pages is provided directly to that third party and is subject to that third party&rsquo;s privacy policy. We are not responsible for the content or privacy and security practices and policies of websites to which we link. Links from our Service to third parties or to other sites are provided for your convenience only. We encourage you to learn about their privacy and security practices and policies before providing them with Personal Information.</p>
 
-<ol>
-	<li value="7"><strong>Hardware Capacity Communication</strong></li>
-</ol>
+<p><strong>7. Hardware Capacity Communication</strong></p>
 
 <p>You understand and agree that when you download a Game, in order to be able to use the Game, the Game software may monitor and communicate information from your computer relating to hardware capacity.</p>
 
-<ol>
-	<li value="8"><strong>Performance Monitoring</strong></li>
-</ol>
+<p><strong>8. Performance Monitoring</strong></p>
 
 <p>You understand and agree that when you communicate with other users within a game or utilize any interactive features available on the Service, such as instant messaging, forums or chat rooms, such communications and postings are transmitted through our servers, and we may, but are not obligated to, monitor all such communications and postings, including those that are designated as &ldquo;private,&rdquo; to the degree that laws and regulations enable us to do this. Therefore, as the abovementioned performance monitoring might involve access to these communications and postings, please do not use these communication channels for private messages or to exchange Personal Information.</p>
 
 <p>This processing is based on our legitimate interest to keep our Service efficient and safe, in line with art. 6.1.(f) of the GDPR (if and to the extent that the GDPR applies).</p>
 
-<ol>
-	<li value="9"><strong>What Steps Do We Take to Protect Personal Information Online?</strong></li>
-</ol>
+<p><strong>9. What Steps Do We Take to Protect Personal Information Online?</strong></p>
 
 <p>Arc Games endeavors to take reasonable precaution to safeguard and secure the Personal Information we collect through the Service. We have put in place physical, electronic, and managerial procedures that are designed to prevent unauthorized access, loss, or misuse of Personal Information. For example, Arc Games uses SSL (secured socket layer) technology to encrypt your transmission of sensitive information to us, such as account passwords, credit card numbers and other payment-related identifiable information).</p>
 
@@ -620,9 +483,7 @@ FBLogin.init({
 
 <p>If you have any questions about security on our Service, you can contact us at <a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>.</p>
 
-<ol>
-	<li value="10"><strong>What Choices Do You Have Regarding the Use Of Your Personal Information?</strong></li>
-</ol>
+<p><strong>10. What Choices Do You Have Regarding the Use Of Your Personal Information?</strong></p>
 
 <p>Arc Games gives you certain options to control the collection, use, and disclosure of your Personal Information. We will ask for your consent before sharing your Personal Information with third parties in ways not covered by this Privacy Policy (including any use for direct marketing purposes), if it is required by applicable laws.</p>
 
@@ -640,21 +501,17 @@ FBLogin.init({
 
 <p>As mentioned above, if you are based in the European Union and the GDPR applies to our processing of your Personal Information, we will only use, where applicable, strictly necessary, performance, functional, targeting, and social media cookies when you have given your consent for this, as described in our Cookie Policy. You can choose whether to accept the use of cookies by indicating your cookie preferences in our cookie management tool located at the footer of each Website.</p>
 
-<ol>
-	<li value="11"><strong>Children&rsquo;s Privacy</strong></li>
-</ol>
+<p><strong>11. Children&rsquo;s Privacy</strong></p>
 
 <p>Children under the age of 13 are not eligible to use our Service. The Services are not directed to children under the age of 13. Arc Games does not intentionally collect Personal Information from children without seeking any required parental consent in accordance with applicable legal and regulatory obligations, such as the U.S. Children&rsquo;s Online Privacy Protection Act (&ldquo;COPPA&rdquo;).&nbsp; If we discover that we have inadvertently collected information from children under 13, we will delete the child&rsquo;s information from our systems as soon as possible. If you become aware that Personal Information about a person under 13 has been provided to us, please immediately contact us at <a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>.</p>
 
 <p>We may ask you to provide age-related information for age verification to assist us with compliance with laws and regulations, including COPPA. Such information that we may request in connection with age verification may be your date of birth. If a parental consent is required and if a parent provides their consent, parents can review the account settings and make choices with regard to their child&rsquo;s account and data.</p>
 
-<ol>
-	<li value="12"><strong>How to Review, Update, Correct, Or Delete Personal Information</strong></li>
-</ol>
+<p><strong>12. How to Review, Update, Correct, Or Delete Personal Information</strong></p>
 
 <p>Upon request Arc Games will provide you with information about whether we hold, or process on behalf of a third party, any of your Personal Information. To request this information please submit a ticket using the Customer Support website: support.arcgames.com.</p>
 
-<p>If and insofar as foreseen in applicable data protection legislation, you have the right to request from us access to and rectification or erasure of Personal Information or restriction of processing or to object to processing as well as the right to data portability, please contact us at <a href="mailto:privacy@gearboxsf.com">privacy@arcgames.com</a>.</p>
+<p>If and insofar as foreseen in applicable data protection legislation, you have the right to request from us access to and rectification or erasure of Personal Information or restriction of processing or to object to processing as well as the right to data portability, please contact us at <a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>.</p>
 
 <p>Please note that certain types of Personal Information that is necessary to check eligibility, such as birth date or age, cannot be deleted unless you close your Account. However, such information may be modified with sufficient verification of the new information. Note that if you choose to have us delete all of your data, you may need to open a new user account to continue receiving the full functionality of the applicable Services.</p>
 
@@ -664,21 +521,17 @@ FBLogin.init({
 
 <p>Where processing is based on your consent, you have the right to withdraw consent at any time. Furthermore, you have the right to lodge a complaint with a competent supervisory authority.</p>
 
-<ol>
-	<li value="13"><strong>Data Storage</strong></li>
-</ol>
+<p><strong>13. Data Storage</strong></p>
 
 <p>We store Personal Information for as long as we reasonably need it to fulfill the purposes for which it was collected. We may retain certain information for legitimate purposes or as required by applicable laws.</p>
 
-<ol>
-	<li value="14"><strong>&nbsp;General Data Protection Regulation</strong></li>
-</ol>
+<p><strong>14. General Data Protection Regulation</strong></p>
 
 <p>When you are in the European Union, the European Regulation (EU) 2016/679, also referred to as the &ldquo;General Data Protection Regulation&rdquo; or &ldquo;GDPR&rdquo;, applies to the collection and processing of your Personal Information by Arc Games.</p>
 
 <p>Arc Games Inc. is a United States based company and our servers and business operations are located primarily in the United States of America. By using our Service and providing us with information, please note that your Personal Information will be processed on computers located in the United States of America in the manner described in this Privacy Policy. You acknowledge and understand that the laws regarding Personal Information in the United States may be less stringent than the laws of your country and may not offer the same protections or rights as those laws. If you object to your Personal Information being transferred or used as described in this Privacy Policy, please do not use this Service. Additionally, if you are under age 16, do not provide any Personal Information unless you have first obtained your parent&rsquo;s or guardian&rsquo;s permission, and your parent or guardian has expressly given us consent for you to do so.</p>
 
-<p>For EU users: Arc Games Inc. is a United States based company and our servers and business operations are located primarily in the United States. In order to be able to also use your account on our Website and in our Service and to be able to choose a server located in the United States or in Europe for the Games or our Services, the information relating to your account and use of our Games is transferred between Arc Games Inc. located in the United States and Gearbox Publishing Amsterdam B.V. located in the Netherlands.</p>
+<p>For EU users: Arc Games Inc. is a United States based company and our servers and business operations are located primarily in the United States. In order to be able to also use your account on our Website and in our Service and to be able to choose a server located in the United States or in Europe for the Games or our Services, the information relating to your account and use of our Games is transferred between Arc Games Inc. located in the United States and Arc Games B.V. located in the Netherlands.</p>
 
 <p>EU-US Data Privacy Framework</p>
 
@@ -700,17 +553,15 @@ FBLogin.init({
 
 <p>If you have any thoughts or questions about this Privacy Policy, you may&nbsp;contact us at <a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>.</p>
 
-<p>Arc Games Inc.&rsquo;s representative for GDPR purposes in the European Union is Gearbox Publishing Amsterdam B.V., with registered address in Herikerbergweg 181 Unit 4.3, 1101CN, Amsterdam, The Netherlands, with corporate identification number 75256827.</p>
+<p>Arc Games Inc.&rsquo;s representative for GDPR purposes in the European Union is Arc Games B.V., with registered address in Herikerbergweg 181 Unit 4.3, 1101CN, Amsterdam, The Netherlands, with corporate identification number 75256827.</p>
 
-<ol>
-	<li value="15"><strong>Contact Us</strong></li>
-</ol>
+<p><strong>15. Contact Us</strong></p>
 
 <p>If you have any questions, concerns, or comments regarding this Privacy Policy, please contact us via email at&nbsp;<a href="mailto:privacy@arcgames.com">privacy@arcgames.com</a>&nbsp;or by writing to us at the appropriate address below:</p>
 
-<p>If you are in the European Union, you may also contact Gearbox Publishing Amsterdam B.V. for inquiries regarding your Personal Information by regular mail at the following address:</p>
+<p>If you are in the European Union, you may also contact Arc Games B.V. for inquiries regarding your Personal Information by regular mail at the following address:</p>
 
-<p style="margin-left:84.0pt;">Gearbox Publishing Amsterdam B.V.</p>
+<p style="margin-left:84.0pt;">Arc Games B.V.</p>
 
 <p style="margin-left:84.0pt;">Attn: Privacy Policy Inquiry</p>
 
@@ -730,93 +581,91 @@ FBLogin.init({
 
 <p style="margin-left:84.0pt;">United States of America.</p>
 
-<ol>
-	<li value="16"><strong>Additional Information for California Residents</strong></li>
-</ol>
+<p><strong>16. Additional Information for California Residents</strong></li>
 
 <p>California Civil Code Section 1798.100 <em>et seq</em>., as amended by California Privacy Rights Act, (&ldquo;CPRA&rdquo;), requires us to provide the following information.</p>
 
-<p><a name="_Hlk117524932">This section of the Privacy Policy describes the Personal Information Arc Games collects or processes about California residents in connection with the application materials and the use the online activities, how Arc Games uses, shares, and protects that Personal Information, and what your rights are concerning your Personal Information that Arc Games collects or processes.</a></p>
+<p>This section of the Privacy Policy describes the Personal Information Arc Games collects or processes about California residents in connection with the application materials and the use the online activities, how Arc Games uses, shares, and protects that Personal Information, and what your rights are concerning your Personal Information that Arc Games collects or processes.</p>
 
 <p><strong><u>Personal Information Arc Games Collects and Shares, and For What Purpose</u></strong></p>
 
 <p>In the past 12 months, Arc Games has collected the Personal Information discussed above in the section titled &ldquo;Which information do we collect, and for which purposes.&rdquo; Additionally, in the past 12 months, Arc Games has disclosed the above information with the following categories of third parties for a business purpose:</p>
 
 <table border="1" cellpadding="0" cellspacing="0" style="width:684px;" width="684">
-	<tbody>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Category of Personal Information</strong></p>
-			</td>
-			<td style="width:276px;">
-			<p><strong>Categories of Third Parties to whom the information is disclosed for Operational Business Purposes</strong></p>
-			</td>
-			<td style="width:198px;">
-			<p><strong>Business Purpose for Disclosure</strong></p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Personal Identifiers: </strong>Information such as your name; username; email address; mailing address; IP-address; and date of birth.</p>
+    <tbody>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Category of Personal Information</strong></p>
+            </td>
+            <td style="width:276px;">
+            <p><strong>Categories of Third Parties to whom the information is disclosed for Operational Business Purposes</strong></p>
+            </td>
+            <td style="width:198px;">
+            <p><strong>Business Purpose for Disclosure</strong></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Personal Identifiers: </strong>Information such as your name; username; email address; mailing address; IP-address; and date of birth.</p>
 
-			<p>&nbsp;</p>
-			</td>
-			<td style="width:276px;">
-			<p>Affiliates; Service Providers, vendors; professional advisors; third parties in connection with contractual obligations.</p>
-			</td>
-			<td style="width:198px;">
-			<p>To provide the Services and marketing. &nbsp;To ensure compliance with company policies; to create and maintain cybersecurity controls; to ensure compliance with legal obligations.</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Internet or other network activity information:</strong></p>
+            <p>&nbsp;</p>
+            </td>
+            <td style="width:276px;">
+            <p>Affiliates; Service Providers, vendors; professional advisors; third parties in connection with contractual obligations.</p>
+            </td>
+            <td style="width:198px;">
+            <p>To provide the Services and marketing. &nbsp;To ensure compliance with company policies; to create and maintain cybersecurity controls; to ensure compliance with legal obligations.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Internet or other network activity information:</strong></p>
 
-			<p>Information regarding your interaction with the online activities and other applications; geolocation information; links you use or web pages you visit; other applications; browser type; internet Service Provider (ISP); cookies.</p>
-			</td>
-			<td style="width:276px;">
-			<p>Affiliates; vendors; professional advisors; legal authorities, government agencies, and regulators.</p>
-			</td>
-			<td style="width:198px;">
-			<p>To provide the Services and marketing. To ensure compliance with company policies; to create and maintain cybersecurity controls; to ensure compliance with legal obligations.</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Commercial information:</strong></p>
+            <p>Information regarding your interaction with the online activities and other applications; geolocation information; links you use or web pages you visit; other applications; browser type; internet Service Provider (ISP); cookies.</p>
+            </td>
+            <td style="width:276px;">
+            <p>Affiliates; vendors; professional advisors; legal authorities, government agencies, and regulators.</p>
+            </td>
+            <td style="width:198px;">
+            <p>To provide the Services and marketing. To ensure compliance with company policies; to create and maintain cybersecurity controls; to ensure compliance with legal obligations.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Commercial information:</strong></p>
 
-			<p>Transaction information, purchase history, records of personal property, products or services purchased, obtained, or considered.</p>
-			</td>
-			<td style="width:276px;">
-			<p>Affiliates, vendors and Service Providers.</p>
-			</td>
-			<td style="width:198px;">
-			<p>For our marketing purposes and to provide the Services.</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Geolocation data </strong>such as location derived from your IP address.</p>
-			</td>
-			<td style="width:276px;">
-			<p>Affiliates, vendors, Service Providers.</p>
-			</td>
-			<td style="width:198px;">
-			<p>To provide Services and marketing.</p>
-			</td>
-		</tr>
-		<tr>
-			<td style="width:210px;">
-			<p><strong>Inferences </strong>drawn from any of the Personal Information listed above to create a profile or summary about an individual&rsquo;s preferences, for example.</p>
-			</td>
-			<td style="width:276px;">
-			<p>Affiliates, vendors, Service Providers.</p>
-			</td>
-			<td style="width:198px;">
-			<p>To provide Services and marketing.</p>
-			</td>
-		</tr>
-	</tbody>
+            <p>Transaction information, purchase history, records of personal property, products or services purchased, obtained, or considered.</p>
+            </td>
+            <td style="width:276px;">
+            <p>Affiliates, vendors and Service Providers.</p>
+            </td>
+            <td style="width:198px;">
+            <p>For our marketing purposes and to provide the Services.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Geolocation data </strong>such as location derived from your IP address.</p>
+            </td>
+            <td style="width:276px;">
+            <p>Affiliates, vendors, Service Providers.</p>
+            </td>
+            <td style="width:198px;">
+            <p>To provide Services and marketing.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:210px;">
+            <p><strong>Inferences </strong>drawn from any of the Personal Information listed above to create a profile or summary about an individual&rsquo;s preferences, for example.</p>
+            </td>
+            <td style="width:276px;">
+            <p>Affiliates, vendors, Service Providers.</p>
+            </td>
+            <td style="width:198px;">
+            <p>To provide Services and marketing.</p>
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 <p><strong><u>Opt-out Preference Signals</u></strong></p>
@@ -830,11 +679,11 @@ FBLogin.init({
 <p>You have the right to request that we disclose:</p>
 
 <ul>
-	<li>The categories of Personal Information we collect;</li>
-	<li>The categories of sources from which we collect your Personal Information;</li>
-	<li>Our business or commercial purpose for selling or collecting your information;</li>
-	<li>The categories of Personal Information sold or shared about you, as well as the categories of third parties to whom the Personal Information was sold, by category of Personal Information for each party to whom information was sold; and</li>
-	<li>The specific pieces of Personal Information we have collected about you.</li>
+    <li>The categories of Personal Information we collect;</li>
+    <li>The categories of sources from which we collect your Personal Information;</li>
+    <li>Our business or commercial purpose for selling or collecting your information;</li>
+    <li>The categories of Personal Information sold or shared about you, as well as the categories of third parties to whom the Personal Information was sold, by category of Personal Information for each party to whom information was sold; and</li>
+    <li>The specific pieces of Personal Information we have collected about you.</li>
 </ul>
 
 <p>Our delivery of this information may take place electronically or by mail. We are not required to provide Personal Information to you more than twice in a 12-month period.</p>
@@ -875,8 +724,7 @@ FBLogin.init({
 
 <p>We do not disclose Personal Information to third parties for their direct marketing purposes.</p>
 
-<p>Last updated: May 30, 2024.</p>
-        </section>           
+<p>Last updated: April 29, 2024</p>        </section>           
     </div>
 </div>
 <style>
@@ -892,7 +740,7 @@ FBLogin.init({
 	</div>
 	<div class="footer-flexbox__languages">
 		<div class="languages dropup" id="footerLanguage"><div class="current-language" data-toggle="dropdown">
-	<a href="#" class="ico-language ico-en" id="languageSelection2">
+	<a href="#" class="ico-language ico-en" id="languageSelection1">
 		<span>English</span>
 		<i>down</i>
 	</a>
@@ -1029,5 +877,5 @@ Modernizr.load([
 </script>
 
       <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PPSQTXS2"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script type="text/javascript"  src="/wSUWY6w2YMgBdIbSAg/aQEuz8hSGQJm5D/UEtAAzo/W2/gRACF3d1A"></script></body>
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script type="text/javascript"  src="/JDHZ8c4xL/pLcKJ3NV/twNbjlgW/xA/k3aYmtwpcVrw/VGB1VA/O3p/RRyljUkA"></script></body>
 </html>
