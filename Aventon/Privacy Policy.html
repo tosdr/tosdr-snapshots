@@ -6,6 +6,13 @@
 
 
 
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <!--[if IE 7]><html lang="en" class="ie7 "><![endif]-->
 <!--[if IE 8]><html lang="en" class="ie8 "><![endif]-->
@@ -32,6 +39,14 @@
         Aventon.request.origin = 'https://www.aventon.com';
         Aventon.request.page_type = 'page';
 
+        // configure customer values
+        Aventon.customer = {};
+        Aventon.customer.email = '';
+        Aventon.customer.isLoggedIn = Aventon.customer.email.length > 0;
+        Aventon.customer.firstName = '';
+        Aventon.customer.lastName = '';
+        Aventon.customer.fullName = Aventon.customer.firstName + ' ' + Aventon.customer.lastName;
+
         
 
         // configure route values Aventon.routes = {};
@@ -54,6 +69,12 @@
         Aventon.routes.product_recommendations_url = '/recommendations/products';
         Aventon.routes.root_url = '/';
         Aventon.routes.search_url = '/search';
+
+        if (Aventon.currentCountryCode === 'US') {
+            Aventon.routes.basePath = '/';
+        } else {
+            Aventon.routes.basePath = Aventon.routes.root_url + '/';
+        }
 
         // Checkout.liquid does not support metaobjects
         
@@ -136,7 +157,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 
   <!-- Tell Google to use our largest image for "search result previews" --->
-  <meta name="robots" content="max-image-preview:large"><link rel="canonical" href="https://www.aventon.com/pages/privacy-policy" /><link rel="shortcut icon" href="https://aventon.imgix.net/aventon_favicon_72.png?w=67" type="image/x-icon" /><link rel="apple-touch-icon-precomposed" href="//www.aventon.com/cdn/shop/t/814/assets/iphone_icon.png?v=32080302484166739841721242805" /><link rel="apple-touch-icon-precomposed" sizes="114x114" href="//www.aventon.com/cdn/shop/t/814/assets/iphone_icon_retina.png?v=41781715276804407121721242805" /><link rel="apple-touch-icon-precomposed" sizes="72x72" href="//www.aventon.com/cdn/shop/t/814/assets/ipad_icon.png?v=166241170992891898301721242804" /><link rel="apple-touch-icon-precomposed" sizes="144x144" href="//www.aventon.com/cdn/shop/t/814/assets/ipad_icon_retina.png?v=136416457067170728881721242804" /><meta name="description" content="Aventon Terms, Conditions of Sale, and Privacy Policy." /><title>Privacy Policy</title><!-- /snippets/social-meta-tags.liquid -->
+  <meta name="robots" content="max-image-preview:large"><link rel="canonical" href="https://www.aventon.com/pages/privacy-policy" /><link rel="shortcut icon" href="https://aventon.imgix.net/aventon_favicon_72.png?w=67" type="image/x-icon" /><link rel="apple-touch-icon-precomposed" href="//www.aventon.com/cdn/shop/t/836/assets/iphone_icon.png?v=32080302484166739841725913177" /><link rel="apple-touch-icon-precomposed" sizes="114x114" href="//www.aventon.com/cdn/shop/t/836/assets/iphone_icon_retina.png?v=41781715276804407121725913177" /><link rel="apple-touch-icon-precomposed" sizes="72x72" href="//www.aventon.com/cdn/shop/t/836/assets/ipad_icon.png?v=166241170992891898301725913176" /><link rel="apple-touch-icon-precomposed" sizes="144x144" href="//www.aventon.com/cdn/shop/t/836/assets/ipad_icon_retina.png?v=136416457067170728881725913177" /><meta name="description" content="Aventon Terms, Conditions of Sale, and Privacy Policy." /><title>Privacy Policy</title><!-- /snippets/social-meta-tags.liquid -->
 <meta property='og:site_name' content='Aventon Bikes'>
 <meta property='og:url' content='https://www.aventon.com/pages/privacy-policy'>
 <meta property='og:title' content='Privacy Policy'>
@@ -263,7 +284,7 @@
           --gl-font-weight-menuItem: 600;
           --gl-font-weight-badge: 400;
 
-          --gl-mfp-loader: url(//www.aventon.com/cdn/shop/t/814/assets/loader.gif?v=126954784679907309791721242815);
+          --gl-mfp-loader: url(//www.aventon.com/cdn/shop/t/836/assets/loader.gif?v=126954784679907309791725913186);
           --gl-contact-map-height: 400px;
           --gl-popup-mc-width: 750px;
 
@@ -274,24 +295,24 @@
           --gl-border-radius-for-header-icon: 22.5px;
           --gl-cart-count-dim: 23px;
 
-          --pswp__button--arrow--right_bg_before_png: url("//www.aventon.com/cdn/shop/t/814/assets/pswp-default-skin.png?v=115405504031309184941721242868");
-          --pswp__button--arrow--right_bg_before_svg: url("//www.aventon.com/cdn/shop/t/814/assets/pswp-default-skin.svg?v=118181495713311880261721242868");
-          --pswp__preloader__icn_bg: url("//www.aventon.com/cdn/shop/t/814/assets/pswp-preloader.gif?v=112103233767241431421721242869");
-          --easyzoom-isready_cursor: url("//www.aventon.com/cdn/shop/t/814/assets/plus-in.svg?v=86405944462493311241721242858");
+          --pswp__button--arrow--right_bg_before_png: url("//www.aventon.com/cdn/shop/t/836/assets/pswp-default-skin.png?v=115405504031309184941725913236");
+          --pswp__button--arrow--right_bg_before_svg: url("//www.aventon.com/cdn/shop/t/836/assets/pswp-default-skin.svg?v=118181495713311880261725913236");
+          --pswp__preloader__icn_bg: url("//www.aventon.com/cdn/shop/t/836/assets/pswp-preloader.gif?v=112103233767241431421725913237");
+          --easyzoom-isready_cursor: url("//www.aventon.com/cdn/shop/t/836/assets/plus-in.svg?v=86405944462493311241725913227");
 
           --homefilter-input-height: 40px;
 
           --product_item_wrap_padding: 0.75rem;
           --product_item_countdown_height: 52px;
           --product_item_box_shadow: 0px 9px 7px 1px #0000002e;
-          --soldout-img: url(//www.aventon.com/cdn/shop/t/814/assets/sold_out.png?v=174504563296916457131721242901);
+          --soldout-img: url(//www.aventon.com/cdn/shop/t/836/assets/sold_out.png?v=174504563296916457131725913268);
       }
-      @font-face{font-family:'FontAwesome';src:url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.eot?v=4.6.3&v=27653591633895088991721242783);src:url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.eot?%23iefix&v=4.6.3&v=27653591633895088991721242783) format('embedded-opentype'),url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.woff2?v=4.6.3&v=92687554370256573971721242785) format('woff2'),url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.woff?v=4.6.3&v=135656766985270248011721242785) format('woff'),url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.ttf?v=4.6.3&v=38559600735332494681721242784) format('truetype'),url(//www.aventon.com/cdn/shop/t/814/assets/fontawesome-webfont.svg?v=4.6.3%23fontawesomeregular&v=165101685860473394641721242784) format('svg');font-weight:normal;font-style:normal}
-      @font-face {font-family: revicons;src:url(//www.aventon.com/cdn/shop/t/814/assets/revicons.eot?v=41099164764038834561721242872);src:url(//www.aventon.com/cdn/shop/t/814/assets/revicons.eot%23iefix?335381) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/814/assets/revicons.woff?v=75075768985131144671721242873) format('woff'), url(//www.aventon.com/cdn/shop/t/814/assets/revicons.ttf?v=122609643915160486271721242873) format('truetype'), url(//www.aventon.com/cdn/shop/t/814/assets/revicons.svgt%23revicons?335381) format('svg');font-weight: 400;font-style: normal}
+      @font-face{font-family:'FontAwesome';src:url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.eot?v=4.6.3&v=27653591633895088991725913156);src:url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.eot?%23iefix&v=4.6.3&v=27653591633895088991725913156) format('embedded-opentype'),url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.woff2?v=4.6.3&v=92687554370256573971725913158) format('woff2'),url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.woff?v=4.6.3&v=135656766985270248011725913158) format('woff'),url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.ttf?v=4.6.3&v=38559600735332494681725913157) format('truetype'),url(//www.aventon.com/cdn/shop/t/836/assets/fontawesome-webfont.svg?v=4.6.3%23fontawesomeregular&v=165101685860473394641725913157) format('svg');font-weight:normal;font-style:normal}
+      @font-face {font-family: revicons;src:url(//www.aventon.com/cdn/shop/t/836/assets/revicons.eot?v=41099164764038834561725913240);src:url(//www.aventon.com/cdn/shop/t/836/assets/revicons.eot%23iefix?344729) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/836/assets/revicons.woff?v=75075768985131144671725913241) format('woff'), url(//www.aventon.com/cdn/shop/t/836/assets/revicons.ttf?v=122609643915160486271725913241) format('truetype'), url(//www.aventon.com/cdn/shop/t/836/assets/revicons.svgt%23revicons?344729) format('svg');font-weight: 400;font-style: normal}
 
 
         	
-        	@font-face {font-family: 'icomoon';src:  url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.eot?v=158606438572528620811721242795); src:  url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.eot%23iefix?335381) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.ttf?v=44354186378846598511721242796) format('truetype'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.woff?v=31684586807558652561721242796) format('woff'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.woff2?v=69933330625647272081721242797) format('woff2'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon.svg%23icomoon?335381) format('svg'); font-weight: normal; font-style: normal; font-display: block;}
+        	@font-face {font-family: 'icomoon';src:  url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.eot?v=158606438572528620811725913168); src:  url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.eot%23iefix?344729) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.ttf?v=44354186378846598511725913169) format('truetype'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.woff?v=31684586807558652561725913169) format('woff'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.woff2?v=69933330625647272081725913170) format('woff2'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon.svg%23icomoon?344729) format('svg'); font-weight: normal; font-style: normal; font-display: block;}
 
         	[class^="icon-"], [class*=" icon-"] {
       /* use !important to prevent issues with browser extensions that change fonts */
@@ -354,7 +375,7 @@
       content: "\e90a";
     }
 
-    @font-face {font-family: 'icomoon';src:  url(//www.aventon.com/cdn/shop/t/814/assets/icomoon2.eot?v=125366846794191358731721242797); src:  url(//www.aventon.com/cdn/shop/t/814/assets/icomoon2.eot%23iefix?335381) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon2.ttf?v=57359477878325884211721242798) format('truetype'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon2.woff?v=166508138478294304651721242798) format('woff'), url(//www.aventon.com/cdn/shop/t/814/assets/icomoon2.svg%23icomoon?335381) format('svg'); font-weight: normal; font-style: normal; font-display: block;}
+    @font-face {font-family: 'icomoon';src:  url(//www.aventon.com/cdn/shop/t/836/assets/icomoon2.eot?v=125366846794191358731725913170); src:  url(//www.aventon.com/cdn/shop/t/836/assets/icomoon2.eot%23iefix?344729) format('embedded-opentype'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon2.ttf?v=57359477878325884211725913171) format('truetype'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon2.woff?v=166508138478294304651725913171) format('woff'), url(//www.aventon.com/cdn/shop/t/836/assets/icomoon2.svg%23icomoon?344729) format('svg'); font-weight: normal; font-style: normal; font-display: block;}
 
     [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -412,10 +433,6 @@
   })(window,document,'script','dataLayer','GTM-TLZVJ35');</script>
   <!-- End Google Tag Manager -->
 
-  <!-- Cookie Bot -->
-  <script id='Cookiebot' src='https://consent.cookiebot.com/uc.js' data-cbid='eef944ae-e269-4543-988e-be599a967fc7' type='text/javascript'></script>
-  <!-- Cookie Bot End -->
-
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.shopify.com" crossorigin>
   
@@ -424,8 +441,8 @@
   <style>
     @font-face {
       font-family: 'Montserrat';
-      src: url('//www.aventon.com/cdn/shop/t/814/assets/Montserrat-VF.woff2?v=41271460113459147951721242830') format('woff2 supports variations'),
-           url('//www.aventon.com/cdn/shop/t/814/assets/Montserrat-VF.woff2?v=41271460113459147951721242830') format('woff2-variations');
+      src: url('//www.aventon.com/cdn/shop/t/836/assets/Montserrat-VF.woff2?v=41271460113459147951725913200') format('woff2 supports variations'),
+           url('//www.aventon.com/cdn/shop/t/836/assets/Montserrat-VF.woff2?v=41271460113459147951725913200') format('woff2-variations');
       font-weight: 100 900;
       font-display: swap;
     }
@@ -458,16 +475,16 @@
     function onLoadStylesheet(_url) {
 
     }
-</script><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/bootstrap.min.css?v=46725285300863999711721242737' type='text/css' media='print' onload="this.media='all'">
-    <link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.style.css?v=164319563261872854641721242879' type='text/css' media='print' onload="this.media='all'">
-    <link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.application.css?v=94950866260131058121721242876' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.vendors.css?v=28760938269757529841721242881' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.vendor.css?v=59403071949603203481721242880' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.menu.css?v=23941554513872097611721242878' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.custom.css?v=105894130165880656671721242877' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/custom_code.css?v=109659911428771793371721242771' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.pages.css?v=45397699032072756771721242878' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.cbuilder.css?v=26886015815238222801721242876' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/rt.helper.css?v=158827095290563805131721242877' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/owl.css?v=70516089817612781961721242848' type='text/css' media='print' onload="this.media='all'">
-<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/814/assets/custom.css?v=113352228156932358601721242770' type='text/css' media='print' onload="this.media='all'">
+</script><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/bootstrap.min.css?v=46725285300863999711725913109' type='text/css' media='print' onload="this.media='all'">
+    <link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.style.css?v=164319563261872854641725913247' type='text/css' media='print' onload="this.media='all'">
+    <link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.application.css?v=94950866260131058121725913243' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.vendors.css?v=28760938269757529841725913248' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.vendor.css?v=59403071949603203481725913248' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.menu.css?v=23941554513872097611725913245' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.custom.css?v=105894130165880656671725913244' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/custom_code.css?v=109659911428771793371725913144' type='text/css' media='print' onload="this.media='all'"><link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.pages.css?v=45397699032072756771725913246' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.cbuilder.css?v=26886015815238222801725913244' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/rt.helper.css?v=158827095290563805131725913245' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/owl.css?v=70516089817612781961725913217' type='text/css' media='print' onload="this.media='all'">
+<link rel='stylesheet' href='//www.aventon.com/cdn/shop/t/836/assets/custom.css?v=113352228156932358601725913142' type='text/css' media='print' onload="this.media='all'">
 <script type='text/javascript' async>
     window.sidebar=!1,
     window.template="page",
@@ -477,7 +494,7 @@
     window.popup_mailchimp_delay=1000,
     window.popup_mailchimp_close=0,
     window.products={},window.product_image_zoom=0,
-    window.asset_url="//www.aventon.com/cdn/shop/t/814/assets/?335381",
+    window.asset_url="//www.aventon.com/cdn/shop/t/836/assets/?344729",
     window.swatch_color=true,
     window.swatch_size=true,
     window.shopping_cart_type="ajax_notify",
@@ -524,22 +541,22 @@
       },
       inventory: false,
       sale_percentages: null,
-      asset_url: "\/\/www.aventon.com\/cdn\/shop\/t\/814\/assets\/?335381",
+      asset_url: "\/\/www.aventon.com\/cdn\/shop\/t\/836\/assets\/?344729",
       libs: {
         psearch: {
-          src: "//www.aventon.com/cdn/shop/t/814/assets/ll.prs.js?v=65261712195628419391721242813",
+          src: "//www.aventon.com/cdn/shop/t/836/assets/ll.prs.js?v=65261712195628419391725913184",
           state: 0
         },
         slick: {
-          src: "//www.aventon.com/cdn/shop/t/814/assets/ll.sl.js?v=46673513581459844871721242813",
+          src: "//www.aventon.com/cdn/shop/t/836/assets/ll.sl.js?v=46673513581459844871725913184",
           state: 0
         },
         photoswipe: {
-          src: "//www.aventon.com/cdn/shop/t/814/assets/ll.phs.js?v=112706263986180850171721242812",
+          src: "//www.aventon.com/cdn/shop/t/836/assets/ll.phs.js?v=112706263986180850171725913183",
           state: 0
         },
         mpopup: {
-          src: "//www.aventon.com/cdn/shop/t/814/assets/ll.mp.js?v=120034011879457808891721242812",
+          src: "//www.aventon.com/cdn/shop/t/836/assets/ll.mp.js?v=120034011879457808891725913183",
           state: 0
         }
       }
@@ -551,12 +568,13 @@
         shop: 'aventonbikes.myshopify.com',
         domain: 'aventonbikes.myshopify.com',
        	rdomain: 'www.aventon.com',
-        license: 'dmljffi8glljb79dgcblhlkm8lfbddhih'
+        license: 'qzywssvltyywokmqtpoyuyxzlysoqquvu'
       }
     };
 </script>
-<script src='//www.aventon.com/cdn/shop/t/814/assets/jquery-3.5.0.min.js?v=180725601166958724111721242806' defer='defer'></script>
-<script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="google-site-verification" content="4l2QmExtJDbzHzhL5rW9jKTTvdvGdGP2yI7aD2isyhU">
+<script src='//www.aventon.com/cdn/shop/t/836/assets/jquery-3.5.0.min.js?v=180725601166958724111725913178' defer='defer'></script>
+
+  <script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.start');</script><meta name="google-site-verification" content="4l2QmExtJDbzHzhL5rW9jKTTvdvGdGP2yI7aD2isyhU">
 <meta id="shopify-digital-wallet" name="shopify-digital-wallet" content="/15202468/digital_wallets/dialog">
 <meta name="shopify-checkout-api-token" content="dcdcaa14a1b9cd43ae1d208c08b63e3f">
 <meta id="in-context-paypal-metadata" data-shop-id="15202468" data-venmo-supported="true" data-environment="production" data-locale="en_US" data-paypal-v4="true" data-currency="USD">
@@ -572,7 +590,7 @@ Shopify.shop = "aventonbikes.myshopify.com";
 Shopify.locale = "en";
 Shopify.currency = {"active":"USD","rate":"1.0"};
 Shopify.country = "US";
-Shopify.theme = {"name":"Free Accessory Bundle Part 1, 07-18-2024","id":136972665027,"theme_store_id":null,"role":"main"};
+Shopify.theme = {"name":"Soltera.2 Price Drop, 09-09-2024","id":138058301635,"theme_store_id":null,"role":"main"};
 Shopify.theme.handle = "null";
 Shopify.theme.style = {"id":null,"handle":null};
 Shopify.cdnHost = "www.aventon.com/cdn";
@@ -582,16 +600,16 @@ Shopify.routes.root = "/";</script>
 <script>!function(o){function n(){var o=[];function n(){o.push(Array.prototype.slice.apply(arguments))}return n.q=o,n}var t=o.Shopify=o.Shopify||{};t.loadFeatures=n(),t.autoloadFeatures=n()}(window);</script>
 <script>window.ShopifyPay = window.ShopifyPay || {};
 window.ShopifyPay.apiHost = "shop.app\/pay";</script>
-<script id="shop-js-features" type="application/json">{"compact":true,"defer_modal_on_autofill":true}</script>
+<script id="shop-js-features" type="application/json">{"compact":true}</script>
 <script id="shop-js-analytics" type="application/json">{"pageType":"page"}</script>
 <script>
   window.Shopify = window.Shopify || {};
   if (!window.Shopify.featureAssets) window.Shopify.featureAssets = {};
-  window.Shopify.featureAssets['shop-js'] = {"pay-button":["modules/client.pay-button_Dw9WI1PR.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"init-shop-email-lookup-coordinator":["modules/client.init-shop-email-lookup-coordinator_BK5sBbcN.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"avatar":["modules/client.avatar_BTnouDA3.en.esm.js"],"init-customer-accounts-sign-up":["modules/client.init-customer-accounts-sign-up_BVbExB_8.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"init-shop-for-new-customer-accounts":["modules/client.init-shop-for-new-customer-accounts_dF7kSXu0.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"shop-pay-checkout-sheet":["modules/client.shop-pay-checkout-sheet_CKqgOmAK.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"init-customer-accounts":["modules/client.init-customer-accounts_CjFLgM5V.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"shop-pay-payment-request":["modules/client.shop-pay-payment-request_DCzAl-8B.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js","modules/chunk.shop-pay_BBdpKAc7.esm.js"],"login-button":["modules/client.login-button_C7ZT1KH5.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"discount-app":["modules/client.discount-app_BxN7hSNH.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"],"payment-terms":["modules/client.payment-terms_ByJDUVge.en.esm.js","modules/chunk.common_BtjbWkV9.esm.js"]};
+  window.Shopify.featureAssets['shop-js'] = {"pay-button":["modules/client.pay-button_zetnfE79.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js"],"init-shop-email-lookup-coordinator":["modules/client.init-shop-email-lookup-coordinator_BZqecfet.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js"],"avatar":["modules/client.avatar_BTnouDA3.en.esm.js"],"init-customer-accounts-sign-up":["modules/client.init-customer-accounts-sign-up_BabnYeg3.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js"],"shop-pay-checkout-sheet":["modules/client.shop-pay-checkout-sheet_h4yclT-l.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js"],"init-customer-accounts":["modules/client.init-customer-accounts_J3yi4a7h.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js"],"init-shop-for-new-customer-accounts":["modules/client.init-shop-for-new-customer-accounts_BCz5ohCt.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js"],"discount-app":["modules/client.discount-app_BckT31bf.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js"],"shop-pay-payment-request":["modules/client.shop-pay-payment-request_Dkg0DTWy.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js","modules/chunk.shop-pay_CIy7S84e.esm.js"],"payment-terms":["modules/client.payment-terms_KDpw7Ddj.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js","modules/client.login-button_D-Lxpty5.en.esm.js"],"login-button":["modules/client.login-button_D-Lxpty5.en.esm.js","modules/chunk.common_DrxRB5tH.esm.js"]};
 </script>
 <script>(function() {
   function asyncLoad() {
-    var urls = ["https:\/\/analytics.getshogun.com\/collector.js?shop=aventonbikes.myshopify.com","\/\/searchserverapi.com\/widgets\/shopify\/init.js?a=5u3C9g3J4o\u0026shop=aventonbikes.myshopify.com","\/\/app.backinstock.org\/widget\/7248_1680651898.js?category=bis\u0026v=6\u0026shop=aventonbikes.myshopify.com","https:\/\/cdn.judge.me\/assets\/installed.js?shop=aventonbikes.myshopify.com","https:\/\/shopify.seon.io\/app.js?shop=aventonbikes.myshopify.com","https:\/\/cdn.attn.tv\/aventon\/dtag.js?shop=aventonbikes.myshopify.com"];
+    var urls = ["https:\/\/na.shgcdn3.com\/collector.js?shop=aventonbikes.myshopify.com","\/\/searchserverapi.com\/widgets\/shopify\/init.js?a=5u3C9g3J4o\u0026shop=aventonbikes.myshopify.com","\/\/app.backinstock.org\/widget\/7248_1680651898.js?category=bis\u0026v=6\u0026shop=aventonbikes.myshopify.com","https:\/\/cdn.judge.me\/assets\/installed.js?shop=aventonbikes.myshopify.com","https:\/\/shopify.seon.io\/app.js?shop=aventonbikes.myshopify.com","https:\/\/cdn.attn.tv\/aventon\/dtag.js?shop=aventonbikes.myshopify.com"];
     for (var i = 0; i < urls.length; i++) {
       var s = document.createElement('script');
       s.type = 'text/javascript';
@@ -607,10 +625,10 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
     window.addEventListener('load', asyncLoad, false);
   }
 })();</script>
-<script id="__st">var __st={"a":15202468,"offset":-25200,"reqid":"2ef1f3c3-5f34-4f4a-9b5b-831611685de5-1722253057","pageurl":"www.aventon.com\/pages\/privacy-policy","s":"pages-223226441","u":"b2ac1662e9a5","p":"page","rtyp":"page","rid":223226441};</script>
+<script id="__st">var __st={"a":15202468,"offset":-25200,"reqid":"ca27c883-a64b-48bb-9069-e9690aed6478-1725983816","pageurl":"www.aventon.com\/pages\/privacy-policy","s":"pages-223226441","u":"d75e125cc56b","p":"page","rtyp":"page","rid":223226441};</script>
 <script>window.ShopifyPaypalV4VisibilityTracking = true;</script>
-<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(',');function c(t,e){try{const n=window.sessionStorage;for(const[o,c]of Object.entries(JSON.parse(n.getItem(e))))t.elements[o]&&(t.elements[o].value=c);n.removeItem(e)}catch{}}const r='form_type',s='cptcha';function a(t){t.dataset[s]=!0}((i,m,f,u,d,p,l)=>{if(0)return;let E=!1;const _=(t,e,n)=>{const o=i[f][u],c=o.bindForm,r='f06e6c50-85a8-45c8-87d0-21a2b65856fe',s={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'};if(c)return c(t,r,e,s).then(n);o.q.push([[t,r,e,s],n]),E||(m.body.append(Object.assign(m.createElement('script'),{id:'captcha-provider',async:!0,src:'https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.3.3.iife.js'})),E=!0)};i[f]=i[f]||{},i[f][u]=i[f][u]||{},i[f][u].q=[],i[f][d]=i[f][d]||{},i[f][d].protect=function(t,e){_(t,void 0,e),a(t)},Object.freeze(i[f][d]),function(i,m,f,u,d,p){const[l,E,_]=function(c,r,s){const a=r?[[t,t],['blogs',n],['comments',n],[t,'customer']]:[],i=c?[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']]:[],m=[...a,...i],f=o(m),u=o(a),d=s&&o(m.filter((([t,e])=>s.includes(e)))),p=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];return[p(f),p(u),p(d)]}(!0,!1,['guest_login']),T=t=>{const e=t.target,n=e instanceof HTMLFormElement?e:e&&e.form;return n&&l().find((t=>n===t))};i.addEventListener('submit',(t=>{T(t)&&t.preventDefault()}));const h=(t,e)=>{t&&!t.dataset[s]&&(f(t,e.some((e=>e===t))),a(t))};for(const t of['focusin','change'])i.addEventListener(t,(t=>h(T(t),E())));const v=m.get('form_key'),g=m.get(r),y=v&&g;i.addEventListener('DOMContentLoaded',(()=>{const t=E();if(y)for(const e of t)e.elements[r].value===g&&c(e,v);[...new Set([..._(),...l().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>h(e,t)))}))}(m,new URLSearchParams(i.location.search),_)})(window,document,'Shopify','ce_forms','captcha')}();</script>
-<script>!function(){'use strict';const e=/recaptcha|reCATPCHA|google|Googl/gi,t=o=>{let c=o.firstChild;for(;c;)c.nodeType===Node.TEXT_NODE?c.textContent=c.textContent.replace(e,'hCaptcha'):c.nodeType===Node.ELEMENT_NODE&&t(c),c=c.nextSibling};document.addEventListener('DOMContentLoaded',(()=>{(e=>{const o=document.querySelector('p[data-spam-detection-disclaimer]');if(o){for(const e of['terms','privacy']){const t=o.querySelector(`a[href*='https://policies.google.com/${e}']`);t&&(t.href=`https://hcaptcha.com/${e}`)}t(o)}})()}))}();</script>
+<script id="captcha-bootstrap">!function(){'use strict';const t='contact',e='account',n='new_comment',o=[[t,t],['blogs',n],['comments',n],[t,'customer']],c=[[e,'customer_login'],[e,'guest_login'],[e,'recover_customer_password'],[e,'create_customer']],r=t=>t.map((([t,e])=>`form[action*='/${t}']:not([data-nocaptcha='true']) input[name='form_type'][value='${e}']`)).join(',');function s(t,e,n=!1){try{const o=window.sessionStorage;for(const[n,c]of Object.entries(JSON.parse(o.getItem(e))))t.elements[n]&&(t.elements[n].value=c);n&&o.removeItem(e)}catch{}}const a='form_key',i=['recaptcha-v3-token','g-recaptcha-response','h-captcha-response','password'],u=()=>{try{return window.sessionStorage}catch{return}},m=t=>t.elements[a],f='form_type',d='cptcha';function p(t){t.dataset[d]=!0}const l=window,h=l.document,_='Shopify',y='ce_forms',E='captcha';let v=!1;((t,e)=>{const n=(g='f06e6c50-85a8-45c8-87d0-21a2b65856fe','https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.4.0.iife.js',T={infoText:'Protected by hCaptcha',privacyText:'Privacy',termsText:'Terms'},(t,e,n)=>{const o=l[_][y],c=o.bindForm;if(c)return c(t,g,e,T).then(n);o.q.push([[t,g,e,T],n]),v||(h.body.append(Object.assign(h.createElement('script'),{id:'captcha-provider',async:!0,src:'https://cdn.shopify.com/shopifycloud/storefront-forms-hcaptcha/ce_storefront_forms_captcha_hcaptcha.v1.4.0.iife.js'})),v=!0)});var g,T;l[_]=l[_]||{},l[_][y]=l[_][y]||{},l[_][y].q=[],l[_][E]=l[_][E]||{},l[_][E].protect=function(t,e){n(t,void 0,e),p(t)},Object.freeze(l[_][E]),function(t,e,n,l,h,_){const[y,E,v,g]=function(t,e,n){const s=e?o:[],a=t?c:[],i=[...s,...a],u=[...o],m=r(i),f=r(s),d=n&&r(i.filter((([t,e])=>n.includes(e)))),p=r(u),l=t=>()=>t?[...document.querySelectorAll(t)].map((t=>t.form)):[];return[l(m),l(f),l(d),l(p)]}(l,h,_),T=t=>{const e=t.target;return e instanceof HTMLFormElement?e:e&&e.form},S=t=>y().includes(t);t.addEventListener('submit',(t=>{const e=T(t);if(!e)return;const n=S(e)&&!e.dataset.hcaptchaBound&&!e.dataset.recaptchaBound,o=m(e),c=g().includes(e)&&(!o||!o.value);(n||c)&&t.preventDefault(),c&&!n&&(function(t){try{if(!u())return;!function(t){const e=u();if(!e)return;const n=m(t);if(!n)return;const o=n.value;o&&e.removeItem(o)}(t);const e=Array.from(Array(32),(()=>Math.random().toString(36)[2])).join('');!function(t,e){m(t)||t.append(Object.assign(document.createElement('input'),{type:'hidden',name:a})),t.elements[a].value=e}(t,e),function(t,e){const n=u();if(!n)return;const o=[...t.querySelectorAll('input[type="password"]')].map((({name:t})=>t)),c=[...i,...o],r={};for(const[s,a]of new FormData(t).entries())c.includes(s)||(r[s]=a);n.setItem(e,JSON.stringify(r))}(t,e)}catch(e){console.error('failed to persist form',e)}}(e),e.submit())}));const w=(t,e)=>{t&&!t.dataset[d]&&(n(t,e.some((e=>e===t))),p(t))};for(const o of['focusin','change'])t.addEventListener(o,(t=>{const e=T(t);S(e)&&w(e,E())}));const A=e.get('form_key'),b=e.get(f),I=A&&b;t.addEventListener('DOMContentLoaded',(()=>{const t=E();if(I)for(const e of t)e.elements[f].value===b&&s(e,A);[...new Set([...v(),...y().filter((t=>'true'===t.dataset.shopifyCaptcha))])].forEach((e=>w(e,t)))}))}(h,new URLSearchParams(l.location.search),n,!0,!1,['guest_login'])})()}();</script>
+<script id="captcha-terms">!function(){'use strict';const e=/recaptcha|reCATPCHA|google|Googl/gi,t=o=>{let c=o.firstChild;for(;c;)c.nodeType===Node.TEXT_NODE?c.textContent=c.textContent.replace(e,'hCaptcha'):c.nodeType===Node.ELEMENT_NODE&&t(c),c=c.nextSibling};document.addEventListener('DOMContentLoaded',(()=>{(e=>{const o=document.querySelector('p[data-spam-detection-disclaimer]');if(o){for(const e of['terms','privacy']){const t=o.querySelector(`a[href*='https://policies.google.com/${e}']`);t&&(t.href=`https://hcaptcha.com/${e}`)}t(o)}})()}))}();</script>
 <script integrity="sha256-n5Uet9jVOXPHGd4hH4B9Y6+BxkTluaaucmYaxAjUcvY=" data-source-attribution="shopify.loadfeatures" defer="defer" src="//www.aventon.com/cdn/shopifycloud/shopify/assets/storefront/load_feature-9f951eb7d8d53973c719de211f807d63af81c644e5b9a6ae72661ac408d472f6.js" crossorigin="anonymous"></script>
 <script crossorigin="anonymous" defer="defer" src="//www.aventon.com/cdn/shopifycloud/shopify/assets/shopify_pay/storefront-80e528be853eac23af2454534897ca9536b1d3d04aa043b042f34879a3c111c8.js?v=20220906"></script>
 <script integrity="sha256-HAs5a9TQVLlKuuHrahvWuke+s1UlxXohfHeoYv8G2D8=" data-source-attribution="shopify.dynamic-checkout" defer="defer" src="//www.aventon.com/cdn/shopifycloud/shopify/assets/storefront/features-1c0b396bd4d054b94abae1eb6a1bd6ba47beb35525c57a217c77a862ff06d83f.js" crossorigin="anonymous"></script>
@@ -628,6 +646,28 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
   }
 }
 </style><script>window.performance && window.performance.mark && window.performance.mark('shopify.content_for_header.end');</script>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    
+      window.__shgMoneyFormat = window.__shgMoneyFormat || {"CAD":{"currency":"CAD","currency_symbol":"$","currency_symbol_location":"left","decimal_places":2,"decimal_separator":".","thousands_separator":","},"USD":{"currency":"USD","currency_symbol":"$","currency_symbol_location":"left","decimal_places":2,"decimal_separator":".","thousands_separator":","}};
+    
+    window.__shgCurrentCurrencyCode = window.__shgCurrentCurrencyCode || {
+      currency: "USD",
+      currency_symbol: "$",
+      decimal_separator: ".",
+      thousands_separator: ",",
+      decimal_places: 2,
+      currency_symbol_location: "left"
+    };
+  </script>
+
+
+
 
   <!--  AOS Animation Stylesheet  -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -691,11 +731,11 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 
 <!-- for shell style bundle -->
   
-<link href="//www.aventon.com/cdn/shop/t/814/assets/bundle.main.css?v=13107513129986912731721242747" rel="stylesheet" type="text/css" media="all" />
+<link href="//www.aventon.com/cdn/shop/t/836/assets/bundle.main.css?v=46059667299843541511725913119" rel="stylesheet" type="text/css" media="all" />
 
 
     
-    <link href="//www.aventon.com/cdn/shop/t/814/assets/bundle.page.css?v=147493729274861663121721242748" rel="stylesheet" type="text/css" media="all" />
+    <link href="//www.aventon.com/cdn/shop/t/836/assets/bundle.page.css?v=147493729274861663121725913121" rel="stylesheet" type="text/css" media="all" />
 
 
   <script type="application/javascript">
@@ -713,7 +753,7 @@ window.ShopifyPay.apiHost = "shop.app\/pay";</script>
 <meta property="og:image:height" content="628" />
 <link href="https://monorail-edge.shopifysvc.com" rel="dns-prefetch">
 <script>(function(){if ("sendBeacon" in navigator && "performance" in window) {var session_token = document.cookie.match(/_shopify_s=([^;]*)/);function handle_abandonment_event(e) {var entries = performance.getEntries().filter(function(entry) {return /monorail-edge.shopifysvc.com/.test(entry.name);});if (!window.abandonment_tracked && entries.length === 0) {window.abandonment_tracked = true;var currentMs = Date.now();var navigation_start = performance.timing.navigationStart;var payload = {shop_id: 15202468,url: window.location.href,navigation_start,duration: currentMs - navigation_start,session_token: session_token && session_token.length === 2 ? session_token[1] : "",page_type: "page"};window.navigator.sendBeacon("https://monorail-edge.shopifysvc.com/v1/produce", JSON.stringify({schema_id: "online_store_buyer_site_abandonment/1.1",payload: payload,metadata: {event_created_at_ms: currentMs,event_sent_at_ms: currentMs}}));}}window.addEventListener('pagehide', handle_abandonment_event);}}());</script>
-<script id="web-pixels-manager-setup">(function e(e,n,a,t,r){var o="function"==typeof BigInt&&-1!==BigInt.toString().indexOf("[native code]")?"modern":"legacy";window.Shopify=window.Shopify||{};var i=window.Shopify;i.analytics=i.analytics||{};var s=i.analytics;s.replayQueue=[],s.publish=function(e,n,a){return s.replayQueue.push([e,n,a]),!0};try{self.performance.mark("wpm:start")}catch(e){}var l=[a,"/wpm","/b",r,o.substring(0,1),".js"].join("");!function(e){var n=e.src,a=e.async,t=void 0===a||a,r=e.onload,o=e.onerror,i=document.createElement("script"),s=document.head,l=document.body;i.async=t,i.src=n,r&&i.addEventListener("load",r),o&&i.addEventListener("error",o),s?s.appendChild(i):l?l.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:l,async:!0,onload:function(){var a=window.webPixelsManager.init(e);n(a);var t=window.Shopify.analytics;t.replayQueue.forEach((function(e){var n=e[0],t=e[1],r=e[2];a.publishCustomEvent(n,t,r)})),t.replayQueue=[],t.publish=a.publishCustomEvent,t.visitor=a.visitor},onerror:function(){var n=e.storefrontBaseUrl.replace(/\/$/,""),a="".concat(n,"/.well-known/shopify/monorail/unstable/produce_batch"),r=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:t||"latest",bundle_target:o,page_url:self.location.href,status:"failed",surface:e.surface,error_msg:"".concat(l," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(a,r))return!0}catch(e){}var i=new XMLHttpRequest;try{return i.open("POST",a,!0),i.setRequestHeader("Content-Type","text/plain"),i.send(r),!0}catch(e){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 15202468,storefrontBaseUrl: "https://www.aventon.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938","4735909c"],webPixelsConfigList: [{"id":"144146627","configuration":"{\"pixel_id\":\"246928182389202\",\"pixel_type\":\"facebook_pixel\",\"metaapp_system_user_token\":\"-\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"8b3843af2d71780cfb83fdde884ce168","type":"APP","apiClientId":2329312,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"143622339","configuration":"{\"env\":\"prod\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"81a87ab45a958a658e5ef3e3ec3f5ca4","type":"APP","apiClientId":3977633,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"80740547","configuration":"{\"apiKey\":\"5u3C9g3J4o\", \"host\":\"searchserverapi.com\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"ec78811ab089c6a1f0a244a683fa85b3","type":"APP","apiClientId":578825,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"48726211","configuration":"{\"tagID\":\"2613886716398\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"54f3ea9d23f4af69f7d812fb978ff7ee","type":"APP","apiClientId":3009811,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"22085827","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"5","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Reddit"},{"id":"22347971","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Bing"},{"id":"23429315","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Oyster"},{"id":"23888067","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Pebble Post"},{"id":"23920835","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Avantlink"},{"id":"24182979","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"3","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"GTM"},{"id":"27623619","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Ads Purchase BOFU EC"},{"id":"29229251","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"GMC Survey Opt In"},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0142","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0142","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],initData: {"shop":{"name":"Aventon Bikes","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"aventonbikes.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/www.aventon.com"},"customer":null,"cart":null,"checkout":null,"productVariants":[]},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed", {});},"https://www.aventon.com/cdn","414e24fa0ee81c2fdec6f8766c64cfc123eead2c","d5aab76awd1ffc381pd01fec2bmaf201160",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
+<script id="web-pixels-manager-setup">(function d(d,e,r,a,n){var o,i,t,s,l=(i=(o={modern:/Edge?\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Firefox\/(1{2}[4-9]|1[2-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Chrom(ium|e)\/(9{2}|\d{3,})\.\d+(\.\d+|)|(Maci|X1{2}).+ Version\/(15\.\d+|(1[6-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(9{2}|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(15[._]\d+|(1[6-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Android.+Firefox\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|SamsungBrowser\/([2-9]\d|\d{3,})\.\d+/,legacy:/Edge?\/(1[6-9]|[2-9]\d|\d{3,})\.\d+(\.\d+|)|Firefox\/(5[4-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)|Chrom(ium|e)\/(5[1-9]|[6-9]\d|\d{3,})\.\d+(\.\d+|)([\d.]+$|.*Safari\/(?![\d.]+ Edge\/[\d.]+$))|(Maci|X1{2}).+ Version\/(10\.\d+|(1[1-9]|[2-9]\d|\d{3,})\.\d+)([,.]\d+|)( \(\w+\)|)( Mobile\/\w+|) Safari\/|Chrome.+OPR\/(3[89]|[4-9]\d|\d{3,})\.\d+\.\d+|(CPU[ +]OS|iPhone[ +]OS|CPU[ +]iPhone|CPU IPhone OS|CPU iPad OS)[ +]+(10[._]\d+|(1[1-9]|[2-9]\d|\d{3,})[._]\d+)([._]\d+|)|Android:?[ /-](12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})(\.\d+|)(\.\d+|)|Mobile Safari.+OPR\/([89]\d|\d{3,})\.\d+\.\d+|Android.+Firefox\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+Chrom(ium|e)\/(12[7-9]|1[3-9]\d|[2-9]\d{2}|\d{4,})\.\d+(\.\d+|)|Android.+(UC? ?Browser|UCWEB|U3)[ /]?(15\.([5-9]|\d{2,})|(1[6-9]|[2-9]\d|\d{3,})\.\d+)\.\d+|SamsungBrowser\/(5\.\d+|([6-9]|\d{2,})\.\d+)|Android.+MQ{2}Browser\/(14(\.(9|\d{2,})|)|(1[5-9]|[2-9]\d|\d{3,})(\.\d+|))(\.\d+|)|K[Aa][Ii]OS\/(3\.\d+|([4-9]|\d{2,})\.\d+)(\.\d+|)/}).modern,t=o.legacy,s=navigator.userAgent,i.test(s)?"modern":(t.test(s),"legacy"));window.Shopify=window.Shopify||{};var c=window.Shopify;c.analytics=c.analytics||{};var u=c.analytics;u.replayQueue=[],u.publish=function(d,e,r){return u.replayQueue.push([d,e,r]),!0};try{self.performance.mark("wpm:start")}catch(d){}var h=[r,"/wpm","/b",n,l.substring(0,1),".js"].join("");!function(d){var e=d.src,r=d.async,a=void 0===r||r,n=d.onload,o=d.onerror,i=document.createElement("script"),t=document.head,s=document.body;i.async=a,i.src=e,n&&i.addEventListener("load",n),o&&i.addEventListener("error",o),t?t.appendChild(i):s?s.appendChild(i):console.error("Did not find a head or body element to append the script")}({src:h,async:!0,onload:function(){var r=window.webPixelsManager.init(d);e(r);var a=window.Shopify.analytics;a.replayQueue.forEach((function(d){var e=d[0],a=d[1],n=d[2];r.publishCustomEvent(e,a,n)})),a.replayQueue=[],a.publish=r.publishCustomEvent,a.visitor=r.visitor},onerror:function(){var e=d.storefrontBaseUrl.replace(/\/$/,""),r="".concat(e,"/.well-known/shopify/monorail/unstable/produce_batch"),n=JSON.stringify({metadata:{event_sent_at_ms:(new Date).getTime()},events:[{schema_id:"web_pixels_manager_load/3.1",payload:{version:a||"latest",bundle_target:l,page_url:self.location.href,status:"failed",surface:d.surface,error_msg:"".concat(h," has failed to load")},metadata:{event_created_at_ms:(new Date).getTime()}}]});try{if(self.navigator.sendBeacon.bind(self.navigator)(r,n))return!0}catch(d){}var o=new XMLHttpRequest;try{return o.open("POST",r,!0),o.setRequestHeader("Content-Type","text/plain"),o.send(n),!0}catch(d){console&&console.warn&&console.warn("[Web Pixels Manager] Got an unhandled error while logging a load error.")}return!1}})})({shopId: 15202468,storefrontBaseUrl: "https://www.aventon.com",extensionsBaseUrl: "https://extensions.shopifycdn.com/cdn/shopifycloud/web-pixels-manager",surface: "storefront-renderer",enabledBetaFlags: ["5de24938","d04dc9f4","4735909c"],webPixelsConfigList: [{"id":"265322691","configuration":"{\"config\":\"{\\\"pixel_id\\\":\\\"G-C3DQ90M0TM\\\",\\\"target_country\\\":\\\"US\\\",\\\"gtag_events\\\":[{\\\"type\\\":\\\"search\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/PCWuCPvI65ECELGqo7wD\\\"]},{\\\"type\\\":\\\"begin_checkout\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/o8hVCPjI65ECELGqo7wD\\\"]},{\\\"type\\\":\\\"view_item\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/QSk5CPLI65ECELGqo7wD\\\",\\\"MC-4W1FTGL0TJ\\\"]},{\\\"type\\\":\\\"purchase\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/n896CJOV2_QYELGqo7wD\\\",\\\"MC-4W1FTGL0TJ\\\"]},{\\\"type\\\":\\\"page_view\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/3NxNCOzI65ECELGqo7wD\\\",\\\"MC-4W1FTGL0TJ\\\"]},{\\\"type\\\":\\\"add_payment_info\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/Bf2bCP7I65ECELGqo7wD\\\"]},{\\\"type\\\":\\\"add_to_cart\\\",\\\"action_label\\\":[\\\"G-C3DQ90M0TM\\\",\\\"AW-931714353\\\/E7DJCPXI65ECELGqo7wD\\\"]}],\\\"enable_monitoring_mode\\\":true}\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"a46b87f88a4ff97a9490f9aa4799ba7b","type":"APP","apiClientId":1780363,"privacyPurposes":[]},{"id":"144146627","configuration":"{\"pixel_id\":\"246928182389202\",\"pixel_type\":\"facebook_pixel\",\"metaapp_system_user_token\":\"-\"}","eventPayloadVersion":"v1","runtimeContext":"OPEN","scriptVersion":"8b3843af2d71780cfb83fdde884ce168","type":"APP","apiClientId":2329312,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"143622339","configuration":"{\"env\":\"prod\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"81a87ab45a958a658e5ef3e3ec3f5ca4","type":"APP","apiClientId":3977633,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"80740547","configuration":"{\"apiKey\":\"5u3C9g3J4o\", \"host\":\"searchserverapi.com\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"ec78811ab089c6a1f0a244a683fa85b3","type":"APP","apiClientId":578825,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"48726211","configuration":"{\"tagID\":\"2613886716398\"}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"4fd0680eed907adaf3f85849c393d688","type":"APP","apiClientId":3009811,"privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"]},{"id":"22085827","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"5","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Reddit"},{"id":"22347971","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Bing"},{"id":"23429315","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Oyster"},{"id":"23888067","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Pebble Post"},{"id":"23920835","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Avantlink"},{"id":"24182979","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"3","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"GTM"},{"id":"27623619","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"1","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING","SALE_OF_DATA"],"name":"Ads Purchase BOFU EC"},{"id":"29229251","eventPayloadVersion":"1","runtimeContext":"LAX","scriptVersion":"2","type":"CUSTOM","privacyPurposes":[],"name":"GMC Survey Opt In"},{"id":"shopify-app-pixel","configuration":"{}","eventPayloadVersion":"v1","runtimeContext":"STRICT","scriptVersion":"0210","apiClientId":"shopify-pixel","type":"APP","privacyPurposes":["ANALYTICS","MARKETING"]},{"id":"shopify-custom-pixel","eventPayloadVersion":"v1","runtimeContext":"LAX","scriptVersion":"0210","apiClientId":"shopify-pixel","type":"CUSTOM","privacyPurposes":["ANALYTICS","MARKETING"]}],initData: {"shop":{"name":"Aventon Bikes","paymentSettings":{"currencyCode":"USD"},"myshopifyDomain":"aventonbikes.myshopify.com","countryCode":"US","storefrontUrl":"https:\/\/www.aventon.com"},"customer":null,"cart":null,"checkout":null,"productVariants":[],"purchasingCompany":null},},function pageEvents(webPixelsManagerAPI) {webPixelsManagerAPI.publish("page_viewed", {});},"https://www.aventon.com/cdn","fb1ffa160d2bd633e9a569ca53327bdc14774168","f69b9fb6w3396cff1pe45e79a7m2cbe3366",);</script>  <script>window.ShopifyAnalytics = window.ShopifyAnalytics || {};
 window.ShopifyAnalytics.meta = window.ShopifyAnalytics.meta || {};
 window.ShopifyAnalytics.meta.currency = 'USD';
 var meta = {"page":{"pageType":"page","resourceType":"page","resourceId":223226441}};
@@ -837,22 +877,22 @@ for (var attr in meta) {
     Monorail.produce('monorail-edge.shopifysvc.com',
       'trekkie_storefront_load_errors/1.1',
       {shop_id: 15202468,
-      theme_id: 136972665027,
+      theme_id: 138058301635,
       app_name: "storefront",
       context_url: window.location.href,
-      source_url: "//www.aventon.com/cdn/s/trekkie.storefront.a1ad2ab43a5932ff96084a0e2e69f51ba73ddbec.min.js"});
+      source_url: "//www.aventon.com/cdn/s/trekkie.storefront.03be50ea3788c26020561bb2ba01cb1e65d0fb9a.min.js"});
 
         };
         scriptFallback.async = true;
-        scriptFallback.src = '//www.aventon.com/cdn/s/trekkie.storefront.a1ad2ab43a5932ff96084a0e2e69f51ba73ddbec.min.js';
+        scriptFallback.src = '//www.aventon.com/cdn/s/trekkie.storefront.03be50ea3788c26020561bb2ba01cb1e65d0fb9a.min.js';
         first.parentNode.insertBefore(scriptFallback, first);
       };
       script.async = true;
-      script.src = '//www.aventon.com/cdn/s/trekkie.storefront.a1ad2ab43a5932ff96084a0e2e69f51ba73ddbec.min.js';
+      script.src = '//www.aventon.com/cdn/s/trekkie.storefront.03be50ea3788c26020561bb2ba01cb1e65d0fb9a.min.js';
       first.parentNode.insertBefore(script, first);
     };
     trekkie.load(
-      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":15202468,"isMerchantRequest":null,"themeId":136972665027,"themeCityHash":"4369690232034241237","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"Google Analytics":{"trackingId":"UA-71676953-3","domain":"auto","siteSpeedSampleRate":"10","enhancedEcommerce":true,"doubleClick":true,"includeSearch":true},"TikTok Pixel":{"pixelId":"C3J2EN7JSDISMO50DP7G"},"Google Gtag Pixel":{"conversionId":"G-C3DQ90M0TM","eventLabels":[{"type":"search","action_label":["G-C3DQ90M0TM","AW-931714353\/PCWuCPvI65ECELGqo7wD"]},{"type":"begin_checkout","action_label":["G-C3DQ90M0TM","AW-931714353\/o8hVCPjI65ECELGqo7wD"]},{"type":"view_item","action_label":["G-C3DQ90M0TM","AW-931714353\/QSk5CPLI65ECELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"purchase","action_label":["G-C3DQ90M0TM","AW-931714353\/n896CJOV2_QYELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"page_view","action_label":["G-C3DQ90M0TM","AW-931714353\/3NxNCOzI65ECELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"add_payment_info","action_label":["G-C3DQ90M0TM","AW-931714353\/Bf2bCP7I65ECELGqo7wD"]},{"type":"add_to_cart","action_label":["G-C3DQ90M0TM","AW-931714353\/E7DJCPXI65ECELGqo7wD"]}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":true,"facebookAppPixelId":"246928182389202","source":"trekkie-storefront-renderer"}}
+      {"Trekkie":{"appName":"storefront","development":false,"defaultAttributes":{"shopId":15202468,"isMerchantRequest":null,"themeId":138058301635,"themeCityHash":"7737858313634123292","contentLanguage":"en","currency":"USD"},"isServerSideCookieWritingEnabled":true,"monorailRegion":"shop_domain","enabledBetaFlags":["bbcf04e6"]},"Google Analytics":{"trackingId":"UA-71676953-3","domain":"auto","siteSpeedSampleRate":"10","enhancedEcommerce":true,"doubleClick":true,"includeSearch":true},"TikTok Pixel":{"pixelId":"C3J2EN7JSDISMO50DP7G"},"Google Gtag Pixel":{"conversionId":"G-C3DQ90M0TM","eventLabels":[{"type":"search","action_label":["G-C3DQ90M0TM","AW-931714353\/PCWuCPvI65ECELGqo7wD"]},{"type":"begin_checkout","action_label":["G-C3DQ90M0TM","AW-931714353\/o8hVCPjI65ECELGqo7wD"]},{"type":"view_item","action_label":["G-C3DQ90M0TM","AW-931714353\/QSk5CPLI65ECELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"purchase","action_label":["G-C3DQ90M0TM","AW-931714353\/n896CJOV2_QYELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"page_view","action_label":["G-C3DQ90M0TM","AW-931714353\/3NxNCOzI65ECELGqo7wD","MC-4W1FTGL0TJ"]},{"type":"add_payment_info","action_label":["G-C3DQ90M0TM","AW-931714353\/Bf2bCP7I65ECELGqo7wD"]},{"type":"add_to_cart","action_label":["G-C3DQ90M0TM","AW-931714353\/E7DJCPXI65ECELGqo7wD"]}],"targetCountry":"US"},"Session Attribution":{},"S2S":{"facebookCapiEnabled":true,"source":"trekkie-storefront-renderer","apiClientId":580111}}
     );
 
     var loaded = false;
@@ -932,8 +972,8 @@ for (var attr in meta) {
   window.BOOMR.themeName = "Fastor";
   window.BOOMR.themeVersion = "5.0.4";
   window.BOOMR.shopId = 15202468;
-  window.BOOMR.themeId = 136972665027;
-  window.BOOMR.renderRegion = "gcp-europe-west1";
+  window.BOOMR.themeId = 138058301635;
+  window.BOOMR.renderRegion = "gcp-us-east1";
   window.BOOMR.url =
     "https://www.aventon.com/cdn/shopifycloud/boomerang/shopify-boomerang-1.0.0.min.js";
   var where = document.currentScript || document.getElementsByTagName("script")[0];
@@ -1066,12 +1106,12 @@ for (var attr in meta) {
 })();</script>
 <script
   defer
-  src="https://www.aventon.com/cdn/shopifycloud/perf-kit/shopify-perf-kit-unstable.min.js"
+  src="https://www.aventon.com/cdn/shopifycloud/perf-kit/shopify-perf-kit-1.0.0.min.js"
   data-application="storefront-renderer"
   data-shop-id="15202468"
-  data-render-region="gcp-europe-west1"
+  data-render-region="gcp-us-east1"
   data-page-type="page"
-  data-theme-instance-id="136972665027"
+  data-theme-instance-id="138058301635"
   data-monorail-region="shop_domain"
   data-resource-timing-sampling-rate="10"
 ></script>
@@ -1106,21 +1146,7 @@ for (var attr in meta) {
                     
                     
                     {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 43629642678467,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7937234895043",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "",
+                            "titleOverride": "Abound Rear Rack Basket",
                             "quantity": 1,
                             "id": 42319545401539,
                             "properties": {
@@ -1134,7 +1160,7 @@ for (var attr in meta) {
                     ,
                     
                     {
-                            "titleOverride": "",
+                            "titleOverride": "Abound Rear Rack Bamboo Board",
                             "quantity": 1,
                             "id": 42319546319043,
                             "properties": {
@@ -1148,7 +1174,7 @@ for (var attr in meta) {
                     ,
                     
                     {
-                            "titleOverride": "",
+                            "titleOverride": "Abound Seat Pad",
                             "quantity": 1,
                             "id": 42319546613955,
                             "properties": {
@@ -1162,7 +1188,7 @@ for (var attr in meta) {
                     ,
                     
                     {
-                            "titleOverride": "",
+                            "titleOverride": "Aventon Abound Handrail",
                             "quantity": 1,
                             "id": 42319545991363,
                             "properties": {
@@ -1176,7 +1202,7 @@ for (var attr in meta) {
                     ,
                     
                     {
-                            "titleOverride": "",
+                            "titleOverride": "Abound Pannier",
                             "quantity": 1,
                             "id": 43252604895427,
                             "properties": {
@@ -1186,233 +1212,27 @@ for (var attr in meta) {
                                 "_freeWith" : "All","_isFreeProduct": "true"}
                     }
                 
-] },{ "enable" : true, "title" : "Aventure.2 free battery + better bike bundle", "productId": "7494192136387", "items": [
+
+                    ,
+                    
+                    {
+                            "titleOverride": "Aventon Cargo Net",
+                            "quantity": 1,
+                            "id": 42513967349955,
+                            "properties": {
+                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
+                                "_discountType": "Percent",
+                                "_productId": "7621104664771",
+                                "_freeWith" : "All","_isFreeProduct": "true"}
+                    }
+                
+] },{ "enable" : false },{ "enable" : false },{ "enable" : false },{ "enable" : false },{ "enable" : false },{ "enable" : false },{ "enable" : true, "title" : "Pace 500.3 free battery + better bike bundle", "productId": "7525724258499", "items": [
             
 
                     
                     
                     {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 39812001857731,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Aventure.2 free battery + better bike bundle", "productId": "7494186500291", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 39812001857731,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Level.2 free battery + better bike bundle", "productId": "7369531785411", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 42941326065859,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Level.2 ST free battery + better bike bundle", "productId": "7367057113283", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 42941326065859,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Sinch.2 free battery + better bike bundle", "productId": "7539934429379", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 41554206294211,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Pace 500.3 free battery", "productId": "7525723275459", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
+                            "titleOverride": "Free 2nd Battery (UL certified)",
                             "quantity": 1,
                             "id": 42410022437059,
                             "properties": {
@@ -1422,81 +1242,7 @@ for (var attr in meta) {
                                 "_freeWith" : "All","_isFreeProduct": "true"}
                     }
                 
-] },{ "enable" : true, "title" : "Pace 500.3 free battery + better bike bundle", "productId": "7525724258499", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Extra Battery",
-                            "quantity": 1,
-                            "id": 42410022437059,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "1418249732213",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] },{ "enable" : true, "title" : "Soltera.2 Better Bike Bundle + better bike bundle", "productId": "7604843020483", "items": [
-            
-
-                    
-                    
-                    {
-                            "titleOverride": "Aventon Suspension Seatpost",
-                            "quantity": 1,
-                            "id": 43252633927875,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7621104140483",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-
-                    ,
-                    
-                    {
-                            "titleOverride": "Aventon Chain Lock",
-                            "quantity": 1,
-                            "id": 42466713403587,
-                            "properties": {
-                                "_applyDiscountToAllVariants": false, "_discountValue": 100,
-                                "_discountType": "Percent",
-                                "_productId": "7601802281155",
-                                "_freeWith" : "All","_isFreeProduct": "true"}
-                    }
-                
-] }]
+] },{ "enable" : false }]
         </script>
     
 
@@ -2125,18 +1871,6 @@ for (var attr in meta) {
 
     
     
-
-    
-    
-
-    
-    
-
-    
-    
-
-    
-    
         
         
 
@@ -2148,16 +1882,12 @@ for (var attr in meta) {
                     tw-text-white tw-tracking-[1.4px] tw-font-semibold tw-font-condensed tw-text-[13px] tw-uppercase tw-mb-0
                     tw-flex tw-items-center tw-gap-1 tw-justify-center tw-flex-col md:tw-flex-row
                 '>
-                <a href="/collections/sale">$700 INSTANT SAVINGS WITH SELECT EBIKES</a>
-                <div class='tw-flex tw-gap-2 tw-items-center md:tw-ml-2'>
-                    <span class='tw-hidden lg:tw-block tw-opacity-30'>—</span>
-                    
-                        <span id='promo-timer' class='tw-inline-flex tw-text-primary-500 tw-text-[11px] tw-opacity-0 tw-transition md:tw-w-[98.81px] tw-justify-center'>
-                            <div class='tw-flex tw-gap-1 tw-mx-1 tw-tracking-[0.03em] tw-opacity-0 tw-w-[98.81px] tw-h-[33px]'></div>
-                        </span>
+                <a href="/products/soltera-2-ebike">Get the Soltera.2 Now for Just $999!</a>
+                <div class='tw-flex tw-gap-2 tw-items-center '>
+                    <span class='tw-hidden  tw-opacity-30'>—</span>
                     
                     
-                        <span class='tw-block lg:tw-block tw-opacity-30'>—</span>
+                        <span class='tw-hidden tw-ml-2 lg:tw-block tw-opacity-30'>—</span>
                         <div class='tw-flex tw-items-center tw-cursor-pointer js_open_offers'>
                             <span
                                 data-click-id='Global_OfferDrawer_Opened'
@@ -2168,7 +1898,7 @@ for (var attr in meta) {
                                     tw-w-4 tw-h-4 tw-bg-white tw-text-center tw-align-middle tw-font-normal tw-font-sans tw-text-[10px]
                                     tw-text-gray-900 tw-rounded-full tw-ml-1 tw-flex tw-justify-center tw-items-center
                                 '>
-                                <span class='promo-count tw-tracking-tighter'>7</span>
+                                <span class='promo-count tw-tracking-tighter'>4</span>
                             </span>
                         </div>
                     
@@ -2225,7 +1955,7 @@ for (var attr in meta) {
                         <div
                             x-show='openMenu === "support"'
                             x-transition.opacity.duration.200ms
-                            class='tw-absolute tw-right-0 tw-z-[10000] tw-w-60 tw-origin-top tw-rounded-b-2xl tw-bg-white tw-shadow-lg focus:tw-outline-none tw-top-[42px]'
+                            class='tw-absolute tw-right-0 tw-z-[10000] tw-w-60 tw-origin-top tw-rounded-b-2xl tw-bg-white tw-shadow-lg focus:tw-outline-none '
                             role='menu'
                             aria-orientation='vertical'
                             aria-labelledby='menu-button'
@@ -2303,7 +2033,7 @@ for (var attr in meta) {
                                             
                                             <p class='tw-text-gray-900 tw-mb-2'>Send us a message</p>
                                             <p class='tw-text-gray-900 tw-font-normal tw-mb-3'>
-                                                Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 9am-4pm PST</span>
+                                                Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 1pm-4:30pm PST</span>
                                             </p>
                                             <div class='tw-space-y-2'>
                                                 <a
@@ -2411,7 +2141,7 @@ for (var attr in meta) {
                     x-cloak
                     id='CountryList'
                     role='list'
-                    class='tw-right-0 tw-w-max tw-top-[47px] tw-z-[10000] tw-origin-top tw-font-sans tw-font-semibold tw-text-sm tw-pl-2 tw-pt-2 tw-bg-white focus:tw-outline-none 2lg:tw-px-6 2lg:tw-pt-6 2lg:tw-pb-3 2lg:tw-absolute 2lg:tw-shadow-lg lg:tw-rounded-b-2xl'>
+                    class='tw-right-0 tw-w-max  tw-z-[10000] tw-origin-top tw-font-sans tw-font-semibold tw-text-sm tw-pl-2 tw-pt-2 tw-bg-white focus:tw-outline-none 2lg:tw-px-6 2lg:tw-pt-6 2lg:tw-pb-3 2lg:tw-absolute 2lg:tw-shadow-lg lg:tw-rounded-b-2xl'>
                     <template x-for='(locale, index) in localizationData'>
                         <template x-for='(availableLanguage, index) in locale.availableLanguages'>
                             <li class='tw-mb-3'>
@@ -2558,7 +2288,7 @@ document.addEventListener('alpine:init', () => {
                 
                 
                     
-                    <a data-click-id="Global_OffersDrawer_Offer_" href='/products/aventure2-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
+                    <a data-click-id="Global_OffersDrawer_Offer_" href='/products/abound-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
     <div class='background-media tw-relative'>
         <div class='background-image'>
             
@@ -2567,21 +2297,21 @@ document.addEventListener('alpine:init', () => {
 
 
     <picture
-        id='image2901'
+        id='image4498'
         class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
         style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
         data-loaded='false'><source
                 
-                    data-srcset='https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=400&q=25 400w'sizes=''
+                    data-srcset='https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=400&q=25 400w'sizes=''
                 aria-hidden='true'><img
                 class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/65d7ccf93a605798c18c21dc_Promo-Side-Drawer-Aventure2-Free-Battery_67214d35-9d52-4d3f-8287-4dea58d9a74b.jpg?v=1714157335&auto=compress,format&w=10&blur=10'
+                src='https://aventon-images.imgix.net/files/Promo-Side-Drawer-Cargo-Bundles.jpg?v=1721240815&auto=compress,format&w=10&blur=10'
                 alt=''
                 width='400'
                 height=''
             ></picture><script>
             {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image2901")
+                const el = document.querySelector("#image4498")
                 if(el && window.lazyImageFn) window.lazyImageFn(el);
                 else if(el) lazyImages.push(el)
             }
@@ -2603,7 +2333,7 @@ document.addEventListener('alpine:init', () => {
                 
                 
                     
-                    <a data-click-id="Global_OffersDrawer_Offer_1" href='/products/aventon-level-commuter-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
+                    <a data-click-id="Global_OffersDrawer_Offer_1" href='/collections/ebikes' class='tw-block promo-bar tw-relative tw-mb-3'>
     <div class='background-media tw-relative'>
         <div class='background-image'>
             
@@ -2612,142 +2342,7 @@ document.addEventListener('alpine:init', () => {
 
 
     <picture
-        id='image3319'
-        class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
-        style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
-        data-loaded='false'><source
-                
-                    data-srcset='https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=400&q=25 400w'sizes=''
-                aria-hidden='true'><img
-                class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/7584c06f-d73c-42cc-9f1a-0dbf71008c0d_Promo-Side-Drawer-Free-Extra-Battery_1_d14c339e-ebcb-4488-8a32-25958b0ed7cd.jpg?v=1714157335&auto=compress,format&w=10&blur=10'
-                alt=''
-                width='400'
-                height=''
-            ></picture><script>
-            {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image3319")
-                if(el && window.lazyImageFn) window.lazyImageFn(el);
-                else if(el) lazyImages.push(el)
-            }
-        </script>
-
-        </div>
-        
-    </div>
-
-    <div class='promotionBar_content_wrapper tw-text-white content tw-absolute tw-w-full tw-h-full tw-p-4 tw-top-0 tw-text-xs tw-font-sans'> 
-
-    </div>
-</a>
-
-                    
-                    
-                
-            
-                
-                
-                    
-                    <a data-click-id="Global_OffersDrawer_Offer_2" href='/products/pace500-3-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
-    <div class='background-media tw-relative'>
-        <div class='background-image'>
-            
-
-
-
-
-    <picture
-        id='image8909'
-        class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
-        style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
-        data-loaded='false'><source
-                
-                    data-srcset='https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=400&q=25 400w'sizes=''
-                aria-hidden='true'><img
-                class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/d2a969e6-023a-4a7c-aadf-5c48a99ac3cd_Promo-Side-Drawer-Pace5003-Extra-Battery_1_e2628bfe-9ecd-4286-ba13-5baf62766c7c.jpg?v=1714157346&auto=compress,format&w=10&blur=10'
-                alt=''
-                width='400'
-                height=''
-            ></picture><script>
-            {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image8909")
-                if(el && window.lazyImageFn) window.lazyImageFn(el);
-                else if(el) lazyImages.push(el)
-            }
-        </script>
-
-        </div>
-        
-    </div>
-
-    <div class='promotionBar_content_wrapper tw-text-white content tw-absolute tw-w-full tw-h-full tw-p-4 tw-top-0 tw-text-xs tw-font-sans'> 
-
-    </div>
-</a>
-
-                    
-                    
-                
-            
-                
-                
-                    
-                    <a data-click-id="Global_OffersDrawer_Offer_3" href='/products/sinch2-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
-    <div class='background-media tw-relative'>
-        <div class='background-image'>
-            
-
-
-
-
-    <picture
-        id='image9809'
-        class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
-        style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
-        data-loaded='false'><source
-                
-                    data-srcset='https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=400&q=25 400w'sizes=''
-                aria-hidden='true'><img
-                class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/2ea46349-70e3-48fe-94ed-331bea68ba28_Promo-Side-Drawer-Sinch-Extra-Battery-1.jpg?v=1717013713&auto=compress,format&w=10&blur=10'
-                alt=''
-                width='400'
-                height=''
-            ></picture><script>
-            {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image9809")
-                if(el && window.lazyImageFn) window.lazyImageFn(el);
-                else if(el) lazyImages.push(el)
-            }
-        </script>
-
-        </div>
-        
-    </div>
-
-    <div class='promotionBar_content_wrapper tw-text-white content tw-absolute tw-w-full tw-h-full tw-p-4 tw-top-0 tw-text-xs tw-font-sans'> 
-
-    </div>
-</a>
-
-                    
-                    
-                
-            
-                
-                
-                    
-                    <a data-click-id="Global_OffersDrawer_Offer_4" href='/collections/ebikes' class='tw-block promo-bar tw-relative tw-mb-3'>
-    <div class='background-media tw-relative'>
-        <div class='background-image'>
-            
-
-
-
-
-    <picture
-        id='image5170'
+        id='image9385'
         class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
         style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
         data-loaded='false'><source
@@ -2761,7 +2356,7 @@ document.addEventListener('alpine:init', () => {
                 height=''
             ></picture><script>
             {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image5170")
+                const el = document.querySelector("#image9385")
                 if(el && window.lazyImageFn) window.lazyImageFn(el);
                 else if(el) lazyImages.push(el)
             }
@@ -2783,7 +2378,7 @@ document.addEventListener('alpine:init', () => {
                 
                 
                     
-                    <a data-click-id="Global_OffersDrawer_Offer_5" href='/products/abound-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
+                    <a data-click-id="Global_OffersDrawer_Offer_2" href='/products/soltera-2-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
     <div class='background-media tw-relative'>
         <div class='background-image'>
             
@@ -2792,21 +2387,21 @@ document.addEventListener('alpine:init', () => {
 
 
     <picture
-        id='image1092'
+        id='image283'
         class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
         style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
         data-loaded='false'><source
                 
-                    data-srcset='https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=400&q=25 400w'sizes=''
+                    data-srcset='https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=400&q=25 400w'sizes=''
                 aria-hidden='true'><img
                 class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/47507d4c-ba48-47b4-a079-687e4691b4b9_Promo-Side-Drawer-Abound-Free-Battery_96c824c3-7310-466a-a97a-e0c1ffe96d5a.jpg?v=1714157346&auto=compress,format&w=10&blur=10'
+                src='https://aventon-images.imgix.net/files/Promo-Side-Drawer-US-Soltera2.jpg?v=1725923813&auto=compress,format&w=10&blur=10'
                 alt=''
                 width='400'
                 height=''
             ></picture><script>
             {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image1092")
+                const el = document.querySelector("#image283")
                 if(el && window.lazyImageFn) window.lazyImageFn(el);
                 else if(el) lazyImages.push(el)
             }
@@ -2828,7 +2423,7 @@ document.addEventListener('alpine:init', () => {
                 
                 
                     
-                    <a data-click-id="Global_OffersDrawer_Offer_6" href='/collections/sale' class='tw-block promo-bar tw-relative tw-mb-3'>
+                    <a data-click-id="Global_OffersDrawer_Offer_3" href='/products/pace500-3-step-through-ebike' class='tw-block promo-bar tw-relative tw-mb-3'>
     <div class='background-media tw-relative'>
         <div class='background-image'>
             
@@ -2837,21 +2432,21 @@ document.addEventListener('alpine:init', () => {
 
 
     <picture
-        id='image6405'
+        id='image9482'
         class='lazyImage tw-rounded-lg tw-overflow-hidden image--square '
         style='--maxw: 400px;--maxh: px;--responsive-aspect-ratio:var(--ov-aspect-ratio, 0.78);;'
         data-loaded='false'><source
                 
-                    data-srcset='https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=400&q=25 400w'sizes=''
+                    data-srcset='https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=100 100w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=116 116w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=134 134w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=156 156w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=182 182w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=210 210w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=244 244w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=282 282w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=328 328w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=380 380w,https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=400&q=25 400w'sizes=''
                 aria-hidden='true'><img
                 class='lazyImage__elem'
-                src='https://aventon-images.imgix.net/files/Promo-Side-Drawer-July-18.png?v=1721244888&auto=compress,format&w=10&blur=10'
+                src='https://aventon-images.imgix.net/files/Promo-Side-Drawer-Pace_3d59955e-8a7c-41f6-9897-e28a462f8ddf.jpg?v=1725397344&auto=compress,format&w=10&blur=10'
                 alt=''
                 width='400'
                 height=''
             ></picture><script>
             {const lazyImages = window.lazyImages = window.lazyImages || []
-                const el = document.querySelector("#image6405")
+                const el = document.querySelector("#image9482")
                 if(el && window.lazyImageFn) window.lazyImageFn(el);
                 else if(el) lazyImages.push(el)
             }
@@ -2881,51 +2476,6 @@ document.addEventListener('alpine:init', () => {
     }
 </style>
 
-
-    <script>
-        function updateTimer() {
-            const future = Date.parse("2024-08-01T04:00:00Z");
-            const now = new Date();
-            const diff = future - now;
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const mins = Math.floor(diff / (1000 * 60));
-            const secs = Math.floor(diff / 1000);
-
-            const d = days;
-            const h = hours - days * 24;
-            const m = mins - hours * 60;
-            const s = secs - mins * 60;
-
-            function addZero(time) {
-                if (time.toString().length === 1) {
-                    return "0";
-                } else {
-                    return "";
-                }
-            }
-
-            const promoTimer = document.getElementById("promo-timer");
-
-            promoTimer.innerHTML = `
-            <div class="tw-flex tw-gap-1 tw-mx-1 tw-tracking-[0.03em] tw-opacity-100">
-                <div class="${days <= 0 ? "tw-hidden" : "tw-flex"} tw-flex-col tw-justify-center tw-items-center"><div class="tw-font-poppins tw-text-white">${days}</div><div class="tw-font-condensed tw-font-normal">DAYS</div></div>
-                <div class="${h <= 0 ? "tw-hidden" : "tw-flex"}tw-flex tw-flex-col tw-justify-center tw-items-center"><div class="tw-font-poppins tw-text-white">${h}</div><div class="tw-font-condensed tw-font-normal">HRS</div></div>
-                <div class="tw-flex tw-flex-col tw-justify-center tw-items-center"><div class="tw-font-poppins tw-text-white">${m}</div><div class="tw-font-condensed tw-font-normal">MINS</div></div>
-                <div class="tw-flex tw-flex-col tw-justify-center tw-items-center"><div class="tw-font-poppins tw-text-white">${s}</div><div class="tw-font-condensed tw-font-normal">SECS</div></div>
-            </div>
-          `;
-
-          promoTimer.classList.remove("tw-opacity-0");
-          promoTimer.classList.add("tw-opacity-100");
-
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            setInterval('updateTimer()', 1000);
-        });
-    </script>
 
 
 <script>
@@ -3502,7 +3052,7 @@ document.addEventListener('alpine:init', () => {
                                                                     data-sl='ebikes_shop-by-model_pace'
                                                                     x-bind:href="openTab === 8 ? '/collections/ebikes?constraint=__pace_500' : '/collections/ebikes?constraint=__pace_500'"
                                                                     data-click-id='Global_Nav_EbikesPace500'>
-                                                                    <img src="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1714067904&amp;width=288" alt="Pace 500.3 Step-Through Basalt SKUs: 1E038-0023709, 1E038-0024509" srcset="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1714067904&amp;width=288 288w" width="288" height="192" loading="lazy" class="tw-max-w-[144px]">
+                                                                    <img src="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1722321854&amp;width=288" alt="Pace 500.3 Step-Through Basalt SKUs: 1E038-0023709, 1E038-0024509" srcset="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1722321854&amp;width=288 288w" width="288" height="192" loading="lazy" class="tw-max-w-[144px]">
                                                                     <p class=' tw-text-xs tw-font-bold tw-tracking-normal tw-font-sans group-hover:tw-text-teal-700 tw-mt-[1px]'>
                                                                         <span>Pace 500</span>
                                                                         
@@ -3560,7 +3110,7 @@ document.addEventListener('alpine:init', () => {
                                                                     data-sl='ebikes_shop-by-model_soltera'
                                                                     x-bind:href="openTab === 8 ? '/collections/ebikes?constraint=__soltera' : '/collections/ebikes?constraint=__soltera'"
                                                                     data-click-id='Global_Nav_EbikesSoltera'>
-                                                                    <img src="//www.aventon.com/cdn/shop/files/soltera2-ebike-nav.jpg?v=1691460834&amp;width=288" alt="Soltera.2 Ebike" srcset="//www.aventon.com/cdn/shop/files/soltera2-ebike-nav.jpg?v=1691460834&amp;width=288 288w" width="288" height="196" loading="lazy" class="tw-max-w-[144px]">
+                                                                    <img src="//www.aventon.com/cdn/shop/files/soltera-2-storm-blue-nav-shot.jpg?v=1723759625&amp;width=288" alt="" srcset="//www.aventon.com/cdn/shop/files/soltera-2-storm-blue-nav-shot.jpg?v=1723759625&amp;width=288 288w" width="288" height="196" loading="lazy" class="tw-max-w-[144px]">
                                                                     <p class=' tw-text-xs tw-font-bold tw-tracking-normal tw-font-sans group-hover:tw-text-teal-700 tw-mt-[1px]'>
                                                                         <span>Soltera</span>
                                                                         
@@ -3751,9 +3301,9 @@ document.addEventListener('alpine:init', () => {
                                                         <a
                                                             data-sl='affirm'
                                                             class='tw-block tw-text-center tw-max-w-[360px] tw-mx-auto'
-                                                            href='/collections/sale'
+                                                            href='/products/soltera-2-ebike'
                                                             data-click-id='Global_Nav_EbikesPromoThumbnail'>
-                                                            <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-w-full">
+                                                            <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-w-full">
                                                         </a>
                                                     </div></div>
                                 </div>
@@ -4591,7 +4141,7 @@ document.addEventListener('alpine:init', () => {
                                                     Send us a message
                                                 </p>
                                                 <p class='tw-text-xs tw-text-gray-500 tw-tracking-normal tw-font-sans tw-mt-[1px] tw-mb-2 tw-max-w-[256px] '>
-                                                    Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 9am-4pm PST</span>
+                                                    Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 1pm-4:30pm PST</span>
                                                 </p>
                                                 <div class='tw-inline-flex tw-items-center tw-space-x-1'>
                                                     <svg
@@ -4652,7 +4202,7 @@ document.addEventListener('alpine:init', () => {
                         Send us a message
                     </p>
                     <p class='tw-text-xs tw-text-gray-500 tw-tracking-normal tw-font-sans tw-mt-[1px] tw-mb-2 tw-max-w-[256px] '>
-                        Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 9am-4pm PST</span>
+                        Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 1pm-4:30pm PST</span>
                     </p>
                     <div class='tw-inline-flex tw-items-center tw-space-x-1'>
                         <svg
@@ -5380,7 +4930,7 @@ document.addEventListener('alpine:init', () => {
                                                                         data-sl='ebikes_shop-by-model_pace'
                                                                         href='/collections/ebikes?constraint=__pace_500'
                                                                         data-click-id='Global_Nav_EbikesPace500'>
-                                                                        <img src="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1714067904&amp;width=288" alt="Pace 500.3 Step-Through Basalt SKUs: 1E038-0023709, 1E038-0024509" srcset="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1714067904&amp;width=288 288w" width="288" height="192" loading="lazy" class="tw-max-w-[144px]">
+                                                                        <img src="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1722321854&amp;width=288" alt="Pace 500.3 Step-Through Basalt SKUs: 1E038-0023709, 1E038-0024509" srcset="//www.aventon.com/cdn/shop/files/pace-basalt-01.jpg?v=1722321854&amp;width=288 288w" width="288" height="192" loading="lazy" class="tw-max-w-[144px]">
                                                                         <p class=' tw-text-xs tw-font-bold tw-tracking-normal tw-font-sans group-hover:tw-text-teal-700 tw-mt-0'>
                                                                             <span>Pace 500</span>
                                                                             
@@ -5432,7 +4982,7 @@ document.addEventListener('alpine:init', () => {
                                                                         data-sl='ebikes_shop-by-model_soltera'
                                                                         href='/collections/ebikes?constraint=__soltera'
                                                                         data-click-id='Global_Nav_EbikesSoltera'>
-                                                                        <img src="//www.aventon.com/cdn/shop/files/soltera2-ebike-nav.jpg?v=1691460834&amp;width=288" alt="Soltera.2 Ebike" srcset="//www.aventon.com/cdn/shop/files/soltera2-ebike-nav.jpg?v=1691460834&amp;width=288 288w" width="288" height="196" loading="lazy" class="tw-max-w-[144px]">
+                                                                        <img src="//www.aventon.com/cdn/shop/files/soltera-2-storm-blue-nav-shot.jpg?v=1723759625&amp;width=288" alt="" srcset="//www.aventon.com/cdn/shop/files/soltera-2-storm-blue-nav-shot.jpg?v=1723759625&amp;width=288 288w" width="288" height="196" loading="lazy" class="tw-max-w-[144px]">
                                                                         <p class=' tw-text-xs tw-font-bold tw-tracking-normal tw-font-sans group-hover:tw-text-teal-700 tw-mt-0'>
                                                                             <span>Soltera</span>
                                                                             
@@ -5443,8 +4993,8 @@ document.addEventListener('alpine:init', () => {
                                                     </div></div>
                                     </div>
 <div class='tw-flex tw-mt-[74px] tw-rounded-lg tw-mb-[10px] xl:tw-mb-9 tw-w-full tw-pl-4'>
-                                                <a data-sl='affirm' class='tw-block' href='/collections/sale' data-click-id='Global_Nav_EbikesPromoThumbnail'>
-                                                    <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-rounded-lg">
+                                                <a data-sl='affirm' class='tw-block' href='/products/soltera-2-ebike' data-click-id='Global_Nav_EbikesPromoThumbnail'>
+                                                    <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-rounded-lg">
                                                 </a>
                                             </div></div>
                         </div>
@@ -5754,8 +5304,8 @@ document.addEventListener('alpine:init', () => {
                                                     </div></div>
                                     </div>
 <div class='tw-flex tw-mt-[74px] tw-rounded-lg tw-mb-[10px] xl:tw-mb-9 tw-w-full tw-pl-4'>
-                                                <a data-sl='affirm' class='tw-block' href='/collections/sale' data-click-id='Global_Nav_EbikesPromoThumbnail'>
-                                                    <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-July-18.png?v=1721244844&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-rounded-lg">
+                                                <a data-sl='affirm' class='tw-block' href='/products/soltera-2-ebike' data-click-id='Global_Nav_EbikesPromoThumbnail'>
+                                                    <img src="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720" alt="promo" srcset="//www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=560 560w, //www.aventon.com/cdn/shop/files/Promo-Drop-Down-Nav-US-Soltera2.jpg?v=1725923769&amp;width=720 720w" width="720" height="950" loading="lazy" class="tw-rounded-lg">
                                                 </a>
                                             </div></div>
                         </div>
@@ -5834,7 +5384,7 @@ document.addEventListener('alpine:init', () => {
                                                         Send us a message
                                                     </p>
                                                     <p class='tw-text-xs tw-tracking-normal tw-font-sans tw-mt-1 tw-mb-3 tw-max-w-[25ch]'>
-                                                        Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 9am-4pm PST</span>
+                                                        Have a question about something not found in our support links? <span class="tw-text-gray-900 tw-mt-2 tw-block tw-font-normal">Mon-Fri 1pm-4:30pm PST</span>
                                                     </p>
                                                     <a
                                                         href='https://rideaventon.zendesk.com/hc/en-us/requests/new'
@@ -6836,18 +6386,18 @@ document.addEventListener('alpine:init', () => {
           </div>
         </div>
         <link
-    href='//www.aventon.com/cdn/shop/t/814/assets/sms-email-signup.css?v=39978689395863072971721242898'
+    href='//www.aventon.com/cdn/shop/t/836/assets/sms-email-signup.css?v=39978689395863072971725913266'
     rel='stylesheet'
     type='text/css'
 >
-<script src="//www.aventon.com/cdn/shop/t/814/assets/sms-email-signup.js?v=177622701795805833281721242898" type="text/javascript"></script>
+<script src="//www.aventon.com/cdn/shop/t/836/assets/sms-email-signup.js?v=177622701795805833281725913266" type="text/javascript"></script>
 
 <div
     class='newsletter-container'
 >
     <div class='newsletter-spinner-hidden' id='newsletter-spinner'>
         <div class='loader'></div>
-<!-- <div class='spinner'><img src='//www.aventon.com/cdn/shop/t/814/assets/ajax-loader.gif?v=2312168510127470811721242715' alt='Spinner'></div> -->
+<!-- <div class='spinner'><img src='//www.aventon.com/cdn/shop/t/836/assets/ajax-loader.gif?v=2312168510127470811725913087' alt='Spinner'></div> -->
 
     </div>
     <div class='newsletter-title'>The latest on Aventon deals & gear</div>
@@ -7079,6 +6629,14 @@ document.addEventListener('alpine:init', () => {
                                         
                                         class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4'
                                         data-sl='Support_Accessibility'>Accessibility</a>
+                                </li><li>
+                                    <a
+                                        href='/pages/order-tracker'
+                                        
+                                            
+                                        
+                                        class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4'
+                                        data-sl='Support_Order_Status'>Order Status</a>
                                 </li></ul>
                     </div><div
                         x-data='
@@ -7280,7 +6838,7 @@ document.addEventListener('alpine:init', () => {
                                             
                                         
                                         class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4'
-                                        data-sl='Community_Electric_Bike_Dealers'>Electric Bike Dealers</a>
+                                        data-sl='Community_Electric_Bike_Shops'>Electric Bike Shops</a>
                                 </li></ul>
                     </div><div
                         x-data='
@@ -7513,6 +7071,15 @@ document.addEventListener('alpine:init', () => {
                                     class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4 hover:!tw-text-teal-300-'
                                     data-sl='Support_Accessibility'
                                     data-click-id='Footer_Support_Accessibility'>Accessibility</a>
+                            </li><li>
+                                <a
+                                    href='/pages/order-tracker'
+                                    
+                                        
+                                    
+                                    class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4 hover:!tw-text-teal-300-'
+                                    data-sl='Support_Order_Status'
+                                    data-click-id='Footer_Support_OrderStatus'>Order Status</a>
                             </li></ul>
                 </div><div class=''>
                     <h3
@@ -7680,8 +7247,8 @@ document.addEventListener('alpine:init', () => {
                                         
                                     
                                     class='tw-font-sans tw-text-sm tw-text-gray-400 hover:tw-underline hover:tw-underline-offset-4 hover:!tw-text-teal-300-'
-                                    data-sl='Community_Electric_Bike_Dealers'
-                                    data-click-id='Footer_Community_ElectricBikeDealers'>Electric Bike Dealers</a>
+                                    data-sl='Community_Electric_Bike_Shops'
+                                    data-click-id='Footer_Community_ElectricBikeShops'>Electric Bike Shops</a>
                             </li></ul>
                 </div><div class=''>
                     <h3
@@ -8655,8 +8222,8 @@ document.addEventListener('alpine:init', () => {
         </div>
     </div>
 </div>
-<script src="//www.aventon.com/cdn/shop/t/814/assets/rt.application.js?v=6937574773988118571721242980" defer="async"></script><script src="//www.aventon.com/cdn/shop/t/814/assets/owl.js?v=55643275455756327011721242848" defer="defer"></script>
-  <script src="//www.aventon.com/cdn/shop/t/814/assets/theme.js?v=42413812433951315901721242911" defer="defer"></script>
+<script src="//www.aventon.com/cdn/shop/t/836/assets/rt.application.js?v=6937574773988118571725913351" defer="async"></script><script src="//www.aventon.com/cdn/shop/t/836/assets/owl.js?v=55643275455756327011725913217" defer="defer"></script>
+  <script src="//www.aventon.com/cdn/shop/t/836/assets/theme.js?v=42413812433951315901725913278" defer="defer"></script>
 
   <!-- BEGIN GCR Badge Code -->
   <!-- <script src="https://apis.google.com/js/platform.js?onload=renderBadge"
@@ -8734,23 +8301,23 @@ document.addEventListener('alpine:init', () => {
 </script>
 <!-- Bing Events -->
 
-<!-- <link href="//www.aventon.com/cdn/shop/t/814/assets/splide.min.css?v=97726140279251456091721242904" rel="stylesheet" type="text/css" /> -->
+<!-- <link href="//www.aventon.com/cdn/shop/t/836/assets/splide.min.css?v=97726140279251456091725913271" rel="stylesheet" type="text/css" /> -->
 <!-- Vendor Modules -->
 
-<script src="//www.aventon.com/cdn/shop/t/814/assets/bundle.vendors.js?v=145752276616415586371721242756" type="text/javascript"></script>
+<script src="//www.aventon.com/cdn/shop/t/836/assets/bundle.vendors.js?v=163022600983063134291725913129" type="text/javascript"></script>
 
 <!-- Common Modules -->
 
-<script src="//www.aventon.com/cdn/shop/t/814/assets/bundle.common.js?v=118688585461837253101721242745" type="text/javascript"></script>
+<script src="//www.aventon.com/cdn/shop/t/836/assets/bundle.common.js?v=57146713806914490291725913117" type="text/javascript"></script>
 
 <!-- Layout Modules -->
 
-<script src="//www.aventon.com/cdn/shop/t/814/assets/bundle.main.js?v=5557888659563134291721242747" type="text/javascript"></script>
+<script src="//www.aventon.com/cdn/shop/t/836/assets/bundle.main.js?v=98591360435429649301725913120" type="text/javascript"></script>
 
 <!-- Template Modules -->
 
     
-    <script src="//www.aventon.com/cdn/shop/t/814/assets/bundle.page.js?v=111603181540343972631721242749" type="text/javascript"></script>
+    <script src="//www.aventon.com/cdn/shop/t/836/assets/bundle.page.js?v=111603181540343972631725913122" type="text/javascript"></script>
 
 
 </body>
