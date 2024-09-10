@@ -215,7 +215,7 @@ jQuery(window).on('load',  function() {
 			<div class="modules-smart-search" style="display:none;">
 				<div style="position: relative;">
 					<div class="container">
-						<form id="" action="/en/search" method="get" class="form-search">
+						<form id="" action="/search" method="get" class="form-search">
 							<div class="finder">
 								<input type="text" name="q" id="" class="search-query input-medium" size="25" value="" placeholder="search Navicat.com">
 							</div>
@@ -444,6 +444,7 @@ jQuery(window).on('load',  function() {
 							<ul>
 								<li><a href="/store/maintenance">Software Maintenance</a></li>
 								<li><a href="/store/upgrade">Upgrades</a></li>
+								<li><a href="/store/non-commercial">Non-Commercial Licenses</a></li>
 								<li><a href="/store/site-license">Site Licenses</a></li>
 								<li><a href="/store/offline-order">Offline Orders</a></li>
 								<li><a href="/unsubscribe">Unsubscribe</a></li>
@@ -512,31 +513,30 @@ jQuery(window).on('load',  function() {
 
 		</div>
 	</div>
-	<div class="cookies-container" style="">
-		<div class="cookies-inner container">
-			<div class="row">
-				<div class="col-md-9 col-xs-9 text-div">
-					We use cookies to ensure its efficient functioning. Read about how we use cookies <a href='/GDPR'>here</a>. By continuing to use this site, you are giving us your consent to do this.				</div>
-				<div class="col-md-3 col-xs-3 img-div"><img id="agree-btn" src="/images/cookie_cancel_icon.png" /></div>
+			<div class="consent-banner-background" style="">
+			<div class="consent-banner">
+				<p class="consent-banner-title">Our site uses cookies.</p>
+				<p class="consent-banner-content">We use cookies to ensure its efficient functioning. Read about how we use cookies <a class='default-links' href='/GDPR'>here</a>. By continuing to use this site, you are giving us your consent to do this.</p>
+				<div class="consent-banner-button-container">
+					<div class="button consent-banner-button agree-btn">Accept</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</body>
+	</body>
 
 </html>
 
-<script>jQuery("body").addClass("consent-banner");</script><script>
+<script>
 	/*Consent Banner*/
-	jQuery("#agree-btn").click(function() {
+	jQuery(".agree-btn").click(function() {
 		gtag('consent', 'update', {
 			'ad_storage': 'granted',
 			'ad_user_data': 'granted',
 			'ad_personalization': 'granted',
 			'analytics_storage': 'granted'
 		});
-		jQuery(".cookies-container").hide();
+		jQuery(".cookies-container, .consent-banner-background").hide();
 		setCookie("consent", "agreed", 30)
-		jQuery("body").removeClass("consent-banner");
 	});
 
 	function setCookie(cname, cvalue, exdays) {
