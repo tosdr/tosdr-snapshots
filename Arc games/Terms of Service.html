@@ -62,8 +62,8 @@
 	if(!pageInfo) var pageInfo = {};
 	pageInfo['lang'] = "en";
 	pageInfo['locale'] = "en_US";
-	pageInfo['country_code'] = "GB";
-	pageInfo['country_area'] = "eu";
+	pageInfo['country_code'] = "US";
+	pageInfo['country_area'] = "us";
 	pageInfo['country_coppa_exempt'] = null;
 	pageInfo['show_cookie_policy'] = true;
 	pageInfo['browser'] = false;
@@ -114,21 +114,28 @@
 <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadRecaptchaCallback&render=explicit&hl=en" async defer></script>
 
 <script>
-  var globalData = {"lang":"en","corpUrl":"https:\/\/www.arcgames.com","accountArcUrl":"https:\/\/www.arcgames.com","apiBaseUrl":"https:\/\/api.arcgames.com","scrubbedUserData":null,"isLoggedIn":false,"userip":868455900,"isOnClient":false,"isOnArcClientApp":false,"isMobile":false};
+  var globalData = {"lang":"en","corpUrl":"https:\/\/www.arcgames.com","accountArcUrl":"https:\/\/www.arcgames.com","apiBaseUrl":"https:\/\/api.arcgames.com","paymentBaseUrl":"https:\/\/payment.arcgames.com","scrubbedUserData":null,"isLoggedIn":false,"userip":3461415120,"isOnClient":false,"isOnArcClientApp":false,"isMobile":false};
 </script>
 
 
-	</head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/lfx1fam.css"></head>
 
-	<body >
-
-<!-- style="background: #001b48 url() 50%, 0;" -->
-<div id="fb-root"></div>
-<div class="alert alert-danger fade" role="alert" id="js_facebookError" style="text-align: center; display:none;">
-  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-  <p></p>
-</div>
 <script>
+$(document).ready(function() {
+	init_global_sign();
+});
+</script>
+<body >
+
+	<!-- style="background: #001b48 url() 50%, 0;" -->
+		<div id="fb-root"></div>
+	<div class="alert alert-danger fade" role="alert" id="js_facebookError" style="text-align: center; display:none;">
+	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+	<p></p>
+	</div>
+	<script>
 var notAuthorized = "We're sorry, you must accept permission from our Facebook app to continue with login";
 var showFBError = function(msg) {
 	var js_facebookError = $('#js_facebookError');
@@ -242,194 +249,67 @@ FBLogin.init({
 </script>
 
 
-<script type="application/json" id="json-flash-actions">[]</script>
+	<script type="application/json" id="json-flash-actions">[]</script>
 
+		
+	
+			<script>
+			// Some default data for generic pages
+			const specificGameData = typeof localGameData === "undefined" ? {} : localGameData;
+			const gameData = {
+				...{
+					gameName: "Arc Games",
+					brandLogo: "https://pwimages-a.akamaihd.net/arcportal_static/images/header_logo/arc_games.webp",
+					links: [
+						{
+							url: "/en/storefront",
+							caption: "Store",
+							props: {
+								"className": "js-track-generic-interaction-link-internal",
+								"data-track-interaction-category": "info",
+								"data-track-interaction-action": "info_header_link_about"
+							}
+						}, {
+							url: "https://support.arcgames.com/hc/en/",
+							caption: "Support",
+							target: "_blank"
+						}
+					],
+					userComponents: {
+						"user": {
+														signInAction: { type: "url", action: `/en/pwe-oauth/login?src=${encodeURI(window.location.href)}` },
+							signOutAction: { type: "url", action: `/en/sign/out?src=${encodeURI(window.location.href)}` }
+						},
+						"languages": ["en", "de", "fr", "it", "ru", "es"]
+					},
+					ctaComponent: {
+						secondary: {
+							caption: "Download Client",
+							props: {
+								as: "link",
+								href: `${window.location.origin}/download`,
+							}
+						}
+					}
+				},
+				...specificGameData
+			}
+		</script>
 
-<div class="push-down-message" id="js_pushDownBrowserMessage">
-	<div class="container">You're using an unsupported web browser. Some features may not work correctly. Please check out our <a href="https://www.arcgames.com/en/about/supported-browsers">list of supported browsers</a> for the best experience.		<span class="ico-line-vertical"></span>
-		<a href="#~" class="dismiss-push-down-message">Dismiss</a>
-	</div>
-</div>
-<header class="header"  id="header-arcgames">
-	<div class="user-bar">
-		<div class="user-bar-inner clearfix">
-			<ul>
-									<li class="shopping-cart" id="js_shopping_cart_icon" style="display: none;"><a href="https://payment.arcgames.com/en/bodega/cart"><span><b></b></span></a></li>
-										<li class="email js_unreadMessageNumBlock" style="display: none">
-						<a href=""><span><b class="js_unreadMessageNum">0</b></span></a>
-					</li>
-								<li class="welcome dropdown">
-					<div id="fb-load-container"><div id="fb-load-info"></div></div>
-					<span id="js_user_login" class="user-login " data-toggle="">
-						<a 
-															href="https://www.arcgames.com/en/sign/in"
-								aria-label="user info"
-								class="un_logined"
-													>
-							<i class="ico-user"></i>
-							<span>Sign in</span>
-						</a>
-						or						<a
-															href="https://www.arcgames.com/en/sign/up"
-								aria-label="user info"
-								class="un_logined"
-													>Register</a>
-					</span>
-
-					<div class="user-infos dropdown-menu" id="user-info-dropdown">
-													<div style="display:none;"> 
-	<div id="js_verifyCredentials"> 
-		<section class="web-defender-wrap">
-	<div class="web-defender">
-    	<h2 class="defender-title">Verify Your Credentials</h2>
-        <div class="defender-line"></div>
-        <div class="defender-content">
-        	<div class="arc-defender">
-                <img src="https://pwimages-a.akamaihd.net/arcportal_static/images/web-defender/arc-defender.png" />
-                <h3>Arc Defender</h3>
-            </div>
-            <p class="overview">Looks like you are logging in with a new computer or browser. For your security, please verify your account prior to logging in. We have emailed you a pin to verify you are the owner of this account.</p>
-            <p class="error"></p>
-            <input class="search-text" type="text" name="pin" value="" maxlength="5" data-error="The PIN must be 5 characters long, and contain only letters or numbers." />
-            <p class="overview overview-pin">Please enter the pin we emailed you above</p>
-            <p class="error"></p>
-            <a class="btn-common btn-submit-pin" href="#~" data-url="/en/web-defender/validate-pin" ><span>Submit My Pin</span></a>
-            <p class="error"></p>
-            <a class="bg-btn btn-where-pin" href="#~" data-url="/en/web-defender/resend-pin"><span>Where is My Pin?</span></a>
-            <p class="email-link"><a href="https://support.arcgames.com/hc/en-us/articles/360017620234">What is this and why am I seeing it?</a></p>
-            <div class="defender-line"></div>
-            <a class="bg-btn btn-cancel" href="#~"><span>Cancel</span></a>
-        </div>
-    </div>
-</section>
-	</div> 
-	<div id="js_verifyCredentialsSuccess"> 
-		<section class="web-defender-wrap">
-	<div class="web-defender">
-    	<h2 class="defender-title">Account Verification Successful</h2>
-        <div class="defender-line"></div>
-        <div class="defender-content">
-        	<div class="arc-defender">
-                <img src="https://pwimages-a.akamaihd.net/arcportal_static/images/web-defender/arc-defender.png" />
-                <h3>Arc Defender</h3>
-            </div>
-            <p class="overview">Great! We have verified that you have appropriate access to this account.</p>
-            <p class="error"></p>
-            <a class="btn-common btn-continue-arc" href="#~" data-url="/en/web-defender/continue"><span>Continue to Arcgames</span></a>
-            <p class="email-link"><a href="https://support.arcgames.com/hc/en-us/articles/360017620234">What is this and why am I seeing it?</a></p>
-        </div>
-    </div>
-</section>
-	</div>
-	</div>
-											</div>
-				</li>
-				<li class="languages dropdown"><div class="current-language" data-toggle="dropdown">
-	<a href="#" class="ico-language ico-en" id="languageSelection1">
-		<span>English</span>
-		<i>down</i>
-	</a>
-</div>
-<dl class="dropdown-menu">
-			<dd >
-			<a class='ico-language ico-en ' lang='en' href='/en/about/terms' >
-				<span class="language-text">English</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-de ' lang='de' href='/de/about/terms' >
-				<span class="language-text">Deutsch</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-fr ' lang='fr' href='/fr/about/terms' >
-				<span class="language-text">Fran&ccedil;ais</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-ru ' lang='ru' href='/ru/about/terms' >
-				<span class="language-text">Pусский</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-it ' lang='it' href='/it/about/terms' >
-				<span class="language-text">Italiano</span>
-			</a>
-		</dd>
-			<dd >
-			<a class='ico-language ico-es ' lang='es' href='/es/about/terms' >
-				<span class="language-text">Espa&ntilde;ol</span>
-			</a>
-		</dd>
-	</dl>
-</li>
-								<li class="arc-download">
-					<a href="/en/about/client" class="install-arc btn-install-disabled" style="display: none" data-ga-event-options='{"eventLabel": "install arc", "eventValue": 1}'>
-						<em class="icon-install"></em>
-						<span>Install Arc </span>
-					</a>
-				</li>
-							</ul>
-		</div>
-	</div>
-	<script>
-	$(document).ready(function() {
-		init_global_sign();
-	});
-	</script>
-	<div class="nav-bar">
-	<div class="nav-bar-inner clearfix">
-		<a id="ArcHeaderLogo" class="logo" href="https://www.arcgames.com/en/games">arc logo</a>
-		<nav class="dropdown">
-			<a class="btn-nav-bar" href="#">
-				<span class="ico-bar"></span>
-				<span class="ico-bar"></span>
-				<span class="ico-bar"></span>
-			</a>
-			<ul class="dropdown-content">
-				<li><a id="gameNavLink" href="https://www.arcgames.com/en/games"> GAMES </a></li>
-				<li>
-									<a href="https://www.arcgames.com/en/social/forum" target="_blank"> FORUMS </a>
-				</li>
-				<li><a href="https://www.arcgames.com/en/arc-news"> ARC NEWS </a></li>
-				<li><a href="https://www.arcgames.com/en/supportredirect/app/home/"> SUPPORT </a></li>
-			</ul>
-		</nav>
-		<!--
-		<dl class="install-arc-client" style="display:block">
-			<dt>
-			
-			<a href="https://www.arcgames.com/en/about/client" id="js_whatIsArc" class="highlight">What is Arc?</a>
-			
-				
-			</dt>
-			<dd>
-				<a href="https://www.arcgames.com/download" class="btn-all btn-install-disabled js-gaEventTracking" style="display: none" data-ga-event-options='{"eventLabel": "install arc", "eventValue": 1}'>
-					<span>Install Arc </span>
-				</a>
-			</dd>
-		</dl> -->
-	</div>
-</div>
-		<div class="notification" id="js_emailkey_notification" style="display: none">
-		Your Torchlight product key has been emailed to your Arc registered email address, you can redeem this key in game.		<span class="ico-line-vertical"></span>
-		<a href="#~" class="dismiss-push-down-message">Dismiss</a>
-	</div>
-</header>
-
+		<div id="microsite-header" style="position: sticky; top: 0; z-index:5000"></div>
+		<script defer="defer" src="/wwwarc_assets/dist/MicrositeComponents/Header.js"></script>			
 <div class="misc-module">
         <div class="biscuit-header"></div>
     	<div class="container">
         <!-- body -->
         <section class="module-body">
         <h1 class="policy-header">Terms of Service</h1>
-        <p><strong>THIS DOCUMENT CONTAINS IMPORTANT TERMS AND CONDITIONS APPLICABLE TO YOUR ACCESS AND USE OF OUR WEBSITE AND SERVICES. PLEASE READ THESE TERMS CAREFULLY BEFORE YOU START TO USE THE WEBSITE AND OUR SERVICES. BY ACCESSING OR USING THIS WEBSITE OR DOWNLOADING OR USING ANY GAMES, YOU AGREE TO BE BOUND BY THE TERMS DESCRIBED HEREIN. IF YOU DO NOT AGREE TO ALL OF THESE TERMS, DO NOT USE THIS WEBSITE OR THE GAMES.</strong></p>
-<br type="_moz" />
+        <strong>THIS DOCUMENT CONTAINS IMPORTANT TERMS AND CONDITIONS APPLICABLE TO YOUR ACCESS AND USE OF OUR WEBSITE AND SERVICES. PLEASE READ THESE TERMS CAREFULLY BEFORE YOU START TO USE THE WEBSITE AND OUR SERVICES. BY ACCESSING OR USING THIS WEBSITE OR DOWNLOADING OR USING ANY GAMES, YOU AGREE TO BE BOUND BY THE TERMS DESCRIBED HEREIN. IF YOU DO NOT AGREE TO ALL OF THESE TERMS, DO NOT USE THIS WEBSITE OR THE GAMES.</strong><br type="_moz" />
 <p>THESE TERMS INCLUDE AN AGREEMENT TO RESOLVE DISPUTES BY ARBITRATION ON AN INDIVIDUAL BASIS, WHERE PERMITTED BY APPLICABLE LAW.</p>
 
 <p>Depending on where you reside or acquire goods or services, you may Be entitled to warranties, statutory guarantees or other rights under applicable local laws that cannot be excluded, limited, waived, Disclaimed or modified (&ldquo;Non-excludable rights&rdquo;). Nothing in this Agreement is intended to have or has the effect of excluding, limiting, waiving, disclaiming or modifying any such rights under those local laws.</p>
 
-<p>This document contains the terms and conditions (&ldquo;Terms&rdquo; or &ldquo;Agreement&rdquo;) for governing your access to, and use of, the Arc Games websites located at <a href="https://www.arcgames.com">www.arcgames.com</a>, <a href="https://www.torchlight1.com">www.torchlight1.com</a>, <a href="https://www.torchlight2.com">www.torchlight2.com</a>, <a href="https://www.torchlight3.com">www.torchlight3.com</a>, <a href="https://www.haveanicedeath.com">www.haveanicedeath.com</a>, <a href="https://www.hyperlightbreaker.com">www.hyperlightbreaker.com</a>, <a href="https://www.iplayufogame.com">www.iplayufogame.com</a>, <a href="https://www.playstartrekonline.com">www.playstartrekonline.com</a>, <a href="https://www.playneverwinter.com">www.playneverwinter.com</a><u>,</u> <a href="https://www.playchampionsonline.com">www.playchampionsonline.com</a><u>,</u> <a href="https://www.playpwi.com">www.playpwi.com</a><u>,</u> <a href="https://www.gogigantic.com">www.gogigantic.com</a>, and <a href="http://www.remnantgame.com/">www.remnantgame.com</a> (or any&nbsp;subsequent URL which may replace them), and all officially associated micro-sites, mobile sites, subdomains, directories and subdirectories of such sites (collectively, the &ldquo;Website&rdquo;), any games and game platforms, clients software, downloaded software or servers operated by Arc Games through the Website or otherwise supported by Arc Games on the Website (each, the &ldquo;Game&rdquo;, and collectively, the &ldquo;Games&rdquo;), and all features, functions, software and services offered through this Website. The Website, the Games and the features, functions, software and services offered through this Website collectively constitute the &ldquo;Service.&rdquo;</p>
+<p>This document contains the terms and conditions (&ldquo;Terms&rdquo; or &ldquo;Agreement&rdquo;) for governing your access to, and use of, the Arc Games websites located at <a href="https://www.arcgames.com">www.arcgames.com</a>, <a href="https://www.torchlight1.com">www.torchlight1.com</a>, <a href="https://www.torchlight2.com">www.torchlight2.com</a>, <a href="https://www.torchlight3.com">www.torchlight3.com</a>, <a href="https://www.haveanicedeath.com">www.haveanicedeath.com</a>, <a href="https://www.hyperlightbreaker.com">www.hyperlightbreaker.com</a>, <a href="https://www.iplayufogame.com">www.iplayufogame.com</a>, <a href="https://www.playstartrekonline.com">www.playstartrekonline.com</a>, <a href="https://www.playneverwinter.com">www.playneverwinter.com</a><u>,</u> <a href="https://www.playchampionsonline.com">www.playchampionsonline.com</a><u>,</u> <a href="https://www.playpwi.com">www.playpwi.com</a><u>,</u> <a href="https://www.gogigantic.com">www.gogigantic.com</a>, <a href="http://www.remnantgame.com/">www.remnantgame.com</a>, and <a href="http://www.playfellowship.com/">www.playfellowship.com</a> (or any&nbsp;subsequent URL which may replace them), and all officially associated micro-sites, mobile sites, subdomains, directories and subdirectories of such sites (collectively, the &ldquo;Website&rdquo;), any games and game platforms, clients software, downloaded software or servers operated by Arc Games through the Website or otherwise supported by Arc Games on the Website (each, the &ldquo;Game&rdquo;, and collectively, the &ldquo;Games&rdquo;), and all features, functions, software and services offered through this Website. The Website, the Games and the features, functions, software and services offered through this Website collectively constitute the &ldquo;Service.&rdquo;</p>
 
 <h1><strong>1.</strong><strong>Legal Agreement</strong></h1>
 
@@ -922,8 +802,7 @@ Your Signature (only if this form is notified on paper).</p>
 
 <p>Thank you again for visiting us. We hope you enjoy your stay and take full advantage of the online community we are developing. Please remember that you are a guest and act with the same courtesy and respect that you would expect from other guests.</p>
 
-<p>Last updated: May 30, 2024.</p>
-        </section>           
+<p>Last updated: April 29, 2024.</p>        </section>           
     </div>
 </div>
 <style>
@@ -939,7 +818,7 @@ Your Signature (only if this form is notified on paper).</p>
 	</div>
 	<div class="footer-flexbox__languages">
 		<div class="languages dropup" id="footerLanguage"><div class="current-language" data-toggle="dropdown">
-	<a href="#" class="ico-language ico-en" id="languageSelection2">
+	<a href="#" class="ico-language ico-en" id="languageSelection1">
 		<span>English</span>
 		<i>down</i>
 	</a>
@@ -1076,5 +955,5 @@ Modernizr.load([
 </script>
 
       <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PPSQTXS2"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script type="text/javascript"  src="/wSUWY6w2YMgBdIbSAg/aQEuz8hSGQJm5D/UEtAAzo/W2/gRACF3d1A"></script></body>
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><script type="text/javascript"  src="/JDHZ8c4xL/pLcKJ3NV/twNbjlgW/xA/k3aYmtwpcVrw/VGB1VA/O3p/RRyljUkA"></script></body>
 </html>
