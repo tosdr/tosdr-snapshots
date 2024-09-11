@@ -25,21 +25,21 @@
 
 		
 		
-<link rel="alternate" hreflang="fr-fr" href="https://www.alludo.com/fr/legal/privacy/" />
-		
-<link rel="alternate" hreflang="ja-jp" href="https://www.alludo.com/jp/legal/privacy/" />
-		
-<link rel="alternate" hreflang="es" href="https://www.alludo.com/es/legal/privacy/" />
-		
-<link rel="alternate" hreflang="it-it" href="https://www.alludo.com/it/legal/privacy/" />
+<link rel="alternate" hreflang="zh-Hant-tw" href="https://www.alludo.com/tw/legal/privacy/" />
 		
 <link rel="alternate" hreflang="en" href="https://www.alludo.com/en/legal/privacy/" />
 		
 <link rel="alternate" hreflang="pr-br" href="https://www.alludo.com/br/legal/privacy/" />
 		
-<link rel="alternate" hreflang="zh-Hant-tw" href="https://www.alludo.com/tw/legal/privacy/" />
+<link rel="alternate" hreflang="fr-fr" href="https://www.alludo.com/fr/legal/privacy/" />
+		
+<link rel="alternate" hreflang="es" href="https://www.alludo.com/es/legal/privacy/" />
 		
 <link rel="alternate" hreflang="de-de" href="https://www.alludo.com/de/legal/privacy/" />
+		
+<link rel="alternate" hreflang="it-it" href="https://www.alludo.com/it/legal/privacy/" />
+		
+<link rel="alternate" hreflang="ja-jp" href="https://www.alludo.com/jp/legal/privacy/" />
 		
 	
 
@@ -148,51 +148,7 @@ section.dark, section.dark h4 {color: #fff;}
 
 <script src="/static/common/scripts/jquery-3.6.0.min.js"></script>
 
-<script>
-window.dataLayer = window.dataLayer || [];
-
-window.dataLayer.push = function() {
-    Array.prototype.push.apply(this, arguments);
-    if (arguments[0].event === 'OneTrustGroupsUpdated') {
-        checkOptOutStatus();
-    }
-};
-
-function checkOptOutStatus() {
-    var optOut = true;
-    
-    for (var i = 0; i < window.dataLayer.length; i++) {
-        if (window.dataLayer[i].event === 'OneTrustGroupsUpdated') {
-            var activeGroups = window.dataLayer[i].OnetrustActiveGroups;
-            if (activeGroups && activeGroups.indexOf('C0002') !== -1) {
-                optOut = false;
-            }
-            break;
-        }
-    }
-
-    window["optimizely"] = window["optimizely"] || [];
-    window["optimizely"].push({
-        "type": "optOut",
-        "isOptOut": optOut
-    });
-
-    if (!window.optimizelyLoaded) {
-        var script = document.createElement('script');
-        script.src = "https://cdn.optimizely.com/js/26814980203.js";
-        document.head.appendChild(script);
-        window.optimizelyLoaded = true;
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    if (window.dataLayer.some(function(item) {
-        return item.event === 'OneTrustGroupsUpdated';
-    })) {
-        checkOptOutStatus();
-    }
-});
-</script>
+<script src="https://cdn.optimizely.com/js/26814980203.js"></script>
 </head>
 <body id="" class="responsive night" >
 <div class="modal fade" id="modal-master" tabindex="-1" role="dialog" aria-hidden="true">
