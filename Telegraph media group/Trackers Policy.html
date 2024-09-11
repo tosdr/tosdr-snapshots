@@ -83,7 +83,13 @@
 
 
 
-	<script data-test="structure-data" type="application/ld+json" data-js="main-json-schema">
+	<script type="module">
+  window.RUM_BASE = window.origin;
+  import { sampleRUM } from '/.rum/@adobe/helix-rum-js@%5E2/src/index.js';
+  window.hlx = window.hlx || {};
+  window.hlx.sampleRUM = sampleRUM;
+  sampleRUM();
+</script><script data-test="structure-data" type="application/ld+json" data-js="main-json-schema">
 		{
   "@context" : "https://schema.org",
   "@type" : "NewsArticle",
@@ -111,9 +117,8 @@
       "caption" : "The Telegraph Logo"
     }
   },
-  "isAccessibleForFree" : "True",
+  "isAccessibleForFree" : true,
   "author" : [ ],
-  "image" : [ ],
   "hasPart" : {
     "@type" : "WebPageElement",
     "isAccessibleForFree" : true,
@@ -195,7 +200,7 @@
 
 
     
-<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui.lc-40e00bb29d7cbb1790694d3a7e366920-lc.min.css" type="text/css">
+<link rel="stylesheet" href="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui.lc-309b612b9793712210fad6bb379e20e7-lc.min.css" type="text/css">
 
 
 
@@ -260,7 +265,7 @@
 		
 
 
-<script src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/save-article.lc-57d66c55bf81346d9d8f5253970e9ace-lc.min..js" defer></script>
+<script src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/save-article.lc-da35346c4a5010aa597c8ea6eccdb3bb-lc.min..js" defer></script>
 
 
 	
@@ -281,7 +286,7 @@
 
 	
 		
-	<script src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui.lc-bf450b66a049e22ae62bbf18858c123e-lc.min..js" defer></script>
+	<script src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui.lc-6107b147f9f1865ba25ffe60678a70ce-lc.min..js" defer></script>
 
 
 	
@@ -629,7 +634,7 @@
 		
 	
 	
-		<meta name="tmgads.geo" content="GB"></meta>
+		<meta name="tmgads.geo" content="US"></meta>
 	
 	
 
@@ -1861,6 +1866,20 @@
 
 
 
+<!-- Flags for the save-article functionality
+	tmg.isSaveArticleEnabled: Considered the global flag, adds the save js and controls the large horizontal scroll layout.
+	tmg.isTextNumberedHorizontalScrollEnabled: Controls the text-numbered horizontal scroll layout.
+	tmg.isSmallHorizontalScrollEnabled: Controls the small horizontal scroll layout.
+	tmg.isCollectionsCuratedListEnabled: Controls the curated lists layouts, such as single article image, guide links, article lists.
+	tmg.isCollectionsDynamicListEnabled: Controls the dynamic lists layouts, such as single article image, guide links, article lists.
+-->
+<meta name="tmg.isSaveArticleEnabled" content="false"/>
+<meta name="tmg.isTextNumberedHorizontalScrollEnabled" content="false"/>
+<meta name="tmg.isSmallHorizontalScrollEnabled" content="false"/>
+<meta name="tmg.isCollectionsCuratedListEnabled" content="false"/>
+<meta name="tmg.isCollectionsDynamicListEnabled" content="false"/>
+
+
 
 
 <script>
@@ -1957,15 +1976,22 @@
 
 
 
-<script type="module">
-  window.RUM_BASE = '/';
-  import { sampleRUM } from '/.rum/@adobe/helix-rum-js@^1/src/index.js';
-  window.hlx = window.hlx || {};
-  window.hlx.sampleRUM = sampleRUM;
-  sampleRUM('top');
-  window.addEventListener('load', () => sampleRUM('load'));
-  document.addEventListener('click', () => sampleRUM('click'));
-</script></head>
+	
+<!-- Flags for the save-article functionality
+	tmg.isSaveArticleEnabled: Considered the global flag, adds the save js and controls the large horizontal scroll layout.
+	tmg.isTextNumberedHorizontalScrollEnabled: Controls the text-numbered horizontal scroll layout.
+	tmg.isSmallHorizontalScrollEnabled: Controls the small horizontal scroll layout.
+	tmg.isCollectionsCuratedListEnabled: Controls the curated lists layouts, such as single article image, guide links, article lists.
+	tmg.isCollectionsDynamicListEnabled: Controls the dynamic lists layouts, such as single article image, guide links, article lists.
+-->
+<meta name="tmg.isSaveArticleEnabled" content="false"/>
+<meta name="tmg.isTextNumberedHorizontalScrollEnabled" content="false"/>
+<meta name="tmg.isSmallHorizontalScrollEnabled" content="false"/>
+<meta name="tmg.isCollectionsCuratedListEnabled" content="false"/>
+<meta name="tmg.isCollectionsDynamicListEnabled" content="false"/>
+
+
+</head>
 	
 
 
@@ -2142,7 +2168,7 @@
 					e-navigation-primary-item--first
 					" data-accordion-max-screen-width="1024">
 
-			<a class="e-navigation-primary-item__link" href="/news/" data-track-txt data-test="site-navigation-link">
+			<a class="e-navigation-primary-item__link" href="/news/usa/" data-track-txt data-test="site-navigation-link">
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
@@ -2177,11 +2203,11 @@
 					
 					" data-accordion-max-screen-width="1024">
 
-			<a class="e-navigation-primary-item__link" href="/olympics/" data-track-txt data-test="site-navigation-link">
+			<a class="e-navigation-primary-item__link" href="/us-election/" data-track-txt data-test="site-navigation-link">
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Olympics
+						2024 Elections
 					</span>
 
 					
@@ -2212,116 +2238,11 @@
 					
 					" data-accordion-max-screen-width="1024">
 
-			<a class="e-navigation-primary-item__link" href="/sport/" data-track-txt data-test="site-navigation-link">
+			<a class="e-navigation-primary-item__link" href="/israel-hamas-war/" data-track-txt data-test="site-navigation-link">
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Sport
-					</span>
-
-					
-				</span>
-			</a>
-
-			
-			
-
-		</li>
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		<li class="e-navigation-primary-item
-					
-					
-					
-					
-					" data-accordion-max-screen-width="1024">
-
-			<a class="e-navigation-primary-item__link" href="/business/" data-track-txt data-test="site-navigation-link">
-
-				<span class="e-navigation-primary-item__link-content">
-					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Business
-					</span>
-
-					
-				</span>
-			</a>
-
-			
-			
-
-		</li>
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		<li class="e-navigation-primary-item
-					
-					
-					
-					
-					" data-accordion-max-screen-width="1024">
-
-			<a class="e-navigation-primary-item__link" href="/money/" data-track-txt data-test="site-navigation-link">
-
-				<span class="e-navigation-primary-item__link-content">
-					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Money
-					</span>
-
-					
-				</span>
-			</a>
-
-			
-			
-
-		</li>
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		<li class="e-navigation-primary-item
-					
-					
-					
-					
-					" data-accordion-max-screen-width="1024">
-
-			<a class="e-navigation-primary-item__link" href="/opinion/" data-track-txt data-test="site-navigation-link">
-
-				<span class="e-navigation-primary-item__link-content">
-					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Opinion
+						Israel
 					</span>
 
 					
@@ -2387,11 +2308,81 @@
 					
 					" data-accordion-max-screen-width="1024">
 
-			<a class="e-navigation-primary-item__link" href="/us-election/" data-track-txt data-test="site-navigation-link">
+			<a class="e-navigation-primary-item__link" href="/royal-family/" data-track-txt data-test="site-navigation-link">
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						US election
+						Royals
+					</span>
+
+					
+				</span>
+			</a>
+
+			
+			
+
+		</li>
+	
+
+		
+			
+
+	
+	
+	
+	
+	
+	
+	
+
+		<li class="e-navigation-primary-item
+					
+					
+					
+					
+					" data-accordion-max-screen-width="1024">
+
+			<a class="e-navigation-primary-item__link" href="/sport/" data-track-txt data-test="site-navigation-link">
+
+				<span class="e-navigation-primary-item__link-content">
+					<span class="e-navigation-primary-item__link-text e-navigation-border">
+						Sports
+					</span>
+
+					
+				</span>
+			</a>
+
+			
+			
+
+		</li>
+	
+
+		
+			
+
+	
+	
+	
+	
+	
+	
+	
+
+		<li class="e-navigation-primary-item
+					
+					
+					
+					
+					" data-accordion-max-screen-width="1024">
+
+			<a class="e-navigation-primary-item__link" href="/opinion/" data-track-txt data-test="site-navigation-link">
+
+				<span class="e-navigation-primary-item__link-content">
+					<span class="e-navigation-primary-item__link-text e-navigation-border">
+						Opinion
 					</span>
 
 					
@@ -2496,7 +2487,7 @@
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Lifestyle
+						Life
 					</span>
 
 					
@@ -2531,7 +2522,42 @@
 
 				<span class="e-navigation-primary-item__link-content">
 					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Culture
+						Entertainment
+					</span>
+
+					
+				</span>
+			</a>
+
+			
+			
+
+		</li>
+	
+
+		
+			
+
+	
+	
+	
+	
+	
+	
+	
+
+		<li class="e-navigation-primary-item
+					
+					
+					
+					
+					" data-accordion-max-screen-width="1024">
+
+			<a class="e-navigation-primary-item__link" href="/business/" data-track-txt data-test="site-navigation-link">
+
+				<span class="e-navigation-primary-item__link-content">
+					<span class="e-navigation-primary-item__link-text e-navigation-border">
+						Business
 					</span>
 
 					
@@ -2577,921 +2603,6 @@
 			
 
 		</li>
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		<li class="e-navigation-primary-item
-					
-					
-					
-					
-					" data-accordion-max-screen-width="1024">
-
-			<a class="e-navigation-primary-item__link" href="/podcasts/" data-track-txt data-test="site-navigation-link">
-
-				<span class="e-navigation-primary-item__link-content">
-					<span class="e-navigation-primary-item__link-text e-navigation-border">
-						Podcasts
-					</span>
-
-					
-				</span>
-			</a>
-
-			
-			
-
-		</li>
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
-	
-
-		
-			
-
-	
-	
-	
-	
-	
-	
 	
 
 		
@@ -3562,16 +2673,16 @@
 							<button class="e-site-header-country-selector__name" data-js="country-selector__button">
 
 								
-								
 
     <span data-js="country-selector__button-icon" class="e-site-header-country-selector__icon-flag">
-        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
+        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
     </span>
     <span data-js="country-selector__button-text" data-test="country-selector-button-text">
-        UK Edition
+        US Edition
     </span>
 
 
+								
 
 							</button>
 							<svg class="e-site-header-country-selector__icon accordion__arrow-icon  tmg-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5">
@@ -3582,18 +2693,18 @@
 						<ul class="e-site-header-country-selector__list">
 
 							
+							
 
-        <li class="e-site-header-country-selector__item" data-track-wrapper="country-selector-us">
-            <a href="/us/" class="e-site-header-country-selector__link" data-country="us" data-js="country-selector-link" data-track-txt data-track-destination="/us/">
+        <li class="e-site-header-country-selector__item" data-track-wrapper="country-selector-uk">
+            <a href="/" class="e-site-header-country-selector__link" data-country="uk" data-js="country-selector-link" data-track-txt data-track-destination="/">
                 <span class="e-site-header-country-selector__title">
-                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
-                    US Edition
+                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
+                    UK Edition
                 </span>
             </a>
         </li>
 
 
-							
 
 						</ul>
 					</div>
@@ -3620,16 +2731,7 @@
 										<span class="e-site-header-button__link-text e-site-header-button__link-text--message">
 											Subscribe now
 										</span>
-										<span class="e-site-header-button__link-text e-site-header-button__link-text--description">
-											Free for one month
-										</span>
 									</span>
-
-									
-	<svg class="e-site-header-button__arrow  tmg-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5">
-		<path d="M.312 0L5 2.353 9.687 0 10 .294 5 5 0 .294.312 0z"/>
-	</svg>
-
 								</a>
 							</div>
 						
@@ -3656,7 +2758,7 @@
 		</div>
 
 		
-		
+
 		
 
 		
@@ -3701,16 +2803,16 @@
 							<button class="all-section-country-selector__name" data-js="country-selector__button">
 
 								
-								
 
     <span data-js="country-selector__button-icon" class="all-section-country-selector__icon-flag">
-        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
+        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
     </span>
     <span data-js="country-selector__button-text" data-test="country-selector-button-text">
-        UK Edition
+        US Edition
     </span>
 
 
+								
 
 							</button>
 							<svg class="all-section-country-selector__icon accordion__arrow-icon  tmg-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5">
@@ -3721,18 +2823,18 @@
 						<ul class="all-section-country-selector__list">
 
 							
+							
 
-        <li class="all-section-country-selector__item" data-track-wrapper="country-selector-us">
-            <a href="/us/" class="all-section-country-selector__link" data-country="us" data-js="country-selector-link" data-track-txt data-track-destination="/us/">
+        <li class="all-section-country-selector__item" data-track-wrapper="country-selector-uk">
+            <a href="/" class="all-section-country-selector__link" data-country="uk" data-js="country-selector-link" data-track-txt data-track-destination="/">
                 <span class="all-section-country-selector__title">
-                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
-                    US Edition
+                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
+                    UK Edition
                 </span>
             </a>
         </li>
 
 
-							
 
 						</ul>
 					</div>
@@ -3775,6 +2877,16 @@
 								<li class="all-sections__secondary-item">
 									<a class="all-sections__link" href="/news/uk/" data-track-txt>
 										UK news
+									</a>
+								</li>
+
+							
+
+								
+
+								<li class="all-sections__secondary-item">
+									<a class="all-sections__link" href="/conservative-leadership-election/" data-track-txt>
+										Tory leadership
 									</a>
 								</li>
 
@@ -3868,22 +2980,17 @@
 									</a>
 								</li>
 
-							</ul>
-
-						</li>
-					
-						<li class="all-sections__item " id="olympics" data-accordion-max-screen-width="1024">
-							<a class="all-sections__link all-sections__link--is-primary" href="/olympics/" data-track-txt data-test="all-sections-link">
-								<span class="all-sections__link-heading">Olympics</span>
+							
 
 								
-							</a>
 
-							
-							
+								<li class="all-sections__secondary-item">
+									<a class="all-sections__link" href="/royal-family/" data-track-txt>
+										Royals
+									</a>
+								</li>
 
-							
-							
+							</ul>
 
 						</li>
 					
@@ -4313,7 +3420,7 @@
 								</li>
 
 								<li class="all-sections__secondary-item">
-									<a class="all-sections__link" href="https://www.telegraph.co.uk/world-news/2024/07/31/russia-iran-war-diplomacy/" data-track-txt>
+									<a class="all-sections__link" href="https://www.telegraph.co.uk/world-news/2024/09/06/ukraine-russia-kursk-war-advance/" data-track-txt>
 										Daily podcast
 									</a>
 								</li>
@@ -4853,16 +3960,16 @@
 								<span class="all-sections__link-heading" data-js="country-selector__button">
 
 									
-									
 
     <span data-js="country-selector__button-icon" class="all-sections-country-selector__icon-flag">
-        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" class="all-sections-country-selector__icon-flag-link" data-test="country-selector-flag-icon"/>
+        <img src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" class="all-sections-country-selector__icon-flag-link" data-test="country-selector-flag-icon"/>
     </span>
     <span data-js="country-selector__button-text" data-test="country-selector-button-text">
-        UK Edition
+        US Edition
     </span>
 
 
+									
 
 								</span>
 								<svg class="all-sections__arrow-icon accordion__arrow-icon  tmg-svg-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 5">
@@ -4872,18 +3979,18 @@
 							<ul class="all-sections__secondary-list accordion__content" data-test="all-sections-secondary-list" data-accordion-content="">
 
 								
+								
 
-        <li class="all-sections__secondary-item" data-track-wrapper="country-selector-us">
-            <a href="/us/" class="all-sections__link" data-country="us" data-js="country-selector-link" data-track-txt data-track-destination="/us/">
+        <li class="all-sections__secondary-item" data-track-wrapper="country-selector-uk">
+            <a href="/" class="all-sections__link" data-country="uk" data-js="country-selector-link" data-track-txt data-track-destination="/">
                 <span class="all-sections-country-selector__wrapper">
-                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/USA-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
-                    US Edition
+                    <img class="e-site-header-country-selector__icon-flag" src="/etc.clientlibs/settings/wcm/designs/telegraph/core/clientlibs/ui/dist/static/resources/images/flags/UK-SVG.svg" fetchpriority="high" role="presentation" data-test="country-selector-flag-icon"/>
+                    UK Edition
                 </span>
             </a>
         </li>
 
 
-								
 
 							</ul>
 						</li>
@@ -5169,7 +4276,7 @@
 						</li>
 					
 						<li class="all-sections__more-item" data-test="all-sections-more-item">
-							<a class="all-sections__more-link" href="https://tickets.telegraph.co.uk/" data-test="all-sections-more-link">
+							<a class="all-sections__more-link" href="https://tickets.telegraph.co.uk/?utm_source=TMG+main&utm_medium=hamburger+menu&utm_campaign=evergreen" data-test="all-sections-more-link">
 								Tickets
 							</a>
 
@@ -5684,7 +4791,7 @@
 
 
 
-	<time class="e-published-date u-meta " itemprop="datePublished" datetime="2024-07-03T10:00+0100" data-test="time">
+	<time class="e-published-date u-meta " datetime="2024-07-03T10:00+0100" data-test="time">
 		3 July 2024 • 10:00am
 	</time>
 
@@ -5895,21 +5002,26 @@
 
 	
 
-	
-		<button id="save-article-icon-AzYjql2nG9Jh" class="e-save-article " data-test="save-article" data-save-article='{ "id": "AzYjql2nG9Jh", "text": { "save": "Save", "saved": "Saved" }, "articleListType": "" }'>
+	<button id="save-article-icon" class="e-save-article " data-test="save-article" data-save-article='{ "id": "AzYjql2nG9Jh", "text": { "save": "Save", "saved": "Saved" } }'>
+
+		
 			
 
 			
-		<svg class="e-save-article__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-			<title>Save</title>
-			<path class="ribbon--outline" d="M10 13.1453L15.5 17.1453V3C15.5 2.72386 15.2761 2.5 15 2.5H5C4.72386 2.5 4.5 2.72386 4.5 3V17.1453L10 13.1453ZM3 18V3C3 1.89543 3.89543 1 5 1H15C16.1046 1 17 1.89543 17 3V18L15.5 19L10 15L4.5 19L3 18Z"/>
-			<path class="ribbon--inside" d="M10.4411 14.3934L10 14.0726L9.55887 14.3934L4.48136 18.0862L3.75 17.5986V3C3.75 2.30964 4.30964 1.75 5 1.75H15C15.6904 1.75 16.25 2.30964 16.25 3V17.5986L15.5186 18.0862L10.4411 14.3934Z"/>
-		</svg>
 
 			
-		</button>
-	
+	<svg class="e-save-article__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+		<title>Save</title>
+		<path class="ribbon--outline" d="M10 13.1453L15.5 17.1453V3C15.5 2.72386 15.2761 2.5 15 2.5H5C4.72386 2.5 4.5 2.72386 4.5 3V17.1453L10 13.1453ZM3 18V3C3 1.89543 3.89543 1 5 1H15C16.1046 1 17 1.89543 17 3V18L15.5 19L10 15L4.5 19L3 18Z"/>
+		<path class="ribbon--inside" d="M10.4411 14.3934L10 14.0726L9.55887 14.3934L4.48136 18.0862L3.75 17.5986V3C3.75 2.30964 4.30964 1.75 5 1.75H15C15.6904 1.75 16.25 2.30964 16.25 3V17.5986L15.5186 18.0862L10.4411 14.3934Z"/>
+	</svg>
 
+			
+		
+
+		
+
+	</button>
 	
 
 
@@ -6022,9 +5134,6 @@
 						" itemprop="articleBody" data-js="article-body" data-test="tpl-article-body-recipe">
 
 						
-				
-
-				
 
 				
 
@@ -6865,7 +5974,7 @@
   
 </div>
 </div>
-<figure itemscope="true" data-test="article-body-image" itemtype="https://schema.org/ImageObject" data-js="article-body-image" itemprop="image" class="article-body-image section">
+<figure data-js="article-body-image" data-test="article-body-image" class="article-body-image section">
 
 
 
@@ -6890,14 +5999,6 @@
 	
 	
 
-	
-
-	
-	<meta itemprop="url" content="/content/dam/spark/cookie-manager.jpg"/>
-	<meta itemprop="width" content="2843"/>
-	<meta itemprop="height" content="1116"/>
-
-	
 	
 
 
@@ -8296,11 +7397,6 @@ N.B. Telegraph Travel also uses the services of smaller organisations and indivi
 
 
 
-<script type="module">
-  window.RUM_BASE = '/';
-  import { sampleRUM } from '/.rum/@adobe/helix-rum-js@^1/src/index.js';
-  sampleRUM('lazy');
-  sampleRUM('cwv');
-</script></body>
+</body>
 
 </html>
