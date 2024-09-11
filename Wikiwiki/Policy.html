@@ -12,10 +12,26 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-param" content="_csrf">
-<meta name="csrf-token" content="-n4HDdiQ3gNZ62u9YJBudD73raeROWFdM20gOwcwaTSoPHF5ufuMMxC0IowM2CAlWp3b4vx3Mj5gHRILM3cHDA==">
+<meta name="csrf-token" content="AsYf1cys_QSx5OsXx7q7tLupuuup7L7dMYzmx8UWYXpPoXThoPy3Q-ecuW2t3cHA78jOmMyV5LgI-6qqs0I7NA==">
     <title>利用規約 - WIKIWIKI</title>
     <link rel="shortcut icon" href="/common/favicon.ico?v=2" type="image/x-icon">
-        <link href="/pa/assets/app-ae06cc2314586f4bf287.min.css" rel="stylesheet"></head>
+        <link href="/pa/assets/app-ae06cc2314586f4bf287.min.css" rel="stylesheet">
+<style>.button-container {
+    display: flex;
+    justify-content: center;
+}
+.fixed-size-btn {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    width: 250px;
+    height: 60px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.fixed-size-btn:active {
+    transform: none;
+    box-shadow: none;
+}</style></head>
 <body>
 <nav class="p-sp-nav" id="sp-nav" aria-hidden="true">
     <div class="p-sp-nav__title">
@@ -128,7 +144,6 @@
     </div>
                 
 <main class="l-contents__main">
-
     <article class="p-entry">
         <header class="p-entry__header">
             <h1>利用規約</h1>
@@ -315,6 +330,16 @@
                 <li>本規約またはサービス利用契約に起因し、または関連する一切の紛争については、大阪地方裁判所を第一審の専属的合意管轄裁判所とします。</li>
             </ol>
             <hr>
+            <div class="button-container">
+                <button id="agreeButton" type="button" class="btn btn-danger fixed-size-btn" style="display: none;">
+                    <i class="fa-regular fa-square fa-fw fa-lg"></i>利用規約に同意します
+                </button>
+            </div>
+            <hr>
+            <button class="btn btn-dark" data-toggle="collapse" data-target="#revision-history" aria-expanded="false" aria-controls="revision-history" style="margin-bottom: 10px">
+                <i class="fa-solid fa-rectangle-history fa-fw"></i>改定履歴
+            </button>
+            <div class="collapse" id="revision-history">
             <p>2005年9月18日制定</p>
             <p>2005年11月5日改定</p>
             <p>2006年3月21日改定</p>
@@ -327,9 +352,9 @@
             <p>2008年2月19日改定</p>
             <p>2008年3月29日改定</p>
             <p>2016年2月4日全面改定</p>
+            </div>
         </div>
     </article>
-
 </main>
                 <aside class="l-contents__aside children-spaced">
     <section class="p-information hidden-xs hidden-sm">
@@ -406,5 +431,28 @@
 </div>
 
 <script src="https://cse.google.com/cse.js?cx=bcf91dfa96f3c4721"></script>
-<script src="/pa/assets/app-7eada78264c1bd270e33.min.js"></script></body>
+<script src="/pa/assets/app-7eada78264c1bd270e33.min.js"></script>
+<script>jQuery(function ($) {
+    var agreeButton = $('#agreeButton');
+    function styleAgreeButton(isAgreed) {
+        if (isAgreed) {
+            agreeButton.addClass('active');
+            agreeButton.removeClass('btn-danger').addClass('btn-success');
+            agreeButton.find('i').removeClass('fa-square').addClass('fa-square-check');
+        } else {
+            agreeButton.removeClass('active');
+            agreeButton.removeClass('btn-success').addClass('btn-danger');
+            agreeButton.find('i').removeClass('fa-square-check').addClass('fa-square');
+        }
+    }
+    var usageStatistics = JSON.parse(localStorage.getItem('usageStatistics')) || {agreementStatus: false};
+    styleAgreeButton(!!usageStatistics.agreementStatus);
+    agreeButton.show().on('click', function() {
+        var isAgreed = agreeButton.hasClass('active');
+        isAgreed = !isAgreed;
+        usageStatistics.agreementStatus = isAgreed;
+        localStorage.setItem('usageStatistics', JSON.stringify(usageStatistics));
+        styleAgreeButton(isAgreed);
+    });
+});</script></body>
 </html>
