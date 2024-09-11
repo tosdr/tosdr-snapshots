@@ -3168,9 +3168,9 @@ a#btnResources[aria-expanded="true"]:after {
                                                     <li class="ez__childBackground">
                                                         <div class="ez__megaMenu--item">
                                                             <div class="ez__megaMenuItemHead">
-                                                                <span>Zoom One</span>
+                                                                <span>Zoom Workplace</span>
                                                                 <p>Everything you need to work together, all in one place.</p>
-                                                                <p><a href="https://explore.zoom.us/en/collaboration-tools/">Explore Zoom One’s Collaboration Tools</a></p>
+                                                                <p><a href="https://explore.zoom.us/en/collaboration-tools/">Explore Zoom Workplace's Collaboration Tools</a></p>
                                                             </div>
                                                             <div class="ez__megaMenuItemBody">
                                                                 <ul>
@@ -4153,7 +4153,7 @@ Support Center</a>
 <br>
 <div class="footer-copyright">
 <div class="info">
-Copyright ©2023 Zoom Video Communications, Inc. All rights reserved. <a href="https://explore.zoom.us/en/terms/">Terms</a>
+Copyright ©2024 Zoom Video Communications, Inc. All rights reserved. <a href="https://explore.zoom.us/en/terms/">Terms</a>
 <a href="https://explore.zoom.us/en/privacy/">Privacy</a>
 <a href="https://explore.zoom.us/en/trust/">Trust Center</a>
 <a href="https://explore.zoom.us/en/acceptable-use-guidelines/">Acceptable Use Guidelines</a>
@@ -4214,12 +4214,7 @@ Copyright ©2023 Zoom Video Communications, Inc. All rights reserved. <a href="h
 <script>
  if(window.location.href.indexOf("onlycontent=1") > -1) {
                 var sheet = document.createElement('style')
-                sheet.innerHTML = "#solvvy-lazy-button,#solvvy-container, #ada-entry, #onetrust-consent-sdk { display:none !important; }";
-                document.body.appendChild(sheet);
-}
- if(window.location.href.indexOf("nohyperlink=1") > -1) {
-                var sheet = document.createElement('style')
-                sheet.innerHTML = "#solvvy-lazy-button { display:none !important; }";
+                sheet.innerHTML = "#ada-entry, #onetrust-consent-sdk { display:none !important; }";
                 document.body.appendChild(sheet);
 }
 </script>
@@ -4238,7 +4233,6 @@ function menuItemposition() {
   x.querySelector('#'+'resourcesDropdown').style.left= -menuItemPos+"px";*/
 }
 </script>
-<script nonce="" type="text/javascript" src="https://cdn.solvvy.com/deflect/customization/zoom/lazy-solvvy.js" defer=""></script>
 <script>
 // Change logo links based on current language
 try{
@@ -4455,6 +4449,24 @@ window.dataLayer.push({
           );
         }
           if (data.isLogin) {
+/****** Paid User Deals *******/
+$(".paid_user_deal_hero a.ez__btnPrimary").hide();
+var paidUserPlanType= [1098,1096,42,43,119,120,12030,12025,12024,12023,12022,12021,12020,12019,12018,12017,12016,12015,12014,12013,12012,12011,12010,12009,12008,12007,12006,12005,12004,12003,12002,12001];
+
+if( data.accountPlanType && ( jQuery.inArray(data.accountPlanType, paidUserPlanType) != -1)){
+    $(".paid_user_deals_multi_cards span.ez__linkPrimary").text("Redeem offer");
+    var cta_link0 = "https://www.adobe.com/promo/ZoomCCSN.html?sdid=ZXL8DTVF&mv=affiliate";
+    var cta_link1 = "https://www.godaddy.com/websites/website-builder?isc=50WAMZOOM&utm_source=zoom&utm_medium=postdownload&utm_campaign=zoomgdwam24";
+    $(".cta_only_link a").each(function(index) { 
+            if((index != undefined) && (index == 0)){ $(this).attr("href",cta_link0); }
+            if((index != undefined) && (index == 1)){ $(this).attr("href",cta_link1); }
+        });  
+}else{
+    var cta_link = "https://zoom.us/buy?cartid=acsfBwwEUn&itm_source=retention&itm_medium=landingpage&itm_content=partnerships&itm_campaign=ZoomCustomerDeals&zcid=16390";
+    $(".paid_user_deals_multi_cards span.ez__linkPrimary").text("Upgrade to access");
+    $(".paid_user_deals_multi_cards a").attr("href",cta_link);
+}
+/****** Paid User Deals *******/
 $(".ez__signedInItems").css('display', 'flex');
 $(".ez__signedOutItems").css('display', 'none');
 $(".user-signedout").css('display', 'none');
