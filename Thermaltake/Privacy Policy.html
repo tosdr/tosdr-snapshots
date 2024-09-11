@@ -568,7 +568,7 @@ table>tbody>tr>th, table>tfoot>tr>th, table>tbody>tr>td, table>tfoot>tr>td{
             </div>
 			        </div>
 	    <script>
-        window.checkout = {"shoppingCartUrl":"https:\/\/www.thermaltake.com\/checkout\/cart\/","checkoutUrl":"https:\/\/www.thermaltake.com\/checkout\/","updateItemQtyUrl":"https:\/\/www.thermaltake.com\/checkout\/sidebar\/updateItemQty\/","removeItemUrl":"https:\/\/www.thermaltake.com\/checkout\/sidebar\/removeItem\/","imageTemplate":"Magento_Catalog\/product\/image_with_borders","baseUrl":"https:\/\/www.thermaltake.com\/","minicartMaxItemsVisible":5,"websiteId":"1","maxItemsToDisplay":10,"storeId":"1","storeGroupId":"1","customerLoginUrl":"https:\/\/www.thermaltake.com\/customer\/account\/login\/referer\/aHR0cHM6Ly93d3cudGhlcm1hbHRha2UuY29tL3ByaXZhY3ktcG9saWN5LWNvb2tpZS1yZXN0cmljdGlvbi1tb2Rl\/","isRedirectRequired":false,"autocomplete":"off","captcha":{"user_login":{"isCaseSensitive":false,"imageHeight":50,"imageSrc":"","refreshUrl":"https:\/\/www.thermaltake.com\/captcha\/refresh\/","isRequired":false,"timestamp":1722509776}}};
+        window.checkout = {"shoppingCartUrl":"https:\/\/www.thermaltake.com\/checkout\/cart\/","checkoutUrl":"https:\/\/www.thermaltake.com\/checkout\/","updateItemQtyUrl":"https:\/\/www.thermaltake.com\/checkout\/sidebar\/updateItemQty\/","removeItemUrl":"https:\/\/www.thermaltake.com\/checkout\/sidebar\/removeItem\/","imageTemplate":"Magento_Catalog\/product\/image_with_borders","baseUrl":"https:\/\/www.thermaltake.com\/","minicartMaxItemsVisible":5,"websiteId":"1","maxItemsToDisplay":10,"storeId":"1","storeGroupId":"1","customerLoginUrl":"https:\/\/www.thermaltake.com\/customer\/account\/login\/referer\/aHR0cHM6Ly93d3cudGhlcm1hbHRha2UuY29tL3ByaXZhY3ktcG9saWN5LWNvb2tpZS1yZXN0cmljdGlvbi1tb2Rl\/","isRedirectRequired":false,"autocomplete":"off","captcha":{"user_login":{"isCaseSensitive":false,"imageHeight":50,"imageSrc":"","refreshUrl":"https:\/\/www.thermaltake.com\/captcha\/refresh\/","isRequired":false,"timestamp":1726014977}}};
     </script>
     <script type="text/x-magento-init">
     {
@@ -662,7 +662,7 @@ table>tbody>tr>th, table>tfoot>tr>th, table>tbody>tr>td, table>tfoot>tr>td{
 </script>
 </div><div class="column main"><div class="magestore-bannerslider">
     </div>
-<input name="form_key" type="hidden" value="cc3RCh5wbg0ku6cZ" /><div id="authenticationPopup" data-bind="scope:'authenticationPopup', style: {display: 'none'}">
+<input name="form_key" type="hidden" value="ASklOLtMsMfCpKj4" /><div id="authenticationPopup" data-bind="scope:'authenticationPopup', style: {display: 'none'}">
         <script>window.authenticationPopup = {"autocomplete":"off","customerRegisterUrl":"https:\/\/www.thermaltake.com\/customer\/account\/create\/","customerForgotPasswordUrl":"https:\/\/www.thermaltake.com\/customer\/account\/forgotpassword\/","baseUrl":"https:\/\/www.thermaltake.com\/"}</script>    <!-- ko template: getTemplate() --><!-- /ko -->
     <script type="text/x-magento-init">
         {
@@ -1350,6 +1350,78 @@ class="hidden">Instagram</span></a></li>
                 }
             }
         }
+</script>
+
+<div id="popup-modal" style="display:none">
+    <div class="content bg-white">
+        <br>
+        <p style="font-size: 17px;">  <span class="info">We have detected a different Store for You, According to your country.</span></p>
+        <p style="font-size: 17px;"> <span class="info">Shopping From <b style="color: #e26703;">United States</b> ?</span>
+        <span class="info"> Looking for <b style="color: #e26703;">USA</b> Store.</span> </p>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'geomodal'
+        ],
+        function(
+            $,
+            geomodal
+        ){            
+            var geoipbtnText = $.mage.__('Proceed to %s Store.');            
+            var geoipbtn = geoipbtnText.replace('%s', 'USA');
+                
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Welcome Thermaltake',
+                buttons: [{
+                    text: geoipbtn,
+                    class: '',
+                    click: function () {
+                        var url = 'https://www.thermaltake.com/geoip/redirect/popupredirect/';
+                        $.ajax({
+                            showLoader: true,
+                            url: url,
+                            data: {id:'29',url:'https://www.thermaltakeusa.com/privacy-policy-cookie-restriction-mode', isAjax: true},
+                            type: "POST"
+                        }).done(function(data){
+                            window.location.href= data;
+                        });
+                    }
+                }]
+            };
+            
+            $('#popup-modal').on('popup-closed',function(){
+                var url = 'https://www.thermaltake.com/geoip/redirect/closeredirect/'
+                $.ajax({
+                    showLoader: false,
+                    url: url,
+                    data: {isAjax: true},
+                    type: "POST"
+                }).done(function(data){
+                    //window.location.href= data;
+                });
+            });        
+            
+            var url = 'https://www.thermaltake.com/geoip/redirect/checksession/'
+            $.ajax({
+                showLoader: true,
+                url: url,
+                data: {isAjax: true},
+                type: "POST"
+            }).done(function(data){
+                if(data.value == 'true'){
+                    var popup = geomodal(options,$('#popup-modal'));
+                    $('#popup-modal').geomodal('openModal');
+                }
+            });			
+        }
+    );
 </script>
 <div class="magestore-bannerslider">
     </div>
