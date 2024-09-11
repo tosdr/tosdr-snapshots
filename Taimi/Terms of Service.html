@@ -13,6 +13,17 @@
 
             if (firstCookie === 1 && secondCookie === 1 && thirdCookie === 1) {
                 fbq('consent', 'grant');
+                const consentMode = {
+                    'functionality_storage': 'granted',
+                    'security_storage': 'granted',
+                    'ad_storage': 'granted',
+                    'analytics_storage': 'granted',
+                    'personalization_storage': 'granted',
+                };
+                gtag('consent', 'update', consentMode);
+                localStorage.setItem('consentMode', JSON.stringify(consentMode));
+
+                initMetaPixel()
             }
 
         });
@@ -29,21 +40,32 @@
     <script src="https://taimi.com/themes/taimi2/assets/libs/splide/splide.min.js"></script>
     <link rel="shortcut icon" href="https://taimi.com/themes/taimi2/assets/images/favicon.ico">
 
-    <link rel="stylesheet preload" as="style" href="/themes/taimi2/assets/css/combine/combine-83f9c607f7a89ed4d3c8cc0fdbf3f262.css?1721827783" media="all">
+    <link rel="stylesheet preload" as="style" href="/themes/taimi2/assets/css/combine/combine-9e6278e6381cfc5bb937a4d649d1a66f.css?1725975916" media="all">
 
     <link rel="manifest" href="/manifest.json">
 
-    <title>TAIMI Paid Service Terms and Conditions > Taimi</title>
-    <meta name="description" content="Welcome to Taimi.com and Taimi&#039;s mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we).">
+    
+<title>TAIMI Paid Service Terms and Conditions</title>
+<meta name="title" content="TAIMI Paid Service Terms and Conditions">
+<meta name="description" content="Welcome to Taimi.com and Taimi's mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we).">
+<meta name="keywords" content="">
+<link rel="canonical" href="https://taimi.com/billing">
+<meta name="robots" content="index, follow">
 
-    <meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://taimi.com/billing" />
-<meta property="og:site_name" content="Taimi" />
-<meta property="article:publisher " content="https://www.facebook.com/taimiapp/" />
-<meta property="og:image" content="https://taimi.com/themes/taimi2/assets/images/og_image.jpg" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="628" /><meta property="og:title" content="TAIMI Paid Service Terms and Conditions > Taimi" /><meta property="og:description" content="Welcome to Taimi.com and Taimi's mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we). > Taimi" /><meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TAIMI Paid Service Terms and Conditions" /><meta name="twitter:description" content="Welcome to Taimi.com and Taimi's mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we)." /><meta name="twitter:image" content="https://taimi.com/themes/taimi2/assets/images/og_image.jpg" />
-<meta name="twitter:site" content="@taimiapp">
+
+
+<meta property="og:title" content="TAIMI Paid Service Terms and Conditions">
+<meta property="og:description" content="Welcome to Taimi.com and Taimi's mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we).">
+<meta property="og:site_name" content="">
+<meta property="og:url" content="https://taimi.com/billing">
+
+
+
+
+<meta name="twitter:description" content="Welcome to Taimi.com and Taimi's mobile and web-based applications (the Service) operated by Intor Inc. (Taimi or we).">
+<meta name="twitter:title" content="TAIMI Paid Service Terms and Conditions">
+
+
 
     <script type = "application/ld+json" class = "yoast-schema-graph" > {
         "@context": "https://schema.org",
@@ -51,43 +73,99 @@
 		}
 		</script>
 
-    <link rel="canonical" href="https://taimi.com/billing">
-    <link rel="alternate" hreflang="x-default" href="https://taimi.com/billing" />
-    <link rel="alternate" hreflang="en" href="https://taimi.com/billing"/>
+    <script>
+    window.dataLayer = window.dataLayer || [];
 
-                                    <link rel="alternate" hreflang="pt" href="https://taimi.com/pt/billing"/>
-                                <link rel="alternate" hreflang="fr" href="https://taimi.com/fr/billing"/>
-                                <link rel="alternate" hreflang="nl" href="https://taimi.com/nl/billing"/>
-                                <link rel="alternate" hreflang="de" href="https://taimi.com/de/billing"/>
-                                <link rel="alternate" hreflang="it" href="https://taimi.com/it/billing"/>
-                                <link rel="alternate" hreflang="es" href="https://taimi.com/es/billing"/>
-            
+    function gtag() {
+        dataLayer.push(arguments);
+    }
 
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-P65VDW2');</script>
+    if (localStorage.getItem('consentMode') === null) {
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'personalization_storage': 'denied',
+            'functionality_storage': 'denied',
+            'security_storage': 'denied',
+        });
+    } else {
+        gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
+    }
+</script>
+
+<!-- Google Tag Manager -->
+<script>
+    (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-P65VDW2');
+</script>
 <!-- End Google Tag Manager -->
 
 <!-- Meta Pixel Code -->
 <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
         'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('consent', 'revoke')
     fbq('init', '434188952727028');
     fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
                src="https://www.facebook.com/tr?id=434188952727028&ev=PageView&noscript=1"
 /></noscript>
-<!-- End Meta Pixel Code --></head>
+<!-- End Meta Pixel Code -->
+
+<!-- TikTok Pixel Code Start -->
+<script>
+    function initMetaPixel() {
+        !function (w, d, t) {
+            w.TiktokAnalyticsObject = t;
+            var ttq = w[t] = w[t] || [];
+            ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"], ttq.setAndDefer = function (t, e) {
+                t[e] = function () {
+                    t.push([e].concat(Array.prototype.slice.call(arguments, 0)))
+                }
+            };
+            for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
+            ttq.instance = function (t) {
+                for (
+                    var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]);
+                return e
+            }, ttq.load = function (e, n) {
+                var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner;
+                ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {};
+                n = document.createElement("script")
+                ;n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t;
+                e = document.getElementsByTagName("script")[0];
+                e.parentNode.insertBefore(n, e)
+            };
+            ttq.load('CKIKVLRC77U2JMMJ2PA0');
+            ttq.page();
+        }(window, document, 'ttq');
+    }
+</script>
+<!-- TikTok Pixel Code End --></head>
 <body id="body">
 
 
@@ -165,11 +243,7 @@
         <div class="content">
             <h1 dir="ltr">TAIMI Paid Service Terms and Conditions</h1>
 
-<p dir="ltr"><strong>Effective Date: January 04, 2023</strong></p>
-
-<p>
-	<br>
-</p>
+<p dir="ltr"><strong>Effective Date: July 30, 2024</strong></p>
 
 <p dir="ltr">Taimi Paid Service Terms and Conditions constitute an integral part of the Taimi <a href="https://taimi.com/terms">Terms of Service</a> and supplement them as provided below.</p>
 
@@ -268,7 +342,7 @@
 
 <p dir="ltr">If you purchased a Taimi Premium subscription through a Third Party account, you will need to cancel your subscription through that Third Party and in line with that Third Party’s terms and conditions. See in details below.</p>
 
-<p dir="ltr">If you purchased a subscription through App Store (IOS users)</p>
+<p dir="ltr"><strong>If you purchased a subscription through App Store (IOS users)</strong></p>
 
 <ol>
 	<li aria-level="1" dir="ltr">
@@ -303,7 +377,7 @@
 
 <p dir="ltr">Detailed instructions on the management (cancellation) of subscriptions can be also found on <a href="https://support.apple.com/en-ca/HT202039">Apple Support Page</a>.</p>
 
-<p dir="ltr">If you purchased a subscription through Google Play (Android users)</p>
+<p dir="ltr"><strong>If you purchased a subscription through Google Play (Android users)</strong></p>
 
 <ol>
 	<li aria-level="1" dir="ltr">
@@ -338,11 +412,11 @@
 
 <p dir="ltr">Detailed instructions on the management (cancellation) of subscriptions can be also found on <a href="https://support.google.com/googleplay/answer/7018481?hl=en&amp;sjid=10289217745202477108-EU">Google Play Help</a>.</p>
 
-<p dir="ltr">If you purchased a subscription on our website</p>
+<p dir="ltr"><strong>If you purchased a subscription on our website</strong></p>
 
 <p dir="ltr">This subscription can only be canceled with the Taimi Support team’s help. Please send an email to <a href="mailto:support@taimi.com">support@taimi.com</a>. &nbsp;</p>
 
-<p dir="ltr">For more information check our <a href="https://hily.com/terms-of-use/">Terms of Use</a>.&nbsp;</p>
+<p dir="ltr">For more information check our <a href="https://taimi.com/terms/">Terms of Use</a>.&nbsp;</p>
 
 <ol start="4">
 	<li aria-level="1" dir="ltr">
@@ -407,6 +481,27 @@
 
 <p dir="ltr">You are prohibited to execute or solicit in: (a) exchange of Licensed Content for money, donation or any other value; (b) request of money, donation or any other value for the Licensed Content; (c) providing of or request of any items, including without limitation, merchandise, services, including, without limitation, commercial dating, favors, private conversation, etc. that any person can associate with any monetary value in exchange of the Licensed Content.</p>
 
+<ol start="6">
+	<li aria-level="1" dir="ltr">
+
+		<p dir="ltr">DATE CERTIFICATES</p>
+	</li>
+</ol>
+
+<p dir="ltr"><strong>Date Certificates:</strong> From time to time, we may offer the opportunity to purchase Date Certificates through our Taimi app. Each certificate can be exchanged for a specific activity of your choice from our proposed options.</p>
+
+<p dir="ltr"><strong>Payment and Purchase:</strong> Date Certificates can only be purchased within the app. Follow the in-app instructions to complete your purchase.</p>
+
+<p dir="ltr"><strong>Non-Transferable:</strong> Date Certificates are non-transferable and cannot be resold, transferred, or exchanged for cash or any other value.</p>
+
+<p dir="ltr"><strong>Refunds:</strong> Date Certificates are refundable within 14 days of purchase if they have not been redeemed. Refunds will be issued to the original purchaser. To request a refund, please contact our support team via <a href="mailto:support@taimi.com">support@taimi.com</a>.</p>
+
+<p dir="ltr"><strong>Cancellation:</strong> Once booking confirmation is received, cancellations are not permitted. Failure to appear on the booked date will result in the forfeiture of the service without any refund.</p>
+
+<p dir="ltr"><strong>Validity and Expiry:</strong> Date Certificates must be redeemed within the specified validity period, if any. Expired certificates will not be honored or refunded.</p>
+
+<p dir="ltr"><strong>User Responsibility:</strong> It is the responsibility of the certificate holder to book the selected activity and ensure they attend the scheduled event. Any changes to the booking must comply with the terms provided at the time of booking. Taimi shall not be responsible for the loss or damage of any Date Certificate.</p>
+
 <p dir="ltr">All personal data is handled under the terms and conditions of Taimi’s Privacy Policy. More details can be found here: <a href="https://taimi.com/privacy-policy">https://taimi.com/privacy-policy</a>.</p>
 
 <p dir="ltr">Additional information about Terms of Service of the application, including detailed terms of subscription, can be found here: <a href="https://taimi.com/terms">https://taimi.com/terms</a>.</p>
@@ -438,19 +533,16 @@
         <div>En</div>
     </div>
 
-    <form method="POST" action="https://taimi.com/billing" accept-charset="UTF-8"><input name="_session_key" type="hidden" value="jtfxPrbiA2GsllXE7IRB443DfTcitN8Z8r3Fe7f0"><input name="_token" type="hidden" value="c7G53pWGDS1ksyI6W4r7BeogsnuSiQhweJiEDuQe">
-    <select id="footer_language_mob" name="url" data-request="onSwitchLocale" class="language">
-                <option value="https://taimi.com/billing" selected>English</option>
-                <option value="https://taimi.com/pt/billing" >Portuguesa</option>
-                <option value="https://taimi.com/fr/billing" >Français</option>
-                <option value="https://taimi.com/nl/billing" >Nederlands</option>
-                <option value="https://taimi.com/de/billing" >Deutsch</option>
-                <option value="https://taimi.com/it/billing" >Italiano</option>
-                <option value="https://taimi.com/es/billing" >Español</option>
-            </select>
-    </form>
-</div>
-                                        <div class="soc_container">
+    <select id="footer_language_mob" class="form-control lang-select" onchange="window.location.assign(this.value)">
+                                                    <option value="http://taimi.com/billing" selected>En</option>
+                                            <option value="http://taimi.com/pt/billing" >Pt</option>
+                                            <option value="http://taimi.com/fr/billing" >Fr</option>
+                                            <option value="http://taimi.com/nl/billing" >Nl</option>
+                                            <option value="http://taimi.com/de/billing" >De</option>
+                                            <option value="http://taimi.com/es/billing" >Es</option>
+                                            <option value="http://taimi.com/it/billing" >It</option>
+                        </select>
+</div>                                        <div class="soc_container">
                         <a target="_blank" href="https://www.facebook.com/taimiapp" class="soc_link">
                             <img width="auto" height="auto" src="https://taimi.com/themes/taimi2/assets/images/foot_fb.svg" alt="Facebook" loading="lazy">
                         </a>
@@ -529,19 +621,16 @@
         <div>En</div>
     </div>
 
-    <form method="POST" action="https://taimi.com/billing" accept-charset="UTF-8"><input name="_session_key" type="hidden" value="jtfxPrbiA2GsllXE7IRB443DfTcitN8Z8r3Fe7f0"><input name="_token" type="hidden" value="c7G53pWGDS1ksyI6W4r7BeogsnuSiQhweJiEDuQe">
-    <select id="footer_language_mob" name="url" data-request="onSwitchLocale" class="language">
-                <option value="https://taimi.com/billing" selected>English</option>
-                <option value="https://taimi.com/pt/billing" >Portuguesa</option>
-                <option value="https://taimi.com/fr/billing" >Français</option>
-                <option value="https://taimi.com/nl/billing" >Nederlands</option>
-                <option value="https://taimi.com/de/billing" >Deutsch</option>
-                <option value="https://taimi.com/it/billing" >Italiano</option>
-                <option value="https://taimi.com/es/billing" >Español</option>
-            </select>
-    </form>
-</div>
-                                        <div class="item">
+    <select id="footer_language_mob" class="form-control lang-select" onchange="window.location.assign(this.value)">
+                                                    <option value="http://taimi.com/billing" selected>En</option>
+                                            <option value="http://taimi.com/pt/billing" >Pt</option>
+                                            <option value="http://taimi.com/fr/billing" >Fr</option>
+                                            <option value="http://taimi.com/nl/billing" >Nl</option>
+                                            <option value="http://taimi.com/de/billing" >De</option>
+                                            <option value="http://taimi.com/es/billing" >Es</option>
+                                            <option value="http://taimi.com/it/billing" >It</option>
+                        </select>
+</div>                                        <div class="item">
                         <div class="title">Dating</div>
                         <ul>
     <li>
@@ -591,6 +680,13 @@
     </div>
     <img src="https://view.adjust.com/impression/goc7ths?campaign=http://taimi.com/billing" alt="adjust" style="width: 0px; height: 0px;">
 </footer>
+
+<div class="fluidity-banner">
+    <div class="title">
+        <img width="50" height="22" src="https://taimi.com/themes/taimi2/assets/images/logo.svg" alt="Logo" loading="lazy"><span>: fluidity, discovery, diversity</span>
+    </div>
+</div>
+
 <script defer src="https://taimi.com/themes/taimi2/assets/js/combine.js"></script>
 <a rel="nofollow" href="https://app.adjust.com/goc7ths?campaign=https://taimi.com/billing_page(id 129)" class="btn_gen_footer target-btn dwn-btn btn btn-taimi btn-taimi-gradient">
             Get Taimi App for Free
