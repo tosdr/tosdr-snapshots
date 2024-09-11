@@ -52,7 +52,7 @@
 
 
 
-	<link href="/etc.clientlibs/atlas/clientlibs/common/publish/resources/css/appLegacy.e5813f11b1e4e451381f.bundle.css" type="text/css" rel="stylesheet"/>
+	<link href="/etc.clientlibs/atlas/clientlibs/common/publish/resources/css/appLegacy.cd4646ea6cd5552eec14.bundle.css" type="text/css" rel="stylesheet"/>
 
 
 
@@ -82,7 +82,6 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://prod-unifiedlogin.mktg.workday.com/scripts/detect.js"></script>
 <div id="utag" data-utm-element="QnZmSVY1d3NQVGRqVTllTExxNFlKZz09" data-mktouri="//info.workday.com" data-munchkin="078-WHZ-188" data-mktoformid="39373">
 </div>
@@ -238,6 +237,16 @@ setTimeout(() => {
     }
 </script>
  <!-- End Update Rising EMEA footer-->
+
+<!-- Fix for legacy pages : If the document lacks the locale, set it. -->
+<script>
+      if (!document.documentElement.lang) {
+        const regex = /\/([a-z]{2}-[a-z]{2})\//i;
+        const match = regex.exec(window.location.pathname);
+        const currentLocale = (match && match[1]) || 'en-us';
+        document.documentElement.lang = currentLocale;
+      }
+    </script>
     </code></pre>
 </div>
 </div>
@@ -281,44 +290,6 @@ setTimeout(() => {
 
     
     <div class="fixpatch aem-GridColumn aem-GridColumn--default--12">
-
-<div id="cmp-fixpatch" class="cmp-fixpatch">
-  <pre><code>
-      <!-- Fix for https://workday-marketing.atlassian.net/browse/MTQ-11743-->
-<style>
-    .cfix {
-        display:none !important;
-        visibility:hidden;
-        height:0;
-        width:0;
-        }
-</style>
-
-<script>
-    if(window.location.hash && location.href.includes('about-workday/sponsorships.html')){
-        let announcementBar;  
-        let ol = document.createElement('ol');
-        ol.classList.add('cmp-tabs__tablist','cfix')
-        ol.setAttribute('role','tablist');
-        let li = document.createElement('li');
-        li.classList.add('cmp-tabs__tab')
-        li.setAttribute('role','tab');
-        li.setAttribute('data-cmp-hook-tabs','tab');
-        ol.appendChild(li);
-        let attempt = 0;
-        let intervalTimer = setInterval(() => {
-            attempt++;
-            announcementBar = document.querySelector('.announcement-carousel-v2 .cmp-tabs');
-            announcementBar && announcementBar.insertBefore(ol,announcementBar.firstChild);
-            if(attempt > 10 || announcementBar){
-                clearInterval(intervalTimer);
-            }
-        }, 50);
-    }
-</script>
-<!-- End https://workday-marketing.atlassian.net/browse/MTQ-11743 -->
-    </code></pre>
-</div>
 </div>
 
   
@@ -2754,7 +2725,7 @@ setTimeout(() => {
     
     
     <h3>
-        <a class="cmp-navigation-v2__item-link" href="https://www.workday.com/en-us/company/partners/become-a-partner.html" target="_self" title="Become a Partner">Become a Partner
+        <a class="cmp-navigation-v2__item-link" href="https://www.workday.com/en-us/company/partners/partner-program-overview.html" target="_self" title="Partner Program">Partner Program
             
             
         </a>
@@ -3292,436 +3263,1065 @@ setTimeout(() => {
 
     
 </li>
-    <li class="cmp-language-navigation"><div>
-  <button class="language-toggle" type="button" aria-haspopup="true" aria-label="Language navigation" data-mobile-label="Language Selection">
+    <li class="cmp-language-navigation">
+
+    
+
+</li>
+
+    <li class="cmp-language-navigation-v3"><div class="cmp-language-navigation-v3" role="application" id="8c5e401a71e38eb39ef333be20c157200df69cbd9571e6ff49363b7624e6f7f7">
+  <button class="language-toggle" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Language and Region Selector">
     
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
     <use href="/content/dam/web/images/icons/wd-system-globe.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-globe.svg#icon"></use>
   </svg>
 
   </button>
-  <nav class="cmp-languagenavigation-v2">
-  <ul class="cmp-languagenavigation-v2__group">
+  <nav class="cmp-language-navigation-v3__wrapper" role="Dialog" aria-modal="true" aria-labelledby="langV3-8c5e401a71e38eb39ef333be20c157200df69cbd9571e6ff49363b7624e6f7f7">
+    <div class="language-menu">
+      <div class="language-menu__header">
+        <span id="langV3-8c5e401a71e38eb39ef333be20c157200df69cbd9571e6ff49363b7624e6f7f7"> Region &amp; Language </span>
+        <div class="language-menu__header__current-site">
+          <span class="language-menu__header__current-site__label">
+            Current website:
+          </span>
+          <span class="language-menu__header__current-site__language"></span>
+        </div>
+      </div>
+      <div class="language-menu__header-mobile">
+        <div class="language-menu__header-mobile__title">
+          <button class="btn-icon go-back-lang-nav-menu" aria-label="Previous">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet" class="prev-btn-svg" fill="#333333" width="36" height="36">
+              <use xlink:href="/content/dam/web/images/icons/wd-system-chevron-down.svg#icon"></use>
+            </svg>
+          </button>
+          <span class="active-section"> Region &amp; Language </span>
+          <button class="btn-icon close-lang-nav-menu" aria-label="Menu" aria-expanded="true">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet" class="prev-btn-svg" fill="#333333" width="24" height="24">
+              <use xlink:href="/content/dam/web/images/icons/wd-system-x.svg#icon"></use>
+            </svg>
+          </button>
+        </div>
+        <div class="language-menu__header-mobile__devider"></div>
+        <div class="language-menu__header-mobile__languages current-site">
+          <span class="current-site__label">
+            Current website:
+            <span class="current-site__label__language"></span>
+          </span>
+          <span class="current-site__available-links"></span>
+        </div>
+      </div>
+      <div class="language-menu__container">
+        <div class="section-wrapper region-list active">
+          <ul class="regions">
+            
+  <li>
     
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-US cmp-languagenavigation-v2__item--langcode-en-US  cmp-languagenavigation-v2__item--active">
+  <button class="languageNav region" data-el-type="region" aria-controls="apj" aria-expanded="false" data-region-id="apj">
+    <span class="item-label"> Asia-Pacific &amp; Japan </span>
     
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-us/homepage.html" lang="en-US" rel="alternate" title="United States (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">United States (English)</span>
-    
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="false">
-    <use href="/content/dam/web/images/icons/wd-system-check.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
   </svg>
 
+  </button>
+
+    <ul class="regions__countries" id="apj">
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-0" aria-expanded="false" data-country-name="Australia" data-country-group="Australia/New Zealand" data-country-id="apj-0">
+    <span class="item-label"> Australia </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
+
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-0">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-0" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-au/homepage.html" ismaster="true" data-lang-id="apj-0" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  <li class="lang-separator">
-    <div></div>
-  </li>
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-1" aria-expanded="false" data-country-name="Hong Kong" data-country-group="Hong Kong/Taiwan" data-country-id="apj-1">
+    <span class="item-label"> Hong Kong </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-AU cmp-languagenavigation-v2__item--langcode-en-AU ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-au/homepage.html" lang="en-AU" rel="alternate" title="Australia (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Australia (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-1">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-1" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-hk/homepage.html" ismaster="true" data-lang-id="apj-1" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-2" aria-expanded="false" data-country-name="Indonesia" data-country-group="Southeast Asian Region" data-country-id="apj-2">
+    <span class="item-label"> Indonesia </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-BE cmp-languagenavigation-v2__item--langcode-en-BE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-be/homepage.html" lang="en-BE" rel="alternate" title="Belgium (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Belgium (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-2">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-2" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-sg/homepage.html" ismaster="false" data-lang-id="apj-2" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-3" aria-expanded="false" data-country-name="日本" data-country-id="apj-3">
+    <span class="item-label"> 日本 </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-CA cmp-languagenavigation-v2__item--langcode-en-CA ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-ca/homepage.html" lang="en-CA" rel="alternate" title="Canada (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Canada (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-3">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-3" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/ja-jp/homepage.html" ismaster="true" data-lang-id="apj-3" data-laguage="日本語">
+    <span class="item-label"> 日本語 </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-4" aria-expanded="false" data-country-name="대한민국" data-country-id="apj-4">
+    <span class="item-label"> 대한민국 </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-CA cmp-languagenavigation-v2__item--langcode-fr-CA ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/fr-ca/homepage.html" lang="fr-CA" rel="alternate" title="Canada (Français)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Canada (Français)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-4">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-4" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/ko-kr/homepage.html" ismaster="true" data-lang-id="apj-4" data-laguage="한국어">
+    <span class="item-label"> 한국어 </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-5" aria-expanded="false" data-country-name="Malaysia" data-country-group="Southeast Asian Region" data-country-id="apj-5">
+    <span class="item-label"> Malaysia </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SE cmp-languagenavigation-v2__item--langcode-en-SE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-se/homepage.html" lang="en-SE" rel="alternate" title="Denmark (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Denmark (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-5">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-5" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-sg/homepage.html" ismaster="false" data-lang-id="apj-5" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-6" aria-expanded="false" data-country-name="New Zealand" data-country-group="Australia/New Zealand" data-country-id="apj-6">
+    <span class="item-label"> New Zealand </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-DE cmp-languagenavigation-v2__item--langcode-de-DE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/de-de/homepage.html" lang="de-DE" rel="alternate" title="Deutschland (Deutsch)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Deutschland (Deutsch)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-6">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-6" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-au/homepage.html" ismaster="false" data-lang-id="apj-6" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-7" aria-expanded="false" data-country-name="Singapore" data-country-group="Southeast Asian Region" data-country-id="apj-7">
+    <span class="item-label"> Singapore </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-ES cmp-languagenavigation-v2__item--langcode-es-ES ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/es-es/homepage.html" lang="es-ES" rel="alternate" title="España (Español)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">España (Español)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-7">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-7" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-sg/homepage.html" ismaster="true" data-lang-id="apj-7" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-8" aria-expanded="false" data-country-name="Taiwan" data-country-group="Hong Kong/Taiwan" data-country-id="apj-8">
+    <span class="item-label"> Taiwan </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SE cmp-languagenavigation-v2__item--langcode-en-SE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-se/homepage.html" lang="en-SE" rel="alternate" title="Finland (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Finland (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-8">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-8" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-hk/pages/workday-for-taiwan.html" ismaster="true" data-lang-id="apj-8" data-laguage="繁體中文">
+    <span class="item-label"> 繁體中文 </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
-
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-FR cmp-languagenavigation-v2__item--langcode-fr-FR ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/fr-fr/homepage.html" lang="fr-FR" rel="alternate" title="France (Français)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">France (Français)</span>
-    
+            </li>
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-8" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-hk/homepage.html" ismaster="false" data-lang-id="apj-8" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="apj-9" aria-expanded="false" data-country-name="Thailand" data-country-group="Southeast Asian Region" data-country-id="apj-9">
+    <span class="item-label"> Thailand </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-HK cmp-languagenavigation-v2__item--langcode-en-HK ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-hk/homepage.html" lang="en-HK" rel="alternate" title="Hong Kong (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Hong Kong (English)</span>
-    
+  </button>
+
+
+        <ul class="regions__countries__languages" id="apj-9">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-9" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-sg/pages/workday-for-thailand.html" ismaster="true" data-lang-id="apj-9" data-laguage="ประเทศไทย">
+    <span class="item-label"> ประเทศไทย </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
-
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SG cmp-languagenavigation-v2__item--langcode-en-SG ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-sg/homepage.html" lang="en-SG" rel="alternate" title="Indonesia (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Indonesia (English)</span>
-    
+            </li>
+          
+            <li>
+              
+  <a aria-current="" aria-controls="apj-9" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-sg/homepage.html" ismaster="false" data-lang-id="apj-9" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
+            </li>
+          
+        </ul>
+      </li>
+    </ul>
   </li>
-  
 
-  
+            
+  <li>
     
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-GB cmp-languagenavigation-v2__item--langcode-en-GB ">
+  <button class="languageNav region" data-el-type="region" aria-controls="emea" aria-expanded="false" data-region-id="emea">
+    <span class="item-label"> Europe, Middle East &amp; Africa </span>
     
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-gb/homepage.html" lang="en-GB" rel="alternate" title="Ireland (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Ireland (English)</span>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
+
+  </button>
+
+    <ul class="regions__countries" id="emea">
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-0" aria-expanded="false" data-country-name="Belgium" data-country-group="Belgium/Luxembourg" data-country-id="emea-0">
+    <span class="item-label"> Belgium </span>
     
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
+
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-0">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-0" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-be/homepage.html" ismaster="true" data-lang-id="emea-0" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-1" aria-expanded="false" data-country-name="Denmark" data-country-group="Nordic Region" data-country-id="emea-1">
+    <span class="item-label"> Denmark </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-IT cmp-languagenavigation-v2__item--langcode-it-IT ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/it-it/homepage.html" lang="it-IT" rel="alternate" title="Italia (Italiano)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Italia (Italiano)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-1">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-1" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-se/homepage.html" ismaster="false" data-lang-id="emea-1" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-2" aria-expanded="false" data-country-name="Deutschland" data-country-group="Deutschland/Österreich" data-country-id="emea-2">
+    <span class="item-label"> Deutschland </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-JP cmp-languagenavigation-v2__item--langcode-ja-JP ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/ja-jp/homepage.html" lang="ja-JP" rel="alternate" title="日本 (日本語)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">日本 (日本語)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-2">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-2" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/de-de/homepage.html" ismaster="true" data-lang-id="emea-2" data-laguage="Deutsch">
+    <span class="item-label"> Deutsch </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-3" aria-expanded="false" data-country-name="España" data-country-id="emea-3">
+    <span class="item-label"> España </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-KR cmp-languagenavigation-v2__item--langcode-ko-KR ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/ko-kr/homepage.html" lang="ko-KR" rel="alternate" title="대한민국 (한국어)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">대한민국 (한국어)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-3">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-3" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/es-es/homepage.html" ismaster="true" data-lang-id="emea-3" data-laguage="Español">
+    <span class="item-label"> Español </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-4" aria-expanded="false" data-country-name="Finland" data-country-group="Nordic Region" data-country-id="emea-4">
+    <span class="item-label"> Finland </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-BE cmp-languagenavigation-v2__item--langcode-en-BE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-be/homepage.html" lang="en-BE" rel="alternate" title="Luxembourg (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Luxembourg (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-4">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-4" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-se/homepage.html" ismaster="false" data-lang-id="emea-4" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-5" aria-expanded="false" data-country-name="France" data-country-id="emea-5">
+    <span class="item-label"> France </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SG cmp-languagenavigation-v2__item--langcode-en-SG ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-sg/homepage.html" lang="en-SG" rel="alternate" title="Malaysia (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Malaysia (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-5">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-5" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/fr-fr/homepage.html" ismaster="true" data-lang-id="emea-5" data-laguage="Français">
+    <span class="item-label"> Français </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-6" aria-expanded="false" data-country-name="Ireland" data-country-group="United Kingdom/Ireland" data-country-id="emea-6">
+    <span class="item-label"> Ireland </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-MX cmp-languagenavigation-v2__item--langcode-es-MX ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/es-mx/homepage.html" lang="es-MX" rel="alternate" title="México (Español)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">México (Español)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-6">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-6" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-gb/homepage.html" ismaster="false" data-lang-id="emea-6" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-7" aria-expanded="false" data-country-name="Italia" data-country-id="emea-7">
+    <span class="item-label"> Italia </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-NL cmp-languagenavigation-v2__item--langcode-nl-NL ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/nl-nl/homepage.html" lang="nl-NL" rel="alternate" title="Nederland (Nederlands)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Nederland (Nederlands)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-7">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-7" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/it-it/homepage.html" ismaster="true" data-lang-id="emea-7" data-laguage="Italiano">
+    <span class="item-label"> Italiano </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-8" aria-expanded="false" data-country-name="Luxembourg" data-country-group="Belgium/Luxembourg" data-country-id="emea-8">
+    <span class="item-label"> Luxembourg </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-AU cmp-languagenavigation-v2__item--langcode-en-AU ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-au/homepage.html" lang="en-AU" rel="alternate" title="New Zealand (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">New Zealand (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-8">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-8" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-be/homepage.html" ismaster="false" data-lang-id="emea-8" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-9" aria-expanded="false" data-country-name="Nederland" data-country-id="emea-9">
+    <span class="item-label"> Nederland </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SE cmp-languagenavigation-v2__item--langcode-en-SE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-se/homepage.html" lang="en-SE" rel="alternate" title="Norway (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Norway (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-9">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-9" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/nl-nl/homepage.html" ismaster="true" data-lang-id="emea-9" data-laguage="Nederlands">
+    <span class="item-label"> Nederlands </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-10" aria-expanded="false" data-country-name="Norway" data-country-group="Nordic Region" data-country-id="emea-10">
+    <span class="item-label"> Norway </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-DE cmp-languagenavigation-v2__item--langcode-de-DE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/de-de/homepage.html" lang="de-DE" rel="alternate" title="Österreich (Deutsch)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Österreich (Deutsch)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-10">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-10" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-se/homepage.html" ismaster="false" data-lang-id="emea-10" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-11" aria-expanded="false" data-country-name="Österreich" data-country-group="Deutschland/Österreich" data-country-id="emea-11">
+    <span class="item-label"> Österreich </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-CH cmp-languagenavigation-v2__item--langcode-de-CH ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/de-ch/homepage.html" lang="de-CH" rel="alternate" title="Schweiz (Deutsch)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Schweiz (Deutsch)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-11">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-11" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/de-de/homepage.html" ismaster="false" data-lang-id="emea-11" data-laguage="Deutsch">
+    <span class="item-label"> Deutsch </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-12" aria-expanded="false" data-country-name="South Africa" data-country-id="emea-12">
+    <span class="item-label"> South Africa </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-CH cmp-languagenavigation-v2__item--langcode-fr-CH ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/fr-ch/homepage.html" lang="fr-CH" rel="alternate" title="Suisse (Français)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Suisse (Français)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-12">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-12" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-za/homepage.html" ismaster="true" data-lang-id="emea-12" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-13" aria-expanded="false" data-country-name="Sweden" data-country-group="Nordic Region" data-country-id="emea-13">
+    <span class="item-label"> Sweden </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-CH cmp-languagenavigation-v2__item--langcode-en-CH ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-ch/homepage.html" lang="en-CH" rel="alternate" title="Switzerland (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Switzerland (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-13">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-13" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-se/homepage.html" ismaster="true" data-lang-id="emea-13" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-14" aria-expanded="false" data-country-name="Schweiz" data-country-group="Schweiz / Switzerland / Suisse" data-country-id="emea-14">
+    <span class="item-label"> Schweiz </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SG cmp-languagenavigation-v2__item--langcode-en-SG ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-sg/homepage.html" lang="en-SG" rel="alternate" title="Singapore (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Singapore (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-14">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-14" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/de-ch/homepage.html" ismaster="true" data-lang-id="emea-14" data-laguage="Deutsch">
+    <span class="item-label"> Deutsch </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
-
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-ZA cmp-languagenavigation-v2__item--langcode-en-ZA ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-za/homepage.html" lang="en-ZA" rel="alternate" title="South Africa (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">South Africa (English)</span>
-    
+            </li>
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-14" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-ch/homepage.html" ismaster="true" data-lang-id="emea-14" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
-
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SE cmp-languagenavigation-v2__item--langcode-en-SE ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-se/homepage.html" lang="en-SE" rel="alternate" title="Sweden (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Sweden (English)</span>
-    
+            </li>
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-14" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/fr-ch/homepage.html" ismaster="true" data-lang-id="emea-14" data-laguage="Français">
+    <span class="item-label"> Français </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="emea-15" aria-expanded="false" data-country-name="United Kingdom" data-country-group="United Kingdom/Ireland" data-country-id="emea-15">
+    <span class="item-label"> United Kingdom </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-HK cmp-languagenavigation-v2__item--langcode-en-HK ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-hk/homepage.html" lang="en-HK" rel="alternate" title="Taiwan (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Taiwan (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="emea-15">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="emea-15" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-gb/homepage.html" ismaster="true" data-lang-id="emea-15" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
+            </li>
+          
+        </ul>
+      </li>
+    </ul>
   </li>
-  
 
-  
+            
+  <li>
     
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-HK cmp-languagenavigation-v2__item--langcode-en-HK ">
+  <button class="languageNav region" data-el-type="region" aria-controls="na" aria-expanded="false" data-region-id="na">
+    <span class="item-label"> North America </span>
     
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-hk/pages/workday-for-taiwan.html" lang="en-HK" rel="alternate" title="台灣 (繁體中文)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">台灣 (繁體中文)</span>
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
+
+  </button>
+
+    <ul class="regions__countries" id="na">
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="na-0" aria-expanded="false" data-country-name="Canada" data-country-id="na-0">
+    <span class="item-label"> Canada </span>
     
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
+
+  </button>
+
+        <ul class="regions__countries__languages" id="na-0">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="na-0" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-ca/homepage.html" ismaster="true" data-lang-id="na-0" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
-
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-SG cmp-languagenavigation-v2__item--langcode-en-SG ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-sg/homepage.html" lang="en-SG" rel="alternate" title="Thailand (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">Thailand (English)</span>
-    
+            </li>
+          
+            <li>
+              
+  <a aria-current="" aria-controls="na-0" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/fr-ca/homepage.html" ismaster="true" data-lang-id="na-0" data-laguage="Français">
+    <span class="item-label"> Français </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="na-1" aria-expanded="false" data-country-name="México" data-country-id="na-1">
+    <span class="item-label"> México </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--langcode- ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-sg/pages/workday-for-thailand.html" rel="alternate" title="ประเทศไทย (ภาษาไทย)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">ประเทศไทย (ภาษาไทย)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="na-1">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="na-1" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/es-mx/homepage.html" ismaster="true" data-lang-id="na-1" data-laguage="Español">
+    <span class="item-label"> Español </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
-  </li>
-  
+            </li>
+          
+        </ul>
+      </li>
+    
+      <li>
+        
+  <button class="languageNav country" data-el-type="country" aria-controls="na-2" aria-expanded="false" data-country-name="United States" data-country-id="na-2">
+    <span class="item-label"> United States </span>
+    
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+    <use href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-chevron-right-small.svg#icon"></use>
+  </svg>
 
-  
-    
-  <li class="cmp-languagenavigation-v2__item  cmp-languagenavigation-v2__item--countrycode-GB cmp-languagenavigation-v2__item--langcode-en-GB ">
-    
-  <a class="cmp-languagenavigation-v2__item-link" href="https://www.workday.com/en-gb/homepage.html" lang="en-GB" rel="alternate" title="United Kingdom (English)">
-    <span class="cmp-languagenavigation-v2__item-link--text region">United Kingdom (English)</span>
-    
+  </button>
+
+        <ul class="regions__countries__languages" id="na-2">
+          
+            <li>
+              
+  <a aria-current="" aria-controls="na-2" data-el-type="language" class="languageNav language no-toast" href="https://www.workday.com/en-us/homepage.html" ismaster="true" data-lang-id="na-2" data-laguage="English">
+    <span class="item-label"> English </span>
+    <svg class="language-check-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-check.svg#icon"></use>
+    </svg>
+    <svg class="language-available-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMin meet">
+      <use xlink:href="/content/dam/web/images/icons/wd-system-icon-arrow-diagonal-small.svg#icon"></use>
+    </svg>
   </a>
 
+            </li>
+          
+        </ul>
+      </li>
+    </ul>
   </li>
-  
 
-  </ul>
-</nav>
+          </ul>
+        </div>
+        <div class="section-wrapper country-list"></div>
+        <div class="section-wrapper language-list"></div>
+      </div>
+    </div>
+  </nav>
 </div>
 
     
 
 </li>
+
     <li class="cmp-sign-in"><div class="cmp-sign-in-menu">
   <button type="button" class="cmp-sign-in-menu__toggle" data-mobile-label="Sign In" aria-expanded="false" aria-label="Sign in options">
     
@@ -3749,7 +4349,7 @@ setTimeout(() => {
       <button aria-describedby="unifiedMessage" class="cmp-sign-in-menu__content-close-button" aria-label="Close">
         
   
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false" aria-labelledby=" ">
     <use href="/content/dam/web/images/icons/wd-system-x.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-x.svg#icon"></use>
     
     
@@ -3757,12 +4357,13 @@ setTimeout(() => {
 
       </button>
       <div id="unifiedMessage" role="group">
-        <h2 id="unifiedMessageH2" data-punctuation="!" data-text="Welcome,"></h2>
+        <h2 id="unifiedMessageH2" data-punctuation="!" data-text="Welcome,">Welcome,
+        </h2>
         <p>You have automatically signed in to workday.com with your Workday Community account.</p>
 
       </div>
       <div>
-        <button aria-describedby="unifiedMessage" class="wd-btn btn btn--bg__white btn--outline__blue btn--size__md mp-sign-in-menu__content-accept-button" type="button">
+        <button aria-describedby="unifiedMessageH2" class="wd-btn btn btn--bg__white btn--outline__blue btn--size__md mp-sign-in-menu__content-accept-button" type="button">
           Got it
         </button>
       </div>
@@ -3947,7 +4548,7 @@ setTimeout(() => {
   <button aria-label="Search" class="cmp-search-v2__toggle" type="button" aria-haspopup="true">
     
   
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false" aria-labelledby=" ">
     <use href="/content/dam/web/images/icons/wd-system-search.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-search.svg#icon"></use>
     
     
@@ -3962,7 +4563,7 @@ setTimeout(() => {
           <span class="search-icon">
             
   
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false" aria-labelledby=" ">
     <use href="/content/dam/web/images/icons/wd-system-search.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-search.svg#icon"></use>
     
     
@@ -3978,7 +4579,7 @@ setTimeout(() => {
       <button aria-label="Clear" class="cmp-search-v2__input-clear" type="button">
         
   
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false" aria-labelledby=" ">
     <use href="/content/dam/web/images/icons/wd-system-x-small.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-x-small.svg#icon"></use>
     
     
@@ -4011,8 +4612,8 @@ setTimeout(() => {
       </li>
     
       <li id="item-b0c0b9a288">
-        <a href="https://www.workday.com/en-us/solutions/role/enterprise-hr/diversity-inclusion-belonging-solutions.html" target="_self" title="How Workday Supports Diversity and Inclusion">
-          How Workday Supports Diversity and Inclusion
+        <a href="https://www.workday.com/en-us/company/latest/events-webinars/customer-awards-na.html" target="_self" title="Workday Customer Awards">
+          Workday Customer Awards
         </a>
       </li>
     
@@ -4042,7 +4643,7 @@ setTimeout(() => {
   <button aria-label="Close" class="cmp-search-v2__close-search" type="button">
     
   
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="svg-icon" preserveAspectRatio="xMidYMin meet" viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="false" aria-labelledby=" ">
     <use href="/content/dam/web/images/icons/wd-system-x.svg#icon" xlink:href="/content/dam/web/images/icons/wd-system-x.svg#icon"></use>
     
     
@@ -4540,10 +5141,9 @@ setTimeout(() => {
 </div>
 <div class="text parbase section">
 
-<p><b>Last Updated: 12/7/2023</b><br>
+<p><b>Last Updated: 8/19/2024</b><br>
 </p>
-<p>These Terms of Service (“Terms”) apply to your access to and use of (a) the website located at www.workday.com and all associated web pages, websites and corresponding social media pages, (b) any web pages, websites and corresponding social media pages (including all content therein) that directly reference these Terms, (c) the Community (as defined below), and (d) the Workday APIs (as defined below) ((a)-(d) collectively,&nbsp; the “Sites”) provided by Workday, Inc., its subsidiaries and affiliates (each “Workday”, “we”, “us” &nbsp;or “our”).<br>
-</p>
+<p>These Terms of Service (“Terms”) apply to your access to and use of (a) the website located at www.workday.com and all associated web pages, websites and corresponding social media pages, (b) any web pages, websites, corresponding social media pages, materials, or other documents (including all content therein) that directly reference these Terms, (c) the Community (as defined below), and (d) the Workday APIs (as defined below) ((a)-(d) collectively,&nbsp; the “Sites”) provided by Workday, Inc., its subsidiaries and affiliates (each “Workday”, “we”, “us”&nbsp; or “our”).</p>
 <p><b>By checking a box agreeing to these Terms or by using our Sites, you agree to these Terms, including the mandatory arbitration provision and class action waiver in Section 14. If you do not agree to these Terms, do not use our Sites.</b><br>
 </p>
 <p>We may supply different or additional terms, conditions, guidelines, policies, or rules in relation to some of our Sites or Workday products or services made available on or through our Sites (“Supplemental Terms”). Any Supplemental Terms become part of your agreement with us if you use the applicable Sites and are hereby incorporated herein, and if there is a conflict between these Terms and the Supplemental Terms, the Supplemental Terms will control for that conflict.&nbsp; The Supplemental Terms include our:</p>
@@ -4603,7 +5203,7 @@ setTimeout(() => {
 <p>To the fullest extent permitted by applicable law, you will indemnify, defend and hold harmless Workday and our subsidiaries and affiliates, and each of our and their respective officers, directors, agents, partners and employees (individually and collectively, the “Workday Parties”) from and against any losses, liabilities, claims, demands, damages, expenses or costs (“Claims”) arising out of or related to (a) your access to or use of the Sites or any content you provide thereon or therein; (b) sharing your login credentials for the Sites without Workday’s authorization; (c) your Feedback; (d)&nbsp;your violation of these Terms; (e) your violation, misappropriation or infringement of any rights of another (including intellectual property rights or privacy rights); or (f) your conduct in connection with the Sites. You agree to promptly notify the Workday Parties of any Claims, cooperate with the Workday Parties in defending such Claims and pay all fees, costs and expenses associated with defending such Claims (including attorneys' fees). You also agree that the Workday Parties will have control of the defense or settlement, at Workday's sole option, of any Claims. This indemnity is in addition to, and not in lieu of, any other indemnities set forth in a written agreement between you and any of the Workday Parties.<br>
 </p>
 <p><b>11. Disclaimers</b></p>
-<p><b>Your use of our Sites is at your sole risk. Except as otherwise provided in a writing by us and to the fullest extent permitted under applicable law, our Sites and any content therein&nbsp; are provided “as is” and “as available” without warranties of any kind, either express or implied. Workday disclaims all warranties with respect to the Sites and any content therein, including implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement. In addition, Workday does not represent or warrant that our Sites are accurate, complete, reliable, current, free of viruses or other harmful components or content, or error-free or that access to the Sites will be uninterrupted. You assume the entire risk as to the quality and performance of the Sites.</b></p>
+<p>YOUR USE OF OUR SITES IS AT YOUR SOLE RISK. EXCEPT AS OTHERWISE PROVIDED IN A WRITING BY US AND TO THE FULLEST EXTENT PERMITTED UNDER APPLICABLE LAW, OUR SITES AND ANY CONTENT THEREIN ARE PROVIDED “AS IS” AND “AS AVAILABLE” WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. OUR SITES CONTAIN LINKS TO THIRD PARTY PRODUCTS AND SERVICES. YOUR NAVIGATION TO AND USE OF SUCH THIRD PARTY PRODUCTS AND SERVICES IS SOLELY GOVERNED BY YOUR AGREEMENT WITH SUCH THIRD PARTY. WORKDAY DISCLAIMS ALL WARRANTIES AND LIABILITY WITH RESPECT TO SUCH THIRD PARTY PRODUCTS AND SERVICES, INCLUDING THOSE THIRD PARTY PRODUCTS AND SERVICES THAT ARE RECOMMENDED OR CERTIFIED BY WORKDAY AND THOSE THIRD PARTY PRODUCTS AND SERVICES THAT ARE DESIGNED TO INTEROPERATE WITH WORKDAY OFFERINGS. WORKDAY DISCLAIMS ALL WARRANTIES WITH RESPECT TO THE SITES AND ANY CONTENT THEREIN, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. IN ADDITION, WORKDAY DOES NOT REPRESENT OR WARRANT THAT OUR SITES ARE ACCURATE, COMPLETE, RELIABLE, CURRENT, FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS OR CONTENT, OR ERROR-FREE OR THAT ACCESS TO THE SITES WILL BE UNINTERRUPTED. YOU ASSUME THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SITES.&nbsp;</p>
 <p><b>12.&nbsp; Limitation of Liability</b></p>
 <p><b>(a)&nbsp;&nbsp; To the fullest extent permitted by applicable law, the Workday Parties will not be liable to you under any theory of liability—whether based in contract, tort, negligence, warranty, or otherwise—for any indirect, consequential, incidental, or special damages or lost profits, even if Workday or the other Workday Parties have been advised of the possibility of such damages.</b></p>
 <p><b>(b)&nbsp;&nbsp; The total liability of the Workday Parties for any claim arising out of or relating to these Terms or our Sites, regardless of the form of the action, is limited to $100.</b></p>
@@ -4703,7 +5303,9 @@ Australia</p>
 <p style="margin-left: 80.0px;">▪ take any action with respect to your User Content that is necessary or appropriate, in Workday’s sole discretion, to ensure compliance with applicable law and these Terms or to protect any third-party rights, including third-party intellectual property and privacy rights (e.g., providing information regarding you to copyright owners in furtherance of Digital Millennium Copyright Act takedown requests); and</p>
 <p style="margin-left: 80.0px;">▪ cooperate fully with any law enforcement authorities or court order requesting or directing us to disclose the identity or other information of anyone posting any materials on or through the Community.</p>
 <p>(c)&nbsp;&nbsp; <b>Confidentiality. </b>Workday may provide to you certain information that (a) is marked or declared “Confidential” or “Proprietary” or in some other manner to indicate its confidential nature or (b) based upon the facts and circumstances of the disclosure, is information that a reasonable person would consider confidential or proprietary (“Confidential Information”).&nbsp; “Confidential Information” does not include any information that (i) was publicly available prior to the time of disclosure by Workday, (ii) becomes publicly available after disclosure by Workday to you through no action or inaction by you, (iii) is already in the lawful possession of you at the time of disclosure, (iv) is obtained by you from a third party without a breach of such third party’s obligations of confidentiality, or (v) is independently developed by you without use of or reference to Workday’s Confidential Information. You will use Workday’s Confidential Information only as necessary to use the Services provided under these Terms and will use reasonable care to protect Workday’s Confidential Information from being disclosed to persons other than, as applicable, your employees, affiliates, contractors, agents, or professional advisors who need to know it and who have a legal obligation to keep it confidential. Your disclosure of Workday’s Confidential Information pursuant to law or a judicial or administrative order will not be deemed to be a breach of this Agreement, if you (A) provide timely written notice of such disclosure requirement to Workday (if permitted to do so under applicable law), and (B) reasonably cooperate, at your expense, with Workday’s efforts to limit the scope of such disclosure.</p>
-<p><b>2.&nbsp; Paid Offering Terms</b></p>
+<p><b>2.&nbsp; Workday Marketplace&nbsp;</b></p>
+<p>Workday’s certification or badging does not constitute a representation or acknowledgment by Workday that any AI Application, App, or solution on Workday Marketplace complies with any specific requirements, nor does it constitute acceptance by Workday of any responsibility or liability for the AI Application, App or solution.&nbsp; It is your sole responsibility to evaluate any AI Application, App or solution to ensure they are appropriate for Your usage, including, but not limited to, all security and privacy controls.</p>
+<p><b>3.&nbsp; Paid Offering Terms</b></p>
 <p>The following terms (the <i>“Paid Offerings Terms”</i>) are Supplemental Terms and apply solely to products or services that are made available for purchase through our Sites (<i>“Paid Offerings”</i>):</p>
 <p style="margin-left: 40.0px;">(a)&nbsp;&nbsp;<b> Transactions.</b> By purchasing a Paid Offering through our Sites (a <i>“Transaction”</i>), you represent that the applicable Paid Offerings will be used only in a lawful manner.</p>
 <p style="margin-left: 40.0px;">(b)&nbsp;&nbsp;<b> Eligibility. </b>To complete your purchase, you must have a valid billing and shipping address within a country that can be selected for the billing and shipping addresses as part of the checkout process on the Sites (the<i> “Territory”</i>). We make no promise that Paid Offerings available on the Sites are appropriate or available for use in locations outside the Territory.</p>
@@ -4715,9 +5317,9 @@ Australia</p>
 <p style="margin-left: 40.0px;">(h)&nbsp;&nbsp; <b>Order Delays; Cancellation.</b> We reserve the right to delay, refuse or cancel any order prior to your use of the Paid Offering. For example, if there are errors on the Site or made in connection with your order, inaccuracies in Paid Offering or pricing information or Paid Offering availability, we reserve the right to correct the error and charge you the correct price or cancel your order. We will contact you if any portion of your order is canceled or if additional information is required to accept your order.</p>
 <p style="margin-left: 40.0px;">(i)&nbsp;&nbsp; <b>Refunds, Returns, and Exchanges.</b>&nbsp;All sales are final. Requests for refunds will be reviewed by Workday and granted in Workday’s sole discretion, except where prohibited by law. Any refunds granted will be made to the same method of payment and account used to place the order. We do not currently provide for returns or exchanges.</p>
 <p style="margin-left: 40.0px;">(j)&nbsp; &nbsp;<b>Reservation of Rights.</b> Workday reserves the right, including without prior notice, to limit the available quantity of or discontinue making available any Paid Offering; to impose conditions on the honoring of any coupon, discount or similar promotion; to bar any user from making any Transaction; alter the payment option for Paid Offerings; and to refuse to provide any user with any Paid Offering.</p>
-<p><b>3. Workday API Terms</b></p>
+<p><b>4. Workday API Terms</b></p>
 <p>If Workday makes application programming interfaces available to you on or through the Sites (the “Workday APIs”), you may not use any Workday APIs without authorization under a separate agreement with Workday&nbsp;(the “Workday API Terms”).&nbsp;</p>
-<p><b>4. Global Addendum</b></p>
+<p><b>5. Global Addendum</b></p>
 <p>If you are in a country that provides consumer guarantees or imposes obligations on us which cannot be excluded, restricted or modified by applicable law, or may be so only to a limited extent, then nothing in the Terms is intended to exclude, restrict or modify such mandatory guarantees or obligations. Without limiting the foregoing, if you are in a country where any provision of these Terms are illegal or unenforceable, or unlawful for any reason, including but not limited to by statute or because such provision is found to be unconscionable, (i) the unenforceable or unlawful provision will be severed from these Terms; (ii) severance of the unenforceable or unlawful provision will have no impact whatsoever on the remainder of these Terms.</p>
 <p>If you reside outside of the United States in one of the countries listed below (each an “Applicable Country”) and the Sites were offered to you in an Applicable Country, please review this Global Addendum for special provisions applicable to your use of the Sites in the Applicable Country (“Special Provisions”). In the event of a conflict between the Special Provisions and other provisions of the Terms, the provisions of the Special Provisions control. By accessing or using the Sites, you also agree to be bound by the applicable Special Provisions. All capitalized terms not defined in this Global Addendum shall have the meaning given to them in the Terms. Applicable Countries:</p>
 <ul>
@@ -5352,7 +5954,7 @@ Australia</p>
 
 
 
-  <script src="/etc.clientlibs/atlas/clientlibs/common/publish/resources/js/appLegacy.828bf97b93657d8a08c8.bundle.js" type="text/javascript"></script>
+  <script src="/etc.clientlibs/atlas/clientlibs/common/publish/resources/js/appLegacy.f6c2cbed7f800f5e1115.bundle.js" type="text/javascript"></script>
 
 
 
