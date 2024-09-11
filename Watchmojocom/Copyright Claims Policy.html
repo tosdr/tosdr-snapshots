@@ -828,7 +828,7 @@ background:linear-gradient( #060606 0%, #1a1a1a 100%);
     padding: 0 0.1rem;}
 .top-nav .left li a{}
 .top-nav .right li a{ font-size:0.75rem; padding:0.4rem 0.6rem 0.4rem 0.3rem; margin:0;}
-.mainhead { margin:0 ; overflow:hidden }
+.mainhead { margin:0 ; overflow:hidden; min-height: 399px; }
 .mainhead img{ margin:0; object-fit: cover; min-height: 399px; }
 #mainplayer { }
 #mainplayer video{ }
@@ -921,6 +921,7 @@ background:linear-gradient( #060606 0%, #1a1a1a 100%);
 	
 	.input-block-level { height:32px; width:200px;}
 	.mywm_login { text-align:right; margin-top:2px}
+    .mywm_login ul { right: 0;}
 	.mywm_login img{ float:left; width:30px !important;  display:inline-block; vertical-align:middle; margin:-6px 3px 0 0 ;  }
 	/*.loginpic{width:35px; height:35px; margin:0 4px 0 0 ; display:inline-block; vertical-align:middle; background-size: contain !important; float:right}*/
 	.loginpic{width:32px; height:32px; margin:-7px 3px 0 0 ; display:inline-block; vertical-align:middle; background-size: cover !important; float: left; border-radius:16px;}
@@ -1153,6 +1154,7 @@ transform:rotate(45deg);
 			}
 
 @media (max-width: 800px) and (min-width: 320px){
+    .mainhead { min-height: 259px; }
     .mainhead img { min-height: 259px; }
 	.split{height:/*65px;*/}
 	.sear { display:none}
@@ -3076,6 +3078,10 @@ text-align:left;}
         e.setAttribute('defer', '');
         e.setAttribute('data-cfasync', 'false');
         e.async = true
+        e.onload = function() {
+            const adsLoadedEvent = new Event("adsLoadedEvent");
+            document.dispatchEvent(adsLoadedEvent);
+        }
         t.parentNode.insertBefore(e, t);
 
         var e = document.createElement("script");
@@ -3083,10 +3089,6 @@ text-align:left;}
         e.setAttribute('defer', '');
         e.setAttribute('data-cfasync', 'false');
         e.async = true
-        e.onload = function() {
-            const adsLoadedEvent = new Event("adsLoadedEvent");
-            document.dispatchEvent(adsLoadedEvent);
-        }
         t.parentNode.insertBefore(e, t);
 
         var e = document.createElement("script");
@@ -3110,7 +3112,7 @@ text-align:left;}
             t.parentNode.insertBefore(e, t);
 
             var e = document.createElement("script");
-            e.src = "/2021/common.js?2024-Q1.v23";
+            e.src = "/2021/common.js?2024-Q1.v231705980585";
             e.setAttribute('defer', '');
             t.parentNode.insertBefore(e, t);
             e.onload = () => {
@@ -3207,6 +3209,10 @@ text-align:left;}
             loaded();
         }
         lcp.addEventListener('error', function() {
+            lcpLoaded = true;
+            setTimeout(loaded(), 500);
+        });
+        lcp.addEventListener('loadeddata', function()  {
             lcpLoaded = true;
             setTimeout(loaded(), 500);
         });
